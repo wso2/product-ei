@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+      "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 ESB - EJB Mediator </title>
+  <link href="css/esb-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<h2>Bean Mediator</h2>
+
+<p>EJB mediator calls an external Enterprise JavaBean(EJB) and stores the result in the message payload or in a message context property. Currently, this mediator supports EJB3 Stateless Session Beans and Stateful Session Bean
+</p>
+
+<h3>Syntax</h3>
+<pre xml:space="preserve">&lt;bean action=&quot;CREATE | REMOVE | SET_PROPERTY | GET_PROPERTY&quot; var=&quot;string&quot; 
+  [class=&quot;string&quot;] [property=&quot;string&quot;] 
+  [value=&quot;string | {xpath}&quot;] /&gt;</pre>
+
+<h3>UI Configuration</h3>
+
+<div class="image">
+<img src="../bean-mediator/docs/images/BeanMediator.png" alt="" />
+
+<p>Bean specific options </p>
+</div>
+
+<p>Bean mediator field descriptions,</p>
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td style="font-weight: bold;">Field name</td>
+      <td style="font-weight: bold;">Description</td>
+    </tr>
+    <tr>
+      <td>Class</td>
+      <td>Bean talks manager uses this class which is defined here to perform actions such as (CREATE/GET_PROPERTY/SET_PROPERTY/REMOVE)
+      </td>
+    </tr>
+    <tr>
+      <td>Action</td>
+      <td>This defines the action which suppose to be perfomed for the variable such as (CREATE/GET_PROPERTY/SET_PROPERTY/REMOVE)
+    </td>
+    </tr>
+    <tr>
+      <td>Var</td>
+      <td>Instance name of the decalred variable for the given class </td>
+    </tr>
+    <tr>
+      <td>Value</td>
+      <td>This section uses to assign variable based on the action setup (GET_PROPERTY/SET_PROPERTY) <span style="font-weight: bold;">Expression/Value</span></td>
+    </tr>
+    <tr>
+      <td>Target </td>
+      <td>Will be assign to defined property name
+        <span style="font-weight: bold;">Expression/Value</span>. </td>
+    </tr>
+   </tbody>
+</table>
+
+<h3>Example</h3>
+<pre xml:space="preserve">
+&lt;bean action="CREATE" var="loc" class="org.ejb.wso2.test.bean.Location"/&gt;
+&lt;bean xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" action="SET_PROPERTY" var="loc" property="latitude" value="{//latitude}"/&gt;
+&lt;bean xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" action="SET_PROPERTY" var="loc" property="longitude" value="{//longitude}"/&gt;
+       
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~  Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 ESB - Rule Samples </title>
+</head>
+
+<body>
+<h1>Running the Rule samples with WSO2 Enterprise Service Bus (ESB) </h1>
+
+<h2>Introduction</h2>
+
+<p>Rule mediator integrates the WSO2 rules component into the WSO2 ESB to
+provide you with a suitable capability to define your organization's
+dynamic integration decisions in terms of rules.This guide provides you with
+two samples, which are quite simple. The goal of the samples is to make you
+an expertise in using rule mediator. Please follow the configuration guide of
+the rule mediator before proceeding with the samples if you have not already
+done so.</p>
+
+
+<h2 id="Sample600">Sample 600 : Simple Message Transformation - Rule Mediator
+for Message Transformation</h2>
+<pre>&lt;!-- Simple rule based transformation (changing message )  --&gt;
+&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
+
+    &lt;sequence name=&quot;main&quot;&gt;
+        &lt;in&gt;
+
+            &lt;rule xmlns=&quot;http://wso2.org/carbon/rules&quot;&gt;
+                &lt;source&gt;soapBody&lt;/source&gt;
+                &lt;target action=&quot;replace&quot; xmlns:m0=&quot;http://services.samples&quot; resultXpath=&quot;//m0:symbol&quot;
+                        xpath=&quot;//m0:getQuote/m0:request/m0:symbol&quot;&gt;soapBody&lt;/target&gt;
+                &lt;ruleSet&gt;
+                    &lt;properties/&gt;
+                    &lt;rule resourceType=&quot;regular&quot; sourceType=&quot;inline&quot;&gt;
+                        &lt;![CDATA[ package SimpleRoutingRules;
+
+                        rule InvokeIBM
+                        when
+                        symbol: String()
+                        eval( symbol.equals(&quot;MSFT&quot;) || symbol.equals(&quot;SUN&quot;) )
+                        then
+                        update(drools.getWorkingMemory().getFactHandle(symbol),&quot;IBM&quot;);
+                        end
+                        ]]&gt;
+                    &lt;/rule&gt;
+                &lt;/ruleSet&gt;
+                &lt;input namespace=&quot;http://services.samples&quot; wrapperElementName=&quot;getQuote&quot;&gt;
+                    &lt;fact xmlns:m0=&quot;http://services.samples&quot; elementName=&quot;symbol&quot; namespace=&quot;http://services.samples&quot;
+                          type=&quot;java.lang.String&quot; xpath=&quot;//m0:getQuote/m0:request/m0:symbol/child::text()&quot;/&gt;
+                &lt;/input&gt;
+                &lt;output namespace=&quot;http://services.samples&quot; wrapperElementName=&quot;getQuote&quot;&gt;
+                    &lt;fact elementName=&quot;symbol&quot; namespace=&quot;http://services.samples&quot; type=&quot;java.lang.String&quot;/&gt;
+                &lt;/output&gt;
+            &lt;/rule&gt;
+            &lt;send&gt;
+                &lt;endpoint&gt;
+                    &lt;address uri=&quot;http://localhost:9000/services/SimpleStockQuoteService&quot;/&gt;
+                &lt;/endpoint&gt;
+            &lt;/send&gt;
+
+        &lt;/in&gt;
+        &lt;out&gt;
+            &lt;send/&gt;
+        &lt;/out&gt;
+    &lt;/sequence&gt;
+
+&lt;/definitions&gt;</pre>
+
+
+<p><strong>Objective:</strong> Simple message transformation - Rule mediator
+for message transformation. </p>
+
+<p><strong>Prerequisites:</strong></p>
+
+<p>Start the Synapse configuration numbered 600: (i.e. ./wso2esb-samples.sh -sn
+600)</p>
+
+<p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
+deployed</p>
+
+<p>In this sample , a simple transformation is happened . If the symbol is
+either SUN or MSFT , then it will changed into IBM in the SOAP envelope and
+then invoke the external service.</p>
+
+<p>Run client as </p>
+<pre>ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=MSFT</pre>
+
+<p>Or as </p>
+<pre>ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=SUN</pre>
+
+<div>
+</div>
+
+<p>Then check the axis2server log or console . </p>
+<pre>Wed July 04 16:33:05 IST 2012 samples.services.SimpleStockQuoteService :: Generating quote for : IBM</pre>
+
+
+<h2 id="Sample601">Sample 601 : Advance Rule Based Routing - Switching Routing
+Decision According to the Rules - Rule Mediator as Switch mediator </h2>
+<pre>&lt;!-- Simple rule based routing  of messages - same as filter mediator --&gt;
+&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
+
+    &lt;sequence name=&quot;main&quot;&gt;
+
+        &lt;in&gt;
+            &lt;rule xmlns=&quot;http://wso2.org/carbon/rules&quot;&gt;
+                &lt;source&gt;soapBody&lt;/source&gt;
+                &lt;target action=&quot;replace&quot; resultXpath=&quot;//accept/child::text()&quot;&gt;$accept&lt;/target&gt;
+                &lt;ruleSet&gt;
+                    &lt;properties/&gt;
+                    &lt;rule resourceType=&quot;regular&quot; sourceType=&quot;inline&quot;&gt;
+                        &lt;![CDATA[ package SimpleRoutingRules;
+
+                        rule &quot;Invoke IBM&quot; no-loop true
+                        when
+                        symbol: String()eval( symbol.equals(&quot;IBM&quot;) )
+                        then
+                         update(drools.getWorkingMemory().getFactHandle(symbol),&quot;ibmEndPoint&quot;);
+                        end
+
+                        rule &quot;Invoke SUN&quot; no-loop true
+                        when
+                        symbol: String()eval( symbol.equals(&quot;SUN&quot;) )
+                        then
+                         update(drools.getWorkingMemory().getFactHandle(symbol),&quot;sunEndPoint&quot;);
+                        end
+
+                        rule &quot;Invoke MFST&quot; no-loop true
+                        when
+                        symbol: String()eval( symbol.equals(&quot;MFST&quot;) )
+                        then
+                         update(drools.getWorkingMemory().getFactHandle(symbol),&quot;mfstEndPoint&quot;);
+                        end
+                        ]]&gt;
+                    &lt;/rule&gt;
+                &lt;/ruleSet&gt;
+                &lt;input namespace=&quot;http://services.samples&quot; wrapperElementName=&quot;getQuote&quot;&gt;
+                    &lt;fact xmlns:m0=&quot;http://services.samples&quot; elementName=&quot;symbol&quot; namespace=&quot;http://services.samples&quot;
+                          type=&quot;java.lang.String&quot; xpath=&quot;//m0:getQuote/m0:request/m0:symbol/child::text()&quot;/&gt;
+                &lt;/input&gt;
+                &lt;output namespace=&quot;http://services.samples&quot; wrapperElementName=&quot;getQuoteRespone&quot;&gt;
+                    &lt;fact elementName=&quot;accept&quot; namespace=&quot;&quot; type=&quot;java.lang.String&quot;/&gt;
+                &lt;/output&gt;
+            &lt;/rule&gt;
+
+
+            &lt;switch source=&quot;get-property('accept')&quot;&gt;
+                &lt;case regex=&quot;ibmEndPoint&quot;&gt;
+                    &lt;send&gt;
+                        &lt;endpoint&gt;
+                            &lt;address uri=&quot;http://localhost:9000/services/SimpleStockQuoteService&quot;/&gt;
+                        &lt;/endpoint&gt;
+                    &lt;/send&gt;
+                &lt;/case&gt;
+                &lt;case regex=&quot;sunEndPoint&quot;&gt;
+                    &lt;sequence key=&quot;nonExistentService&quot;/&gt;
+                &lt;/case&gt;
+                &lt;case regex=&quot;mfstEndPoint&quot;&gt;
+                     &lt;sequence key=&quot;nonExistentService&quot;/&gt;
+                &lt;/case&gt;
+            &lt;/switch&gt;
+
+            &lt;drop/&gt;
+
+        &lt;/in&gt;
+        &lt;out&gt;
+            &lt;send/&gt;
+        &lt;/out&gt;
+
+    &lt;/sequence&gt;
+
+    &lt;sequence name=&quot;nonExistentService&quot; onError=&quot;myFaultHandler&quot;&gt;
+
+        &lt;send&gt;
+            &lt;endpoint&gt;
+                &lt;address uri=&quot;http://localhost:9009/services/NonExistentStockQuoteService&quot;/&gt;
+            &lt;/endpoint&gt;
+        &lt;/send&gt;
+        &lt;drop/&gt;
+
+    &lt;/sequence&gt;
+    &lt;sequence name=&quot;myFaultHandler&quot;&gt;
+        &lt;makefault&gt;
+            &lt;code value=&quot;tns:Receiver&quot; xmlns:tns=&quot;http://www.w3.org/2003/05/soap-envelope&quot;/&gt;
+            &lt;reason expression=&quot;get-property('ERROR_MESSAGE')&quot;/&gt;
+        &lt;/makefault&gt;
+
+        &lt;property name=&quot;RESPONSE&quot; value=&quot;true&quot;/&gt;
+        &lt;header name=&quot;To&quot; expression=&quot;get-property('ReplyTo')&quot;/&gt;
+        &lt;send/&gt;
+    &lt;/sequence&gt;
+
+&lt;/definitions&gt;</pre>
+
+
+
+<p><strong>Objective:</strong> Rule based routing - Switching routing
+decision according to the rules. </p>
+
+<p><strong>Prerequisites:</strong><br />
+Start the Synapse configuration numbered 601: i.e. (i.e. ./wso2esb-samples.sh
+-sn 601)</p>
+
+<p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
+deployed </p>
+
+<p>In rule script , there are three cases each for 'IBM','SUN' and 'MSFT'. When
+condition is match , then corresponding rule will be got fire. </p>
+
+<p>Invoke IBM rule by running client as </p>
+<pre>ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ </pre>
+
+<div>
+</div>
+
+<p>You will get stock quote price successfully </p>
+
+<p>Then invoke SUN (or MSFT) rule by running client as </p>
+<pre> ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=SUN</pre>
+
+<div>
+</div>
+
+<p>Then will get </p>
+<pre>&lt;soapenv:Fault xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;&lt;faultcode&gt;soapenv:Server&lt;/faultcode&gt;&lt;faultstring&gt;java.net.ConnectException: Connection refused&lt;/faultstring&gt;&lt;detail /&gt;&lt;/soapenv:Fault&gt;</pre>
+
+<div>
+</div>
+
+</body>
+</html>

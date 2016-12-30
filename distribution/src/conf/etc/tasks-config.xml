@@ -1,0 +1,69 @@
+ <!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<tasks-configuration xmlns:svns="http://org.wso2.securevault/configuration">
+
+    <!-- 
+      The currently running server mode; possible values are:-
+      STANDALONE, CLUSTERED, REMOTE, AUTO.
+      In AUTO mode, the server startup checks whether clustering is enabled in the system, 
+      if so, CLUSTERED mode will be used, or else, the the server mode will be STANDALONE.
+    -->
+    <taskServerMode>AUTO</taskServerMode>
+    
+    <!-- 
+      To be used in CLUSTERED mode to notify how many servers are there in 
+      the task server cluster, the servers wait till this amount of servers
+      are activated before the tasks are scheduled -->
+    <taskServerCount>1</taskServerCount>
+
+    <!-- The default location resolver configuration -->
+    <defaultLocationResolver>
+        <locationResolverClass>org.wso2.carbon.ntask.core.impl.RoundRobinTaskLocationResolver</locationResolverClass>
+    </defaultLocationResolver>
+
+    <!-- 
+      if task-type-pattern matches and task-name-pattern matches, check existing addresses of address-pattern,
+      and if addresses exist, select address in round-robin fashion, if not move onto next rule in sequence.
+      <property name="rule-[order]">[task-type-pattern],[task-name-pattern],[address-pattern]</property>
+    -->
+    <!--defaultLocationResolver>
+        <locationResolverClass>org.wso2.carbon.ntask.core.impl.RuleBasedLocationResolver</locationResolverClass>
+        <properties>
+            <property name="rule-1">HIVE_TASK,.*,192.168.2.*</property>
+            <property name="rule-5">.*,.*,.*</property>
+        </properties>
+    </defaultLocationResolver-->
+
+    <!-- The address to which the remote task server should dispatch the trigger messages to, 
+      usually this would be an endpoint to a load balancer -->
+    <taskClientDispatchAddress>https://localhost:9448</taskClientDispatchAddress>
+    
+    <!-- The address of the remote task server -->
+    <remoteServerAddress>https://localhost:9443</remoteServerAddress>
+    
+    <!-- The username to authenticate to the remote task server -->
+    <remoteServerUsername>admin</remoteServerUsername>
+    
+    <!-- The password to authenticate to the remote task server -->
+    <remoteServerPassword>admin</remoteServerPassword>
+
+    <!-- Below contain a sample to be used when using with secure vault -->
+    <!--remoteServerPassword svns:secretAlias="remote.task.server.password"></remoteServerPassword-->
+
+</tasks-configuration>

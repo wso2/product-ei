@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+      "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 ESB - Smooks Mediator </title>
+  <link href="css/esb-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<h2>Smooks Mediator</h2>
+
+	<p>Smooks is a powerful framework for processing, manipulating and transforming XML. More information about 
+		Smooks can be obtained from the official <a href="http://www.smooks.org">Smooks website</a>.
+		Smooks mediator can be used to execute following scenarios. 
+	</p>
+	<ol>
+		<li>Lightweight transformations on messages in an efficient manner</li>
+		<li>Process huge messages</li>
+		<li>Apply scripting on messages</li>
+		<li>Output a java bean result from messages</li>
+		<li>Routing messages to endpoints (files, databases)</li>
+		<li>Entity Persistence Framework Support (JPA)</li>
+	</ol>
+
+	<p><strong>Configurations</strong> </p>
+	<p>The Smooks mediator requires the transformation definition to be passed in as an external resource. 
+		This transformation can be specified as a local entry or be stored in the registry. 
+		The mediator UI enables you to point the mediator to an existing local entry or a registry resource.
+	</p>
+	
+	<ul>
+	<li>Smooks configuartion : Smooks mediator requires the transformation definition to be passed in as an external resource.
+	</li>
+	
+	<li>Input : User can define an 'input' as a 'TEXT' or 'XML' and can provide a 'xpath' expression to pick exact
+	 message block. If not 'xpath' is not provided, by default whole 'message body' will be selected. </li>
+	<li>Output : User can define how his output should be either as 'TEXT' or 'XML' or 'JAVA' . 
+		User can define 'Property' attribute for the output where output will be saved in the messagecontext
+		 for the future uses with the given Property name. </li>  
+	
+	</ul>
+
+
+	<h3>Syntax</h3>
+	
+	<pre xml:space="preserve">
+		&lt;smooks [config-key=&quot;string&quot;] [persistence-unit=&quot;string&quot;]&gt;
+			&lt;input [type=&quot;|text|xml&quot;]  [regex=&quot;regex&quot;]/&gt;
+			&lt;output [type=&quot;|text|xml|java&quot;]  [regex=&quot;regex&quot;] [property=&quot;string&quot;] [action=&quot;string&quot;]/&gt;
+		&lt;/smooks&gt;
+	</pre>
+
+<h3>UI Configuration</h3>
+
+<p><img alt="Smooks Mediator" src="../smooks-mediator/docs/images/smooks.png" /> </p>
+
+<p><strong>Smooks Mediator Configuartion</strong></p>
+
+<h4>Configurations</h4>
+<ul>
+    <li>Configuration Key:</li>
+	
+	<p>
+		Smooks transformation definition can be specified as a local entry or be stored in the registry. 
+	</p>
+    
+    <li>persistence-unit:</li>
+	
+	<p>
+		User can define the persistence unit name as defined in persistence.xml, when Smooks transformation is using JPA. 
+	</p>
+   
+    <li>Input :</li>   
+	<p>
+		User can define an 'input' as a 'Text' or 'XML' and can provide a 'xpath' expression to pick exact
+		message block. If not 'xpath' is not provided, by default whole 'message body' will be selected. 
+    </p>
+    <li>Output :</li>   
+	<p>
+		User can define how his output should be either as 'Text' or 'XML' or 'JAVA' . 
+		<br/>When user defines an 'output' expression there are additional operations can be performed.
+	</p>
+
+		<ul>
+			<li>
+				Add     : Selected node will be added as a child to the message.
+			</li>
+			<li>
+				Replace : Selected node will be replaced in the message.
+			</li>
+			<li>
+				Sibling : Selected node will be added as a sibling.
+			</li>
+		</ul>
+		
+	<p>
+	When user defines an 'output' as a 'Property', property will be saved in the messagecontext for the future uses. 
+	</p>
+</ul>
+
+<h3>Examples</h3>
+	<p><strong>1. Smooks Mediator to output a java bean result from messages</strong> </p>
+	<p>Input message can be,</p>
+
+	<pre xml:space="preserve">&lt;order&gt;
+		  &lt;order-items&gt;
+		    &lt;order-item&gt;
+		       &lt;product&gt;111&lt;/product&gt;
+		       &lt;quantity&gt;2&lt;/quantity&gt;
+		       &lt;price&gt;8.90&lt;/price&gt;
+		    &lt;/order-item&gt;
+		  &lt;/order-items&gt;
+		&lt;/order&gt;
+	</pre>
+
+	<p>ESB Smooks Mediator Configuration is as follows.</p>
+
+	<pre xml:space="preserve">&lt;smooks config-key=&quot;smooks-key&quot;&gt;
+                    &lt;input type=&quot;xml&quot;/&gt;
+                    &lt;output type=&quot;java&quot; property=&quot;order&quot;/&gt;
+                &lt;/smooks&gt;
+	</pre>
+
+	<p>The Smooks transformation definition guide for
+	 xml to java can be found from 
+	<a href="http://www.smooks.org/mediawiki/index.php?title=V1.5:Smooks_v1.5_User_Guide#Java_Binding_Configuration_Details">here.</a></p>
+
+	<p>As the above configuration the input message will be transformed to java object 'order'.
+	 It will be saved in the messagecontext. Any mediator followed by the smooks mediator can retrieve
+	 that java object, and use its values inside the mediator.</p>
+
+	<p>Ex :</p>
+
+	<p>JavaResult result = (JavaResult)synCtx.getProperty("order");<br/>
+	Order order = (Order)result.getBean("order"); <br/>
+	order.getOrderItems();</p>
+
+	<p><strong>2. Smooks Mediator to use Entity Persistence Framework Support (JPA)</strong> </p>
+	<p>Input message can be,</p>
+
+	<pre xml:space="preserve">&lt;order&gt;
+	    &lt;ordernumber&gt;1&lt;/ordernumber&gt;
+	    &lt;customer&gt;123456&lt;/customer&gt;
+	    &lt;order-items&gt;
+		&lt;order-item&gt;
+		    &lt;product&gt;11&lt;/product&gt;
+		    &lt;quantity&gt;2&lt;/quantity&gt;
+		&lt;/order-item&gt;
+		&lt;order-item&gt;
+		    &lt;product&gt;22&lt;/product&gt;
+		    &lt;quantity&gt;7&lt;/quantity&gt;
+		&lt;/order-item&gt;
+	    &lt;/order-items&gt;
+	&lt;/order&gt;</pre>
+
+	<p>ESB Smooks Mediator Configuration is as follows. The Smooks transformation definition
+	 guide for Entity Persistence Framework (JPA) support can be found from here. </p>
+ 
+	<pre xml:space="preserve">&lt;smooks config-key=&quot;smooks-key&quot; persistence-unit=&quot;db&quot;&gt;
+		&lt;input type=&quot;xml&quot; /&gt;
+		&lt;output type=&quot;xml&quot;/&gt;
+	&lt;/smooks&gt; 
+	</pre>
+
+	<p>User need to write the persistence.xml with the database connection properties. 
+	The name of persistence-unit definition inside persistence.xml should come to above
+	 smooks configuration. </p>
+
+	<p>With the JPA support Smooks will populate beans from the data in the database according to the input message. 
+	Also from the input message Smmoks can persist beans to the database as well.</p>
+
+	<p>Ex : For the order-items Smooks queries the database and populate product bean according
+	 to given product ids (11 and 22). Also order bean is populated with the given values in the
+	 input message and the previously populated product bean. Then order bean will be inserted to the database. </p>
+</body>
+</html>
