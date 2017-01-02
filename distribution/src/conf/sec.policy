@@ -1,0 +1,57 @@
+keystore "file:${user.dir}/repository/resources/security/wso2carbon.jks", "JKS";
+
+// ========== SYSTEM CODE PERMISSIONS =========================================
+
+// These permissions apply to javac
+grant codeBase "file:${java.home}/lib/-" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to all shared system extensions
+grant codeBase "file:${java.home}/jre/lib/ext/-" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to javac when ${java.home] points at $JAVA_HOME/jre
+grant codeBase "file:${java.home}/../lib/-" {
+        permission java.security.AllPermission;
+};
+
+// These permissions apply to all shared system extensions when
+// ${java.home} points at $JAVA_HOME/jre
+grant codeBase "file:${java.home}/lib/ext/-" {
+        permission java.security.AllPermission;
+};
+
+// ========= Carbon Cloud Server Permissions ===================================
+
+grant {
+   permission java.net.SocketPermission "*:1-65535", "connect,resolve";
+   permission java.util.PropertyPermission "http.proxyHost", "read";
+   permission java.util.PropertyPermission "http.nonProxyHosts", "read";
+   permission java.util.PropertyPermission "adb.converterutil", "read";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.context";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.registry.api";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.registry.core";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.user.api";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.user.core";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.authenticator.stub";
+   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.core.common";
+   permission java.lang.RuntimePermission "setContextClassLoader";
+   permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+   permission javax.management.MBeanServerPermission "*";
+   permission javax.management.MBeanPermission "*", "*";
+   permission java.lang.RuntimePermission "accessDeclaredMembers";
+   permission java.util.PropertyPermission "*", "read";
+};
+
+grant signedBy "wso2carbon" {
+  // permission java.util.PropertyPermission "*", "read";
+  // permission java.lang.RuntimePermission "*", "*";
+  // permission java.io.FilePermission "*", "*";
+  permission java.security.AllPermission;
+};
+
+grant CodeBase "file:${user.dir}/lib/core/-" {
+  permission java.security.AllPermission;
+};

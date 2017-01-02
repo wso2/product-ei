@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+      "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 ESB - EJB Mediator </title>
+  <link href="css/esb-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<h2>EJB Mediator</h2>
+
+<p>The EJB mediator calls an external Enterprise JavaBean(EJB) and stores the result in the message payload or in a message context property. Currently, this mediator supports EJB3 Stateless Session Beans and state-full Session Beans
+</p>
+
+<h3>Syntax</h3>
+<pre xml:space="preserve">&lt;ejb beanstalk=&quot;string&quot; class=&quot;string&quot; [sessionId=&quot;string&quot;] [remove=&quot;true | false&quot;] 
+  [method=&quot;string&quot;] [target=&quot;string | {xpath}&quot;] [jndiName=&quot;string&quot;] /&gt; 
+    &lt;args&gt; 
+      &lt;arg (value=&quot;string | {xpath}&quot;)/&gt;* 
+    &lt;/args&gt; 
+&lt;/ejb&gt;</pre>
+
+<h3>UI Configuration</h3>
+
+<div class="image">
+<img src="../ejb-mediator/docs/images/ejbMediator.png" alt="" />
+
+<p>EJB specific options </p>
+</div>
+
+<p>EJB mediator field descriptions,</p>
+
+<table border="1">
+  <tbody>
+    <tr>
+      <td style="font-weight: bold;">Field name</td>
+      <td style="font-weight: bold;">Description</td>
+    </tr>
+    <tr>
+      <td>Beanstalk ID</td>
+      <td>Reference to the application server specific connection source information, which is defined at the synapse.properties
+      </td>
+    </tr>
+    <tr>
+      <td>Class</td>
+      <td>This required the remote interface definition provided in the EJB 3.0 (EJB service invocation remote/home interface)
+    </td>
+    </tr>
+    <tr>
+      <td>Session ID</td>
+      <td>When the invoke ejb context in the form state-full bean then the related ejb session status specif id will be stored in here.    <span style="font-weight: bold;"> Expression/Value </span>. </td>
+    </tr>
+    <tr>
+      <td>Remove</td>
+      <td>Once invoke state-full/stateless session user can force and ask the Enterprise entity manager to remove the ejb context related parameters</td>
+    </tr>
+     <tr>
+      <td>Target </td>
+      <td>if a particular EJB method returns then the return object can be saved against the the name provided in the target at the synapse property context
+        <span style="font-weight: bold;">Expression/Value</span>. </td>
+    </tr>
+    <tr>
+      <td>JNDI Name </td>
+      <td>The Java Naming and Directory Interface (JNDI) is an application programming interface (API) for accessing different kinds of naming and directory services. JNDI is not specific to a particular naming or directory service, it can be used to access many different kinds of systems including file systems; distributed objects systems like CORBA, Java RMI, and EJB; and directory services like LDAP, Novell NetWare, and NIS+</td>
+    </tr>
+    <tr>
+      <td>Method Arguments </td>
+      <td>Can be used to define the arguments which is required for the particular ejb method to be invoked
+        <span style="font-weight: bold;">Expression/Value</span>. </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Example</h3>
+<pre xml:space="preserve">
+&lt;ejb beanstalk="jack" class="org.ejb.wso2.test.StoreRegister" method="getStoreById" target="store" jndiName="ejb:/EJBDemo/StoreRegsiterBean!org.ejb.wso2.test.StoreRegister"&gt;
+   &lt;args&gt;
+     &lt;arg xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" value="{get-property('loc_id')}"/&gt;
+   &lt;/args&gt;
+&lt;/ejb&gt;
+</pre>
+
+</body>
+</html>
