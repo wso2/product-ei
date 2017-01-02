@@ -78,7 +78,7 @@ public class Utils {
     }
 
     public static String getUniqueRequestID(String uri) {
-        String input = uri + CodeHolder.getCodes(CarbonConstants.START_TIME);
+        String input = uri + System.getProperty(CarbonConstants.START_TIME);
         return UUID.nameUUIDFromBytes(input.getBytes()).toString();
     }
 
@@ -91,7 +91,7 @@ public class Utils {
     }
 
     public static boolean validateHeader(String key, String uri) {
-        String input = uri + CodeHolder.getCodes(CarbonConstants.START_TIME);
+        String input = uri + System.getProperty(CarbonConstants.START_TIME);
         return (UUID.nameUUIDFromBytes(input.getBytes()).toString().equals(key));
     }
 

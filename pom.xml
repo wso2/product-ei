@@ -41,8 +41,8 @@
     </licenses>
 
     <modules>
-        <module>components/org.wso2.carbon.integrator.core</module>
-        <module>features/integrator-features</module>
+        <module>components</module>
+        <module>features</module>
         <module>p2-profile</module>
         <module>distribution</module>
     </modules>
@@ -1018,7 +1018,7 @@
         <carbon.mediation.version>4.6.10-SNAPSHOT</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.10</carbon.kernel.version>
+        <carbon.kernel.version>4.4.11</carbon.kernel.version>
 
         <!-- Carbon Commons version-->
         <carbon.commons.version>4.5.4</carbon.commons.version>
@@ -1047,6 +1047,15 @@
         <!-- Carbon Multitenancy version-->
         <carbon.multitenancy.version>4.6.0</carbon.multitenancy.version>
 
+        <jaggery.version>0.13.0</jaggery.version>
+        <carbon.module.version>1.2.0</carbon.module.version>
+        <email.module.version>1.2.0</email.module.version>
+        <gadget.module.version>1.2.0</gadget.module.version>
+        <i18n.module.version>1.2.0</i18n.module.version>
+        <oauth.module.version>1.2.0</oauth.module.version>
+        <process.module.version>1.2.0</process.module.version>
+        <uuid.module.version>1.2.0</uuid.module.version>
+        <ws.module.version>1.2.0</ws.module.version>
         <httpcore.version>4.1.2</httpcore.version>
         <httpcore.wso2.version>4.3.0.wso2v1</httpcore.wso2.version>
         <httpclient.wso2.version>4.3.2.wso2v1</httpclient.wso2.version>
