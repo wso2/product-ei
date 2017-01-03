@@ -21,9 +21,9 @@
 
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>wso2ei-parent</artifactId>
+        <artifactId>ei-component-parent</artifactId>
         <version>6.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
@@ -86,7 +86,6 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
-                            !org.wso2.carbon.integrator.core.internal,
                             org.wso2.carbon.integrator.core.*;version="${project.version}"
                         </Export-Package>
                         <Import-Package>
