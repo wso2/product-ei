@@ -1,0 +1,303 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://ws.wso2.org/dataservice" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/batch_request_sample" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/batch_request_sample">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/batch_request_sample">
+            <xs:element name="addEmployee">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="employeeNumber" nillable="true" type="xs:int" />
+                        <xs:element name="email" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="employeeExists">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="employeeNumber" nillable="true" type="xs:int" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Employees" type="ns0:Employees" />
+            <xs:complexType name="Employees">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Employee" type="ns0:Employee" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Employee">
+                <xs:sequence>
+                    <xs:element name="exists" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="deleteEmployee">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="employeeNumber" nillable="true" type="xs:int" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addEmployee_batch_req">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" ref="ns0:addEmployee" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteEmployee_batch_req">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" ref="ns0:deleteEmployee" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="addEmployeeRequest">
+        <wsdl:part name="parameters" element="ns0:addEmployee" />
+    </wsdl:message>
+    <wsdl:message name="addEmployeeResponse">
+        <wsdl:part name="parameters" element="ns1:REQUEST_STATUS" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns1:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:message name="addEmployee_batch_reqRequest">
+        <wsdl:part name="parameters" element="ns0:addEmployee_batch_req" />
+    </wsdl:message>
+    <wsdl:message name="addEmployee_batch_reqResponse">
+        <wsdl:part name="parameters" element="ns1:REQUEST_STATUS" />
+    </wsdl:message>
+    <wsdl:message name="employeeExistsRequest">
+        <wsdl:part name="parameters" element="ns0:employeeExists" />
+    </wsdl:message>
+    <wsdl:message name="employeeExistsResponse">
+        <wsdl:part name="parameters" element="ns0:Employees" />
+    </wsdl:message>
+    <wsdl:message name="deleteEmployee_batch_reqRequest">
+        <wsdl:part name="parameters" element="ns0:deleteEmployee_batch_req" />
+    </wsdl:message>
+    <wsdl:message name="deleteEmployeeRequest">
+        <wsdl:part name="parameters" element="ns0:deleteEmployee" />
+    </wsdl:message>
+    <wsdl:portType name="BatchRequestSamplePortType">
+        <wsdl:operation name="addEmployee">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:addEmployeeRequest" wsaw:Action="urn:addEmployee" />
+            <wsdl:output message="ns0:addEmployeeResponse" wsaw:Action="urn:addEmployeeResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:addEmployeeDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="addEmployee_batch_req">
+            <wsdl:documentation>batch operation for 'addEmployee'</wsdl:documentation>
+            <wsdl:input message="ns0:addEmployee_batch_reqRequest" wsaw:Action="urn:addEmployee_batch_req" />
+            <wsdl:output message="ns0:addEmployee_batch_reqResponse" wsaw:Action="urn:addEmployee_batch_reqResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:addEmployee_batch_reqDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="employeeExists">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:employeeExistsRequest" wsaw:Action="urn:employeeExists" />
+            <wsdl:output message="ns0:employeeExistsResponse" wsaw:Action="urn:employeeExistsResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:employeeExistsDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee_batch_req">
+            <wsdl:documentation>batch operation for 'deleteEmployee'</wsdl:documentation>
+            <wsdl:input message="ns0:deleteEmployee_batch_reqRequest" wsaw:Action="urn:deleteEmployee_batch_req" />
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:deleteEmployeeRequest" wsaw:Action="urn:deleteEmployee" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BatchRequestSampleSOAP11Binding" type="ns0:BatchRequestSamplePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="addEmployee">
+            <soap:operation soapAction="urn:addEmployee" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addEmployee_batch_req">
+            <soap:operation soapAction="urn:addEmployee_batch_req" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="employeeExists">
+            <soap:operation soapAction="urn:employeeExists" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee_batch_req">
+            <soap:operation soapAction="urn:deleteEmployee_batch_req" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee">
+            <soap:operation soapAction="urn:deleteEmployee" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="BatchRequestSampleSOAP12Binding" type="ns0:BatchRequestSamplePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="addEmployee">
+            <soap12:operation soapAction="urn:addEmployee" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addEmployee_batch_req">
+            <soap12:operation soapAction="urn:addEmployee_batch_req" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="employeeExists">
+            <soap12:operation soapAction="urn:employeeExists" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee_batch_req">
+            <soap12:operation soapAction="urn:deleteEmployee_batch_req" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee">
+            <soap12:operation soapAction="urn:deleteEmployee" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="BatchRequestSampleHttpBinding" type="ns0:BatchRequestSamplePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="addEmployee">
+            <http:operation location="addEmployee" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addEmployee_batch_req">
+            <http:operation location="addEmployee_batch_req" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="employeeExists">
+            <http:operation location="employeeExists" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee_batch_req">
+            <http:operation location="deleteEmployee_batch_req" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="deleteEmployee">
+            <http:operation location="deleteEmployee" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BatchRequestSample">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:BatchRequestSampleSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/BatchRequestSample.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:BatchRequestSampleSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/BatchRequestSample.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:BatchRequestSampleSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/BatchRequestSample.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:BatchRequestSampleSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/BatchRequestSample.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:BatchRequestSampleHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/BatchRequestSample.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:BatchRequestSampleHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/BatchRequestSample.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

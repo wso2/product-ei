@@ -1,0 +1,125 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="DTPServiceTest" enableBoxcarring="true" enableDTP="true" serviceGroup="DTP" baseURI="http://ws.wso2.org/dataservice/samples/dtp_sample">
+
+   <config id="MySqlDataSource1">
+      <property name="org.wso2.ws.dataservice.xa_datasource_class">com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</property>
+      <property name="org.wso2.ws.dataservice.xa_datasource_properties">                
+      	<property name="URL">jdbc:mysql://192.168.4.27:3306/testDatabase1_wso2automation_com</property>                  
+      	<property name="user">testAt1_52lTBOdp</property>                  
+      	<property name="password">test123</property>
+      </property>
+   </config>
+
+   <config id="MySqlDataSource2">
+      <property name="org.wso2.ws.dataservice.xa_datasource_class">com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</property>
+      <property name="org.wso2.ws.dataservice.xa_datasource_properties">               
+      	<property name="URL">jdbc:mysql://192.168.4.27:3306/testDatabase2_wso2automation_com</property>                  
+      	<property name="user">testAt2_52lTBOdp</property>                  
+      	<property name="password">test123</property>
+      </property>
+   </config>
+
+   <query id="addAccountToBank1Query" useConfig="MySqlDataSource1" returnGeneratedKeys="true">
+      <sql>insert into Accounts (balance) values (:balance)</sql>
+      <param name="balance" sqlType="DOUBLE" defaultValue="0" />
+      <result element="GeneratedKeys" rowName="Entry" useColumnNumbers="true">
+         <element name="ID" column="1" xsdType="xs:integer" />
+      </result>
+   </query>
+
+   <operation name="addAccountToBank1">
+      <call-query href="addAccountToBank1Query">
+        <with-param name="balance" query-param="balance" />
+      </call-query>
+   </operation>
+
+   <query id="addToAccountBalanceInBank1Query" useConfig="MySqlDataSource1">
+      <sql>update Accounts set balance = balance + :value where accountId=:accountId</sql>
+      <param name="accountId" sqlType="INTEGER" />
+      <param name="value" sqlType="DOUBLE">
+        <validateDoubleRange minimum="-2000" maximum="2000" />
+      </param>
+   </query>
+
+   <operation name="addToAccountBalanceInBank1">
+      <call-query href="addToAccountBalanceInBank1Query">
+        <with-param name="accountId" query-param="accountId" />
+        <with-param name="value" query-param="value" />
+      </call-query>
+   </operation>
+
+   <query id="getAccountBalanceFromBank1Query" useConfig="MySqlDataSource1">
+      <sql>select balance from Accounts where accountId=:accountId</sql>
+      <param name="accountId" sqlType="INTEGER" />
+      <result element="Balance">
+         <element name="Value" column="balance" xsdType="xs:double" />
+      </result>
+   </query>
+
+   <operation name="getAccountBalanceFromBank1">
+      <call-query href="getAccountBalanceFromBank1Query">
+        <with-param name="accountId" query-param="accountId" />
+      </call-query>
+   </operation>
+
+   <query id="addAccountToBank2Query" useConfig="MySqlDataSource2" returnGeneratedKeys="true">
+      <sql>insert into Accounts (balance) values (:balance)</sql>
+      <param name="balance" sqlType="DOUBLE" defaultValue="0" />
+      <result element="GeneratedKeys" rowName="Entry" useColumnNumbers="true">
+         <element name="ID" column="1" xsdType="xs:integer" />
+      </result>
+   </query>
+
+   <operation name="addAccountToBank2" disableStreaming="true">
+      <call-query href="addAccountToBank2Query">
+        <with-param name="balance" query-param="balance" />
+      </call-query>
+   </operation>
+
+   <query id="addToAccountBalanceInBank2Query" useConfig="MySqlDataSource2">
+      <sql>update Accounts set balance = balance + :value where accountId=:accountId</sql>
+      <param name="accountId" sqlType="INTEGER" />
+      <param name="value" sqlType="DOUBLE">
+        <validateDoubleRange minimum="-2000" maximum="2000" />
+      </param>
+   </query>
+
+   <operation name="addToAccountBalanceInBank2">
+      <call-query href="addToAccountBalanceInBank2Query">
+        <with-param name="accountId" query-param="accountId" />
+        <with-param name="value" query-param="value" />
+      </call-query>
+   </operation>
+
+   <query id="getAccountBalanceFromBank2Query" useConfig="MySqlDataSource2">
+      <sql>select balance from Accounts where accountId=:accountId</sql>
+      <param name="accountId" sqlType="INTEGER" />
+      <result element="Balance">
+         <element name="Value" column="balance" xsdType="xs:double" />
+      </result>
+   </query>
+
+   <operation name="getAccountBalanceFromBank2">
+      <call-query href="getAccountBalanceFromBank2Query">
+        <with-param name="accountId" query-param="accountId" />
+      </call-query>
+   </operation>
+
+</data>

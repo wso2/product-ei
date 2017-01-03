@@ -1,0 +1,57 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="ExcelDataService" serviceGroup="Excel" baseURI="http://ws.wso2.org/dataservice/samples/excel_sample_service">
+   <config id="excelDataSource">                                          
+      <property name="excel_datasource">conf:/automation/resources/excel/Products.xls</property>
+   </config>                     
+   <query id="selectProducts" useConfig="excelDataSource">                                          
+      <excel>                                                               
+         <workbookname>product</workbookname>                                                               
+         <hasheader>true</hasheader>                                                               
+         <startingrow>2</startingrow>                                                               
+         <maxrowcount>-1</maxrowcount>                                          
+      </excel>                                          
+      <result element="Products" rowName="Product" defaultNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service/getProducts">                                                               
+         <element name="ID" column="ID" />                                                               
+         <element name="Name" column="Model" />                                          
+      </result>                     
+   </query>
+
+   <query id="classificationsQuery" useConfig="excelDataSource">
+      <excel>
+         <workbookname>product</workbookname>
+         <hasheader>true</hasheader>
+         <startingrow>2</startingrow>
+         <maxrowcount>-1</maxrowcount>
+      </excel>
+      <result element="Products" rowName="Product" xsltPath="conf:/automation/resources/excel/transform.xslt" defaultNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service">
+         <element name="Name" column="Model" xsdType="xs:string" />
+         <element name="Classification" column="Classification" xsdType="xs:string" />
+      </result>
+   </query>
+
+   <operation name="getProducts">                                          
+      <call-query href="selectProducts" />                     
+   </operation>
+   <operation name="getProductClassifications">
+      <call-query href="classificationsQuery" />
+   </operation>                     
+
+   
+</data>

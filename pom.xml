@@ -45,6 +45,7 @@
         <module>features</module>
         <module>p2-profile</module>
         <module>distribution</module>
+        <module>integration</module>
     </modules>
 
     <dependencyManagement>
@@ -111,13 +112,23 @@
                 <version>${geronimo-jms.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.ws.security</groupId>
+                <groupId>org.apache.ws.security.wso2</groupId>
                 <artifactId>wss4j</artifactId>
                 <version>${wss4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.rampart.wso2</groupId>
                 <artifactId>rampart-core</artifactId>
+                <version>${rampart.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rampart.wso2</groupId>
+                <artifactId>rampart-policy</artifactId>
+                <version>${rampart.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rampart.wso2</groupId>
+                <artifactId>rampart-trust</artifactId>
                 <version>${rampart.wso2.version}</version>
             </dependency>
             <dependency>
@@ -927,6 +938,118 @@
                 <artifactId>kryo-shaded</artifactId>
                 <version>${esotericsoftware.kryo.version}</version>
             </dependency>
+
+
+
+            <!--Dependency for Integration Tests-->
+            <dependency>
+                <groupId>org.wso2.carbon.automation</groupId>
+                <artifactId>org.wso2.carbon.automation.test.utils</artifactId>
+                <version>${automation.framework.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.dataservice.integration.ui.pages</artifactId>
+                <version>${product.ei.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jettison.wso2</groupId>
+                <artifactId>jettison</artifactId>
+                <version>${jettison.orbit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>SecVerifier</artifactId>
+                <version>${carbon.kernel.version}</version>
+                <type>aar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>dataservice-client-samples</artifactId>
+                <version>${product.ei.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.6</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.json.wso2</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.orbit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.data</groupId>
+                <artifactId>org.wso2.carbon.dataservices.fileupload.stub</artifactId>
+                <version>${carbon-dataservice-hosting.feature.imp.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.deployment</groupId>
+                <artifactId>org.wso2.carbon.service.mgt.stub</artifactId>
+                <version>${carbon.deployment.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.data</groupId>
+                <artifactId>org.wso2.carbon.dataservices.stub</artifactId>
+                <version>${carbon-dataservice-hosting.feature.imp.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.data</groupId>
+                <artifactId>org.wso2.carbon.dataservices.task.stub</artifactId>
+                <version>${carbon-dataservice-hosting.feature.imp.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.registry</groupId>
+                <artifactId>org.wso2.carbon.registry.resource.stub</artifactId>
+                <version>${carbon.registry.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.dataservice.integration.common.clients</artifactId>
+                <version>${product.ei.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.dataservice.integration.common.utils</artifactId>
+                <version>${product.ei.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.neethi.wso2</groupId>
+                <artifactId>neethi</artifactId>
+                <version>${neethi.orbit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.utils</artifactId>
+                <version>${carbon.kernel.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>${jacoco.agent.version}</version>
+            </dependency>
+
             <!-- Adding cipertool feature to the product -->
             <dependency>
                 <groupId>org.wso2.ciphertool</groupId>
@@ -1050,6 +1173,7 @@
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
         <httpcore-nio.wso2.version>4.3.3.wso2v4</httpcore-nio.wso2.version>
         <rampart.wso2.version>1.6.1.wso2v18</rampart.wso2.version>
+        <neethi.orbit.version>2.0.4.wso2v4</neethi.orbit.version>
         <rampart.mar.version>1.6.1-wso2v18</rampart.mar.version>
 
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
@@ -1079,7 +1203,7 @@
         <passthru.transport.patch.version>1.0.2</passthru.transport.patch.version>
         <servlet-api.version>2.4</servlet-api.version>
         <geronimo-jms.version>1.1.1</geronimo-jms.version>
-        <wss4j.version>1.5.11-wso2v8</wss4j.version>
+        <wss4j.version>1.5.11.wso2v9</wss4j.version>
         <!--<emma.version>2.1.5320</emma.version>-->
         <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
         <axiom.wso2.version>1.2.11.wso2v10</axiom.wso2.version>
@@ -1116,7 +1240,7 @@
         <!-- Automation Framework versions -->
         <automation.framework.version>4.4.2</automation.framework.version>
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
-
+        <jettison.orbit.version>1.3.4.wso2v1</jettison.orbit.version>
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>2.40.0</selenium.version>
         <slf4j.version>1.7.5</slf4j.version>

@@ -1,0 +1,472 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://ws.wso2.org/dataservice" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/dtp_sample" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/dtp_sample">
+    <wsdl:documentation/>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/dtp_sample">
+            <xs:element name="addToAccountBalanceInBank2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="accountId" nillable="true" type="xs:int"/>
+                        <xs:element name="value" nillable="true" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addToAccountBalanceInBank1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="accountId" nillable="true" type="xs:int"/>
+                        <xs:element name="value" nillable="true" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="end_boxcar">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAccountBalanceFromBank1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="accountId" nillable="true" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Balance" type="ns0:Balance"/>
+            <xs:complexType name="Balance">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Value" nillable="true" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="getAccountBalanceFromBank2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="accountId" nillable="true" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="begin_boxcar">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addAccountToBank1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="balance" nillable="true" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GeneratedKeys" type="ns0:GeneratedKeys"/>
+            <xs:complexType name="GeneratedKeys">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Entry" type="ns0:Entry"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Entry">
+                <xs:sequence>
+                    <xs:element name="ID" nillable="true" type="xs:integer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="addAccountToBank2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="balance" nillable="true" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="abort_boxcar">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="abort_boxcarRequest">
+        <wsdl:part name="parameters" element="ns0:abort_boxcar"/>
+    </wsdl:message>
+    <wsdl:message name="addToAccountBalanceInBank2Request">
+        <wsdl:part name="parameters" element="ns0:addToAccountBalanceInBank2"/>
+    </wsdl:message>
+    <wsdl:message name="begin_boxcarRequest">
+        <wsdl:part name="parameters" element="ns0:begin_boxcar"/>
+    </wsdl:message>
+    <wsdl:message name="end_boxcarRequest">
+        <wsdl:part name="parameters" element="ns0:end_boxcar"/>
+    </wsdl:message>
+    <wsdl:message name="end_boxcarResponse">
+        <wsdl:part name="parameters" element="ns1:DATA_SERVICE_RESPONSE"/>
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns1:DataServiceFault"/>
+    </wsdl:message>
+    <wsdl:message name="addAccountToBank1Request">
+        <wsdl:part name="parameters" element="ns0:addAccountToBank1"/>
+    </wsdl:message>
+    <wsdl:message name="addAccountToBank1Response">
+        <wsdl:part name="parameters" element="ns0:GeneratedKeys"/>
+    </wsdl:message>
+    <wsdl:message name="addToAccountBalanceInBank1Request">
+        <wsdl:part name="parameters" element="ns0:addToAccountBalanceInBank1"/>
+    </wsdl:message>
+    <wsdl:message name="addAccountToBank2Request">
+        <wsdl:part name="parameters" element="ns0:addAccountToBank2"/>
+    </wsdl:message>
+    <wsdl:message name="addAccountToBank2Response">
+        <wsdl:part name="parameters" element="ns0:GeneratedKeys"/>
+    </wsdl:message>
+    <wsdl:message name="getAccountBalanceFromBank1Request">
+        <wsdl:part name="parameters" element="ns0:getAccountBalanceFromBank1"/>
+    </wsdl:message>
+    <wsdl:message name="getAccountBalanceFromBank1Response">
+        <wsdl:part name="parameters" element="ns0:Balance"/>
+    </wsdl:message>
+    <wsdl:message name="getAccountBalanceFromBank2Request">
+        <wsdl:part name="parameters" element="ns0:getAccountBalanceFromBank2"/>
+    </wsdl:message>
+    <wsdl:message name="getAccountBalanceFromBank2Response">
+        <wsdl:part name="parameters" element="ns0:Balance"/>
+    </wsdl:message>
+    <wsdl:portType name="DTPSampleServicePortType">
+        <wsdl:operation name="abort_boxcar">
+            <wsdl:documentation>Control operation for aborting a boxcarring session</wsdl:documentation>
+            <wsdl:input message="ns0:abort_boxcarRequest" wsaw:Action="urn:abort_boxcar"/>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank2">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:addToAccountBalanceInBank2Request" wsaw:Action="urn:addToAccountBalanceInBank2"/>
+        </wsdl:operation>
+        <wsdl:operation name="begin_boxcar">
+            <wsdl:documentation>Control operation for beginning a boxcarring session</wsdl:documentation>
+            <wsdl:input message="ns0:begin_boxcarRequest" wsaw:Action="urn:begin_boxcar"/>
+        </wsdl:operation>
+        <wsdl:operation name="end_boxcar">
+            <wsdl:documentation>Control operation for ending a boxcarring session</wsdl:documentation>
+            <wsdl:input message="ns0:end_boxcarRequest" wsaw:Action="urn:end_boxcar"/>
+            <wsdl:output message="ns0:end_boxcarResponse" wsaw:Action="urn:end_boxcarResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:end_boxcarDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank1">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:addAccountToBank1Request" wsaw:Action="urn:addAccountToBank1"/>
+            <wsdl:output message="ns0:addAccountToBank1Response" wsaw:Action="urn:addAccountToBank1Response"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:addAccountToBank1DataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank1">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:addToAccountBalanceInBank1Request" wsaw:Action="urn:addToAccountBalanceInBank1"/>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank2">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:addAccountToBank2Request" wsaw:Action="urn:addAccountToBank2"/>
+            <wsdl:output message="ns0:addAccountToBank2Response" wsaw:Action="urn:addAccountToBank2Response"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:addAccountToBank2DataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank1">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:getAccountBalanceFromBank1Request" wsaw:Action="urn:getAccountBalanceFromBank1"/>
+            <wsdl:output message="ns0:getAccountBalanceFromBank1Response" wsaw:Action="urn:getAccountBalanceFromBank1Response"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getAccountBalanceFromBank1DataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank2">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:getAccountBalanceFromBank2Request" wsaw:Action="urn:getAccountBalanceFromBank2"/>
+            <wsdl:output message="ns0:getAccountBalanceFromBank2Response" wsaw:Action="urn:getAccountBalanceFromBank2Response"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getAccountBalanceFromBank2DataServiceFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="DTPSampleServiceSOAP11Binding" type="ns0:DTPSampleServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="abort_boxcar">
+            <soap:operation soapAction="urn:abort_boxcar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank2">
+            <soap:operation soapAction="urn:addToAccountBalanceInBank2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="begin_boxcar">
+            <soap:operation soapAction="urn:begin_boxcar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="end_boxcar">
+            <soap:operation soapAction="urn:end_boxcar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank1">
+            <soap:operation soapAction="urn:addAccountToBank1" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank1">
+            <soap:operation soapAction="urn:addToAccountBalanceInBank1" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank2">
+            <soap:operation soapAction="urn:addAccountToBank2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank1">
+            <soap:operation soapAction="urn:getAccountBalanceFromBank1" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank2">
+            <soap:operation soapAction="urn:getAccountBalanceFromBank2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="DTPSampleServiceSOAP12Binding" type="ns0:DTPSampleServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="abort_boxcar">
+            <soap12:operation soapAction="urn:abort_boxcar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank2">
+            <soap12:operation soapAction="urn:addToAccountBalanceInBank2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="begin_boxcar">
+            <soap12:operation soapAction="urn:begin_boxcar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="end_boxcar">
+            <soap12:operation soapAction="urn:end_boxcar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank1">
+            <soap12:operation soapAction="urn:addAccountToBank1" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank1">
+            <soap12:operation soapAction="urn:addToAccountBalanceInBank1" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank2">
+            <soap12:operation soapAction="urn:addAccountToBank2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank1">
+            <soap12:operation soapAction="urn:getAccountBalanceFromBank1" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank2">
+            <soap12:operation soapAction="urn:getAccountBalanceFromBank2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="DTPSampleServiceHttpBinding" type="ns0:DTPSampleServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="abort_boxcar">
+            <http:operation location="abort_boxcar"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank2">
+            <http:operation location="addToAccountBalanceInBank2"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="begin_boxcar">
+            <http:operation location="begin_boxcar"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="end_boxcar">
+            <http:operation location="end_boxcar"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank1">
+            <http:operation location="addAccountToBank1"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addToAccountBalanceInBank1">
+            <http:operation location="addToAccountBalanceInBank1"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="addAccountToBank2">
+            <http:operation location="addAccountToBank2"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank1">
+            <http:operation location="getAccountBalanceFromBank1"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountBalanceFromBank2">
+            <http:operation location="getAccountBalanceFromBank2"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="DTPSampleService">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:DTPSampleServiceSOAP11Binding">
+            <soap:address location="http://10.100.0.66:9763/services/DTPSampleService.SOAP11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:DTPSampleServiceSOAP11Binding">
+            <soap:address location="https://10.100.0.66:9443/services/DTPSampleService.SecureSOAP11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:DTPSampleServiceSOAP12Binding">
+            <soap12:address location="https://10.100.0.66:9443/services/DTPSampleService.SecureSOAP12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:DTPSampleServiceSOAP12Binding">
+            <soap12:address location="http://10.100.0.66:9763/services/DTPSampleService.SOAP12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:DTPSampleServiceHttpBinding">
+            <http:address location="http://10.100.0.66:9763/services/DTPSampleService.HTTPEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:DTPSampleServiceHttpBinding">
+            <http:address location="https://10.100.0.66:9443/services/DTPSampleService.SecureHTTPEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
