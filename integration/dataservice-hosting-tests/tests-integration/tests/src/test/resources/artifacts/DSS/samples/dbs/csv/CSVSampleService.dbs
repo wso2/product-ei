@@ -1,0 +1,20 @@
+<data name="CSVSampleService" serviceNamespace="http://ws.wso2.org/dataservice/samples/csv_sample_service">
+   <config id="default">
+      <property name="csv_datasource">./samples/resources/Products.csv</property>
+      <property name="csv_columnseperator">,</property>
+      <property name="csv_startingrow">2</property>
+      <property name="csv_maxrowcount">-1</property>
+      <property name="csv_hasheader">false</property>
+   </config>
+   <operation name="getProducts">
+      <call-query href="productsQuery"/>
+   </operation>
+   <query id="productsQuery" useConfig="default">
+      <result element="Products" rowName="Product">
+         <element column="1" name="ID"/>
+         <element column="3" name="Category"/>
+         <element column="4" name="Price" xsdType="double"/>
+         <element column="2" name="Name"/>
+      </result>
+   </query>
+</data>

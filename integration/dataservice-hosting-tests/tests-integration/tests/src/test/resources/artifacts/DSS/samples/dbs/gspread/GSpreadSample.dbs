@@ -1,0 +1,29 @@
+<data name="GSpreadSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/gspread_sql_driver_sample_service">
+   <config id="xx">
+      <property name="gspread_datasource">https://spreadsheets.google.com/ccc?key=0Av5bU8aVtFjPdElrUVN3VmZlRkoyM1ZzVlE1MzdtbXc&amp;hl=en</property>
+      <property name="gspread_visibility">private</property>
+      <property name="gspread_client_id">117152539458-eci53bg8vkjk3601i2h1qna08d4mfg06.apps.googleusercontent.com</property>
+      <property name="gspread_client_secret">TpMOSmeySPDc5Q89HUiF_L-4</property>
+      <property name="gspread_refresh_token">1/BHqGAGToVABXF4T_0HDXeE7-PAO1YT--LduhN5Ax7YpIgOrJDtdun6zK6XiATCKT</property>
+   </config>
+   <query id="aa" useConfig="xx">
+      <gspread>
+         <worksheetnumber>1</worksheetnumber>
+         <startingrow>2</startingrow>
+         <maxrowcount>5</maxrowcount>
+         <hasheader>true</hasheader>
+      </gspread>
+      <result element="Customers" rowName="Customer">
+         <element column="customerNumber" name="customerNumber"/>
+         <attribute column="customerName" name="customerName"/>
+         <attribute column="city" name="city"/>
+      </result>
+   </query>
+   <operation name="getCustomers">
+      <call-query href="aa"/>
+   </operation>
+   <resource method="GET" path="customers">
+      <call-query href="aa"/>
+   </resource>
+</data>
+

@@ -1,0 +1,9 @@
+<transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
+    <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
+    <parameter name="mail.smtp.auth">true</parameter>
+    <parameter name="mail.smtp.port">587</parameter>
+    <parameter name="mail.smtp.starttls.enable">true</parameter>
+    <parameter name="mail.smtp.user">zaqxsw987593</parameter>
+    <parameter name="mail.smtp.password">oijoacxe42</parameter>
+    <parameter name="mail.smtp.from">zaqxsw987593@gmail.com</parameter>
+</transportSender>
