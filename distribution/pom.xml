@@ -205,6 +205,84 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
+<!--                    <execution>
+                        &lt;!&ndash; Creating sample database &ndash;&gt;
+                        <id>create-sample-database</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <property name="db.dir" value="target/samples/database" />
+                                <property name="userid" value="wso2ds" />
+                                <property name="password" value="wso2ds" />
+                                &lt;!&ndash;<property name="dbURL" value="jdbc:derby:${basedir}/${db.dir}/DATA_SERV_SAMP;create=true" />&ndash;&gt;
+                                <property name="dbURL" value="jdbc:h2:file:${basedir}/${db.dir}/DATA_SERV_SAMP" />
+
+                                <sql driver="org.h2.Driver" url="${dbURL}" userid="${userid}" password="${password}" autocommit="true" onerror="continue">
+                                    <classpath refid="maven.dependency.classpath" />
+                                    <classpath refid="maven.compile.classpath" />
+                                    <classpath refid="maven.runtime.classpath" />
+
+                                    <fileset file="${basedir}/../samples/sql/h2/CreateTables.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/Customers.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/Employees.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/Offices.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/OrderDetails.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/Orders.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/Payments.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/ProductLines.sql" />
+                                    <fileset file="${basedir}/../samples/sql/h2/Products.sql" />
+                                </sql>
+                                &lt;!&ndash; Sign all the jars in the distribution &ndash;&gt;
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+                                <if>
+                                    <equals arg1="${profile}" arg2="signJar" />
+                                    <then>
+                                        <signjar alias="wso2carbon" keystore="target/wso2carbon-core-${carbon.kernel.version}/repository/resources/security/wso2carbon.jks" storepass="wso2carbon" lazy="true">
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins" includes="**/*.jar" />
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib" includes="**/*.jar" />
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/patches" includes="**/*.jar" />
+                                            &lt;!&ndash;<fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/api"
+                                                    includes="**/*.jar" /> &ndash;&gt;
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/bin" includes="**/*.jar" />
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/xboot" includes="**/*.jar" />
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed" includes="**/*.jar" />
+                                            &lt;!&ndash;<fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/core/WEB-INF/lib"
+                                                    includes="**/*.jar" /> &ndash;&gt;
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/patches" includes="**/*.jar" />
+                                        </signjar>
+                                    </then>
+                                </if>
+                            </tasks>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        &lt;!&ndash; Creating sample database2 &ndash;&gt;
+                        <id>create-sample-database-2</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <property name="db.dir" value="target/samples/database" />
+                                <property name="userid" value="wso2ds" />
+                                <property name="password" value="wso2ds" />
+                                <property name="dbURL" value="jdbc:h2:file:${basedir}/${db.dir}/DATA_SERV_SAMP2" />
+
+                                <sql driver="org.h2.Driver" url="${dbURL}" userid="${userid}" password="${password}" autocommit="true" onerror="continue">
+                                    <classpath refid="maven.dependency.classpath" />
+                                    <classpath refid="maven.compile.classpath" />
+                                    <classpath refid="maven.runtime.classpath" />
+
+                                    <fileset file="${basedir}/../samples/sql/h2/CreateTables2.sql" />
+                                </sql>
+                            </tasks>
+                        </configuration>
+                    </execution>-->
                 </executions>
             </plugin>
 

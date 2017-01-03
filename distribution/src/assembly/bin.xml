@@ -591,5 +591,15 @@
             <outputDirectory>wso2ei-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+        <!-- ODATA WebApp -->
+        <file>
+            <source>
+                ../p2-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps/odata.war
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/webapps</outputDirectory>
+            <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
+            <!--<filtered>true</filtered>-->
+            <fileMode>644</fileMode>
+        </file>
     </files>
 </assembly>
