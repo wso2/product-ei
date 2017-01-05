@@ -1068,7 +1068,7 @@
         <rampart.wso2.version>1.6.1.wso2v18</rampart.wso2.version>
         <rampart.mar.version>1.6.1-wso2v18</rampart.mar.version>
 
-        <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
+        <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
 
         <!-- Carbon -->
         <carbon.reliable-messaging.version>4.2.0</carbon.reliable-messaging.version>
