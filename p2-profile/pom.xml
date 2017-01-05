@@ -408,13 +408,13 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.deployment.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.ei:org.wso2.ei.styles.feature:${product.ei.version}
+                                </featureArtifactDef>
 
                                 <!--9 ESB Specific-->
                                 <!-- TODO                               <featureArtifactDef>
                                                                     org.wso2.esb:org.wso2.esb.samples.feature:${product.esb.version}
-                                                                </featureArtifactDef>
-                                                                <featureArtifactDef>
-                                                                    org.wso2.esb:org.wso2.esb.styles.feature:${product.esb.version}
                                                                 </featureArtifactDef>-->
 
                                 <!--10 Carbon-rules-->
@@ -947,11 +947,13 @@
                                     <version>${carbon.multitenancy.version}</version>
                                 </feature>
 
+                                <feature>
+                                    <id>org.wso2.ei.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+
                                 <!--9 ESB Specific -->
-                                <!--                                <feature>
-                                                                    <id>org.wso2.esb.styles.feature.group</id>
-                                                                    <version>${product.esb.version}</version>
-                                                                </feature>
+                                <!--
                                                                 <feature>
                                                                     <id>org.wso2.esb.samples.feature.group</id>
                                                                     <version>${product.esb.version}</version>
@@ -1498,13 +1500,13 @@
                                     <id>org.wso2.carbon.tenant.deployment.feature.group</id>
                                     <version>${carbon.multitenancy.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.ei.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
 
                                 <!--9 ESB Specific -->
-                                <!--                                <feature>
-                                                                    <id>org.wso2.esb.styles.feature.group</id>
-                                                                    <version>${product.esb.version}</version>
-                                                                </feature>
-                                                                <feature>
+                                <!--                            <feature>
                                                                     <id>org.wso2.esb.samples.feature.group</id>
                                                                     <version>${product.esb.version}</version>
                                                                 </feature>-->
