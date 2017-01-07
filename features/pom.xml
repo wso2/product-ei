@@ -34,6 +34,7 @@
 
     <modules>
         <module>org.wso2.carbon.integrator.server.feature</module>
+        <module>org.wso2.ei.styles.feature</module>
     </modules>
 
 </project>
