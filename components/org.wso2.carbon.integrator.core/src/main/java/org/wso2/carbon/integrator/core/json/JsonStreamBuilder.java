@@ -40,11 +40,10 @@ public class JsonStreamBuilder implements Builder {
 
     public JsonStreamBuilder()
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        //TODO Need some configurations to configure default message builders and formatters to use in dss and esb
-        Class synapseBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass("org.apache.synapse.commons.json.JsonStreamBuilder");
+        Class synapseBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getPassThroughJsonBuilder());
         this.synapseBuilder = synapseBuilderClass.newInstance();
         this.synapseBuilder_processDocumentMethod = synapseBuilderClass.getMethod("processDocument", new Class[]{InputStream.class, String.class, MessageContext.class});
-        Class axis2GsonBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass("org.apache.axis2.json.gson.JsonBuilder");
+        Class axis2GsonBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getDSSJsonBuilder());
         this.axis2GsonBuilder = axis2GsonBuilderClass.newInstance();
         this.axis2GsonBuilder_processDocumentMethod = axis2GsonBuilderClass.getMethod("processDocument", new Class[]{InputStream.class, String.class, MessageContext.class});
     }
