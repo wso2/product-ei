@@ -34,5 +34,12 @@
                 <exclude>**/.settings</exclude>
             </excludes>
         </fileSet>
+        <fileSet>
+            <directory>wso2ei-${pom.version}/repository/conf</directory>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <includes>
+                <include>**</include>
+            </includes>
+        </fileSet>
     </fileSets>
 </assembly>

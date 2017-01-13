@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.integrator.core;
 
+import org.apache.axis2.description.Parameter;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.wso2.carbon.CarbonConstants;
@@ -88,6 +89,42 @@ public class Utils {
 
     public static String getServicePath() {
         return "/" + CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.SERVICE_PATH).getValue().toString();
+    }
+
+    public static String getDSSJsonBuilder() {
+        Parameter dssJsonBuilder = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.DATASERVICE_JSON_BUILDER);
+        if(dssJsonBuilder == null) {
+            return "org.apache.axis2.json.gson.JsonBuilder";
+        } else {
+            return dssJsonBuilder.getValue().toString();
+        }
+    }
+
+    public static String getPassThroughJsonBuilder() {
+        Parameter psJsonBuilder = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.PASSTHRU_JSON_BUILDER);
+        if (psJsonBuilder == null) {
+            return "org.apache.synapse.commons.json.JsonStreamBuilder";
+        } else {
+            return psJsonBuilder.getValue().toString();
+        }
+    }
+
+    public static String getDSSJsonFormatter() {
+        Parameter dssJsonFormatter = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.DATASERVICE_JSON_FORMATTER);
+        if (dssJsonFormatter == null) {
+            return "org.apache.axis2.json.gson.JsonFormatter";
+        } else {
+            return dssJsonFormatter.getValue().toString();
+        }
+    }
+
+    public static String getPassThroughJsonFormatter() {
+        Parameter psJsonFormatter = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.PASSTHRU_JSON_FORMATTER);
+        if (psJsonFormatter == null) {
+            return "org.apache.synapse.commons.json.JsonStreamFormatter";
+        } else {
+            return psJsonFormatter.getValue().toString();
+        }
     }
 
     public static boolean validateHeader(String key, String uri) {

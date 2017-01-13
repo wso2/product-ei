@@ -49,7 +49,7 @@ public class JsonStreamFormatter implements MessageFormatter {
 
     public JsonStreamFormatter()
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        Class synapseFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass("org.apache.synapse.commons.json.JsonStreamFormatter");
+        Class synapseFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getPassThroughJsonFormatter());
         this.synapseFormatter = synapseFormatterClass.newInstance();
         this.synapseFormatter_getBytesMethod = synapseFormatterClass.getMethod("getBytes", new Class[]{MessageContext.class, OMOutputFormat.class});
         this.synapseFormatter_writeToMethod = synapseFormatterClass.getMethod("writeTo", new Class[]{MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class});
@@ -58,7 +58,7 @@ public class JsonStreamFormatter implements MessageFormatter {
         this.synapseFormatter_formatSOAPActionMethod = synapseFormatterClass.getMethod("formatSOAPAction", new Class[]{MessageContext.class, OMOutputFormat.class, String.class});
 
 
-        Class axis2GsonFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass("org.apache.axis2.json.gson.JsonFormatter");
+        Class axis2GsonFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getDSSJsonFormatter());
         this.axis2GsonFormatter = axis2GsonFormatterClass.newInstance();
         this.axis2GsonFormatter_getBytesMethod = axis2GsonFormatterClass.getMethod("getBytes", new Class[]{MessageContext.class, OMOutputFormat.class});
         this.axis2GsonFormatter_writeToMethod = axis2GsonFormatterClass.getMethod("writeTo", new Class[]{MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class});
