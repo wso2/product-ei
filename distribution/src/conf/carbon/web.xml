@@ -24,7 +24,7 @@
     <!-- OWASP CSRFGuard per-application configuration property file location-->
     <context-param>
         <param-name>Owasp.CsrfGuard.Config</param-name>
-        <param-value>repository/conf/security/Owasp.CsrfGuard.Carbon.properties</param-value>
+        <param-value>conf/security/Owasp.CsrfGuard.Carbon.properties</param-value>
     </context-param>
 
     <servlet id="bridge">

@@ -44,7 +44,8 @@ public class IntegratorFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String uri = httpRequest.getRequestURI();
-        if (uri != null && !("/carbon").equals(Utils.getContext(uri)) && !(Utils.getServicePath()).equals(Utils.getContext(uri))) {
+        String contextPath = Utils.getContext(uri);
+        if (uri != null && contextPath != null && !("/carbon").equals(contextPath)) {
             String integratorHeader = httpRequest.getHeader(Constants.INTEGRATOR_HEADER);
             if (Utils.validateHeader(integratorHeader, uri)) {
                 filterChain.doFilter(new HeaderMapRequestWrapper(httpRequest), servletResponse);
