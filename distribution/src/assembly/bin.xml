@@ -60,12 +60,9 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
@@ -80,7 +77,6 @@
                 <exclude>**/synapse.xml</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
@@ -88,28 +84,17 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
 
         <fileSet>
-            <directory>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/components/dropins
-            </directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/dropins</directory>
             <outputDirectory>wso2ei-${pom.version}/dropins</outputDirectory>
             <excludes>
             </excludes>
@@ -153,6 +138,7 @@
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/*.bat</exclude>
+                <exclude>**/wrapper.conf</exclude>
                 <exclude>build.xml</exclude>
             </excludes>
         </fileSet>
@@ -192,12 +178,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/lib</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
-                <exclude>**/conf/axis2/axis2.xml</exclude>
-                <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
-                <exclude>**/conf/synapse.xml</exclude>
                 <exclude>**/log4j.properties</exclude>
-                <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
@@ -206,20 +187,7 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/repository//plugins/saxon*.jar</exclude>
-                <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
-                <exclude>**/repository/conf/registry.xml</exclude>
-                <exclude>**/repository/conf/tomcat/web.xml</exclude>
-                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
+                <exclude>**/endorsed/xalan*.jar</exclude>
             </excludes>
         </fileSet>
 
@@ -707,6 +675,12 @@
             <source>src/conf/registry.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>registry.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/wrapper.conf</source>
+            <outputDirectory>wso2ei-${pom.version}/bin/yajsw</outputDirectory>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>
