@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="HttpProxyTest"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <property name="POST_TO_URI" value="true" scope="axis2"/>
+            <property name="FORCE_HTTP_1.0" value="true" scope="axis2"/>
+            <send>
+               <endpoint>
+                  <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+               </endpoint>
+            </send>
+         </inSequence>
+         <outSequence>
+            <send/>
+         </outSequence>
+      </target>
+   </proxy>
+</definitions>

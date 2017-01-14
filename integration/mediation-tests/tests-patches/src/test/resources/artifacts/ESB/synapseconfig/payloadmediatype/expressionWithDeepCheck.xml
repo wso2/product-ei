@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api name="deepCheckAPI" context="/deepCheckAPI">
+        <resource methods="POST">
+            <inSequence>
+                <property name="messageType"
+                          value="application/json"
+                          scope="axis2"
+                          type="STRING"/>
+                <property name="inputValue"
+                          expression="json-eval($.input.value)"
+                          scope="default"
+                          type="STRING"/>
+                <log level="custom">
+                    <property name="###############################inputValue"
+                              expression="get-property('inputValue')"/>
+                </log>
+                <payloadFactory media-type="json">
+                    <format>
+                        {
+                            "output": "$1"
+                        }
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="$ctx:inputValue"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+</definitions>

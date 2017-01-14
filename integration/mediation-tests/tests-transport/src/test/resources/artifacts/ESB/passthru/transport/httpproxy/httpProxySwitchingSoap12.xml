@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="EchoTest"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:8480/services/echo" format="soap12"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <description/>
+    </proxy>
+</definitions>

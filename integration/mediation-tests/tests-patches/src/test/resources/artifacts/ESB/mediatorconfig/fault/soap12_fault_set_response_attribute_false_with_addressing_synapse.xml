@@ -1,0 +1,48 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="myFaultHandler" response="false">
+        <makefault version="soap12">
+            <code xmlns:soap12Env="http://www.w3.org/2003/05/soap-envelope"
+                  value="soap12Env:VersionMismatch"/>
+            <reason value="Soap12FaultWithPropertyResponseFalseWithAddressingTestCase"/>
+            <role>automation</role>
+            <detail>fault details by automation</detail>
+            <node>automation-node</node>
+        </makefault>
+        <log level="full"/>
+        <!--<header name="To" action="remove"/>-->
+        <send/>
+    </sequence>
+
+    <sequence name="main" onError="myFaultHandler">
+        <in>
+            <log level="full"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9020/services/NonExistingService"/>
+                </endpoint>
+            </send>
+        </in>
+
+        <out>
+            <send/>
+        </out>
+    </sequence>
+
+    <sequence name="fault">
+        <makefault version="soap12">
+            <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+            <reason value="Default Fault sequence Executed instead of myFaultHandler"/>
+        </makefault>
+
+        <log level="full">
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <send/>
+
+    </sequence>
+
+</definitions>

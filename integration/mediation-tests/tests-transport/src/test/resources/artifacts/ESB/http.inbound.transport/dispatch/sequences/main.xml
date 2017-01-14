@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="main">
+   <in>
+       <log level="custom">
+         <property name="SUPER_MAIN" value="SUPER_MAIN"/>
+      </log>
+       <respond/>
+   </in>
+   <description>The main sequence for the message mediation</description>
+</sequence>

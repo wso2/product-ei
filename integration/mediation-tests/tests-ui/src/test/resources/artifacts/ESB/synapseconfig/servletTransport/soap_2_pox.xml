@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="SOAP2POX">
+        <target>
+            <inSequence>
+                <log level="full"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:8080/services/SimpleStockQuoteService"
+                                 format="pox"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+</definitions>

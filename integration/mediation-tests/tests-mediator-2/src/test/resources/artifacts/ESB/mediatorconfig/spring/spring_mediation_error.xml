@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <sequence name="fault">
+        <log category="INFO" level="full" separator=",">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <spring:spring
+                xmlns:spring="http://ws.apache.org/ns/synapse"
+                bean="springtest" key="conf:/spring/spring_bean_for_error_client.xml"/>
+            <send>
+                <endpoint>
+                    <address statistics="disable" trace="disable" uri="http://localhost:9000/services/SimpleStockQuoteService">
+                        <timeout>
+                            <duration>30000</duration>
+                            <responseAction>discard</responseAction>
+                        </timeout>
+                        <markForSuspension>
+                            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                            <retryDelay>0</retryDelay>
+                        </markForSuspension>
+                        <suspendOnFailure>
+                            <initialDuration>0</initialDuration>
+                            <maximumDuration>0</maximumDuration>
+                            <progressionFactor>1.0</progressionFactor>
+                        </suspendOnFailure>
+                    </address>
+                </endpoint>
+            </send>
+        </in>
+        <out>
+            <log category="INFO" level="full" separator=","/>
+            <send/>
+        </out>
+    </sequence>
+</definitions>

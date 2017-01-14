@@ -1,0 +1,42 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api xmlns="http://ws.apache.org/ns/synapse" name="LiteralArgumentAPI" context="/literal">
+        <resource methods="POST" url-mapping="/true">
+            <inSequence>
+                <property name="EXTRACT" expression="json-eval($.extract)" scope="default" type="STRING"/>
+                <payloadFactory media-type="json">
+                    <format>{ "payload": "$1" }</format>
+                    <args>
+                        <arg deepCheck="false" literal="true" evaluator="xml" expression="$ctx:EXTRACT"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="POST" url-mapping="/false">
+            <inSequence>
+                <property name="EXTRACT" expression="json-eval($.extract)" scope="default" type="STRING"/>
+                <payloadFactory media-type="json">
+                    <format>{ "payload": "$1" }</format>
+                    <args>
+                        <arg deepCheck="false" literal="false" evaluator="xml" expression="$ctx:EXTRACT"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="newLineApi" context="/newline">
+        <resource methods="POST" url-mapping="/xmleval">
+            <inSequence>
+                <property name="EXTRACT" expression="json-eval($.hello)" scope="default" type="STRING"/>
+                <payloadFactory media-type="json">
+                    <format>{ "payload": "$1" }</format>
+                    <args>
+                        <arg evaluator="xml" expression="$ctx:EXTRACT"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>

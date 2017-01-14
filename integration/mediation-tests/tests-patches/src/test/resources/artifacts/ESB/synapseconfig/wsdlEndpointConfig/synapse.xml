@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="wsdlEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="wsdlEP_Test" >
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="wsdlEndPoint_Config_Reg" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key ="conf:/test_ep_config/wsdlEP_Test.xml"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+</definitions>
+
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <api name="MyAPI1" context="/myApi1">
+        <resource methods="DELETE" uri-template="/order/{id}/item/{itemnumber}?*">
+            <inSequence>
+                <property name="POST_TO_URI" value="true" scope="axis2"/>
+                <send>
+                    <endpoint name="apiEP">
+                        <http uri-template="http://localhost:8480/">
+                            <timeout>
+                                <duration>30000</duration>
+                                <responseAction>fault</responseAction>
+                            </timeout>
+                            <suspendOnFailure>
+                                <errorCodes>-1</errorCodes>
+                                <initialDuration>0</initialDuration>
+                                <progressionFactor>1.0</progressionFactor>
+                                <maximumDuration>0</maximumDuration>
+                            </suspendOnFailure>
+                            <markForSuspension>
+                                <errorCodes>-1</errorCodes>
+                            </markForSuspension>
+                        </http>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+    <api name="MyAPI2" context="/order">
+        <resource methods="DELETE" uri-template="/{id}/item/{itemnumber}*">
+            <inSequence>
+                <log level="custom">
+                    <property name="hi" value="**********Entered to ESB***********"/>
+                    <property name="STATUS"
+                              value="-----------------order API INVOKED------------------"/>
+                    <property name="Message_ID: " expression="$url:message_id"/>
+                    <property name="ID: " expression="get-property('uri.var.id')"/>
+                    <property name="Job Number: " expression="get-property('uri.var.itemnumber')"/>
+                </log>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>

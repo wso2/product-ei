@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <proxy name="TestProxy" startOnLoad="true" trace="disable" transports="https http">
+        <target>
+            <inSequence>
+                <property name="FORCE_POST_PUT_NOBODY" scope="axis2"
+                          type="BOOLEAN" value="true"/>
+                <property name="DISABLE_CHUNKING" scope="axis2" value="true"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

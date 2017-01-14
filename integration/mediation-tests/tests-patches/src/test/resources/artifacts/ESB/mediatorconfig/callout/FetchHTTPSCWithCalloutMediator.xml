@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="HTTPSCProxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <callout endpointKey="mockEP">
+               <source type="envelope"/>
+               <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                       xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                       xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            </callout>
+            <log level="custom">
+               <property name="************** Status Code inSequence"
+                         expression="get-property('axis2','HTTP_SC')"/>
+            </log>
+            <drop/>
+         </inSequence>
+         <faultSequence>
+            <log level="custom">
+               <property name="************** Status Code faultSequence"
+                         expression="get-property('axis2','HTTP_SC')"/>
+               <property name="ERROR_DETAIL" expression="get-property('ERROR_DETAIL')"/>
+            </log>
+            <drop/>
+         </faultSequence>
+      </target>
+   </proxy>
+   <endpoint name="mockEP">
+      <http method="get"
+            uri-template="http://www.mocky.io/v2/5646b874100000e815889a82"/>
+   </endpoint>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

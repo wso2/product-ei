@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <header name="To" value="http://localhost:9000/services/SimpleStockQuoteService"
+                    action="set"/>
+            <log level="full"/>
+        </in>
+        <send/>
+    </sequence>
+</definitions>

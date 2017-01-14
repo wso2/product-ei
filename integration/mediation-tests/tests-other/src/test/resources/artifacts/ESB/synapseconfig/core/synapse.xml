@@ -1,0 +1,36 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="fault">
+        <makefault>
+            <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+            <reason value="Mediation failed."/>
+        </makefault>
+        <send/>
+    </sequence>
+
+    <sequence name="main" onError="fault">
+        <in>
+            <enrich> xmlns="http://ws.apache.org/ns/synapse"
+                <source clone="false"  type="inline" key="init_req"/>
+                <target action="replace" type="body" />
+
+            </enrich>
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </in>
+        <out>
+            <send/>
+        </out>
+
+    </sequence>
+    <localEntry key="init_req">
+        <ns:getQuote xmlns:ns="http://services.samples">
+            <ns:request>
+                <ns:symbol>ABC</ns:symbol>
+            </ns:request>
+        </ns:getQuote>
+    </localEntry>
+</definitions>

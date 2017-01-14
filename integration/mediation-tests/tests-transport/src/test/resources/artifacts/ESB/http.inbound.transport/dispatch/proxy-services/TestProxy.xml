@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="TestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <endpoint>
+         <address uri="http://localhost"/>
+      </endpoint>
+      <inSequence>
+         <log level="custom">
+            <property name="PROXY" value="PROXY_HIT"/>
+         </log>
+          <respond/>
+      </inSequence>
+   </target>
+</proxy>

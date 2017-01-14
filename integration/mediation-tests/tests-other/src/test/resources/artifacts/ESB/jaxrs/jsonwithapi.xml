@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager">
+        <parameter name="cachableDuration">15000</parameter>
+    </taskManager>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api name="AddMusic" context="/addMusic">
+        <resource methods="POST" uri-template="/music*">
+            <inSequence>
+                <property name="POST_TO_URI" value="true" scope="axis2" type="STRING"/>
+                <send>
+                    <endpoint>
+                        <http method="POST" uri-template="http://localhost:8080/rest/api/music/post"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+    <api name="GetMusic" context="/getMusic">
+        <resource methods="GET" uri-template="/music*">
+            <inSequence>
+                <property name="POST_TO_URI" value="true" scope="axis2" type="STRING"/>
+                <send>
+                    <endpoint>
+                        <http method="GET"
+                              uri-template="http://localhost:8080/rest/api/music/get?album=New%20Moon"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+</definitions>

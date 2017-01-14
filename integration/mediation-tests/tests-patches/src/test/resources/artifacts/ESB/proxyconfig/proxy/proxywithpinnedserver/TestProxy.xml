@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy
+            name="TestProxy"
+            transports="http https"
+            startOnLoad="true"
+            trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="full"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy
+            name="TestProxyWithPinnedServer"
+            transports="http https"
+            startOnLoad="true"
+            pinnedServers="testServer"
+            trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="full"/>
+            </inSequence>
+        </target>
+    </proxy>
+
+</definitions>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="addressEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="addressEP_Test" >
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="addressEndPoint_Config_Reg" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key ="conf:/test_ep_config/addressEP_Test.xml"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="invalidAddressEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="addressEP_Test" >
+                        <address uri="http://localhost:9008/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="invalidPropertyAddressEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="addressEP_Test" >
+                        <property name="adad" value="adada" scope="andun" />
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+</definitions>
+
+

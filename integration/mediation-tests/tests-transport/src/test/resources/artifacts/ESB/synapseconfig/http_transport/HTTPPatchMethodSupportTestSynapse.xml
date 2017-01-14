@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="PatchProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <inSequence>
+         <log level="full"/>
+         <send>
+            <endpoint>
+               <address uri="http://localhost:8480/services/PatchRespondProxy"/>
+            </endpoint>
+         </send>
+      </inSequence>
+   </target>
+</proxy>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="PatchRespondProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <inSequence>
+         <log level="full"/>
+         <respond/>
+      </inSequence>
+   </target>
+</proxy>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="PatchTest"
+     context="/test">
+   <resource methods="POST PATCH GET DELETE OPTIONS PUT">
+      <inSequence>
+         <log level="full"/>        
+         <respond/>
+      </inSequence>
+   </resource>
+</api>
+</definitions>

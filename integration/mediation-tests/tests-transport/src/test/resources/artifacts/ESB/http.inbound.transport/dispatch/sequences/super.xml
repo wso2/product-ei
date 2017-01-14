@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="super">
+   <log level="custom">
+      <property name="super-tenant" value="CARBON_SUPER"/>
+   </log>
+    <respond/>
+</sequence>

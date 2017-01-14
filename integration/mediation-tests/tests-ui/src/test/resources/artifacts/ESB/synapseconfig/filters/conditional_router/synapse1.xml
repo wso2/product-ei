@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <!-- sequence for conditional-route -->
+    <sequence name="cnd_seq4">
+        <log>
+            <property name="message" value="**********Conditional Router Test Condition Satisfied **************"/>
+        </log>
+    </sequence>
+
+    <!-- Fault sequence-->
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+
+    <!-- Main sequence -->
+    <sequence name="main" trace="enable">
+        <in>
+            <log level="full">
+                <property name="STAGE" value="starting conditional  router"/>
+            </log>
+
+            <conditionalRouter continueAfter="true">
+                <conditionalRoute breakRoute="false">
+                    <condition>
+                        <match type="url" regex=".*StockQuote.*"/>
+                    </condition>
+                    <target sequence="cnd_seq4"/>
+                </conditionalRoute>
+            </conditionalRouter>
+
+            <log level="custom">
+                <property name="STAGE" value="end conditional  router"/>
+            </log>
+
+            <send />
+
+        </in>
+
+        <out>
+            <send/>
+        </out>
+
+    </sequence>
+</definitions>

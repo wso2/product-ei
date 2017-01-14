@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+		<parameter name="cachableDuration">15000</parameter>
+	</registry>
+	<sequence name="aggregateMessages">
+		<aggregate id="iterate1">
+			<completeCondition>
+				<messageCount min="-1" max="-1" />
+			</completeCondition>
+			<onComplete xmlns:ns="http://org.apache.synapse/xsd"
+				xmlns:ns3="http://org.apache.synapse/xsd" xmlns:m0="http://services.samples"
+				expression="//m0:getQuoteResponse">
+				<send />
+			</onComplete>
+		</aggregate>
+	</sequence>
+	<sequence name="iterateMessages">
+		<iterate id="iterate1" expression="//m0:getQuote/m0:request"
+			preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+			<target>
+				<sequence>
+					<send>
+						<endpoint>
+							<address uri="https://localhost:8243/services/StockQuoteProxy" />
+						</endpoint>
+					</send>
+				</sequence>
+			</target>
+		</iterate>
+	</sequence>
+	<sequence name="fault">
+		<log level="full">
+			<property name="MESSAGE" value="Executing default 'fault' sequence" />
+			<property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+			<property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+		</log>
+		<drop />
+	</sequence>
+	<sequence name="main">
+		<in>
+			<sequence key="iterateMessages" />
+		</in>
+		<out>
+			<sequence key="aggregateMessages" />
+		</out>
+		<description>The main sequence for the message mediation</description>
+	</sequence>
+
+	<proxy name="StockQuoteProxy" transports="https">
+		<target>
+			<endpoint>
+				<address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+			</endpoint>
+			<outSequence>
+				<send />
+			</outSequence>
+		</target>
+		<publishWSDL
+			uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl" />
+	</proxy>
+
+</definitions>

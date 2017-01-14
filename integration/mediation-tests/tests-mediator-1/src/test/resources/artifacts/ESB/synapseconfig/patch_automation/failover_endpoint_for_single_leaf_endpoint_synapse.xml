@@ -1,0 +1,51 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="test_failover"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <target>
+         <inSequence>
+            <log/>
+            <send>
+               <endpoint>
+                  <failover>
+                     <endpoint>
+                        <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                           <timeout>
+                              <duration>1000</duration>
+                              <responseAction>discard</responseAction>
+                           </timeout>
+                           <suspendOnFailure>
+                              <initialDuration>1000</initialDuration>
+                              <progressionFactor>2.0</progressionFactor>
+                              <maximumDuration>64000</maximumDuration>
+                           </suspendOnFailure>
+                           <markForSuspension>
+                              <errorCodes>101000,101001,101500,101501,101503,101504,101505,101506,101507,101508,101509</errorCodes>
+                              <retriesBeforeSuspension>1</retriesBeforeSuspension>
+                           </markForSuspension>
+                        </address>
+                     </endpoint>
+                  </failover>
+               </endpoint>
+            </send>
+         </inSequence>
+         <outSequence>
+            <log/>
+            <send/>
+         </outSequence>
+      </target>
+   </proxy>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <log/>
+      <drop/>
+   </sequence>
+</definitions>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="wsdl-fault-proxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+    </target>
+    <publishWSDL uri="http://localhost:8480/delay?wsdl"/>
+    <description/>
+</proxy>

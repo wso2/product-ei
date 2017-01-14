@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="restCheck" transports="http,https">
+        <target>
+            <inSequence>
+                <header name="Action" value="getQuote"/>
+                <property name="SOAPAction" value="getQuote" scope="transport"/>
+                <send>
+                    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="addressEP_Test" >
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+</definitions>
+
+

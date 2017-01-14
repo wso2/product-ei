@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="RestProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="HTTP_METHOD" value="POST" scope="axis2" type="STRING"/>
+                <property name="messageType" value="application/json" scope="axis2"/>
+                <log>
+                    <property xmlns:ns="http://org.apache.synapse/xsd"
+                              name="JSON-Payload ************* "
+                              expression="json-eval($.)"/>
+                </log>
+                <log level="custom">
+                    <property name="after" value="JSON *********"/>
+                </log>
+                <log>
+                    <property xmlns:ns="http://org.apache.synapse/xsd"
+                              name="JSON-Payload ****** "
+                              expression="json-eval($.)"/>
+                </log>
+                <property name="messageType"
+                          value="application/x-www-form-urlencoded"
+                          scope="axis2"/>
+                <send>
+                    <endpoint>
+                        <http method="POST"
+                              uri-template="http://localhost:8991/MyrestServicepro/services/myrest_service/users/user"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

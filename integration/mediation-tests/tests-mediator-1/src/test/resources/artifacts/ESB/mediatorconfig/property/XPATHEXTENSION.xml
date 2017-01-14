@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager">
+      <parameter name="cachableDuration">15000</parameter>
+   </taskManager>
+   <proxy name="Hello"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <send>
+               <endpoint>
+                  <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+               </endpoint>
+            </send>
+         </inSequence>
+         <outSequence>
+            <property name="Transport"
+                      value="This scope is trasport"
+                      scope="transport"
+                      type="STRING"/>
+            <property name="Operation"
+                      value="This scope is operation"
+                      scope="operation"
+                      type="STRING"/>
+            <property name="Axis2Client"
+                      value="This scope is Axis2-Client"
+                      scope="axis2-client"
+                      type="STRING"/>
+            <property name="Synapse"
+                      value="This scope is synapse"
+                      scope="default"
+                      type="STRING"/>
+            <property name="Registry"
+                      value="This is from Registry"
+                      scope="default"
+                      type="STRING"/>
+            <log level="custom">
+               <property name="Transport-scope"
+                         expression="get-property('transport', 'Transport')"/>
+               <property name="Operation-scope"
+                         expression="get-property('operation','Operation')"/>
+               <property name="System-scope"
+                         expression="get-property('system', 'file.separator')"/>
+               <property name="Axis2Client-scope"
+                         expression="get-property('axis2-client', 'Axis2Client')"/>
+               <property name="Synapse-scope" expression="get-property('Synapse', 'Synapse')"/>
+               <property name="Registry-scope"
+                         expression="get-property('registry', 'conf://bay')"/>
+            </log>
+            <send/>
+         </outSequence>
+      </target>
+   </proxy>
+   <localEntry key="testEntry">12345<description/>
+   </localEntry>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

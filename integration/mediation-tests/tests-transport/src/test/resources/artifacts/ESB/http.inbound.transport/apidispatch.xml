@@ -1,0 +1,9 @@
+
+<inboundEndpoint name="HttpListenerEP2"
+                 protocol="http"
+                 suspend="false" sequence="TestIn" onError="fault" >
+    <p:parameters xmlns:p="http://ws.apache.org/ns/synapse">
+        <p:parameter  name="inbound.http.port">8082</p:parameter>
+        <p:parameter  name="api.dispatching.enabled">true</p:parameter>
+    </p:parameters>
+</inboundEndpoint>

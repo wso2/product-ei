@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="TDAICheckAuth">
+   <property xmlns:ns1="http://ws.wso2.org/dataservice"
+             xmlns:ns="http://org.apache.synapse/xsd"
+             name="isAuthorizeds"
+             expression="//ns1:results/ns1:result/ns1:isAuthorized"
+             scope="default"
+             type="STRING"/>
+   <filter xmlns:ns="http://org.apache.synapse/xsd"
+           source="get-property('isAuthorized')"
+           regex="1">
+      <then>
+         <log level="custom" separator=",">
+            <property name="AuthCheck"
+                      expression="fn:concat('*** User ', get-property('emailaddress'), ' access to org ', get-property('orgCode'), ' - GRANTED ***')"/>
+         </log>
+         <property name="REST_URL_POSTFIX"
+                   expression="fn:concat('/tdaiDataService.SecureHTTPEndpoint/getEndpointTemplate/',get-property('orgCode'),'/',get-property('serviceName'),'/',get-property('version'))"
+                   scope="axis2"
+                   type="STRING"/>
+         <property name="HTTP_METHOD" value="GET" scope="axis2" type="STRING"/>
+         <property name="Content-Type"
+                   value="application/x-www-form-urlencoded"
+                   scope="transport"
+                   type="STRING"/>
+         <send receive="TDAIGetTargetEndpoint">
+            <endpoint key="gov:references/com/xxx/endpoints/AirDataServiceEP.xml"/>
+         </send>
+         <drop/>
+      </then>
+      <else>
+         <property name="errorText"
+                   expression="fn:concat('*** User ', get-property('emailaddress'), ' access to org ', get-property('orgCode'), ' - DENIED ***')"
+                   scope="default"
+                   type="STRING"/>
+         <log level="custom" separator=",">
+            <property name="AuthCheck" expression="get-property('errorText')"/>
+         </log>
+         <payloadFactory media-type="xml">
+            <format>
+               <airlineIntegrationServiceError xmlns="">
+                  <error>
+                     <errorCode>101503</errorCode>
+                     <errorMsgTitle>Access Denied</errorMsgTitle>
+                     <errorMsg>$1</errorMsg>
+                  </error>
+               </airlineIntegrationServiceError>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="get-property('errorText')"/>
+            </args>
+         </payloadFactory>
+         <property name="HTTP_SC" value="403" scope="axis2" type="STRING"/>
+         <header name="To" action="remove"/>
+         <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+         <send/>
+      </else>
+   </filter>
+</sequence>

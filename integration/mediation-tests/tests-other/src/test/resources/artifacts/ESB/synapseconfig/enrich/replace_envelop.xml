@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="tt" transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl"/>
+    </proxy>
+    <proxy name="enrichSample6" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="full"/>
+
+                <enrich>
+                    <source type="envelope"/>
+                    <target type="property" property="test"/>
+                </enrich>
+                <log level="full"/>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+
+                <enrich>
+                <source type="property" property="test"/>
+                <target type="envelope" action="replace" />
+                </enrich>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl"/>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+    </sequence>
+</definitions>
+

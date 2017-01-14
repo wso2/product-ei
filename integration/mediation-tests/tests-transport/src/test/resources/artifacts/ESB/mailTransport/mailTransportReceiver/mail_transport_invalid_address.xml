@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="MailTranportInvalidAddress"
+           transports="mailto"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <property name="senderAddress" expression="get-property('transport', 'From')"/>
+                <log level="custom">
+                    <property name="Date" expression="$trp:Date"/>
+                    <property name="Subject" expression="$trp:Subject"/>
+                    <property name="Content-Type" expression="$trp:Content-Type"/>
+                    <property name="From" expression="$trp:From"/>
+                    <property name="To" expression="$trp:To"/>
+                </log>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <parameter name="mail.pop3.socketFactory.class">javax.net.ssl.SSLSocketFactory</parameter>
+        <parameter name="transport.mail.ContentType">text/plain</parameter>
+        <parameter name="mail.pop3.host">pop.gmail.com</parameter>
+        <parameter name="transport.mail.Address">invalid_email@gmail.com</parameter>
+        <parameter name="mail.pop3.user">test.automation.dummyabc</parameter>
+        <parameter name="mail.pop3.socketFactory.port">995</parameter>
+        <parameter name="transport.PollInterval">1</parameter>
+        <parameter name="mail.pop3.port">995</parameter>
+        <parameter name="mail.pop3.fetchsize">1</parameter>
+        <parameter name="mail.pop3.socketFactory.fallback">false</parameter>
+        <parameter name="transport.mail.Protocol">pop3</parameter>
+        <parameter name="mail.pop3.password">automation.test</parameter>
+        <description/>
+    </proxy>
+</definitions>

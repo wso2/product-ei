@@ -1,0 +1,98 @@
+<!--
+
+Call Mediator with main sequence with in/out
+
+Console Log
+===========
+STATE = MAIN IN S1
+STATE = SEQ1 S1
+STATE = F1 S1
+STATE = F1 S2
+STATE = SEQ1 S2
+STATE = MAIN IN S2
+STATE = MAIN OUT S1
+STATE = MAIN OUT S2
+
+-->
+
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   
+    <endpoint name="EP">
+      <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+   </endpoint>
+   
+   <sequence name="SEQ1">
+      <log level="custom">
+         <property name="STATE" value="SEQ1 S1"/>
+      </log>
+      <filter xmlns:ns="http://org.apache.synapse/xsd"
+              xmlns:m0="http://services.samples"
+              xpath="//m0:request">
+         <then>
+            <log level="custom">
+               <property name="STATE" value="F1 S1"/>
+            </log>
+            <call>
+               <endpoint key="EP"/>
+            </call>
+            <log level="custom">
+               <property name="STATE" value="F1 S2"/>
+            </log>
+         </then>
+         <else/>
+      </filter>
+      <log level="custom">
+         <property name="STATE" value="SEQ1 S2"/>
+      </log>
+   </sequence>
+   <sequence name="main">
+       <in>
+           <log level="custom">
+               <property name="STATE" value="MAIN IN S1"/>
+           </log>
+           <sequence key="SEQ1"/>
+           <log level="custom">
+               <property name="STATE" value="MAIN IN S2"/>
+           </log>
+           <header name="Action" value="urn:getQuote"/>
+           <payloadFactory media-type="xml">
+               <format>
+                   <m0:getQuote xmlns:m0="http://services.samples">
+                       <m0:request>
+                           <m0:symbol>IN</m0:symbol>
+                       </m0:request>
+                   </m0:getQuote>
+               </format>
+               <args/>
+           </payloadFactory>
+           <send>
+               <endpoint key="EP"/>
+           </send>
+       </in>
+       <out>
+           <log level="custom">
+               <property name="STATE" value="MAIN OUT S1"/>
+           </log>
+           <header name="Action" value="urn:getQuote"/>
+           <payloadFactory media-type="xml">
+               <format>
+                   <m0:getQuote xmlns:m0="http://services.samples">
+                       <m0:request>
+                           <m0:symbol>WSO2</m0:symbol>
+                       </m0:request>
+                   </m0:getQuote>
+               </format>
+               <args/>
+           </payloadFactory>
+           <call>
+               <endpoint key="EP"/>
+           </call>
+           <log level="custom">
+               <property name="STATE" value="MAIN OUT S2"/>
+           </log>
+           <send/>
+       </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

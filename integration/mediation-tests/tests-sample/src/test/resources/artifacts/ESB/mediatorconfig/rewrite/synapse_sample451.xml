@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="main">
+        <in>
+            <rewrite>
+                <rewriterule>
+                    <condition>
+                        <and>
+                            <equal type="url" source="host" value="localhost"/>
+                            <not>
+                                <equal type="url" source="protocol" value="http"/>
+                            </not>
+                        </and>
+                    </condition>
+                    <action fragment="protocol" value="http"/>
+                    <action fragment="port" value="9000"/>
+                </rewriterule>
+            </rewrite>
+            <send/>
+        </in>
+        <out>
+            <send/>
+        </out>
+    </sequence>
+
+</definitions>

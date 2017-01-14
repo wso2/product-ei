@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="JMStoHTTPStockQuoteProxy" transports="jms" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="OUT_ONLY" value="true" scope="default" type="STRING"/>
+                <log level="full"/>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+            <faultSequence/>
+        </target>
+    </proxy>
+</definitions>

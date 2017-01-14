@@ -1,0 +1,10 @@
+<inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
+                 name="GenericTest"
+                 sequence="requestHandlerSeq"
+                 onError="inFault"
+                 class="org.wso2.carbon.inbound.endpoint.protocol.generic.GenericConsumer"
+                 suspend="false">
+    <parameters>
+        <parameter name="interval">10000</parameter>
+    </parameters>
+</inboundEndpoint>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="RESTAPI"
+         context="/jdbc">
+        <resource methods="POST" url-mapping="/store">
+            <inSequence>
+                <log level="custom">
+                    <property name="MESSAGE" value="************RESTProxy IN"/>
+                    <property name="IN-Content-Type" expression="$trp:Content-Type"/>
+                    <property name="IN-Test-Header-Field" expression="$trp:Test-Header-Field"/>
+                </log>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <store messageStore="RESTMessageStore"/>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="MESSAGE" value="************RESTProxy OUT"/>
+                </log>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+
+    <sequence name="SamplingSeq">
+        <log level="custom">
+            <property name="MESSAGE" value="************SamplingSeq IN"/>
+            <property name="IN-Content-Type" expression="$trp:Content-Type"/>
+            <property name="IN-Test-Header-Field" expression="$trp:Test-Header-Field"/>
+        </log>
+        <drop/>
+    </sequence>
+
+    <messageStore class="org.apache.synapse.message.store.impl.jdbc.JDBCMessageStore"
+                  name="RESTMessageStore">
+        <parameter name="store.jdbc.driver">com.mysql.jdbc.Driver</parameter>
+        <parameter name="store.jdbc.connection.url">jdbc:mysql://localhost:3306/WSO2SampleDBForAutomation</parameter>
+        <parameter name="store.jdbc.username">root</parameter>
+        <parameter name="store.jdbc.password"></parameter>
+        <parameter name="store.jdbc.table">jdbc_store_table</parameter>
+    </messageStore>
+
+    <messageProcessor class="org.apache.synapse.message.processor.impl.sampler.SamplingProcessor"
+                      name="SamplingProcessorABC"
+                      messageStore="RESTMessageStore">
+        <parameter name="interval">1000</parameter>
+        <parameter name="sequence">SamplingSeq</parameter>
+    </messageProcessor>
+
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+
+</definitions>

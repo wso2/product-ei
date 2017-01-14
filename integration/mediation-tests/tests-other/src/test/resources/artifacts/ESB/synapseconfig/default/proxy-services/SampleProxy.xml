@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="SampleProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <target>
+      <inSequence>
+         <log level="custom">
+            <property name="MSG" value="PROXY INVOKED"/>
+         </log>
+         <property name="OUT_ONLY" value="true"/>
+         <send>
+            <endpoint>
+               <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+         </send>
+      </inSequence>
+      <outSequence>
+         <drop/>
+      </outSequence>
+   </target>
+</proxy>

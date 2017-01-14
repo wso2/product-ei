@@ -1,0 +1,50 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "test",
+  "type" : "object",
+  "properties" : {
+    "axis2ns11:records_un,xsi:type=sf:sObject" : {
+      "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject",
+      "type" : "object",
+      "properties" : {
+        "sf:type" : {
+          "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject/sf:type",
+          "type" : "string"
+        },
+        "sf:Id" : {
+          "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject/sf:Id",
+          "type" : "array",
+          "items" : [ {
+            "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject/sf:Id/0",
+            "type" : "string"
+          } ]
+        },
+        "sf:CreatedDate" : {
+          "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject/sf:CreatedDate",
+          "type" : "string"
+        },
+        "sf:Name" : {
+          "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject/sf:Name",
+          "type" : "string"
+        }
+      },
+      "attributes" : {
+        "xsi:type" : {
+          "id" : "http://wso2jsonschema.org/axis2ns11:records,xsi:type=sf:sObject/xsi:type",
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "namespaces" : [ {
+    "prefix" : "axis2ns11",
+    "url" : "urn:partner.soap.sforce.com"
+  }, {
+    "prefix" : "xsi",
+    "url" : "http://www.w3.org/2001/XMLSchema-instance"
+  }, {
+    "prefix" : "sf",
+    "url" : "urn:sobject.partner.soap.sforce.com"
+  } ]
+}

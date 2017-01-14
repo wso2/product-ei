@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="ESBTestSuite" parallel="false">
+    <listeners>
+        <listener class-name="org.wso2.carbon.automation.core.PlatformExecutionManager"/>
+        <listener class-name="org.wso2.carbon.automation.core.PlatformSuiteManager"/>
+        <listener class-name="org.wso2.carbon.automation.core.PlatformAnnotationTransferManager"/>
+        <listener class-name="org.wso2.carbon.automation.core.PlatformTestManager"/>
+        <listener class-name="org.wso2.carbon.automation.core.PlatformReportManager"/>
+    </listeners>
+
+    <test name="Server Stratup" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.ui.test.ServerStartupTestCase"/>
+            <class name="org.wso2.carbon.esb.ui.test.login.ESBLoginTestCase"/>
+            <class name="org.wso2.carbon.esb.ui.test.proxyadmin.ESBProxySaveTestCase"/>
+            <class name="org.wso2.carbon.esb.ui.test.proxyadmin.ESBJAVA_2708TestCase"/>
+            <class name="org.wso2.carbon.esb.ui.test.sequence.ESBJAVA_2893TestCase"/>
+            <class name="org.wso2.carbon.esb.ui.test.proxyadmin.ESBProxyDeleteTestCase"/>
+            <class name="org.wso2.carbon.esb.ui.test.endpoints.EndpointsListTestCase"/>
+        </classes>
+    </test>
+</suite>
+
+

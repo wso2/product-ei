@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="TestCallout"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService"
+                         action="urn:getQuote">
+                    <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                    <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                </callout>
+                <property name="RESPONSE" value="true"/>
+                <header name="To" action="remove"/>
+                <send/>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <log/>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

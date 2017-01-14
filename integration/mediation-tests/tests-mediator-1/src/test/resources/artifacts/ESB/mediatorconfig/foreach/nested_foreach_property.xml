@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<!-- Introduction to For-each mediator  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<sequence name="main">
+		<in>
+			<foreach expression="//m0:getQuote/m0:request" xmlns:m0="http://services.samples" id="outer">
+				<sequence>
+					<payloadFactory media-type="xml">
+						<format>
+							<m0:checkPrice>
+                                <m0:group>New$2$3</m0:group>
+								<m0:code>$1-1</m0:code>
+								<m0:code>$1-2</m0:code>
+							</m0:checkPrice>
+						</format>
+						<args>
+							<arg evaluator="xml" expression="//m0:request/m0:symbol"/>
+                            <arg evaluator="xml" expression="get-property('outer_FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                            <arg evaluator="xml" expression="get-property('outer_FOREACH_COUNTER')"/>
+						</args>
+					</payloadFactory>
+					<log level="custom">
+						<property name="outer_fe_originalpayload"
+								  expression="get-property('outer_FOREACH_ORIGINAL_MESSAGE')"/>
+					</log>
+					<log level="custom">
+						<property name="outer_fe_count" expression="get-property('outer_FOREACH_COUNTER')"/>
+					</log>
+					<log level="custom">
+						<property name="outer_fe_group"
+								  expression="get-property('outer_FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+					</log>
+					<foreach expression="//m0:code" xmlns:m0="http://services.samples" id="inner">
+						<sequence>
+							<payloadFactory media-type="xml">
+								<format>
+									<m0:symbol>$1_$2_$3</m0:symbol>
+								</format>
+								<args>
+                                    <arg evaluator="xml" expression="get-property('outer_FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                                    <arg evaluator="xml" expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                                    <arg evaluator="xml" expression="//m0:code"/>
+								</args>
+							</payloadFactory>
+							<log level="custom">
+								<property name="inner_fe_originalpayload"
+										  expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')"/>
+							</log>
+							<log level="custom">
+								<property name="inner_fe_count" expression="get-property('inner_FOREACH_COUNTER')"/>
+							</log>
+							<log level="custom">
+								<property name="inner_fe_group"
+										  expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+							</log>
+						</sequence>
+					</foreach>
+                    <log level="custom">
+                        <property name="inner_fe_end_originalpayload"
+                                  expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="inner_fe_end_count" expression="get-property('inner_FOREACH_COUNTER')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="inner_fe_end_group"
+                                  expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                    </log>
+				</sequence>
+			</foreach>
+            <log level="custom">
+                <property name="outer_in_originalpayload"
+                          expression="get-property('outer_FOREACH_ORIGINAL_MESSAGE')"/>
+            </log>
+            <log level="custom">
+                <property name="outer_in_count" expression="get-property('outer_FOREACH_COUNTER')"/>
+            </log>
+            <log level="custom">
+                <property name="outer_in_group"
+                          expression="get-property('outer_FOREACH_ORIGINAL_MESSAGE')//m0:group" xmlns:m0="http://services.samples"/>
+            </log>
+            <log level="custom">
+                <property name="inner_in_originalpayload"
+                          expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')"/>
+            </log>
+            <log level="custom">
+                <property name="inner_in_count" expression="get-property('inner_FOREACH_COUNTER')"/>
+            </log>
+            <log level="custom">
+                <property name="inner_in_group"
+                          expression="get-property('inner_FOREACH_ORIGINAL_MESSAGE')//m0:group" xmlns:m0="http://services.samples"/>
+            </log>
+			<log level="full">
+				<property name="in_payload" value="end of insequence" />
+			</log>
+		</in>
+		<out/>
+	</sequence>
+</definitions>

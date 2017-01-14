@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="testProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <property name="messageType" value="application/xml" scope="axis2"/>
+                <property name="customHeader" value="customHeadervalue" scope="transport" type="STRING" />
+                <store messageStore="MyStore"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <endpoint name="StockQuoteServiceEp">
+        <address uri="http://localhost:8999/services/SimpleStockQuoteService"/>
+    </endpoint>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <messageStore name="testMessageStore"/>
+    <messageStore name="MyStore"/>
+    <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="ScheduledProcessor"
+                      targetEndpoint="StockQuoteServiceEp"
+                      messageStore="MyStore">
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="interval">1000</parameter>
+        <parameter name="is.active">true</parameter>
+    </messageProcessor>
+</definitions>

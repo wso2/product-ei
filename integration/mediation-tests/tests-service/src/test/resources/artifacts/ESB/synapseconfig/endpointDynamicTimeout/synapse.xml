@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+
+    <!--proxy to call delayed endpoint-->
+    <proxy name="MockDelayedTimeoutProxy" startOnLoad="true"
+           trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="MockDelayedTimeoutEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--proxy to call default endpoint-->
+    <proxy name="MockTimeoutProxy" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="MockTimeoutEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--proxy to call default template endpoint-->
+    <proxy name="MockTimeoutTemplateProxy" startOnLoad="true"
+           trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="MockTimeoutTemplateEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--proxy to call delayed template endpoint-->
+    <proxy name="MockDelayedTimeoutTemplateProxy" startOnLoad="true"
+           trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="MockDelayedTimeoutTemplateEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--local entry to hold timeout value-->
+    <localEntry key="timeout"><![CDATA[5000]]><description/>
+    </localEntry>
+
+    <!--Template Endpoint with timeout parameterized to delayed endpoint-->
+    <endpoint name="MockDelayedTimeoutTemplateEndpoint"
+              template="HTTPEndpointTemplate" uri="http://localhost:8480/getDelayedQuote">
+        <axis2ns167:parameter name="timeout"
+                              value="{get-property('timeout')}" xmlns:axis2ns167="http://ws.apache.org/ns/synapse"/>
+    </endpoint>
+
+
+    <!--Template Endpoint with timeout parameterized to default endpoint-->
+    <endpoint name="MockTimeoutTemplateEndpoint"
+              template="HTTPEndpointTemplate" uri="http://localhost:8480/getQuote">
+        <axis2ns168:parameter name="timeout"
+                              value="{get-property('timeout')}" xmlns:axis2ns168="http://ws.apache.org/ns/synapse"/>
+    </endpoint>
+
+    <!--Endpoint with timeout parameterized to default api-->
+    <endpoint name="MockTimeoutEndpoint">
+        <http method="GET" uri-template="http://localhost:8480/getQuote">
+            <timeout>
+                <duration>{get-property('timeout')}</duration>
+                <responseAction>fault</responseAction>
+            </timeout>
+        </http>
+    </endpoint>
+
+    <!--Endpoint with timeout from local entry to the delayed api-->
+    <endpoint name="MockDelayedTimeoutEndpoint">
+        <http method="GET" uri-template="http://localhost:8480/getDelayedQuote">
+            <timeout>
+                <duration>{get-property('timeout')}</duration>
+                <responseAction>fault</responseAction>
+            </timeout>
+        </http>
+    </endpoint>
+
+
+    <!--Endpoint Template with Timeout-->
+    <template name="HTTPEndpointTemplate">
+        <axis2ns172:parameter name="timeout" xmlns:axis2ns172="http://ws.apache.org/ns/synapse"/>
+        <axis2ns173:parameter name="name" xmlns:axis2ns173="http://ws.apache.org/ns/synapse"/>
+        <axis2ns174:parameter name="uri" xmlns:axis2ns174="http://ws.apache.org/ns/synapse"/>
+        <endpoint name="$name">
+            <http method="get" uri-template="$uri">
+                <timeout>
+                    <duration>$timeout</duration>
+                    <responseAction>fault</responseAction>
+                </timeout>
+            </http>
+        </endpoint>
+    </template>
+
+
+
+    <!--APIS-->
+    <!--default api-->
+    <api context="/getQuote" name="MockAPI">
+        <resource methods="GET" uri-template="/">
+            <inSequence>
+                <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+                <payloadFactory media-type="json">
+                    <format>{ "quote" : "IBM"}</format>
+                    <args/>
+                </payloadFactory>
+                <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+                <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+
+    <!--delayed api-->
+    <api context="/getDelayedQuote" name="MockDelayedAPI">
+        <resource methods="GET" uri-template="/">
+            <inSequence>
+                <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+                <payloadFactory media-type="json">
+                    <format>{ "quote" : "IBM"}</format>
+                    <args/>
+                </payloadFactory>
+                <script language="js"><![CDATA[java.lang.Thread.sleep(20000);]]></script>
+                <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+                <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+
+    <sequence name="fault">
+        <payloadFactory media-type="json">
+            <format>
+                {"error_code" : $1, "error_msg" : $2}
+            </format>
+            <args>
+                <arg expression="get-property('ERROR_CODE')"/>
+                <arg expression="get-property('ERROR_MESSAGE')"/>
+                    </args>
+        </payloadFactory>
+        <respond/>
+    </sequence>
+
+</definitions>
