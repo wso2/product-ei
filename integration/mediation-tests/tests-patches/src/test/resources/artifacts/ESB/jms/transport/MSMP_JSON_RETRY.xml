@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="MSMPRetrytest"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <property name="FORCE_SC_ACCEPTED"
+                      value="true"
+                      scope="axis2"
+                      type="STRING"/>
+            <property name="Accept" value="application/json" scope="transport"/>
+            <store messageStore="JMSMS"/>
+         </inSequence>
+      </target>
+   </proxy>
+   <!--<endpoint name="ep1">-->
+      <!--<address uri="http://localhost:9000/services/SimpleStockQuoteService"/>-->
+   <!--</endpoint>-->
+   <endpoint name="ep2">
+      <address uri="http://localhost:8080/rest/api/customerservice/customers"/>
+   </endpoint>
+   <sequence name="replySeq">
+      <log/>
+      <log level="full"/>
+   </sequence>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+   <messageStore class="org.apache.synapse.message.store.impl.jms.JmsStore" name="JMSMS">
+      <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+      <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+      <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+      <parameter name="store.jms.destination">JMSMS</parameter>
+   </messageStore>
+   <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                     name="Forwarder1"
+                     targetEndpoint="ep2"
+                     messageStore="JMSMS">
+      <parameter name="message.processor.reply.sequence">replySeq</parameter>
+      <parameter name="client.retry.interval">1000</parameter>
+      <parameter name="interval">1000</parameter>
+      <parameter name="is.active">true</parameter>
+   </messageProcessor>
+</definitions>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="CloneMediatorBugTest"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <sequence key="{fn:concat('TestClone','In')}"/>
+         </inSequence>
+         <outSequence>
+            <send/>
+         </outSequence>
+         <faultSequence>
+            <clone continueParent="true">
+               <target>
+                  <sequence>
+                     <log level="full" separator=", – Clone Test 01 – "/>
+                  </sequence>
+               </target>
+               <target>
+                  <sequence>
+                     <log level="full" separator=", – Clone Test 02 – "/>
+                  </sequence>
+               </target>
+            </clone>
+            <log level="full" separator=", – Clone Test 03 – "/>
+            <makefault version="soap11">
+               <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                     value="soap11Env:Server"/>
+               <reason expression="get-property('ERROR_MESSAGE')"/>
+               <role/>
+               <detail expression="get-property('ERROR_DETAIL')"/>
+            </makefault>
+            <send/>
+         </faultSequence>
+      </target>
+   </proxy>
+   <localEntry key="TestCloneIn">
+      <sequence name="TestCloneIn">
+         <log level="custom">
+            <property name="step" value="inSequence"/>
+         </log>
+         <header name="To" value="http://host_which_does_not_exist"/>
+         <send/>
+      </sequence>
+      <description/>
+   </localEntry>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

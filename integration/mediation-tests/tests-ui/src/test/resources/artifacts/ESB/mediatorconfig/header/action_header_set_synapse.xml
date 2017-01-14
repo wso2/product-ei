@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="HeaderProxy" transports="https,http"
+           statistics="disable" trace="disable" startOnLoad="true">
+        <target>
+            <inSequence>
+                <log level="full"/>
+                <header name="Action" value="urn:getQuote" action="set"/>
+                <log level="full"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+
+                <send/>
+            </outSequence>
+        </target>
+        <description></description>
+    </proxy>
+</definitions>

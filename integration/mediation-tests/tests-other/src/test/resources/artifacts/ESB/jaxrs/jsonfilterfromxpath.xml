@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="FilterWithJSONProxyXpath"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="full"/>
+                <log level="custom">
+                    <property name="xpath" value="Filtering From Xpath"/>
+                </log>
+
+
+                <filter source="get-property('axis2', 'HTTP_METHOD')" regex="POST">
+                    <then>
+                        <log level="custom">
+                            <property name="LOG_METHOD" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                        </log>
+                        <filter source="//album" regex="River">
+                            <then>
+                                <log level="custom">
+                                    <property name="THEN" value="The Condition is true album is River"/>
+                                </log>
+                                <send>
+                                    <endpoint>
+                                        <http method="POST" uri-template="http://localhost:8080/rest/api/music/post"/>
+                                    </endpoint>
+                                </send>
+                            </then>
+                            <else>
+                                <log level="custom">
+                                    <property name="ELSE" value="The Condition is false album is not River"/>
+                                </log>
+                            </else>
+                        </filter>
+                    </then>
+                    <else>
+                        <log level="custom">
+                            <property name="LOG_METHOD" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                        </log>
+                        <send>
+                            <endpoint>
+                                <http method="GET"
+                                      uri-template="http://localhost:8080/rest/api/music/get?album=River"/>
+                            </endpoint>
+                        </send>
+                    </else>
+                </filter>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

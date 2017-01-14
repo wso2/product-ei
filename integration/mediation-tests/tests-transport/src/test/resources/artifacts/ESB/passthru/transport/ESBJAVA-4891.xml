@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <proxy name="TestProxy" startOnLoad="true" trace="disable" transports="http https">
+        <description/>
+        <target>
+            <endpoint>
+                <address uri="http://localhost:8280/services/echo.echoHttpSoap12Endpoint"/>
+            </endpoint>
+            <inSequence>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT"
+                          scope="default" type="STRING" value="true"/>
+                <log category="DEBUG" description="log entry"/>
+                <property description="save asset"
+                          expression="//v1:UpdateBusInBayRequest/v1:vehicle"
+                          name="ASSET_ID" scope="default" type="STRING" xmlns:v1="http://translink.ca/ws/Asset/Bay/V1/"/>
+                <clone id="cl1" sequential="true">
+                    <target>
+                        <sequence>
+                            <sequence key="BoTest"/>
+                            <log/>
+                        </sequence>
+                    </target>
+                    <target>
+                        <sequence>
+                            <log/>
+                        </sequence>
+                    </target>
+                </clone>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+            <faultSequence>
+                <makefault description="" version="pox">
+                    <reason value="fault_reason"/>
+                    <detail>DATA IS ENCODED IMPROPERLY</detail>
+                </makefault>
+                <send/>
+            </faultSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <!-- Log the message at the full log level with the ERROR_MESSAGE and the ERROR_CODE-->
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <!-- Drops the messages by default if there is a fault -->
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <!-- Log all messages passing through -->
+            <log level="full"/>
+            <!-- ensure that the default configuration only sends if it is one of samples -->
+            <!-- Otherwise Synapse would be an open proxy by default (BAD!)               -->
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <!-- Send the messages where they have been sent (i.e. implicit "To" EPR) -->
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <sequence name="BoTest" trace="disable">
+        <payloadFactory media-type="xml">
+            <format>
+                <foo>
+                    <bar attrib="$1"/>
+                </foo>
+            </format>
+            <args>
+                <arg evaluator="xml" expression="$ctx:ASSET_ID" xmlns:ns="http://org.apache.synapse/xsd"/>
+            </args>
+        </payloadFactory>
+        <log category="DEBUG" level="full"/>
+    </sequence>
+    <!-- You can add any flat sequences, endpoints, etc.. to this synapse.xml file if you do
+    *not* want to keep the artifacts in several files -->
+</definitions>

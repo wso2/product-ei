@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api name="DeviceID" context="/deviceid">
+        <resource methods="POST" uri-template="/{id}">
+            <inSequence>
+                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+                <property name="ID"
+                          expression="get-property('uri.var.id')"
+                          scope="default"
+                          type="INTEGER"/>
+                <payloadFactory media-type="json">
+                    <format>{ "deviceId": "device"}</format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('ID')"/>
+                    </args>
+                </payloadFactory>
+                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+                <property name="messageType"
+                          value="application/json"
+                          scope="axis2"
+                          type="STRING"/>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api name="AllDevices" context="/alldevices">
+        <resource methods="GET" uri-template="/">
+            <inSequence>
+                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+                <payloadFactory media-type="json">
+                    <format>{ "devices" : [ { "deviceId": "1" }, { "deviceId": "2" }, { "deviceId": "3" }, { "deviceId":
+                        "4" }, { "deviceId": "5" } ]}
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+                <property name="messageType"
+                          value="application/json"
+                          scope="axis2"
+                          type="STRING"/>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api name="Devices" context="/devices">
+        <resource methods="GET" uri-template="/getDevices/{limit}">
+            <inSequence>
+                <property name="LIMIT"
+                          expression="get-property('uri.var.limit')"
+                          scope="default"
+                          type="DOUBLE"/>
+                <call>
+                    <endpoint>
+                        <http method="get" uri-template="http://localhost:8480/alldevices/"/>
+                    </endpoint>
+                </call>
+                <iterate id="iterator-id" expression="//deviceId" sequential="true">
+                    <target>
+                        <sequence>
+                            <property
+                                    name="uri.var.id"
+                                    expression="//deviceId"
+                                    scope="default"
+                                    type="STRING"/>
+                            <send>
+                                <endpoint>
+                                    <http method="post"
+                                          uri-template="http://localhost:8480/deviceid/{uri.var.id}"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+            </inSequence>
+            <outSequence>
+                <property name="root" scope="default">
+                    <root:rootelement xmlns:root="http://ws.wso2.org/dataservice"/>
+                </property>
+                <aggregate id="iterator-id">
+                    <completeCondition>
+                        <messageCount min="-1" max="{get-property('LIMIT')}"/>
+                    </completeCondition>
+                    <onComplete expression="//jsonObject" enclosingElementProperty="root">
+                        <send/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+    </api>
+</definitions>

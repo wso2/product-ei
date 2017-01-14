@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <proxy name="TestProxy" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="full"/>
+                <script language="js"><![CDATA[
+            var symbol = mc.getPayloadXML()..*::Code.toString();
+             mc.setProperty("axis2Property", "AXIS2_PROPERTY","axis2");
+             mc.setProperty("transportProperty", "TRANSPORT_PROPERTY","transport");
+             mc.setProperty("operationProperty", "OPERATION_PROPERTY","operation");
+               mc.setPayloadXML(
+                  <m:getQuote xmlns:m="http://services.samples">
+                     <m:request>
+                        <m:symbol>{symbol}</m:symbol>
+                     </m:request>
+                  </m:getQuote>);]]></script>
+                <log level="custom">
+                    <property expression="get-property('axis2', 'axis2Property')" name="Axis2_Property"/>
+                    <property expression="get-property('transport', 'transportProperty')" name="Transport_Property"/>
+                    <property expression="get-property('operation', 'operationProperty')" name="Operation_Property"/>
+                </log>
+                <script language="js"><![CDATA[
+             mc.removeProperty("axis2Property","axis2");
+             mc.removeProperty("operationProperty","operation");
+             mc.removeProperty("transportProperty","transport");]]></script>
+                <log level="custom">
+                    <property expression="get-property('axis2', 'axis2Property')" name="Axis2_Property_After_Remove"/>
+                    <property expression="get-property('transport', 'transportProperty')" name="Transport_Property_After_Remove"/>
+                    <property expression="get-property('operation', 'operationProperty')" name="Operation_Property_After_Remove"/>
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl"/>
+    </proxy>
+    <sequence name="fault">
+        <!-- Log the message at the full log level with the ERROR_MESSAGE and the ERROR_CODE-->
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <!-- Drops the messages by default if there is a fault -->
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>-->
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

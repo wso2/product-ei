@@ -1,0 +1,13 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+  <sequence name="main">
+    <in>
+      <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" /> 
+      <property name="OUT_ONLY" value="true"/>
+      <send>
+        <endpoint>
+           <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+        </endpoint>
+      </send>
+    </in>
+  </sequence>
+</definitions>

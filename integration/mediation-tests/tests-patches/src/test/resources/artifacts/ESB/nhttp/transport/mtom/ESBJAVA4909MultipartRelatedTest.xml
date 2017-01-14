@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="fault">
+        <log level="custom">
+            <property name="MESSAGE" value="Executing default"/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="ERROR_CODE"
+                      expression="get-property('ERROR_CODE')"/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="ERROR_MESSAGE"
+                      expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="MTOMChecker"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <log level="custom" >
+                    <property name="MEESSSSHHHHAA" expression="get-property('messageType')" />
+                </log>
+                <header name="Action" value="uploadFileUsingMTOM"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9001/services/MTOMSwASampleService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <parameter name="enableMTOM">true</parameter>
+        <description/>
+    </proxy>
+</definitions>

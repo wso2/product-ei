@@ -1,0 +1,39 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="switchSoap11SampleNegative" transports="https,http"
+           trace="disable" startOnLoad="true">
+        <description/>
+        <target>
+            <inSequence>
+                <switch xmlns:Envelope="http://schemas.xmlsoap.org/soap/envelope/"
+                        source="get-property('MESSAGE_FORMAT')">
+                    <case regex="soap11">
+                        <log level="full">
+                            <property name="soap_11" value="Soap 1.1"/>
+                        </log>
+                        <send/>
+                    </case>
+                    <case regex="soap12">
+                        <log level="full">
+                            <property name="soap_12" value="Soap 1.2"/>
+                        </log>
+                        <drop/>
+                    </case>
+                </switch>
+
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <description></description>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+</definitions>
+

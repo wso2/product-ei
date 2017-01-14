@@ -1,0 +1,31 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<proxy name="switchSoap11Sample" transports="https,http" trace="disable"
+		startOnLoad="true">
+		<description />
+		<target>
+			<inSequence>
+				<switch xmlns:Envelope="http://schemas.xmlsoap.org/soap/envelope/"
+					source="get-property('MESSAGE_FORMAT')">
+					<case regex="soap11">
+						<log level="full">
+							<property name="soap_11" value="Soap 1.1" />
+						</log>
+						<send />
+					</case>
+					<case regex="soap12">
+						<log level="full">
+							<property name="soap_12" value="Soap 1.2" />
+						</log>
+						<send />
+					</case>
+				</switch>
+
+			</inSequence>
+			<outSequence>
+				<send />
+			</outSequence>
+		</target>
+		<description></description>
+	</proxy>
+</definitions>
+

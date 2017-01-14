@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api name="StockQuoteAPI" context="/stockquote">
+        <resource methods="GET" uri-template="/view?Name={symbol}">
+            <inSequence>
+                <log>
+                    <property name="SymboValue" expression="get-property('uri.var.symbol')"/>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <m0:getQuote xmlns:m0="http://services.samples">
+                            <m0:request>
+                                <m0:symbol>$1</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('uri.var.symbol')"/>
+                    </args>
+                </payloadFactory>
+                <header name="Action" value="urn:getQuote"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"
+                                 format="soap11"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </resource>
+        <resource methods="POST" url-mapping="/order/*">
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <header name="Action" value="urn:placeOrder"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"
+                                 format="soap11"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>

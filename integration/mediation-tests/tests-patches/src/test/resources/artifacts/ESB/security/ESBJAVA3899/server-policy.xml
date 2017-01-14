@@ -1,0 +1,33 @@
+<wsp:Policy wsu:Id="UTOverTransport" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+        <wsp:Policy>
+          <sp:TransportToken>
+            <wsp:Policy>
+              <sp:HttpsToken RequireClientCertificate="true"/>
+            </wsp:Policy>
+          </sp:TransportToken>
+          <sp:AlgorithmSuite>
+            <wsp:Policy>
+              <sp:Basic256/>
+            </wsp:Policy>
+          </sp:AlgorithmSuite>
+          <sp:Layout>
+            <wsp:Policy>
+              <sp:Lax/>
+            </wsp:Policy>
+          </sp:Layout>
+        </wsp:Policy>
+      </sp:TransportBinding>
+      <rampart:RampartConfig xmlns:rampart="http://ws.apache.org/rampart/policy">
+        <rampart:encryptionUser>useReqSigCert</rampart:encryptionUser>
+        <rampart:timestampPrecisionInMilliseconds>true</rampart:timestampPrecisionInMilliseconds>
+        <rampart:timestampTTL>300</rampart:timestampTTL>
+        <rampart:timestampMaxSkew>300</rampart:timestampMaxSkew>
+        <rampart:tokenStoreClass>org.wso2.carbon.security.util.SecurityTokenStore</rampart:tokenStoreClass>
+        <rampart:nonceLifeTime>300</rampart:nonceLifeTime>
+      </rampart:RampartConfig>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>

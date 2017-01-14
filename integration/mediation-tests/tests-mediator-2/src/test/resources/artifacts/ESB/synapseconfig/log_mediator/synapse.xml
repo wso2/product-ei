@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <endpoint name="epr">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService/"/>
+    </endpoint>
+    <sequence name="logCategoryTestSequence">
+        <in>
+            <log level="custom" category="TRACE">
+                <property name="trace_custom" value="*****IN-LOGGING AT TRACE LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="custom" category="INFO">
+                <property name="trace_custom" value="*****TEST CUSTOM LOGGING MESSAGE TO SYSTEM LOGS TEST*****"/>
+            </log>
+            <log level="full" category="TRACE">
+                <property name="trace_full" value="*****IN-LOGGING AT TRACE LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log category="TRACE">
+                <property name="trace_simple" value="*****IN-LOGGING AT TRACE LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers" category="TRACE">
+                <property name="trace_header" value="*****IN-LOGGING AT TRACE LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <log level="custom" category="DEBUG">
+                <property name="debug_custom" value="*****IN-LOGGING AT DEBUG LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="full" category="DEBUG">
+                <property name="debug_full" value="*****IN-LOGGING AT DEBUG LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log category="DEBUG">
+                <property name="debug_simple" value="*****IN-LOGGING AT DEBUG LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers" category="DEBUG">
+                <property name="debug_header" value="*****IN-LOGGING AT DEBUG LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <log level="custom">
+                <property name="info_custom" value="*****IN-LOGGING AT INFO LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="full">
+                <property name="info_full" value="*****IN-LOGGING AT INFO LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log>
+                <property name="info_simple" value="*****IN-LOGGING AT INFO LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers">
+                <property name="info_header" value="*****IN-LOGGING AT INFO LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <log level="custom" category="WARN">
+                <property name="warn_custom" value="*****IN-LOGGING AT WARN LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="full" category="WARN">
+                <property name="warn_full" value="*****IN-LOGGING AT WARN LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log category="WARN">
+                <property name="warn_simple" value="*****IN-LOGGING AT WARN LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers" category="WARN">
+                <property name="warn_header" value="*****IN-LOGGING AT WARN LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <log level="custom" category="ERROR">
+                <property name="error_custom" value="*****IN-LOGGING AT ERROR LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="full" category="ERROR">
+                <property name="error_full" value="*****IN-LOGGING AT ERROR LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log category="ERROR">
+                <property name="error_simple" value="*****IN-LOGGING AT ERROR LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers" category="ERROR">
+                <property name="error_header" value="*****IN-LOGGING AT ERROR LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <log level="custom" category="FATAL">
+                <property name="fatal_custom" value="*****IN-LOGGING AT FATAL LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="full" category="FATAL">
+                <property name="fatal_full" value="*****IN-LOGGING AT FATAL LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log category="FATAL">
+                <property name="fatal_simple" value="*****IN-LOGGING AT FATAL LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers" category="FATAL">
+                <property name="fatal_header" value="*****IN-LOGGING AT FATAL LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </in>
+        <out>
+            <log level="custom" category="TRACE">
+                <property name="trace_custom" value="*****OUT-LOGGING AT TRACE LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <log level="full" category="TRACE">
+                <property name="trace_full" value="*****OUT-LOGGING AT TRACE LEVEL-FULL LEVEL*****"/>
+            </log>
+            <log category="TRACE">
+                <property name="trace_simple" value="*****OUT-LOGGING AT TRACE LEVEL-SIMPLE LEVEL*****"/>
+            </log>
+            <log level="headers" category="TRACE">
+                <property name="trace_header" value="*****OUT-LOGGING AT TRACE LEVEL-HEADER LEVEL*****"/>
+            </log>
+            <send/>
+        </out>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <sequence key="logCategoryTestSequence"/>
+    </sequence>
+</definitions>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <header name="To" expression="get-property('To')"/>
+        <header name="Action" expression="get-property('Action')"/>
+        <callout>
+            <source xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                    xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            <target xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                    xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+        </callout>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <send/>
+        <drop/>
+    </sequence>
+</definitions>

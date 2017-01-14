@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="CallerProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <call-template target="Templ1"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <template name="Templ2">
+        <sequence>
+            <log level="custom">
+                <property name="LINE" value="Line 1"/>
+                <property xmlns:ns2="http://org.apache.synapse/xsd"
+                          xmlns:ns="http://org.apache.synapse/xsd"
+                          xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                          name="MSG"
+                          expression="$func:MSG"/>
+            </log>
+            <log level="custom">
+                <property name="LINE" value="Line 2"/>
+                <property xmlns:ns2="http://org.apache.synapse/xsd"
+                          xmlns:ns="http://org.apache.synapse/xsd"
+                          xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                          name="MSG"
+                          expression="$func:MSG"/>
+            </log>
+            <log level="custom">
+                <property name="LINE" value="Line 3"/>
+                <property xmlns:ns2="http://org.apache.synapse/xsd"
+                          xmlns:ns="http://org.apache.synapse/xsd"
+                          xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                          name="MSG"
+                          expression="$func:MSG"/>
+            </log>
+        </sequence>
+        <parameter name="MSG"/>
+    </template>
+    <template name="Templ1">
+        <sequence>
+            <clone>
+                <target>
+                    <sequence>
+                        <call-template target="Templ2">
+                            <with-param name="MSG" value="Call-1"/>
+                        </call-template>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <call-template target="Templ2">
+                            <with-param name="MSG" value="Call-2"/>
+                        </call-template>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <call-template target="Templ2">
+                            <with-param name="MSG" value="Call-3"/>
+                        </call-template>
+                    </sequence>
+                </target>
+            </clone>
+        </sequence>
+    </template>
+</definitions>

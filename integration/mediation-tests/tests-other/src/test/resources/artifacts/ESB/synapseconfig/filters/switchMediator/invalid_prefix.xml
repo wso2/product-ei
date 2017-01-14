@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<sequence name="fault">
+		<log level="full">
+			<property name="MESSAGE" value="Executing default &#34;fault&#34; sequence" />
+			<property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+			<property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+		</log>
+		<drop />
+	</sequence>
+	<sequence name="main">
+		<in>
+			<switch xmlns:m1="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+				<case regex="IBM">
+					<property name="symbol" value="Great stock - IBM" />
+				</case>
+				<case regex="MSFT">
+					<property name="symbol" value="Are you sure? - MSFT" />
+				</case>
+				<default>
+					<property name="symbol"
+						expression="fn:concat('Normal Stock - ', //m0:getQuote/m0:request/m0:symbol)" />
+				</default>
+			</switch>
+			<log level="custom">
+				<property name="symbol" expression="get-property('symbol')" />
+				<property name="epr" expression="get-property('To')" />
+			</log>
+			<send />
+		</in>
+		<out>
+			<send />
+		</out>
+	</sequence>
+</definitions>

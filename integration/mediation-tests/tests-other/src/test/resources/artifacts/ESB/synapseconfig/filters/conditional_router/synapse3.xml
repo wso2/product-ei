@@ -1,0 +1,80 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="StockQuoteProxy1" transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <inSequence>
+                <conditionalRouter continueAfter="false">
+                    <!-- condition with break_route=true  -->
+                    <conditionalRoute breakRoute="true">
+                        <condition>
+                            <match xmlns="" type="header" source="foo" regex="bar.*"/>
+                        </condition>
+                        <target sequence="cnd1_seq"/>
+                    </conditionalRoute>
+                     <!-- In the test this will not be executed, as message satisfies first conditional_route -->
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                            <match xmlns="" type="header" source="foo" regex="bar.*"/>
+                        </condition>
+                        <target sequence="cnd2_seq"/>
+                    </conditionalRoute>
+                </conditionalRouter>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxy2" transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <inSequence>
+                <conditionalRouter continueAfter="false">
+                    <!-- condition with break_route=false  -->
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                           <match xmlns="" type="header" source="foo" regex="bar.*"/>
+                        </condition>
+                        <target sequence="cnd1_seq"/>
+                    </conditionalRoute>
+
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                            <match xmlns="" type="header" source="foo" regex="ba.*"/>
+                        </condition>
+                        <target sequence="cnd2_seq"/>
+                    </conditionalRoute>
+                </conditionalRouter>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+
+    <sequence name="cnd1_seq">
+        <log level="custom">
+            <property name="MSG_FLOW" value="Condition (I) Satisfied"/>
+        </log>
+    </sequence>
+
+    <sequence name="cnd2_seq">
+        <log level="custom">
+            <property name="MSG_FLOW" value="Condition (II) Satisfied"/>
+        </log>
+        <!-- Call for sending message to endpoint -->
+        <sequence key="send_seq"/>
+    </sequence>
+
+    <sequence name="send_seq">
+        <log level="custom">
+            <property name="DEBUG" value="Condition Satisfied"/>
+        </log>
+        <send>
+            <endpoint name="simple">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+</definitions>

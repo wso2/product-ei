@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="Axis2ProxyService" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="COPY_CONTENT_LENGTH_FROM_INCOMING" value="false" scope="axis2"/>
+                <property name="FORCE_HTTP_CONTENT_LENGTH" scope="axis2" value="false"></property>
+
+                <log>
+                    <property name="server-name" expression="get-property('SERVER_IP')"/>
+                </log>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <endpoint name="Axis2EP">
+        <address uri="http://localhost:8991/services/SimpleStockQuoteService"/>
+    </endpoint>
+</definitions>

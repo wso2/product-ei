@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="ResutDisplayServiceTransform">
+    <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" version="2.0" exclude-result-prefixes="fn">
+        <xsl:template match="/">
+            <test:displayClubDetails xmlns:test="http://test.wso2.org">
+                <test:clubName>Charith</test:clubName>
+                <test:profile>Test</test:profile>
+            </test:displayClubDetails>
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>

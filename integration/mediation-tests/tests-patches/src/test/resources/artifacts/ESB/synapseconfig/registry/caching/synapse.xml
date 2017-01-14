@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">0</parameter>
+    </registry>
+    <sequence name="fault">
+        <property name="test" expression="get-property('registry','conf:/@cache_test')" scope="default"/>
+        <log level="custom">
+            <property name="FROM" value="fault"/>
+            <property name="test" expression="$ctx:test"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <property name="test" expression="get-property('registry','conf:/@cache_test')" scope="default"/>
+            <log level="custom">
+                <property name="FROM" value="in"/>
+                <property name="test" expression="$ctx:test"/>
+            </log>
+            <drop/>
+        </in>
+        <out>
+            <drop/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

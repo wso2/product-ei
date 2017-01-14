@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="club_profile_ds_endpoint">
+    <address uri="http://10.100.2.122:9766/services/ClubProfileDS1/" statistics="enable" format="pox"/>
+</endpoint>

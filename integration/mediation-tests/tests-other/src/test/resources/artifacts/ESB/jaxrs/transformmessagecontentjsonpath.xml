@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager">
+      <parameter name="cachableDuration">15000</parameter>
+   </taskManager>
+   <proxy name="TransformInJsonPath"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <filter source="get-property('axis2', 'HTTP_METHOD')" regex="POST">
+               <then>
+                  <log level="custom">
+                     <property name="LOG_METHOD" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                  </log>
+                  <property name="HTTP_METHOD" value="POST" scope="axis2" type="STRING"/>
+                  <payloadFactory media-type="json">
+                     <format>{"album":"$1","singer":"$2"}</format>
+                     <args>
+                        <arg value="Fire in the sky"/>
+                        <arg evaluator="json" expression="$.album"/>
+                     </args>
+                  </payloadFactory>
+                  <send>
+                     <endpoint>
+                        <address uri="http://localhost:8080/rest/api/music/post"/>
+                     </endpoint>
+                  </send>
+               </then>
+               <else>
+                  <log level="custom">
+                     <property name="LOG_METHOD" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                  </log>
+                  <send>
+                     <endpoint>
+                        <http method="GET"
+                              uri-template="http://localhost:8080/rest/api/music/get?album=Fire%20in%20the%20sky"/>
+                     </endpoint>
+                  </send>
+               </else>
+            </filter>
+         </inSequence>
+         <outSequence>
+            <log>
+               <property name="JSON-Payload" expression="json-eval($.)"/>
+            </log>
+            <send/>
+         </outSequence>
+      </target>
+   </proxy>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <log/>
+      <drop/>
+   </sequence>
+</definitions>

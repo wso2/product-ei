@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- CBR with the Switch-case mediator, using message properties -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="main">
+        <in>
+            <switch source="//m0:getQuote/m0:request/m0:symbol" xmlns:m0="http://services.samples">
+                <case regex="IBM">
+                    <!-- the property mediator sets a local property on the *current* message -->
+                    <property name="symbol" value="Great stock - IBM"/>
+                </case>
+                <case regex="MSFT">
+                    <property name="symbol" value="Are you sure? - MSFT"/>
+                </case>
+                <default>
+                    <!-- it is possible to assign the result of an XPath expression as well -->
+                    <property name="symbol"
+                              expression="fn:concat('Normal Stock - ', //m0:getQuote/m0:request/m0:symbol)"
+                              xmlns:m0="http://services.samples"/>
+                </default>
+            </switch>
+            <log level="custom">
+                <!-- the get-property() XPath extension function allows the lookup of local message properties
+                    as well as properties from the Axis2 or Transport contexts (i.e. transport headers) -->
+                <property name="symbol" expression="get-property('symbol')"/>
+                <!-- the get-property() function supports the implicit message headers To/From/Action/FaultTo/ReplyTo -->
+                <property name="epr" expression="get-property('To')"/>
+            </log>
+            <!-- Send the messages where they are destined to (i.e. the 'To' EPR of the message) -->
+            <send/>
+        </in>
+        <out>
+            <send/>
+        </out>
+    </sequence>
+</definitions>

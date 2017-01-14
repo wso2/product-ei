@@ -1,0 +1,11 @@
+<endpoint xmlns="http://ws.apache.org/ns/synapse">
+   <address uri="http://localhost:9000/services/SimpleStockQuoteService">
+      <suspendOnFailure>
+         <progressionFactor>1.0</progressionFactor>
+      </suspendOnFailure>
+      <markForSuspension>
+         <retriesBeforeSuspension>0</retriesBeforeSuspension>
+         <retryDelay>0</retryDelay>
+      </markForSuspension>
+   </address>
+</endpoint>

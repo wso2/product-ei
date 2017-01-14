@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="serviceTest"
+     context="/serviceTest">
+    <resource methods="GET" uri-template="/test*">
+        <inSequence>
+            <log level="full"/>
+            <send>
+                <endpoint>
+                    <http method="get"
+                          uri-template="http://localhost:8089/gettest"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/notfound">
+        <inSequence>
+            <log level="full"/>
+            <send>
+                <endpoint>
+                    <http method="get"
+                          uri-template="http://localhost:8089/notfound"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

@@ -1,0 +1,7 @@
+<eventSource name="SampleEventSource" xmlns="http://ws.apache.org/ns/synapse">
+    <subscriptionManager class="org.apache.synapse.eventing.managers.DefaultInMemorySubscriptionManager">
+        <property name="topicHeaderName" value="Topic"/>
+        <property name="topicHeaderNS" value="http://apache.org/aip"/>
+    </subscriptionManager>
+</eventSource>
+

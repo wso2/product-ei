@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="booleanVal" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="TRUE"  scope="default" type="BOOLEAN" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="booleanXpath" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="BOOLEAN" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="doubleVal" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="8888888888.8888888888"  scope="default" type="DOUBLE" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="doubleXpath" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="DOUBLE" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="floatVal" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="888888.888888"  scope="default" type="FLOAT" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="floatXpath" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="FLOAT" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="integerValProperty" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="88888888" scope="default" type="INTEGER" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="integerXpathProperty" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="INTEGER" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="longVal" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="888888888"  scope="default" type="LONG" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="longXpath" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="LONG" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="shortVal" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="88"  scope="default" type="SHORT" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="shortXpath" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="SHORT" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="stringValProperty" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" value="WSO2 Lanka"  scope="default" type="STRING" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="stringXpathProperty" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="MyProp" expression="//m0:getQuote/m0:request/m0:symbol"  scope="default" type="STRING" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('MyProp')" />
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="static" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <case regex="MSFT">
+                        <property name="symbol" value="MSFT"/>
+                    </case>
+                    <default>
+                        <property name="symbol" expression="fn:concat('Normal Stock - ', //m0:getQuote/m0:request/m0:symbol)"/>
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property name="symbol" expression="get-property('symbol')"/>
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="Axis2ProxyService" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="to-header" expression="get-property('To')"/>
+                    <property name="from-header" expression="get-property('From')"/>
+                    <property name="action-header" expression="get-property('Action')"/>
+                    <property name="replyto-header" expression="get-property('ReplyTo')"/>
+                    <property name="messageid-header" expression="get-property('MessageID')"/>
+                    <property name="faultto-header" expression="get-property('FaultTo')"/>
+                    <property name="content-type" expression="$trp:Content-Type"/>
+                    <property xmlns:ser="http://service.carbon.wso2.org" name="body" expression="$body/ser:echoInt"/>
+                    <property xmlns:wsa="http://www.w3.org/2005/08/addressing" name="header" expression="$header/wsa:To"/>
+                </log>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+
+    <proxy name="negative" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <case regex="MSFT">
+                        <property name="symbol" expression="fn:concatXXX()"/>
+                    </case>
+                    <default>
+                        <property name="symbol" value="Test Invalid Scope" scope="default"/>
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property name="symbol" expression="$trp:symbol"/>
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="SynapseXpathvariables" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="trp" expression="$trp:Content-Type"/>
+                    <property xmlns:ser="http://service.carbon.wso2.org" name="body" expression="$body/getQuote"/>
+                    <property xmlns:wsa="http://www.w3.org/2005/08/addressing" name="header" expression="$header/wsa:To"/>
+                    <property name="axis2" expression="$axis2:messageType"/>
+                    <property name="ctx" expression="$ctx:RESPONSE"/>
+                </log>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="SynapseProperties" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="ctx-Response" expression="$ctx:RESPONSE"/>
+                    <property name="ctx-Out-Only" expression="$ctx:OUT-ONLY"/>
+                </log>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+
+    <proxy name="HttpProperties" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="remote-host" expression="get-property('axis2','REMOTE_HOST')" />
+                    <property name="http-method" expression="get-property('axis2','HTTP_METHOD')" />
+                    <property name="remote-address" expression="get-property('axis2','REMOTE_ADDR')" />
+                </log>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="GenericProperties" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="server-ip" expression="get-property('SERVER_IP')"/>
+                </log>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+
+    <endpoint name="Axis2EP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService">
+            <enableAddressing/>
+        </address>
+    </endpoint>
+
+
+</definitions>

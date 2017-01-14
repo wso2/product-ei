@@ -1,0 +1,40 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<proxy name="switchSample1" transports="https http" startOnLoad="true"
+		trace="disable">
+		<description />
+		<target>
+			<inSequence>
+				<switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+					<case regex="IBM">
+						<property name="symbol" value="Great stock - IBM" scope="default" />
+						<send />
+					</case>
+					<case regex="MSFT">
+						<property name="symbol" value="Are you sure? - MSFT"
+							scope="default" />
+						<send />
+					</case>
+				</switch>
+				<log level="custom">
+					<property name="symbol" expression="get-property('symbol')" />
+					<property name="epr" expression="get-property('To')" />
+				</log>
+			</inSequence>
+			<outSequence>
+				<send />
+			</outSequence>
+		</target>
+	</proxy>
+	<sequence name="fault">
+		<log level="full">
+			<property name="MESSAGE" value="Executing default &#34;fault&#34; sequence" />
+			<property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+			<property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+		</log>
+		<drop />
+	</sequence>
+	<sequence name="main">
+		<log />
+		<drop />
+	</sequence>
+</definitions>

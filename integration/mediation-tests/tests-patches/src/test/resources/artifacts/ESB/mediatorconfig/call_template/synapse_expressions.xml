@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="SplitAggregateProxy123" startOnLoad="true">
+        <target>
+            <inSequence>
+                <call-template target="iter_func123">
+                    <with-param xmlns:m0="http://services.samples" name="iter_expr" value="{{//m0:getQuote/m0:request}}"/>
+                    <with-param name="symbol" value="WSO2"/>
+                    <with-param xmlns:m0="http://services.samples" name="attach_path" value="{{//m0:getQuote}}"/>
+                </call-template>
+            </inSequence>
+            <outSequence>
+                <call-template target="aggr_func123">
+                    <with-param xmlns:m0="http://services.samples" name="aggr_expr" value="{{//m0:getQuoteResponse}}"/>
+                </call-template>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+    <template name="aggr_func123">
+        <parameter name="aggr_expr"/>
+        <sequence>
+            <log level="full"/>
+            <aggregate>
+                <completeCondition>
+                    <messageCount min="-1" max="-1"/>
+                </completeCondition>
+                <onComplete expression="$func:aggr_expr">
+                    <log level="full"/>
+                    <send/>
+                </onComplete>
+            </aggregate>
+        </sequence>
+    </template>
+    <template name="iter_func123">
+        <parameter name="iter_expr"/>
+        <parameter name="attach_path"/>
+        <parameter name="symbol"/>
+        <sequence>
+            <property name="sym" expression="$func:symbol"/>
+            <iterate xmlns:m0="http://services.samples" preservePayload="true" attachPath="$func:attach_path" expression="$func:iter_expr">
+                <target>
+                    <sequence>
+                        <enrich>
+                            <source type="property" clone="true" property="sym"/>
+                            <target xpath="//m0:request/m0:symbol/text()"/>
+                        </enrich>
+                        <send>
+                            <endpoint>
+                                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </sequence>
+    </template>
+</definitions>

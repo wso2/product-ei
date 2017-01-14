@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="GenericProxy"
+           transports="jms"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <property name="OUT_ONLY" value="true"/>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <header name="Action" value="urn:placeOrder"/>
+            </inSequence>
+        </target>
+        <parameter name="transport.jms.ContentType">
+            <rules>
+                <jmsProperty>contentType</jmsProperty>
+                <default>text/xml</default>
+            </rules>
+        </parameter>
+    </proxy>
+
+    <sequence name="fault">
+        <log category="INFO" level="full" separator=",">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log category="INFO" level="full" separator=","/>
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <then>
+                    <send/>
+                </then>
+                <else/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <sequence name="requestHandlerSeq" onError="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="test" value="requestHandlerSequence"/>
+        </log>
+    </sequence>
+    <sequence name="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="fault" value="Inside the Fault sequence"/>
+        </log>
+    </sequence>
+
+
+</definitions>

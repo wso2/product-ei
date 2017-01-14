@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+-->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <api xmlns="http://ws.apache.org/ns/synapse" name="TestApi" context="/test">
+      <resource methods="GET" url-mapping="/testapi1">
+         <inSequence>
+            <property name="ContentType" value="application/json" scope="axis2"/>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <send>
+               <endpoint>
+                  <http method="get" uri-template="http://localhost:8480/mockservice/test1"/>
+               </endpoint>
+            </send>
+         </inSequence>
+         <outSequence>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <log>
+               <property name="JSON-Payload" expression="json-eval($.)"/>
+            </log>
+            <send/>
+         </outSequence>
+      </resource>
+      <resource methods="GET" url-mapping="/testapi2">
+           <inSequence>
+               <property name="ContentType" value="application/json" scope="axis2"/>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <send>
+                   <endpoint>
+                       <http method="get" uri-template="http://localhost:8480/mockservice/test2"/>
+                   </endpoint>
+               </send>
+           </inSequence>
+           <outSequence>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+               <log>
+                   <property name="JSON-Payload" expression="json-eval($.)"/>
+               </log>
+               <send/>
+           </outSequence>
+      </resource>
+      <resource methods="GET" url-mapping="/testapi3">
+           <inSequence>
+               <property name="ContentType" value="application/json" scope="axis2"/>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <send>
+                   <endpoint>
+                       <http method="get" uri-template="http://localhost:8480/mockservice/test3"/>
+                   </endpoint>
+               </send>
+           </inSequence>
+           <outSequence>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+               <log>
+                   <property name="JSON-Payload" expression="json-eval($.)"/>
+               </log>
+               <send/>
+           </outSequence>
+       </resource>
+       <resource methods="GET" url-mapping="/testapi4">
+           <inSequence>
+               <property name="ContentType" value="application/json" scope="axis2"/>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <send>
+                   <endpoint>
+                       <http method="get" uri-template="http://localhost:8480/mockservice/test4"/>
+                   </endpoint>
+               </send>
+           </inSequence>
+           <outSequence>
+               <property name="messageType" value="application/json" scope="axis2"/>
+               <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+               <log>
+                   <property name="JSON-Payload" expression="json-eval($.)"/>
+               </log>
+               <send/>
+           </outSequence>
+       </resource>
+   </api>
+   <api xmlns="http://ws.apache.org/ns/synapse"
+        name="mockservice"
+        context="/mockservice">
+      <resource methods="GET" url-mapping="/test1">
+         <inSequence>
+            <payloadFactory media-type="json">
+               <format>{  "numberfield": "23",
+                          "objectField": { "arrayField": [ { "stringfield": "string",
+                          "objectField": { "floatValue": 0.95 }, "zeroElementArrayField": [] } ]}
+                       }</format>
+               <args/>
+            </payloadFactory>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <property name="messageType"
+                      value="application/json"
+                      scope="axis2"
+                      type="STRING"/>
+            <respond/>
+         </inSequence>
+      </resource>
+      <resource methods="GET" url-mapping="/test2">
+           <inSequence>
+               <payloadFactory media-type="json">
+                   <format>{"arrayField":[
+                       { "numField1" : "1" },
+                       { "numField2" : "2" },
+                       { "numField3" : "3" },
+                       { "numField4" : "4" }
+                       ]}
+                   </format>
+                   <args/>
+               </payloadFactory>
+               <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+               <property name="messageType"
+                         value="application/json"
+                         scope="axis2"
+                         type="STRING"/>
+               <respond/>
+           </inSequence>
+       </resource>
+       <resource methods="GET" url-mapping="/test3">
+           <inSequence>
+               <payloadFactory media-type="json">
+                   <format>{"singleElementArrayField":[
+                       { "numField1" : "1" }
+                       ]}
+                   </format>
+                   <args/>
+               </payloadFactory>
+               <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+               <property name="messageType"
+                         value="application/json"
+                         scope="axis2"
+                         type="STRING"/>
+               <respond/>
+           </inSequence>
+       </resource>
+       <resource methods="GET" url-mapping="/test4">
+           <inSequence>
+               <payloadFactory media-type="json">
+                   <format>{"multipleElementArrayField":[
+                       { "numField1" : "1" },
+                       { "numField2" : "2" },
+                       { "numField3" : "3" }
+                       ]}
+                   </format>
+                   <args/>
+               </payloadFactory>
+               <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+               <property name="messageType"
+                         value="application/json"
+                         scope="axis2"
+                         type="STRING"/>
+               <respond/>
+           </inSequence>
+       </resource>
+   </api>
+</definitions>
+
+
+

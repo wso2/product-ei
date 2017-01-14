@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <sequence name="myFaultHandler">
+
+        <property name="uniqueKey" value="123" scope="default" type="STRING"/>
+        <property name="customErrorCode" value="8719" scope="default" type="STRING"/>
+        <property name="customErrorText" value="Issue has " scope="default" type="STRING"/>
+        <property name="customTime" expression="get-property('SYSTEM_DATE')" scope="default" type="STRING"/>
+
+        <script language="js" key="conf:/script_js/detailTransform.js" function="transformDetail"/>
+        <log level="custom">
+            <property name="Detail" expression="get-property('customErrorDetail')" />
+        </log>
+        <makefault version="soap11">
+            <code xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/" value="tns:Receiver" />
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+            <detail expression="get-property('customErrorDetail')" />
+        </makefault>
+        <send/>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default fault sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main" onError="myFaultHandler">
+        <in>
+            <log level="full"/>
+            <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                <case regex="MSFT">
+                    <send>
+                        <endpoint name="endpoint_urn_uuid_F3FC39CF93F681A11649593938524451942754528">
+                            <address uri="http://bogus:9000/services/NonExistentStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="SUN">
+                    <send>
+                        <endpoint name="endpoint_urn_uuid_F3FC39CF93F681A1164959398253284-1608236576">
+                            <address uri="http://localhost:9009/services/NonExistentStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+            </switch>
+            <drop/>
+        </in>
+        <log level="full"/>
+        <out>
+            <send/>
+        </out>
+        <log level="full"/>
+    </sequence>
+</definitions>

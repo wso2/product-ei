@@ -1,0 +1,4 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="conf_test_sequence_build_message_conf">
+    <log level="full"/>
+    <send/>
+</sequence>

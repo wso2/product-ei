@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <sequence name="SampleSequence">
+       <log level="custom">
+          <property name="MSG" value="SEQUENCE INVOKED *************************************************************"/>
+       </log>
+       <property name="OUT_ONLY" value="true"/>
+       <send>
+          <endpoint>
+             <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+          </endpoint>
+       </send>
+    </sequence>
+
+</definitions>

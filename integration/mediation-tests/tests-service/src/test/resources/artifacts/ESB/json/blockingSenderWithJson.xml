@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="jsonproducer"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <payloadFactory media-type="json">
+                    <format>{"RESPONSE":"$1", "ID":$2, "ID_STR":"$3"}</format>
+                    <args>
+                        <arg evaluator="json" expression="request.responsefield"/>
+                        <arg evaluator="json" expression="request.idfield"/>
+                        <arg evaluator="json" expression="request.idfield"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <messageStore name="one"/>
+
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="loganddrop">
+        <log level="custom">
+            <property xmlns:ns="http://org.apache.synapse/xsd" name="[loganddrop]REPLY-JSON" expression="json-eval($.)"></property>
+        </log>
+        <drop></drop>
+    </sequence>
+
+    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="TestEp">
+        <address uri="http://localhost:8280/services/jsonproducer">
+            <suspendOnFailure>
+                <progressionFactor>1.0</progressionFactor>
+            </suspendOnFailure>
+            <markForSuspension>
+                <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                <retryDelay>0</retryDelay>
+            </markForSuspension>
+        </address>
+    </endpoint>
+
+    <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="pullfromone"
+                      targetEndpoint="TestEp"
+                      messageStore="one">
+        <parameter name="message.processor.reply.sequence">loganddrop</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="interval">1000</parameter>
+        <parameter name="is.active">true</parameter>
+    </messageProcessor>
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="tesforwardingprocessor"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <store messageStore="one"/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="testcallout"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="[testcallout]REQUEST-JSON" expression="json-eval($.)"/>
+                </log>
+                <callout serviceURL="http://localhost:8280/services/jsonproducer"
+                         action="urn:mediate">
+                    <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                    <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                </callout>
+                <log level="custom">
+                    <property name="[testcallout]REPLY-JSON" expression="json-eval($.)"/>
+                </log>
+                <respond/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <sequence name="fault">
+        <makefault version="soap11">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  expression="get-property('ERROR_CODE')"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <log level="full"/>
+        <send/>
+    </sequence>
+</definitions>

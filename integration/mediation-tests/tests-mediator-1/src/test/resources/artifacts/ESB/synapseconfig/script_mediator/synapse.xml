@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <localEntry key="stockquoteScript" src="file:repository/samples/resources/script/stockquoteTransform.js"/>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <script language="js">var symbol = mc.getPayloadXML()..*::Code.toString();
+                mc.setPayloadXML(
+                &lt;m:getQuote xmlns:m="http://services.samples"&gt;
+                &lt;m:request&gt;
+                &lt;m:symbol&gt;{symbol}&lt;/m:symbol&gt;
+                &lt;/m:request&gt;
+                &lt;/m:getQuote&gt;);</script>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </in>
+        <out>
+            <script language="js" key="stockquoteScript" function="transformResponse"/>
+            <send/>
+        </out>
+    </sequence>
+</definitions>
