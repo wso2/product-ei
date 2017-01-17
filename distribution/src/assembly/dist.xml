@@ -25,8 +25,8 @@
     <fileSets>
         <!-- Copying p2 profile and osgi bundles-->
         <fileSet>
-            <directory>../p2-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/components</directory>
-            <outputDirectory>wso2ei-${pom.version}/repository/components</outputDirectory>
+            <directory>../p2-profile/wso2ei-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
             <excludes>
                 <exclude>**/eclipse.ini</exclude>
                 <exclude>**/*.lock</exclude>
@@ -35,11 +35,14 @@
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>wso2ei-${pom.version}/repository/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <includes>
-                <include>**</include>
-            </includes>
+            <directory>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
+            <excludes>
+                <exclude>**/eclipse.ini</exclude>
+                <exclude>**/*.lock</exclude>
+                <exclude>**/.data</exclude>
+                <exclude>**/.settings</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
 </assembly>

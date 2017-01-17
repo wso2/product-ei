@@ -117,15 +117,27 @@
                                         <include name="wso2ei-${product.ei.version}.zip" />
                                     </fileset>
                                 </unzip>
-                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/" overwrite="false">
-                                    <fileset dir="${tempdir}/wso2ei-${product.ei.version}/repository/components/">
+                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/"
+                                      overwrite="false">
+                                    <fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components/">
                                     </fileset>
                                 </copy>
+                                <!--<copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/analytics/"-->
+                                        <!--overwrite="false">-->
+                                    <!--<fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/analytics/">-->
+                                    <!--</fileset>-->
+                                <!--</copy>-->
+                                <!--<copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components"-->
+                                      <!--overwrite="false">-->
+                                    <!--<fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components">-->
+                                    <!--</fileset>-->
+                                <!--</copy>-->
                                 <delete file="target/wso2ei-${product.ei.version}.zip" />
                                 <delete dir="${tempdir}" />
                                 <mkdir dir="${tempdir}" />
                                 <unzip dest="${tempdir}">
-                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
+                                    <fileset
+                                            dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
                                         <include name="*.ui*.jar" />
                                     </fileset>
                                 </unzip>
@@ -167,17 +179,17 @@
                                 <property name="tempdir2" value="target/identity-ui" />
                                 <mkdir dir="${tempdir2}" />
                                 <!-- Move identity:user-roles menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
                                 <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
                                  <!--Move identity:user-store to config_menu-->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
                                 <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
                                 <!-- Move identity:key-store menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
                                 <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;manage_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
 
                                 <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties" token="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*" value="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*${line.separator}org.owasp.csrfguard.unprotected.Sequences=%servletContext%/carbon/sequences/*${line.separator}org.owasp.csrfguard.unprotected.Configadmin=%servletContext%/carbon/configadmin/*${line.separator}org.owasp.csrfguard.unprotected.Localentries=%servletContext%/carbon/localentries/*${line.separator}org.owasp.csrfguard.unprotected.Api=%servletContext%/carbon/api/*${line.separator}org.owasp.csrfguard.unprotected.Proxyservices=%servletContext%/carbon/proxyservices/*${line.separator}org.owasp.csrfguard.unprotected.Resources=%servletContext%/carbon/resources/*${line.separator}org.owasp.csrfguard.unprotected.Task=%servletContext%/carbon/task/*${line.separator}org.owasp.csrfguard.unprotected.RegistryResource=%servletContext%/registry/resource/*${line.separator}org.owasp.csrfguard.unprotected.TenantServices=^%servletContext%/t/.*/services/.*$${line.separator}org.owasp.csrfguard.unprotected.TenantProxyServices=^%servletContext%/t/.*/carbon/proxyservices/.*$${line.separator}org.owasp.csrfguard.unprotected.Saml2SSO=%servletContext%/acs" />
 
@@ -283,6 +295,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
