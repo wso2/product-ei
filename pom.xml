@@ -100,11 +100,6 @@
                 <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
                 <version>${stratos.version}</version>
             </dependency>
-<!--            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>org.wso2.stratos.esb.login.ui</artifactId>
-                <version>${stratos.version}</version>
-            </dependency>-->
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
@@ -238,21 +233,6 @@
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>${bouncycastle.version}</version>
             </dependency>
-<!--            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>org.wso2.esb.styles</artifactId>
-                <version>${product.esb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>org.wso2.esb.samples</artifactId>
-                <version>${product.esb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>extensions</artifactId>
-                <version>${product.esb.version}</version>
-            </dependency>-->
             <dependency>
                 <groupId>org.wso2.carbon.mediation</groupId>
                 <artifactId>org.wso2.carbon.inbound.stub</artifactId>
@@ -839,33 +819,33 @@
                 <version>${org.wso2.json.version}</version>
                 <scope>compile</scope>
             </dependency>
-<!--            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>admin-clients</artifactId>
-                <version>${product.esb.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.wso2.carbon.mediation</groupId>
-                        <artifactId>org.wso2.carbon.rest.api</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>integration-test-utils</artifactId>
-                <version>${product.esb.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.wso2.carbon.mediation</groupId>
-                        <artifactId>org.wso2.carbon.rest.api</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>service-samples</artifactId>
-                <version>${product.esb.version}</version>
-            </dependency>-->
+            <!--            <dependency>
+                            <groupId>org.wso2.esb</groupId>
+                            <artifactId>admin-clients</artifactId>
+                            <version>${product.esb.version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>org.wso2.carbon.mediation</groupId>
+                                    <artifactId>org.wso2.carbon.rest.api</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.wso2.esb</groupId>
+                            <artifactId>integration-test-utils</artifactId>
+                            <version>${product.esb.version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>org.wso2.carbon.mediation</groupId>
+                                    <artifactId>org.wso2.carbon.rest.api</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.wso2.esb</groupId>
+                            <artifactId>service-samples</artifactId>
+                            <version>${product.esb.version}</version>
+                        </dependency>-->
             <dependency>
                 <groupId>groovy</groupId>
                 <artifactId>groovy-all</artifactId>
@@ -921,11 +901,11 @@
                 <artifactId>carbon-p2-plugin</artifactId>
                 <version>${carbon.p2.plugin.version}}</version>
             </dependency>
-<!--            <dependency>
-                <groupId>org.wso2.esb</groupId>
-                <artifactId>ui-pages</artifactId>
-                <version>${product.esb.version}</version>
-            </dependency>-->
+            <!--            <dependency>
+                            <groupId>org.wso2.esb</groupId>
+                            <artifactId>ui-pages</artifactId>
+                            <version>${product.esb.version}</version>
+                        </dependency>-->
             <dependency>
                 <groupId>org.wso2.carbon.commons</groupId>
                 <artifactId>org.wso2.carbon.discovery.stub</artifactId>
@@ -997,6 +977,10 @@
 
         <product.ei.version>6.0.0-SNAPSHOT</product.ei.version>
 
+        <!--Business-Process-->
+        <carbon.business-process.version>4.4.10</carbon.business-process.version>
+        <bps.version>3.5.1</bps.version>
+
         <!-- Axis2 -->
         <axis2.wso2.version>1.6.1.wso2v20</axis2.wso2.version>
         <addressing.version>1.6.1-wso2v20</addressing.version>
@@ -1018,10 +1002,10 @@
         <carbon.mediation.version>4.6.10-SNAPSHOT</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.11</carbon.kernel.version>
+        <carbon.kernel.version>4.4.12</carbon.kernel.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.5.5</carbon.commons.version>
+        <carbon.commons.version>4.5.6</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.7.2</carbon.deployment.version>
@@ -1047,13 +1031,13 @@
         <!-- Carbon Multitenancy version-->
         <carbon.multitenancy.version>4.6.0</carbon.multitenancy.version>
 
-        <jaggery.version>0.13.0</jaggery.version>
-        <carbon.module.version>1.2.0</carbon.module.version>
+        <jaggery.version>0.12.8</jaggery.version>
+        <carbon.module.version>1.5.5</carbon.module.version>
         <email.module.version>1.2.0</email.module.version>
         <gadget.module.version>1.2.0</gadget.module.version>
-        <i18n.module.version>1.2.0</i18n.module.version>
+        <i18n.module.version>1.5.5</i18n.module.version>
         <oauth.module.version>1.2.0</oauth.module.version>
-        <process.module.version>1.2.0</process.module.version>
+        <process.module.version>1.5.5</process.module.version>
         <uuid.module.version>1.2.0</uuid.module.version>
         <ws.module.version>1.2.0</ws.module.version>
         <httpcore.version>4.1.2</httpcore.version>

@@ -17,7 +17,9 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2.ei</groupId>
@@ -65,6 +67,13 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.business-process</groupId>
+            <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
+            <version>${carbon.business-process.version}</version>
+            <classifier>web</classifier>
+            <type>zip</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -91,6 +100,44 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.carbon.business-process</groupId>
+                                    <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
+                                    <version>${carbon.business-process.version}</version>
+                                    <classifier>web</classifier>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.carbon.business-process</groupId>
+                                    <artifactId>org.wso2.carbon.humantask.humantaskweb</artifactId>
+                                    <version>${carbon.business-process.version}</version>
+                                    <classifier>web</classifier>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-war</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wso2.carbon.business-process</groupId>
+                                    <artifactId>org.wso2.carbon.bpmn.rest</artifactId>
+                                    <version>${carbon.business-process.version}</version>
+                                    <type>war</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target</outputDirectory>
+                                    <destFileName>bpmn.war</destFileName>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -110,79 +157,115 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <property name="tempdir" value="target/docs-temp" />
-                                <mkdir dir="${tempdir}" />
+                                <property name="tempdir" value="target/docs-temp"/>
+                                <mkdir dir="${tempdir}"/>
                                 <unzip dest="${tempdir}">
                                     <fileset dir="target">
-                                        <include name="wso2ei-${product.ei.version}.zip" />
+                                        <include name="wso2ei-${product.ei.version}.zip"/>
                                     </fileset>
                                 </unzip>
-                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/" overwrite="false">
-                                    <fileset dir="${tempdir}/wso2ei-${product.ei.version}/repository/components/">
+                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/"
+                                      overwrite="false">
+                                    <fileset
+                                            dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components/">
                                     </fileset>
                                 </copy>
-                                <delete file="target/wso2ei-${product.ei.version}.zip" />
-                                <delete dir="${tempdir}" />
-                                <mkdir dir="${tempdir}" />
+                                <!--<copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/analytics/"-->
+                                <!--overwrite="false">-->
+                                <!--<fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/analytics/">-->
+                                <!--</fileset>-->
+                                <!--</copy>-->
+                                <!--<copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components"-->
+                                <!--overwrite="false">-->
+                                <!--<fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components">-->
+                                <!--</fileset>-->
+                                <!--</copy>-->
+                                <delete file="target/wso2ei-${product.ei.version}.zip"/>
+                                <delete dir="${tempdir}"/>
+                                <mkdir dir="${tempdir}"/>
                                 <unzip dest="${tempdir}">
-                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
-                                        <include name="*.ui*.jar" />
+                                    <fileset
+                                            dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
+                                        <include name="*.ui*.jar"/>
                                     </fileset>
                                 </unzip>
                                 <move todir="${tempdir}/web/" includeemptydirs="false">
                                     <fileset dir="${tempdir}/web/">
-                                        <exclude name="**/yui/**" />
-                                        <exclude name="**/ajax/**" />
-                                        <exclude name="**/editarea/**" />
-                                        <exclude name="**/codepress/**" />
-                                        <exclude name="**/WEB-INF/**" />
-                                        <include name="**/*.html" />
+                                        <exclude name="**/yui/**"/>
+                                        <exclude name="**/ajax/**"/>
+                                        <exclude name="**/editarea/**"/>
+                                        <exclude name="**/codepress/**"/>
+                                        <exclude name="**/WEB-INF/**"/>
+                                        <include name="**/*.html"/>
                                     </fileset>
-                                    <mapper type="glob" from="*.html" to="*.xml" />
+                                    <mapper type="glob" from="*.html" to="*.xml"/>
                                 </move>
-                                <mkdir dir="src/site/xdoc" />
-                                <copy todir="src/site/xdoc" overwrite="false" includeemptydirs="false">
+                                <mkdir dir="src/site/xdoc"/>
+                                <copy todir="src/site/xdoc" overwrite="false"
+                                      includeemptydirs="false">
                                     <fileset dir="${tempdir}/web">
-                                        <exclude name="**/yui/**" />
-                                        <exclude name="**/ajax/**" />
-                                        <exclude name="**/WEB-INF/**" />
-                                        <exclude name="**/*.html" />
-                                        <exclude name="**/*.js" />
-                                        <exclude name="**/*.jsp" />
-                                        <exclude name="**/*.xsl" />
-                                        <exclude name="*.*" />
+                                        <exclude name="**/yui/**"/>
+                                        <exclude name="**/ajax/**"/>
+                                        <exclude name="**/WEB-INF/**"/>
+                                        <exclude name="**/*.html"/>
+                                        <exclude name="**/*.js"/>
+                                        <exclude name="**/*.jsp"/>
+                                        <exclude name="**/*.xsl"/>
+                                        <exclude name="*.*"/>
                                     </fileset>
                                 </copy>
                                 <copy todir="src/site" overwrite="false" includeemptydirs="false">
                                     <fileset dir="../docs">
                                     </fileset>
                                 </copy>
-                                <copy todir="target/site/" overwrite="false" includeemptydirs="false">
+                                <copy todir="target/site/" overwrite="false"
+                                      includeemptydirs="false">
                                     <fileset dir="src/site/xdoc/">
-                                        <include name="**/images/*.*" />
+                                        <include name="**/images/*.*"/>
                                     </fileset>
                                 </copy>
-                                <delete dir="${tempdir}" />
-                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/user-mgt.xml" token="&lt;Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property&gt;" value="&lt;!--Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property--&gt;" />
-                                <property name="tempdir2" value="target/identity-ui" />
-                                <mkdir dir="${tempdir2}" />
+                                <delete dir="${tempdir}"/>
+                                <replace
+                                        file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/user-mgt.xml"
+                                        token="&lt;Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property&gt;"
+                                        value="&lt;!--Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property--&gt;"/>
+                                <property name="tempdir2" value="target/identity-ui"/>
+                                <mkdir dir="${tempdir2}"/>
                                 <!-- Move identity:user-roles menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
-                                 <!--Move identity:user-store to config_menu-->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar"
+                                       dest="${tempdir2}"/>
+                                <replace file="${tempdir2}/META-INF/component.xml"
+                                         token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;"
+                                         value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;"/>
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar"
+                                     basedir="${tempdir2}"/>
+                                <!--Move identity:user-store to config_menu-->
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar"
+                                       dest="${tempdir2}"/>
+                                <replace file="${tempdir2}/META-INF/component.xml"
+                                         token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;"
+                                         value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;"/>
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar"
+                                     basedir="${tempdir2}"/>
                                 <!-- Move identity:key-store menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;manage_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar"
+                                       dest="${tempdir2}"/>
+                                <replace file="${tempdir2}/META-INF/component.xml"
+                                         token="&lt;parent-menu&gt;manage_menu&lt;/parent-menu&gt;"
+                                         value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;"/>
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar"
+                                     basedir="${tempdir2}"/>
 
-                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties" token="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*" value="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*${line.separator}org.owasp.csrfguard.unprotected.Sequences=%servletContext%/carbon/sequences/*${line.separator}org.owasp.csrfguard.unprotected.Configadmin=%servletContext%/carbon/configadmin/*${line.separator}org.owasp.csrfguard.unprotected.Localentries=%servletContext%/carbon/localentries/*${line.separator}org.owasp.csrfguard.unprotected.Api=%servletContext%/carbon/api/*${line.separator}org.owasp.csrfguard.unprotected.Proxyservices=%servletContext%/carbon/proxyservices/*${line.separator}org.owasp.csrfguard.unprotected.Resources=%servletContext%/carbon/resources/*${line.separator}org.owasp.csrfguard.unprotected.Task=%servletContext%/carbon/task/*${line.separator}org.owasp.csrfguard.unprotected.RegistryResource=%servletContext%/registry/resource/*${line.separator}org.owasp.csrfguard.unprotected.TenantServices=^%servletContext%/t/.*/services/.*$${line.separator}org.owasp.csrfguard.unprotected.TenantProxyServices=^%servletContext%/t/.*/carbon/proxyservices/.*$${line.separator}org.owasp.csrfguard.unprotected.Saml2SSO=%servletContext%/acs" />
+                                <replace
+                                        file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties"
+                                        token="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*"
+                                        value="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*${line.separator}org.owasp.csrfguard.unprotected.Sequences=%servletContext%/carbon/sequences/*${line.separator}org.owasp.csrfguard.unprotected.Configadmin=%servletContext%/carbon/configadmin/*${line.separator}org.owasp.csrfguard.unprotected.Localentries=%servletContext%/carbon/localentries/*${line.separator}org.owasp.csrfguard.unprotected.Api=%servletContext%/carbon/api/*${line.separator}org.owasp.csrfguard.unprotected.Proxyservices=%servletContext%/carbon/proxyservices/*${line.separator}org.owasp.csrfguard.unprotected.Resources=%servletContext%/carbon/resources/*${line.separator}org.owasp.csrfguard.unprotected.Task=%servletContext%/carbon/task/*${line.separator}org.owasp.csrfguard.unprotected.RegistryResource=%servletContext%/registry/resource/*${line.separator}org.owasp.csrfguard.unprotected.TenantServices=^%servletContext%/t/.*/services/.*$${line.separator}org.owasp.csrfguard.unprotected.TenantProxyServices=^%servletContext%/t/.*/carbon/proxyservices/.*$${line.separator}org.owasp.csrfguard.unprotected.Saml2SSO=%servletContext%/acs"/>
 
                                 <!-- Update Owasp.CsrfGuard.properties file with ValidateWhenNoSessionExists to disable validation on requests made with no valid session -->
-                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties" token="org.owasp.csrfguard.ValidateWhenNoSessionExists = true" value="org.owasp.csrfguard.ValidateWhenNoSessionExists = false" />
+                                <replace
+                                        file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties"
+                                        token="org.owasp.csrfguard.ValidateWhenNoSessionExists = true"
+                                        value="org.owasp.csrfguard.ValidateWhenNoSessionExists = false"/>
                             </tasks>
                         </configuration>
                     </execution>
@@ -191,14 +274,17 @@
                         <phase>install</phase>
                         <configuration>
                             <tasks>
-                                <delete dir="target/archive-tmp" />
-                                <delete dir="target/dependency-maven-plugin-markers" />
-                                <delete dir="target/maven-archiver" />
-                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}" />
-                                <delete dir="target/sources" />
-                                <delete dir="target/site" />
-                                <delete dir="src/site" />
-                                <delete dir="target/identity-ui" />
+                                <delete dir="target/archive-tmp"/>
+                                <delete dir="target/dependency-maven-plugin-markers"/>
+                                <delete dir="target/maven-archiver"/>
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}"/>
+                                <delete dir="target/sources"/>
+                                <delete dir="target/site"/>
+                                <delete dir="src/site"/>
+                                <delete dir="target/identity-ui"/>
+                                <delete dir="target/bpmn-explorer"/>
+                                <delete file="target/bpmn.war"/>
+                                <delete dir="target/humantask-explorer"/>
                             </tasks>
                         </configuration>
                         <goals>
@@ -241,7 +327,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2-beta-5</version> <!-- TODO: Update to latest after fixing config properly-->
+                <version>2.2-beta-5
+                </version> <!-- TODO: Update to latest after fixing config properly-->
                 <executions>
                     <execution>
                         <id>pre_dist</id>
@@ -283,6 +370,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>

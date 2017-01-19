@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+  ~ Copyright 2005-2013 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!--
+    This file defines the different classloading environments. This is container level config file. Individual webapps are not allowed to override these elements.
+    
+    ${carbon.home} represents the carbon.home system property.
+    Other system properties can be specified in a similar manner.
+-->
+<Classloading xmlns="http://wso2.org/projects/as/classloading-environments">
+    
+   <!-- 
+	We define three different environments. 
+	
+	1) Delegated environment - This is a virtual environment where all the resources belongs to these environments are loaded from the parent. This way you can control whats being loaded from the parent classloader. Only the packages and resources specified in the delegated environments are loaded from the parent. All the others are loaded from the local webapp's classpath. If a webapps has speficied two or more delegated environments, they all get merged at runtime. 
+    -->
+    <DelegatedEnvironments>
+
+        <DelegatedEnvironment>
+            <Name>Tomcat</Name>
+            <DelegatedPackages>javax.annotation.*,javax.ejb,javax.el,javax.persistence,javax.servlet.*,javax.xml,javax.xml.ws,org.apache.catalina.*,org.apache.coyote.*,org.apache.el.*,org.apache.jasper.*,org.apache.naming.*,org.apache.tomcat.*,com.sun.el.*,org.wso2.carbon.tomcat.jndi.*</DelegatedPackages>
+            <DelegatedResources>*,!META-INF/services/org.apache.webbeans.spi.plugins.OpenWebBeansPlugin,!META-INF/openwebbeans/openwebbeans.properties,!META-INF/standard-faces-config.xml,!META-INF/faces-config.xml</DelegatedResources>
+        </DelegatedEnvironment>
+
+        <DelegatedEnvironment>
+            <Name>Carbon</Name>
+            <DelegatedPackages>*,!org.springframework.*,!org.apache.solr.*</DelegatedPackages>
+            <DelegatedResources>*,!META-INF/services/org.apache.webbeans.spi.plugins.OpenWebBeansPlugin,!META-INF/openwebbeans/openwebbeans.properties,!META-INF/standard-faces-config.xml,!META-INF/faces-config.xml</DelegatedResources>
+        </DelegatedEnvironment>
+
+        <DelegatedEnvironment>
+            <Name>Javaee</Name>
+            <DelegatedPackages>*,!org.springframework.*</DelegatedPackages>
+            <DelegatedResources>*</DelegatedResources>
+        </DelegatedEnvironment>
+
+
+    </DelegatedEnvironments>
+
+
+   <!-- 
+        2) Shared  environment - These environments are loaded once and shared between multiple webapps. Certain runtimes can be shared by multiple webapps. So no need to load them per webapp.
+    -->
+
+    <!--SharedEnvironments>
+        <SharedEnvironment>
+            <name>Spring</name>
+            <Classpath></Classpath>
+        </SharedEnvironment>
+    </SharedEnvironments-->
+
+   <!-- 
+	3) Exclusive environment - These environments are loaded per webapp. Exclusive environments define a set of resources(jars) which should be loaded per webapp. e.g. CXF runtime.
+    -->	
+    <ExclusiveEnvironments>
+        <ExclusiveEnvironment>
+            <Name>CXF</Name>
+            <Classpath>${carbon.home}/../lib/runtimes/cxf/*.jar;${carbon.home}/../lib/runtimes/cxf/</Classpath>
+        </ExclusiveEnvironment>
+    </ExclusiveEnvironments>
+
+</Classloading>
