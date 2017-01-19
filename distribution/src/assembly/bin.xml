@@ -960,25 +960,25 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--<file>-->
-            <!--<source>-->
-                <!--./src/business-process/bpmn/jaggery.conf-->
-            <!--</source>-->
-            <!--<outputDirectory>-->
-                <!--wso2ei-${pom.version}/wso2/business-process/repository/deployment/server/jaggeryapps/bpmn-explorer-->
-            <!--</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</file>-->
+        <file>
+            <source>
+                ./src/business-process/bpmn/jaggery.conf
+            </source>
+            <outputDirectory>
+                wso2ei-${pom.version}/wso2/business-process/repository/deployment/server/jaggeryapps/bpmn-explorer
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
 
-        <!--<file>-->
-            <!--<source>-->
-                <!--./src/business-process/humantask/jaggery.conf-->
-            <!--</source>-->
-            <!--<outputDirectory>-->
-                <!--wso2ei-${pom.version}/wso2/business-process/repository/deployment/server/jaggeryapps/humantask-explorer-->
-            <!--</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</file>-->
+        <file>
+            <source>
+                ./src/business-process/humantask/jaggery.conf
+            </source>
+            <outputDirectory>
+                wso2ei-${pom.version}/wso2/business-process/repository/deployment/server/jaggeryapps/humantask-explorer
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
         <file>
             <source>./src/business-process/conf/axis2/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf/axis2
