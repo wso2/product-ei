@@ -60,12 +60,9 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
@@ -80,7 +77,6 @@
                 <exclude>**/synapse.xml</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
@@ -88,60 +84,55 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
 
         <fileSet>
-            <directory>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/components/dropins
-            </directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>*dropins/**</exclude>
+                <exclude>*patches/**</exclude>
+                <exclude>*servicepacks/**</exclude>
+                <exclude>*extensions/**</exclude>
+                <exclude>*lib/**</exclude>
+            </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/dropins</directory>
             <outputDirectory>wso2ei-${pom.version}/dropins</outputDirectory>
             <excludes>
             </excludes>
         </fileSet>
 
         <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/lib
-            </directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/lib</directory>
             <outputDirectory>wso2ei-${pom.version}/lib</outputDirectory>
             <excludes>
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/components/patches
-            </directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/patches</directory>
             <outputDirectory>wso2ei-${pom.version}/patches</outputDirectory>
             <excludes>
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/components/servicepacks
-            </directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/servicepacks</directory>
             <outputDirectory>wso2ei-${pom.version}/servicepacks</outputDirectory>
             <excludes>
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/components/extensions
-            </directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/components/extensions</directory>
             <outputDirectory>wso2ei-${pom.version}/extensions</outputDirectory>
             <excludes>
             </excludes>
@@ -153,8 +144,27 @@
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/*.bat</exclude>
+                <exclude>**/wrapper.conf</exclude>
                 <exclude>build.xml</exclude>
             </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>**.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+
+     <fileSet>
+            <directory>src/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>**.bat</include>
+                <include>build.xml</include>
+            </includes>
         </fileSet>
 
         <fileSet>
@@ -192,12 +202,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/lib</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
-                <exclude>**/conf/axis2/axis2.xml</exclude>
-                <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
-                <exclude>**/conf/synapse.xml</exclude>
                 <exclude>**/log4j.properties</exclude>
-                <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
@@ -206,20 +211,7 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/repository//plugins/saxon*.jar</exclude>
-                <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
-                <exclude>**/repository/conf/registry.xml</exclude>
-                <exclude>**/repository/conf/tomcat/web.xml</exclude>
-                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
+                <exclude>**/endorsed/xalan*.jar</exclude>
             </excludes>
         </fileSet>
 
@@ -249,6 +241,91 @@
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <includes>
                 <include>**/sec.policy</include>
+            </includes>
+        </fileSet>
+     <fileSet>
+            <directory>../samples/product/services</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server/src</outputDirectory>
+            <fileMode>644</fileMode>
+            <directoryMode>775</directoryMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/resources</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples</outputDirectory>
+            <includes>
+                <include>**/*.pdf</include>
+            </includes>
+            <fileMode>644</fileMode>
+            <directoryMode>775</directoryMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/java</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Client/src</outputDirectory>
+            <excludes>
+                <exclude>**/target</exclude>
+                <exclude>**/target/**/*</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+            <directoryMode>775</directoryMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Client</outputDirectory>
+            <includes>
+                <include>build.xml</include>
+            </includes>
+            <fileMode>644</fileMode>
+            <directoryMode>775</directoryMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>wso2ei-samples.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>wso2ei-samples.bat</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server</outputDirectory>
+            <includes>
+                <include>axis2server.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/scripts</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server</outputDirectory>
+            <includes>
+                <include>axis2server.bat</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/product/src/main/conf/synapse</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/samples</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>../components/org.wso2.ei.styles/src/main/resources/web/styles/css</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/resources/allthemes/Default/admin</outputDirectory>
+            <includes>
+                <include>**/**.css</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../components/org.wso2.ei.styles/src/main/resources/web/styles/images</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/resources/allthemes/Default/images</outputDirectory>
+            <includes>
+                <include>**/**.gif</include>
+                <include>**/**.png</include>
             </includes>
         </fileSet>
 
@@ -663,7 +740,24 @@
                 <include>org.wso2.carbon:org.wso2.carbon.mediator.bridge:jar</include>
             </includes>
         </dependencySet>
-
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Client/client_repo/modules</outputDirectory>
+            <includes>
+                <include>org.apache.axis2:addressing:mar</include>
+                <include>org.apache.rampart:rampart:mar</include>
+                <include>org.apache.sandesha2:sandesha2:mar</include>
+            </includes>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server/repository/modules</outputDirectory>
+            <includes>
+                <include>org.apache.axis2:addressing:mar</include>
+                <include>org.apache.rampart:rampart:mar</include>
+                <include>org.apache.sandesha2:sandesha2:mar</include>
+            </includes>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+        </dependencySet>
         <dependencySet>
             <outputDirectory>wso2ei-${pom.version}/repository/axis2/client/lib</outputDirectory>
             <includes>
@@ -688,6 +782,12 @@
     </dependencySets>
 
     <files>
+
+        <file>
+            <source>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-broker.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
 
         <file>
             <source>
@@ -748,7 +848,12 @@
             <destName>axis2_blocking_client.xml</destName>
             <fileMode>644</fileMode>
         </file>
-
+        <file>
+            <source>src/conf/wrapper.conf</source>
+            <outputDirectory>wso2ei-${pom.version}/bin/yajsw</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
         <file>
             <source>src/conf/log4j.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
@@ -886,9 +991,39 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/wso2server.bat</source>
-            <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
-            <filtered>true</filtered>
+            <source>../samples/product/src/main/conf/client/axis2.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Client/client_repo/conf</outputDirectory>
+            <destName>axis2.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../samples/product/src/main/conf/server/axis2.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server/repository/conf</outputDirectory>
+            <destName>axis2.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../samples/product/src/main/conf/server/sample-server-wrapper.conf</source>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>sample-server-wrapper.conf</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../samples/product/src/main/conf/server/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tmp/sampleServer</outputDirectory>
+            <destName>README.txt</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../samples/product/src/main/conf/client/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tmp/sampleClient</outputDirectory>
+            <destName>README.txt</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../samples/product/src/main/resources/wss4j_1.5.11.wso2v6.jar</source>
+            <outputDirectory>wso2ei-${pom.version}/repository/axis2/client/lib</outputDirectory>
+            <destName>wss4j_1.5.11.wso2v6.jar</destName>
             <fileMode>644</fileMode>
         </file>
         <file>
