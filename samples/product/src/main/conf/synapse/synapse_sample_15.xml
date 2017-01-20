@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Licensed to the Apache Software Foundation (ASF) under one
+  ~  or more contributor license agreements.  See the NOTICE file
+  ~  distributed with this work for additional information
+  ~  regarding copyright ownership.  The ASF licenses this file
+  ~  to you under the Apache License, Version 2.0 (the
+  ~  "License"); you may not use this file except in compliance
+  ~  with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<!-- Message Copying and Content Enriching with Enrich Mediator -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="main">
+
+        <in>
+            <enrich>
+                <source type="custom"
+                        xpath="//m0:getQuote/m0:request/m0:symbol/text()"
+                        xmlns:m0="http://services.samples"/>
+                <target type="property" property="ORIGINAL_REQ"/>
+            </enrich>
+            <enrich>
+                <source type="body"/>
+                <target type="property" property="REQUEST_PAYLOAD"/>
+            </enrich>
+
+
+            <enrich>
+                <source type="inline" key="init_req"/>
+                <target xmlns:m0="http://services.samples"
+                        xpath="//m0:getQuote/m0:request/m0:symbol/text()"/>
+            </enrich>
+
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+            <drop/>
+        </in>
+        <out>
+            <header xmlns:urn="http://synapse.apache.org" name="urn:lastTradeTimestamp" value="foo"/>
+            <enrich>
+                <source type="custom"
+                        xpath="//ns:getQuoteResponse/ns:return/ax21:lastTradeTimestamp"
+                        xmlns:ns="http://services.samples"
+                        xmlns:ax21="http://services.samples/xsd"/>
+                <target xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                        xmlns:urn="http://synapse.apache.org"
+                        xpath="/soapenv:Envelope/soapenv:Header/urn:lastTradeTimestamp"/>
+            </enrich>
+             <log level="full"/>
+            <log>
+                <property name="Original Request Symbol" expression="get-property('ORIGINAL_REQ')"/>
+                <property name="Request Payload" expression="get-property('REQUEST_PAYLOAD')"/>
+            </log>
+            <send/>
+        </out>
+
+    </sequence>
+    <localEntry key="init_req">MSFT</localEntry>
+    <localEntry key="price_req">
+        <m0:symbol xmlns:m0="http://services.samples">MSFT</m0:symbol>
+    </localEntry>
+
+
+</definitions>

@@ -22,7 +22,6 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.extensions.axis2server.ServiceNameConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;

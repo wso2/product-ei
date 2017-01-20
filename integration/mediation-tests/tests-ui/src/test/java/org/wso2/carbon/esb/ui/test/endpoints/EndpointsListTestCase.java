@@ -16,16 +16,16 @@
 
 package org.wso2.carbon.esb.ui.test.endpoints;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.api.clients.registry.ResourceAdminServiceClient;
-import org.wso2.carbon.automation.api.selenium.login.LoginPage;
-import org.wso2.carbon.automation.core.BrowserManager;
-import org.wso2.carbon.automation.core.ProductConstant;
-import org.wso2.carbon.esb.ui.test.ESBIntegrationUITest;
-import org.wso2.carbon.automation.api.selenium.endpoint.EndpointsListPage;
+import org.wso2.carbon.automation.extensions.selenium.BrowserManager;
+import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
+import org.wso2.esb.integration.common.ui.page.LoginPage;
+import org.wso2.esb.integration.common.ui.page.main.EndpointsListPage;
+import org.wso2.esb.integration.common.utils.ESBIntegrationUITest;
 
 public class EndpointsListTestCase extends ESBIntegrationUITest {
 
@@ -37,23 +37,22 @@ public class EndpointsListTestCase extends ESBIntegrationUITest {
 	public void setUp() throws Exception {
 		super.init();
 		driver = BrowserManager.getWebDriver();
-		driver.get(getLoginURL(ProductConstant.ESB_SERVER_NAME));
+		driver.get(getLoginURL());
 
 		// add resource using resourceAdminServiceClient
 		resourceAdminServiceClient = new ResourceAdminServiceClient(
-				esbServer.getBackEndUrl(), userInfo.getUserName(),
-				userInfo.getPassword());
+				contextUrls.getBackEndUrl(), getSessionCookie());
 		uploadResourcesToGovRegistry();
 	}
 
 	@Test(groups = "wso2.esb", description = "Verify that endpoints page renders when an invalid dynamic endpoint is present.")
 	public void testEndpointsList() throws Exception {
-		boolean isCloud = isRunningOnCloud();
-		LoginPage test = new LoginPage(driver, isCloud);
+//		boolean isCloud = isRunningOnCloud();
+		LoginPage test = new LoginPage(driver);
 		test.loginAs(userInfo.getUserName(), userInfo.getPassword());
-
+        driver.findElement(By.linkText("Endpoints")).click();
 		EndpointsListPage epPage = new EndpointsListPage(driver);
-		epPage.testPageLoadFail();
+		epPage.listDynamicEndpoint();
 		driver.close();
 	}
 

@@ -25,7 +25,7 @@ package org.wso2.carbon.esb.mediator.test.smooks;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-//import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+//import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 //import org.wso2.carbon.esb.util.MultiMessageReceiver;
 
 import javax.activation.DataHandler;

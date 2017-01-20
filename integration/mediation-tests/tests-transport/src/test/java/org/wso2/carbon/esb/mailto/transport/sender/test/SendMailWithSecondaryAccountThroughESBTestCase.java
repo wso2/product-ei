@@ -24,10 +24,10 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.MailToTransportUtil;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 import org.wso2.esb.integration.common.utils.exception.ESBMailTransportIntegrationTestException;
 

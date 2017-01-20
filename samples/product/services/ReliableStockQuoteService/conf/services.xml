@@ -1,0 +1,56 @@
+<!--
+  ~  Licensed to the Apache Software Foundation (ASF) under one
+  ~  or more contributor license agreements.  See the NOTICE file
+  ~  distributed with this work for additional information
+  ~  regarding copyright ownership.  The ASF licenses this file
+  ~  to you under the Apache License, Version 2.0 (the
+  ~  "License"); you may not use this file except in compliance
+  ~  with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<serviceGroup>
+<service name="ReliableStockQuoteService">
+
+    <module ref="sandesha2"/>
+	
+    <messageReceivers>
+    <messageReceiver mep="http://www.w3.org/ns/wsdl/in-only"
+            class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+    <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out"
+            class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+    </messageReceivers>
+    <parameter locked="false" name="ServiceClass">samples.services.ReliableStockQuoteService</parameter>
+    <operation name="placeOrder">
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+        <actionMapping>urn:placeOrder</actionMapping>
+    </operation>
+    <operation name="getQuote">
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        <actionMapping>urn:getQuote</actionMapping>
+    </operation>
+    <supported-policy-namespaces namespaces="http://ws.apache.org/sandesha2/policy" />
+
+	<wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	    xmlns:wsrm="http://ws.apache.org/sandesha2/policy" wsu:Id="RMPolicy">
+	        
+	    <!-- Following policy value has been overrided from the default values.-->> 
+	    <wsrm:AcknowledgementInterval>3500</wsrm:AcknowledgementInterval>
+	    <wsrm:RetransmissionInterval>6000</wsrm:RetransmissionInterval>
+	    <wsrm:InactivityTimeout>1</wsrm:InactivityTimeout>
+	    <wsrm:InactivityTimeoutMeasure>minutes</wsrm:InactivityTimeoutMeasure>
+	    <wsrm:InvokeInOrder>true</wsrm:InvokeInOrder>
+	   
+	</wsp:Policy>
+
+</service>
+</serviceGroup>

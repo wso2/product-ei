@@ -28,7 +28,7 @@ import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.test.utils.common.FileManager;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 
 import javax.activation.DataHandler;

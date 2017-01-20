@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.testng.annotations.*;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.JSONClient;

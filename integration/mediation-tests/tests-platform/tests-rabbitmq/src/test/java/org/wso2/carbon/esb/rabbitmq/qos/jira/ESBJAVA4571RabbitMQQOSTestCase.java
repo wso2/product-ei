@@ -25,7 +25,7 @@ import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQTestUtils;
 import org.wso2.carbon.integration.common.utils.exceptions.AutomationUtilException;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.proxy.admin.ProxyServiceAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.rabbitmqclient.RabbitMQConsumerClient;

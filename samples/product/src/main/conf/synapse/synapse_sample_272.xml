@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="SampleProxy" transports="mqtt" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <endpoint>
+                <address uri="mqtt:/SampleProxy?mqtt.server.host.name=localhost&amp;mqtt.server.port=1883&amp;mqtt.client.id=esb.test.sender&amp;mqtt.topic.name=esb.test2&amp;mqtt.subscription.qos=2&amp;mqtt.blocking.sender=true"/>
+            </endpoint>
+            <inSequence>
+                <property name="OUT_ONLY" value="true"/>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" type="STRING"/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <parameter name="mqtt.connection.factory">mqttConFactory</parameter>
+        <parameter name="mqtt.topic.name">esb.test1</parameter>
+        <parameter name="mqtt.subscription.qos">2</parameter>
+        <parameter name="mqtt.content.type">text/plain</parameter>
+        <parameter name="mqtt.session.clean">false</parameter>
+    </proxy>
+</definitions>
