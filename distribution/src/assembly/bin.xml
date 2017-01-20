@@ -467,7 +467,7 @@
             <directory>
                 ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/identity/
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/identity</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/dbscripts/identity</outputDirectory>
             <includes>
                 <include>**/*.sql</include>
             </includes>
