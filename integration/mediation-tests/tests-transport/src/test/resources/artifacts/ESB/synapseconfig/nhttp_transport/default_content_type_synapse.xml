@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <api name="DefaultRequestContentTypeTestAPI"
+         context="/defaultRequestContentTypeApi">
+        <resource methods="PUT">
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <response xmlns="">WSO2</response>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+
+</definitions>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="ProxyPF" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+        <target inSequence="PF" />
+        <publishWSDL uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" />
+        <description></description>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="PF">
+        <property name="quantity" value="12"/>
+        <property name="symbol" xmlns:xsd="http://services.samples/xsd" xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:ser="http://services.samples" expression="//ser:placeOrder/ser:order/xsd:symbol/text()"/>
+        <payloadFactory>
+            <format>
+                <ser:placeOrder xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                    <ser:order>
+                        <xsd:price>100.00</xsd:price>
+                        <xsd:quantity>$ctx:quantity</xsd:quantity>
+                        <xsd:symbol>$ctx:symbol</xsd:symbol>
+                    </ser:order>
+                </ser:placeOrder>
+            </format>
+        </payloadFactory>
+        <log level="full">
+            <property name="LOG" value="==========================================" />
+        </log>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

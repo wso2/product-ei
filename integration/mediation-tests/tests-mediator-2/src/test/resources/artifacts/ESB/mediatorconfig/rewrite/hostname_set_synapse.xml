@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="urlRewriteProxy" transports="https,http" statistics="disable" trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <property name="host.value" value="localhost" scope="default"/>
+                <rewrite>
+                    <rewriterule>
+                        <condition>
+                            <equal xmlns="" type="url" source="protocol" value="http"/>
+                        </condition>
+                        <action value="localhost" type="set" fragment="host"/>
+                    </rewriterule>
+                    <rewriterule>
+                        <condition>
+                            <equal xmlns="" type="url" source="protocol" value="https"/>
+                        </condition>
+                        <action xpath="get-property('host.value')" type="set" fragment="host"/>
+                        <action value="http" type="set" fragment="protocol"/>
+                    </rewriterule>
+                </rewrite>
+                <log level="full"/>
+                <send/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <description></description>
+    </proxy>
+
+</definitions>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:ns0="http://services.samples"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:ns1="http://org.apache.axis2/xsd"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://services.samples">
+    <wsdl:documentation>LBService1</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:ns="http://services.samples" attributeFormDefault="qualified"
+                   elementFormDefault="qualified" targetNamespace="http://services.samples">
+            <xs:complexType name="Exception">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+
+            </xs:complexType>
+            <xs:element name="loadOperation">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="param" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="loadOperationResponse">
+
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sampleOperation">
+                <xs:complexType>
+                    <xs:sequence>
+
+                        <xs:element minOccurs="0" name="param" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sampleOperationResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setClientName">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="cName" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="setClientNameResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sleepOperation">
+                <xs:complexType>
+
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="param" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sleepOperationResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="sleepOperationRequest">
+        <wsdl:part name="parameters" element="ns0:sleepOperation"/>
+    </wsdl:message>
+    <wsdl:message name="sleepOperationResponse">
+
+        <wsdl:part name="parameters" element="ns0:sleepOperationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="setClientNameRequest">
+        <wsdl:part name="parameters" element="ns0:setClientName"/>
+    </wsdl:message>
+    <wsdl:message name="setClientNameResponse">
+        <wsdl:part name="parameters" element="ns0:setClientNameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="sampleOperationRequest">
+
+        <wsdl:part name="parameters" element="ns0:sampleOperation"/>
+    </wsdl:message>
+    <wsdl:message name="sampleOperationResponse">
+        <wsdl:part name="parameters" element="ns0:sampleOperationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="loadOperationRequest">
+        <wsdl:part name="parameters" element="ns0:loadOperation"/>
+    </wsdl:message>
+    <wsdl:message name="loadOperationResponse">
+
+        <wsdl:part name="parameters" element="ns0:loadOperationResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="LBService1PortType">
+        <wsdl:operation name="sleepOperation">
+            <wsdl:input message="ns0:sleepOperationRequest" wsaw:Action="urn:sleepOperation"/>
+            <wsdl:output message="ns0:sleepOperationResponse"
+                         wsaw:Action="urn:sleepOperationResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="setClientName">
+            <wsdl:input message="ns0:setClientNameRequest" wsaw:Action="urn:setClientName"/>
+
+            <wsdl:output message="ns0:setClientNameResponse"
+                         wsaw:Action="urn:setClientNameResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="sampleOperation">
+            <wsdl:input message="ns0:sampleOperationRequest" wsaw:Action="urn:sampleOperation"/>
+            <wsdl:output message="ns0:sampleOperationResponse"
+                         wsaw:Action="urn:sampleOperationResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="loadOperation">
+            <wsdl:input message="ns0:loadOperationRequest" wsaw:Action="urn:loadOperation"/>
+            <wsdl:output message="ns0:loadOperationResponse"
+                         wsaw:Action="urn:loadOperationResponse"/>
+
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="LBService1SOAP11Binding" type="ns0:LBService1PortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="sleepOperation">
+            <soap:operation soapAction="urn:sleepOperation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="setClientName">
+            <soap:operation soapAction="urn:setClientName" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sampleOperation">
+            <soap:operation soapAction="urn:sampleOperation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loadOperation">
+            <soap:operation soapAction="urn:loadOperation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="LBService1SOAP12Binding" type="ns0:LBService1PortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="sleepOperation">
+            <soap12:operation soapAction="urn:sleepOperation" style="document"/>
+
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="setClientName">
+            <soap12:operation soapAction="urn:setClientName" style="document"/>
+
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sampleOperation">
+            <soap12:operation soapAction="urn:sampleOperation" style="document"/>
+
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loadOperation">
+            <soap12:operation soapAction="urn:loadOperation" style="document"/>
+
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="LBService1HttpBinding" type="ns0:LBService1PortType">
+
+        <http:binding verb="POST"/>
+        <wsdl:operation name="sleepOperation">
+            <http:operation location="LBService1/sleepOperation"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="sleepOperation"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="sleepOperation"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+        <wsdl:operation name="setClientName">
+            <http:operation location="LBService1/setClientName"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="setClientName"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="setClientName"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+        <wsdl:operation name="sampleOperation">
+            <http:operation location="LBService1/sampleOperation"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="sampleOperation"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="sampleOperation"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+        <wsdl:operation name="loadOperation">
+            <http:operation location="LBService1/loadOperation"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="loadOperation"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="loadOperation"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="LBService1">
+        <wsdl:port name="LBService1SOAP11port_https" binding="ns0:LBService1SOAP11Binding">
+            <soap:address location="https://indika:9005/soap/LBService1"/>
+        </wsdl:port>
+        <wsdl:port name="LBService1SOAP11port_http1" binding="ns0:LBService1SOAP11Binding">
+            <soap:address location="http://indika:9001/soap/LBService1"/>
+        </wsdl:port>
+
+        <wsdl:port name="LBService1SOAP12port_https" binding="ns0:LBService1SOAP12Binding">
+            <soap12:address location="https://indika:9005/soap/LBService1"/>
+        </wsdl:port>
+        <wsdl:port name="LBService1SOAP12port_http1" binding="ns0:LBService1SOAP12Binding">
+            <soap12:address location="http://indika:9001/soap/LBService1"/>
+        </wsdl:port>
+        <wsdl:port name="LBService1Httpport" binding="ns0:LBService1HttpBinding">
+            <http:address location="https://indika:9005/soap/LBService1"/>
+        </wsdl:port>
+
+        <wsdl:port name="LBService1Httpport1" binding="ns0:LBService1HttpBinding">
+            <http:address location="http://indika:9001/soap/LBService1"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,48 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd">
+
+    <sequence name="main">
+        <in>
+            <validate source="//m0:requestElement/m0:getQuote" xmlns:m0="http://services.samples">
+                <schema key="validate_schema"/>
+                <on-fail>
+                    <!-- if the request does not validate againt schema throw a fault -->
+                    <makefault response="true">
+                        <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope"
+                              value="tns:Receiver" targetNamespace="http://services.samples"/>
+                        <reason value="Invalid custom quote request"/>
+                    </makefault>
+                </on-fail>
+            </validate>
+        </in>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+    <localEntry key="validate_schema">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns="http://services.samples" elementFormDefault="qualified"
+                   attributeFormDefault="unqualified" targetNamespace="http://services.samples">
+            <xs:element name="requestElement">
+                <xs:element name="getQuote">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="request">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="symbol" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:element>
+        </xs:schema>
+    </localEntry>
+
+</definitions>

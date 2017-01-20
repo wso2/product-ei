@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager">
+        <parameter name="cachableDuration">15000</parameter>
+    </taskManager>
+    <proxy name="InboundEndpointProxy" statistics="disable"
+        trace="disable" transports="https http">
+        <target>
+            <inSequence>
+                <property action="set" name="FORCE_SC_ACCEPTED"
+                    scope="axis2" type="STRING" value="true"/>
+                <property action="set" name="OUT_ONLY" scope="default"
+                    type="STRING" value="true"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="requestHandlerSeq" onError="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="test" value="requestHandlerSequence"/>
+        </log>
+    </sequence>
+    <sequence name="requestHandlerSeq2" onError="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="test" value="requestHandlerSequence2"/>
+        </log>
+        <header action="set" name="Action" value="urn:getQuote"/>
+        <property action="set" name="SOAPAction" scope="transport"
+            type="STRING" value="urn:getQuote"/>
+        <send>
+            <endpoint>
+                <address format="soap12" statistics="disable"
+                    trace="disable" uri="http://localhost:9000/services/SimpleStockQuoteService">
+                    <timeout>
+                        <duration>0</duration>
+                        <responseAction>discard</responseAction>
+                    </timeout>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                        <retryDelay>0</retryDelay>
+                    </markForSuspension>
+                    <suspendOnFailure>
+                        <initialDuration>0</initialDuration>
+                        <maximumDuration>0</maximumDuration>
+                        <progressionFactor>1.0</progressionFactor>
+                    </suspendOnFailure>
+                </address>
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence name="fault">
+        <log category="INFO" level="full" separator=",">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log category="INFO" level="full" separator=","/>
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <then>
+                    <send/>
+                </then>
+                <else/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <sequence name="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="fault" value="Inside the Fault sequence"/>
+        </log>
+    </sequence>
+</definitions>

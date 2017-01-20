@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <api name="api_poc_messagetype" context="/services/testmessagetype">
+        <resource methods="POST GET" inSequence="pocmt_seqStart"/>
+        <resource methods="POST GET"
+                  url-mapping="/soapclient"
+                  inSequence="pocmt_seqSoapClient_Start"/>
+        <resource methods="POST GET"
+                  url-mapping="/plaintextclient"
+                  inSequence="pocmt_seqPlaintTextClient_Start"/>
+    </api>
+
+    <sequence name="pocmt_seqStart">
+        <sequence key="pocmt_seqMakeSoapCall"/>
+    </sequence>
+
+    <sequence name="pocmt_seqMakeSoapCall">
+        <enrich>
+            <source type="inline" clone="true">
+                <soapclientbody>
+                    <somecontent>somecontent</somecontent>
+                </soapclientbody>
+            </source>
+            <target type="body"/>
+        </enrich>
+        <log level="custom">
+            <property name="SoapClient envelope request to be sent" expression="/"/>
+        </log>
+        <property name="messageType" value="text/xml" scope="axis2"/>
+        <log level="custom">
+            <property name="MessageType value before SoapClient call"
+                      expression="$axis2:messageType"/>
+        </log>
+        <header name="Action" value="urn:soapclientbody"/>
+        <send receive="pocmt_seqMakeSoapCall_r">
+            <endpoint key="pocmt_epSoapClient"/>
+        </send>
+    </sequence>
+
+    <endpoint name="pocmt_epSoapClient"
+              template="pocmt_tmplEpStaticUri"
+              uri="http://localhost:8280/services/testmessagetype/soapclient">
+        <axis2ns4:parameter xmlns:axis2ns4="http://ws.apache.org/ns/synapse"
+                            name="timeout"
+                            value="3000"/>
+    </endpoint>
+
+    <template name="pocmt_tmplEpStaticUri">
+        <axis2ns14:parameter xmlns:axis2ns14="http://ws.apache.org/ns/synapse" name="timeout"/>
+        <axis2ns15:parameter xmlns:axis2ns15="http://ws.apache.org/ns/synapse" name="name"/>
+        <axis2ns16:parameter xmlns:axis2ns16="http://ws.apache.org/ns/synapse" name="uri"/>
+        <endpoint name="$name">
+            <address encoding="UTF-8"
+                     format="soap11"
+                     statistics="disable"
+                     trace="disable"
+                     uri="$uri">
+                <timeout>
+                    <duration>$timeout</duration>
+                    <action>fault</action>
+                </timeout>
+                <markForSuspension>
+                    <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                    <retryDelay>0</retryDelay>
+                </markForSuspension>
+                <suspendOnFailure>
+                    <initialDuration>0</initialDuration>
+                    <maximumDuration>0</maximumDuration>
+                    <progressionFactor>1.0</progressionFactor>
+                </suspendOnFailure>
+            </address>
+        </endpoint>
+    </template>
+
+
+    <sequence name="pocmt_seqSoapClient_Start">
+        <log level="custom">
+            <property name="MessageType value inside SoapClient plugin"
+                      expression="$axis2:messageType"/>
+            <property name="SoapClient envelope request received" expression="/"/>
+        </log>
+        <sequence key="pocmt_seqSoapClient_Finish"/>
+    </sequence>
+
+
+    <sequence name="pocmt_seqSoapClient_Finish">
+        <enrich>
+            <source type="inline" clone="true">
+                <soapclientbodyresposne xmlns="hhhh">
+                    <someresponse>somecontent2</someresponse>
+                </soapclientbodyresposne>
+            </source>
+            <target type="body"/>
+        </enrich>
+        <log level="custom">
+            <property name="SoapClient envelope response sent" expression="/"/>
+        </log>
+        <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <send/>
+        <drop/>
+    </sequence>
+
+    <sequence name="pocmt_seqMakeSoapCall_r">
+        <log level="custom">
+            <property name="SoapClient envelope response returned" expression="/"/>
+        </log>
+        <sequence key="pocmt_epMakeTextPlainCall"/>
+    </sequence>
+
+    <sequence name="pocmt_epMakeTextPlainCall">
+        <enrich>
+            <source type="inline" clone="true">
+                <text xmlns="http://ws.apache.org/commons/ns/payload">someparemeter1=somevalue1&amp;someparemeter2=somevalue2</text>
+            </source>
+            <target type="body"/>
+        </enrich>
+        <log level="custom">
+            <property name="TextPlainClient envelope request to be sent" expression="/"/>
+        </log>
+        <property name="messageType" value="text/plain" scope="axis2"/>
+        <log level="custom">
+            <property name="MessageType value before TextPlainClient call"
+                      expression="$axis2:messageType"/>
+        </log>
+        <property name="REST_URL_POSTFIX" scope="axis2" action="remove"/>
+        <send receive="pocmt_epMakeTextPlainCall_r">
+            <endpoint key="pocmt_epTextPlainClient"/>
+        </send>
+    </sequence>
+
+
+    <endpoint name="pocmt_epTextPlainClient"
+              template="pocmt_tmplEpStaticRestUri"
+              uri="http://localhost:8280/services/testmessagetype/plaintextclient">
+        <axis2ns3:parameter xmlns:axis2ns3="http://ws.apache.org/ns/synapse"
+                            name="timeout"
+                            value="3000"/>
+    </endpoint>
+
+
+    <template name="pocmt_tmplEpStaticRestUri">
+        <axis2ns11:parameter xmlns:axis2ns11="http://ws.apache.org/ns/synapse" name="timeout"/>
+        <axis2ns12:parameter xmlns:axis2ns12="http://ws.apache.org/ns/synapse" name="name"/>
+        <axis2ns13:parameter xmlns:axis2ns13="http://ws.apache.org/ns/synapse" name="uri"/>
+        <endpoint name="$name">
+            <address encoding="UTF-8"
+                     format="rest"
+                     statistics="disable"
+                     trace="disable"
+                     uri="$uri">
+                <timeout>
+                    <duration>$timeout</duration>
+                    <action>fault</action>
+                </timeout>
+                <markForSuspension>
+                    <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                    <retryDelay>0</retryDelay>
+                </markForSuspension>
+                <suspendOnFailure>
+                    <initialDuration>0</initialDuration>
+                    <maximumDuration>0</maximumDuration>
+                    <progressionFactor>1.0</progressionFactor>
+                </suspendOnFailure>
+            </address>
+        </endpoint>
+    </template>
+
+
+    <sequence name="pocmt_seqPlaintTextClient_Start">
+        <log level="custom">
+            <property name="MessageType value inside PlainText plugin"
+                      expression="$axis2:messageType"/>
+            <property name="PlaintText envelope request received" expression="/"/>
+        </log>
+        <sequence key="pocmt_seqPlaintTextClient_Finish"/>
+    </sequence>
+
+
+    <sequence name="pocmt_seqPlaintTextClient_Finish">
+        <enrich>
+            <source type="inline" clone="true">
+                <text xmlns="http://ws.apache.org/commons/ns/payload">someparemeter1=somevalue1&amp;someparemeter2=somevalue2</text>
+            </source>
+            <target type="body"/>
+        </enrich>
+        <log level="custom">
+            <property name="PlaintText envelope response sent" expression="/"/>
+        </log>
+        <property name="messageType" value="text/plain" scope="axis2"/>
+        <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <send/>
+        <drop/>
+    </sequence>
+
+
+    <sequence name="pocmt_epMakeTextPlainCall_r">
+        <log level="custom">
+            <property name="TextPlainClient envelope response returned" expression="/"/>
+        </log>
+        <sequence key="pocmt_seqMakeSoapCall2"/>
+    </sequence>
+
+
+    <sequence name="pocmt_seqMakeSoapCall2">
+        <enrich>
+            <source type="inline" clone="true">
+                <soapclientbody2>
+                    <somecontent2>somecontent2</somecontent2>
+                </soapclientbody2>
+            </source>
+            <target type="body"/>
+        </enrich>
+        <log level="custom">
+            <property name="SoapClient envelope request to be sent 2" expression="/"/>
+        </log>
+        <property name="messageType" value="text/xml" scope="axis2"/>
+        <log level="custom">
+            <property name="MessageType value before SoapClient call 2"
+                      expression="$axis2:messageType"/>
+        </log>
+        <header name="Action" value="urn:soapclientbody2"/>
+        <send receive="pocmt_seqMakeSoapCall2_r">
+            <endpoint key="pocmt_epSoapClient"/>
+        </send>
+    </sequence>
+
+
+    <sequence name="pocmt_seqMakeSoapCall2_r">
+        <log level="custom">
+            <property name="SoapClient envelope response returned 2" expression="/"/>
+        </log>
+        <sequence key="pocmt_seqFinish"/>
+    </sequence>
+
+
+    <sequence name="pocmt_seqFinish">
+        <property name="messageType" value="text/xml" scope="axis2"/>
+        <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <send/>
+        <drop/>
+    </sequence>
+
+</definitions>

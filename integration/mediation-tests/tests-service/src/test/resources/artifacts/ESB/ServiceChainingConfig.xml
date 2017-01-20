@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="ServiceChainingProxy" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="DEBUG PROXY SERVICE"
+                              value="Hit proxy service"/>
+                </log>
+                <enrich>
+                    <source type="body" clone="true"/>
+                    <target type="property" property="REQUEST"/>
+                </enrich>
+                <send receive="ReceiveSeq_1">
+                    <endpoint name="SimpleStockQuoteService">
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <sequence name="ReceiveSeq_1">
+        <log level="custom">
+            <property name="DEBUG SEQ 1" value="FIRST RECEIVE SEQUENCE"/>
+        </log>
+        <enrich>
+            <source type="property" clone="true" property="REQUEST"/>
+            <target type="body"/>
+        </enrich>
+        <send receive="ReceiveSeq_2">
+            <endpoint name="SimpleStockQuoteService">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+    <sequence name="ReceiveSeq_2">
+        <log level="custom">
+            <property name="DEBUG SEQ 2"
+                      value="SECOND RECEIVE SEQUENCE"/>
+        </log>
+        <send/>
+    </sequence>
+</definitions>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="publishevent" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target faultSequence="myfault">
+            <inSequence>
+                <property name="number" value="a"/>
+                <call-template target="mytemplate">
+                    <with-param name="num" value="a"/>
+                </call-template>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="myfault">
+        <makefault version="soap11">
+            <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+            <reason value="Fault Sequence Invoked"/>
+            <role/>
+        </makefault>
+        <respond/>
+    </sequence>
+    <template name="mytemplate">
+        <parameter name="num"/>
+        <sequence>
+            <publishEvent>
+                <eventSink>myeventsink</eventSink>
+                <streamName>meevents</streamName>
+                <streamVersion>1.0.0</streamVersion>
+                <attributes>
+                    <meta/>
+                    <correlation/>
+                    <payload>
+                        <attribute defaultValue=""
+                                   expression="$func:num" name="number"
+                                   type="INTEGER"
+                                   xmlns:ns="http://org.apache.synapse/xsd"
+                                   xmlns:ns2="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+                    </payload>
+                    <arbitrary/>
+                </attributes>
+            </publishEvent>
+        </sequence>
+    </template>
+</definitions>

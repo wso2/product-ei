@@ -28,6 +28,7 @@ import org.apache.synapse.SynapseException;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.builtin.SendMediator;
 import org.apache.synapse.transport.passthru.core.PassThroughSenderManager;
+import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.integrator.core.Utils;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 
@@ -48,23 +49,26 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     @Override
     public boolean handleRequestInFlow(MessageContext messageContext) {
         try {
-            String uri = messageContext.getTo().getAddress();
-            String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
-            String host;
-            String contextPath = Utils.getContext(uri);
-            configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
-            if (((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS") instanceof TreeMap && contextPath != null) {
-                host = Utils.getHostname((String) ((TreeMap) ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS")).get("Host"));
-                if ("/odata".equals(contextPath)) {
-                    Utils.setIntegratorHeader(messageContext);
-                    messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
-                    return sendMediator.mediate(messageContext);
-                } else {
-                    WebApplication webApplication = Utils.getStartedWebapp(contextPath, host);
-                    if (webApplication != null) {
+            if (messageContext.getTo() != null) {
+                String uri = messageContext.getTo().getAddress();
+                String tenantDomain = TenantAxisUtils.getTenantDomain(uri);
+                String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
+                String host;
+                String contextPath = Utils.getContext(uri);
+                configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+                if (((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS") instanceof TreeMap && contextPath != null) {
+                    host = Utils.getHostname((String) ((TreeMap) ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS")).get("Host"));
+                    if ("/odata".equals(contextPath)) {
                         Utils.setIntegratorHeader(messageContext);
                         messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
                         return sendMediator.mediate(messageContext);
+                    } else {
+                        WebApplication webApplication = Utils.getStartedWebapp(contextPath, host);
+                        if (webApplication != null) {
+                            Utils.setIntegratorHeader(messageContext);
+                            messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
+                            return sendMediator.mediate(messageContext);
+                        }
                     }
                 }
             }

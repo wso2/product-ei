@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="contentTypeCharsetProxy1" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <endpoint name="ep2">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="contentTypeCharsetProxy2" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <endpoint name="ep2">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <log level="full"/>
+                <property name="messageType" value="application/xml" scope="axis2"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="contentTypeCharsetProxy3" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <endpoint name="ep2">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <log level="full"/>
+                <property name="messageType" value="application/xml; charset=UTF-8" scope="axis2"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+</definitions>

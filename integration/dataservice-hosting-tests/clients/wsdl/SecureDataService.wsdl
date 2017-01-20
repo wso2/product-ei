@@ -1,0 +1,140 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://ws.wso2.org/dataservice" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/secure_dataservice" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/secure_dataservice">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/secure_dataservice">
+            <xs:element name="showAllOffices">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Offices" type="ns0:Offices" />
+            <xs:complexType name="Offices">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Office" type="ns0:Office" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Office">
+                <xs:sequence>
+                    <xs:element name="officeCode" nillable="true" type="xs:string" />
+                    <xs:element name="city" nillable="true" type="xs:string" />
+                    <xs:element name="phone" nillable="true" type="xs:string" />
+                    <xs:element name="addressLine1" nillable="true" type="xs:string" />
+                    <xs:element name="addressLine2" nillable="true" type="xs:string" />
+                    <xs:element name="state" nillable="true" type="xs:string" />
+                    <xs:element name="country" nillable="true" type="xs:string" />
+                    <xs:element name="postalCode" nillable="true" type="xs:string" />
+                    <xs:element name="territory" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="showAllOfficesRequest">
+        <wsdl:part name="parameters" element="ns0:showAllOffices" />
+    </wsdl:message>
+    <wsdl:message name="showAllOfficesResponse">
+        <wsdl:part name="parameters" element="ns0:Offices" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns1:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:portType name="SecureDataServicePortType">
+        <wsdl:operation name="showAllOffices">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:showAllOfficesRequest" wsaw:Action="urn:showAllOffices" />
+            <wsdl:output message="ns0:showAllOfficesResponse" wsaw:Action="urn:showAllOfficesResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:showAllOfficesDataServiceFault" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SecureDataServiceSOAP11Binding" type="ns0:SecureDataServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="showAllOffices">
+            <soap:operation soapAction="urn:showAllOffices" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SecureDataServiceSOAP12Binding" type="ns0:SecureDataServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="showAllOffices">
+            <soap12:operation soapAction="urn:showAllOffices" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SecureDataServiceHttpBinding" type="ns0:SecureDataServicePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="showAllOffices">
+            <http:operation location="showAllOffices" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SecureDataService">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:SecureDataServiceSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/SecureDataService.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:SecureDataServiceSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/SecureDataService.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:SecureDataServiceSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/SecureDataService.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:SecureDataServiceSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/SecureDataService.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:SecureDataServiceHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/SecureDataService.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:SecureDataServiceHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/SecureDataService.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

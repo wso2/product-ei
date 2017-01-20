@@ -232,28 +232,28 @@
                                 <property name="tempdir2" value="target/identity-ui"/>
                                 <mkdir dir="${tempdir2}"/>
                                 <!-- Move identity:user-roles menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar"
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.framework.version}.jar"
                                        dest="${tempdir2}"/>
                                 <replace file="${tempdir2}/META-INF/component.xml"
                                          token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;"
                                          value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;"/>
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.version}.jar"
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.framework.version}.jar"
                                      basedir="${tempdir2}"/>
                                 <!--Move identity:user-store to config_menu-->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar"
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.framework.version}.jar"
                                        dest="${tempdir2}"/>
                                 <replace file="${tempdir2}/META-INF/component.xml"
                                          token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;"
                                          value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;"/>
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.version}.jar"
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.framework.version}.jar"
                                      basedir="${tempdir2}"/>
                                 <!-- Move identity:key-store menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar"
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.framework.version}.jar"
                                        dest="${tempdir2}"/>
                                 <replace file="${tempdir2}/META-INF/component.xml"
                                          token="&lt;parent-menu&gt;manage_menu&lt;/parent-menu&gt;"
                                          value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;"/>
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.version}.jar"
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.framework.version}.jar"
                                      basedir="${tempdir2}"/>
 
                                 <replace

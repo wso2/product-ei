@@ -1,0 +1,29 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="MyProxy"
+           statistics="disable" trace="disable" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="OUT_ONLY" value="true" scope="default" type="STRING"/>
+                <property name="FORCE_HTTP_1.0" value="true" scope="axis2"/>
+                <log level="full"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:8991/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

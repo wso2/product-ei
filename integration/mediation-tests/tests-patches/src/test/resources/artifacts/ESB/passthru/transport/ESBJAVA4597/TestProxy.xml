@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="TestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target faultSequence="MyFaultSequency">
+      <inSequence>
+         <log level="full"/>
+         <send>
+            <endpoint>
+               <address uri="https://localhost:8888/test"/>
+            </endpoint>
+         </send>
+      </inSequence>
+      <outSequence>
+         <log>
+            <property name="OutSequence" value="***** OUT **************"/>
+         </log>
+         <respond/>
+      </outSequence>
+   </target>
+</proxy>
+</definitions>

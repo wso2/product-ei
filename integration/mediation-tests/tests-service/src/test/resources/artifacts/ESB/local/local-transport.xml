@@ -1,0 +1,61 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="LocalTransportProxy"
+           transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <endpoint name="ep1">
+                <address uri="local://services/SecondProxy"/>
+            </endpoint>
+            <inSequence>
+                <log level="full"/>
+                <log level="custom">
+                    <property name="LocalTransportProxy" value="In sequence of LocalTransportProxy invoked!"/>
+                </log>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="LocalTransportProxy" value="Out sequence of LocalTransportProxy invoked!"/>
+                </log>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="SecondProxy"
+           transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <endpoint name="ep2">
+                <address uri="local://services/StockQuoteProxy"/>
+            </endpoint>
+            <inSequence>
+                <log level="full"/>
+                <log level="custom">
+                    <property name="SecondProxy" value="In sequence of Second proxy invoked!"/>
+                </log>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="SecondProxy" value="Out sequence of Second proxy invoked!"/>
+                </log>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteProxy"
+           startOnLoad="true">
+        <target>
+            <endpoint name="ep3">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <log level="custom">
+                    <property name="StockQuoteProxy"
+                              value="Out sequence of StockQuote proxy invoked!"/>
+                </log>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+</definitions>

@@ -1,0 +1,142 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="ESBTestSuite" parallel="false">
+    <listeners>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestManagerListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestReportListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestExecutionListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestSuiteListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
+    </listeners>
+
+    <!-- This was commented since fails in batch execution - passed locally when individual run-->
+    <!--test name="Server-Stratup" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.switchMediator.InvokeOnErrorSequenceFromSwitchIntegrationTestCase"/>
+        </classes>
+    </test-->
+
+    <test name="Sequence-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.sequence"/>
+        </packages>
+    </test>
+
+    <test name="Switch-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.switchMediator"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.switchMediator.InvokeOnErrorSequenceFromSwitchIntegrationTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Validate-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.validate"/>
+        </packages>
+    </test>
+
+    <test name="XQuery-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.xquery"/>
+        </packages>
+    </test>
+
+    <test name="XSLT-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.xslt"/>
+        </packages>
+    </test>
+
+    <test name="FastXSLT-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.fastXslt"/>
+        </packages>
+    </test>
+
+    <test name="Loopback-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.loopback"/>
+        </packages>
+    </test>
+
+    <test name="Respond-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.respond"/>
+        </packages>
+    </test>
+
+    <test name="Spring-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.spring"/>
+        </packages>
+    </test>
+
+    <test name="Smook-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.smooks"/>
+        </packages>
+    </test>
+
+    <test name="Script-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.script"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.script.ScriptIntegrationToGenerateFaultTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Class-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.classMediator"/>
+        </packages>
+    </test>
+
+    <test name="Message-Processor-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.message.processor.test.forwarding"/>
+            <package name="org.wso2.carbon.esb.message.processor.test"/>
+        </packages>
+    </test>
+
+    <test name="Iterate-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.iterate"/>
+        </packages>
+		<classes>
+           <class name="org.wso2.carbon.esb.mediator.test.iterate.InvalidNamespaceTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+           </class>
+		</classes>
+    </test>
+
+    <test name="Send-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.send"/>
+        </packages>
+    </test>
+
+    <test name="Datamapper-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.datamapper"/>
+        </packages>
+    </test>
+
+    <test name="PublishEvent Mediator Test" preserve-order="true" verbose="2" parallel="false">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.publishevent"/>
+        </packages>
+    </test>
+</suite>

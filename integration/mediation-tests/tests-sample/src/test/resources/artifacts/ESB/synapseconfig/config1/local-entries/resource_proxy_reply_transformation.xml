@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="resource_proxy_reply_transformation">
+    <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://fact.vfa.com/xsd" xmlns:ax22="http://fact.vfa.com/xsd" xmlns:brs="http://brs.carbon.wso2.org" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" version="2.0" exclude-result-prefixes="fn">
+        <xsl:param name="resourceType"/>
+        <xsl:template match="//result">
+            <xs:Resouces xmlns:xs="http://vfa.com/resource">
+                <xsl:apply-templates select="//brs:LineItem"/>
+            </xs:Resouces>
+        </xsl:template>
+        <xsl:template match="brs:LineItem">
+            <xsd:Resource xmlns:xsd="http://vfa.com/resource">
+                <xsd:id>
+                    <xsl:value-of select="ax22:id"/>
+                </xsd:id>
+                <xsd:cost>
+                    <xsl:value-of select="ax22:cost"/>
+                </xsd:cost>
+                <xsd:resourceCode>
+                    <xsl:value-of select="ax22:resourceCode"/>
+                </xsd:resourceCode>
+                <xsd:resourceType>
+                    <xsl:value-of select="$resourceType"/>
+                </xsd:resourceType>
+            </xsd:Resource>
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>

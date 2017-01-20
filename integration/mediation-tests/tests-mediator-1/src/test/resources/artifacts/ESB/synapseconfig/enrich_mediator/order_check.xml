@@ -1,0 +1,18 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="EnrichOrderTest" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+   <target>
+      <inSequence>
+         <loopback/>
+      </inSequence>
+      <outSequence>
+         <enrich>
+            <source clone="true" xpath="//orders/order/*"/>
+            <target xpath="//order/."/>
+         </enrich>
+         <log level="full"/>
+         <send/>
+      </outSequence>
+   </target>
+   <description/>
+</proxy>                               
+</definitions>

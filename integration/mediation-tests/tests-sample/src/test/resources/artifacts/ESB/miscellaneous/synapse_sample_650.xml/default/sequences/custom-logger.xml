@@ -1,0 +1,6 @@
+<sequence name="customSeq" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property name="symbol" expression="get-property('symbol')"/>
+        <property name="epr" expression="get-property('To')"/>
+    </log>
+</sequence>

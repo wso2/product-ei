@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="testWithAngleBrackets"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description>Test for proxy service save with angle brackets</description>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="test" value="&lt;test&gt;"/>
+                </log>
+            </inSequence>
+            <outSequence/>
+        </target>
+    </proxy>
+</definitions>

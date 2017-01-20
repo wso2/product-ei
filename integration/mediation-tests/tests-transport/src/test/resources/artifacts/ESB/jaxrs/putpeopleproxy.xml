@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="peoplePutProxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="HTTP_METHOD" value="GET" scope="axis2"/>
+            <property name="messageType"
+                      value="application/x-www-form-urlencoded"
+                      scope="axis2"/>
+            <send>
+                <endpoint>
+                    <http method="post"
+                          uri-template="http://localhost:8080/rest/api/people?email={uri.var.email}&firstName={uri.var.fname}&lastName={uri.var.lname}"/>
+                    <property name="uri.var.fname" value="dhar"/>
+                    <property name="uri.var.email" value="kasun@gmail.com"/>
+                    <property name="uri.var.lname" value="kasun"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <property name="messageType" value="text/xml" scope="axis2"/>
+            <send/>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>

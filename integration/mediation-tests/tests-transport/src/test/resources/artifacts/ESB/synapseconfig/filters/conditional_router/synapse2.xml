@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <!--  If condition satisfied send it to service -->
+    <sequence name="cnd1_seq">
+        <log>
+            <property name="message" value="**********Conditional Router Test Condition Satisfied **************"/>
+        </log>
+        <send/>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main" trace="enable">
+        <in>
+            <log level="full">
+                <property name="STAGE" value="starting conditional  router"/>
+            </log>
+            <conditionalRouter continueAfter="false">
+                <conditionalRoute breakRoute="false">
+                    <condition>
+                        <!-- url means To address -->
+                        <match type="url" regex=".*SimpleStockQuoteService.*"/>
+                    </condition>
+                    <target sequence="cnd1_seq"/>
+                </conditionalRoute>
+            </conditionalRouter>
+
+            <!--  Rest of the In-sequence from here will not execute -->
+            <log level="custom">
+                <property name="STAGE" value="end conditional  router"/>
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </in>
+        <out>
+            <send/>
+        </out>
+    </sequence>
+</definitions>

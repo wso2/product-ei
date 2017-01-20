@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<registry provider="org.wso2.carbon.mediation.registry.ESBRegistry">
+		<parameter name="root">file:repository/samples/resources/
+		</parameter>
+		<parameter name="cachableDuration">15000</parameter>
+	</registry>
+	<proxy name="simpleProxy" transports="https http"
+		startOnLoad="true" trace="disable">
+		<description />
+		<target>
+			<inSequence>
+				<send>
+					<endpoint>
+						<address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+					</endpoint>
+				</send>
+			</inSequence>
+			<outSequence>
+				<send />
+			</outSequence>
+		</target>
+	</proxy>
+</definitions>

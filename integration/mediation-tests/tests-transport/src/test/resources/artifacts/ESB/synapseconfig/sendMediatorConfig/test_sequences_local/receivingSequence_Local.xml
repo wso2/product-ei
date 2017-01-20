@@ -1,0 +1,6 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="local:receivingSequence">
+    <send/>
+    <log xmlns="http://ws.apache.org/ns/synapse">
+        <property name="Receiving Sequence" value="Local Reg" ></property>
+    </log>
+</sequence>

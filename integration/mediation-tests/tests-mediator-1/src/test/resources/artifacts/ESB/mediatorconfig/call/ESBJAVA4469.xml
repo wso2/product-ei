@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="ESBJAVA4469"
+           transports="https http"
+           startOnLoad="true">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:3828/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+            </inSequence>
+        </target>
+    </proxy>
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="ESBJAVA4469WithLogMediator"
+           transports="https http"
+           startOnLoad="true">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <log level="full"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:3829/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+            </inSequence>
+        </target>
+    </proxy>
+</definitions>

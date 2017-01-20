@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="simpleProxy" statistics="disable" trace="disable" transports="http,https">
+        <target>
+            <inSequence>
+                <log category="INFO" level="simple" separator=","/>
+                <property name="TransformationSequence" expression="get-property('transport','Sequence')"/>
+                <sequence key="{get-property('TransformationSequence')}" />
+            </inSequence>
+
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+
+    </proxy>
+
+    <sequence name="correctsequence">
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+
+</definitions>

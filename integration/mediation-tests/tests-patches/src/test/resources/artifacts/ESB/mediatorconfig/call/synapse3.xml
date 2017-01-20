@@ -1,0 +1,214 @@
+<!--
+
+CallMediator within a REST API
+
+Console Log
+===========
+http://localhost:8280/testCallApi
+
+STATE = IN SEQ S1
+STATE = SEQ1 S1
+STATE = SEQ2 S1
+STATE = SEQ2 S2
+STATE = SEQ1 S2
+STATE = SEQ1 S3
+STATE = IN SEQ S2
+STATE = OUT SEQ S1
+STATE = SEQ3 S1
+STATE = SEQ3 S2
+STATE = OUT SEQ S2
+STATE = OUT SEQ S3
+
+http://localhost:8280/testCallApi/resource2
+
+STATE = RESOURCE 2 IN SEQ S1
+STATE = SEQ1 S1
+STATE = SEQ2 S1
+STATE = SEQ2 S2
+STATE = SEQ1 S2
+STATE = SEQ1 S3
+STATE = RESOURCE 2 IN SEQ S2
+STATE = RESOURCE 2 OUT SEQ S1
+STATE = SEQ3 S1
+STATE = SEQ3 S2
+STATE = RESOURCE 2 OUT SEQ S2
+STATE = RESOURCE 2 OUT SEQ S3
+
+-->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <api name="TestCallAPI" context="/testCallApi">
+        <resource methods="POST">
+            <inSequence>
+                <log level="custom">
+                    <property name="STATE" value="IN SEQ S1"/>
+                </log>
+                <sequence key="SEQ1"/>
+                <log level="custom">
+                    <property name="STATE" value="IN SEQ S2"/>
+                </log>
+                <header name="Action" value="urn:getQuote"/>
+                <payloadFactory>
+                    <format>
+                        <m0:getQuote xmlns:m0="http://services.samples">
+                            <m0:request>
+                                <m0:symbol>IN SEQ</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <send>
+                    <endpoint key="EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="STATE" value="OUT SEQ S1"/>
+                </log>
+                <sequence key="SEQ3"/>
+                <log level="custom">
+                    <property name="STATE" value="OUT SEQ S2"/>
+                </log>
+                <header name="Action" value="urn:getQuote"/>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <m0:getQuote xmlns:m0="http://services.samples">
+                            <m0:request>
+                                <m0:symbol>WSO2</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <call>
+                    <endpoint key="EP"/>
+                </call>
+                <log level="custom">
+                    <property name="STATE" value="OUT SEQ S3"/>
+                </log>
+                <send/>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/resource2">
+            <inSequence>
+                <log level="custom">
+                    <property name="STATE" value="RESOURCE 2 IN SEQ S1"/>
+                </log>
+                <sequence key="SEQ1"/>
+                <log level="custom">
+                    <property name="STATE" value="RESOURCE 2 IN SEQ S2"/>
+                </log>
+                <header name="Action" value="urn:getQuote"/>
+                <payloadFactory>
+                    <format>
+                        <m0:getQuote xmlns:m0="http://services.samples">
+                            <m0:request>
+                                <m0:symbol>IN SEQ</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <send>
+                    <endpoint key="EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="STATE" value="RESOURCE 2 OUT SEQ S1"/>
+                </log>
+                <sequence key="SEQ3"/>
+                <log level="custom">
+                    <property name="STATE" value="RESOURCE 2 OUT SEQ S2"/>
+                </log>
+                <header name="Action" value="urn:getQuote"/>
+                <payloadFactory>
+                    <format>
+                        <m0:getQuote xmlns:m0="http://services.samples">
+                            <m0:request>
+                                <m0:symbol>WSO2</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <call>
+                    <endpoint key="EP"/>
+                </call>
+                <log level="custom">
+                    <property name="STATE" value="RESOURCE 2 OUT SEQ S3"/>
+                </log>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+
+    <endpoint name="EP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+
+    <sequence name="SEQ3">
+        <log level="custom">
+            <property name="STATE" value="SEQ3 S1"/>
+        </log>
+        <header name="Action" value="urn:getQuote"/>
+        <payloadFactory>
+            <format>
+                <m0:getQuote xmlns:m0="http://services.samples">
+                    <m0:request>
+                        <m0:symbol>SEQ3</m0:symbol>
+                    </m0:request>
+                </m0:getQuote>
+            </format>
+            <args/>
+        </payloadFactory>
+        <call>
+            <endpoint key="EP"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ3 S2"/>
+        </log>
+    </sequence>
+
+    <sequence name="SEQ1">
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S1"/>
+        </log>
+        <sequence key="SEQ2"/>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S2"/>
+        </log>
+        <header name="Action" value="urn:getQuote"/>
+        <payloadFactory>
+            <format>
+                <m0:getQuote xmlns:m0="http://services.samples">
+                    <m0:request>
+                        <m0:symbol>SEQ1</m0:symbol>
+                    </m0:request>
+                </m0:getQuote>
+            </format>
+            <args/>
+        </payloadFactory>
+        <call>
+            <endpoint key="EP"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S3"/>
+        </log>
+    </sequence>
+
+    <sequence name="SEQ2">
+        <log level="custom">
+            <property name="STATE" value="SEQ2 S1"/>
+        </log>
+        <call>
+            <endpoint key="EP"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ2 S2"/>
+        </log>
+    </sequence>
+
+</definitions>

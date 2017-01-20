@@ -1,0 +1,65 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="MSProxy" startOnLoad="true" transports="http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" scope="axis2" value="true"/>
+                <header name="Action" scope="default" value="urn:echoInt"/>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT" value="true"/>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <p:echoInt xmlns:p="http://echo.services.core.carbon.wso2.org">
+                            <in xmlns="">AA</in>
+                        </p:echoInt>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <store messageStore="SimpleMsgStore"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <endpoint name="faultEP">
+        <address format="soap11" uri="https://localhost:8443/services/echo">
+            <suspendOnFailure>
+                <errorCodes>-1</errorCodes>
+                <progressionFactor>1.0</progressionFactor>
+            </suspendOnFailure>
+            <markForSuspension>
+                <errorCodes>-1</errorCodes>
+            </markForSuspension>
+        </address>
+    </endpoint>
+    <sequence name="FaultSeq">
+        <log level="full">
+            <property name="FaultSeq" value="*********** FaultSeq *****************"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="ReplySeq">
+        <log level="full">
+            <property name="ReplySeq" value="*********** ReplySeq *****************"/>
+        </log>
+        <drop/>
+    </sequence>
+    <messageStore
+            class="org.apache.synapse.message.store.impl.jms.JmsStore" name="SimpleMsgStore">
+        <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+        <parameter name="store.jms.connection.factory">QueueConnectionFactory</parameter>
+        <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+        <parameter name="store.jms.destination">StockQuoteService</parameter>
+    </messageStore>
+    <messageProcessor
+            class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+            messageStore="SimpleMsgStore" name="SimpleMsgProcessor" targetEndpoint="faultEP">
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="message.processor.reply.sequence">ReplySeq</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="max.delivery.attempts">2</parameter>
+        <parameter name="interval">2000</parameter>
+        <parameter name="throttle">false</parameter>
+        <parameter name="target.endpoint">faultEP</parameter>
+        <parameter name="message.processor.fault.sequence">FaultSeq</parameter>
+        <parameter name="is.active">true</parameter>
+    </messageProcessor>
+</definitions>

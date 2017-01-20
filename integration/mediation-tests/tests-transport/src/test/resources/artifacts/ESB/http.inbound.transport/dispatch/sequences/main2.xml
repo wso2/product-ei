@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="main2">
+   <log level="custom">
+      <property name="MAIN2" value="MAIN2"/>
+   </log>
+    <respond/>
+</sequence>

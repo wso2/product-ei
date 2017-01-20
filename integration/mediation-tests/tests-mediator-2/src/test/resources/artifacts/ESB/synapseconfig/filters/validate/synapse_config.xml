@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="testProxy2"
+          transports="http https"
+          startOnLoad="true"
+          trace="disable">
+      <target>
+         <inSequence>
+            <call-template target="validateRequestTemplate" description="">
+               <with-param name="schema" value="b"/>
+            </call-template>
+         </inSequence>
+         <outSequence/>
+         <faultSequence/>
+      </target>
+   </proxy>
+   <proxy name="testProxy"
+          transports="http https"
+          startOnLoad="true"
+          trace="disable">
+      <target>
+         <inSequence>
+            <call-template target="validateRequestTemplate">
+               <with-param name="schema" value="a"/>
+            </call-template>
+         </inSequence>
+         <outSequence/>
+         <faultSequence/>
+      </target>
+   </proxy>
+   <localEntry key="b">
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified">
+         <xs:element name="level1">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="c">
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element type="xs:short" name="d"/>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:schema>
+   </localEntry>
+   <localEntry key="a">
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified">
+         <xs:element name="level1">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="a">
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element type="xs:short" name="b"/>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:schema>
+   </localEntry>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+   <template name="validateRequestTemplate">
+      <parameter name="schema"/>
+      <sequence>
+         <log level="full"/>
+         <property name="schemaProp"
+                   expression="$func:schema"
+                   scope="default"
+                   type="STRING"/>
+         <log level="custom" description="">
+            <property name="xsdName" expression="get-property('schemaProp')"/>
+         </log>
+         <validate>
+            <schema key="{get-property('schemaProp')}"/>
+            <on-fail>
+               <log level="custom" description="">
+                  <property name="ValidateFailed" value="=====ValidateFailed====="/>
+               </log>
+               <payloadFactory media-type="xml">
+                  <format>
+                     <response xmlns="">$1</response>
+                  </format>
+                  <args>
+                     <arg value="ValidateFailed"/>
+                  </args>
+               </payloadFactory>
+               <respond/>
+            </on-fail>
+         </validate>
+         <payloadFactory media-type="xml">
+            <format>
+               <response xmlns="">$1</response>
+            </format>
+            <args>
+               <arg value="ValidateSuccess"/>
+            </args>
+         </payloadFactory>
+         <respond/>
+      </sequence>
+   </template>
+</definitions>

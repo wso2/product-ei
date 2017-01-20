@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="Axis2ProxyService"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <property name="FORCE_SC_ACCEPTED" value="false" scope="axis2"/>
+            <send>
+               <endpoint key="Axis2EP"/>
+            </send>
+         </inSequence>
+         <outSequence>
+            <send/>
+         </outSequence>
+      </target>
+   </proxy>
+   <endpoint name="Axis2EP">
+      <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+   </endpoint>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <log/>
+      <drop/>
+   </sequence>
+</definitions>

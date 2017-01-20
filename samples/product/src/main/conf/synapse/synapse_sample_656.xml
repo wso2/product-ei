@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+  <proxy name="StockQuoteProxy" startOnLoad="true">
+    <target>
+      <inSequence>
+        <builder>
+          <messageBuilder contentType="application/xml" class="org.apache.axis2.builder.ApplicationXMLBuilder"
+                          formatterClass="org.apache.axis2.transport.http.ApplicationXMLFormatter"/>
+          <messageBuilder contentType="application/xop+xml" class="org.apache.axis2.builder.MTOMBuilder"/>
+          <messageBuilder contentType="multipart/related" class="org.apache.axis2.builder.MIMEBuilder"/>
+          <messageBuilder contentType="application/x-www-form-urlencoded" class="org.apache.axis2.builder.XFormURLEncodedBuilder"
+                          formatterClass="org.apache.axis2.transport.http.XFormURLEncodedFormatter"/>
+          <messageBuilder contentType="text/xml" class="org.apache.axis2.format.PlainTextBuilder"
+                          formatterClass="org.apache.axis2.format.PlainTextFormatter"/>
+          <messageBuilder contentType="application/soap+xml" class="org.apache.axis2.builder.SOAPBuilder"/>
+        </builder>
+        <log level="full"/>
+        <send>
+          <endpoint name="epr">
+            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+          </endpoint>
+        </send>
+      </inSequence>
+      <outSequence>
+        <builder>
+          <messageBuilder contentType="application/xml" class="org.apache.axis2.builder.ApplicationXMLBuilder"
+                          formatterClass="org.apache.axis2.transport.http.ApplicationXMLFormatter"/>
+          <messageBuilder contentType="application/xop+xml" class="org.apache.axis2.builder.MTOMBuilder"/>
+          <messageBuilder contentType="multipart/related" class="org.apache.axis2.builder.MIMEBuilder"/>
+          <messageBuilder contentType="application/x-www-form-urlencoded" class="org.apache.axis2.builder.XFormURLEncodedBuilder"
+                          formatterClass="org.apache.axis2.transport.http.XFormURLEncodedFormatter"/>
+          <messageBuilder contentType="text/xml" class="org.apache.axis2.format.PlainTextBuilder"
+                          formatterClass="org.apache.axis2.format.PlainTextFormatter"/>
+          <messageBuilder contentType="application/soap+xml" class="org.apache.axis2.builder.SOAPBuilder"/>
+        </builder>
+        <log level="full"/>
+        <send/>
+      </outSequence>
+    </target>
+    <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+  </proxy>
+  <sequence name="fault">
+    <log level="full">
+      <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+      <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+      <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+    </log>
+    <drop/>
+  </sequence>
+  <sequence name="main">
+    <log/>
+    <drop/>
+  </sequence>
+</definitions>

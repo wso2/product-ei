@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "title": "company",
+  "properties": {
+    "name": {
+      "id": "http://jsonschema.net/name",
+      "type": "string"
+    },
+    "usoffice": {
+      "id": "http://jsonschema.net/usoffice",
+      "type": "object",
+      "properties": {
+        "address": {
+          "id": "http://jsonschema.net/usoffice/address",
+          "type": "object",
+          "properties": {
+            "no": {
+              "id": "http://jsonschema.net/usoffice/address/no",
+              "type": "string"
+            },
+            "street": {
+              "id": "http://jsonschema.net/usoffice/address/street",
+              "type": "string"
+            },
+            "city": {
+              "id": "http://jsonschema.net/usoffice/address/city",
+              "type": "string"
+            },
+            "code": {
+              "id": "http://jsonschema.net/usoffice/address/code",
+              "type": "string"
+            },
+            "country": {
+              "id": "http://jsonschema.net/usoffice/address/country",
+              "type": "string"
+            }
+          }
+        },
+        "phone": {
+          "id": "http://jsonschema.net/usoffice/phone",
+          "type": "string"
+        },
+        "fax": {
+          "id": "http://jsonschema.net/usoffice/fax",
+          "type": "string"
+        }
+      }
+    },
+    "europeoffice": {
+      "id": "http://jsonschema.net/europeoffice",
+      "type": "object",
+      "properties": {
+        "address": {
+          "id": "http://jsonschema.net/europeoffice/address",
+          "type": "object",
+          "properties": {
+            "no": {
+              "id": "http://jsonschema.net/europeoffice/address/no",
+              "type": "string"
+            },
+            "street": {
+              "id": "http://jsonschema.net/europeoffice/address/street",
+              "type": "string"
+            },
+            "city": {
+              "id": "http://jsonschema.net/europeoffice/address/city",
+              "type": "string"
+            },
+            "code": {
+              "id": "http://jsonschema.net/europeoffice/address/code",
+              "type": "string"
+            },
+            "country": {
+              "id": "http://jsonschema.net/europeoffice/address/country",
+              "type": "string"
+            }
+          }
+        },
+        "phone": {
+          "id": "http://jsonschema.net/europeoffice/phone",
+          "type": "string"
+        },
+        "fax": {
+          "id": "http://jsonschema.net/europeoffice/fax",
+          "type": "string"
+        }
+      }
+    },
+    "asiaoffice": {
+      "id": "http://jsonschema.net/asiaoffice",
+      "type": "object",
+      "properties": {
+        "address": {
+          "id": "http://jsonschema.net/asiaoffice/address",
+          "type": "object",
+          "properties": {
+            "no": {
+              "id": "http://jsonschema.net/asiaoffice/address/no",
+              "type": "string"
+            },
+            "street": {
+              "id": "http://jsonschema.net/asiaoffice/address/street",
+              "type": "string"
+            },
+            "city": {
+              "id": "http://jsonschema.net/asiaoffice/address/city",
+              "type": "string"
+            },
+            "code": {
+              "id": "http://jsonschema.net/asiaoffice/address/code",
+              "type": "string"
+            },
+            "country": {
+              "id": "http://jsonschema.net/asiaoffice/address/country",
+              "type": "string"
+            }
+          }
+        },
+        "phone": {
+          "id": "http://jsonschema.net/asiaoffice/phone",
+          "type": "string"
+        },
+        "fax": {
+          "id": "http://jsonschema.net/asiaoffice/fax",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "usoffice",
+    "europeoffice",
+    "asiaoffice"
+  ]
+}

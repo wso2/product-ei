@@ -1,0 +1,30 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="StockQuoteProxy">
+        <target>
+            <inSequence>
+                <call-template target="test_func">
+                    <with-param name="test_key" value="REQUEST PARAM VALUE"/>
+                </call-template>
+                <respond/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <template xmlns="http://ws.apache.org/ns/synapse" name="test_func">
+        <parameter name="test_key"/>
+        <sequence>
+		     <clone continueParent="true">
+		         <target>
+		            <sequence>
+			           <log level="custom">
+			               <property name="PARAM" expression="$func:test_key" />
+			           </log>
+		               <drop/>
+		             </sequence>
+		         </target>
+		     </clone>            
+        </sequence>
+    </template>
+</definitions>

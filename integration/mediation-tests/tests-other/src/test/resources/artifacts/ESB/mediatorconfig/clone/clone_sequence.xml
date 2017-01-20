@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+		<parameter name="cachableDuration">15000</parameter>
+	</registry>
+	<sequence name="aggregateMessages">
+		<aggregate>
+			<completeCondition>
+				<messageCount min="0" max="5" />
+			</completeCondition>
+			<onComplete xmlns:ns3="http://org.apache.synapse/xsd"
+				xmlns:m0="http://services.samples" expression="//m0:getQuoteResponse">
+				<log level="full">
+				</log>
+				<send />
+			</onComplete>
+		</aggregate>
+	</sequence>
+	<sequence name="cloningMessages">
+		<clone>
+			<target sequence="conf:/sequences/clone/cloneLogAndSendSequence" />
+			<target sequence="gov:/sequences/clone/cloneLogAndSendSequence" />
+		</clone>
+	</sequence>
+	<sequence name="fault">
+		<log level="full">
+			<property name="MESSAGE" value="Executing default 'fault' sequence" />
+			<property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+			<property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+		</log>
+		<drop />
+	</sequence>
+	<sequence name="main">
+		<in>
+			<sequence key="cloningMessages" />
+		</in>
+		<out>
+			<sequence key="aggregateMessages" />
+		</out>
+	</sequence>
+</definitions>

@@ -1,0 +1,105 @@
+<!--
+
+Call Mediator test for failover endpoint
+
+Console Log
+===========
+STATE = IN SEQ S1
+STATE = SEQ1 S1
+STATE = SEQ2 S1
+STATE = SEQ2 S2
+STATE = SEQ1 S2
+WARN ConnectCallback Connection refused or failed for : localhost/127.0.0.1:9010
+WARN EndpointContext Endpoint : endpoint_d34ceed862da23d3f4ff274d89d84f5769be4504837bb615 will be marked SUSPENDED as it failed
+WARN EndpointContext Suspending endpoint : endpoint_d34ceed862da23d3f4ff274d89d84f5769be4504837bb615 - current suspend duration is : 30000ms - Next retry after : Sat Sep 07 10:18:18 IST 2013
+WARN FailoverEndpoint Endpoint [EP2] Detect a Failure in a child endpoint : Endpoint [endpoint_d34ceed862da23d3f4ff274d89d84f5769be4504837bb615]
+WARN ConnectCallback Connection refused or failed for : localhost/127.0.0.1:9012
+WARN EndpointContext Endpoint : endpoint_c34ceed862da23d3f4ff274d89d84f5769be4504837bb615 will be marked SUSPENDED as it failed
+WARN EndpointContext Suspending endpoint : endpoint_c34ceed862da23d3f4ff274d89d84f5769be4504837bb615 - current suspend duration is : 30000ms - Next retry after : Sat Sep 07 10:18:18 IST 2013
+WARN FailoverEndpoint Endpoint [EP2] Detect a Failure in a child endpoint : Endpoint [endpoint_c34ceed862da23d3f4ff274d89d84f5769be4504837bb615]
+STATE = SEQ1 S3
+STATE = IN SEQ S2
+
+-->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="TestCallProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="STATE" value="IN SEQ S1"/>
+                </log>
+                <sequence key="SEQ1"/>
+                <log level="custom">
+                    <property name="STATE" value="IN SEQ S2"/>
+                </log>
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true"/>
+                <send/>
+            </inSequence>
+        </target>
+    </proxy>
+
+    <endpoint name="EP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+
+    <endpoint name="EP2">
+        <failover>
+            <endpoint>
+                <address uri="http://localhost:9010/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <endpoint>
+                <address uri="http://localhost:9012/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </failover>
+    </endpoint>
+
+    <sequence name="SEQ1" onError="fault">
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S1"/>
+        </log>
+        <sequence key="SEQ2"/>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S2"/>
+        </log>
+        <header name="Action" value="urn:getQuote"/>
+        <payloadFactory media-type="xml">
+            <format>
+                <m0:getQuote xmlns:m0="http://services.samples">
+                    <m0:request>
+                        <m0:symbol>FO</m0:symbol>
+                    </m0:request>
+                </m0:getQuote>
+            </format>
+            <args/>
+        </payloadFactory>
+        <call>
+            <endpoint key="EP2"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S3"/>
+        </log>
+    </sequence>
+
+    <sequence name="SEQ2">
+        <log level="custom">
+            <property name="STATE" value="SEQ2 S1"/>
+        </log>
+        <call>
+            <endpoint key="EP"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ2 S2"/>
+        </log>
+    </sequence>
+
+</definitions>

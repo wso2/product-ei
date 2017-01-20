@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <sequence name="logCategoryTestSequence">
+        <in>
+            <log level="custom" category="TRACE">
+                <property name="trace_custom" value="*****IN-LOGGING AT TRACE LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <send>
+                <endpoint key="conf:/endpoints/registry_endpoint.xml"/>
+            </send>
+        </in>
+        <out>
+            <log level="custom" category="TRACE">
+                <property name="trace_custom" value="*****OUT-LOGGING AT TRACE LEVEL-CUSTOM LEVEL*****"/>
+            </log>
+            <send/>
+        </out>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <sequence key="logCategoryTestSequence"/>
+    </sequence>
+</definitions>

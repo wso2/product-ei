@@ -1,0 +1,15 @@
+<sequence name="main" xmlns="http://ws.apache.org/ns/synapse">
+    <in>
+        <send/>
+    </in>
+    <out>
+        <log level="custom">
+            <property xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd" name="Stock_Quote_on"
+                      expression="//ns:return/ax21:lastTradeTimestamp/child::text()"/>
+            <property xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd"
+                      name="For_the_organization" expression="//ns:return/ax21:name/child::text()"/>
+            <property xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd" name="Last_Value"
+                      expression="//ns:return/ax21:last/child::text()"/>
+        </log>
+    </out>
+</sequence>

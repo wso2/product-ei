@@ -1,0 +1,23 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <sequence name="main">
+        <in>
+            <validate>
+                <schema key="conf:/validate/schema.xml"/>
+                <on-fail>
+                    <!-- if the request does not validate againt schema throw a fault -->
+                    <makefault response="true">
+                        <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                        <reason value="Invalid custom quote request"/>
+                    </makefault>
+                </on-fail>
+            </validate>
+        </in>
+        <send/>
+    </sequence>
+</definitions>

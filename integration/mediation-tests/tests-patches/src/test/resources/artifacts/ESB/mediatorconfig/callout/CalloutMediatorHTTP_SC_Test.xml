@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="TestCallout"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target faultSequence="fault">
+            <inSequence>
+                <callout serviceURL="http://localhost:1995" action="urn:getQuote">
+                    <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                    <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                </callout>
+                <drop/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="custom">
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="STATUS-Fault"
+                      expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <proxy name="StockQuoteProxy" startOnLoad="true" statistics="enable" trace="enable">
+        <target>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="SplitAggregateProxy" startOnLoad="true"
+           statistics="enable" trace="enable">
+        <target>
+            <inSequence>
+                <iterate attachPath="//m0:getQuote"
+                         expression="//m0:getQuote/m0:request"
+                         preservePayload="true" xmlns:m0="http://services.samples">
+                    <target>
+                        <sequence>
+                            <send>
+                                <endpoint>
+                                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount/>
+                    </completeCondition>
+                    <onComplete expression="//m0:getQuoteResponse" xmlns:m0="http://services.samples">
+                        <send/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

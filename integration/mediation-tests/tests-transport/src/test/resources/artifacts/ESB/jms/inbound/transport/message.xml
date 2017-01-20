@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns:ns= "http://services.samples"
+                   xmlns:xsd="http://services.samples/xsd">
+      <soapenv:Header/>
+       <soapenv:Body>
+           <ns:getQuote >
+               <ns:request>
+                   <ns:symbol>IBM</ns:symbol>
+               </ns:request>
+           </ns:getQuote>
+       </soapenv:Body>
+</soapenv:Envelope>
+

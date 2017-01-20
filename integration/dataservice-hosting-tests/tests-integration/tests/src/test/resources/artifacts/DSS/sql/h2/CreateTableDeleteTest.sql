@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS FILTER;
+
+Create table FILTER(
+  REC_ID int
+  );

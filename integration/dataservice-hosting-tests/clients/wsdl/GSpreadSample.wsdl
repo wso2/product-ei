@@ -1,0 +1,184 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://ws.wso2.org/dataservice" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/gspread_sample_service" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/gspread_sample_service">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/gspread_sample_service">
+            <xs:element name="getCustomers">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Customers" type="ns0:Customers" />
+            <xs:complexType name="Customers">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Customer" type="ns0:Customer" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element name="customerNumber" nillable="true" type="xs:string" />
+                </xs:sequence>
+                <xs:attribute name="customerName" type="xs:string" use="optional" />
+                <xs:attribute name="city" type="xs:string" use="optional" />
+            </xs:complexType>
+            <xs:element name="_getcustomers">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="_getcustomersRequest">
+        <wsdl:part name="parameters" element="ns0:_getcustomers" />
+    </wsdl:message>
+    <wsdl:message name="_getcustomersResponse">
+        <wsdl:part name="parameters" element="ns0:Customers" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns1:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:message name="getCustomersRequest">
+        <wsdl:part name="parameters" element="ns0:getCustomers" />
+    </wsdl:message>
+    <wsdl:message name="getCustomersResponse">
+        <wsdl:part name="parameters" element="ns0:Customers" />
+    </wsdl:message>
+    <wsdl:portType name="GSpreadSamplePortType">
+        <wsdl:operation name="_getcustomers">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:_getcustomersRequest" wsaw:Action="urn:_getcustomers" />
+            <wsdl:output message="ns0:_getcustomersResponse" wsaw:Action="urn:_getcustomersResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getcustomersDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="getCustomers">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:getCustomersRequest" wsaw:Action="urn:getCustomers" />
+            <wsdl:output message="ns0:getCustomersResponse" wsaw:Action="urn:getCustomersResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getCustomersDataServiceFault" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GSpreadSampleSOAP11Binding" type="ns0:GSpreadSamplePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="_getcustomers">
+            <soap:operation soapAction="urn:_getcustomers" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomers">
+            <soap:operation soapAction="urn:getCustomers" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GSpreadSampleSOAP12Binding" type="ns0:GSpreadSamplePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="_getcustomers">
+            <soap12:operation soapAction="urn:_getcustomers" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomers">
+            <soap12:operation soapAction="urn:getCustomers" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="GSpreadSampleHttpBinding" type="ns0:GSpreadSamplePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="_getcustomers">
+            <http:operation location="customers" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCustomers">
+            <http:operation location="getCustomers" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="GSpreadSample">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:GSpreadSampleSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/GSpreadSample.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:GSpreadSampleSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/GSpreadSample.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:GSpreadSampleSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/GSpreadSample.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:GSpreadSampleSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/GSpreadSample.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:GSpreadSampleHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/GSpreadSample.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:GSpreadSampleHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/GSpreadSample.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

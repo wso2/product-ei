@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+    <api name="Transform" context="/Transform">
+        <resource methods="POST">
+            <inSequence>
+                <property name="messageType" value="application/json" scope="axis2"/>
+                <log level="custom">
+                    <property name="Status" expression="json-eval($.StockQuotes.Stock)"/>
+                </log>
+                <filter source="json-eval($.StockQuotes.Stock.Symbol)" regex="null">
+                    <then>
+                        <payloadFactory media-type="json">
+                            <format>{ "StockQuotes": { "Stock": $1 } }</format>
+                            <args>
+                                <arg evaluator="json" expression="$.StockQuotes.Stock"/>
+                            </args>
+                        </payloadFactory>
+                    </then>
+                    <else>
+                        <payloadFactory media-type="json">
+                            <format>{ "StockQuotes": { "Stock": [ $1 ] } }</format>
+                            <args>
+                                <arg evaluator="json" expression="$.StockQuotes.Stock"/>
+                            </args>
+                        </payloadFactory>
+                    </else>
+                </filter>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <proxy name="ESBJAVA3656Proxy"
+           transports="http https"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="where" value="*** IN ***** ESBJAVA3656Proxy inSequence"/>
+                </log>
+                <store messageStore="JMSStore" description="store"/>
+                <respond description="replay"/>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="where" value="*** UNEXPECTED ***** ESBJAVA3656Proxy outSequence"/>
+                </log>
+                <send/>
+            </outSequence>
+            <faultSequence>
+                <log level="custom">
+                    <property name="where" value="*** UNEXPECTED ***** ESBJAVA3656Proxy faultSequence"/>
+                </log>
+            </faultSequence>
+        </target>
+    </proxy>
+
+    <proxy name="BProxy"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="where" value="***IN*****_BProxy_inSequence"/>
+                </log>
+                <respond description="replay"/>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="where" value="*** OUT ***** BProxy outSequence"/>
+                </log>
+                <send/>
+            </outSequence>
+            <faultSequence>
+                <log level="custom">
+                    <property name="where" value="*** FAULT ***** BProxy faultSequence"/>
+                </log>
+            </faultSequence>
+        </target>
+        <description/>
+    </proxy>
+
+
+    <endpoint name="BEndpoint">
+        <address uri="http://localhost:8280/services/BProxy"/>
+    </endpoint>
+
+    <sequence name="faultSeq">
+        <log level="custom">
+            <property name="where" value="******** faultSeq"/>
+        </log>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="replaySeq">
+        <log level="custom">
+            <property name="where" value="********replaySeq"/>
+        </log>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <messageStore class="org.apache.synapse.message.store.impl.jms.JmsStore"
+                  name="JMSStore">
+        <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+        <parameter name="store.jms.username">admin</parameter>
+        <parameter name="store.jms.password">admin</parameter>
+        <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+        <parameter name="store.jms.destination">TestQueue</parameter>
+    </messageStore>
+
+    <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="messProc"
+                      targetEndpoint="BEndpoint"
+                      messageStore="JMSStore">
+        <parameter name="message.processor.reply.sequence">replaySeq</parameter>
+        <parameter name="max.delivery.attempts">1</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="interval">3000</parameter>
+        <parameter name="bind.processor.server">false</parameter>
+        <parameter name="pinnedServers">Server1</parameter>
+        <parameter name="message.processor.fault.sequence">faultSeq</parameter>
+        <parameter name="is.active">true</parameter>
+    </messageProcessor>
+</definitions>
