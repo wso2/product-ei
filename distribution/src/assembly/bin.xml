@@ -826,6 +826,7 @@
             <excludes>
                 <exclude>**/wso2</exclude>
                 <exclude>**/*.sh</exclude>
+                <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/axis2/axis2.xml</exclude>
                 <exclude>**/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/synapse.xml</exclude>
@@ -884,11 +885,14 @@
         </fileSet>
 
         <fileSet>
-            <directory>./src/broker/conf/identity</directory>
+            <directory>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity</directory>
             <outputDirectory>
                 wso2ei-${pom.version}/wso2/broker/conf/identity
             </outputDirectory>
         </fileSet>
+
+<!--End of Broker custom scripts -->
+
 
     </fileSets>
     
@@ -1653,11 +1657,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
-        <file>
-            <source>./src/broker/conf/master-datasources.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/datasources/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
+
         <file>
             <source>./src/broker/conf/metrics-datasources.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/datasources/</outputDirectory>
@@ -1718,8 +1718,19 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2MB_DB.h2.db</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/repository/database/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2METRICS_DB.h2.db</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/repository/database/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>./src/broker/conf/master-datasources.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/datasources/</outputDirectory>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <!-- End copying broker files -->

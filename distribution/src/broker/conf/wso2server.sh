@@ -294,6 +294,7 @@ do
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
     -DandesConfig=broker.xml \
+    -Dqpid.conf="/conf/advanced/" \
     -Dcarbon.home="$CARBON_HOME" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
