@@ -47,5 +47,17 @@
                 <exclude>**/.settings</exclude>
             </excludes>
         </fileSet>
+        <fileSet>
+            <directory>
+                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components
+            </directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
+            <excludes>
+                <exclude>**/eclipse.ini</exclude>
+                <exclude>**/*.lock</exclude>
+                <exclude>**/.data</exclude>
+                <exclude>**/.settings</exclude>
+            </excludes>
+        </fileSet>
     </fileSets>
 </assembly>

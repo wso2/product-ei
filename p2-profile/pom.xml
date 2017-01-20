@@ -35,6 +35,7 @@
     <modules>
         <module>ei-profile</module>
         <module>business-process-profile</module>
+        <module>broker-profile</module>
     </modules>
 
 </project>
