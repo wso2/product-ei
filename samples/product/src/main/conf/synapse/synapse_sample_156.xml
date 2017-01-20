@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2011, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Service Integration with specifying the receiving sequence -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/>
+
+    <proxy name="StockQuoteProxy">
+        <target>
+            <inSequence>
+                <enrich>
+                    <source type="body"/>
+                    <target type="property" property="REQUEST"/>
+                </enrich>
+
+                <send receive="SimpleServiceSeq">
+                    <endpoint name="secure">
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService">
+                            <enableSec policy="sec_policy"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <sequence name="SimpleServiceSeq">
+        <property name="SECURE_SER_AMT" expression="//ns:getQuoteResponse/ns:return/ax21:last"
+                xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd"/>
+        <log level="custom">
+            <property name="SecureStockQuoteService-Amount" expression="get-property('SECURE_SER_AMT')"/>
+        </log>
+        <enrich>
+            <source type="body"/>
+            <target type="property" property="SecureService_Res"/>
+        </enrich>
+        <enrich>
+            <source type="property" property="REQUEST"/>
+            <target type="body"/>
+        </enrich>
+        <header name="Action" scope="default" value="urn:getQuote"/>
+        <send receive="ClientOutSeq">
+            <endpoint name="SimpleStockQuoteService">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+    <sequence name="ClientOutSeq">
+        <property name="SIMPLE_SER_AMT" expression="//ns:getQuoteResponse/ns:return/ax21:last"
+                       xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd"/>
+        <log level="custom">
+            <property name="SimpleStockQuoteService-Amount" expression="get-property('SIMPLE_SER_AMT')"/>
+        </log>
+        <enrich>
+            <source type="body"/>
+            <target type="property" property="SimpleService_Res"/>
+        </enrich>
+
+        <filter xpath="fn:number(get-property('SIMPLE_SER_AMT')) > fn:number(get-property('SECURE_SER_AMT'))">
+            <then>
+                <log>
+                    <property name="StockQuote" value="SecureStockQuoteService"/>
+                </log>
+                <enrich>
+                    <source type="property" property="SecureService_Res"/>
+                    <target type="body"/>
+                </enrich>
+            </then>
+            <else>
+                <log>
+                    <property name="StockQuote" value="SimpleStockQuoteService"/>
+                </log>
+            </else>
+        </filter>
+
+        <send/>
+    </sequence>
+
+</definitions>

@@ -11,11 +11,11 @@ import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 //import org.wso2.esb.integration.common.clients.feature.mgt.FeatureManagementAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.esb.hl7.transport.test.sample.HL7Sender;
 import org.wso2.carbon.esb.hl7.transport.test.sample.HL7Server;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 /**
  * Need to test once the product is released with the actual feature repo link

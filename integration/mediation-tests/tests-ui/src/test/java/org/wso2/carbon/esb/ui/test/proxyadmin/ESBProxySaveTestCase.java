@@ -5,14 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.api.selenium.home.HomePage;
-import org.wso2.carbon.automation.api.selenium.proxyservices.ProxySourcePage;
-import org.wso2.carbon.automation.api.selenium.servlistlist.DeployedServicesPage;
-import org.wso2.carbon.automation.api.selenium.servlistlist.ServiceListPage;
-import org.wso2.carbon.automation.api.selenium.login.LoginPage;
-import org.wso2.carbon.automation.core.BrowserManager;
-import org.wso2.carbon.automation.core.ProductConstant;
-import org.wso2.carbon.esb.ui.test.ESBIntegrationUITest;
+import org.wso2.carbon.automation.extensions.selenium.BrowserManager;
+import org.wso2.esb.integration.common.ui.page.LoginPage;
+import org.wso2.esb.integration.common.ui.page.main.DeployedServicesPage;
+import org.wso2.esb.integration.common.ui.page.main.HomePage;
+import org.wso2.esb.integration.common.ui.page.main.ProxySourcePage;
+import org.wso2.esb.integration.common.utils.ESBIntegrationUITest;
 
 public class ESBProxySaveTestCase  extends ESBIntegrationUITest {
 
@@ -23,13 +21,13 @@ public class ESBProxySaveTestCase  extends ESBIntegrationUITest {
         super.init();
         loadESBConfigurationFromClasspath("artifacts/ESB/synapseconfig/proxyadmin/testconfig.xml");
         driver = BrowserManager.getWebDriver();
-        driver.get(getLoginURL(ProductConstant.ESB_SERVER_NAME));
+        driver.get(getLoginURL());
     }
 
     @Test(groups = "wso2.esb", description = "verify proxy service can be saved.")
     public void testLogin() throws Exception {
-        boolean isCloud = isRunningOnCloud();
-        LoginPage test = new LoginPage(driver, isCloud);
+//        boolean isCloud = isRunningOnCloud();
+        LoginPage test = new LoginPage(driver);
         HomePage home = test.loginAs(userInfo.getUserName(), userInfo.getPassword());
         home.clickMenu("Services","List");
         DeployedServicesPage listPage = new DeployedServicesPage(driver);
@@ -41,5 +39,6 @@ public class ESBProxySaveTestCase  extends ESBIntegrationUITest {
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
         driver.quit();
+        super.cleanup();
     }
 }

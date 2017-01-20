@@ -1,24 +1,20 @@
 package org.wso2.carbon.esb.jms.transport.test;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-
-import javax.activation.DataHandler;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.service.mgt.ServiceAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+
+import javax.activation.DataHandler;
+import java.io.File;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Related to https://wso2.org/jira/browse/ESBJAVA-3341

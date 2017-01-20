@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.wso2.esb</groupId>
-        <artifactId>esb-integration-tests</artifactId>
-        <version>5.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <groupId>org.wso2.ei</groupId>
+        <artifactId>mediation-integration</artifactId>
+        <version>6.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.carbon.esb.tests.patches</artifactId>
+    <artifactId>org.wso2.carbon.ei.tests.patches</artifactId>
     <name>ESB test Module - Test Patches</name>
     <packaging>jar</packaging>
     <build>
@@ -43,7 +43,7 @@
                         <sec.verifier.dir>${basedir}/target/security-verifier/</sec.verifier.dir>
                         <maven.test.haltafterfailure>false</maven.test.haltafterfailure>
                         <carbon.zip>
-                            ${basedir}/../../../distribution/target/wso2esb-${product.esb.version}.zip
+                            ${basedir}/../../../distribution/target/wso2ei-${product.ei.version}.zip
                         </carbon.zip>
                         <instr.file>${basedir}/src/test/resources/instrumentation.txt</instr.file>
                         <filters.file>${basedir}/src/test/resources/filters.txt</filters.file>
@@ -104,9 +104,9 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.wso2.esb</groupId>
-                                    <artifactId>wso2esb</artifactId>
-                                    <version>${product.esb.version}</version>
+                                    <groupId>org.wso2.ei</groupId>
+                                    <artifactId>wso2ei</artifactId>
+                                    <version>${product.ei.version}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${basedir}/target/tobeCopied/</outputDirectory>
@@ -145,7 +145,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2esb-${product.esb.version}/repository/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
@@ -166,7 +166,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2esb-${product.esb.version}/repository/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
@@ -187,7 +187,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2esb-${product.esb.version}/repository/samples/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/samples/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
@@ -208,7 +208,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2esb-${product.esb.version}/repository/deployment/client/modules
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/deployment/client/modules
                                     </directory>
                                     <includes>
                                         <include>**/*.mar</include>
@@ -229,7 +229,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2esb-${product.esb.version}/repository/samples/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/samples/
                                     </directory>
                                     <includes>
                                         <include>**/*.xml</include>
@@ -244,8 +244,9 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.wso2.esb</groupId>
+            <groupId>org.wso2.ei</groupId>
             <artifactId>admin-clients</artifactId>
+            <version>${product.ei.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -254,8 +255,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.esb</groupId>
+            <groupId>org.wso2.ei</groupId>
             <artifactId>integration-test-utils</artifactId>
+            <version>${product.ei.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -264,12 +266,14 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.esb</groupId>
+            <groupId>org.wso2.ei</groupId>
             <artifactId>service-samples</artifactId>
+            <version>${product.ei.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.esb</groupId>
+            <groupId>org.wso2.ei</groupId>
             <artifactId>extensions</artifactId>
+            <version>${product.ei.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.sshd</groupId>

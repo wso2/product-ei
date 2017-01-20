@@ -1,0 +1,47 @@
+<order id='332'>
+    <header>
+        <customer number="123">Joe</customer>
+    </header>
+    <order-items>
+        <order-item id='1'>
+            <product quantity="4">Pen</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='2'>
+            <product quantity="1">Book</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='3'>
+            <product quantity="2">Bottle</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='4'>
+            <product quantity="8">Note Book</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='5'>
+            <product quantity="3">Pencil</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='6'>
+            <product quantity="5">Chocolate</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='7'>
+            <product quantity="7">Bun</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='8'>
+            <product quantity="1">Banana</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='9'>
+            <product quantity="3">Hat</product>
+            <price>8.80</price>
+        </order-item>
+        <order-item id='10'>
+            <product quantity="12">Toffee</product>
+            <price>8.80</price>
+        </order-item>
+      </order-items>
+</order>
