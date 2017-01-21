@@ -62,7 +62,7 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
         File srcFile = new File(nhttpFile);
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
         httpLogDir = carbonHome + File.separator + "repository" + File.separator + "logs" + File.separator + "httpLogs";
-        File log4jProperties = new File(carbonHome + File.separator + "repository" + File.separator + "conf" +
+        File log4jProperties = new File(carbonHome + File.separator + "conf" +
                 File.separator + "log4j.properties");
 
         String propertyName = "nhttp.log.directory";

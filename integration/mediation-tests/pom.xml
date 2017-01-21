@@ -32,17 +32,17 @@
     <packaging>pom</packaging>
 
     <modules>
-      <!--  <module>tests-common</module>-->
-<!--        <module>service-samples</module>
-        <module>tests-transport</module>
-        <module>tests-service</module>-->
-        <module>tests-mediator-1</module>
-<!--        <module>tests-mediator-2</module>
+        <module>tests-common</module>
+        <module>service-samples</module>
+<!--        <module>tests-transport</module>-->
+        <module>tests-service</module>
+<!--        <module>tests-mediator-1</module>
+        <module>tests-mediator-2</module>-->
         <module>tests-patches</module>
         <module>tests-sample</module>
-        <module>tests-other</module>-->
-        <!--<module>tests-ui</module>-->
-        <!--<module>tests-platform</module>-->
+        <module>tests-other</module>
+        <module>tests-ui</module>
+        <module>tests-platform</module>
     </modules>
 
 </project>

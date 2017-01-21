@@ -52,18 +52,18 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository/components/plugins/saxon*.jar</exclude>
+                <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
-                <exclude>**/repository/conf/registry.xml</exclude>
-                <exclude>**/repository/conf/tomcat/web.xml</exclude>
+                <exclude>**/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/conf/registry.xml</exclude>
+                <exclude>**/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
+                <exclude>**/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/wso2/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/wso2/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/wso2/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/wso2/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
+                <exclude>**/wso2/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
 
@@ -85,12 +85,22 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**//tomcat/catalina-server.xml</exclude>
-                <exclude>**//registry.xml</exclude>
+                <exclude>**/tomcat/catalina-server.xml</exclude>
+                <exclude>**/registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
             </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/tomcat</directory>
+            <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/tomee</directory>
+            <outputDirectory>wso2ei-${pom.version}/conf/tomee</outputDirectory>
         </fileSet>
 
         <fileSet>
@@ -444,7 +454,7 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository/components/plugins/saxon*.jar</exclude>
+                <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
                 <exclude>**/repository/conf/registry.xml</exclude>
@@ -482,21 +492,12 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
 

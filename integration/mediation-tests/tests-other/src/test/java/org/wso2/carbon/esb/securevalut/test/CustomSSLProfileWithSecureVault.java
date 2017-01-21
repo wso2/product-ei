@@ -46,8 +46,7 @@ public class CustomSSLProfileWithSecureVault extends ESBIntegrationTest {
         String sourceCText = FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB" +
                              separator + "synapseconfig" + separator + "customSSLprofileWithsecurevault" + separator
                              + "cipher-text.properties";
-        String targetCText = CarbonBaseUtils.getCarbonHome() + File.separator + "repository" +
-                             File.separator + "conf" + File.separator + "security" + File.separator + "cipher-text.properties";
+        String targetCText = CarbonBaseUtils.getCarbonHome() + File.separator + "conf" + File.separator + "security" + File.separator + "cipher-text.properties";
         File sourceFileCText = new File(sourceCText);
         File targetFileCText = new File(targetCText);
         serverConfigurationManager.applyConfigurationWithoutRestart(sourceFileCText, targetFileCText, true);
@@ -56,7 +55,7 @@ public class CustomSSLProfileWithSecureVault extends ESBIntegrationTest {
         String sourceCTool = FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB" +
                              separator + "synapseconfig" + separator + "customSSLprofileWithsecurevault" + separator
                              + "cipher-tool.properties";
-        String targetCTool = CarbonBaseUtils.getCarbonHome() + File.separator + "repository" + File.separator +
+        String targetCTool = CarbonBaseUtils.getCarbonHome() + File.separator +
                              "conf" + File.separator + "security" + File.separator + "cipher-tool.properties";
         File sourceFileCTool = new File(sourceCTool);
         File targetFileCTool = new File(targetCTool);
@@ -66,7 +65,7 @@ public class CustomSSLProfileWithSecureVault extends ESBIntegrationTest {
         String sourceSecret = FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB" +
                               separator + "synapseconfig" + separator + "customSSLprofileWithsecurevault" + separator
                               + "secret-conf.properties";
-        String targetSecret = CarbonBaseUtils.getCarbonHome() + File.separator + "repository" + File.separator +
+        String targetSecret = CarbonBaseUtils.getCarbonHome() + File.separator +
                               "conf" + File.separator + "security" + File.separator + "secret-conf.properties";
         File sourceFileSecret = new File(sourceSecret);
         File targetFileSecret = new File(targetSecret);
@@ -76,7 +75,7 @@ public class CustomSSLProfileWithSecureVault extends ESBIntegrationTest {
         String sourceAxis2 = FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB" +
                              separator + "synapseconfig" + separator + "customSSLprofileWithsecurevault" + separator
                              + "axis2.xml";
-        String targetAxis2 = CarbonBaseUtils.getCarbonHome() + File.separator + "repository" + File.separator +
+        String targetAxis2 = CarbonBaseUtils.getCarbonHome() + File.separator +
                              "conf" + File.separator + "axis2" + File.separator + "axis2.xml";
         File sourceFileAxis2 = new File(sourceAxis2);
         File targetFileAxis2 = new File(targetAxis2);
@@ -86,7 +85,7 @@ public class CustomSSLProfileWithSecureVault extends ESBIntegrationTest {
         String sourceTomcat = FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB" +
                               separator + "synapseconfig" + separator + "customSSLprofileWithsecurevault" + separator
                               + "catalina-server.xml";
-        String targetTomcat = CarbonBaseUtils.getCarbonHome() + File.separator + "repository" + File.separator +
+        String targetTomcat = CarbonBaseUtils.getCarbonHome() + File.separator +
                               "conf" + File.separator + "tomcat" + File.separator + "catalina-server.xml";
         File sourceFileTomcat = new File(sourceTomcat);
         File targetFileTomcat = new File(targetTomcat);

@@ -27,7 +27,7 @@ public class CARBON14965TenantJsonFormatter extends ESBIntegrationTest {
         File sourceFile = new File(FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator +
                                     "ESB" + File.separator + "json" + File.separator + "tenant-axis2.xml");
 
-        File targetFile = new File(CarbonUtils.getCarbonHome() + File.separator + "repository" + File.separator + "conf"
+        File targetFile = new File(CarbonUtils.getCarbonHome() + File.separator + "conf"
                 + File.separator + "axis2" + File.separator + "tenant-axis2.xml");
 
         serverManager.applyConfigurationWithoutRestart(sourceFile, targetFile, true);

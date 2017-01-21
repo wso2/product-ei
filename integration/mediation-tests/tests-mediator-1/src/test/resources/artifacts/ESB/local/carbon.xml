@@ -27,17 +27,17 @@
     <!--
        Product Name
     -->
-    <Name>WSO2 Enterprise Service Bus</Name>
+    <Name>WSO2 Enterprise Integrator</Name>
 
     <!--
        machine readable unique key to identify each product
     -->
-    <ServerKey>ESB</ServerKey>
+    <ServerKey>EI</ServerKey>
 
     <!--
        Product Version
     -->
-    <Version>5.0.0</Version>
+    <Version>6.0.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
@@ -74,7 +74,10 @@
     Ex : <Role>.*</Role> means this server can act any role
     -->
     <ServerRoles>
+        <Role>EnterpriseIntegrator</Role>
         <Role>EnterpriseServiceBus</Role>
+        <Role>DataServicesServer</Role>
+        <Role>ApplicationServer</Role>
     </ServerRoles>
 
     <!-- uncommnet this line to subscribe to a bam instance automatically -->
@@ -250,7 +253,7 @@
             3. file:///home/carbon/repository/axis2.xml
             4. http://repository/conf/axis2.xml
         -->
-        <ConfigurationFile>${carbon.home}/repository/conf/axis2/axis2.xml</ConfigurationFile>
+        <ConfigurationFile>${carbon.home}/conf/axis2/axis2.xml</ConfigurationFile>
 
         <!--
           ServiceGroupContextIdleTime, which will be set in ConfigurationContex
@@ -266,7 +269,7 @@
         <ClientRepositoryLocation>${carbon.home}/repository/deployment/client/</ClientRepositoryLocation>
         <!-- This axis2 xml is used in createing the configuration context by the FE server
          calling to BE server -->
-        <clientAxis2XmlLocation>${carbon.home}/repository/conf/axis2/axis2_client.xml</clientAxis2XmlLocation>
+        <clientAxis2XmlLocation>${carbon.home}/conf/axis2/axis2_client.xml</clientAxis2XmlLocation>
         <!-- If this parameter is set, the ?wsdl on an admin service will not give the admin service wsdl. -->
         <HideAdminServiceWSDLs>true</HideAdminServiceWSDLs>
 	

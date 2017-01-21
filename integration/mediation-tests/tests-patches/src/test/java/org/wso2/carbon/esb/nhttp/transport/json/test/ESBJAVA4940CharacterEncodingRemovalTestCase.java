@@ -60,7 +60,7 @@ public class ESBJAVA4940CharacterEncodingRemovalTestCase extends ESBIntegrationT
 
         // Enable wire logs
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        File log4jProperties = Paths.get(carbonHome, "repository", "conf", "log4j.properties").toFile();
+        File log4jProperties = Paths.get(carbonHome, "conf", "log4j.properties").toFile();
         applyProperty(log4jProperties, "log4j.logger.org.apache.synapse.transport.http.wire", "DEBUG");
         serverConfigurationManager.restartGracefully();
         super.init();

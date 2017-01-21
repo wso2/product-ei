@@ -10,13 +10,26 @@
     </listeners>
 
     <!-- This was commented since fails in batch execution - passed locally when individual run-->
-    <!--test name="Server-Stratup" preserve-order="true" verbose="2">
+    <test name="Server-Stratup" preserve-order="true" verbose="2">
         <classes>
-            <class name="org.wso2.carbon.esb.mediator.test.switchMediator.InvokeOnErrorSequenceFromSwitchIntegrationTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.classMediator.InvokeAfterRemovingPropertiesTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsFloat"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsLong"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustom"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsBoolean"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsString"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XquaryInvaluedKeyTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsDouble"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsInteger"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsByte"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsInt"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryEmptyEmptySoapRequestTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryReplaceEmptyMessageBody"/>
+            <class name="org.wso2.carbon.esb.mediator.test.classMediator.InvokeAfterRemovingPropertiesTestCase"/>
         </classes>
-    </test-->
+    </test>
 
-    <test name="Sequence-mediator-Test" preserve-order="true" verbose="2">
+<!--    <test name="Sequence-mediator-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.sequence"/>
         </packages>
@@ -138,5 +151,5 @@
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.publishevent"/>
         </packages>
-    </test>
+    </test>-->
 </suite>

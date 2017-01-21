@@ -47,6 +47,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleRequestInFlow(MessageContext messageContext) {
+        boolean isPreserveHeadersContained = false;
         try {
             if (messageContext.getTo() != null) {
                 String uri = messageContext.getTo().getAddress();
@@ -57,6 +58,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                     host = Utils.getHostname((String) ((TreeMap) ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS")).get("Host"));
                     if ("/odata".equals(contextPath)) {
                         configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+                        isPreserveHeadersContained = true;
                         Utils.setIntegratorHeader(messageContext);
                         messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
                         return sendMediator.mediate(messageContext);
@@ -64,6 +66,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                         WebApplication webApplication = Utils.getStartedWebapp(contextPath, host);
                         if (webApplication != null) {
                             configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+                            isPreserveHeadersContained = true;
                             Utils.setIntegratorHeader(messageContext);
                             messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
                             return sendMediator.mediate(messageContext);
@@ -76,7 +79,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
             this.handleException("Errr", e, messageContext);
             return true;
         } finally {
-            configuration.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+            if (isPreserveHeadersContained) {
+                configuration.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+            }
         }
     }
 
