@@ -133,11 +133,6 @@
                 <version>${axiom.api.wso2.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.ws.commons.axiom.wso2</groupId>
-                <artifactId>axiom</artifactId>
-                <version>${axiom.wso2.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.axis2.wso2</groupId>
                 <artifactId>axis2</artifactId>
                 <version>${axis2.wso2.version}</version>
@@ -234,11 +229,6 @@
                 <artifactId>extensions</artifactId>
                 <version>${product.esb.version}</version>
             </dependency>-->
-            <dependency>
-                <groupId>org.wso2.carbon.mediation</groupId>
-                <artifactId>org.wso2.carbon.inbound.stub</artifactId>
-                <version>${carbon.mediation.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.apache.ws.commons.axiom.wso2</groupId>
                 <artifactId>axiom</artifactId>
@@ -505,12 +495,7 @@
                 <version>${automation.framework.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.automation</groupId>
-                <artifactId>org.wso2.carbon.automation.engine</artifactId>
-                <version>${automation.framework.version}</version>
-                <scope>test</scope>
-            </dependency>
+
             <dependency>
                 <groupId>org.wso2.carbon.automation</groupId>
                 <artifactId>org.wso2.carbon.automation.extensions</artifactId>
@@ -803,11 +788,6 @@
                 <artifactId>service-samples</artifactId>
                 <version>${product.esb.version}</version>
             </dependency>-->
-            <dependency>
-                <groupId>groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.jacoco</groupId>
                 <artifactId>org.jacoco.agent</artifactId>
