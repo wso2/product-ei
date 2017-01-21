@@ -27,7 +27,7 @@
         </packages>
     </test>
 
-    <test name="SecureVault-Test" preserve-order="true" verbose="2">
+    <test name="SecureVault-Test" preserve-order="true" verbose="2" enabled="false">
         <packages>
             <package name="org.wso2.carbon.esb.securevalut.test.*"/>
         </packages>
@@ -81,7 +81,7 @@
         </packages>
     </test>
 
-    <test name="Stats-Test" preserve-order="true" verbose="2">
+    <test name="Stats-Test" preserve-order="true" verbose="2" enabled="false">
         <packages>
             <package name="org.wso2.carbon.esb.statistics"/>
         </packages>
