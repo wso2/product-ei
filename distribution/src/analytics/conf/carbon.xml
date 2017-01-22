@@ -26,7 +26,7 @@
     <!--
        Product Name
     -->
-    <Name>WSO2 Enterprise Integrator</Name>
+    <Name>WSO2 Enterprise Integrator Analytics</Name>
 
     <!--
        machine readable unique key to identify each product
@@ -73,8 +73,8 @@
     Ex : <Role>.*</Role> means this server can act any role
     -->
     <ServerRoles>
-        <Role>EnterpriseIntegrator</Role>
-        <Role>${cep.server.role}</Role>
+        <Role>DataAnalyticsServer</Role>
+        <Role>ComplexEventProcessor</Role>
     </ServerRoles>
 
     <!-- uncommnet this line to subscribe to a bam instance automatically -->
@@ -125,7 +125,7 @@
          the define value + Offset.
          e.g. Offset=2 and HTTPS port=9443 will set the effective HTTPS port to 9445
          -->
-        <Offset>0</Offset>
+        <Offset>1</Offset>
 
         <!-- The JMX Ports -->
         <JMX>
@@ -164,12 +164,12 @@
         JNDI Configuration
     -->
     <JNDI>
-        <!-- 
+        <!--
              The fully qualified name of the default initial context factory
         -->
         <DefaultInitialContextFactory>org.wso2.carbon.tomcat.jndi.CarbonJavaURLContextFactory</DefaultInitialContextFactory>
-        <!-- 
-             The restrictions that are done to various JNDI Contexts in a Multi-tenant environment 
+        <!--
+             The restrictions that are done to various JNDI Contexts in a Multi-tenant environment
         -->
         <Restrictions>
             <!--
@@ -185,7 +185,7 @@
                     </UrlContext>
                 </UrlContexts>
             </SuperTenantOnly> -->
-            <!-- 
+            <!--
                 Contexts that are common to all tenants
             -->
             <AllTenants>
@@ -198,8 +198,8 @@
                     </UrlContext> -->
                 </UrlContexts>
             </AllTenants>
-            <!-- 
-                 All other contexts not mentioned above will be available on a per-tenant basis 
+            <!--
+                 All other contexts not mentioned above will be available on a per-tenant basis
                  (i.e. will not be shared among tenants)
             -->
         </Restrictions>
@@ -290,7 +290,7 @@
 
         <!--
          Deployment update interval in seconds. This is the interval between repository listener
-         executions. 
+         executions.
         -->
         <DeploymentUpdateInterval>15</DeploymentUpdateInterval>
 
@@ -305,7 +305,7 @@
             3. file:///home/carbon/repository/axis2.xml
             4. http://repository/conf/axis2.xml
         -->
-	<ConfigurationFile>${carbon.home}/wso2/analytics/conf/axis2/axis2.xml</ConfigurationFile>
+	<ConfigurationFile>${carbon.home}/conf/axis2/axis2.xml</ConfigurationFile>
 
         <!--
           ServiceGroupContextIdleTime, which will be set in ConfigurationContex
@@ -321,7 +321,7 @@
         <ClientRepositoryLocation>${carbon.home}/repository/deployment/client/</ClientRepositoryLocation>
         <!-- This axis2 xml is used in createing the configuration context by the FE server
          calling to BE server -->
-	<clientAxis2XmlLocation>${carbon.home}/wso2/analytics/conf/axis2/axis2_client.xml</clientAxis2XmlLocation>
+	<clientAxis2XmlLocation>${carbon.home}/conf/axis2/axis2_client.xml</clientAxis2XmlLocation>
         <!-- If this parameter is set, the ?wsdl on an admin service will not give the admin service wsdl. -->
         <HideAdminServiceWSDLs>true</HideAdminServiceWSDLs>
 
@@ -347,8 +347,8 @@
         </Role>
     </ServiceUserRoles>
 
-    <!-- 
-      Enable following config to allow Emails as usernames. 	
+    <!--
+      Enable following config to allow Emails as usernames.
     -->
     <!--EnableEmailUserName>true</EnableEmailUserName-->
 
@@ -388,11 +388,11 @@
 
         <!--
             The Authenticator configuration to be used at the JVM level. We extend the
-            java.net.Authenticator to make it possible to authenticate to given servers and 
+            java.net.Authenticator to make it possible to authenticate to given servers and
             proxies.
         -->
         <NetworkAuthenticatorConfig>
-            <!-- 
+            <!--
                 Below is a sample configuration for a single authenticator. Please note that
                 all child elements are mandatory. Not having some child elements would lead to
                 exceptions at runtime.
@@ -554,7 +554,7 @@
 
        The value of the Item element is the first parameter in the query string(e.g. ?wsdl)
        which needs special processing
-       
+
        The value of the Class element is a class which implements
        org.wso2.carbon.transport.HttpGetRequestProcessor
     -->
@@ -639,7 +639,7 @@
         name="pgPort"  - The port (default: 5435)
         name="pgAllowOthers"  - Allow other computers to connect
         name="trace" - Print additional trace information; for all servers
-        name="baseDir" - The base directory for H2 databases; for all servers  
+        name="baseDir" - The base directory for H2 databases; for all servers
     -->
     <!--H2DatabaseConfiguration>
         <property name="web" />

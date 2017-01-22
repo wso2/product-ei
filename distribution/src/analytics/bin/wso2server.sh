@@ -199,7 +199,7 @@ elif [ "$CMD" = "start" ]; then
   fi
   export CARBON_HOME="$CARBON_HOME"
 # using nohup sh to avoid erros in solaris OS.TODO
-  nohup sh $CARBON_HOME/wso2/analytics/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
+  nohup sh $CARBON_HOME/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "stop" ]; then
   export CARBON_HOME="$CARBON_HOME"
@@ -218,13 +218,13 @@ elif [ "$CMD" = "restart" ]; then
   done
 
 # using nohup sh to avoid erros in solaris OS.TODO
-  nohup sh "$CARBON_HOME"/wso2/analytics/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
+  nohup sh "$CARBON_HOME"/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "test" ]; then
     JAVACMD="exec "$JAVACMD""
 elif [ "$CMD" = "version" ]; then
-  cat "$CARBON_HOME"/wso2/analytics/bin/version.txt
-  cat "$CARBON_HOME"/wso2/analytics/bin/wso2carbon-version.txt
+  cat "$CARBON_HOME"/bin/version.txt
+  cat "$CARBON_HOME"/bin/wso2carbon-version.txt
   exit 0
 fi
 
@@ -236,14 +236,14 @@ if [ "$jdk_17" = "" ]; then
 fi
 
 CARBON_XBOOTCLASSPATH=""
-for f in "$CARBON_HOME"/wso2/lib/xboot/*.jar
+for f in "$CARBON_HOME"/../lib/xboot/*.jar
 do
-    if [ "$f" != "$CARBON_HOME/wso2/lib/xboot/*.jar" ];then
+    if [ "$f" != "$CARBON_HOME/../lib/xboot/*.jar" ];then
         CARBON_XBOOTCLASSPATH="$CARBON_XBOOTCLASSPATH":$f
     fi
 done
 
-JAVA_ENDORSED_DIRS="$CARBON_HOME/wso2/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
+JAVA_ENDORSED_DIRS="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
 
 CARBON_CLASSPATH=""
 if [ -e "$JAVA_HOME/lib/tools.jar" ]; then
@@ -255,7 +255,7 @@ do
         CARBON_CLASSPATH="$CARBON_CLASSPATH":$f
     fi
 done
-for t in "$CARBON_HOME"/wso2/lib/commons-lang*.jar
+for t in "$CARBON_HOME"/../lib/commons-lang*.jar
 do
     CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
 done
@@ -295,7 +295,13 @@ fi
 echo "Using Java memory options: $JVM_MEM_OPTS"
 
 #load spark environment variables
-. $CARBON_HOME/wso2/analytics/bin/load-spark-env-vars.sh
+. $CARBON_HOME/bin/load-spark-env-vars.sh
+
+#setting up profile parameter for runtime in EI
+if [[ "$@" != *"-Dprofile"* ]]
+   then
+        NODE_PARAMS="$NODE_PARAMS -Dprofile=analytics-default"
+fi
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
@@ -311,25 +317,26 @@ do
     -Dcom.sun.management.jmxremote \
     -classpath "$CARBON_CLASSPATH" \
     -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
-    -Djava.io.tmpdir="$CARBON_HOME/wso2/analytics/tmp" \
-    -Dcatalina.base="$CARBON_HOME/wso2/lib/tomcat" \
+    -Djava.io.tmpdir="$CARBON_HOME/tmp" \
+    -Dcatalina.base="$CARBON_HOME/../lib/tomcat" \
     -Dwso2.server.standalone=true \
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
     -Dcarbon.home="$CARBON_HOME" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-    -Dcarbon.config.dir.path="$CARBON_HOME/wso2/analytics/conf" \
-    -Dcarbon.components.dir.path="$CARBON_HOME/wso2/components" \
-    -Dcarbon.extensions.dir.path="$CARBON_HOME/extensions" \
-    -Dcarbon.dropins.dir.path="$CARBON_HOME/dropins" \
-    -Dcarbon.external.lib.dir.path="$CARBON_HOME/lib" \
-    -Dcarbon.patches.dir.path="$CARBON_HOME/patches" \
-    -Dcarbon.servicepacks.dir.path="$CARBON_HOME/servicepacks" \
-    -Dcarbon.internal.lib.dir.path="$CARBON_HOME/wso2/lib" \
-    -Djava.util.logging.config.file="$CARBON_HOME/wso2/analytics/conf/etc/logging-bridge.properties" \
-    -Dcomponents.repo="$CARBON_HOME/wso2/components/plugins" \
-    -Dconf.location="$CARBON_HOME/wso2/analytics/conf"\
-    -Dcom.atomikos.icatch.file="$CARBON_HOME/wso2/lib/transactions.properties" \
+    -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
+    -Dcarbon.repository.dir.path="$CARBON_HOME/repository" \
+    -Dcarbon.components.dir.path="$CARBON_HOME/../components" \
+    -Dcarbon.extensions.dir.path="$CARBON_HOME/../../extensions" \
+    -Dcarbon.dropins.dir.path="$CARBON_HOME/../../dropins" \
+    -Dcarbon.external.lib.dir.path="$CARBON_HOME/../../lib" \
+    -Dcarbon.patches.dir.path="$CARBON_HOME/../../patches" \
+    -Dcarbon.servicepacks.dir.path="$CARBON_HOME/../../servicepacks" \
+    -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
+    -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
+    -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
+    -Dconf.location="$CARBON_HOME/../analytics/conf"\
+    -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \
     -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true \
@@ -342,6 +349,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
     -Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600 \
+    -Dcarbon.das.c5.enabled="true" \
     $NODE_PARAMS \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?

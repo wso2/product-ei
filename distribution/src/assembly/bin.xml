@@ -495,7 +495,15 @@
             </excludes>
         </fileSet>
 
-
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/*.bat</exclude>
+                <exclude>build.xml</exclude>
+            </excludes>
+        </fileSet>
 
         <fileSet>
             <directory>src/analytics/samples/publishers</directory>
@@ -585,8 +593,8 @@
 
         <!-- copying runtimes -->
         <fileSet>
-            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/lib/runtimes</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/lib/runtimes/</outputDirectory>
+            <directory>../p2-profile/wso2ei-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/lib/runtimes</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib/runtimes/</outputDirectory>
             <includes>
                 <include>*/**</include>
             </includes>
@@ -775,7 +783,7 @@
             <directory>
                 ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/identity/
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/identity</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/dbscripts/identity</outputDirectory>
             <includes>
                 <include>**/*.sql</include>
             </includes>
@@ -785,7 +793,7 @@
             <directory>
                 ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/metrics</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/dbscripts/metrics</outputDirectory>
             <includes>
                 <include>**/*.sql</include>
             </includes>
@@ -803,7 +811,7 @@
         </fileSet>
         <fileSet>
             <directory>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/ml/</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/ml/</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/dbscripts/ml/</outputDirectory>
             <includes>
                 <include>**/*.sql</include>
             </includes>
@@ -841,6 +849,27 @@
             <outputDirectory>${project.artifactId}-${pom.version}/wso2/analytics/migration/</outputDirectory>
             <includes>
                 <include>*/**</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/carbonapps
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/carbonapps</outputDirectory>
+            <includes>
+                <include>**/*.car</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/siddhilib</outputDirectory>
+            <includes>
+                <include>**/siddhi-extension-*.jar</include>
+                <include>**/org.wso2.analytics.esb_*.jar</include>
             </includes>
         </fileSet>
 
@@ -1352,7 +1381,7 @@
         </file>
         <file>
             <source>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/tomcat/webapp-classloading-environments.xml
+                src/analytics/conf/tomcat/webapp-classloading-environments.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/tomcat</outputDirectory>
             <filtered>true</filtered>
@@ -1784,52 +1813,6 @@
 
         <!-- END CEP -->
 
-
-
-        <!--START ML config files-->
-        <file>
-            <source>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/machine-learner.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/datasources/ml-datasources.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/datasources/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/h2o-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/etc/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <!-- ML REST APIs WebApp -->
-        <file>
-            <source>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/webapps/api.war</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/webapps/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2ML_DB.h2.db
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/database/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/ml-email-templates.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/email/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <!--END ML config files-->
-
-        <!-- Adding Geo Dashboard  configuration files and Capp -->
-        <file>
-            <source>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/samples/capp/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-
         <!-- Analytics JS APIs artifacts -->
         <file>
             <source>
@@ -1896,7 +1879,7 @@
             <source>
                 target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/web.xml
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/tomcat/</outputDirectory>
             <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
             <!--filtered>true</filtered-->
             <fileMode>644</fileMode>
@@ -1904,7 +1887,7 @@
 
         <file>
             <source>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/carbon/WEB-INF/web.xml
+                src/analytics/conf/tomcat/carbon/WEB-INF/web.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/tomcat/carbon/WEB-INF/</outputDirectory>
             <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
