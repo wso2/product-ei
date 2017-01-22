@@ -18,13 +18,19 @@
 
 package org.wso2.carbon.integrator.core;
 
+import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.description.Parameter;
+import org.apache.http.nio.reactor.IOSession;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
+import org.apache.synapse.transport.http.conn.LoggingNHttpServerConnection;
 import org.wso2.carbon.CarbonConstants;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.CarbonConfigurationContextFactory;
+import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
+import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.tomcat.api.CarbonTomcatService;
+import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 import org.wso2.carbon.webapp.mgt.WebApplicationsHolder;
 import org.wso2.carbon.webapp.mgt.utils.WebAppUtils;
@@ -45,7 +51,7 @@ public class Utils {
     }
 
     /**
-     * Get the details of a deplyed webapp
+     * Get the details of a deployed webApp
      *
      * @param path
      * @param hostName
@@ -56,9 +62,39 @@ public class Utils {
         WebApplication matchedWebApplication = null;
         for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
             for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
-                if (webApplication.getContextName().equals(path) && webApplication.getHostName().equals(hostName)) {
+                if (path.contains(webApplication.getContextName()) && webApplication.getHostName().equals(hostName)) {
                     matchedWebApplication = webApplication;
                     return matchedWebApplication;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the details of a deployed webapp
+     *
+     * @param path
+     * @param hostName
+     * @return meta data for webapp
+     */
+    public static WebApplication getStartedTenantWebapp(String tenantDomain, String path, String hostName) {
+
+        ConfigurationContextService contextService = IntegratorComponent.getContextService();
+        ConfigurationContext configContext;
+        ConfigurationContext tenantContext;
+        if (null != contextService) {
+            // Getting server's configContext instance
+            configContext = contextService.getServerConfigContext();
+            tenantContext = TenantAxisUtils.getTenantConfigurationContext(tenantDomain, configContext);
+            Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(tenantContext);
+            WebApplication matchedWebApplication = null;
+            for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
+                for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
+                    if (path.contains(webApplication.getContextName()) && webApplication.getHostName().equals(hostName)) {
+                        matchedWebApplication = webApplication;
+                        return matchedWebApplication;
+                    }
                 }
             }
         }
@@ -93,7 +129,7 @@ public class Utils {
 
     public static String getDSSJsonBuilder() {
         Parameter dssJsonBuilder = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.DATASERVICE_JSON_BUILDER);
-        if(dssJsonBuilder == null) {
+        if (dssJsonBuilder == null) {
             return "org.apache.axis2.json.gson.JsonBuilder";
         } else {
             return dssJsonBuilder.getValue().toString();
@@ -154,4 +190,13 @@ public class Utils {
         return filePath.contains("dataservices");
     }
 
+    public static String getRemoteAddress(Object conn) {
+        if (conn instanceof LoggingNHttpServerConnection) {
+            IOSession session = ((LoggingNHttpServerConnection) conn).getIOSession();
+            if (session != null) {
+                return session.getRemoteAddress().toString();
+            }
+        }
+        return null;
+    }
 }

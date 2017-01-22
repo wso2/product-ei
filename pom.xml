@@ -1019,6 +1019,7 @@
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.12</carbon.kernel.version>
+        <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
         <carbon.commons.version>4.5.7-SNAPSHOT</carbon.commons.version>
@@ -1220,7 +1221,7 @@
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-scr-plugin</artifactId>
-                    <version>1.8.2</version>
+                    <version>1.7.2</version>
                     <executions>
                         <execution>
                             <id>generate-scr-scrdescriptor</id>

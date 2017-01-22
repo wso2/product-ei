@@ -13,23 +13,22 @@
 
     <test name="InitializeAndSetupServer" preserve-order="true">
         <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.server.mgt.DSSServerStartupTestCase"/>
-            <!--disabled due to test failure-->
+            <class name="org.wso2.ei.dataservice.integration.test.odata.ODataTenantUserTestCase"/><!--disabled due to test failure-->
             <!--<class name="DSSServerBundleStatusTestCase"/>-->
         </classes>
     </test>
 
-    <test name="DSS-Schedule-task-tests" parallel="false" verbose="2">
+   <!-- <test name="DSS-Schedule-task-tests" parallel="false" verbose="2">
         <packages>
             <package name="org.wso2.ei.dataservice.integration.test.scheduletask"/>
         </packages>
     </test>
 
-<!--    <test name="DSS-DBConsole" parallel="false" verbose="2">
+&lt;!&ndash;    <test name="DSS-DBConsole" parallel="false" verbose="2">
         <packages>
             <package name="org.wso2.ei.dataservice.integration.test.dbConsole"/>
         </packages>
-    </test>-->
+    </test>&ndash;&gt;
 
     <test name="OData-tests" parallel="false" verbose="2">
         <packages>
@@ -85,30 +84,30 @@
         </packages>
     </test>
 
-    <!--<test name="DSS-jira-issues-tests" parallel="false" verbose="2">-->
-    <!--<packages>-->
-    <!--<package name="org.wso2.ei.dataservice.integration.test.jira.issues"/>-->
-    <!--</packages>-->
-    <!--</test>-->
+    &lt;!&ndash;<test name="DSS-jira-issues-tests" parallel="false" verbose="2">&ndash;&gt;
+    &lt;!&ndash;<packages>&ndash;&gt;
+    &lt;!&ndash;<package name="org.wso2.ei.dataservice.integration.test.jira.issues"/>&ndash;&gt;
+    &lt;!&ndash;</packages>&ndash;&gt;
+    &lt;!&ndash;</test>&ndash;&gt;
 
 
-    <!--<test name="DSS-jira-issues-tests" parallel="false" verbose="2">-->
-    <!--<classes>-->
-    <!--<class name="CARBON15235JsonValueTypeMissMatchTest"/>-->
-    <!--</classes>-->
-    <!--</test>-->
+    &lt;!&ndash;<test name="DSS-jira-issues-tests" parallel="false" verbose="2">&ndash;&gt;
+    &lt;!&ndash;<classes>&ndash;&gt;
+    &lt;!&ndash;<class name="CARBON15235JsonValueTypeMissMatchTest"/>&ndash;&gt;
+    &lt;!&ndash;</classes>&ndash;&gt;
+    &lt;!&ndash;</test>&ndash;&gt;
 
-    <!--<test name="DSS-jira-issues-tests-jsontest" parallel="false" verbose="2">-->
-    <!--<classes>-->
-    <!--<class name="DS1190JsonValueTypeMisMatchTest"/>-->
-    <!--</classes>-->
-    <!--</test>-->
+    &lt;!&ndash;<test name="DSS-jira-issues-tests-jsontest" parallel="false" verbose="2">&ndash;&gt;
+    &lt;!&ndash;<classes>&ndash;&gt;
+    &lt;!&ndash;<class name="DS1190JsonValueTypeMisMatchTest"/>&ndash;&gt;
+    &lt;!&ndash;</classes>&ndash;&gt;
+    &lt;!&ndash;</test>&ndash;&gt;
 
-    <!--<test name="DSS-jira-issues-xml-null-test" parallel="false" verbose="2">
+    &lt;!&ndash;<test name="DSS-jira-issues-xml-null-test" parallel="false" verbose="2">
         <classes>
             <class name="CARBON15879XmlNullElementTest"/>
         </classes>
-    </test>-->
+    </test>&ndash;&gt;
 
     <test name="DSS-samples-tests" parallel="false" verbose="2">
         <packages>
@@ -116,11 +115,11 @@
         </packages>
     </test>
 
-    <!--<test name="DSS-jira-issues-tests-email" parallel="false" verbose="2">-->
-        <!--<classes>-->
-            <!--<class name="DS1063EmailUsernameTestCase"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+    &lt;!&ndash;<test name="DSS-jira-issues-tests-email" parallel="false" verbose="2">&ndash;&gt;
+        &lt;!&ndash;<classes>&ndash;&gt;
+            &lt;!&ndash;<class name="DS1063EmailUsernameTestCase"/>&ndash;&gt;
+        &lt;!&ndash;</classes>&ndash;&gt;
+    &lt;!&ndash;</test>&ndash;&gt;
 
     <test name="DSS-jira-issues-tests" parallel="false" verbose="2">
         <packages>
@@ -128,38 +127,38 @@
         </packages>
     </test>
 
-    <!--<test name="DSS-jira-issues-tests-time" parallel="false" verbose="2">-->
-        <!--<classes>-->
-            <!--<class name="DS1069DifferentTimeStampStoreIssueTestCase"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+    &lt;!&ndash;<test name="DSS-jira-issues-tests-time" parallel="false" verbose="2">&ndash;&gt;
+        &lt;!&ndash;<classes>&ndash;&gt;
+            &lt;!&ndash;<class name="DS1069DifferentTimeStampStoreIssueTestCase"/>&ndash;&gt;
+        &lt;!&ndash;</classes>&ndash;&gt;
+    &lt;!&ndash;</test>&ndash;&gt;
 
-    <!--<test name="DSS-jira-issues-tests-time-legacy" parallel="false" verbose="2">
+    &lt;!&ndash;<test name="DSS-jira-issues-tests-time-legacy" parallel="false" verbose="2">
        <classes>
            <class name="DS1189LeagyTimeStampModeTestCase"/>
        </classes>
-   </test>-->
+   </test>&ndash;&gt;
 
-<!--    <test name="DSS-jira-issues-boxcarring-parallel-access" parallel="false" verbose="2">
+&lt;!&ndash;    <test name="DSS-jira-issues-boxcarring-parallel-access" parallel="false" verbose="2">
         <classes>
             <class name="DS1083BoxcarringParallelInsertTestCase"/>
             <class name="DS937BoxcarringTestCase"/>
         </classes>
-    </test>-->
+    </test>&ndash;&gt;
 
-    <!--<test name="DSS-jira-issues-dataservice-duplicate" parallel="false" verbose="2">
+    &lt;!&ndash;<test name="DSS-jira-issues-dataservice-duplicate" parallel="false" verbose="2">
         <classes>
             <class name="DS1103DuplicateDataServiceTestCase"/>
         </classes>
-    </test>-->
+    </test>&ndash;&gt;
 
-   <!-- <test name="DSS-jira-issues-policy-key-without-policy-path" parallel="false" verbose="2">
+   &lt;!&ndash; <test name="DSS-jira-issues-policy-key-without-policy-path" parallel="false" verbose="2">
         <classes>
             <class name="DS1031PolicyKeyWithoutPolicyPathTestCase"/>
         </classes>
-    </test>-->
+    </test>&ndash;&gt;
 
- <!--   <test name="DSS-jira-issues-escape-non-printable-chars" parallel="false" verbose="2">
+ &lt;!&ndash;   <test name="DSS-jira-issues-escape-non-printable-chars" parallel="false" verbose="2">
         <classes>
             <class name="DS1090EscapeNonPrintableCharactersTestCase"/>
         </classes>
@@ -176,7 +175,7 @@
         <classes>
             <class name="CARBON15379XMLExternalEntityAttacksTestCase"/>
         </classes>
-    </test>-->
+    </test>&ndash;&gt;
 
     <test name="DSS-requestBox-tests" parallel="false" verbose="2">
         <packages>
@@ -188,7 +187,7 @@
         <classes>
             <class name="org.wso2.ei.dataservice.integration.test.gspread.GSpreadDataServiceTestCase"/>
         </classes>
-    </test>
+    </test>-->
 <!--
     <test name="DSS-jira-issues-role-extension-test" parallel="false" verbose="2">
         <classes>
