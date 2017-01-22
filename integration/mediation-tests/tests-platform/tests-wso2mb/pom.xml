@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.ei.tests.platform.wso2mb</artifactId>
-    <name>ESB test Module - Platform - with WSO2MB</name>
+    <name>EI test Module - Platform - with WSO2MB</name>
     <packaging>jar</packaging>
     <build>
         <plugins>

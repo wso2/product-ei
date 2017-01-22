@@ -9,6 +9,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>admin-clients</artifactId>
-    <name>ESB Integration Test Admin Clients</name>
+    <name>EI Integration Test Admin Clients</name>
     <packaging>jar</packaging>
 </project>

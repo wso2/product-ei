@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>service-samples</artifactId>
-    <name>ESB Test Service Module</name>
+    <name>EI Test Service Module</name>
     <packaging>jar</packaging>
 
 

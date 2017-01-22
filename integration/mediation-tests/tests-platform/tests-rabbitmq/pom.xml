@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.ei.tests.platform.rabbitmq</artifactId>
-    <name>ESB test Module - Platform - RabbitMQ Transport</name>
+    <name>EI test Module - Platform - RabbitMQ Transport</name>
     <packaging>jar</packaging>
     <build>
         <plugins>

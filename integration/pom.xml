@@ -34,7 +34,6 @@
 
     <modules>
         <module>automation-extensions</module>
-        <module>dataservice-hosting-tests</module>
         <module>mediation-tests</module>
     </modules>
 

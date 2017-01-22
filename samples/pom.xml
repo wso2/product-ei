@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ei-samples-parent</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Enterprise Integrator - Component Parent</name>
+    <name>WSO2 Enterprise Integrator - Samples Parent</name>
     <url>http://wso2.com/products/enterprise-integrator</url>
     <description>WSO2 Enterprise Integrator - Component Parent</description>
 

@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.ei.tests.transport</artifactId>
-    <name>ESB test Module-Transport</name>
+    <name>EI test Module-Transport</name>
     <packaging>jar</packaging>
     <build>
         <plugins>

@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.ei.tests.other</artifactId>
-    <name>ESB test Module-Other</name>
+    <name>EI test Module-Other</name>
     <packaging>jar</packaging>
     <build>
         <plugins>

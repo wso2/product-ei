@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.ei.tests.mediator-2</artifactId>
-    <name>ESB test Module-mediator-2</name>
+    <name>EI test Module-mediator-2</name>
     <packaging>jar</packaging>
     <build>
         <plugins>
