@@ -378,7 +378,7 @@
 	 <!--Multitenancy related file -->
         <fileSet>
             <directory>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/multitenancy/
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/conf/multitenancy</outputDirectory>
             <includes>
@@ -391,7 +391,7 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/multitenancy/
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/conf</outputDirectory>
             <includes>
@@ -499,6 +499,30 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
             </excludes>
+        </fileSet>
+
+
+        <fileSet>
+            <directory>
+                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/multitenancy</outputDirectory>
+            <includes>
+                <include>**/stratos.xml</include>
+                <include>**/multitenancy-packages.xml</include>
+                <include>**/usage-throttling-agent-config.xml</include>
+                <include>**/cloud-services-desc.xml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf</outputDirectory>
+            <includes>
+                <include>**/tenant-mgt.xml</include>
+            </includes>
         </fileSet>
 
         <!-- copying runtimes -->
@@ -632,6 +656,7 @@
                 <include>**/sso-sp-config.properties</include>
             </includes>
         </fileSet>
+
         <!-- BPS styles -->
         <fileSet>
             <directory>./src/business-process/styles/product/src/main/resources/web/styles/css
