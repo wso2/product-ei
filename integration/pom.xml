@@ -33,6 +33,7 @@
     <url>http://wso2.org</url>
 
     <modules>
+        <module>automation-extensions</module>
         <module>dataservice-hosting-tests</module>
         <module>mediation-tests</module>
     </modules>

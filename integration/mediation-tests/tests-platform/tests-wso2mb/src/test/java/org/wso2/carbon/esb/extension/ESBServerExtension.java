@@ -24,7 +24,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.exceptions.AutomationFrameworkException;
 import org.wso2.carbon.automation.engine.extensions.ExecutionListenerExtension;
 import org.wso2.carbon.automation.extensions.ExtensionConstants;
-import org.wso2.carbon.automation.extensions.servers.carbonserver.TestServerManager;
+import org.wso2.esb.integration.common.extensions.carbonserver.TestServerManager;
 import org.wso2.esb.integration.common.utils.common.FileManager;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 

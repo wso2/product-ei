@@ -84,7 +84,10 @@ public class CarbonServerManager {
             File commandDir = new File(carbonHome);
 
             log.info("Starting carbon server............. ");
-            String scriptName = TestFrameworkUtils.getStartupScriptFileName(carbonHome);
+            String scriptName = commandMap.get("startupScript");
+            if (scriptName == null) {
+                scriptName = TestFrameworkUtils.getStartupScriptFileName(carbonHome);
+            }
             String[] parameters = expandServerStartupCommandList(commandMap);
 
             String[] cmdArray;

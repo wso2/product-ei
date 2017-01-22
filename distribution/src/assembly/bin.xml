@@ -975,12 +975,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/wso2server.bat</source>
-            <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/carbon.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
             <filtered>true</filtered>
