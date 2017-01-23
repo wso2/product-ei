@@ -38,6 +38,7 @@
                 <exclude>**/repository/conf/**</exclude>
                 <exclude>**/repository/components/**</exclude>
                 <exclude>**/lib/**</exclude>
+                <exclude>tmp/**</exclude>
                 <exclude>**/bin/**</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
@@ -65,6 +66,11 @@
                 <exclude>**/wso2/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
             </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/tmp</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tmp</outputDirectory>
         </fileSet>
 
         <fileSet>
