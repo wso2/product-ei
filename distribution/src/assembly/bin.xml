@@ -252,6 +252,15 @@
         </fileSet>
 
         <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/eventpublishers</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/eventpublishers</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/eventstreams</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/eventstreams</outputDirectory>
+        </fileSet>
+
+        <fileSet>
             <directory>./src/resources/tomcat</directory>
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <includes>
@@ -850,7 +859,7 @@
         <!-- Multitenancy related files -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/multitenancy</outputDirectory>
             <includes>
@@ -862,7 +871,7 @@
         </fileSet>
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf</outputDirectory>
             <includes>
@@ -895,7 +904,7 @@
         <!-- Analytics related config -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/analytics/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/analytics/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/analytics</outputDirectory>
             <includes>
@@ -955,7 +964,7 @@
         <!-- Some war files related to CEP websockets -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/webapps
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/webapps
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/webapps
             </outputDirectory>
@@ -983,7 +992,7 @@
         <!-- Jaggery modules, carbon and process. Should be copied to <DAS_HOME> -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/modules
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/modules
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/modules</outputDirectory>
             <includes>
@@ -994,7 +1003,7 @@
         <!-- Shindig webapp. Should be copied to <DAS_HOME> -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/webapps
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/webapps
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/webapps</outputDirectory>
             <includes>
@@ -1006,7 +1015,7 @@
         <!-- TODO remove exclusions after upgrading to carbon-dashboards 1.0.19 -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps/portal
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps/portal
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/jaggeryapps/portal</outputDirectory>
         </fileSet>
@@ -1028,7 +1037,7 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/identity/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/identity/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/dbscripts/identity</outputDirectory>
             <includes>
@@ -1038,7 +1047,7 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/dbscripts/metrics</outputDirectory>
             <includes>
@@ -1049,7 +1058,7 @@
         <!-- ML -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/jaggeryapps</outputDirectory>
             <includes>
@@ -1057,7 +1066,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/ml/</directory>
+            <directory>../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/ml/</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/dbscripts/ml/</outputDirectory>
             <includes>
                 <include>**/*.sql</include>
@@ -1083,7 +1092,7 @@
         <!-- Copying 'sharedstore' directory -->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/resources/sharedstore/layout
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/resources/sharedstore/layout
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/resources/sharedstore/layout</outputDirectory>
         </fileSet>
@@ -1091,7 +1100,7 @@
         <!--Dashboard migration-->
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/migration/
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/migration/
             </directory>
             <outputDirectory>${project.artifactId}-${pom.version}/wso2/analytics/migration/</outputDirectory>
             <includes>
@@ -1101,7 +1110,7 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/carbonapps
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/carbonapps
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/carbonapps</outputDirectory>
             <includes>
@@ -1111,7 +1120,7 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/siddhilib</outputDirectory>
             <includes>
