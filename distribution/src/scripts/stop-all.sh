@@ -74,10 +74,10 @@ fi
 ###########################################################################
 NAME=stop-all
 # Daemon name, where is the actual executable
-EI_INIT_SCRIPT="$CARBON_HOME/bin/Integrator.sh"
+EI_INIT_SCRIPT="$CARBON_HOME/bin/integrator.sh"
 ANALYTICS_INIT_SCRIPT="$CARBON_HOME/wso2/analytics/bin/wso2server.sh"
 BPS_INIT_SCRIPT="$CARBON_HOME/wso2/business-process/bin/wso2server.sh"
-MB_INIT_SCRIPT="$CARBON_HOME/wso2/message-broker/bin/wso2server.sh"
+MB_INIT_SCRIPT="$CARBON_HOME/wso2/broker/bin/wso2server.sh"
 
 sh $EI_INIT_SCRIPT stop
 sh $ANALYTICS_INIT_SCRIPT stop
