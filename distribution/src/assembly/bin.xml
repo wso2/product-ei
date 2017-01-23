@@ -40,6 +40,7 @@
                 <exclude>**/lib/**</exclude>
                 <exclude>tmp/**</exclude>
                 <exclude>**/bin/**</exclude>
+                <exclude>**/Owasp.CsrfGuard.Carbon.properties</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
@@ -1416,6 +1417,13 @@
             <source>src/conf/access-log.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>access-log.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/Owasp.CsrfGuard.Carbon.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/security</outputDirectory>
+            <destName>Owasp.CsrfGuard.Carbon.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
