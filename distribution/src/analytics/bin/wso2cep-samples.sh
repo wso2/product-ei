@@ -300,6 +300,13 @@ echo "Using Java memory options: $JVM_MEM_OPTS"
 #load spark environment variables
 . $CARBON_HOME/bin/load-spark-env-vars.sh
 
+#setting up profile parameter for runtime in EI
+if [[ "$@" != *"-Dprofile"* ]]
+   then
+        NODE_PARAMS="$NODE_PARAMS -Dprofile=analytics-default"
+fi
+
+
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
 
@@ -316,17 +323,25 @@ do
     -classpath "$CARBON_CLASSPATH" \
     -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
     -Djava.io.tmpdir="$CARBON_HOME/tmp" \
-    -Dcatalina.base="$CARBON_HOME/lib/tomcat" \
+    -Dcatalina.base="$CARBON_HOME/../lib/tomcat" \
     -Dwso2.server.standalone=true \
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
     -Dcarbon.home="$CARBON_HOME" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-    -Dcarbon.config.dir.path="$CARBON_HOME/repository/conf" \
-    -Djava.util.logging.config.file="$CARBON_HOME/repository/conf/etc/logging-bridge.properties" \
-    -Dcomponents.repo="$CARBON_HOME/repository/components/plugins" \
-    -Dconf.location="$CARBON_HOME/repository/conf"\
-    -Dcom.atomikos.icatch.file="$CARBON_HOME/lib/transactions.properties" \
+    -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
+    -Dcarbon.repository.dir.path="$CARBON_HOME/repository" \
+    -Dcarbon.components.dir.path="$CARBON_HOME/../components" \
+    -Dcarbon.extensions.dir.path="$CARBON_HOME/../../extensions" \
+    -Dcarbon.dropins.dir.path="$CARBON_HOME/../../dropins" \
+    -Dcarbon.external.lib.dir.path="$CARBON_HOME/../../lib" \
+    -Dcarbon.patches.dir.path="$CARBON_HOME/../../patches" \
+    -Dcarbon.servicepacks.dir.path="$CARBON_HOME/../../servicepacks" \
+    -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
+    -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
+    -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
+    -Dconf.location="$CARBON_HOME/../business-process/conf"\
+    -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \
     -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true \
@@ -342,6 +357,7 @@ do
     -DdisableMLSparkCtx=true \
 	-DdisableMl=true \
     -Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600 \
+    -Dcarbon.das.c5.enabled="true" \
     $NODE_PARAMS \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
