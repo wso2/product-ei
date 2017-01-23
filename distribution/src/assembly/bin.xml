@@ -538,6 +538,42 @@
 
         <fileSet>
             <directory>
+                ./src/scripts/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/bin</outputDirectory>
+            <includes>
+                <include>**/build.xml</include>
+                <include>**/carbondump.bat</include>
+                <include>**/carbondump.sh</include>
+                <include>**/chpasswd.bat</include>
+                <include>**/chpasswd.sh</include>
+                <include>**/java2wsdl.bat</include>
+                <include>**/java2wsdl.sh</include>
+                <include>**/tcpmon.bat</include>
+                <include>**/tcpmon.sh</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                ./src/scripts/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/bin</outputDirectory>
+            <includes>
+                <include>**/build.xml</include>
+                <include>**/carbondump.bat</include>
+                <include>**/carbondump.sh</include>
+                <include>**/chpasswd.bat</include>
+                <include>**/chpasswd.sh</include>
+                <include>**/java2wsdl.bat</include>
+                <include>**/java2wsdl.sh</include>
+                <include>**/tcpmon.bat</include>
+                <include>**/tcpmon.sh</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>
                 ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/multitenancy/
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf</outputDirectory>
@@ -1751,6 +1787,22 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>
+                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/bin/ciphertool.sh
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/bin
+            </outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>
+                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/bin/ciphertool.bat
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/bin
+            </outputDirectory>
+        </file>
+
         <!-- End copying broker files -->
 
 
