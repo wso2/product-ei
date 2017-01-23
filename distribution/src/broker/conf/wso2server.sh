@@ -276,11 +276,10 @@ if [ -z "$JVM_MEM_OPTS" ]; then
 fi
 echo "Using Java memory options: $JVM_MEM_OPTS"
 
-
-#setting up profile parameter for runtime in EI
+#setting up profile parameter for runtime in MB
 if [[ "$@" != *"-Dprofile"* ]]
-   then
-        NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
+then
+NODE_PARAMS="$NODE_PARAMS -Dprofile=broker-default"
 fi
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
@@ -302,6 +301,8 @@ do
     -Dwso2.server.standalone=true \
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
+    -DandesConfig=broker.xml \
+    -Dqpid.conf="/conf/advanced/" \
     -Dcarbon.home="$CARBON_HOME" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
@@ -315,7 +316,7 @@ do
     -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
-    -Dconf.location="$CARBON_HOME/conf"\
+    -Dconf.location="$CARBON_HOME/../broker/conf"\
     -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \

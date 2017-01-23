@@ -26,17 +26,17 @@
     <!--
        Product Name
     -->
-    <Name>WSO2 Business Process Server</Name>
+    <Name>WSO2 Enterprise Integrator Analytics</Name>
 
     <!--
        machine readable unique key to identify each product
     -->
-    <ServerKey>BPS</ServerKey>
+    <ServerKey>EI</ServerKey>
 
     <!--
        Product Version
     -->
-    <Version>3.6.0</Version>
+    <Version>6.0.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
@@ -44,7 +44,7 @@
        This is will become part of the End Point Reference of the
        services deployed on this server instance.
     -->
-    <HostName>localhost</HostName>
+    <!--HostName>www.wso2.org</HostName-->
 
     <!--
     Host name to be used for the Carbon management console
@@ -73,7 +73,8 @@
     Ex : <Role>.*</Role> means this server can act any role
     -->
     <ServerRoles>
-        <Role>EnterpriseIntegrator</Role>
+        <Role>DataAnalyticsServer</Role>
+        <Role>ComplexEventProcessor</Role>
     </ServerRoles>
 
     <!-- uncommnet this line to subscribe to a bam instance automatically -->
@@ -124,7 +125,7 @@
          the define value + Offset.
          e.g. Offset=2 and HTTPS port=9443 will set the effective HTTPS port to 9445
          -->
-        <Offset>2</Offset>
+        <Offset>1</Offset>
 
         <!-- The JMX Ports -->
         <JMX>
@@ -149,13 +150,13 @@
 	<!--Override receive port of thrift based entitlement service.-->
 	<ThriftEntitlementReceivePort>10500</ThriftEntitlementReceivePort>
 
-    <!--
-     This is the proxy port of the worker cluster. These need to be configured in a scenario where
-     manager node is not exposed through the load balancer through which the workers are exposed
-     therefore doesn't have a proxy port.
-    <WorkerHttpProxyPort>80</WorkerHttpProxyPort>
-    <WorkerHttpsProxyPort>443</WorkerHttpsProxyPort>
-    -->
+        <!--
+         This is the proxy port of the worker cluster. These need to be configured in a scenario where
+         manager node is not exposed through the load balancer through which the workers are exposed
+         therefore doesn't have a proxy port.
+        <WorkerHttpProxyPort>80</WorkerHttpProxyPort>
+        <WorkerHttpsProxyPort>443</WorkerHttpsProxyPort>
+        -->
 
     </Ports>
 
@@ -254,7 +255,7 @@
     <Tenant>
         <LoadingPolicy>
             <LazyLoading>
-                <IdleTime>30</IdleTime>
+                <IdleTime>153722867280912</IdleTime>
             </LazyLoading>
             <!-- <EagerLoading>
                    <Include>*,!foo.com,!bar.com</Include>
@@ -304,7 +305,7 @@
             3. file:///home/carbon/repository/axis2.xml
             4. http://repository/conf/axis2.xml
         -->
-        <ConfigurationFile>${carbon.home}/conf/axis2/axis2.xml</ConfigurationFile>
+	<ConfigurationFile>${carbon.home}/conf/axis2/axis2.xml</ConfigurationFile>
 
         <!--
           ServiceGroupContextIdleTime, which will be set in ConfigurationContex
@@ -320,7 +321,7 @@
         <ClientRepositoryLocation>${carbon.home}/repository/deployment/client/</ClientRepositoryLocation>
         <!-- This axis2 xml is used in createing the configuration context by the FE server
          calling to BE server -->
-        <clientAxis2XmlLocation>${carbon.home}/conf/axis2/axis2_client.xml</clientAxis2XmlLocation>
+	<clientAxis2XmlLocation>${carbon.home}/conf/axis2/axis2_client.xml</clientAxis2XmlLocation>
         <!-- If this parameter is set, the ?wsdl on an admin service will not give the admin service wsdl. -->
         <HideAdminServiceWSDLs>true</HideAdminServiceWSDLs>
 
@@ -355,16 +356,6 @@
       Security configurations
     -->
     <Security>
-
-        <CSRFPreventionConfig>
-            <!-- CSRFPreventionFilter configurations that adopts Synchronizer Token Pattern -->
-            <CSRFPreventionFilter>
-                <!-- Set below to true to enable the CSRFPreventionFilter -->
-                <Enabled>false</Enabled>
-                <!-- Url Pattern to skip application of CSRF protection-->
-                <SkipUrlPattern>(.*)(/images|/css|/js|/docs)(.*)</SkipUrlPattern>
-            </CSRFPreventionFilter>
-        </CSRFPreventionConfig>
         <!--
             KeyStore which will be used for encrypting/decrypting passwords
             and other sensitive information.
@@ -432,18 +423,18 @@
 
          If this is set to 'UserManager', the realm will pick users & roles from the system's
          WSO2 User Manager. If it is set to 'memory', the realm will pick users & roles from
-         CARBON_HOME/conf/tomcat/tomcat-users.xml
+         CARBON_HOME/repository/conf/tomcat/tomcat-users.xml
         -->
         <TomcatRealm>UserManager</TomcatRealm>
 
 	<!--Option to disable storing of tokens issued by STS-->
 	<DisableTokenStore>false</DisableTokenStore>
 
-	<!--
-	 Security token store class name. If this is not set, default class will be
-	 org.wso2.carbon.security.util.SecurityTokenStore
-	-->
-	<!--TokenStoreClassName>org.wso2.carbon.identity.sts.store.DBTokenStore</TokenStoreClassName-->
+        <!--
+         Security token store class name. If this is not set, default class will be
+         org.wso2.carbon.security.util.SecurityTokenStore
+        -->
+        <!--TokenStoreClassName>org.wso2.carbon.identity.sts.store.DBTokenStore</TokenStoreClassName-->
 
         <XSSPreventionConfig>
             <Enabled>true</Enabled>
@@ -452,6 +443,23 @@
                 <!--Pattern></Pattern-->
             </Patterns>
         </XSSPreventionConfig>
+
+        <!-- Configurations to avoid Cross Site Request Forgery vulnerabilities -->
+        <CSRFPreventionConfig>
+            <!-- CSRFPreventionFilter configurations that adopts Synchronizer Token Pattern -->
+            <CSRFPreventionFilter>
+                <!-- Set below to true to enable the CSRFPreventionFilter -->
+                <Enabled>false</Enabled>
+                <!-- Url Pattern to skip application of CSRF protection-->
+                <SkipUrlPattern>(.*)(/images|/css|/js|/docs)(.*)</SkipUrlPattern>
+            </CSRFPreventionFilter>
+        </CSRFPreventionConfig>
+
+        <!-- Configuration to enable or disable CR and LF sanitization filter-->
+        <CRLFPreventionConfig>
+            <!--Set below to true to enable the CRLFPreventionFilter-->
+            <Enabled>true</Enabled>
+        </CRLFPreventionConfig>
     </Security>
 
     <!--
@@ -569,7 +577,7 @@
         </Processor>
     </HttpGetRequestProcessors>
 
-    <!-- Deployment Synchronizer Configuration. Enable value to true when running with "svn based" dep sync.
+    <!-- Deployment Synchronizer Configuration. t Enabled value to true when running with "svn based" dep sync.
 	In master nodes you need to set both AutoCommit and AutoCheckout to true
 	and in  worker nodes set only AutoCheckout to true.
     -->
@@ -658,8 +666,8 @@
        Default Feature Repository of WSO2 Carbon.
     -->
     <FeatureRepository>
-	    <RepositoryName>default repository</RepositoryName>
-	    <RepositoryURL>http://product-dist.wso2.com/p2/carbon/releases/wilkes/</RepositoryURL>
+        <RepositoryName>default repository</RepositoryName>
+        <RepositoryURL>http://product-dist.wso2.com/p2/carbon/releases/wilkes/</RepositoryURL>
     </FeatureRepository>
 
     <!--

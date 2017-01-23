@@ -1,0 +1,422 @@
+<!--
+  ~ Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<domain name="SensorAnomalyDetection">
+    <description>Detecting anomalies in sensor reading</description>
+    <scenarios>
+        <scenario type="LinearRegressionWithLengthWindow">
+            <description>Anomalies in sensor reading will be detected using linear regression over a defined number of
+                events and those anomalies will be sent to the predefined alert stream
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensorID",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensorValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "timeStamp",
+                    "type": "LONG"
+                    }
+                    ]
+                    }
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+        /* Enter a unique ExecutionPlan */
+        @Plan:name('Analytics-ExecutionPlan-AnomalousEventsDetection')
+
+        /* Enter a unique description for ExecutionPlan */
+        -- @Plan:description('ExecutionPlan')
+
+        /* define streams/tables and write queries here ... */
+
+        @Import('org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        define stream InputStream (sensorID string, sensorValue double, timeStamp long);
+
+        @Export('org.wso2.analytics.stream.AlertStream:1.0.0')
+        define stream OutputStream (type string, message string, time long, severity string);
+
+        partition with ( sensorID of InputStream )
+        begin
+            from InputStream#timeseries:outlier($calculationInterval, $batchSize, $confidenceInterval, $range, sensorValue, timeStamp)
+            select sensorID, sensorValue, timeStamp, outlier as notify
+            insert into tempStream;
+        end;
+
+        from tempStream[notify == true]
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
+        insert into OutputStream;
+                    ]]>
+                </template>
+
+                <!-- gadgets -->
+
+                <!-- Dashboard -->
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+                <parameter name="calculationInterval" type="int">
+                    <displayName>Calculation Interval</displayName>
+                    <description>The frequency of regression calculation</description>
+                    <defaultValue>1</defaultValue>
+                </parameter>
+                <parameter name="batchSize" type="int">
+                    <displayName>Batch Size</displayName>
+                    <description>The maximum number of events used for a regression calculation</description>
+                    <defaultValue>1000</defaultValue>
+                </parameter>
+                <parameter name="confidenceInterval" type="double">
+                    <displayName>Confidence Interval</displayName>
+                    <description>Confidence Interval to be used for regression calculation</description>
+                    <defaultValue>0.95</defaultValue>
+                </parameter>
+                <parameter name="range" type="int">
+                    <displayName>Range</displayName>
+                    <description>Number of standard deviations from the regression equation</description>
+                    <defaultValue>2</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+        <scenario type="LinearRegressionWithTimeAndLengthWindow">
+            <description>Anomalies in sensor reading will be detected using linear regression over a defined number of
+                events or a time period and those anomalies will be sent to the predefined alert stream
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensorID",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensorValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "timeStamp",
+                    "type": "LONG"
+                    }
+                    ]
+                    }
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+        /* Enter a unique ExecutionPlan */
+        @Plan:name('Analytics-ExecutionPlan-AnomalousEventsDetection')
+
+        /* Enter a unique description for ExecutionPlan */
+        -- @Plan:description('ExecutionPlan')
+
+        /* define streams/tables and write queries here ... */
+
+        @Import('org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        define stream InputStream (sensorID string, sensorValue double, timeStamp long);
+
+        @Export('org.wso2.analytics.stream.AlertStream:1.0.0')
+        define stream OutputStream (type string, message string, time long, severity string);
+
+        partition with ( sensorID of InputStream )
+        begin
+            from InputStream#timeseries:lengthTimeOutlier($timeWindowSize min, $lengthWindowSize, $range, $calculationInterval, $confidenceInterval, sensorValue, timeStamp)
+            select sensorID, sensorValue, timeStamp, outlier as notify
+            insert into tempStream;
+        end;
+
+        from tempStream[notify == true]
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
+        insert into OutputStream;
+                    ]]>
+                </template>
+
+                <!-- gadgets -->
+
+                <!-- Dashboard -->
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+                <parameter name="calculationInterval" type="int">
+                    <displayName>Calculation Interval</displayName>
+                    <description>The frequency of regression calculation</description>
+                    <defaultValue>1</defaultValue>
+                </parameter>
+                <parameter name="timeWindowSize" type="long">
+                    <displayName>Time Window Size (Mins)</displayName>
+                    <description>The maximum time period used for a regression calculation</description>
+                    <defaultValue>60</defaultValue>
+                </parameter>
+                <parameter name="lengthWindowSize" type="int">
+                    <displayName>Length Window Size</displayName>
+                    <description>The maximum number of events used for a regression calculation</description>
+                    <defaultValue>1000</defaultValue>
+                </parameter>
+                <parameter name="confidenceInterval" type="double">
+                    <displayName>Confidence Interval</displayName>
+                    <description>Confidence Interval to be used for regression calculation</description>
+                    <defaultValue>0.95</defaultValue>
+                </parameter>
+                <parameter name="range" type="int">
+                    <displayName>Range</displayName>
+                    <description>Number of standard deviations from the regression equation</description>
+                    <defaultValue>2</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+        <scenario type="PercentileValuesWithLengthWindow">
+            <description>Anomalies in sensor reading will be detected using percentiles over a defined number of events
+                and those anomalies will be sent to the predefined alert stream
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensorID",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensorValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "timeStamp",
+                    "type": "LONG"
+                    }
+                    ]
+                    }
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+        /* Enter a unique ExecutionPlan */
+        @Plan:name('Analytics-ExecutionPlan-AnomalousEventsDetection')
+
+        /* Enter a unique description for ExecutionPlan */
+        -- @Plan:description('ExecutionPlan')
+
+        /* define streams/tables and write queries here ... */
+
+        @Import('org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        define stream InputStream (sensorID string, sensorValue double, timeStamp long);
+
+        @Export('org.wso2.analytics.stream.AlertStream:1.0.0')
+        define stream OutputStream (type string, message string, time long, severity string);
+
+        partition with ( sensorID of InputStream )
+        begin
+            from InputStream#window.length($windowSize)
+            select sensorID, sensorValue, timeStamp, ifThenElse(sensorValue > math:percentile(sensorValue, $upperBound), true, ifThenElse(sensorValue < math:percentile(sensorValue, $lowerBound), true, false)) as notify
+            insert into tempStream;
+        end;
+
+        from tempStream[notify == true]
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
+        insert into OutputStream;
+                    ]]>
+                </template>
+
+                <!-- gadgets -->
+
+                <!-- Dashboard -->
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+                <parameter name="windowSize" type="int">
+                    <displayName>Window Size</displayName>
+                    <description>The size of the length window</description>
+                    <defaultValue>100</defaultValue>
+                </parameter>
+                <parameter name="upperBound" type="double">
+                    <displayName>Upper Bound</displayName>
+                    <description>The upper percentile value</description>
+                    <defaultValue>98.0</defaultValue>
+                </parameter>
+                <parameter name="lowerBound" type="double">
+                    <displayName>Lower Bound</displayName>
+                    <description>The lower percentile value</description>
+                    <defaultValue>2.0</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+        <scenario type="PercentileValuesWithTimeWindow">
+            <description>Anomalies in sensor reading will be detected using percentiles over a defined time period and
+                those anomalies will be sent to the predefined alert stream
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensorID",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensorValue",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "timeStamp",
+                    "type": "LONG"
+                    }
+                    ]
+                    }
+                </template>
+                <template type="realtime">
+                    <![CDATA[
+        /* Enter a unique ExecutionPlan */
+        @Plan:name('Analytics-ExecutionPlan-AnomalousEventsDetection')
+
+        /* Enter a unique description for ExecutionPlan */
+        -- @Plan:description('ExecutionPlan')
+
+        /* define streams/tables and write queries here ... */
+
+        @Import('org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0')
+        define stream InputStream (sensorID string, sensorValue double, timeStamp long);
+
+        @Export('org.wso2.analytics.stream.AlertStream:1.0.0')
+        define stream OutputStream (type string, message string, time long, severity string);
+
+        partition with ( sensorID of InputStream )
+        begin
+            from InputStream#window.time($windowSize min)
+            select sensorID, sensorValue, timeStamp, ifThenElse(sensorValue > math:percentile(sensorValue, $upperBound), true, ifThenElse(sensorValue < math:percentile(sensorValue, $lowerBound), true, false)) as notify
+            insert into tempStream;
+        end;
+
+        from tempStream[notify == true]
+        select 'Anomaly' as type, str:concat("$sensorType sensor of sensor id ", sensorID, " had a value of ", sensorValue) as message, timeStamp as time, 'high' as severity
+        insert into OutputStream;
+                    ]]>
+                </template>
+
+                <!-- gadgets -->
+
+                <!-- Dashboard -->
+
+            </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
+            </streamMappings>
+            <parameters>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>Temperature</defaultValue>
+                </parameter>
+                <parameter name="windowSize" type="long">
+                    <displayName>Window Size (Mins)</displayName>
+                    <description>The size of the time window</description>
+                    <defaultValue>60</defaultValue>
+                </parameter>
+                <parameter name="upperBound" type="double">
+                    <displayName>Upper Bound</displayName>
+                    <description>The upper percentile value</description>
+                    <defaultValue>98.0</defaultValue>
+                </parameter>
+                <parameter name="lowerBound" type="double">
+                    <displayName>Lower Bound</displayName>
+                    <description>The lower percentile value</description>
+                    <defaultValue>2.0</defaultValue>
+                </parameter>
+            </parameters>
+
+        </scenario>
+    </scenarios>
+    <commonArtifacts>
+        <artifact type="eventstream">
+            {
+            "name": "org.wso2.analytics.stream.AlertStream",
+            "version": "1.0.0",
+            "nickName": "",
+            "description": "",
+            "payloadData": [
+            {
+            "name": "type",
+            "type": "STRING"
+            },
+            {
+            "name": "message",
+            "type": "STRING"
+            },
+            {
+            "name": "time",
+            "type": "LONG"
+            },
+            {
+            "name": "severity",
+            "type": "STRING"
+            }
+            ]
+            }
+        </artifact>
+    </commonArtifacts>
+</domain>

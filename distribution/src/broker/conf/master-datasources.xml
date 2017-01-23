@@ -1,0 +1,209 @@
+<datasources-configuration>
+
+    <providers>
+        <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
+    </providers>
+
+    <datasources>
+
+        <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
+        <!--datasource>
+            <name>SAMPLE_DATA_SOURCE</name>
+            <jndiConfig>
+                <name></name>
+                <environment>
+                    <property name="java.naming.factory.initial"></property>
+                    <property name="java.naming.provider.url"></property>
+                </environment>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <defaultAutoCommit></defaultAutoCommit>
+                    <defaultReadOnly></defaultReadOnly>
+                    <defaultTransactionIsolation>NONE|READ_COMMITTED|READ_UNCOMMITTED|REPEATABLE_READ|SERIALIZABLE</defaultTransactionIsolation>
+                    <defaultCatalog></defaultCatalog>
+                    <username></username>
+                    <password svns:secretAlias="WSO2.DB.Password"></password>
+                    <maxActive></maxActive>
+                    <maxIdle></maxIdle>
+                    <initialSize></initialSize>
+                    <maxWait></maxWait>
+
+                    <dataSourceClassName>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</dataSourceClassName>
+                    <dataSourceProps>
+                        <property name="url">jdbc:mysql://localhost:3306/Test1</property>
+                        <property name="user">root</property>
+                        <property name="password">123</property>
+                    </dataSourceProps>
+
+                </configuration>
+            </definition>
+        </datasource-->
+
+        <datasource>
+            <name>WSO2_CARBON_DB</name>
+            <description>The datasource used for registry and user manager</description>
+            <jndiConfig>
+                <name>jdbc/WSO2CarbonDB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <!-- WSO2 MB embedded H2 Store     -->
+        
+        <datasource>
+            <name>WSO2_MB_STORE_DB</name>
+            <description>The datasource used for message broker database</description>
+            <jndiConfig>
+                <name>WSO2MBStoreDB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>jdbc:h2:repository/database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <!-- MySQL data source -->
+<!--
+        <datasource>
+             <name>WSO2_MB_STORE_DB</name>
+             <jndiConfig>
+                 <name>WSO2MBStoreDB</name>
+             </jndiConfig>
+             <definition type="RDBMS">
+                 <configuration>
+                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                     <url>jdbc:mysql://localhost/wso2_mb</url>
+                     <username>root</username>
+                     <password>root</password>
+                     <maxActive>50</maxActive>
+                     <maxWait>60000</maxWait>
+                     <minIdle>5</minIdle>
+                     <testOnBorrow>true</testOnBorrow>
+                     <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                 </configuration>
+             </definition>
+         </datasource>
+-->
+
+        <!-- MSSQL server -->
+        <!-- Please enable any one of the following datasource based on your MSSQL driver library -->
+        <!-- JTDS datasource -->
+<!--
+        <datasource>
+            <name>WSO2_MB_STORE_DB</name>
+            <jndiConfig>
+                <name>WSO2MBStoreDB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+            <configuration>
+                    <url>jdbc:jtds:sqlserver://localhost:1433/wso2_mb</url>
+                    <username>sa</username>
+                    <password>sa</password>
+                    <driverClassName>net.sourceforge.jtds.jdbc.Driver</driverClassName>
+                    <maxActive>200</maxActive>
+                    <maxWait>60000</maxWait>
+                    <minIdle>5</minIdle>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+-->
+
+        <!-- SQLServerXA datasource -->
+<!--
+        <datasource>
+            <name>WSO2_MB_STORE_DB</name>
+            <jndiConfig>
+                <name>WSO2MBStoreDB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                    <dataSourceClassName>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</dataSourceClassName>
+                    <dataSourceProps>
+                <property name = "URL">jdbc:sqlserver://localhost/SQLExpress:1433</property>
+                <property name="databaseName">wso2_mb</property>
+                        <property name="user">sa</property>
+                        <property name="password">sa</property>
+                    </dataSourceProps>
+                </configuration>
+            </definition>
+        </datasource>
+-->
+
+        <!-- Oracle datasource -->
+<!--
+        <datasource>
+            <name>WSO2_MB_STORE_DB</name>
+            <jndiConfig>
+                <name>WSO2MBStoreDB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
+                    <url>jdbc:oracle:thin:@localhost:1521/orcl</url>
+                    <maxActive>100</maxActive>
+                    <maxWait>60000</maxWait>
+                    <minIdle>5</minIdle>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationQuery>SELECT 1 FROM DUAL</validationQuery>
+                    <validationInterval>30000</validationInterval>
+                    <username>scott</username>
+                    <password>tiger</password>
+                    <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+-->
+
+        <!-- Postgresql datasource -->
+<!--
+                <datasource>
+                    <name>WSO2_MB_STORE_DB</name>
+                    <jndiConfig>
+                        <name>WSO2MBStoreDB</name>
+                    </jndiConfig>
+                    <definition type="RDBMS">
+                    <configuration>
+                            <url>jdbc:postgresql://localhost/wso2_mb</url>
+                            <username>postgres</username>
+                            <password>postgres</password>
+                            <driverClassName>org.postgresql.Driver</driverClassName>
+                            <validationQuery>SELECT 1</validationQuery>
+                            <validationInterval>30000</validationInterval>
+                            <defaultAutoCommit>false</defaultAutoCommit>
+                        </configuration>
+                    </definition>
+                </datasource>
+-->
+
+    </datasources>
+</datasources-configuration>
