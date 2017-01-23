@@ -1,0 +1,737 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<domain name="SensorDataAnalysis">
+    <description>Domain for sensor data analysis</description>
+    <scenarios>
+        <scenario type="SensorAnalytics">
+            <description>Configure a sensor analytics scenario to display statistics for a given stream of your choice
+            </description>
+            <templates>
+                <!--Note: These will be deployed in the order they appear here-->
+                <!-- Input Event Stream-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.event.$sensorType.stream",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensor_id",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensor_value",
+                    "type": "DOUBLE"
+                    }
+                    ]
+                    }
+                </template>
+                <!-- Output Event Stream-->
+                <template type="eventstream">
+                    {
+                    "name": "org.wso2.event.$sensorType.statistics.stream",
+                    "version": "1.0.0",
+                    "nickName": "",
+                    "description": "",
+                    "payloadData": [
+                    {
+                    "name": "sensor_type",
+                    "type": "STRING"
+                    },
+                    {
+                    "name": "sensor_id_distinct_count",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "count",
+                    "type": "LONG"
+                    },
+                    {
+                    "name": "sum",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "average",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "max",
+                    "type": "DOUBLE"
+                    },
+                    {
+                    "name": "min",
+                    "type": "DOUBLE"
+                    }
+                    ]
+                    }
+                </template>
+                <!-- Realtime Execution Plan-->
+                <template type="realtime">
+                    <![CDATA[
+                                            /* Enter a unique ExecutionPlan */
+                                            @Plan:name('SensorAnalyticsPlan')
+
+                                            /* Enter a unique description for ExecutionPlan */
+                                            -- @Plan:description('ExecutionPlan')
+
+                                            /* define streams/tables and write queries here ... */
+
+                                            @Import('org.wso2.event.$sensorType.stream:1.0.0')
+                                            define stream InputStream (sensor_id string, sensor_value double);
+
+                                    @Export('org.wso2.event.$sensorType.statistics.stream:1.0.0')
+                                    define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
+
+                                    from InputStream#window.time($timeInMins min)
+                                    select '$sensorType' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, math:round(sum(sensor_value)*100.0)/100.0 as sum, math:round(avg(sensor_value)*100.0)/100.0 as average, max(sensor_value) as  max, min(sensor_value) as min
+                                    insert into OutputStream;
+                                                ]]>
+                </template>
+                <!-- Event Publisher-->
+                <template type="eventpublisher">
+                    <![CDATA[
+                            <eventPublisher name="$sensorType.statistics.stream.publisher"
+                              statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+                            <from streamName="org.wso2.event.$sensorType.statistics.stream" version="1.0.0"/>
+                            <mapping customMapping="disable" type="wso2event"/>
+                            <to eventAdapterType="ui"/>
+                        </eventPublisher>
+                        ]]>
+                </template>
+                <!-- Gadget -Count -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-count-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                                    {
+                                        "id": "$sensorType-count-chart",
+                                        "title": "$sensorType-count-chart",
+                                        "type": "gadget",
+                                        "thumbnail": "gadget/$sensorType-count-chart/thumbnail.png",
+                                        "data": {
+                                            "url": "gadget/$sensorType-count-chart/gadget.xml"
+                                        }
+                                    }                          ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                                    {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "count", "title" : "Count $sensorType", "gadget-name" : "$sensorType-count-chart", "chart-name" : "number-chart"}}
+                                                                  ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                                var getGadgetLocation = function (callback) {
+                                var gadgetLocation = "/portal/store/carbon.super/fs/gadget/$sensorType-count-chart";
+                                var PATH_SEPERATOR = "/";
+                                if (gadgetLocation.search("store") != -1) {
+                                    wso2.gadgets.identity.getTenantDomain(function (tenantDomain) {
+                                        var gadgetPath = gadgetLocation.split(PATH_SEPERATOR);
+                                        var modifiedPath = '';
+                                        for (var i = 1; i < gadgetPath.length; i++) {
+                                            if (i === 3) {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, tenantDomain);
+                                            } else {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, gadgetPath[i])
+                                            }
+                                        }
+                                        callback(modifiedPath);
+                                    });
+                                } else {
+                                    callback(gadgetLocation);
+                                }
+                            }
+                        ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -Sum -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-sum-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                               {
+                                    "id": "$sensorType-sum-chart",
+                                    "title": "$sensorType-sum-chart",
+                                    "type": "gadget",
+                                    "thumbnail": "gadget/$sensorType-sum-chart/thumbnail.png",
+                                    "data": {
+                                        "url": "gadget/$sensorType-sum-chart/gadget.xml"
+                                    }
+                                }
+                                                       ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                                {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "sum", "title" : "Sum $sensorType", "gadget-name" : "$sensorType-sum-chart", "chart-name" : "number-chart"}}
+                                                              ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                                var getGadgetLocation = function (callback) {
+                                var gadgetLocation = "/portal/store/carbon.super/fs/gadget/$sensorType-sum-chart";
+                                var PATH_SEPERATOR = "/";
+                                if (gadgetLocation.search("store") != -1) {
+                                    wso2.gadgets.identity.getTenantDomain(function (tenantDomain) {
+                                        var gadgetPath = gadgetLocation.split(PATH_SEPERATOR);
+                                        var modifiedPath = '';
+                                        for (var i = 1; i < gadgetPath.length; i++) {
+                                            if (i === 3) {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, tenantDomain);
+                                            } else {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, gadgetPath[i])
+                                            }
+                                        }
+                                        callback(modifiedPath);
+                                    });
+                                } else {
+                                    callback(gadgetLocation);
+                                }
+                            }
+                        ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -Average -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-average-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-average-chart",
+                                "title": "$sensorType-average-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-average-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-average-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "average", "title" : "Average $sensorType", "gadget-name" : "$sensorType-average-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                                var getGadgetLocation = function (callback) {
+                                var gadgetLocation = "/portal/store/carbon.super/fs/gadget/$sensorType-average-chart";
+                                var PATH_SEPERATOR = "/";
+                                if (gadgetLocation.search("store") != -1) {
+                                    wso2.gadgets.identity.getTenantDomain(function (tenantDomain) {
+                                        var gadgetPath = gadgetLocation.split(PATH_SEPERATOR);
+                                        var modifiedPath = '';
+                                        for (var i = 1; i < gadgetPath.length; i++) {
+                                            if (i === 3) {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, tenantDomain);
+                                            } else {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, gadgetPath[i])
+                                            }
+                                        }
+                                        callback(modifiedPath);
+                                    });
+                                } else {
+                                    callback(gadgetLocation);
+                                }
+                            }
+                        ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -DistinctCount -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-distinctcount-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-distinctcount-chart",
+                                "title": "$sensorType-distinctcount-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-distinctcount-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-distinctcount-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "sensor_id_distinct_count", "title" : "Distinct Count $sensorType", "gadget-name" : "$sensorType-distinctcount-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                                var getGadgetLocation = function (callback) {
+                                var gadgetLocation = "/portal/store/carbon.super/fs/gadget/$sensorType-distinctcount-chart";
+                                var PATH_SEPERATOR = "/";
+                                if (gadgetLocation.search("store") != -1) {
+                                    wso2.gadgets.identity.getTenantDomain(function (tenantDomain) {
+                                        var gadgetPath = gadgetLocation.split(PATH_SEPERATOR);
+                                        var modifiedPath = '';
+                                        for (var i = 1; i < gadgetPath.length; i++) {
+                                            if (i === 3) {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, tenantDomain);
+                                            } else {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, gadgetPath[i])
+                                            }
+                                        }
+                                        callback(modifiedPath);
+                                    });
+                                } else {
+                                    callback(gadgetLocation);
+                                }
+                            }
+                        ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -Max -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-max-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-max-chart",
+                                "title": "$sensorType-max-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-max-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-max-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "max", "title" : "Maximum $sensorType", "gadget-name" : "$sensorType-max-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                                var getGadgetLocation = function (callback) {
+                                var gadgetLocation = "/portal/store/carbon.super/fs/gadget/$sensorType-max-chart";
+                                var PATH_SEPERATOR = "/";
+                                if (gadgetLocation.search("store") != -1) {
+                                    wso2.gadgets.identity.getTenantDomain(function (tenantDomain) {
+                                        var gadgetPath = gadgetLocation.split(PATH_SEPERATOR);
+                                        var modifiedPath = '';
+                                        for (var i = 1; i < gadgetPath.length; i++) {
+                                            if (i === 3) {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, tenantDomain);
+                                            } else {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, gadgetPath[i])
+                                            }
+                                        }
+                                        callback(modifiedPath);
+                                    });
+                                } else {
+                                    callback(gadgetLocation);
+                                }
+                            }
+                        ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -Min -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-min-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-min-chart",
+                                "title": "$sensorType-min-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-min-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-min-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "min", "title" : "Minimum $sensorType", "gadget-name" : "$sensorType-min-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                                var getGadgetLocation = function (callback) {
+                                var gadgetLocation = "/portal/store/carbon.super/fs/gadget/$sensorType-min-chart";
+                                var PATH_SEPERATOR = "/";
+                                if (gadgetLocation.search("store") != -1) {
+                                    wso2.gadgets.identity.getTenantDomain(function (tenantDomain) {
+                                        var gadgetPath = gadgetLocation.split(PATH_SEPERATOR);
+                                        var modifiedPath = '';
+                                        for (var i = 1; i < gadgetPath.length; i++) {
+                                            if (i === 3) {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, tenantDomain);
+                                            } else {
+                                                modifiedPath = modifiedPath.concat(PATH_SEPERATOR, gadgetPath[i])
+                                            }
+                                        }
+                                        callback(modifiedPath);
+                                    });
+                                } else {
+                                    callback(gadgetLocation);
+                                }
+                            }
+                        ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Dashboard -->
+                <template type="dashboard">
+                    <config>
+                        <properties>
+                            <property name="dashboardId">analytics-$sensorType-dashboard</property>
+                        </properties>
+                        <content>
+                            <![CDATA[
+                                        {
+                       "id": "analytics-$sensorType-dashboard",
+                       "title": "analytics-$sensorType-dashboard",
+                       "description": "",
+                       "permissions": {
+                          "viewers": [
+                             "Internal/analytics-$sensorType-dashboard-viewer"
+                          ],
+                          "editors": [
+                             "Internal/analytics-$sensorType-dashboard-editor"
+                          ],
+                          "owners": [
+                             "Internal/analytics-$sensorType-dashboard-owner"
+                          ]
+                       },
+                       "pages": [
+                          {
+                             "id": "landing",
+                             "title": "Home",
+                             "layout": {
+                                "content": {
+                                   "loggedIn": {
+                                      "blocks": [
+                                         {
+                                            "id": "a",
+                                            "x": 0,
+                                            "y": 0,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "b",
+                                            "x": 4,
+                                            "y": 0,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "c",
+                                            "x": 8,
+                                            "y": 0,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "d",
+                                            "x": 0,
+                                            "y": 4,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "e",
+                                            "x": 4,
+                                            "y": 4,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "f",
+                                            "x": 8,
+                                            "y": 4,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         }
+                                      ]
+                                   }
+                                },
+                                "fluidLayout": false
+                             },
+                             "isanon": false,
+                             "content": {
+                                "default": {
+                                   "a": [
+                                      {
+                                         "id": "$sensorType-count-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-count-chart",
+                                            "title": "$sensorType-count-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-count-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-count-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                               "title": "$sensorType-count-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "b": [
+                                      {
+                                         "id": "$sensorType-sum-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-sum-chart",
+                                            "title": "$sensorType-sum-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-sum-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-sum-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                               "title": "$sensorType-sum-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "c": [
+                                      {
+                                         "id": "$sensorType-average-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-average-chart",
+                                            "title": "$sensorType-average-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-average-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-average-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-average-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "d": [
+                                      {
+                                         "id": "$sensorType-distinctcount-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-distinctcount-chart",
+                                            "title": "$sensorType-distinctcount-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-distinctcount-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-distinctcount-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-distinctcount-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "e": [
+                                      {
+                                         "id": "$sensorType-max-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-max-chart",
+                                            "title": "$sensorType-max-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-max-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-max-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-max-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "f": [
+                                      {
+                                         "id": "$sensorType-min-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-min-chart",
+                                            "title": "$sensorType-min-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-min-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-min-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-min-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ]
+                                },
+                                "anon": {}
+                             }
+                          }
+                       ],
+                       "menu": [
+                          {
+                             "id": "landing",
+                             "isanon": false,
+                             "ishidden": false,
+                             "title": "Home",
+                             "subordinates": []
+                          }
+                       ],
+                       "hideAllMenuItems": false,
+                       "identityServerUrl": "",
+                       "accessTokenUrl": "",
+                       "apiKey": "",
+                       "apiSecret": "",
+                       "theme": "Default Theme",
+                       "shareDashboard": false,
+                       "isUserCustom": false,
+                       "isEditorEnable": true,
+                       "banner": {
+                          "globalBannerExists": false,
+                          "customBannerExists": false
+                       },
+                       "landing": "landing",
+                       "isanon": false,
+                       "defaultPriority": "5"
+                    }
+                                        ]]>
+                        </content>
+                    </config>
+                </template>
+            </templates>
+            <parameters>
+                <parameter name="timeInMins" type="int">
+                    <displayName>Time(Mins)</displayName>
+                    <description>The sliding time period for which the window should hold events</description>
+                    <defaultValue>1</defaultValue>
+                </parameter>
+                <parameter name="sensorType" type="string">
+                    <displayName>Sensor Type Name</displayName>
+                    <description>The name of the sensor type</description>
+                    <defaultValue>temperature</defaultValue>
+                </parameter>
+            </parameters>
+        </scenario>
+    </scenarios>
+</domain>

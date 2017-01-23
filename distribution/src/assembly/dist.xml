@@ -23,10 +23,21 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
+        <!-- Copying p2 profile and osgi bundles-->
         <fileSet>
             <directory>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components
             </directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
+            <excludes>
+                <exclude>**/eclipse.ini</exclude>
+                <exclude>**/*.lock</exclude>
+                <exclude>**/.data</exclude>
+                <exclude>**/.settings</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
             <excludes>
                 <exclude>**/eclipse.ini</exclude>

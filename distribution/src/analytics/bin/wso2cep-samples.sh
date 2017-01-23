@@ -1,6 +1,6 @@
 #!/bin/sh
 # ----------------------------------------------------------------------------
-#  Copyright 2005-2012 WSO2, Inc. http://www.wso2.org
+#  Copyright 2005-2016 WSO2, Inc. http://www.wso2.org
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #  limitations under the License.
 
 # ----------------------------------------------------------------------------
-# Main Script for the WSO2 Carbon Server
+# Script for runnig the WSO2 CEP Server samples
 #
 # Environment Variable Prequisites
 #
@@ -32,6 +32,8 @@
 
 # OS specific support.  $var _must_ be set to either true or false.
 #ulimit -n 100000
+
+# NOTE: This is an edited wso2server.sh script to facilitate spark environment variables for WSO2DAS
 
 cygwin=false;
 darwin=false;
@@ -73,7 +75,7 @@ PRGDIR=`dirname "$PRG"`
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
 # Set AXIS2_HOME. Needed for One Click JAR Download
-AXIS2_HOME="$CARBON_HOME"
+AXIS2_HOME=$CARBON_HOME
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin; then
@@ -137,26 +139,47 @@ fi
 
 # ----- Process the input command ----------------------------------------------
 args=""
-NODE_PARAMS="-DdisableMl=false "
+NODE_PARAMS=""
+CMD=""
+SAMPLE=""
+VALIDATE=""
 for c in $*
 do
-    if [ "$CMD" = "--debug" ]; then
-          if [ -z "$PORT" ]; then
-                PORT=$c
-          fi
-    elif [ "$c" = "--stop" ] || [ "$c" = "-stop" ] || [ "$c" = "stop" ]; then
-          CMD="stop"
-    elif [ "$c" = "--start" ] || [ "$c" = "-start" ] || [ "$c" = "start" ]; then
-          CMD="start"
-    elif [ "$c" = "--version" ] || [ "$c" = "-version" ] || [ "$c" = "version" ]; then
-          CMD="version"
-    elif [ "$c" = "--restart" ] || [ "$c" = "-restart" ] || [ "$c" = "restart" ]; then
-          CMD="restart"
-    elif [ "$c" = "--test" ] || [ "$c" = "-test" ] || [ "$c" = "test" ]; then
-          CMD="test"
-    else
-        args="$args $c"
+  if [ "$c" = "-sn" ] || [ "$c" = "sn" ]; then
+    SAMPLE="t"
+    VALIDATE="t"
+    continue
+  elif [ "$SAMPLE" = "t" ]; then
+    NODIGITS="$(echo $c | sed 's/[[:digit:]]//g')"
+    if [ -z $NODIGITS ]; then
+      SAMPLE=""
+      CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
+      CMD="$CMD -Daxis2.repo="$CARBON_HOME"/samples/cep/artifacts/$c"
+      if [ ! -d "$CARBON_HOME"/samples/cep/artifacts/$c/webapps ]; then
+        `mkdir -p "$CARBON_HOME"/samples/cep/artifacts/$c/webapps`
+        `[ -f "$CARBON_HOME"/repository/deployment/server/webapps/inputwebsocket.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/inputwebsocket.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
+        `[ -f "$CARBON_HOME"/repository/deployment/server/webapps/outputwebsocket.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/outputwebsocket.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
+        `[ -f "$CARBON_HOME"/repository/deployment/server/webapps/shindig.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/shindig.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
+      else
+        `[ ! -f "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/inputwebsocket.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/inputwebsocket.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
+        `[ ! -f "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/outputwebsocket.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/outputwebsocket.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
+        `[ ! -f "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/shindig.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/shindig.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
+      fi
+      if [ ! -d "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps ]; then
+        `mkdir -p "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps`
+        `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/`
+        `rm -r "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal/store/*`
+        `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal/store/carbon.super "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal/store/`
+        `rm -r "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal/store/carbon.super/fs/gadget/*`
+      fi
+   else
+      echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"
+      echo "Example, to run sample 1: wso2cep-samples.sh -sn 1"
+      exit
     fi
+  else
+    CMD="$CMD $c"
+  fi
 done
 
 if [ "$CMD" = "--debug" ]; then
@@ -177,19 +200,19 @@ elif [ "$CMD" = "start" ]; then
       exit 0
     fi
   fi
-  export CARBON_HOME="$CARBON_HOME"
+  export CARBON_HOME=$CARBON_HOME
 # using nohup sh to avoid erros in solaris OS.TODO
   nohup sh $CARBON_HOME/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "stop" ]; then
-  export CARBON_HOME="$CARBON_HOME"
-  kill -term `cat "$CARBON_HOME"/wso2carbon.pid`
+  export CARBON_HOME=$CARBON_HOME
+  kill -term `cat $CARBON_HOME/wso2carbon.pid`
   exit 0
 elif [ "$CMD" = "restart" ]; then
-  export CARBON_HOME="$CARBON_HOME"
-  kill -term `cat "$CARBON_HOME"/wso2carbon.pid`
+  export CARBON_HOME=$CARBON_HOME
+  kill -term `cat $CARBON_HOME/wso2carbon.pid`
   process_status=0
-  pid=`cat "$CARBON_HOME"/wso2carbon.pid`
+  pid=`cat $CARBON_HOME/wso2carbon.pid`
   while [ "$process_status" -eq "0" ]
   do
         sleep 1;
@@ -198,13 +221,13 @@ elif [ "$CMD" = "restart" ]; then
   done
 
 # using nohup sh to avoid erros in solaris OS.TODO
-  nohup sh "$CARBON_HOME"/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
+  nohup sh $CARBON_HOME/bin/wso2server.sh $args $NODE_PARAMS  > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "test" ]; then
     JAVACMD="exec "$JAVACMD""
 elif [ "$CMD" = "version" ]; then
-  cat "$CARBON_HOME"/bin/version.txt
-  cat "$CARBON_HOME"/bin/wso2carbon-version.txt
+  cat $CARBON_HOME/bin/version.txt
+  cat $CARBON_HOME/bin/wso2carbon-version.txt
   exit 0
 fi
 
@@ -216,14 +239,14 @@ if [ "$jdk_17" = "" ]; then
 fi
 
 CARBON_XBOOTCLASSPATH=""
-for f in "$CARBON_HOME"/../lib/xboot/*.jar
+for f in "$CARBON_HOME"/lib/xboot/*.jar
 do
-    if [ "$f" != "$CARBON_HOME/../lib/xboot/*.jar" ];then
+    if [ "$f" != "$CARBON_HOME/lib/xboot/*.jar" ];then
         CARBON_XBOOTCLASSPATH="$CARBON_XBOOTCLASSPATH":$f
     fi
 done
 
-JAVA_ENDORSED_DIRS="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
+JAVA_ENDORSED_DIRS="$CARBON_HOME/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
 
 CARBON_CLASSPATH=""
 if [ -e "$JAVA_HOME/lib/tools.jar" ]; then
@@ -235,7 +258,7 @@ do
         CARBON_CLASSPATH="$CARBON_CLASSPATH":$f
     fi
 done
-for t in "$CARBON_HOME"/../lib/commons-lang*.jar
+for t in "$CARBON_HOME"/lib/commons-lang*.jar
 do
     CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
 done
@@ -253,13 +276,13 @@ fi
 # ----- Execute The Requested Command -----------------------------------------
 
 echo JAVA_HOME environment variable is set to $JAVA_HOME
-echo CARBON_HOME environment variable is set to "$CARBON_HOME"
+echo CARBON_HOME environment variable is set to $CARBON_HOME
 
 cd "$CARBON_HOME"
 
-TMP_DIR="$CARBON_HOME"/tmp
+TMP_DIR=$CARBON_HOME/tmp
 if [ -d "$TMP_DIR" ]; then
-rm -rf "$TMP_DIR"/*
+rm -rf "$TMP_DIR"
 fi
 
 START_EXIT_STATUS=121
@@ -267,18 +290,22 @@ status=$START_EXIT_STATUS
 
 if [ -z "$JVM_MEM_OPTS" ]; then
    java_version=$("$JAVACMD" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-   JVM_MEM_OPTS="-Xms256m -Xmx2048m"
+   JVM_MEM_OPTS="-Xms256m -Xmx1024m"
    if [ "$java_version" \< "1.8" ]; then
       JVM_MEM_OPTS="$JVM_MEM_OPTS -XX:MaxPermSize=256m"
    fi
 fi
 echo "Using Java memory options: $JVM_MEM_OPTS"
 
+#load spark environment variables
+. $CARBON_HOME/bin/load-spark-env-vars.sh
+
 #setting up profile parameter for runtime in EI
 if [[ "$@" != *"-Dprofile"* ]]
    then
-        NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
+        NODE_PARAMS="$NODE_PARAMS -Dprofile=analytics-default"
 fi
+
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
@@ -286,6 +313,7 @@ fi
 while [ "$status" = "$START_EXIT_STATUS" ]
 do
     $JAVACMD \
+    $CMD \
     -Xbootclasspath/a:"$CARBON_XBOOTCLASSPATH" \
     $JVM_MEM_OPTS \
     -XX:+HeapDumpOnOutOfMemoryError \
@@ -312,7 +340,7 @@ do
     -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
-    -Dconf.location="$CARBON_HOME/conf"\
+    -Dconf.location="$CARBON_HOME/../business-process/conf"\
     -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \
@@ -325,7 +353,11 @@ do
     -Djava.net.preferIPv4Stack=true \
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
+    -Dtenant.idle.time=153722867280912 \
+    -DdisableMLSparkCtx=true \
+	-DdisableMl=true \
     -Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600 \
+    -Dcarbon.das.c5.enabled="true" \
     $NODE_PARAMS \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?

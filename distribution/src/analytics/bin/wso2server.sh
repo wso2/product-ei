@@ -33,6 +33,8 @@
 # OS specific support.  $var _must_ be set to either true or false.
 #ulimit -n 100000
 
+# NOTE: This is an edited wso2server.sh script to facilitate spark environment variables for WSO2DAS
+
 cygwin=false;
 darwin=false;
 os400=false;
@@ -140,7 +142,25 @@ args=""
 NODE_PARAMS="-DdisableMl=false "
 for c in $*
 do
-    if [ "$CMD" = "--debug" ]; then
+    if [ "$c" = "-receiverNode" ]; then
+          NODE_PARAMS="-DdisableAnalyticsEngine=true -DdisableAnalyticsExecution=true -DdisableIndexing=true -DdisableDataPurging=false -DdisableAnalyticsSparkCtx=true -DdisableAnalyticsStats=true -DdisableMl=true "
+          echo "Starting Data Analytics Server node as a Receiver Node"
+    elif [ "$c" = "-indexerNode" ]; then
+          NODE_PARAMS="-DdisableAnalyticsExecution=true -DdisableAnalyticsEngine=true -DdisableEventSink=true -DdisableAnalyticsSparkCtx=true -DdisableAnalyticsStats=true -DdisableDataPurging=true -DdisableMl=true "
+          echo "Starting Data Analytics Server node as an Indexer Node"
+    elif [ "$c" = "-analyzerNode" ]; then
+          NODE_PARAMS="-DdisableIndexing=true -DdisableEventSink=true -DdisableDataPurging=true -DenableAnalyticsStats=true -DdisableMl=true "
+          echo "Starting Data Analytics Server node as an Analyzer Node"
+    elif [ "$c" = "-dashboardNode" ]; then
+          NODE_PARAMS="-DdisableIndexing=true -DdisableEventSink=true -DdisableDataPurging=true -DenableAnalyticsStats=true -DdisableAnalyticsExecution=true -DdisableAnalyticsEngine=true -DdisableAnalyticsSparkCtx=true -DdisableMl=true "
+          echo "Starting Data Analytics Server node as an Analyzer Node"
+     elif [ "$c" = "-mlNode" ]; then
+      	  NODE_PARAMS="-DdisableAnalyticsExecution=true -DdisableEventSink=true -DdisableIndexing=true -DdisableDataPurging=true -DenableAnalyticsStats=true -DdisableMl=false "
+      	  echo "Starting Data Analytics Server node as a Machine Learner Node"
+    elif [ "$c" = "--debug" ] || [ "$c" = "-debug" ] || [ "$c" = "debug" ]; then
+          CMD="--debug"
+          continue
+    elif [ "$CMD" = "--debug" ]; then
           if [ -z "$PORT" ]; then
                 PORT=$c
           fi
@@ -274,10 +294,13 @@ if [ -z "$JVM_MEM_OPTS" ]; then
 fi
 echo "Using Java memory options: $JVM_MEM_OPTS"
 
+#load spark environment variables
+. $CARBON_HOME/bin/load-spark-env-vars.sh
+
 #setting up profile parameter for runtime in EI
 if [[ "$@" != *"-Dprofile"* ]]
    then
-        NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
+        NODE_PARAMS="$NODE_PARAMS -Dprofile=analytics-default"
 fi
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
@@ -312,7 +335,7 @@ do
     -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
-    -Dconf.location="$CARBON_HOME/conf"\
+    -Dconf.location="$CARBON_HOME/../analytics/conf"\
     -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \
@@ -326,6 +349,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
     -Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600 \
+    -Dcarbon.das.c5.enabled="true" \
     $NODE_PARAMS \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
