@@ -1,0 +1,5 @@
+<UpdateBusInBayRequest xmlns="http://translink.ca/ws/Asset/Bay/V1/">
+    <vehicle></vehicle>
+    <bay>01</bay>
+    <depotcode>S0</depotcode>
+</UpdateBusInBayRequest>

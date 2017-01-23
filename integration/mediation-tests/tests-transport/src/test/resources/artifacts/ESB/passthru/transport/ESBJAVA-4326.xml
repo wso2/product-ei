@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api xmlns="http://ws.apache.org/ns/synapse" name="productsapi" context="/products">
+        <resource methods="POST GET">
+            <inSequence>
+                <header name="Action" value="urn:getQuote"/>
+                <property name="REQUEST_HOST_HEADER" value="new-host-name1:8280"
+                          scope="axis2"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                                          xmlns:xsd="http://services.samples/xsd"
+                                          xmlns:ser="http://services.samples">
+                            <soapenv:Header/>
+                            <soapenv:Body>
+                                <ser:getQuote>
+                                    <ser:request>
+                                        <xsd:symbol>WSO2</xsd:symbol>
+                                    </ser:request>
+                                </ser:getQuote>
+                            </soapenv:Body>
+                        </soapenv:Envelope>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <header name="Action" value="urn:getQuote"/>
+                <property name="REQUEST_HOST_HEADER" value="new-host-name2:8280"
+                          scope="axis2"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:8456/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>

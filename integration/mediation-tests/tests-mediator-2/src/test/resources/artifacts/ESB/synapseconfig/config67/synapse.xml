@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <endpoint name="StudentServiceEndpoint">
+        <address uri="http://localhost:9765/services/StudentService" format="soap11"/>
+    </endpoint>
+    <sequence name="StudentUpdateInSequence">
+        <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    xmlns:p="http://ws.wso2.org/dataservice"
+                    clone="true"
+                    xpath="//p:Student/child::node()"/>
+            <target type="property" property="studentDetails"/>
+        </enrich>
+        <payloadFactory>
+            <format>
+                <p:UpdateStudent xmlns:p="http://ws.wso2.org/dataservice">
+                    <p:registrationNumber>$1</p:registrationNumber>
+                </p:UpdateStudent>
+            </format>
+            <args>
+                <arg xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                     xmlns:ns3="http://org.apache.synapse/xsd"
+                     expression="get-property('uri.var.registrationNumber')"/>
+            </args>
+        </payloadFactory>
+        <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    clone="true"
+                    xpath="get-property('studentDetails')"/>
+            <target xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    xmlns:p="http://ws.wso2.org/dataservice"
+                    action="child"
+                    xpath="//p:UpdateStudent"/>
+        </enrich>
+        <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+        <property name="OUT_ONLY" value="true"/>
+        <send>
+            <endpoint key="StudentServiceEndpoint"/>
+        </send>
+    </sequence>
+    <sequence name="StudentAddInSequence">
+        <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    xmlns:p="http://ws.wso2.org/dataservice"
+                    clone="true"
+                    xpath="//p:Student/child::node()"/>
+            <target type="property" property="studentDetails"/>
+        </enrich>
+        <payloadFactory>
+            <format>
+                <p:AddStudent xmlns:p="http://ws.wso2.org/dataservice">
+                    <p:registrationNumber>$1</p:registrationNumber>
+                </p:AddStudent>
+            </format>
+            <args>
+                <arg xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd"
+                     expression="get-property('uri.var.registrationNumber')"/>
+            </args>
+        </payloadFactory>
+        <enrich>
+            <source xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    clone="true"
+                    xpath="get-property('studentDetails')"/>
+            <target xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    xmlns:p="http://ws.wso2.org/dataservice"
+                    action="child"
+                    xpath="//p:AddStudent"/>
+        </enrich>
+        <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+        <property name="OUT_ONLY" value="true"/>
+        <send>
+            <endpoint key="StudentServiceEndpoint"/>
+        </send>
+    </sequence>
+    <sequence name="StudentDeleteInSequence">
+        <payloadFactory>
+            <format>
+                <p:DeleteStudent xmlns:p="http://ws.wso2.org/dataservice">
+                    <p:registrationNumber>$1</p:registrationNumber>
+                </p:DeleteStudent>
+            </format>
+            <args>
+                <arg xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+                     xmlns:ns3="http://org.apache.synapse/xsd"
+                     expression="get-property('uri.var.registrationNumber')"/>
+            </args>
+        </payloadFactory>
+        <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+        <property name="OUT_ONLY" value="true"/>
+        <send>
+            <endpoint key="StudentServiceEndpoint"/>
+        </send>
+    </sequence>
+    <sequence name="StudentGetOutSequence">
+        <enrich>
+            <source xmlns:m1="http://ws.wso2.org/dataservice"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    clone="true"
+                    xpath="//m1:Students/m1:Student"/>
+            <target type="body"/>
+        </enrich>
+        <send/>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <sequence name="StudentGetInSequence">
+        <payloadFactory>
+            <format>
+                <p:GetStudent xmlns:p="http://ws.wso2.org/dataservice">
+                    <p:registration_number>$1</p:registration_number>
+                </p:GetStudent>
+            </format>
+            <args>
+                <arg xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd"
+                     expression="get-property('uri.var.registrationNumber')"/>
+            </args>
+        </payloadFactory>
+        <send>
+            <endpoint key="StudentServiceEndpoint"/>
+        </send>
+    </sequence>
+    <api name="StudentAPI" context="/students">
+        <resource methods="GET"
+                  uri-template="/{registrationNumber}"
+                  inSequence="StudentGetInSequence"
+                  outSequence="StudentGetOutSequence"/>
+        <resource methods="POST"
+                  uri-template="/{registrationNumber}"
+                  inSequence="StudentAddInSequence"/>
+        <resource methods="PUT"
+                  uri-template="/{registrationNumber}"
+                  inSequence="StudentUpdateInSequence"/>
+        <resource methods="DELETE"
+                  uri-template="/{registrationNumber}"
+                  inSequence="StudentDeleteInSequence"/>
+    </api>
+</definitions>

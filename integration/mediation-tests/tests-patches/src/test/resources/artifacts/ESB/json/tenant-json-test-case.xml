@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry"/>
+    <proxy name="jsonproducer"
+           transports="https http local"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <payloadFactory media-type="json">
+                    <format>{"test":""}</format>
+                    <args/>
+                </payloadFactory>
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true"/>
+                <send/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full"/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

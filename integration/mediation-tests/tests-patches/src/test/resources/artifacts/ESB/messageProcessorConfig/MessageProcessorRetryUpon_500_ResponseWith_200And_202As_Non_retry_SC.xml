@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="NonRetrySCProxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <property name="FORCE_SC_ACCEPTED"
+                      value="true"
+                      scope="axis2"
+                      type="STRING"/>
+            <property name="OUT_ONLY" value="true" scope="default" type="STRING"/>
+            <store messageStore="JMSMS"/>
+         </inSequence>
+      </target>
+   </proxy>
+   <endpoint name="EP">
+      <address uri="http://www.mocky.io/v2/561c9209110000de121cb4c6"/>
+   </endpoint>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+   <messageStore class="org.apache.synapse.message.store.impl.jms.JmsStore" name="JMSMS">
+      <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+      <parameter name="store.jms.password">admin</parameter>
+      <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+      <parameter name="store.jms.username">admin</parameter>
+      <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+   </messageStore>
+   <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                     name="Processor1"
+                     targetEndpoint="EP"
+                     messageStore="JMSMS">
+      <parameter name="client.retry.interval">2000</parameter>
+      <parameter name="max.delivery.attempts">4</parameter>
+      <parameter name="interval">4000</parameter>
+      <parameter name="non.retry.status.codes">200,202</parameter>
+      <parameter name="is.active">true</parameter>
+   </messageProcessor>
+</definitions>

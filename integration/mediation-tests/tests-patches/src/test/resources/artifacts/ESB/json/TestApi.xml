@@ -1,0 +1,31 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<api xmlns="http://ws.apache.org/ns/synapse" name="TestAPI" context="/abc">
+    <resource methods="POST GET" url-mapping="/dd">
+        <inSequence>
+            <payloadFactory media-type="xml">
+                <format>
+                    <jsonObject>
+                        <?xml-multiple  ?>
+                        <state>
+                            <path>$1</path>
+                            <?xml-multiple  ?>
+                            <entry>$2</entry>
+                        </state>
+                    </jsonObject>
+                </format>
+                <args>
+                    <arg evaluator="json" expression="$.statePath"></arg>
+                    <arg evaluator="json" expression="$.entry"></arg>
+                </args>
+            </payloadFactory>
+            <property name="messageType" value="application/json" scope="axis2"></property>
+            <respond></respond>
+        </inSequence>
+        <outSequence>
+            <send></send>
+        </outSequence>
+    </resource>
+</api>
+</definitions>

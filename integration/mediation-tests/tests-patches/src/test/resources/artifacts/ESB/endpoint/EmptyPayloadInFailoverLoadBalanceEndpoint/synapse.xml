@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="loadbalanceproxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target endpoint="LoadBalancingEndpoint">
+            <inSequence>
+                <script language="js">var payload = mc.getEnvelope().buildWithAttachments();</script>
+            </inSequence>
+        </target>
+    </proxy>
+    <endpoint name="LoadBalancingEndpoint">
+        <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+            <endpoint name="LoadBalancingEndpoint1">
+                <address uri="http://localhost:9001/services/LBServiceWithSleep">
+                    <timeout>
+                        <duration>5000</duration>
+                        <responseAction>fault</responseAction>
+                    </timeout>
+                    <suspendOnFailure>
+                        <initialDuration>5000</initialDuration>
+                        <progressionFactor>1.0</progressionFactor>
+                        <maximumDuration>10000</maximumDuration>
+                    </suspendOnFailure>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>5</retriesBeforeSuspension>
+                        <retryDelay>1000</retryDelay>
+                    </markForSuspension>
+                </address>
+            </endpoint>
+            <endpoint name="LoadBalancingEndpoint2">
+                <address uri="http://localhost:9002/services/LBService1">
+                    <timeout>
+                        <duration>5000</duration>
+                        <responseAction>fault</responseAction>
+                    </timeout>
+                    <suspendOnFailure>
+                        <initialDuration>5000</initialDuration>
+                        <progressionFactor>1.0</progressionFactor>
+                        <maximumDuration>10000</maximumDuration>
+                    </suspendOnFailure>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>5</retriesBeforeSuspension>
+                        <retryDelay>1000</retryDelay>
+                    </markForSuspension>
+                </address>
+            </endpoint>
+        </loadbalance>
+    </endpoint>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

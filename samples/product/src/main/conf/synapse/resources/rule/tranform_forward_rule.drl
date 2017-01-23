@@ -1,0 +1,26 @@
+<drl>
+    <![CDATA[
+package ForwardTransformation;
+
+import org.wso2.carbon.rule.samples.GetQuoteRequest ;
+import org.apache.synapse.MessageContext;
+
+rule ForwardTransformation
+
+when
+
+symbol : String()
+mc : MessageContext()
+eval(symbol != null )
+
+then
+
+GetQuoteRequest request = new GetQuoteRequest();
+
+request.setSymbol(symbol);
+insert(request);
+mc.setProperty("execute_children","true");
+end
+
+]]>
+</drl>

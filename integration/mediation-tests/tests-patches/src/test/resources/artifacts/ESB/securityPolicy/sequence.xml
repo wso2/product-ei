@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <proxy name="Hello" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <respond/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+            <faultSequence/>
+        </target>
+        <publishWSDL uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl"/>
+        <policy key="TestLE"/>
+        <parameter name="ScenarioID">scenario1</parameter>
+        <enableSec/>
+    </proxy>
+    <localEntry key="TestLE">
+        <wsp:Policy wsu:Id="UTOverTransport"
+                    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+            <wsp:ExactlyOne>
+                <wsp:All>
+                    <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                        <wsp:Policy>
+                            <sp:TransportToken>
+                                <wsp:Policy>
+                                    <sp:HttpsToken RequireClientCertificate="false"/>
+                                </wsp:Policy>
+                            </sp:TransportToken>
+                            <sp:AlgorithmSuite>
+                                <wsp:Policy>
+                                    <sp:Basic256/>
+                                </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                                <wsp:Policy>
+                                    <sp:Lax/>
+                                </wsp:Policy>
+                            </sp:Layout>
+                            <sp:IncludeTimestamp/>
+                        </wsp:Policy>
+                    </sp:TransportBinding>
+                    <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                        <wsp:Policy>
+                            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient"/>
+                        </wsp:Policy>
+                    </sp:SignedSupportingTokens>
+                </wsp:All>
+            </wsp:ExactlyOne>
+            <rampart:RampartConfig xmlns:rampart="http://ws.apache.org/rampart/policy">
+                <rampart:encryptionUser>useReqSigCert</rampart:encryptionUser>
+                <rampart:timestampPrecisionInMilliseconds>true</rampart:timestampPrecisionInMilliseconds>
+                <rampart:timestampTTL>300</rampart:timestampTTL>
+                <rampart:timestampMaxSkew>300</rampart:timestampMaxSkew>
+                <rampart:timestampStrict>false</rampart:timestampStrict>
+                <rampart:tokenStoreClass>org.wso2.carbon.security.util.SecurityTokenStore</rampart:tokenStoreClass>
+                <rampart:nonceLifeTime>300</rampart:nonceLifeTime>
+            </rampart:RampartConfig>
+            <sec:CarbonSecConfig xmlns:sec="http://www.wso2.org/products/carbon/security">
+                <sec:Authorization>
+                    <sec:property name="org.wso2.carbon.security.allowedroles">admin,sys-admin</sec:property>
+                </sec:Authorization>
+            </sec:CarbonSecConfig>
+        </wsp:Policy>
+    </localEntry>
+    <sequence name="fault">
+        <!-- Log the message at the full log level with the ERROR_MESSAGE and the ERROR_CODE-->
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <!-- Drops the messages by default if there is a fault -->
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <!-- Send the messages where they have been sent (i.e. implicit "To" EPR) -->
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

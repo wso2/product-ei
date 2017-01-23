@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="validateRequest" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <validate source="json-eval($.msg)">
+                    <schema key="stockquote-json-schema"/>
+                    <on-fail>
+                        <makefault version="soap11">
+                            <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            <reason value="Invalid Request"/>
+                            <role/>
+                        </makefault>
+                        <respond/>
+                    </on-fail>
+                </validate>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="validateRequestFromRegistry" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <validate>
+                    <schema key="conf:/StockQuoteSchema.json"/>
+                    <on-fail>
+                        <makefault version="soap11">
+                            <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                            <reason value="Invalid Request"/>
+                            <role/>
+                        </makefault>
+                        <respond/>
+                    </on-fail>
+                </validate>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <localEntry key="stockquote-json-schema"><![CDATA[{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "getQuote": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "symbol"
+          ]
+        }
+      },
+      "required": [
+        "request"
+      ]
+    }
+  },
+  "required": [
+    "getQuote"
+  ]
+}]]><description/>
+    </localEntry>
+</definitions>

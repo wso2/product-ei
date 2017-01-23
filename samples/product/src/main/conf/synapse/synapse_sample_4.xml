@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Introduction to error handling -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <!-- the default fault handling sequence used by Synapse - named 'fault' -->
+    <sequence name="fault">
+        <log level="custom">
+            <property name="text" value="An unexpected error occured"/>
+            <property name="message" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+
+    <sequence name="sunErrorHandler">
+        <log level="custom">
+            <property name="text" value="An unexpected error occured for stock SUN"/>
+            <property name="message" expression="get-property('ERROR_MESSAGE')"/>
+            <!--<property name="detail" expression="get-property('ERROR_DETAIL')"/>-->
+        </log>
+        <drop/>
+    </sequence>
+
+    <sequence name="main">
+        <in>
+            <switch source="//m0:getQuote/m0:request/m0:symbol" xmlns:m0="http://services.samples">
+                <case regex="IBM">
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="MSFT">
+                    <send>
+                        <endpoint key="bogus"/>
+                    </send>
+                </case>
+                <case regex="SUN">
+                    <sequence key="sunSequence"/>
+                </case>
+            </switch>
+            <drop/>
+        </in>
+
+        <out>
+            <send/>
+        </out>
+    </sequence>
+
+    <sequence name="sunSequence" onError="sunErrorHandler">
+        <send>
+            <endpoint key="sunPort"/>
+        </send>
+    </sequence>
+
+</definitions>

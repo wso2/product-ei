@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="messageStoreTargetEndpointFormatTestProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <property name="OUT_ONLY" value="true" scope="default" type="STRING"/>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="Accept-Encoding" scope="transport" action="remove"/>
+                <property name="Content-Length" scope="transport" action="remove"/>
+                <property name="Content-Type" scope="transport" action="remove"/>
+                <property name="User-Agent" scope="transport" action="remove"/>
+                <property name="Transfer-Encoding" scope="transport" action="remove"/>
+                <property name="X-Forwarded-For" scope="transport" action="remove"/>
+                <property name="X-Forwarded-Host" scope="transport" action="remove"/>
+                <property name="X-Forwarded-Server" scope="transport" action="remove"/>
+                <store messageStore="TargetEndpointTestMessageStore"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <endpoint name="messageStoreTargetEndpoint">
+        <address uri="jms:/messageStoreTargetEndpointQueue?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;java.naming.provider.url=tcp://localhost:61616&amp;transport.jms.DestinationType=queue"
+                 format="pox"/>
+    </endpoint>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+
+    <messageStore class="org.apache.synapse.message.store.impl.jms.JmsStore"
+                  name="TargetEndpointTestMessageStore">
+        <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+        <parameter name="store.jms.destination">TargetEndpointTestMessageStore</parameter>
+        <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+    </messageStore>
+    <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="MessageProcessorTEPT"
+                      messageStore="TargetEndpointTestMessageStore"
+                      targetEndpoint="messageStoreTargetEndpoint">
+        <parameter name="interval">10000</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="is.active">true</parameter>
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="member.count">1</parameter>
+    </messageProcessor>
+</definitions>

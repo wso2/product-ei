@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="StockQuoteAPI2"
+     context="/getquote">
+   <resource methods="GET" uri-template="/view/*">
+      <inSequence>
+         <payloadFactory>
+            <format>
+               <m0:getQuote xmlns:m0="http://services.samples">
+                  <m0:request>
+                     <m0:symbol>$1</m0:symbol>
+                  </m0:request>
+               </m0:getQuote>
+            </format>
+            <args>
+               <arg value="WSO2"/>
+            </args>
+         </payloadFactory>
+         <header name="Action" value="getQuote"/>
+         <property name="SOAPAction" value="getQuote" scope="transport"/>
+         <send>
+            <endpoint>
+               <address uri="http://localhost:9000/services/SimpleStockQuoteService"
+                        format="soap11"/>
+            </endpoint>
+         </send>
+      </inSequence>
+      <outSequence>
+         <send/>
+      </outSequence>
+   </resource>
+</api>

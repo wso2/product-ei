@@ -1,0 +1,22 @@
+<inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
+                 name="TestKAFKA1"
+                 sequence="kafkaSeq"
+                 onError="kafkaError"
+                 protocol="kafka"
+                 suspend="false">
+    <parameters>
+        <parameter name="simple.max.messages.to.read">1000</parameter>
+        <parameter name="interval">1</parameter>
+        <parameter name="consumer.type">highlevel</parameter>
+        <parameter name="content.type">application/xml</parameter>
+        <parameter name="coordination">true</parameter>
+        <parameter name="simple.brokers">test</parameter>
+        <parameter name="sequential">true</parameter>
+        <parameter name="topics">test11</parameter>
+        <parameter name="simple.partition">1</parameter>
+        <parameter name="zookeeper.connect">localhost:2181</parameter>
+        <parameter name="group.id">test111</parameter>
+        <parameter name="simple.port">1</parameter>
+        <parameter name="simple.topic">test</parameter>
+    </parameters>
+</inboundEndpoint>

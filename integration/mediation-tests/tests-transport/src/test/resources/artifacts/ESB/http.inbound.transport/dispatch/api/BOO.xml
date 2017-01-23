@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="BOO" context="/boo">
+   <resource methods="GET POST">
+      <inSequence>
+         <log level="custom">
+            <property name="BOO-API" value="BOO"/>
+         </log>
+          <respond/>
+      </inSequence>
+   </resource>
+</api>

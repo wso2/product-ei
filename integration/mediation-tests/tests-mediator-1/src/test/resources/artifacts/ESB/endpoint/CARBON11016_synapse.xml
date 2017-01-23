@@ -1,0 +1,39 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <endpoint name="StockQuoteService">
+      <address uri="http://localhost:9000/services/SimpleStockQuoteService"
+               format="soap11">
+         <timeout>
+            <duration>60000</duration>
+            <responseAction/>
+         </timeout>
+         <suspendOnFailure>
+            <errorCodes>101509,101503,101507,101508</errorCodes>
+            <initialDuration>1000</initialDuration>
+            <progressionFactor>2.0</progressionFactor>
+            <maximumDuration>64000</maximumDuration>
+         </suspendOnFailure>
+         <markForSuspension>
+            <retriesBeforeSuspension>10</retriesBeforeSuspension>
+            <retryDelay>2</retryDelay>
+         </markForSuspension>
+      </address>
+   </endpoint>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <send>
+            <endpoint key="StockQuoteService"/>
+         </send>
+      </in>
+      <out>
+         <send/>
+      </out>
+   </sequence>
+</definitions>

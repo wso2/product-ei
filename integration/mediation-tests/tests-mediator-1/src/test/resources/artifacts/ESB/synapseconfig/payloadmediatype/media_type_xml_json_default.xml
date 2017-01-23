@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="Dummy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true"/>
+            <log level="full"/>
+            <payloadFactory media-type="json">
+               <format>
+               {
+   "coordinates": null,
+   "created_at": "Fri Jun 24 17:43:26 +0000 2011",
+   "truncated": false,
+   "favorited": false,
+   "id_str": "$1",
+   "entities": {
+       "urls": [
+
+       ],
+       "hashtags": [
+           {
+               "text": "$2",
+               "indices": [
+                   35,
+                   45
+               ]
+           }
+       ],
+       "user_mentions": [
+
+       ]
+   },
+   "in_reply_to_user_id_str": null,
+   "contributors": null,
+   "text": "$3",
+   "retweet_count": 0,
+   "id": "##",
+   "in_reply_to_status_id_str": null,
+   "geo": null,
+   "retweeted": false,
+   "in_reply_to_user_id": null,
+   "source": "&lt;a href=\"http://sites.google.com/site/yorufukurou/\" rel=\"nofollow\"&gt;YoruFukurou&lt;/a&gt;",
+   "in_reply_to_screen_name": null,
+   "user": {
+       "id_str": "##",
+       "id": "##"
+   },
+   "place": null,
+   "in_reply_to_status_id": null
+}
+           </format>
+               <args>
+                  <arg evaluator="xml" expression="//entities/hashtags/text"/>
+                  <arg evaluator="xml" expression="//user/id"/>
+                  <arg evaluator="xml" expression="//user/id_str"/>
+                  <arg evaluator="json" expression="$.xml.entities.hashtags.text"/>
+                  <arg evaluator="json" expression="$.xml.user.id"/>
+                  <arg evaluator="json" expression="$.xml.user.id_str"/>
+               </args>
+            </payloadFactory>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <log level="full"/>
+            <send/>
+         </inSequence>
+      </target>
+   </proxy>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

@@ -1,0 +1,14 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ser:placeOrder>
+            <ser:order>
+                <order>
+                    <price>50</price>
+                    <quantity>10</quantity>
+                    <symbol>IBM</symbol>
+                </order>
+            </ser:order>
+        </ser:placeOrder>
+    </soapenv:Body>
+</soapenv:Envelope>

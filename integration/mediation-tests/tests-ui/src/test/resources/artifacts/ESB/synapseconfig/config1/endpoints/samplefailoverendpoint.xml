@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="samplefailoverendpoint">
+    <failover>
+        <endpoint>
+            <address uri="http://localhost:9001/services/LBService1">
+                <enableAddressing/>
+                <suspendDurationOnFailure>60</suspendDurationOnFailure>
+            </address>
+        </endpoint>
+        <endpoint>
+            <address uri="http://localhost:9002/services/LBService1">
+                <enableAddressing/>
+                <suspendDurationOnFailure>60</suspendDurationOnFailure>
+            </address>
+        </endpoint>
+        <endpoint>
+            <address uri="http://localhost:9003/services/LBService1">
+                <enableAddressing/>
+                <suspendDurationOnFailure>60</suspendDurationOnFailure>
+            </address>
+        </endpoint>
+    </failover>
+</endpoint>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="main">
+        <in>
+            <switch source="//m0:getQuote/m0:request/m0:symbol" xmlns:m0="http://services.samples">
+                <case regex="^WSO\w*">
+                    <send>
+                        <endpoint><address uri="http://localhost:9000/services/SimpleStockQuoteService"/></endpoint>
+                    </send>
+                </case>
+                <case regex="^IM\w*">
+                    <send>
+                        <endpoint><address uri="http://localhost:9000/services/SimpleStockQuoteService"/></endpoint>
+                    </send>
+                </case>
+                <case regex="^FT\w*">
+                    <send>
+                        <endpoint><address uri="http://localhost:9000/services/SimpleStockQuoteService"/></endpoint>
+                    </send>
+                </case>
+            </switch>
+            <drop/>
+        </in>
+        <out>
+            <send/>
+        </out>
+    </sequence>
+</definitions>

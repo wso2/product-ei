@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.samples" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="getQuote" type="ser:getQuoteType" xmlns:ser="http://services.samples"/>
+    <xs:complexType name="getQuoteType">
+        <xs:sequence>
+            <xs:element type="ser:requestType" name="request" xmlns:ser="http://services.samples"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="requestType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="symbol"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

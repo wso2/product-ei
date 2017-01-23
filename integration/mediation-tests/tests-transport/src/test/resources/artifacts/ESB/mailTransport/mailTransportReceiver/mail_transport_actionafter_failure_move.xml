@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="MailToTransportActionAfterFailureMoveTestCase"
+           transports="mailto"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="Date" expression="$trp:Date"/>
+                    <property name="Subject" expression="$trp:Subject"/>
+                    <property name="Content-Type" expression="$trp:Content-Type"/>
+                    <property name="From" expression="$trp:From"/>
+                </log>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <parameter name="transport.mail.ActionAfterFailure">MOVE</parameter>
+        <parameter name="transport.mail.MoveAfterFailure">Trash</parameter>
+        <parameter name="mail.imap.socketFactory.class">javax.net.ssl.SSLSocketFactory</parameter>
+        <parameter name="mail.imap.starttls.enable">false</parameter>
+        <parameter name="transport.mail.ContentType">application/xml</parameter>
+        <parameter name="mail.imap.host">imap.gmail.com</parameter>
+        <parameter name="transport.mail.Address">test.automation.dummy.esb@gmail.com</parameter>
+        <parameter name="mail.imap.user">test.automation.dummy.esb</parameter>
+        <parameter name="mail.imap.socketFactory.port">993</parameter>
+        <parameter name="transport.PollInterval">2</parameter>
+        <parameter name="mail.imap.port">993</parameter>
+        <parameter name="mail.imap.ssl.enable">false</parameter>
+        <parameter name="mail.imap.fetchsize">2</parameter>
+        <parameter name="mail.imap.socketFactory.fallback">false</parameter>
+        <parameter name="mail.imap.password">automation.test</parameter>
+        <parameter name="transport.mail.Protocol">imap</parameter>
+        <description/>
+    </proxy>
+</definitions>

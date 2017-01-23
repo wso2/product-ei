@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <script language="js" key="conf:/script_js/test54.js" function="transformReq">
+                <include key="conf:/script_js/stockquoteTransform.js"/>
+            </script>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </in>
+        <out>
+            <script language="js" key="conf:/script_js/test54.js" function="transformRes">
+                <include key="conf:/script_js/stockquoteTransform.js"/>
+            </script>
+            <send/>
+        </out>
+    </sequence>
+</definitions>

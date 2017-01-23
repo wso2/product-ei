@@ -1,0 +1,34 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="TestProxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <endpoint>
+            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+         </endpoint>
+         <inSequence>
+            <log>
+               <property name="name" value="ÁsdfÜ"/>
+            </log>
+         </inSequence>
+         <outSequence>
+            <send/>
+         </outSequence>
+      </target>
+      <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+   </proxy>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <log/>
+      <drop/>
+   </sequence>
+</definitions>

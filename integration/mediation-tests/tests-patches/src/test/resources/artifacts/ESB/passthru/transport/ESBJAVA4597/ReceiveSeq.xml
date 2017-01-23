@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="ReceiveSeq">
+   <log>
+      <property name="ReceivedError" value="ResponseReceived"/>
+   </log>
+   <respond/>
+</sequence>
+</definitions>

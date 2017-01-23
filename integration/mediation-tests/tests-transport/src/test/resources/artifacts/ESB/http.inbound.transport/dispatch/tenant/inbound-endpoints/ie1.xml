@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
+                 name="ie1"
+                 sequence="tenant"
+                 onError="fault"
+                 protocol="http"
+                 suspend="false">
+   <parameters>
+      <parameter name="inbound.thread.group.id">group-testing</parameter>
+      <parameter name="inbound.worker.pool.queue.length">50</parameter>
+      <parameter name="inbound.worker.pool.size.max">20</parameter>
+      <parameter name="dispatch.filter.pattern">^(.*/tenantAPI|.*/TestProxy)$</parameter>
+      <parameter name="inbound.worker.pool.size.core">10</parameter>
+      <parameter name="inbound.http.port">9090</parameter>
+      <parameter name="inbound.worker.thread.keep.alive.sec">10000</parameter>
+      <parameter name="inbound.thread.id">WSO2TestThread</parameter>
+   </parameters>
+</inboundEndpoint>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!--
+ ~ Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~      http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+  -->
+
+<!-- REST support of message forwarding processor -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+   <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+      <description />
+      <target>
+         <inSequence>
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" />
+            <property name="OUT_ONLY" value="true" />
+            <property name="messageType" value="application/xml" scope="axis2" />
+            <store messageStore="MSG_STORE" />
+         </inSequence>
+         <outSequence>
+            <send />
+         </outSequence>
+      </target>
+   </proxy>
+   <endpoint name="SecureStockQuoteService">
+      <address uri="http://localhost:9000/services/SimpleStockQuoteService" format="rest" />
+   </endpoint>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence" />
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+      </log>
+      <drop />
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full" />
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send />
+         </filter>
+      </in>
+      <out>
+         <send />
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+   <messageStore name="MSG_STORE" />
+   <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor" name="SecureForwardingProcessor" targetEndpoint="SecureStockQuoteService" messageStore="MSG_STORE">
+      <parameter name="client.retry.interval">1000</parameter>
+      <parameter name="interval">1000</parameter>
+      <parameter name="is.active">true</parameter>
+   </messageProcessor>
+</definitions>

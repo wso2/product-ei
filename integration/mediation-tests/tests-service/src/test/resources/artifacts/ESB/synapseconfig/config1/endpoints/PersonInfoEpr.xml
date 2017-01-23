@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="PersonInfoEpr">
+    <address uri="http://10.100.0.117:7001/as/services/PersonInfoService/"/>
+</endpoint>

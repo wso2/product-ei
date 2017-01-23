@@ -1,0 +1,386 @@
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<project name="samples" default="help" basedir=".">
+    <target name="help">
+    <echo>
+    ant stockquote
+        Creates and sends a stock quote request. Could execute in 'smart client', 'proxy' and
+        'gateway' modes by specifying WSA, transport and HTTP proxy endpoints/URLs. Optionally
+        a policy (security) could be applied to the requests. The required stock symbol and
+        operation could be specified as follows:
+
+        examples:
+        ant stockquote
+
+        ant stockquote [-Dsymbol=IBM|MSFT|SUN|..]
+            [-Dmode=quote | customquote | fullquote | placeorder | marketactivity]
+            [-Daddurl=http://localhost:9000/soap/SimpleStockQuoteService]
+            [-Dtrpurl=http://localhost:8280]
+            [-Dprxurl=http://localhost:8280]
+            [-Drest=true]
+            [-Dwsrm=true]
+            [-Dpolicy=../../repository/samples/resources/policy/policy_1.xml]
+
+        Mode :
+            quote          - send a quote request for a single stock
+            customquote    - send a quote request in a custom format
+            fullquote      - get quote reports for a period (i.e. 365 days of the year)
+            placeorder     - place an order for stocks using a one way request
+            marketactivity - get a market activity report (i.e. quotes for multiple symbols)
+
+    ant jmsclient
+        A client which could post a raw JMS text or binary message to a given destination.
+
+        examples:
+        ant jmsclient [-Djms_type=text] [-Djms_dest=dynamicQueues/JMSTextProxy][-Djms_payload="24.34 100 IBM"]
+        ant jmsclient [-Djms_type=pox] [-Djms_dest=dynamicQueues/JMSPoxProxy] [-Djms_payload=MSFT]
+        ant jmsclient [-Djms_type=binary] [-Djms_dest=dynamicQueues/JMSFileUploadProxy]
+            [-Djms_payload=./../../repository/samples/resources/mtom/asf-logo.gif]
+
+    ant optimizeclient
+        A client that could send binary content using MTOM and SwA optimizations
+
+        examples:
+        ant optimizeclient [-Dopt_mode=mtom | swa]
+            [-Dopt_url=http://localhost:8280/soap/MTOMSwASampleService]
+            [-Dopt_file=./../../repository/samples/resources/mtom/asf-logo.gif]
+
+    ant fixclient
+        A client which could post a FIX message (of type Order-Single) embedded into a SOAP message.
+
+        example:
+        ant fixclient -Dsymbol=IBM -Dqty=5 -Dmode=buy -Daddurl=http://localhost:8280/soap/FIXProxy
+
+    ant amqpconsumer
+        A JMS based amqp consumer that accept orders and generates executions.
+        [-Dpropfile=$ESB_HOME/repository/samples/resources/fix/direct.properties]
+
+	example:
+        ant amqpconsumer
+
+    ant mddproducer
+        A JMS client to produce market data on binary format seq#|symbol|price|market
+        [-Djms_dest=dynamicQueues/JMSTextProxy]
+        [-Dsymbol=MSFT] [-Dprice=100.20] [-Dmarket=NYSE]
+
+    example:
+        ant mddproducer
+
+    ant jsonclient
+        A client that sends get-quote requests using the JSON content interchange format over HTTP
+
+        example:
+        ant jsonclient
+            [-Daddurl=http://localhost:8280/services/JSONProxy]
+            [-Dsymbol=DELL]
+
+    </echo>
+    </target>
+
+    <property name="symbol" value=""/>
+    <property name="mode" value=""/>
+    <property name="i" value=""/>
+    <property name="port" value=""/>
+    <property name="addurl" value=""/>
+    <property name="trpurl" value=""/>
+    <property name="prxurl" value=""/>
+    <property name="repository" value=""/>
+    <property name="policy" value=""/>
+    <property name="rest" value=""/>
+    <property name="wsrm" value=""/>
+    <property name="itr" value=""/>
+    <property name="jms_dest" value=""/>
+    <property name="jms_type" value=""/>
+    <property name="jms_payload" value=""/>
+    <property name="opt_mode" value=""/>
+    <property name="opt_url" value=""/>
+    <property name="opt_file" value=""/>
+    <property name="class.dir" value="target/classes"/>
+    <property name="qty" value=""/>
+    <property name="price" value=""/>
+    <property name="topic" value=""/>
+    <property name="address" value=""/>
+    <property name="action" value=""/>
+    <property name="topicns" value=""/>
+    <property name="mode" value=""/>
+    <property name="identifier" value=""/>
+    <property name="expires" value=""/>
+    <property name="jms_topic" value=""/>
+    <property name="market" value=""/>
+
+    <target name="clean">
+        <delete dir="target" quiet="true"/>
+        <delete dir="${class.dir}" quiet="true"/>
+    </target>
+
+    <target name="stockquote" depends="compile">
+        <java classname="samples.userguide.StockQuoteClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="symbol" value="${symbol}"/>
+            <sysproperty key="mode"   value="${mode}"/>
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="repository" value="${repository}"/>
+            <sysproperty key="policy" value="${policy}"/>
+            <sysproperty key="rest" value="${rest}"/>
+            <sysproperty key="wsrm" value="${wsrm}"/>
+            <sysproperty key="wsrm11" value="${wsrm11}"/>
+            <sysproperty key="itr" value="${itr}"/>
+            <sysproperty key="javax.net.ssl.trustStore" value="./../../repository/resources/security/client-truststore.jks"/>
+            <sysproperty key="javax.net.ssl.trustStorePassword" value="wso2carbon"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="java.endorsed.dirs" value="./../../wso2/lib/endorsed"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+            <!--
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xnoagent"/>
+            <jvmarg value="-Djava.compiler=none"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000"/>
+            -->
+        </java>
+    </target>
+
+    <!-- a simple smoke test -->
+    <target name="smoke" depends="compile">
+        <property name="addurl" value="http://localhost:9000/services/SimpleStockQuoteService"/>
+        <property name="trpurl" value="http://localhost:8280/"/>
+        <java classname="samples.userguide.StockQuoteClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="addurl" value="http://localhost:9000/services/SimpleStockQuoteService"/>
+            <sysproperty key="trpurl" value="http://localhost:8280/"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+        </java>
+    </target>
+
+    <target name="jmsclient" depends="compile">
+        <java classname="samples.userguide.GenericJMSClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="jms_dest"    value="${jms_dest}"/>
+            <sysproperty key="jms_type"    value="${jms_type}"/>
+            <sysproperty key="jms_payload" value="${jms_payload}"/>
+            <!--<sysproperty key="java.naming.provider.url" value="${java.naming.provider.url}"/>
+            <sysproperty key="java.naming.factory.initial" value="${java.naming.factory.initial}"/>
+            <sysproperty key="java.naming.factory.url.pkg" value="${java.naming.factory.url.pkg}"/>-->
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+    <target name="amqpconsumer" depends="compile">
+        <java classname="samples.userguide.AMQPConsumer"
+             classpathref="javac.classpath" fork="true">
+            <sysproperty key="propfile" value="${propfile}"/>
+        </java>
+    </target>
+
+    <target name="mddproducer" depends="compile">
+        <java classname="samples.userguide.MDDProducer"
+             classpathref="javac.classpath" fork="true">
+            <sysproperty key="jms_dest" value="${jms_dest}"/>
+            <sysproperty key="symbol" value="${symbol}"/>
+            <sysproperty key="price" value="${price}"/>
+            <sysproperty key="market" value="${market}"/>
+        </java>
+    </target>
+
+    <target name="mddconsumer" depends="compile">
+        <java classname="samples.userguide.MDDConsumer"
+             classpathref="javac.classpath" fork="true">
+            <sysproperty key="jms_topic" value="${jms_topic}"/>
+        </java>
+    </target>
+
+    <target name="fixclient" depends="compile">
+        <java classname="samples.userguide.FIXClient"
+             classpathref="javac.classpath" fork="true">
+
+            <sysproperty key="symbol" value="${symbol}"/>
+            <sysproperty key="mode"   value="${mode}"/>
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="qty"    value="${qty}"/>
+            <sysproperty key="repository" value="${repository}"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+    <target name="optimizeclient" depends="compile">
+        <java classname="samples.userguide.MTOMSwAClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="opt_mode" value="${opt_mode}"/>
+            <sysproperty key="opt_url"  value="${opt_url}"/>
+            <sysproperty key="opt_file" value="${opt_file}"/>
+            <sysproperty key="javax.net.ssl.trustStore" value="./../../repository/resources/security/client-truststore.jks"/>
+            <sysproperty key="javax.net.ssl.trustStorePassword" value="wso2carbon"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+            <!--
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xnoagent"/>
+            <jvmarg value="-Djava.compiler=none"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000"/>
+            -->
+        </java>
+    </target>
+
+    <target name="loadbalancefailover" depends="compile">
+        <java classname="samples.userguide.LoadbalanceFailoverClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="mode" value="${mode}"/>
+            <sysproperty key="port" value="${port}"/>
+            <sysproperty key="i" value="${i}"/>
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+    <target name="threadedclient" depends="compile">
+        <java classname="samples.userguide.ThreadedClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="epr" value="${epr}"/>
+            <sysproperty key="op" value="${op}"/>
+            <sysproperty key="req" value="${req}"/>
+            <sysproperty key="load" value="${load}"/>
+            <sysproperty key="msg" value="${msg}"/>
+            <sysproperty key="t" value="${t}"/>
+            <sysproperty key="session" value="${session}"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+	 <path id="jar.classpath">
+            <pathelement path="${class.dir}"/>
+            <pathelement path="../../wso2/lib"/>
+            <fileset dir="../../wso2/components/plugins">
+                <!-- Explicitly include RM and Carbon Utils -->
+                <include name="*.jar"/>
+                <include name="org.wso2.carbon.utils-*.jar"/>
+            </fileset>
+            <fileset dir="../../wso2/components/plugins">
+                <!-- Remove all other Carbon libraries to keep the classpath as short as possible -->
+                <exclude name="org.wso2.carbon.*.jar"/>
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="../../lib">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="../../wso2/lib/endorsed">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="../../extensions">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="../../repository/components/lib">
+                <include name="*.jar"/>
+            </fileset>
+             <fileset dir="../../repository/axis2/client/lib">
+                 <include name="*.jar"/>
+             </fileset>
+        </path>
+		
+    <target name="init">
+        <mkdir dir="${class.dir}"/>
+        <mkdir dir="./../../work/temp/sampleClient"/>
+		<manifestclasspath property="tem.classpath" jarfile="pathing.jar">
+			<classpath refid="jar.classpath"/>
+		</manifestclasspath>        
+		<jar destfile="pathing.jar" basedir="target\classes">
+			<manifest>              
+                <attribute name="Class-Path" value="${tem.classpath}"/>
+			</manifest>
+		</jar>
+        <path id="javac.classpath">
+            <pathelement path="${class.dir}"/>
+            <pathelement path="pathing.jar"/>            
+        </path>
+    </target>
+
+    <target name="compile" depends="init" description="Compile all Java">
+        <javac srcdir="src" destdir="${class.dir}" includeantruntime="false">
+            <classpath refid="javac.classpath"/>
+        </javac>
+    </target>
+
+    <target name="eventsubscriber" depends="compile">
+        <java classname="samples.userguide.EventSubscriber"
+             classpathref="javac.classpath" fork="true">
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="topic" value="${topic}"/>
+            <sysproperty key="address" value="${address}"/>
+            <sysproperty key="repository" value="${repository}"/>
+            <sysproperty key="mode" value="${mode}"/>
+            <sysproperty key="identifier" value="${identifier}"/>
+            <sysproperty key="expires" value="${expires}"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+    <target name="jsonclient" depends="compile">
+        <java classname="samples.userguide.JSONClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="symbol" value="${symbol}"/>
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="repository" value="${repository}"/>
+	    <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+    <target name="newjsonclient" depends="compile">
+        <java classname="samples.userguide.NewJSONClient"
+              classpathref="javac.classpath" fork="true">
+            <sysproperty key="symbol" value="${symbol}"/>
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="repository" value="${repository}"/>
+	    <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+    <target name="eventsender" depends="compile">
+        <java classname="samples.userguide.EventSender"
+             classpathref="javac.classpath" fork="true">
+            <sysproperty key="symbol" value="${symbol}"/>
+            <sysproperty key="price"   value="${price}"/>
+            <sysproperty key="addurl" value="${addurl}"/>
+            <sysproperty key="trpurl" value="${trpurl}"/>
+            <sysproperty key="prxurl" value="${prxurl}"/>
+            <sysproperty key="qty"    value="${qty}"/>
+            <sysproperty key="repository" value="${repository}"/>
+            <sysproperty key="java.io.tmpdir" value="./../../wso2/tmp/"/>
+            <sysproperty key="topic"    value="${topic}"/>
+            <sysproperty key="action"    value="${action}"/>
+            <sysproperty key="topicns"    value="${topicns}"/>
+            <sysproperty key="carbon.home" value="./../.."/>
+        </java>
+    </target>
+
+</project>

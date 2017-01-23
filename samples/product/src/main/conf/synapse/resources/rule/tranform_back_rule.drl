@@ -1,0 +1,27 @@
+<drl>
+    <![CDATA[
+package BackwardTransformation;
+
+import org.wso2.carbon.rule.samples.CheckPriceResponse;
+
+rule BackwardTransformation
+
+when
+
+price : Double()
+symbol : String()
+eval( price != null && symbol != null )
+
+then
+
+CheckPriceResponse response = new CheckPriceResponse();
+
+response.setCode(symbol);
+response.setPrice(price);
+
+insert(response);
+
+end
+
+]]>
+</drl>

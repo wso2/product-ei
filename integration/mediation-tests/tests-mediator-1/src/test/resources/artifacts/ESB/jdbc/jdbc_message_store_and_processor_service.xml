@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="JDBCStoreAndProcessorTestCaseProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <log level="full"/>
+                <store messageStore="MyStore"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <messageStore class="org.apache.synapse.message.store.impl.jdbc.JDBCMessageStore" name="MyStore">
+        <parameter name="store.jdbc.driver">com.mysql.jdbc.Driver</parameter>
+        <parameter name="store.jdbc.connection.url">jdbc:mysql://localhost:3306/WSO2SampleDBForAutomation</parameter>
+        <parameter name="store.jdbc.username">root</parameter>
+        <parameter name="store.jdbc.password"></parameter>
+        <parameter name="store.jdbc.table">jdbc_store_table</parameter>
+    </messageStore>
+</definitions>

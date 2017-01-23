@@ -1,0 +1,20 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="MainStockQuoteProxy" transports="http https">
+        <target>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <sequence key="sendSeq"/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+
+    <localEntry key="xslt-key-req" src="file:repository/samples/resources/transform/transform.xslt"/>
+
+    <sequence name="sendSeq">
+        <log level="full"/>
+        <send/>
+    </sequence>
+</definitions>

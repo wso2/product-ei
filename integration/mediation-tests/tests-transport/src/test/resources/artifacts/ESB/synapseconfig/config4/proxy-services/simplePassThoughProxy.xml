@@ -1,0 +1,11 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="SimplePassThoughProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <outSequence>
+            <send />
+        </outSequence>
+        <endpoint>
+            <address uri="http://localhost:9765/services/HelloService" />
+        </endpoint>
+    </target>
+    <description></description>
+</proxy>

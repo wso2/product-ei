@@ -1,0 +1,6 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="gov:receivingSequence">
+    <log xmlns="http://ws.apache.org/ns/synapse">
+        <property name="Receiving Sequence" value="Gov Reg" ></property>
+    </log>
+    <send/>
+</sequence>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Introduction to Payload-factory mediator  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="main">
+        <in>
+            <!-- using payloadFactory mediator to transform the request message -->
+            <payloadFactory>
+                <format>
+                    <m:getQuote xmlns:m="http://services.samples">
+                        <m:request>
+                            <m:symbol>$1</m:symbol>
+                        </m:request>
+                    </m:getQuote>
+                </format>
+                <args>
+                    <arg xmlns:m0="http://services.samples" expression="//m0:Code"/>
+                </args>
+            </payloadFactory>
+        </in>
+        <out>
+            <!-- using payloadFactory mediator to transform the response message -->
+            <payloadFactory>
+                <format>
+                    <m:CheckPriceResponse xmlns:m="http://services.samples/xsd">
+                        <m:Code>$1</m:Code>
+                        <m:Price>$2</m:Price>
+                    </m:CheckPriceResponse>
+                </format>
+                <args>
+                    <arg xmlns:m0="http://services.samples/xsd" expression="//m0:symbol"/>
+                    <arg xmlns:m0="http://services.samples/xsd" expression="//m0:last"/>
+                </args>
+            </payloadFactory>
+        </out>
+        <send/>
+    </sequence>
+
+</definitions>

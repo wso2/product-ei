@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <endpoint name="SOAPFaultSample">
+        <address uri="http://localhost:9003/services/SOAPFaultSample">
+            <suspendOnFailure>
+                <errorCodes>-1</errorCodes>
+                <progressionFactor>1.0</progressionFactor>
+            </suspendOnFailure>
+        </address>
+    </endpoint>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+            <header name="Action" value="urn:throwAxisFault"/>
+            <property name="target.endpoint" value="SOAPFaultSample"/>
+            <property name="RETRY_ON_SOAPFAULT" value="false"/>
+            <store messageStore="MyStore"/>
+        </in>
+        <out>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <messageStore name="MyStore"/>
+    <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="ScheduledProcessor"
+                      messageStore="MyStore">
+        <parameter name="max.delivery.attempts">5</parameter>
+        <parameter name="interval">100</parameter>
+    </messageProcessor>
+</definitions>

@@ -1,0 +1,87 @@
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<package name="AdvancedRoutingRules"
+         xmlns="http://drools.org/drools-5.0"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+         xs:schemaLocation="http://drools.org/drools-5.0 drools-4.0.xsd">
+
+    <import name="org.apache.synapse.MessageContext"/>
+    <import name="org.apache.synapse.Mediator"/>
+    <import name="org.apache.synapse.mediators.base.SequenceMediator"/>
+
+    <rule name="Invoke IBM ">
+        <lhs>
+            <pattern object-type="MessageContext" identifier="mc">
+            </pattern>
+            <pattern object-type="String" identifier="symbol">
+            </pattern>
+            <pattern identifier="seq" object-type="SequenceMediator">
+                <field-binding field-name="name" identifier="a4"/>
+                <field-constraint field-name="name">
+                    <literal-restriction evaluator="==" value="ibmSequence"/>
+                </field-constraint>
+            </pattern>
+            <eval>symbol.equals("IBM")</eval>
+        </lhs>
+
+        <rhs>
+            ((Mediator)seq).mediate(mc);
+        </rhs>
+    </rule>
+
+    <rule name="Invoke SUN ">
+        <lhs>
+            <pattern object-type="MessageContext" identifier="mc">
+            </pattern>
+            <pattern object-type="String" identifier="symbol">
+            </pattern>
+            <pattern identifier="seq" object-type="SequenceMediator">
+                <field-binding field-name="name" identifier="a4"/>
+                <field-constraint field-name="name">
+                    <literal-restriction evaluator="==" value="sunSequence"/>
+                </field-constraint>
+            </pattern>
+            <eval>symbol.equals("SUN")</eval>
+        </lhs>
+
+        <rhs>
+            ((Mediator)seq).mediate(mc);
+        </rhs>
+    </rule>
+
+    <rule name="Invoke MFST ">
+        <lhs>
+            <pattern object-type="MessageContext" identifier="mc">
+            </pattern>
+            <pattern object-type="String" identifier="symbol">
+            </pattern>
+            <pattern identifier="seq" object-type="SequenceMediator">
+                <field-binding field-name="name" identifier="a4"/>
+                <field-constraint field-name="name">
+                    <literal-restriction evaluator="==" value="msftSequence"/>
+                </field-constraint>
+            </pattern>
+            <eval>symbol.equals("MSFT")</eval>
+        </lhs>
+
+        <rhs>
+            ((Mediator)seq).mediate(mc);
+        </rhs>
+    </rule>
+
+</package>

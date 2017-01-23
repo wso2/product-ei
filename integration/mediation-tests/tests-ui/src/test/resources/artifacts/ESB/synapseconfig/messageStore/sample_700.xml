@@ -1,0 +1,33 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<sequence name="fault">
+		<log level="full">
+			<property name="MESSAGE" value="Executing default 'fault' sequence" />
+			<property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+			<property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+		</log>
+		<drop />
+	</sequence>
+	<sequence name="onStoreSequence">
+		<log>
+			<property name="On-Store" value="Storing message" />
+		</log>
+
+	</sequence>
+	<sequence name="main">
+		<in>
+			<log level="full" />
+			<!-- <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" /> -->
+			<store messageStore="automationMessageStore" />
+			<send>
+				<endpoint>
+					<address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+				</endpoint>
+			</send>
+		</in>
+		<out>
+			<send />
+		</out>
+		<description>The main sequence for the message mediation</description>
+	</sequence>
+	<messageStore name="automationMessageStore" />
+</definitions>

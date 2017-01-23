@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <endpoint name="ep_search_content_select">
+      <http method="get"
+            uri-template="http://localhost:6789/services/echo/solr/content_platform/{uri.var.siteChannel}_select?{uri.var.all}"/>
+   </endpoint>
+   <api name="api_search_content_channel" context="/search/content_channel">
+      <resource methods="POST GET"
+                url-mapping="/select"
+                faultSequence="seq_error_handler">
+         <inSequence>
+            <property name="uri.var.siteChannel" expression="fn:lower-case($url:channel)"/>
+            <property name="uri.var.all"
+                      expression="fn:substring-after($axis2:REST_URL_POSTFIX, '/select?')"/>
+            <send>
+               <endpoint key="ep_search_content_select"/>
+            </send>
+         </inSequence>
+         <outSequence>
+            <send/>
+         </outSequence>
+      </resource>
+   </api>
+</definitions>

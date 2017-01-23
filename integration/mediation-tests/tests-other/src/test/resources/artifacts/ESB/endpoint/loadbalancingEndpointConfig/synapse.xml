@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="loadbalancingEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="loadbalancingEndPoint_Config_Reg" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key ="conf:/test_ep_config/loadbalancingEP_Test.xml"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+</definitions>
+
+

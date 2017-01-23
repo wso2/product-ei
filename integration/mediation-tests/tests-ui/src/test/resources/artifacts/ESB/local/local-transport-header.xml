@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="outer" statistics="disable" trace="disable" transports="https http">
+        <target>
+            <inSequence/>
+            <endpoint>
+                <address statistics="disable" trace="disable" uri="http://www.google.com/mypage404">
+                    <timeout>
+                        <duration>0</duration>
+                        <responseAction>discard</responseAction>
+                    </timeout>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                        <retryDelay>0</retryDelay>
+                    </markForSuspension>
+                    <suspendOnFailure>
+                        <initialDuration>0</initialDuration>
+                        <maximumDuration>0</maximumDuration>
+                        <progressionFactor>1.0</progressionFactor>
+                    </suspendOnFailure>
+                </address>
+            </endpoint>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="inner" statistics="disable" trace="disable" transports="https http">
+        <target>
+            <inSequence/>
+            <endpoint>
+                <address statistics="disable" trace="disable" uri="local://services/outer">
+                    <timeout>
+                        <duration>0</duration>
+                        <responseAction>discard</responseAction>
+                    </timeout>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                        <retryDelay>0</retryDelay>
+                    </markForSuspension>
+                    <suspendOnFailure>
+                        <initialDuration>0</initialDuration>
+                        <maximumDuration>0</maximumDuration>
+                        <progressionFactor>1.0</progressionFactor>
+                    </suspendOnFailure>
+                </address>
+            </endpoint>
+            <outSequence>
+                <log category="INFO" level="custom" separator=",">
+                    <property expression="$axis2:HTTP_SC" name="status"/>
+                </log>
+                <property action="set" expression="$axis2:HTTP_SC"
+                    name="status" scope="default" type="STRING"/>
+                <filter xpath="fn:number(get-property('status')) = 404">
+                    <then>
+                        <payloadFactory>
+                            <format>
+                                <cal:response xmlns:cal="http://wso2.lk/services/proxy/local">
+                                    <cal:status>404</cal:status>
+                                </cal:response>
+                            </format>
+                            <args/>
+                        </payloadFactory>
+                    </then>
+                    <else/>
+                </filter>
+                <property action="set" name="RESPONSE" scope="default"
+                    type="STRING" value="true"/>
+                <header action="remove" name="To"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+</definitions>

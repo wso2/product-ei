@@ -1,0 +1,94 @@
+<!--
+Call Mediator within Sequence Templates
+
+Console Log
+===========
+STATUS = INSEQ S1
+STATUS = SEQ1 S1
+STATUS = Templ1 S1, param = Template1
+STATUS = Templ1 S2
+STATUS =  Templ2 S1 , param = Template2
+STATUS =  Templ1 S3 , param = Template1
+STATUS = SEQ1 S2
+STATUS = INSEQ S2
+-->
+
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   
+    <proxy name="TestCallProxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <log level="custom">
+               <property name="STATUS" value="INSEQ S1"/>
+            </log>
+            <sequence key="SEQ1"/>
+            <log level="custom">
+               <property name="STATUS" value="INSEQ S2"/>
+            </log>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true"/>
+            <send/>
+         </inSequence>
+      </target>
+   </proxy>
+
+   <endpoint name="EP">
+      <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+   </endpoint>
+
+   <sequence name="SEQ1">
+      <log level="custom">
+         <property name="STATUS" value="SEQ1 S1"/>
+      </log>
+      <call-template target="SeqTemplate1">
+         <with-param name="param1" value="Template1"/>
+      </call-template>
+      <log level="custom">
+         <property name="STATUS" value="SEQ1 S2"/>
+      </log>
+   </sequence>
+
+   <template name="SeqTemplate1">
+      <parameter name="param1"/>
+      <sequence>
+         <log level="custom">
+            <property name="STATUS" value="Templ1 S1"/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="param"
+                      expression="$func:param1"/>
+         </log>
+         <call>
+            <endpoint key="EP"/>
+         </call>
+         <log level="custom">
+            <property name="STATUS" value="Templ1 S2"/>
+         </log>
+         <call-template target="SeqTemplate2">
+            <with-param name="param1" value="Template2"/>
+         </call-template>
+         <log level="custom">
+            <property name="STATUS" value=" Templ1 S3 "/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="param"
+                      expression="$func:param1"/>
+         </log>
+      </sequence>
+   </template>
+
+   <template name="SeqTemplate2">
+      <parameter name="param1"/>
+      <sequence>
+         <log level="custom">
+            <property name="STATUS" value=" Templ2 S1 "/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="param"
+                      expression="$func:param1"/>
+         </log>
+      </sequence>
+   </template>
+</definitions>

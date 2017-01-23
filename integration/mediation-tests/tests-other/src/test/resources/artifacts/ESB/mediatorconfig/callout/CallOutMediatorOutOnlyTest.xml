@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+      <parameter name="cachableDuration">15000</parameter>
+   </registry>
+   <proxy name="CallOutMediatorOutOnlyTestProxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target faultSequence="fault">
+         <inSequence>
+            <property name="OUT_ONLY" value="true"/>
+            <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService"
+                     action="urn:placeOrder">
+               <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                       xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                       xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+               <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                       xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                       xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            </callout>
+            <log level="full">
+               <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+               <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+               <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+            </log>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true"/>
+            <payloadFactory>
+               <format>
+                  <ns:placeOrderResponse xmlns:ns="http://services.samples">
+                     <ns:return xmlns:ax21="http://services.samples/xsd">
+                        <ax21:ErrorCode>$1</ax21:ErrorCode>
+                        <ax21:ErrorMessage>$2</ax21:ErrorMessage>
+                     </ns:return>
+                  </ns:placeOrderResponse>
+               </format>
+               <args>
+                  <arg xmlns:m0="http://services.samples/xsd" expression="$ctx:ERROR_CODE"/>
+                  <arg xmlns:m0="http://services.samples/xsd" expression="$ctx:ERROR_MESSAGE"/>
+               </args>
+            </payloadFactory>
+            <send/>
+         </inSequence>
+      </target>
+   </proxy>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <header name="To" action="remove"/>
+      <property name="RESPONSE" value="true"/>
+      <payloadFactory>
+         <format>
+            <ns:placeOrderResponse xmlns:ns="http://services.samples">
+               <ns:return xmlns:ax21="http://services.samples/xsd">
+                  <ax21:ErrorCode>$1</ax21:ErrorCode>
+                  <ax21:ErrorMessage>$2</ax21:ErrorMessage>
+               </ns:return>
+            </ns:placeOrderResponse>
+         </format>
+         <args>
+            <arg xmlns:m0="http://services.samples/xsd" expression="$ctx:ERROR_CODE"/>
+            <arg xmlns:m0="http://services.samples/xsd" expression="$ctx:ERROR_MESSAGE"/>
+         </args>
+      </payloadFactory>
+      <send/>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="aggregateMediatorTestProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <iterate xmlns:ns="http://org.apache.synapse/xsd"
+                         xmlns:ns3="http://org.apache.synapse/xsd"
+                         xmlns:m0="http://services.samples"
+                         id="iterate1"
+                         preservePayload="true"
+                         attachPath="//m0:getQuotes"
+                         expression="//m0:getQuotes/m0:getQuote"
+                         sequential="true">
+                    <target>
+                        <sequence>
+                            <log level="full" category="DEBUG">
+                                <property name="target1"
+                                          value="************After 1st Iterate before 2nd Iterate*************"/>
+                            </log>
+                            <iterate id="iterate2"
+                                     preservePayload="true"
+                                     attachPath="//m0:getQuote"
+                                     expression="//m0:getQuotes/m0:getQuote/m0:request">
+                                <target sequence="anon">
+                                    <sequence>
+                                        <log level="full" category="DEBUG"/>
+                                        <payloadFactory>
+                                            <format>
+                                                <m0:getQuote>
+                                                    <m0:request>
+                                                        <m0:symbol>WSO2</m0:symbol>
+                                                    </m0:request>
+                                                </m0:getQuote>
+                                            </format>
+                                            <args>
+                                                <arg expression="//m0:getQuote/m0:request/m0:symbol"/>
+                                            </args>
+                                        </payloadFactory>
+                                        <log level="full" category="DEBUG">
+                                            <property name="target1" value="************after payload factory*************"/>
+                                        </log>
+                                        <send>
+                                            <endpoint>
+                                                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                                            </endpoint>
+                                        </send>
+                                    </sequence>
+                                </target>
+                            </iterate>
+                        </sequence>
+                    </target>
+                </iterate>
+            </inSequence>
+            <outSequence>
+                <aggregate id="iterate2">
+                    <completeCondition>
+                        <messageCount min="-1" max="-1"/>
+                    </completeCondition>
+                    <onComplete xmlns:ns="http://org.apache.synapse/xsd"
+                                xmlns:ns3="http://org.apache.synapse/xsd"
+                                xmlns:m0="http://services.samples"
+                                expression="//m0:getQuoteResponse">
+                        <log level="custom">
+                            <property name="messageLog" value="*****Aggregating*****"/>
+                        </log>
+                        <aggregate id="iterate1">
+                            <completeCondition timeout="1">
+                                <messageCount min="-1" max="-1"/>
+                            </completeCondition>
+                            <onComplete expression="//m0:getQuoteResponse"
+                                        sequence="conf:/sequences/dynamic_seq1.xml"/>
+                        </aggregate>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <sequence key="IterateMediatorSequence"/>
+        </in>
+        <out>
+            <sequence key="IteratorAggregateSequence"/>
+        </out>
+    </sequence>
+</definitions>
