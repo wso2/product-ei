@@ -1,0 +1,51 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+
+        <property name="dataSourceJndiName" value="jdbc/ActivitiDB"/>
+
+        <property name="databaseSchemaUpdate" value="true"/>
+
+        <property name="jobExecutorActivate" value="true"/>
+
+        <property name="mailServerHost" value="mail.my-corp.com"/>
+        <property name="mailServerPort" value="5025"/>
+
+        <property name="customMybatisMappers">
+            <set>
+                <value>org.wso2.carbon.bpmn.core.internal.mapper.SubstitutesMapper</value>
+            </set>
+        </property>
+
+        <property name="postBpmnParseHandlers">
+            <list>
+                <bean class="org.wso2.carbon.bpmn.people.substitution.UserTaskParseHandler" />
+            </list>
+        </property>
+
+    </bean>
+
+    <bean id="restClientConfiguration">
+        <property name="maxTotalConnections" value="200"/>
+        <property name="maxConnectionsPerRoute" value="200"/>
+    </bean>
+
+    <bean id="activitiInstanceDeleteConfig">
+        <property name="maxCount" value="1000"/>
+    </bean>
+
+    <!-- Uncomment following section to enable User substitution feature.
+        Leave the 'enabled' property "true" to enable substitution feature.
+        If you require to calculate transitive substitutes also, change the
+        'enableTransitivity' property value to "true".
+        Change the substitution activation time in minutes, by changing the 'activationInterval'
+        property value. A substitution will be functional/activated within this time limit. -->
+    <!--<bean id="userSubstitutionConfiguration">
+        <property name="enabled" value="true"></property>
+        <property name="enableTransitivity" value="false"></property>
+        <property name="activationInterval" value="60"></property>
+    </bean>-->
+
+</beans>

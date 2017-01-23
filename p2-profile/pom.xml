@@ -17,21 +17,25 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
         <version>6.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>p2-profile</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Enterprise Integrator Bundle - P2 Profile Generation</name>
+    <name>WSO2 Enterprise Integrator - P2 Profile Module</name>
+    <url>http://wso2.org</url>
 
     <modules>
-        <module>wso2ei-p2-profile</module>
-        <module>wso2analytics-p2-profile</module>
+        <module>ei-profile</module>
+        <module>business-process-profile</module>
     </modules>
+
 </project>
