@@ -35,6 +35,7 @@
 
     <modules>
         <module>ei-profile</module>
+        <module>analytics-profile</module>
         <module>business-process-profile</module>
     </modules>
 

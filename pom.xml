@@ -101,16 +101,6 @@
                 <version>${stratos.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
-                <version>${stratos.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.geronimo.specs</groupId>
-                <artifactId>geronimo-jms_1.1_spec</artifactId>
-                <version>${geronimo-jms.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.ws.security</groupId>
                 <artifactId>wss4j</artifactId>
                 <version>${wss4j.version}</version>
@@ -126,20 +116,9 @@
                 <version>${carbon.kernel.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>SecVerifier</artifactId>
-                <version>${carbon.secVerifier.version}</version>
-                <type>aar</type>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.ws.commons.axiom</groupId>
                 <artifactId>axiom-api</artifactId>
                 <version>${axiom.api.wso2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.ws.commons.axiom.wso2</groupId>
-                <artifactId>axiom</artifactId>
-                <version>${axiom.wso2.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.axis2.wso2</groupId>
@@ -221,12 +200,6 @@
                 <groupId>org.apache.sandesha2</groupId>
                 <artifactId>sandesha2-core</artifactId>
                 <version>${sandesha2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.mediation</groupId>
-                <artifactId>org.wso2.carbon.mediator.bridge</artifactId>
-                <type>jar</type>
-                <version>${carbon.mediation.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
@@ -388,12 +361,6 @@
             <dependency>
                 <groupId>org.wso2.carbon.mediation</groupId>
                 <artifactId>org.wso2.carbon.localentry.stub</artifactId>
-                <version>${carbon.mediation.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.mediation</groupId>
-                <artifactId>org.wso2.carbon.mediation.configadmin.stub</artifactId>
                 <version>${carbon.mediation.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -639,12 +606,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.opensaml</groupId>
                 <artifactId>opensaml</artifactId>
                 <version>${opensaml.version}</version>
@@ -876,11 +837,6 @@
                 <groupId>org.wso2.esb</groupId>
                 <artifactId>service-samples</artifactId>
                 <version>${product.esb.version}</version>
-            </dependency>-->
-            <dependency>
-                <groupId>groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jacoco</groupId>
@@ -1144,7 +1100,6 @@
         <commons-codec.version>1.6</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>
         <commons-digester.version>2.1</commons-digester.version>
-        <groovy.version>1.1-rc-1</groovy.version>
         <hawtbuf.version>1.9</hawtbuf.version>
         <ca.uhn.hapi.wso2.version>2.1.0.wso2v1</ca.uhn.hapi.wso2.version>
         <opensaml.version>2.2.3</opensaml.version>
@@ -1161,7 +1116,6 @@
         <selenium.version>2.40.0</selenium.version>
         <slf4j.version>1.7.5</slf4j.version>
         <activemq.version>5.9.1</activemq.version>
-        <testng.version>6.1.1</testng.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.4.4.wso2v1</rabbitmq.orbit.version>
     </properties>

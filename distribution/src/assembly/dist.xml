@@ -37,7 +37,7 @@
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>../p2-profile/wso2analytics-p2-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components</directory>
+            <directory>../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
             <excludes>
                 <exclude>**/eclipse.ini</exclude>

@@ -274,6 +274,12 @@ if [ -z "$JVM_MEM_OPTS" ]; then
 fi
 echo "Using Java memory options: $JVM_MEM_OPTS"
 
+#setting up profile parameter for runtime in EI
+if [[ "$@" != *"-Dprofile"* ]]
+   then
+        NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
+fi
+
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
 

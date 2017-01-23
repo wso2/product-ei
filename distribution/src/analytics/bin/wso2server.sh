@@ -72,7 +72,7 @@ done
 PRGDIR=`dirname "$PRG"`
 
 # Only set CARBON_HOME if not already set
-[ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/../../.." ; pwd`
+[ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
 # Set AXIS2_HOME. Needed for One Click JAR Download
 AXIS2_HOME="$CARBON_HOME"
