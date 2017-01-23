@@ -297,7 +297,7 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
-            <artifactId>extensions</artifactId>
+            <artifactId>automation-extensions</artifactId>
             <version>${product.ei.version}</version>
         </dependency>
     </dependencies>
