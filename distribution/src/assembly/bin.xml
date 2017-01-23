@@ -202,12 +202,18 @@
         </fileSet>
 
         <fileSet>
-            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/eventpublishers</directory>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventpublishers</directory>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/eventpublishers</outputDirectory>
         </fileSet>
+
         <fileSet>
-            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/eventstreams</directory>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventstreams</directory>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/eventstreams</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/jaggeryapps</outputDirectory>
         </fileSet>
 
         <fileSet>
