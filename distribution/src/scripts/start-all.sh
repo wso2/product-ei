@@ -77,7 +77,7 @@ NAME=start-all
 EI_INIT_SCRIPT="$CARBON_HOME/bin/Integrator.sh"
 ANALYTICS_INIT_SCRIPT="$CARBON_HOME/wso2/analytics/bin/wso2server.sh"
 BPS_INIT_SCRIPT="$CARBON_HOME/wso2/business-process/bin/wso2server.sh"
-MB_INIT_SCRIPT="$CARBON_HOME/wso2/message-broker/bin/wso2server.sh"
+MB_INIT_SCRIPT="$CARBON_HOME/wso2/broker/bin/wso2server.sh"
 
 analyticsoffset=1
 bpsoffset=2
@@ -89,6 +89,9 @@ echo "$CARBON_HOME"
 test -x $EI_INIT_SCRIPT || exit 5
 
 $EI_INIT_SCRIPT &
+sleep 5
 nohup sh $ANALYTICS_INIT_SCRIPT start -DportOffset="$analyticsoffset" -Dprofile="analytics-default" &
+sleep 5
 nohup sh $BPS_INIT_SCRIPT start -DportOffset="$bpsoffset" -Dprofile="business-process-default" &
-nohup sh $MB_INIT_SCRIPT start -DportOffset="$mboffset" -Dprofile="message-broker-default" &
+sleep 5
+nohup sh $MB_INIT_SCRIPT start -DportOffset="$mboffset" -Dprofile="broker-default" &
