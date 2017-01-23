@@ -952,9 +952,9 @@
     </dependencyManagement>
 
     <scm>
-        <url>https://github.com/wso2/product-bam.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/product-bam.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/product-bam.git</connection>
+        <url>https://github.com/wso2/product-ei.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/product-ei.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/product-ei.git</connection>
         <tag>HEAD</tag>
     </scm>
 
