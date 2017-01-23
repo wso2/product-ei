@@ -159,6 +159,18 @@
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/*.bat</exclude>
+                <exclude>**/wrapper.conf</exclude>
+                <exclude>build.xml</exclude>
+            </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/*.bat</exclude>
+                <exclude>**/wrapper.conf</exclude>
                 <exclude>build.xml</exclude>
             </excludes>
         </fileSet>
@@ -166,6 +178,16 @@
         <fileSet>
             <directory>./src/business-process/conf</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/bin</outputDirectory>
+            <includes>
+                <include>**.sh</include>
+                <include>**.bat</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>./src/broker/conf</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin</outputDirectory>
             <includes>
                 <include>**.sh</include>
                 <include>**.bat</include>
@@ -742,29 +764,13 @@
 
         <!-- Broker custom scripts -->
         <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}/bin</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin</outputDirectory>
-            <excludes>
-                <exclude>**/*.sh</exclude>
-                <exclude>**/*.bat</exclude>
-                <exclude>build.xml</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
             <directory>./src/broker/conf</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin</outputDirectory>
             <includes>
                 <include>**.sh</include>
+                <include>**.bat</include>
             </includes>
             <fileMode>755</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>src/scripts</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin</outputDirectory>
-            <includes>
-                <include>**.bat</include>
-                <!--<include>build.xml</include>-->
-            </includes>
         </fileSet>
 
         <fileSet>
@@ -974,6 +980,18 @@
         <file>
             <source>src/conf/wrapper.conf</source>
             <outputDirectory>wso2ei-${pom.version}/bin/yajsw</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/business-process/conf/wrapper.conf</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/business-process/bin/yajsw</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/broker/conf/wrapper.conf</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin/yajsw</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
