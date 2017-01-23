@@ -245,6 +245,11 @@
                                 <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;manage_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
                                 <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.framework.version}.jar" basedir="${tempdir2}" />
 
+                                <!--Move solr registry -->
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_${carbon.registry.version}.jar" dest="${tempdir2}" />
+                                <replace file="${tempdir2}/core.properties" token="dataDir=../../../../solr/data" value="dataDir=../../../solr/data" />
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_${carbon.registry.version}.jar" basedir="${tempdir2}" />
+
 
                                 <replace
                                         file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties"

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+   This is the standard tomcat-users.xml file which can be used for definig users & roles. This
+    is applicable to webapps only, and will be used only if the Security/TomcatRealm entry in the
+    carbon.xml is set to Memory
+-->
+<tomcat-users>
+  <role rolename="manager"/>
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <role rolename="admin"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="tomcat" password="tomcat" roles="tomcat"/>
+  <user username="admin" password="admin" roles="tomcat,manager,admin"/>
+  <user username="role1" password="tomcat" roles="role1"/>
+</tomcat-users>
