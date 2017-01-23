@@ -851,7 +851,40 @@
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/wso2</exclude>
-        </excludes>
+                <exclude>**/repository/conf/**</exclude>
+                <exclude>**/repository/components/**</exclude>
+                <exclude>**/wso2/components/**</exclude>
+                <exclude>**/lib/**</exclude>
+                <exclude>**/bin/**</exclude>
+                <exclude>**/conf/axis2/axis2.xml</exclude>
+                <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
+                <exclude>**/conf/synapse.xml</exclude>
+                <exclude>**/log4j.properties</exclude>
+                <exclude>**/services/sample01.aar</exclude>
+                <exclude>**/repository/services/version/**</exclude>
+                <exclude>**/version.txt</exclude>
+                <exclude>**/wso2carbon-version.txt</exclude>
+                <exclude>**/wso2server.bat</exclude>
+                <exclude>**/README.txt</exclude>
+                <exclude>**/LICENSE.txt</exclude>
+                <exclude>**/release-notes.html</exclude>
+                <exclude>**/carbon.xml</exclude>
+                <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
+                <exclude>**/lib/endorsed/xalan*.jar</exclude>
+                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/registry.xml</exclude>
+                <exclude>**/repository/conf/tomcat/web.xml</exclude>
+                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
+                <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
+                </exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
+                </exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
+                </exclude>
+                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
+            </excludes>
         </fileSet>
 
 
