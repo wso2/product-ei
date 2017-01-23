@@ -2,7 +2,7 @@
 Product EI is an unified distribution of WSO2 Enterprise Service Bus, Application Server, Data Services Server alongside Analytics, Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of each runtime.
 
 ## Startup
-Starting up Enterprise Integrator can be done by invoking bin/integrator.sh or bin/integrator.bat and respective wso2server.sh or wso2server.bat files within the EI-HOME/wso2/< runtime >. 
+Starting up Enterprise Integrator can be done by invoking bin/integrator.sh or bin/integrator.bat and respective wso2server.sh or wso2server.bat files within the < EI-HOME >/wso2/analytics/bin, < EI-HOME >/wso2/business-process/bin, < EI-HOME >/wso2/broker/bin. 
 
 Executing bin/start-all.sh or bin/start-all.bat performs startup of all the runtimes with respective offsets. 
 
