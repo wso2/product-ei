@@ -2253,6 +2253,13 @@
             <fileMode>644</fileMode>
         </file>
 
+        <file>
+            <source>src/analytics/conf/wrapper.conf</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/yajsw</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
         <!--spark defaults file-->
         <file>
             <source>
