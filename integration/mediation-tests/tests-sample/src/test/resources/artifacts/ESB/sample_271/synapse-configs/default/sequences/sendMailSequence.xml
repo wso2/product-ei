@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="sendMailSequence">
+    <log level="custom">
+        <property name="sequence" value="sendMailSequence"/>
+    </log>
+    <property name="messageType" value="text/html" scope="axis2"/>
+    <property name="ContentType" value="text/html" scope="axis2"/>
+    <property name="Subject" value="File Received" scope="transport"/>
+    <property name="OUT_ONLY" value="true"/>
+    <send>
+        <endpoint name="FileEpr">
+            <address uri="mailto:test.automation.dummy@gmail.com"/>
+        </endpoint>
+    </send>
+</sequence>

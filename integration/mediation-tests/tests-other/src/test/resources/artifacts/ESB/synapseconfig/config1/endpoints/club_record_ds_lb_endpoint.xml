@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="club_record_ds_lb_endpoint">
+    <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+        <endpoint>
+            <address uri="http://10.100.2.122:9766/services/ClubDataDS1/"/>
+        </endpoint>
+        <endpoint>
+            <address uri="http://10.100.2.122:9766/services/ClubDataDS1/"/>
+        </endpoint>
+    </loadbalance>
+</endpoint>

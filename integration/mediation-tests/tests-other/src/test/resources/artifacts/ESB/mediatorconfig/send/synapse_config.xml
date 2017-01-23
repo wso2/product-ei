@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="testSequenceAtConfigRegistryBuildMessage">
+        <target>
+            <inSequence>
+                <send receive="conf:/sequence_conf/test_sequence_build_message_conf.xml" buildmessage="true">
+                    <endpoint key ="conf:/endpoints/registry_endpoint.xml"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="testSequenceAtConfigRegistryBuildMessageNo">
+        <target>
+            <inSequence>
+                <send receive="conf:/sequence_conf/test_sequence_build_message_conf.xml" buildmessage="false">
+                    <endpoint key ="conf:/endpoints/registry_endpoint.xml"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+</definitions>

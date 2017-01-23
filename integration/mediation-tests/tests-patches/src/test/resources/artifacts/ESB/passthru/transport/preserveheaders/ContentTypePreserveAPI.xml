@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <api name="ContentTypePreserveAPI" context="/ContentTypePreserveAPI">
+      <resource methods="POST GET OPTIONS DELETE PUT"
+                url-mapping="/*"
+                faultSequence="fault">
+         <inSequence>
+            <property name="DISABLE_CHUNKING" value="true" scope="axis2" />
+            <property name="OUT_ONLY" value="true" />
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+            <call>
+               <endpoint>
+                  <http uri-template="http://localhost:8992/BackendMockAPI"/>
+               </endpoint>
+            </call>
+         </inSequence>
+      </resource>
+   </api>
+</definitions>

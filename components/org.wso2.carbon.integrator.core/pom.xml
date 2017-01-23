@@ -60,7 +60,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>de.jflex</groupId>
                 <artifactId>maven-jflex-plugin</artifactId>
@@ -85,11 +88,16 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Private-Package>
+                            org.wso2.carbon.integrator.core.internal,
+                        </Private-Package>
                         <Export-Package>
+                            ! org.wso2.carbon.integrator.core.internal,
                             org.wso2.carbon.integrator.core.*;version="${project.version}"
                         </Export-Package>
                         <Import-Package>
-                            javax.servlet.*;version="[2.5,4)";resolution:=optional
+                            javax.servlet.*;version="[2.5,4)";resolution:=optional,
+                            org.wso2.carbon.utils;version="${carbon.kernel.imp.pkg.version}",
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>

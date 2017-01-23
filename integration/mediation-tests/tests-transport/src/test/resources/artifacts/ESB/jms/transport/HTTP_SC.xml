@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="MessageStoreProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target faultSequence="fault">
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <property name="OUT_ONLY" value="false"/>
+                <log level="full"/>
+                <store messageStore="MyStoreESB1910" sequence="onStoreSequence"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <endpoint name="SimpleStockQuoteService">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+    <sequence name="replySequence">
+        <log level="full">
+            <property xmlns:ns3="http://org.apache.synapse/xsd"
+                      name="status code----------"
+                      expression="get-property('HTTP_SC')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="fault">
+        <enrich>
+            <source type="property" clone="true" property="ORIGINAL_MSG"/>
+            <target type="body"/>
+        </enrich>
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="onStoreSequence">
+        <log level="custom">
+            <property name="On-Store" value="Storing message"/>
+        </log>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+            <property name="OUT_ONLY" value="false"/>
+            <store messageStore="MyStoreESB1910" sequence="onStoreSequence"/>
+        </in>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <messageStore class="org.apache.synapse.message.store.impl.jms.JmsStore"
+                  name="MyStoreESB1910">
+        <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        <parameter name="store.jms.cache.connection">false</parameter>
+        <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+        <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+        <parameter name="store.jms.destination">MyStoreESB1910</parameter>
+    </messageStore>
+    <messageProcessor class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="ScheduledProcessor"
+                      messageStore="MyStoreESB1910"
+                      targetEndpoint="SimpleStockQuoteService">
+        <parameter name="message.processor.reply.sequence">replySequence</parameter>
+        <parameter name="interval">1000</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="is.active">true</parameter>
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="member.count">1</parameter>
+    </messageProcessor>
+</definitions>

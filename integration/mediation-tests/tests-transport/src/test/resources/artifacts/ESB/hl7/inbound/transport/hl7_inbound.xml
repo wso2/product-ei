@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <drop/>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+
+    <sequence name="genMain">
+        <in>
+            <property name="HL7_APPLICATION_ACK" value="false" scope="default"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <hl7:message xmlns:hl7="http://wso2.org/hl7" xmlns="urn:hl7-org:v2xml">
+                        <ACK>
+                            <MSH>
+                                <MSH.1>|</MSH.1>
+                                <MSH.2>^~\&amp;</MSH.2>
+                                <MSH.3>
+                                    <HD.1>WSO2</HD.1>
+                                </MSH.3>
+                                <MSH.4>
+                                    <HD.1>ABCDEFG</HD.1>
+                                </MSH.4>
+                                <MSH.5>
+                                    <HD.1>ATLAB</HD.1>
+                                </MSH.5>
+                                <MSH.6>
+                                    <HD.1>WSO2</HD.1>
+                                </MSH.6>
+                                <MSH.9>
+                                    <MSG.1>ACK</MSG.1>
+                                </MSH.9>
+                                <MSH.10>$1</MSH.10>
+                                <MSH.11>
+                                    <PT.1>P</PT.1>
+                                </MSH.11>
+                                <MSH.12>
+                                    <VID.1>2.5</VID.1>
+                                </MSH.12>
+                                <MSH.15>NE</MSH.15>
+                                <MSH.16>NE</MSH.16>
+                                <MSH.17>D</MSH.17>
+                            </MSH>
+                            <MSA>
+                                <MSA.1>CA</MSA.1>
+                                <MSA.2>$2</MSA.2>
+                                <MSA.3>Jambugasmulla Mawatha</MSA.3>
+                            </MSA>
+                        </ACK>
+                    </hl7:message>
+                </format>
+                <args>
+                    <arg value="HL7Abc000BBB12345D22"/>
+                    <arg value="1"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+
+    <sequence name="fault">
+        <!-- Generate a NACK containing the error -->
+        <property name="HL7_RESULT_MODE" value="NACK"/>
+        <property name="HL7_NACK_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        <respond/>
+    </sequence>
+</definitions>

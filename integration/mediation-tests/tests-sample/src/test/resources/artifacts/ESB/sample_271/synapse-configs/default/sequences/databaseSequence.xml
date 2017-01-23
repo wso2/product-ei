@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="databaseSequence">
+    <log level="full">
+        <property name="sequence" value="before-smooks"/>
+    </log>
+    <smooks config-key="smooks">
+        <input type="text"/>
+        <output type="xml"/>	
+    </smooks>
+    <log level="full">
+        <property name="sequence" value="after-smooks"/>
+    </log>
+    <iterate xmlns:ns2="http://org.apache.synapse/xsd" xmlns:sec="http://secservice.samples.esb.wso2.org" expression="//csv-set/csv-record">
+        <target>
+            <sequence>
+                <log level="full">
+                    <property name="State" value="Iteration"/>
+                </log>
+                <dbreport>
+                    <connection>
+                        <pool>
+                            <password>wso2carbon</password>
+                            <user>wso2carbon</user>
+                            <url>jdbc:mysql://localhost:3306/test</url>
+                            <driver>com.mysql.jdbc.Driver</driver>
+                        </pool>
+                    </connection>
+                    <statement>
+                        <sql>insert into t_info values (?, ?, ?)</sql>
+                        <parameter expression="//csv-record/col_name/text()" type="VARCHAR"/>
+                        <parameter expression="//csv-record/col_surname/text()" type="VARCHAR"/>
+                        <parameter expression="//csv-record/col_phone/text()" type="VARCHAR"/>
+                    </statement>
+                </dbreport>
+            </sequence>
+        </target>
+    </iterate>
+</sequence>

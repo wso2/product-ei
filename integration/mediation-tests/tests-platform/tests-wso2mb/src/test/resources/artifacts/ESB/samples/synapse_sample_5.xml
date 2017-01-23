@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Creating SOAP fault messages and changing the direction of a message -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="myFaultHandler">
+        <makefault>
+            <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <send/>
+    </sequence>
+
+    <sequence name="main" onError="myFaultHandler">
+        <in>
+            <switch source="//m0:getQuote/m0:request/m0:symbol" xmlns:m0="http://services.samples">
+                <case regex="MSFT">
+                    <send>
+                        <endpoint>
+                            <address uri="http://bogus:9000/services/NonExistentStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="SUN">
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9009/services/NonExistentStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+            </switch>
+            <drop/>
+        </in>
+
+        <out>
+            <send/>
+        </out>
+    </sequence>
+
+</definitions>

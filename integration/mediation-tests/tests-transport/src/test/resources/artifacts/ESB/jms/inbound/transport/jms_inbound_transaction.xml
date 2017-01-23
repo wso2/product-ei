@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="requestHandlerSeq" onError="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="test" value="requestHandlerSequence"/>
+        </log>
+        <property name="OUT_ONLY" value="true"/>
+        <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService">
+            <source type="envelope"/>
+            <target key="placeOrder"/>
+        </callout>
+        <log category="INFO" level="custom">
+            <property name="Transaction Action" value="Committed"/>
+        </log>
+    </sequence>
+
+    <sequence name="requestHandlerSeq1" onError="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="test" value="requestHandlerSequence"/>
+        </log>
+        <property name="OUT_ONLY" value="true"/>
+        <callout serviceURL="http://bogus:9000/services/SimpleStockQuoteService">
+            <source type="envelope"/>
+            <target key="placeOrder"/>
+        </callout>
+        <log category="INFO" level="custom">
+            <property name="Transaction Action" value="Committed"/>
+        </log>
+    </sequence>
+
+    <sequence name="inFault">
+        <log category="INFO" level="full" separator=",">
+            <property name="fault" value="Inside the Fault sequence"/>
+        </log>
+        <property name="SET_ROLLBACK_ONLY" value="true" scope="axis2"/>
+        <log category="INFO" level="custom" separator="**">
+            <property name="Transaction Action" value="Rollbacked"/>
+        </log>
+    </sequence>
+
+</definitions>

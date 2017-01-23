@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="ClientProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <http method="head"
+                              uri-template="http://localhost:8480/services/HEADTestProxy"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="HEADTestProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log>
+                    <property name="MSG" value="Head Request"/>
+                </log>
+                <property name="Allow" value="POST, GET, HEAD" scope="transport"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+</definitions>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="tenantAPI"
+     context="/t/wso2.com/tenantAPI">
+   <resource methods="GET POST">
+      <inSequence>
+         <log level="custom">
+            <property name="TENANT_API" value="TENANT_API"/>
+         </log>
+          <respond/>
+      </inSequence>
+   </resource>
+</api>

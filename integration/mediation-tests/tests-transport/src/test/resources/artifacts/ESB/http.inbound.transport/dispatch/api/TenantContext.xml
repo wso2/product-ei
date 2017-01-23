@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="TenantContext" context="/t/idoexistassupertenantapi">
+   <resource methods="GET POST">
+      <inSequence>
+         <log level="custom">
+            <property name="SUPER_TENANT_API_WITH_TENANT_CONTEXT" value="SUPER_TENANT_API_WITH_TENANT_CONTEXT"/>
+         </log>
+          <respond/>
+      </inSequence>
+   </resource>
+</api>

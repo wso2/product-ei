@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="MyMockProxy"
+          transports="http https"
+          startOnLoad="true"
+          trace="disable">
+      <target>
+         <inSequence>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <script language="groovy">
+                    def sw = new StringWriter();sw.write("{\"mySiteID\":\"54571\",\"fileID\":\"89265\"}");
+                    mc.setPayloadJSON(sw.toString());</script>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <send/>
+         </inSequence>
+      </target>
+   </proxy>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <in>
+         <log level="full"/>
+         <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+         </filter>
+      </in>
+      <out>
+         <send/>
+      </out>
+      <description>The main sequence for the message mediation</description>
+   </sequence>
+</definitions>

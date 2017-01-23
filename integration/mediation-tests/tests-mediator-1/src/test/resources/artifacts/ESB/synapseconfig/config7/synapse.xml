@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <endpoint>
+                <address uri="http://localhost:9764/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <inSequence>
+                <log level="headers"/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <endpoint name="StockQuoteServiceEp">
+        <address uri="http://localhost:8282/services/StockQuoteProxy">
+            <suspendOnFailure>
+                <errorCodes>-1</errorCodes>
+                <progressionFactor>1.0</progressionFactor>
+            </suspendOnFailure>
+        </address>
+    </endpoint>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+            <property name="OUT_ONLY" value="true"/>
+            <property name="target.endpoint" value="StockQuoteServiceEp"/>
+            <header xmlns:sy="http://ws.apache.org/ns/synapse" name="sy:testHeaderAutomation" value="testHeaderValue"/>
+            <store messageStore="MyStore"/>
+        </in>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <messageStore name="MyStore"/>
+    <messageProcessor class="org.apache.synapse.message.processors.forward.ScheduledMessageForwardingProcessor" name="ScheduledProcessor" messageStore="MyStore">
+        <parameter name="interval">1000</parameter>
+        <parameter name="max.delivery.attempts">3</parameter>
+    </messageProcessor>
+</definitions>

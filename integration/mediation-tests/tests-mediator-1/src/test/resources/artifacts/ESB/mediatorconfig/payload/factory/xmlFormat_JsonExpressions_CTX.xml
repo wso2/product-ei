@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Introduction to Payload-factory mediator  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="Dummy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true"/>
+                <property name="hashTag" expression="json-eval($.entities.hashtags[0].text)"/>
+                <property name="userId" expression="json-eval($.user.id)"/>
+                <property name="userIdStr" expression="json-eval($.user.id_str)"/>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <xml>
+                            <coordinates/>
+                            <created_at>Fri Jun 24 17:43:26 +0000 2011</created_at>
+                            <truncated>false</truncated>
+                            <favorited>false</favorited>
+                            <id_str>$ctx:userIdStr</id_str>
+                            <entities>
+                                <hashtags>
+                                    <text>$ctx:hashTag</text>
+                                    <indices>35</indices>
+                                    <indices>45</indices>
+                                </hashtags>
+                            </entities>
+                            <in_reply_to_user_id_str/>
+                            <contributors/>
+                            <text>##</text>
+                            <retweet_count>0</retweet_count>
+                            <id>$ctx:userId</id>
+                            <in_reply_to_status_id_str/>
+                            <geo/>
+                            <retweeted>false</retweeted>
+                            <in_reply_to_user_id/>
+                            <source>&amp;lt;a href="http://sites.google.com/site/yorufukurou/" rel="nofollow"&amp;gt;YoruFukurou&amp;lt;/a&amp;gt;</source>
+                            <in_reply_to_screen_name/>
+                            <user>
+                                <id_str>##</id_str>
+                                <id>##</id>
+                            </user>
+                            <place/>
+                            <in_reply_to_status_id/>
+                        </xml>
+                    </format>
+                </payloadFactory>
+                <property name="messageType" value="application/xml" scope="axis2"/>
+                <log level="full"/>
+                <send/>
+            </inSequence>
+            <faultSequence>
+                <log name="fault" level="full"/>
+            </faultSequence>
+        </target>
+    </proxy>
+
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+
+            <send/>
+        </in>
+
+        <out>
+
+        </out>
+        <send/>
+    </sequence>
+</definitions>

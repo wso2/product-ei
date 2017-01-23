@@ -1,0 +1,18 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="conf:sequences">
+    <log xmlns="http://ws.apache.org/ns/synapse">
+        <property name="Receiving Sequence" value="Config Reg" ></property>
+    </log>
+    <payloadFactory xmlns:m0="http://services.samples">
+        <format>
+            <m0:getQuoteResponse>
+                <m0:responseFromPayloadFactory>
+                    <m0:symbol>WSO2</m0:symbol>
+                </m0:responseFromPayloadFactory>
+            </m0:getQuoteResponse>
+        </format>
+        <args>
+            <arg expression="//m0:getQuote/m0:request/m0:symbol"/>
+        </args>
+    </payloadFactory>
+    <send/>
+</sequence>

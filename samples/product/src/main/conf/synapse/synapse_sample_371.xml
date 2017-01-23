@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Restricting requests based on policies -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="main">
+        <in>
+            <throttle id="A">
+                <policy>
+                    <!-- define throttle policy -->
+                    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                xmlns:throttle="http://www.wso2.org/products/wso2commons/throttle">
+                        <throttle:ThrottleAssertion>
+                            <wsp:All>
+                                <throttle:ID throttle:type="IP">other</throttle:ID>
+                                <wsp:ExactlyOne>
+                                    <wsp:All>
+                                        <throttle:MaximumCount>4</throttle:MaximumCount>
+                                        <throttle:UnitTime>800000</throttle:UnitTime>
+                                        <throttle:ProhibitTimePeriod wsp:Optional="true">10000
+                                        </throttle:ProhibitTimePeriod>
+                                    </wsp:All>
+                                    <throttle:IsAllow>true</throttle:IsAllow>
+                                </wsp:ExactlyOne>
+                            </wsp:All>
+                            <wsp:All>
+                                <throttle:ID throttle:type="IP">192.168.8.200-192.168.8.222
+                                </throttle:ID>
+                                <wsp:ExactlyOne>
+                                    <wsp:All>
+                                        <throttle:MaximumCount>8</throttle:MaximumCount>
+                                        <throttle:UnitTime>800000</throttle:UnitTime>
+                                        <throttle:ProhibitTimePeriod wsp:Optional="true">10
+                                        </throttle:ProhibitTimePeriod>
+                                    </wsp:All>
+                                    <throttle:IsAllow>true</throttle:IsAllow>
+                                </wsp:ExactlyOne>
+                            </wsp:All>
+                            <wsp:All>
+                                <throttle:ID throttle:type="IP">192.168.8.201</throttle:ID>
+                                <wsp:ExactlyOne>
+                                    <wsp:All>
+                                        <throttle:MaximumCount>200</throttle:MaximumCount>
+                                        <throttle:UnitTime>600000</throttle:UnitTime>
+                                        <throttle:ProhibitTimePeriod wsp:Optional="true"/>
+                                    </wsp:All>
+                                    <throttle:IsAllow>true</throttle:IsAllow>
+                                </wsp:ExactlyOne>
+                            </wsp:All>
+                            <wsp:All>
+                                <throttle:ID throttle:type="IP">192.168.8.198</throttle:ID>
+                                <wsp:ExactlyOne>
+                                    <wsp:All>
+                                        <throttle:MaximumCount>50</throttle:MaximumCount>
+                                        <throttle:UnitTime>500000</throttle:UnitTime>
+                                        <throttle:ProhibitTimePeriod wsp:Optional="true"/>
+                                    </wsp:All>
+                                    <throttle:IsAllow>true</throttle:IsAllow>
+                                </wsp:ExactlyOne>
+                            </wsp:All>
+                        </throttle:ThrottleAssertion>
+                    </wsp:Policy>
+                </policy>
+                <onAccept>
+                    <log level="custom">
+                        <property name="text" value="**Access Accept**"/>
+                    </log>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </onAccept>
+                <onReject>
+                    <log level="custom">
+                        <property name="text" value="**Access Denied**"/>
+                    </log>
+                    <makefault response="true">
+                        <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                        <reason value="**Access Denied**"/>
+                    </makefault>
+                    <send/>
+                    <drop/>
+                </onReject>
+            </throttle>
+        </in>
+        <out>
+            <throttle id="A"/>
+            <send/>
+        </out>
+    </sequence>
+
+</definitions>

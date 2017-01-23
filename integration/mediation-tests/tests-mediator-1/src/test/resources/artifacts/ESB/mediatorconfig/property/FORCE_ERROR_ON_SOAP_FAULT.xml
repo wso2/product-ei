@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="Faultproxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <makefault version="soap11">
+               <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                     value="soap11Env:VersionMismatch"/>
+               <reason value="500"/>
+               <role/>
+            </makefault>
+            <respond/>
+         </inSequence>
+      </target>
+   </proxy>
+   <proxy name="MyProxyService"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence onError="fault">
+            <property name="FORCE_ERROR_ON_SOAP_FAULT"
+                      value="true"
+                      scope="default"
+                      type="STRING"/>
+            <send>
+               <endpoint key="Axis2EP"/>
+            </send>
+         </inSequence>
+         <outSequence>
+            <log level="full"/>
+            <send/>
+         </outSequence>
+         <faultSequence>
+            <log level="custom">
+               <property name="faultSequence" value="** Its Inline faultSequence ****"/>
+            </log>
+            <payloadFactory media-type="xml">
+               <format>
+                  <sequence xmlns="">$1</sequence>
+               </format>
+               <args>
+                  <arg value="Its Inline faultSequence "/>
+               </args>
+            </payloadFactory>
+            <send/>
+         </faultSequence>
+      </target>
+   </proxy>
+   <endpoint name="Axis2EP">
+      <address uri="http://localhost:8280/services/Faultproxy"/>
+   </endpoint>
+   <sequence name="fault">
+      <log level="full">
+         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+      </log>
+      <log level="custom">
+         <property name="fault" value="================Its fault Sequence================"/>
+      </log>
+      <payloadFactory media-type="xml">
+         <format>
+            <sequence xmlns="">$1</sequence>
+         </format>
+         <args>
+            <arg value="Its fault Sequence "/>
+         </args>
+      </payloadFactory>
+      <send/>
+      <drop/>
+   </sequence>
+   <sequence name="main">
+      <log/>
+      <drop/>
+   </sequence>
+</definitions>

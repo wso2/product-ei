@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+   <proxy name="StatusCodeTestClientProxy"
+          transports="https http"
+          startOnLoad="true"
+          trace="disable">
+      <description/>
+      <target>
+         <inSequence>
+            <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService"
+                     action="urn:getQuote">
+               <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                       xmlns:ns="http://org.apache.synapse/xsd"
+                       xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                       xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+               <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                       xmlns:ns="http://org.apache.synapse/xsd"
+                       xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                       xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            </callout>
+            <log level="custom">
+               <property xmlns:ns="http://org.apache.synapse/xsd"
+                         name="STATUS"
+                         expression="$axis2:HTTP_SC"/>
+            </log>
+            <payloadFactory media-type="xml">
+               <format>
+                  <response xmlns="">$1</response>
+               </format>
+               <args>
+                  <arg evaluator="xml" expression="$axis2:HTTP_SC"/>
+               </args>
+            </payloadFactory>
+            <respond/>
+         </inSequence>
+      </target>
+   </proxy>
+</definitions>

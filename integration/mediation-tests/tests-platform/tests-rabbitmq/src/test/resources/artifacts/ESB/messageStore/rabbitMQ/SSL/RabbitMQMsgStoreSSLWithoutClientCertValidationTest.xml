@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="rabbitMQRestWithoutClientCert"
+         context="/rabbitMQRestWithoutClientCert">
+        <resource methods="POST" url-mapping="/store">
+            <inSequence>
+                <log level="custom">
+                    <property name="MESSAGE" value="************rabbitMQRestWithoutClientCert IN"/>
+                    <property name="IN-Content-Type" expression="$trp:Content-Type"/>
+                    <property name="IN-Test-Header-Field" expression="$trp:Test-Header-Field"/>
+                </log>
+                <!--<property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>-->
+                <!--<property name="OUT_ONLY" value="true"/>-->
+                <store messageStore="RabbitMQStoreWithoutClientCertificateValidation"/>
+                <loopback/>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="MESSAGE" value="************rabbitMQRestWithoutClientCert OUT"/>
+                </log>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+
+    <messageStore class="org.apache.synapse.message.store.impl.rabbitmq.RabbitMQStore"
+                  name="RabbitMQStoreWithoutClientCertificateValidation">
+        <parameter name="store.producer.guaranteed.delivery.enable">false</parameter>
+        <parameter name="store.rabbitmq.queue.name">WithoutClientCertQueue</parameter>
+        <parameter name="rabbitmq.connection.ssl.enabled">true</parameter>
+        <parameter name="store.rabbitmq.host.name">localhost</parameter>
+        <parameter name="store.rabbitmq.host.port">5671</parameter>
+    </messageStore>
+
+    <sequence name="main">
+        <in>
+            <log level="custom">
+                <property name="abc" value="*****************************************"/>
+            </log>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+
+</definitions>

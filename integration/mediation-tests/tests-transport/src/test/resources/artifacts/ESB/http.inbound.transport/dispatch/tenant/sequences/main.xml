@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="main">
+   <log level="custom">
+      <property name="TENANT" value="SUB_TENANT_MAIN"/>
+   </log>
+    <respond/>
+</sequence>

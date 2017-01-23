@@ -1,0 +1,22 @@
+<drl>
+    <![CDATA[
+package SimpleRoutingRules;
+
+import org.apache.synapse.MessageContext;
+
+rule InvokeIBM
+
+when
+
+mc : MessageContext()
+symbol: String()
+eval( symbol.equals("IBM") )
+
+then
+
+mc.setProperty("execute_children","true");
+
+end
+
+]]>
+</drl>

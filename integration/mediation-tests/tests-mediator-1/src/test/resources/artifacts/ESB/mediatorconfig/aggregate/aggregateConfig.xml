@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="timeoutIterator"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <iterate xmlns:m0="http://services.samples"
+                         id="id1"
+                         preservePayload="true"
+                         attachPath="//sleepOperation"
+                         expression="//sleepOperation/load">
+                    <target soapAction="sleepOperation">
+                        <sequence>
+                            <property name="ROOT" scope="default">
+                                <root:rootelement xmlns:root="www.wso2esb.com"/>
+                            </property>
+                            <send>
+                                <endpoint>
+                                    <address uri="http://localhost:9001/services/LBServiceWithSleep"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+            </inSequence>
+            <outSequence>
+                <aggregate id="id1">
+                    <completeCondition timeout="5">
+                        <messageCount min="-1" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="//sleepOperation" enclosingElementProperty="ROOT">
+                        <log level="custom">
+                            <property name="OnComplete" value ="On Complete Triggered in Iterator for ESBJAVA4792AggregateTimeoutTestCase"/>
+                        </log>
+                        <send/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </target>
+        <description/>
+    </proxy>
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="timeoutClone"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <clone id="myid">
+                    <target soapAction="sleepOperation" sequence="sendClone"/>
+                    <target soapAction="sleepOperation" sequence="createCloneSeq"/>
+                    <target soapAction="sleepOperation" sequence="createCloneSeq"/>
+                </clone>
+            </inSequence>
+            <outSequence>
+                <property name="ROOT" scope="default">
+                    <root:rootelement xmlns:root="www.wso2esb.com"/>
+                </property>
+                <aggregate id="myid">
+                    <completeCondition timeout="5">
+                        <messageCount min="-1" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="//sleepOperation" enclosingElementProperty="ROOT">
+                        <log level="custom">
+                            <property name="OnComplete"
+                                      value="On Complete Triggered in Clone for ESBJAVA4792AggregateTimeoutTestCase"/>
+                        </log>
+                        <send/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </target>
+        <description/>
+    </proxy>
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="createCloneSeq">
+        <payloadFactory media-type="xml">
+            <format>
+                <sleepOperation xmlns="">
+                    <load>1000</load>
+                </sleepOperation>
+            </format>
+        </payloadFactory>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9001/services/LBServiceWithSleep"/>
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="sendClone">
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9001/services/LBServiceWithSleep"/>
+            </endpoint>
+        </send>
+    </sequence>
+</definitions>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <template name="HttpEPTemplate">
+        <axis2ns1:parameter xmlns:axis2ns1="http://ws.apache.org/ns/synapse" name="name"/>
+        <axis2ns2:parameter xmlns:axis2ns2="http://ws.apache.org/ns/synapse" name="uri"/>
+        <endpoint name="$name">
+            <http uri-template="$uri" method="post">
+                <suspendOnFailure>
+                    <progressionFactor>1.0</progressionFactor>
+                </suspendOnFailure>
+                <markForSuspension>
+                    <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                    <retryDelay>0</retryDelay>
+                </markForSuspension>
+            </http>
+        </endpoint>
+    </template>
+    <api name="HttpTemplateTestAPI" context="/HttpTemplateTestAPI">
+        <resource methods="POST" uri-template="/{ser}">
+            <inSequence>
+                <send>
+                    <endpoint template="HttpEPTemplate"
+                              uri="http://{system.prop.hname}:{system.prop.hport}/services/{uri.var.ser}"/>
+                </send>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>

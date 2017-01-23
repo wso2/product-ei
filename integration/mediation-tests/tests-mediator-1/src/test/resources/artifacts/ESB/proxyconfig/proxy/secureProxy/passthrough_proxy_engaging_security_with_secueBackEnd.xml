@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Routing the messages arrived to a proxy service without processing the security headers -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="StockQuoteProxyEngagingScenario1">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="https://localhost:8243/services/UTSecureStockQuoteProxyForSecurityEngaging">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario1-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                        name="wsse:Security" action="remove"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="UTSecureStockQuoteProxyForSecurityEngaging">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+
+    <proxy name="StockQuoteProxyEngagingScenario2">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario2">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario2-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                        name="wsse:Security" action="remove"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario3">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario3">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario3-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                        name="wsse:Security" action="remove"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario4">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario4">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario4-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                        name="wsse:Security" action="remove"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario5">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario5">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario5-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                        name="wsse:Security" action="remove"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="StockQuoteProxyEngagingScenario6">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario6">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario6-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario7">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario7">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario7-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="StockQuoteProxyEngagingScenario8">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address
+                                uri="http://localhost:9007/services/SecureStockQuoteServiceScenario8">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario8-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario9">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9007/services/SecureStockQuoteService9">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario9-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario10">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService10">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario9-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario11">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService11">
+                            <enableAddressing/>
+                            <enableSec policy="conf:/securityEngaging/scenario9-policy.xml"/>
+                        </address>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario12">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService12"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="StockQuoteProxyEngagingScenario13">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService13"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario14">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService14"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="StockQuoteProxyEngagingScenario15">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SecureStockQuoteService15"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+</definitions>

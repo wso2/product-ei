@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.apache.synapse.registry.url.SimpleURLRegistry">
+        <parameter name="root">file:repository/samples/resources/</parameter>
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="body" expression="$body/child::*[position()=1]"/>
+                <log level="full"/>
+                <xquery xmlns:m="http://services.samples" key="new-xquery-req"
+                        target="//m:getQuote/m:request/m:symbols">
+                    <variable name="payload" type="ELEMENT"/>
+                </xquery>
+                <log level="full"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <out>
+                    <send/>
+                </out>
+            </outSequence>
+            <faultSequence>
+                <makefault version="soap11">
+                    <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                    <reason expression="get-property('ERROR_MESSAGE')"/>
+                </makefault>
+                <property name="RESPONSE" value="true"/>
+                <header name="To" expression="get-property('ReplyTo')"/>
+                <send/>
+            </faultSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+    <localEntry key="xquery-req">
+        <x xmlns="">
+            declare namespace m0="http://services.samples";
+            declare variable $payload as document-node() external;
+            &lt;m:getQuote xmlns:m="http://services.samples"&gt;
+            &lt;m:request&gt;
+            &lt;m:symbol&gt;{$payload//m0:CheckPriceRequest/m0:Code/child::text()}&lt;/m:symbol&gt;
+            &lt;/m:request&gt;
+            &lt;/m:getQuote&gt;
+        </x>
+    </localEntry>
+    <localEntry key="xquery-response">
+        <x xmlns="">
+            declare namespace m0="http://services.samples";
+            declare variable $payload as document-node() external;
+            declare variable $code as xs:string external;
+            declare variable $price as xs:double external;
+            &lt;m:CheckPriceResponse xmlns:m="http://services.samples"
+            xmlns:m1="http://services.samples/xsd"&gt;
+            &lt;m1:Code&gt;{$code}&lt;/m1:Code&gt;
+            &lt;m1:Price&gt;{$price}&lt;/m1:Price&gt;
+            &lt;/m:CheckPriceResponse&gt;
+        </x>
+    </localEntry>
+    <localEntry key="new-xquery-req">
+        <x xmlns="">
+            declare namespace m0="http://services.samples";
+            declare variable $payload as document-node() external;
+            &lt;m:symbol xmlns:m="http://services.samples"&gt;{$payload//m:request/m:symbols/m:company/child::text()}&lt;/m:symbol&gt;
+        </x>
+    </localEntry>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

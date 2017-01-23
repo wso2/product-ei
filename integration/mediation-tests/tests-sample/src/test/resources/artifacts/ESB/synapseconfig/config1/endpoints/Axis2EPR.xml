@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="Axis2EPR">
+    <address uri="http://10.100.2.122:7080/as/services/Axis2Service/"/>
+</endpoint>

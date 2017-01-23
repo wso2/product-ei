@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="Axis2ProxyService1" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <property name="NO_ENTITY_BODY" value="false" scope="axis2" type="BOOLEAN"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="Axis2ProxyService2" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="Axis2EP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <property name="NO_ENTITY_BODY" value="true" scope="axis2" type="BOOLEAN"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <endpoint name="Axis2EP">
+        <address uri="http://localhost:8280/services/echo"/>
+    </endpoint>
+</definitions>
+
+
+

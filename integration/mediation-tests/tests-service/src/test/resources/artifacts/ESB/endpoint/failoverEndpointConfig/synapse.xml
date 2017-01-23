@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="failoverEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="doubleFailoverEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <failover>
+                                    <endpoint>
+                                        <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                        </address>
+                                    </endpoint>
+                                    <endpoint>
+                                        <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                        </address>
+                                    </endpoint>
+                                </failover>
+                            </endpoint>
+                            <endpoint>
+                                <failover>
+                                    <endpoint>
+                                        <address uri="http://localhost:9003/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                        </address>
+                                    </endpoint>
+                                    <endpoint>
+                                        <address uri="http://localhost:9000/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                        </address>
+                                    </endpoint>
+                                </failover>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failoverEndPoint2" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failoverEndPoint3" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>10</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>10</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failoverEndPoint4" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                                    <endpoint>
+                                        <address uri="http://localhost:9003/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendOnFailure>
+                                                <initialDuration>60000</initialDuration>
+                                                <progressionFactor>1.0</progressionFactor>
+                                            </suspendOnFailure>
+                                        </address>
+                                    </endpoint>
+                                    <endpoint>
+                                        <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendOnFailure>
+                                                <initialDuration>60000</initialDuration>
+                                                <progressionFactor>1.0</progressionFactor>
+                                            </suspendOnFailure>
+                                        </address>
+                                    </endpoint>
+                                </loadbalance>
+                            </endpoint>
+                            <endpoint>
+                                <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                                    <endpoint>
+                                        <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendOnFailure>
+                                                <initialDuration>60000</initialDuration>
+                                                <progressionFactor>1.0</progressionFactor>
+                                            </suspendOnFailure>
+                                        </address>
+                                    </endpoint>
+                                    <endpoint>
+                                        <address uri="http://localhost:9000/services/SimpleStockQuoteService">
+                                            <enableAddressing/>
+                                            <suspendOnFailure>
+                                                <initialDuration>60000</initialDuration>
+                                                <progressionFactor>1.0</progressionFactor>
+                                            </suspendOnFailure>
+                                        </address>
+                                    </endpoint>
+                                </loadbalance>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failoverEndPoint_Config_Reg" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key ="conf:/test_ep_config/failoverEP_Test.xml"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failoverEndPoint_Specific_Errors" transports="http,https">
+        <target faultSequence="fault">
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint name="9001 Server">
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <timeout>
+                                        <duration>1000</duration>
+                                    </timeout>
+                                    <suspendOnFailure>
+                                        <initialDuration>20000</initialDuration>
+                                        <progressionFactor>2</progressionFactor>
+                                    </suspendOnFailure>
+                                    <markForSuspension>
+                                        <errorCodes>101000,101500,101501,101503,101505,101506,101507,101509</errorCodes>
+                                        <retriesBeforeSuspension>3</retriesBeforeSuspension>
+                                    </markForSuspension>
+                                    <retryConfig>
+                                        <disabledErrorCodes>101000,101500,101501,101503,101505,101506,101507,101509</disabledErrorCodes>
+                                    </retryConfig>
+                                </address>
+                            </endpoint>
+                            <endpoint name="9002 Server">
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <timeout>
+                                        <duration>8000</duration>
+                                    </timeout>
+                                    <suspendDurationOnFailure>20000</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <makefault version="soap11">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  expression="get-property('ERROR_CODE')"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <log level="full"/>
+        <send/>
+    </sequence>
+
+</definitions>
+
+

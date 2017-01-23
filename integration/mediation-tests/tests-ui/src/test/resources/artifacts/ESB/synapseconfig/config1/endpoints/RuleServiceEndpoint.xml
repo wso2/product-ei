@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="RuleServiceEndpoint">
+    <address uri="http://10.100.0.108:9763/services/CostCalculatorService/"/>
+</endpoint>

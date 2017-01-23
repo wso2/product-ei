@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="EchoService"
+           transports="http https"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <log level="full">
+                    <property name="BeforeSend"
+                              value="**********************Came to Echo Service**********************"/>
+                </log>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence/>
+        </target>
+    </proxy>
+    <proxy name="TestProxy"
+           transports="https"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target faultSequence="fault">
+            <inSequence>
+                <property name="enableSwA" value="false" scope="axis2"/>
+                <header name="Expect" scope="transport" action="remove"/>
+                <log>
+                    <property name="Log1" value="***Came here-Log1***"/>
+                </log>
+                <switch source="get-property('Action')">
+                    <case regex=".*sendLetterRequest">
+                        <log>
+                            <property name="Log2" value="***Came here-Log2***"/>
+                        </log>
+                        <sequence key="SendLetterSequence"/>
+                    </case>
+                    <case regex=".*checkStatusRequest">
+                        <log>
+                            <property name="Log3" value="***Came here-Log3***"/>
+                        </log>
+                        <sequence key="eMurCheckStatusSequenceV2"/>
+                    </case>
+                    <default>
+                        <makefault version="soap11">
+                            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                                  value="soap11Env:Server"/>
+                            <reason value="Invalid service request!!!"/>
+                            <role/>
+                        </makefault>
+                        <header name="To" action="remove"/>
+                        <property name="RESPONSE" value="true"/>
+                        <property name="enableMTOM" value="false" scope="axis2"/>
+                        <send/>
+                    </default>
+                </switch>
+            </inSequence>
+            <outSequence>
+                <log>
+                    <property name="BeforeAggregate" value="***Came here-BeforeAggregate***"/>
+                </log>
+                <aggregate id="eMurMsgs">
+                    <completeCondition>
+                        <messageCount min="-1" max="-1"/>
+                    </completeCondition>
+                    <onComplete xmlns:ns="http://org.apache.synapse/xsd"
+                                xmlns:ns3="http://org.apache.synapse/xsd"
+                                xmlns:cts="http://ws.cts.deg.gov.ae/"
+                                expression="//cts:sendLetterResponse/cts:gsbReference">
+                        <header name="To" action="remove"/>
+                        <property name="RESPONSE" value="true"/>
+                        <property name="enableMTOM" value="false" scope="axis2"/>
+                        <property name="enableSwA" value="false" scope="axis2"/>
+                        <log>
+                            <property name="BeforeAggregateSend" value="***Came here-BeforeAggregateSend***"/>
+                        </log>
+                    </onComplete>
+                </aggregate>
+                <log>
+                    <property name="AfterAggregate" value="***Came here-AfterAggregate***"/>
+                </log>
+                <send/>
+            </outSequence>
+        </target>
+        <policy key="gov:policy/UTpolicy.xml"/>
+        <parameter name="enableMTOM">true</parameter>
+        <parameter name="ScenarioID">scenario1</parameter>
+        <parameter name="engagedModules">rampart</parameter>
+        <enableSec/>
+    </proxy>
+    <proxy name="testProcessor"
+           transports="https"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <log>
+                    <property name="Log4" value="***Came here-Log4***"/>
+                </log>
+                <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                        name="wsse:Security"
+                        action="remove"/>
+                <property name="enableSwA" value="false" scope="axis2"/>
+                <property name="outgoingRef" expression="//letter/outgoingRef"/>
+                <xslt key="conf:/xslt/eMurProcessorRes.xsl">
+                    <property name="gsbRef" expression="get-property('gsbRef')"/>
+                </xslt>
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true"/>
+                <property name="enableMTOM" value="false" scope="axis2"/>
+                <property name="enableSwA" value="false" scope="axis2"/>
+                <send/>
+            </inSequence>
+        </target>
+        <parameter name="enableMTOM">true</parameter>
+        <parameter name="ScenarioID">scenario1</parameter>
+    </proxy>
+    <endpoint name="ProcessorEPR">
+        <address uri="https://localhost:8443/services/testProcessor"/>
+    </endpoint>
+    <sequence name="eMurOutSequence">
+        <log>
+            <property name="BeforeAggregate" value="***Came here-BeforeAggregate***"/>
+        </log>
+        <aggregate id="eMurMsgs">
+            <completeCondition>
+                <messageCount min="-1" max="-1"/>
+            </completeCondition>
+            <onComplete xmlns:ns="http://org.apache.synapse/xsd"
+                        xmlns:ns3="http://org.apache.synapse/xsd"
+                        xmlns:cts="http://ws.cts.deg.gov.ae/"
+                        expression="//cts:sendLetterResponse/cts:gsbReference">
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true"/>
+                <property name="enableMTOM" value="false" scope="axis2"/>
+                <property name="enableSwA" value="false" scope="axis2"/>
+                <log>
+                    <property name="BeforeAggregateSend" value="***Came here-BeforeAggregateSend***"/>
+                </log>
+                <send/>
+            </onComplete>
+        </aggregate>
+        <log>
+            <property name="AfterAggregate" value="***Came here-AfterAggregate***"/>
+        </log>
+        <description/>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <sequence name="SendLetterSequence">
+        <log>
+            <property name="BeforePropety" value="***Came here-BeforeProperty***"/>
+        </log>
+        <property xmlns:ns3="http://org.apache.synapse/xsd"
+                  name="outgoingRef"
+                  expression="//letter/outgoingRef"/>
+        <log>
+            <property name="BeforeIterate" value="***Came here-BeforeIterate***"/>
+        </log>
+        <iterate xmlns:ns3="http://org.apache.synapse/xsd"
+                 id="eMurMsgs"
+                 preservePayload="true"
+                 attachPath="//letter"
+                 expression="//letter/to">
+            <target>
+                <sequence>
+                    <log>
+                        <property name="BeforeSend" value="***Came here-BeforeSend***"/>
+                    </log>
+                    <header name="Action" value="urn:mediate"/>
+                    <send>
+                        <endpoint key="ProcessorEPR"/>
+                    </send>
+                </sequence>
+            </target>
+        </iterate>
+    </sequence>
+</definitions>

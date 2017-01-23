@@ -1,0 +1,16 @@
+<AttachmentManagementConfig xmlns="http://wso2.org/attachment/mgt/schema/server/config">
+        <PersistenceConfig>
+            <DataSource>bpsds</DataSource>
+            <DAOConnectionFactoryClass>org.wso2.carbon.attachment.mgt.core.dao.impl.jpa.openjpa.AttachmentMgtDAOConnectionFactoryImpl</DAOConnectionFactoryClass>
+            <GenerateDdl>true</GenerateDdl>
+            <ShowSql>false</ShowSql>
+            <!--JNDIInitialContextFactory>com.sun.jndi.rmi.registry.RegistryContextFactory</JNDIInitialContextFactory>
+            <JNDIProviderUrl>rmi://localhost:2199</JNDIProviderUrl-->
+        </PersistenceConfig>
+        <TransactionManagerConfig>
+            <TransactionManagerClass>org.apache.ode.il.EmbeddedGeronimoFactory</TransactionManagerClass>
+        </TransactionManagerConfig>
+        <TransformerFactoryConfig>
+            <TransformerFactoryClass>org.wso2.carbon.attachment.mgt.core.dao.impl.jpa.openjpa.AttachmentMgtDAOTransformerFactoryImpl</TransformerFactoryClass>
+        </TransformerFactoryConfig>
+</AttachmentManagementConfig>

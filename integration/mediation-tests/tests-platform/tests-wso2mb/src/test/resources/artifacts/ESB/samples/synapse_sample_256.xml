@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Using the mail transport -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="StockQuoteProxy" transports="mailto">
+
+        <parameter name="transport.mail.Address">synapse.demo.1@gmail.com</parameter>
+        <parameter name="transport.mail.Protocol">pop3</parameter>
+        <parameter name="transport.PollInterval">5</parameter>
+        <parameter name="mail.pop3.host">pop.gmail.com</parameter>
+        <parameter name="mail.pop3.port">995</parameter>
+        <parameter name="mail.pop3.user">synapse.demo.1</parameter>
+        <parameter name="mail.pop3.password">mailpassword1</parameter>
+        <parameter name="mail.pop3.socketFactory.class">javax.net.ssl.SSLSocketFactory</parameter>
+        <parameter name="mail.pop3.socketFactory.fallback">false</parameter>
+        <parameter name="mail.pop3.socketFactory.port">995</parameter>
+        <parameter name="transport.mail.ContentType">application/xml</parameter>
+
+        <target>
+            <inSequence>
+                <property name="senderAddress" expression="get-property('transport', 'From')"/>
+                <log level="full">
+                    <property name="Sender Address" expression="get-property('senderAddress')"/>
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <property name="Subject" value="Custom Subject for Response" scope="transport"/>
+                <header name="To" expression="fn:concat('mailto:', get-property('senderAddress'))"/>
+                <property name="OUT_ONLY" value="true"/>
+                <log level="full">
+                    <property name="message" value="Response message"/>
+                    <property name="Sender Address" expression="get-property('senderAddress')"/>
+                </log>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+
+</definitions>
