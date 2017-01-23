@@ -52,7 +52,7 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
+                <exclude>**/wso2/components/plugins/saxon_*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/conf/tomcat/catalina-server.xml</exclude>
                 <exclude>**/conf/registry.xml</exclude>
@@ -204,7 +204,6 @@
                 <exclude>**/LICENSE.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository//plugins/saxon*.jar</exclude>
                 <exclude>**/endorsed/xalan*.jar</exclude>
             </excludes>
         </fileSet>
