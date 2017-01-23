@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="VFSProxyDefault" statistics="disable" trace="disable" transports="http">
+        <target>
+            <log level="full"/>
+            <inSequence>
+                <property action="set" value="default.xml" name="transport.vfs.ReplyFileName" scope="transport"
+                          type="STRING"/>
+                <property action="set" name="OUT_ONLY" scope="default" type="STRING" value="true"/>
+                <send>
+                    <endpoint>
+                        <address uri="vfs:ftp://admin:admin@localhost:8086/in"/>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="VFSProxyBinary" statistics="disable" trace="disable" transports="http">
+        <target>
+            <log level="full"/>
+            <inSequence>
+                <property action="set" value="binary.xml" name="transport.vfs.ReplyFileName" scope="transport"
+                          type="STRING"/>
+                <property action="set" name="OUT_ONLY" scope="default" type="STRING" value="true"/>
+                <send>
+                    <endpoint>
+                        <address uri="vfs:ftp://admin:admin@localhost:8086/in"/>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="VFSProxyAscii" statistics="disable" trace="disable" transports="http">
+        <target>
+            <inSequence>
+                <log level="full"/>
+                <property action="set" value="ascii.xml" name="transport.vfs.ReplyFileName" scope="transport"
+                          type="STRING"/>
+                <property action="set" name="OUT_ONLY" scope="default" type="STRING" value="true"/>
+                <send>
+                    <endpoint>
+                        <address uri="vfs:ftp://admin:admin@localhost:8086/in?transport.vfs.fileType=ASCII"/>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log category="INFO" level="full" separator=",">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log category="INFO" level="full" separator=","/>
+            <send/>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

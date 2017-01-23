@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="Service2"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <serviceName xmlns="">Service2</serviceName>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="Service1"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <serviceName xmlns="">Service1</serviceName>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="Service3"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <serviceName xmlns="">Service3</serviceName>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="ChainingTestProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <http method="post" uri-template="http://localhost:8480/services/Service1"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:8480/services/Service2"/>
+                    </endpoint>
+                </call>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:8480/services/Service3"/>
+                    </endpoint>
+                </call>
+                <log level="full">
+                    <property name="MSG" value="Payload after service 3"/>
+                </log>
+                <respond/>
+            </outSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

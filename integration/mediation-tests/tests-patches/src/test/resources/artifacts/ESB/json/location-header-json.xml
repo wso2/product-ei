@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="service0"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence/>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+            <endpoint>
+                <address uri="http://localhost:8480/services/service"/>
+            </endpoint>
+        </target>
+        <description/>
+    </proxy>
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="service"
+           transports="https,http"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <!--<property name="Location" value="/abc/foo/bar/6Vsdd4990" scope="transport"/>-->
+                <log level="custom">
+                    <property name="MESSAGE" value="***************************************************************"/>
+                </log>
+                <respond/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <sequence name="fault">
+        <makefault version="soap11">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  expression="get-property('ERROR_CODE')"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <log level="full"/>
+        <send/>
+    </sequence>
+</definitions>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="fault">
+   <log level="custom">
+    <property name="SUB_TENANT_FAULT" value="SUB_TENANT_FAULT_HIT"/>
+   </log>
+   <respond/>
+</sequence>

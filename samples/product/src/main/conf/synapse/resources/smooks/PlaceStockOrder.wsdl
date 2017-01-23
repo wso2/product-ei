@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://services.samples"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:ns0="http://services.samples/xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:ns1="http://org.apache.axis2/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://services.samples">
+    <wsdl:documentation>PlaceStockOrderService</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:ns="http://services.samples/xsd" attributeFormDefault="qualified"
+                   elementFormDefault="qualified" targetNamespace="http://services.samples/xsd">
+            <xs:element name="placeOrder">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="order" nillable="true" type="ns:PlaceOrder"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="PlaceOrder" type="ns:PlaceOrder"/>
+            <xs:complexType name="PlaceOrder">
+                <xs:sequence>
+                    <xs:element name="price" type="xs:double"/>
+                    <xs:element name="quantity" type="xs:int"/>
+                    <xs:element name="symbol" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+
+    </wsdl:types>
+    <wsdl:message name="placeOrderMessage">
+        <wsdl:part name="part1" element="ns0:placeOrder"/>
+    </wsdl:message>
+    <wsdl:portType name="PlaceStockOrderServicePortType">
+        <wsdl:operation name="placeOrder">
+            <wsdl:input message="axis2:placeOrderMessage" wsaw:Action="urn:placeOrder"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PlaceStockOrderServiceSOAP11Binding" type="axis2:PlaceStockOrderServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="placeOrder">
+            <soap:operation soapAction="urn:placeOrder" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="PlaceStockOrderServiceSOAP12Binding" type="axis2:PlaceStockOrderServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="placeOrder">
+            <soap12:operation soapAction="urn:placeOrder" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="PlaceStockOrderServiceHttpBinding" type="axis2:PlaceStockOrderServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="placeOrder">
+            <http:operation location="PlaceStockOrderService/placeOrder"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="placeOrder"/>
+
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PlaceStockOrderService">
+        <wsdl:port name="PlaceStockOrderServiceSOAP11port_https" binding="axis2:PlaceStockOrderServiceSOAP11Binding">
+            <soap:address location="https://localhost:9002/soap/PlaceStockOrderService"/>
+        </wsdl:port>
+        <wsdl:port name="PlaceStockOrderServiceSOAP11port_http1" binding="axis2:PlaceStockOrderServiceSOAP11Binding">
+            <soap:address location="http://localhost:9000/soap/PlaceStockOrderService"/>
+
+        </wsdl:port>
+        <wsdl:port name="PlaceStockOrderServiceSOAP12port_https" binding="axis2:PlaceStockOrderServiceSOAP12Binding">
+            <soap12:address location="https://localhost:9002/soap/PlaceStockOrderService"/>
+        </wsdl:port>
+        <wsdl:port name="PlaceStockOrderServiceSOAP12port_http1" binding="axis2:PlaceStockOrderServiceSOAP12Binding">
+            <soap12:address location="http://localhost:9000/soap/PlaceStockOrderService"/>
+        </wsdl:port>
+        <wsdl:port name="PlaceStockOrderServiceHttpport" binding="axis2:PlaceStockOrderServiceHttpBinding">
+            <http:address location="https://localhost:9002/soap/PlaceStockOrderService"/>
+
+        </wsdl:port>
+        <wsdl:port name="PlaceStockOrderServiceHttpport1" binding="axis2:PlaceStockOrderServiceHttpBinding">
+            <http:address location="http://localhost:9000/soap/PlaceStockOrderService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

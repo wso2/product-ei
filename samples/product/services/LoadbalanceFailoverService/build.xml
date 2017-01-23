@@ -1,0 +1,93 @@
+<!--
+  ~  Licensed to the Apache Software Foundation (ASF) under one
+  ~  or more contributor license agreements.  See the NOTICE file
+  ~  distributed with this work for additional information
+  ~  regarding copyright ownership.  The ASF licenses this file
+  ~  to you under the Apache License, Version 2.0 (the
+  ~  "License"); you may not use this file except in compliance
+  ~  with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<project default="build-services">
+
+    <property name="synapse.home" value="../../../.."/>
+    <property name="temp.dir" value="temp"/>
+    <property name="services" value="../../repository/services"/>
+    <property name="classes" value="${temp.dir}/classes"/>
+    <property name="src" value="src"/>
+
+    <path id="synapse.class.path">
+        <pathelement path="${java.class.path}"/>
+        <fileset dir="${synapse.home}">
+            <include name="lib/*.jar"/>
+            <include name="repository/components/plugins/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="build-services" depends="compile-all">
+        <ant target="build-service1"/>
+        <ant target="build-service2"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${services}"/>
+        <mkdir dir="${classes}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${temp.dir}"/>
+        <delete dir="${classes}"/>
+    </target>
+
+    <target name="compile-all" depends="init">
+        <javac debug="on" destdir="${classes}">
+            <src path="${src}"/>
+            <classpath refid="synapse.class.path"/>
+        </javac>
+    </target>
+
+    <target name="build-service1">
+        <property name="LBFA1.dir" value="${temp.dir}/LBService1"/>
+        <mkdir dir="${LBFA1.dir}"/>
+
+        <mkdir dir="${LBFA1.dir}/META-INF"/>
+        <copy file="conf/service1/services.xml" tofile="${LBFA1.dir}/META-INF/services.xml"/>
+        <copy toDir="${LBFA1.dir}">
+            <fileset dir="${classes}">
+                <include name="**/LBService1.class"/>
+            </fileset>
+        </copy>
+
+        <jar destfile="${services}/LBService1.aar">
+            <fileset dir="${LBFA1.dir}"/>
+        </jar>
+    </target>
+
+    <target name="build-service2">
+        <property name="LBFA2.dir" value="${temp.dir}/LBService2"/>
+        <mkdir dir="${LBFA2.dir}"/>
+
+        <mkdir dir="${LBFA2.dir}/META-INF"/>
+        <copy file="conf/service2/services.xml" tofile="${LBFA2.dir}/META-INF/services.xml"/>
+        <copy toDir="${LBFA2.dir}">
+            <fileset dir="${classes}">
+                <include name="**/LBService2.class"/>
+            </fileset>
+        </copy>
+
+        <jar destfile="${services}/LBService2.aar">
+            <fileset dir="${LBFA2.dir}"/>
+        </jar>
+    </target>
+
+</project>

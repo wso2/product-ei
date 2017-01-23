@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2015, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="TargetInSeqInlineFaultSeqProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target inSequence="inMessageHandler">
+            <faultSequence>
+                <property name="messageType" value="text/xml" scope="axis2"></property>
+                <property name="HTTP_SC" value="200" scope="axis2"></property>
+                <log>
+                    <property name="MSG" value="==== Fault Seq ===="></property>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                            <soapenv:Body>
+                                <message xmlns="">Failure</message>
+                            </soapenv:Body>
+                        </soapenv:Envelope>
+                    </format>
+                </payloadFactory>
+                <respond/>
+            </faultSequence>
+        </target>
+    </proxy>
+    <proxy name="InlineInSeqTargetFaultSeqProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="enable">
+        <description/>
+        <target faultSequence="faultHandler">
+            <inSequence>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <ser:getQuote xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                            <ser:request>
+                                <xsd:symbol>Q2</xsd:symbol>
+                            </ser:request>
+                        </ser:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT" value="true" type="STRING"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/Foo" format="soap12"/>
+                    </endpoint>
+                </call>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="TargetInSeqTargetFaultSeqProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target inSequence="inMessageHandler" faultSequence="faultHandler"/>
+    </proxy>
+    <proxy name="InlineInSeqInlineFaultSeqProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="enable">
+        <description/>
+        <target>
+            <inSequence>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <ser:getQuote xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                            <ser:request>
+                                <xsd:symbol>Q2</xsd:symbol>
+                            </ser:request>
+                        </ser:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT" value="true" type="STRING"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/Foo" format="soap12"/>
+                    </endpoint>
+                </call>
+                <respond/>
+            </inSequence>
+            <faultSequence>
+                <property name="messageType" value="text/xml" scope="axis2"></property>
+                <property name="HTTP_SC" value="200" scope="axis2"></property>
+                <log>
+                    <property name="MSG" value="==== Fault Seq ===="></property>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                            <soapenv:Body>
+                                <message xmlns="">Failure</message>
+                            </soapenv:Body>
+                        </soapenv:Envelope>
+                    </format>
+                </payloadFactory>
+                <respond/>
+            </faultSequence>
+        </target>
+    </proxy>
+    <sequence name="faultHandler">
+        <property name="messageType" value="text/xml" scope="axis2"></property>
+        <property name="HTTP_SC" value="200" scope="axis2"></property>
+        <log>
+            <property name="MSG" value="==== Fault Seq ===="></property>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soapenv:Body>
+                        <message xmlns="">Failure</message>
+                    </soapenv:Body>
+                </soapenv:Envelope>
+            </format>
+        </payloadFactory>
+        <respond/>
+    </sequence>
+    <sequence name="inMessageHandler">
+        <call>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </call>
+        <payloadFactory media-type="xml">
+            <format>
+                <ser:getQuote xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                    <ser:request>
+                        <xsd:symbol>Q2</xsd:symbol>
+                    </ser:request>
+                </ser:getQuote>
+            </format>
+            <args/>
+        </payloadFactory>
+        <property name="FORCE_ERROR_ON_SOAP_FAULT" value="true" type="STRING"/>
+        <call>
+            <endpoint>
+                <address uri="http://localhost:9000/services/Foo" format="soap12"/>
+            </endpoint>
+        </call>
+        <respond/>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api name="CallMediatorFaultTestAPI" context="/callFaultTest">
+        <resource methods="POST" uri-template="/InlineInSeqInlineFaultSeq">
+            <inSequence>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <ser:getQuote xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                            <ser:request>
+                                <xsd:symbol>Q2</xsd:symbol>
+                            </ser:request>
+                        </ser:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT" value="true" type="STRING"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/Foo" format="soap12"/>
+                    </endpoint>
+                </call>
+                <respond/>
+            </inSequence>
+            <faultSequence>
+                <property name="messageType" value="text/xml" scope="axis2"></property>
+                <property name="HTTP_SC" value="200" scope="axis2"></property>
+                <log>
+                    <property name="MSG" value="==== Fault Seq ===="></property>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                            <soapenv:Body>
+                                <message xmlns="">Failure</message>
+                            </soapenv:Body>
+                        </soapenv:Envelope>
+                    </format>
+                </payloadFactory>
+                <respond/>
+            </faultSequence>
+        </resource>
+        <resource methods="POST"
+                  uri-template="/InlineInSeqTargetFaultSeq"
+                  faultSequence="faultHandler">
+            <inSequence>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </call>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <ser:getQuote xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                            <ser:request>
+                                <xsd:symbol>Q2</xsd:symbol>
+                            </ser:request>
+                        </ser:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT" value="true" type="STRING"/>
+                <call>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/Foo" format="soap12"/>
+                    </endpoint>
+                </call>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="POST"
+                  uri-template="/TargetInSeqInlineFaultSeq"
+                  inSequence="inMessageHandler">
+            <faultSequence>
+                <property name="messageType" value="text/xml" scope="axis2"></property>
+                <property name="HTTP_SC" value="200" scope="axis2"></property>
+                <log>
+                    <property name="MSG" value="==== Fault Seq ===="></property>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                            <soapenv:Body>
+                                <message xmlns="">Failure</message>
+                            </soapenv:Body>
+                        </soapenv:Envelope>
+                    </format>
+                </payloadFactory>
+                <respond/>
+            </faultSequence>
+        </resource>
+        <resource methods="POST"
+                  uri-template="/TargetInSeqTargetFaultSeq"
+                  inSequence="inMessageHandler"
+                  faultSequence="faultHandler"/>
+    </api>
+</definitions>

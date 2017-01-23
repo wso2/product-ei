@@ -1,0 +1,39 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd">
+	<registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+		<parameter name="cachableDuration">15000</parameter>
+	</registry>
+
+	<sequence name="main">
+		<in>
+			<property name="symbol" value="conf:/validate1/schema.xml" />
+			<property name="isValid" value="true" />
+			<validate>
+				<schema key="conf:/validate/schema.xml" />
+				<on-fail>
+					<makefault version="soap11" response="true">
+						<code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+							value="soap11Env:VersionMismatch" />
+						<reason value="Invalid custom quote request" />
+						<role />
+					</makefault>
+					<property name="isValid" value="false" />
+				</on-fail>
+			</validate>
+			<filter source="$ctx:isValid" regex="true">
+				<then>
+					<send>
+						<endpoint>
+							<address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+						</endpoint>
+					</send>
+				</then>
+				<else>
+					<log />
+				</else>
+			</filter>
+		</in>
+		<send />
+	</sequence>
+</definitions>

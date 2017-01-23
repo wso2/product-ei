@@ -1,0 +1,156 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="ESBTestSuite" parallel="false">
+    <listeners>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestManagerListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestReportListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestExecutionListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestSuiteListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
+    </listeners>
+
+    <test name="POST-Request-Without-Body-without-chunking" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4402MessageWithoutPayloadTestCase"/>
+        </classes>
+    </test>
+
+    <test name="passthru-Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.passthru.transport.test"/>
+        </packages>
+    </test>
+
+    <test name="http-patch-method-support-test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3051HTTPPatchMethodSupportTestCase"/>
+        </classes>
+    </test>
+
+    <test name="JMS-transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.jms.transport.test.*"/>
+        </packages>
+
+        <classes>
+            <class name="org.wso2.carbon.esb.jms.transport.test.ESBJAVA2824MissingResponseTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="inbound-Http Endpoint-Test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTestCase"/>
+            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>
+            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundDispatchTestCase"/>
+        </classes>
+    </test>
+
+    <test name="nhttp-Transport-Test" preserve-order="true" verbose="2">
+        <classes>
+            <!--The following test cases would change the server configuration when starting the test case,-->
+            <!--and restore the same once it's done-->
+            <!--If your test case needs to explicitly change the server configuration, add it here-->
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.DefaultRequestContentTypeTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.ResponseAfterNttpEnabledTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.NhttpMaximumOpenConnections"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.ConfiguringNhttpAccessLogLocationTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.ContentTypeCharsetTestCase"/>
+
+            <!--The SetNhttpAxis2Transport class would set the nhttp axis2 transport and restart the ESB-->
+            <!--The test cases that follow it would not change any server configurations-->
+            <!--RemoveNhttpAxis2Transport would restore the ESBs default transport-->
+            <!--If your test case doesn't need to change the server configuration, add it here-->
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.MessageWithoutContentTypeTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.OCSPCertificateValidationTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.RetrieveBackendWsdlTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.SetHostHttpHeaderTestCase"/>
+        </classes>
+    </test>
+
+    <test name="VFS-transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.vfs.transport.test.*"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.vfs.transport.test.VFSTransportTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="TCP-transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.tcp.transport.test.*"/>
+        </packages>
+    </test>
+
+    <!--disabled since feature management is used to install hl7 feature-->
+    <!--    <test name="HL7-transport-Test" preserve-order="true" verbose="2">
+            <packages>
+                <package name="org.wso2.carbon.esb.hl7.transport.test.*"/>
+            </packages>
+        </test>-->
+
+    <test name="inbound-File Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.file.inbound.transport.test"/>
+        </packages>
+    </test>
+
+    <test name="inbound-Generic Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.generic.inbound.transport.test"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.generic.inbound.transport.test.GenericInboundTransportTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="local Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.local.transport.test"/>
+        </packages>
+    </test>
+
+    <test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>
+        </packages>
+    </test>
+
+    <!-- Kafka is not availble with framework-->
+    <!--test name="inbound-KAFKA Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.kafka.inbound.transport.test"/>
+        </packages>
+    </test-->
+
+    <test name="inbound-HL7 Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.hl7.inbound.transport.test"/>
+        </packages>
+    </test>
+
+    <test name="MailTo-transport-Test-Receiver" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mailto.transport.receiver.test"/>
+        </packages>
+    </test>
+
+    <test name="Https Inbound Transport Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
+        </packages>
+    </test>
+</suite>
+

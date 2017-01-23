@@ -44,8 +44,7 @@ public class IntegratorFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String uri = httpRequest.getRequestURI();
-        String contextPath = Utils.getContext(uri);
-        if (uri != null && contextPath != null && !("/carbon").equals(contextPath)) {
+        if (!validateURI(uri)) {
             String integratorHeader = httpRequest.getHeader(Constants.INTEGRATOR_HEADER);
             if (Utils.validateHeader(integratorHeader, uri)) {
                 filterChain.doFilter(new HeaderMapRequestWrapper(httpRequest), servletResponse);
@@ -59,5 +58,22 @@ public class IntegratorFilter implements Filter {
 
     @Override
     public void destroy() {
+    }
+
+    private boolean validateURI(String contextPath) {
+        //skipping carbon context uri
+        if(contextPath.contains("/carbon")) {
+            return true;
+        }
+
+        if(contextPath.contains("/fileupload")) {
+            return true;
+        }
+
+        if(contextPath.endsWith("?tryit")) {
+            return true;
+        }
+
+        return false;
     }
 }

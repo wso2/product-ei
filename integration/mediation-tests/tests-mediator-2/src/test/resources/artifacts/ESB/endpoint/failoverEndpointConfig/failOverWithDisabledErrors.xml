@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <template name="MainTemplate">
+        <axis2ns2:parameter xmlns:axis2ns2="http://ws.apache.org/ns/synapse" name="name"/>
+        <axis2ns3:parameter xmlns:axis2ns3="http://ws.apache.org/ns/synapse" name="uri"/>
+        <endpoint name="$name">
+            <address uri="$uri" trace="enable">
+                <suspendOnFailure>
+                    <errorCodes>101501,101509,101503,101507,101508</errorCodes>
+                    <initialDuration>1000</initialDuration>
+                    <progressionFactor>2.0</progressionFactor>
+                    <maximumDuration>6400</maximumDuration>
+                </suspendOnFailure>
+                <retryConfig>
+                    <disabledErrorCodes>101504, 101505, 101500</disabledErrorCodes>
+                </retryConfig>
+                <markForSuspension>
+                    <retriesBeforeSuspension>2</retriesBeforeSuspension>
+                    <retryDelay>2</retryDelay>
+                </markForSuspension>
+                <timeout>
+                    <duration>2000</duration>
+                    <responseAction>fault</responseAction>
+                </timeout>
+            </address>
+        </endpoint>
+    </template>
+    <proxy name="failover"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target faultSequence="epfault">
+            <inSequence>
+                <send>
+                    <endpoint key="Test_Failover_0"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+    <endpoint name="Test_Failover">
+        <failover>
+            <endpoint name="primary"
+                      template="MainTemplate"
+                      uri="http://localhost:9001/services/SimpleStockQuoteService"/>
+            <endpoint name="secondary"
+                      template="MainTemplate"
+                      uri="http://localhost:9003/services/SimpleStockQuoteService"/>
+        </failover>
+        <property name="ENDPOINT" value="Test_Failover"/>
+    </endpoint>
+
+    <endpoint name="Test_Failover_0">
+        <failover>
+            <endpoint name="primary_0">
+                <address uri="http://localhost:9001/services/SimpleStockQuoteService"
+                         trace="enable">
+                    <suspendOnFailure>
+                        <errorCodes>101501,101509,101503,101507,101508</errorCodes>
+                        <initialDuration>1000</initialDuration>
+                        <progressionFactor>2.0</progressionFactor>
+                        <maximumDuration>6400</maximumDuration>
+                    </suspendOnFailure>
+                    <retryConfig>
+                        <disabledErrorCodes>101504, 101505, 101500</disabledErrorCodes>
+                    </retryConfig>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>2</retriesBeforeSuspension>
+                        <retryDelay>2</retryDelay>
+                    </markForSuspension>
+                    <timeout>
+                        <duration>2000</duration>
+                        <responseAction>fault</responseAction>
+                    </timeout>
+                </address>
+            </endpoint>
+            <endpoint name="secondary_0">
+                <address uri="http://localhost:9003/services/SimpleStockQuoteService"
+                         trace="enable">
+                    <suspendOnFailure>
+                        <errorCodes>101501,101509,101503,101507,101508</errorCodes>
+                        <initialDuration>1000</initialDuration>
+                        <progressionFactor>2.0</progressionFactor>
+                        <maximumDuration>6400</maximumDuration>
+                    </suspendOnFailure>
+                    <retryConfig>
+                        <disabledErrorCodes>101504, 101505, 101500</disabledErrorCodes>
+                    </retryConfig>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>2</retriesBeforeSuspension>
+                        <retryDelay>2</retryDelay>
+                    </markForSuspension>
+                    <timeout>
+                        <duration>2000</duration>
+                        <responseAction>fault</responseAction>
+                    </timeout>
+                </address>
+            </endpoint>
+        </failover>
+        <property name="ENDPOINT" value="Test_Failover"/>
+    </endpoint>
+
+    <sequence name="epfault">
+        <log level="custom">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <makefault version="soap11">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  expression="get-property('ERROR_CODE')"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <log level="full"/>
+        <send/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+
+</definitions>

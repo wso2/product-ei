@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="httpsBackendProxyService" transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="httpsEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <endpoint name="httpsEndpoint">
+        <address uri="https://google.com"/>
+    </endpoint>
+</definitions>
+
+
+

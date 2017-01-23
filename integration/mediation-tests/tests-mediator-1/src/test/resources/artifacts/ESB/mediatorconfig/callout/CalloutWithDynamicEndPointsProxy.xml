@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="CalloutProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService"
+                         action="urn:getQuote">
+                    <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                    <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                </callout>
+                <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+                <header name="To" action="remove"/>
+                <log level="full"/>
+                <send/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+            <faultSequence>
+                <makefault version="soap11">
+                    <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                          value="soap11Env:Client"/>
+                    <reason value="ErrorConectingBackend"/>
+                    <role/>
+                </makefault>
+                <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+                <header name="To" action="remove"/>
+                <send/>
+            </faultSequence>
+        </target>
+    </proxy>
+</definitions>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse"
+           name="ProxyHavingSourceViewIssueInJava8"
+           transports="http https"
+           startOnLoad="true">
+        <description/>
+        <target>
+            <inSequence>
+                <log/>
+            </inSequence>
+        </target>
+        <parameter name="transport.jms.DestinationType">queue</parameter>
+        <parameter name="transport.jms.ContentType">
+            <rules>
+                <jmsProperty>contentType</jmsProperty>
+                <default>application/xml</default>
+            </rules>
+        </parameter>
+    </proxy>
+</definitions>

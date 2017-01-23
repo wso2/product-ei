@@ -1,0 +1,78 @@
+<!--
+
+Call mediator fault trigger test
+
+Console Log
+===========
+STATE = IN SEQ S1
+STATE = SEQ1 S1
+STATE = SEQ2 S1
+STATE = SEQ2 S2
+STATE = SEQ1 S2
+WARN ConnectCallback Connection refused or failed for : localhost/127.0.0.1:9001
+WARN EndpointContext Endpoint : EP2 will be marked SUSPENDED as it failed
+
+-->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="TestCallProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="STATE" value="IN SEQ S1"/>
+                </log>
+                <sequence key="SEQ1"/>
+                <log level="custom">
+                    <property name="STATE" value="IN SEQ S2"/>
+                </log>
+            </inSequence>
+        </target>
+    </proxy>
+
+    <endpoint name="EP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+
+    <endpoint name="EP2">
+        <address uri="http://localhost:9010/services/SimpleStockQuoteService"/>
+    </endpoint>
+
+    <sequence name="faultSeq">
+        <header name="To" action="remove"/>
+        <property name="RESPONSE" value="true"/>
+        <send/>
+    </sequence>
+
+    <sequence name="SEQ1" onError="faultSeq">
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S1"/>
+        </log>
+        <sequence key="SEQ2"/>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S2"/>
+        </log>
+        <call>
+            <endpoint key="EP2"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 P3"/>
+        </log>
+    </sequence>
+
+    <sequence name="SEQ2">
+        <log level="custom">
+            <property name="STATE" value="SEQ2 S1"/>
+        </log>
+        <call>
+            <endpoint key="EP"/>
+        </call>
+        <log level="custom">
+            <property name="STATE" value="SEQ2 S2"/>
+        </log>
+    </sequence>
+
+</definitions>

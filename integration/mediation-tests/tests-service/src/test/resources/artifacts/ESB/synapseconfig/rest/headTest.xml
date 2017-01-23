@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="headTest"
+         context="/headTest">
+       <resource methods="POST HEAD GET">
+          <inSequence>
+             <log level="custom">
+                <property name="API_INVOKED" value="API_HIT"/>
+             </log>
+             <respond/>
+          </inSequence>
+       </resource>
+    </api>
+</definitions>

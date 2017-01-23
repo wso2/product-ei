@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="FooProxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+   <target>
+      <inSequence>
+         <log/>
+         <property name="CHARACTER_SET_ENCODING"
+                   value="ISO-8859-2"
+                   scope="axis2"
+                   type="STRING"/>
+         <send>
+            <endpoint>
+               <address uri="http://localhost:8480/services/echoProxy"/>
+            </endpoint>
+         </send>
+      </inSequence>
+      <outSequence>
+         <send/>
+      </outSequence>
+   </target>
+   <description/>
+</proxy>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="echoProxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+   <target>
+      <inSequence>
+         <payloadFactory media-type="xml">
+            <format>
+               <test xmlns="">
+                  <aa>aa</aa>
+               </test>
+            </format>
+            <args/>
+         </payloadFactory>
+         <property name="CHARACTER_SET_ENCODING"
+                   value="UTF-8"
+                   scope="axis2"
+                   type="STRING"/>
+         <header name="To" action="remove"/>
+         <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+         <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+         <property name="messageType" value="application/xml" scope="axis2"/>
+         <send/>
+      </inSequence>
+   </target>
+   <description/>
+</proxy>
+                                
+</definitions>

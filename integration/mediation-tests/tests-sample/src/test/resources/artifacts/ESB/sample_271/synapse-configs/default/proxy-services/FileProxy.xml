@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="FileProxy" transports="vfs" startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <clone>
+                <target sequence="fileWriteSequence"/>
+                <target sequence="sendMailSequence"/>
+                <target sequence="databaseSequence"/>
+            </clone>
+        </inSequence>
+    </target>
+    <parameter name="transport.vfs.ActionAfterProcess">MOVE</parameter>
+    <parameter name="transport.PollInterval">15</parameter>
+    <parameter name="transport.vfs.MoveAfterProcess">file:///home/username/test/original</parameter>
+    <parameter name="transport.vfs.FileURI">file:///home/username/test/in</parameter>
+    <parameter name="transport.vfs.MoveAfterFailure">file:///home/username/test/failure</parameter>
+    <parameter name="transport.vfs.FileNamePattern">.*.txt</parameter>
+    <parameter name="transport.vfs.ContentType">text/plain</parameter>
+    <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
+</proxy>

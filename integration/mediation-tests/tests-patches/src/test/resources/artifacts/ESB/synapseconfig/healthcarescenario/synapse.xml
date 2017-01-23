@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="HCCProxyService"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <property xmlns:heal="http://healthcare.wso2"
+                          name="longitude"
+                          expression="//heal:getHealthcareCenterInfo/heal:longitude/text()"
+                          scope="default"
+                          type="STRING"/>
+                <property xmlns:heal="http://healthcare.wso2"
+                          name="latitude"
+                          expression="//heal:getHealthcareCenterInfo/heal:latitude/text()"
+                          scope="default"
+                          type="STRING"/>
+                <log level="custom" separator=",">
+                    <property name="Longitude" expression="$ctx:longitude"/>
+                    <property name="Latitude" expression="$ctx:latitude"/>
+                </log>
+                <enrich>
+                    <source type="inline" clone="true">
+                        <geo:getZipCode xmlns:geo="http://geo.wso2">
+                            <geo:longitude>0</geo:longitude>
+                            <geo:latitude>0</geo:latitude>
+                        </geo:getZipCode>
+                    </source>
+                    <target type="body"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="longitude"/>
+                    <target xmlns:geo="http://geo.wso2" xpath="//geo:getZipCode/geo:longitude/text()"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="latitude"/>
+                    <target xmlns:geo="http://geo.wso2" xpath="//geo:getZipCode/geo:latitude/text()"/>
+                </enrich>
+                <log level="custom" separator=",">
+                    <property name="MessageFlow"
+                              value="======================= Sending Request To : GeoWS ======================="/>
+                </log>
+                <log level="full" separator=","/>
+                <header name="Action" value="urn:getZipCode"/>
+                <send receive="hcfRequest">
+                    <endpoint key="GeoEP"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="custom" separator=",">
+                    <property name="MessageFlow"
+                              value="---------------------------------------------- Response Received - From : HCInformationService ----------------------------------"/>
+                </log>
+                <log level="full" separator=","/>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="-1" max="-1"/>
+                    </completeCondition>
+                    <onComplete xmlns:hcc="http://healthcare.wso2"
+                                expression="//hcc:getHCCenterInfoResponse">
+                        <log level="custom" separator=",">
+                            <property name="MessageFlow"
+                                      value="======================= Sending Back the Aggregated Responses. ==============="/>
+                        </log>
+                        <log level="full" separator=","/>
+                        <send/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </target>
+        <publishWSDL key="gov:service_integration/wsdls/HCCService.wsdl"/>
+    </proxy>
+    <endpoint name="HCInformationService">
+        <address uri="http://localhost:9009/services/HCInformationService"/>
+    </endpoint>
+    <endpoint name="GeoEP">
+        <address uri="http://localhost:9009/services/GeoService/"/>
+    </endpoint>
+    <endpoint name="HCFacilityLocatorServiceEP">
+        <address uri="http://localhost:9009/services/HCFacilityLocatorService"/>
+    </endpoint>
+    <sequence name="hciRequest">
+        <log level="custom" separator=",">
+            <property name="MessageFlow"
+                      value="----------------------------------------------  Response Received - From : HCFacilityLocatorService -----------------------------"/>
+        </log>
+        <log separator=","/>
+        <iterate xmlns:hfs="http://healthcare.wso2"
+                 xmlns:ns="http://org.apache.synapse/xsd"
+                 xmlns:ns3="http://org.apache.synapse/xsd"
+                 preservePayload="true"
+                 attachPath="//hfs:getHCCentersResponse"
+                 expression="//hfs:getHCCentersResponse/hfs:return">
+            <target>
+                <sequence>
+                    <payloadFactory>
+                        <format>
+                            <heal:getHCCenterInfo xmlns:heal="http://healthcare.wso2">
+                                <heal:hcCenterCode>$1</heal:hcCenterCode>
+                            </heal:getHCCenterInfo>
+                        </format>
+                        <args>
+                            <arg xmlns:hcc="http://healthcare.wso2"
+                                 evaluator="xml"
+                                 expression="//hcc:getHCCentersResponse/hcc:return/text()"/>
+                        </args>
+                    </payloadFactory>
+                    <log level="custom" separator=",">
+                        <property name="MessageFlow"
+                                  value="============== Splitting and Sending Request To : HCInformationService ================"/>
+                    </log>
+                    <log level="full" separator=","/>
+                    <header name="Action" value="urn:getHCCenterInfo"/>
+                    <send>
+                        <endpoint key="HCInformationService"/>
+                    </send>
+                </sequence>
+            </target>
+        </iterate>
+        <log separator=","/>
+        <log separator=","/>
+    </sequence>
+    <sequence name="hcfRequest">
+        <log level="custom" separator=",">
+            <property name="MessageFlow"
+                      value="-------------------------------------------------- Response Received - From : GeoWS ---------------------------------------------------"/>
+        </log>
+        <log level="full" separator=","/>
+        <property xmlns:ns="http://org.apache.synapse/xsd"
+                  xmlns:geo="http://geo.wso2"
+                  xmlns:ns3="http://org.apache.synapse/xsd"
+                  name="zipcode"
+                  expression="//geo:getZipCodeResponse/geo:return/text()"
+                  scope="default"
+                  type="STRING"/>
+        <log level="custom" separator=",">
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      xmlns:ns3="http://org.apache.synapse/xsd"
+                      name="zipcode"
+                      expression="$ctx:zipcode"/>
+        </log>
+        <payloadFactory>
+            <format>
+                <heal:getHCCenters xmlns:heal="http://healthcare.wso2">
+                    <heal:postalCode>$1</heal:postalCode>
+                </heal:getHCCenters>
+            </format>
+            <args>
+                <arg xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd"
+                     evaluator="xml"
+                     expression="$ctx:zipcode"/>
+            </args>
+        </payloadFactory>
+        <log level="custom" separator=",">
+            <property name="MessageFlow"
+                      value="==================== Sending Request To : HCFacilityLocatorService ================"/>
+        </log>
+        <log level="full" separator=","/>
+        <header name="Action" value="urn:"/>
+        <send receive="hciRequest">
+            <endpoint key="HCFacilityLocatorServiceEP"/>
+        </send>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

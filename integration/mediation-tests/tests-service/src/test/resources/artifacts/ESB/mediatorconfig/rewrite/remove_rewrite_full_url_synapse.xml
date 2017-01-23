@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="urlRewriteProxy" transports="https,http" statistics="disable" trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <log level="full"/>
+                <rewrite>
+                    <rewriterule>
+                        <action type="remove" fragment="full"/>
+                    </rewriterule>
+                </rewrite>
+                <log level="full"/>
+                <rewrite>
+                    <rewriterule>
+                        <action value="http://localhost:9000/services/SimpleStockQuoteService"
+                                type="append" fragment="full"/>
+                    </rewriterule>
+                </rewrite>
+                <log level="full"/>
+                <send/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <description></description>
+    </proxy>
+
+</definitions>

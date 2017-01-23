@@ -1,0 +1,27 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+	<proxy name="switchByAddress" transports="https,http" statistics="disable"
+		trace="disable" startOnLoad="true">
+		<target>
+			<inSequence>
+				<switch xmlns:p="http://services.samples" source="get-property('Action')">
+					<case regex="urn:getQuote">
+						<log level="full">
+							<property name="print_prop" value="getQuote operation called" />
+						</log>
+						<send />
+					</case>
+					<case regex="urn:getSimpleQuote">
+						<log level="full">
+							<property name="print_prop" value="getSimpleQuote operation called" />
+						</log>
+						<send />
+					</case>
+				</switch>
+			</inSequence>
+			<outSequence>
+				<send />
+			</outSequence>
+		</target>
+		<description></description>
+	</proxy>
+</definitions>

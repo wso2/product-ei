@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+	<proxy xmlns="http://ws.apache.org/ns/synapse"
+	       name="response"
+	       transports="https http"
+	       startOnLoad="true"
+	       trace="disable">
+	   <description/>
+	   <target>
+	      <inSequence>
+		   <payloadFactory media-type="xml">
+		      <format>
+		         <a:test xmlns:a="testns1"> 
+		            <b:testb xmlns:b="testns2" a:attrb1="v1" b:attrb1="v2"></b:testb> 
+		            <c:testc xmlns:c="testns3"></c:testc>
+		         </a:test>
+		      </format>
+		   </payloadFactory>	      
+	         <log level="full"/>
+	         <property name="messageType" value="application/json" scope="axis2"/>
+	         <respond/>
+	      </inSequence>
+	   </target>
+	</proxy>
+    <sequence name="fault">
+        <makefault version="soap11">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  expression="get-property('ERROR_CODE')"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <log level="full"/>
+        <send/>
+    </sequence>
+</definitions>

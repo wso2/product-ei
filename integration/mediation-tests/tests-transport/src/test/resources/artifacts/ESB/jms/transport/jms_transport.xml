@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="JmsProxy" transports="jms" startOnLoad="true" trace="disable">
+        <target>
+            <inSequence>
+                <property name="OUT_ONLY" value="true"/>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <send>
+                    <endpoint key="jmsAddressEP"/>
+                </send>
+            </inSequence>
+
+        </target>
+        <parameter name="transport.jms.ContentType">
+            <rules>
+                <jmsProperty>contentType</jmsProperty>
+                <default>application/xml</default>
+            </rules>
+        </parameter>
+    </proxy>
+    <endpoint name="jmsAddressEP">
+        <address
+                uri="jms:/SimpleStockQuoteService?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;java.naming.provider.url=tcp://localhost:61616"/>
+    </endpoint>
+
+</definitions>

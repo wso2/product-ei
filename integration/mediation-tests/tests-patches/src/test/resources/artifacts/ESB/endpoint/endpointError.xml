@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="CloneProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="MessageFlow" value=" ======= CloneProxy ======= "/>
+                </log>
+                <sequence key="CloneSequence"/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence>
+                <log>
+                    <property name="=============CloneProxy Fault Sequence=========="
+                              value="=====executed======"/>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <error xmlns="">Proxy Fault Handler Called</error>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </faultSequence>
+        </target>
+    </proxy>
+    <endpoint name="ErrorEndpoint">
+        <address uri="http://invalidEndpoint/name" format="soap11">
+            <timeout>
+                <duration>120000</duration>
+                <responseAction>fault</responseAction>
+            </timeout>
+            <suspendOnFailure>
+                <errorCodes>101000,101001,101500,101501,101503,101506,101507,101508,101509</errorCodes>
+                <initialDuration>1000</initialDuration>
+                <progressionFactor>2.0</progressionFactor>
+                <maximumDuration>64000</maximumDuration>
+            </suspendOnFailure>
+            <markForSuspension>
+                <errorCodes>101504,101505</errorCodes>
+                <retriesBeforeSuspension>3</retriesBeforeSuspension>
+                <retryDelay>1</retryDelay>
+            </markForSuspension>
+        </address>
+        <property name="NO_KEEPALIVE" value="true" scope="axis2"/>
+        <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
+    </endpoint>
+    <sequence name="RightErrorSequence">
+        <log level="custom">
+            <property name="-----------RightErrorSequence Processing Sequence-------------"
+                      value="==========RightErrorSequence============"/>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <error xmlns="">RightErrorSequence Fault Handler Called</error>
+            </format>
+            <args/>
+        </payloadFactory>
+        <respond/>
+    </sequence>
+    <sequence name="ErrorSequence" onError="RightErrorSequence">
+        <property xmlns:ns="http://org.apache.synapse/xsd"
+                  name="ID"
+                  expression="get-property('MessageID')"/>
+        <log level="custom" separator=",">
+            <property name="MessageFlow" value=" ======= Auth Sequence Called ======="/>
+        </log>
+        <call>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </call>
+        <send>
+            <endpoint key="ErrorEndpoint"/>
+        </send>
+    </sequence>
+    <sequence name="CloneSequence" onError="RightErrorSequence">
+        <log level="full">
+            <property name="MessageFlow" value="======= Merge Sequence ======="/>
+        </log>
+        <clone sequential="true">
+            <target>
+                <sequence>
+                    <log level="custom">
+                        <property name="MessageFlow" value="====== Clone 1 ======"/>
+                    </log>
+                </sequence>
+            </target>
+            <target>
+                <sequence>
+                    <sequence key="ErrorSequence"/>
+                </sequence>
+            </target>
+        </clone>
+    </sequence>
+    <sequence name="fault">
+        <log level="custom">
+            <property name="came-------------------"
+                      value="=================Default Fault Hnadler============="/>
+        </log>
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="ERROR_CODE"
+                      expression="get-property('ERROR_CODE')"/>
+            <property xmlns:ns="http://org.apache.synapse/xsd"
+                      name="ERROR_MESSAGE"
+                      expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <send>
+            <endpoint>
+                <address uri="http://localhsdsdsdost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

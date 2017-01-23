@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <proxy name="ForceErrorTestProxy" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target endpoint="SimpleEP">
+            <inSequence>
+                <property name="FORCE_ERROR_ON_SOAP_FAULT"
+                    scope="default" type="STRING" value="true"/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <endpoint name="SimpleEP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+    <sequence name="fault">
+        <makefault>
+            <code expression="$ctx:ERROR_CODE"/>
+            <reason expression="$ctx:ERROR_MESSAGE"/>
+            <role/>
+        </makefault>
+        <send/>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

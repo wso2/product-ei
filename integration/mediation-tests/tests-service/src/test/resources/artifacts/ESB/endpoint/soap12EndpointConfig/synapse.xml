@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="soap12ActionHeader" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="soap12EP_Test" >
+                        <address uri="http://localhost:8888/services/SimpleStockQuoteService" format="soap12" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+</definitions>
+
+

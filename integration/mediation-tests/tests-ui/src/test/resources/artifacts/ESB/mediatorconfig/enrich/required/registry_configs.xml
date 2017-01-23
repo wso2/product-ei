@@ -1,0 +1,5 @@
+<m:getQuote xmlns:m="http://services.samples">
+    <m:request>
+        <m:symbol>IBM</m:symbol>
+    </m:request>
+</m:getQuote>

@@ -1,0 +1,22 @@
+
+<inboundEndpoint name="jms-inbound-for-topic" onError="FaultSequence" protocol="jms"
+                 sequence="inbound" suspend="false"
+                 xmlns="http://ws.apache.org/ns/synapse">
+    <parameters>
+        <parameter name="interval">5000</parameter>
+        <parameter name="coordination">true</parameter>
+        <parameter name="transport.jms.CacheLevel">3</parameter>
+        <parameter name="transport.jms.ConnectionFactoryJNDIName">TopicConnectionFactory</parameter>
+        <parameter name="transport.jms.ContentType">application/xml</parameter>
+        <parameter name="sequential">true</parameter>
+        <parameter name="java.naming.factory.initial">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+        <parameter name="transport.jms.SessionTransacted">true</parameter>
+        <parameter name="transport.jms.DurableSubscriberName">newID3</parameter>
+        <parameter name="transport.jms.DurableSubscriberClientID">newID3</parameter>
+        <parameter name="transport.jms.Destination">MyNewTopic</parameter>
+        <parameter name="java.naming.provider.url">repository/conf/jndi.properties</parameter>
+        <parameter name="transport.jms.SessionAcknowledgement">CLIENT_ACKNOWLEDGE</parameter>
+        <parameter name="transport.jms.SubscriptionDurable">true</parameter>
+        <parameter name="transport.jms.ConnectionFactoryType">topic</parameter>
+    </parameters>
+</inboundEndpoint>

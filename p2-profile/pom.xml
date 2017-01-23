@@ -32,7 +32,6 @@
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - P2 Profile Module</name>
     <url>http://wso2.org</url>
-
     <modules>
         <module>ei-profile</module>
         <module>analytics-profile</module>

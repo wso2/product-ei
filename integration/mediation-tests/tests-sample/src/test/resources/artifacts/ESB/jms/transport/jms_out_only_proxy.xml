@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="ResponseQue"
+           transports="jms"
+           startOnLoad="true"
+           trace="disable">
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="Response" value="Received"/>
+                </log>
+                <property name="OUT_ONLY" value="true"/>
+                <drop/>
+            </inSequence>
+        </target>
+        <parameter name="transport.jms.ContentType">
+            <rules>
+                <jmsProperty>contentType</jmsProperty>
+                <default>text/xml</default>
+            </rules>
+        </parameter>
+    </proxy>
+    <proxy name="MainProxy"
+           transports="http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <endpoint>
+                <address uri="jms:/ResponseQue?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
+            </endpoint>
+            <inSequence>
+                <property name="transport.jms.ContentTypeProperty"
+                          value="Content-Type"
+                          scope="axis2"/>
+                <property name="OUT_ONLY" value="true"/>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+                <log level="full"/>
+            </inSequence>
+        </target>
+    </proxy>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

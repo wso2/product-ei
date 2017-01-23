@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.ESBRegistry">
+        <parameter name="root">file:./repository/samples/resources/</parameter>
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="empty" transports="http" startOnLoad="true" trace="disable">
+        <target inSequence="seq1">
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <localEntry key="xq">
+        <x>
+            declare namespace m="http://services.samples";
+            declare variable $symbol as xs:string external;
+            &lt;m:getQuote xmlns:m="http://services.samples"&gt;
+            &lt;m:request&gt;
+            &lt;m:symbol&gt;{$symbol}&lt;/m:symbol&gt;
+            &lt;/m:request&gt;
+            &lt;/m:getQuote&gt;
+        </x>
+    </localEntry>
+    <sequence name="seq1">
+        <property name="symbol" value="IBM"/>
+        <log level="custom" separator=",">
+            <property name="before xquery" expression="$ctx:body"/>
+        </log>
+        <xquery key="xq">
+            <variable name="symbol" expression="get-property('symbol')" type="STRING"/>
+        </xquery>
+        <log level="custom" separator=",">
+            <property name="after xquery" expression="$ctx:body"/>
+        </log>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter source="get-property('To')" regex="http://localhost:9000.*">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

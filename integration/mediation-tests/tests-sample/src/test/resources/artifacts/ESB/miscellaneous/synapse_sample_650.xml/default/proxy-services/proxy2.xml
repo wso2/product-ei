@@ -1,0 +1,9 @@
+<proxy name="CustomStockQuoteProxy1" xmlns="http://ws.apache.org/ns/synapse" transports="http">
+    <target inSequence="customSeq">
+        <endpoint key="foo"/>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+</proxy>

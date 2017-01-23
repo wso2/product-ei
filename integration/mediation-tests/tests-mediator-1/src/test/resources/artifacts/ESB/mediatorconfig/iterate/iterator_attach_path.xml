@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <sequence name="aggregateMessages3">
+        <aggregate id="iterate1">
+            <completeCondition>
+                <messageCount min="-1" max="-1" />
+            </completeCondition>
+            <onComplete xmlns:ns="http://org.apache.synapse/xsd"
+                        xmlns:ns3="http://org.apache.synapse/xsd" xmlns:m0="http://services.samples"
+                        expression="//m0:getQuoteResponse">
+                <send />
+            </onComplete>
+        </aggregate>
+    </sequence>
+    <sequence name="iterateMessages3">
+        <iterate id="iterate1" expression="//m0:getQuote/m0:request"
+                 preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+            <target sequence="anon">
+                <sequence>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                        </endpoint>
+                    </send>
+                </sequence>
+            </target>
+        </iterate>
+    </sequence>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence" />
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
+        </log>
+        <drop />
+    </sequence>
+    <sequence name="main">
+        <in>
+            <sequence key="iterateMessages3" />
+        </in>
+        <out>
+            <sequence key="aggregateMessages3" />
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

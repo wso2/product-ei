@@ -1,0 +1,19 @@
+
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="Test"
+     context="/testapi"
+     hostname="localhost"
+     port="8082">
+    <resource methods="POST GET" url-mapping="/map">
+        <inSequence>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

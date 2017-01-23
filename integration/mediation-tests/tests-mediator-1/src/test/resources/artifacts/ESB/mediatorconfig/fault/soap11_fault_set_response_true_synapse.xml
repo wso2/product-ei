@@ -1,0 +1,45 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="myFaultHandler">
+        <makefault version="soap11" response="true">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  value="soap11Env:VersionMismatch"/>
+            <reason value="Soap11FaultWithAttributeResponseTrueTestCase"/>
+            <role>automation</role>
+            <detail>fault details by automation</detail>
+        </makefault>
+        <log level="full"/>
+        <header name="To" action="remove"/>
+        <send/>
+        <drop/>
+    </sequence>
+
+    <sequence name="main" onError="myFaultHandler">
+        <in>
+            <log level="full"/>
+            <send>
+                <endpoint key="nonExisitentEndpint"/>
+            </send>
+            <drop/>
+        </in>
+        <out>
+            <send/>
+        </out>
+    </sequence>
+
+    <sequence name="fault">
+        <makefault version="soap11">
+            <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                  value="soap11Env:Server"/>
+            <reason value="Default Fault sequence Executed instead of myFaultHandler"/>
+        </makefault>
+        <log level="full">
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <property name="RESPONSE" value="true"/>
+        <header name="To" action="remove"/>
+        <send/>
+    </sequence>
+
+</definitions>

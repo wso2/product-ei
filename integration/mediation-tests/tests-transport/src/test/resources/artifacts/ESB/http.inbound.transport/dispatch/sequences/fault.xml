@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="fault"><!-- Log the message at the full log level with the ERROR_MESSAGE and the ERROR_CODE--><log level="full">
+      <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+      <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+      <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+   </log>
+   <respond/>
+</sequence>

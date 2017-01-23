@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+ -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
+                 name="test"
+                 sequence="TestIn"
+                 onError="TestIn"
+                 protocol="mqtt"
+                 suspend="false">
+        <parameters>
+            <parameter name="mqtt.server.port">1883</parameter>
+            <parameter name="content.type">application/xml</parameter>
+            <parameter name="interval">12</parameter>
+            <parameter name="coordination">false</parameter>
+            <parameter name="mqtt.connection.factory">mqttConFactory</parameter>
+            <parameter name="mqtt.subscription.username">elil</parameter>
+            <parameter name="mqtt.subscription.qos">1</parameter>
+            <parameter name="mqtt.session.clean">false</parameter>
+            <parameter name="mqtt.temporary.store.directory">te</parameter>
+            <parameter name="mqtt.ssl.enable">false</parameter>
+            <parameter name="sequential">false</parameter>
+            <parameter name="mqtt.topic.name">esb.test2</parameter>
+            <parameter name="mqtt.blocking.sender">true</parameter>
+            <parameter name="mqtt.server.host.name">localhost</parameter>
+        </parameters>
+</inboundEndpoint>
+
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="TestIn">
+    <log level="full"/>
+    <drop/>
+</sequence>
+
+</definitions>

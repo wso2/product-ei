@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Pure text/binary and POX message support with JMS -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="text_proxy">
+        <log level="full"/>
+        <header name="Action" value="urn:placeOrder"/>
+        <script language="js">
+            var args = mc.getPayloadXML().toString().split(" ");
+            mc.setPayloadXML(
+            &lt;placeOrder xmlns="http://services.samples"&gt;
+            &lt;order xmlns="http://services.samples/xsd"&gt;
+            &lt;price&gt;{args[0]}&lt;/price&gt;
+            &lt;quantity&gt;{args[1]}&lt;/quantity&gt;
+            &lt;symbol&gt;{args[2]}&lt;/symbol&gt;
+            &lt;/order&gt;
+            &lt;/placeOrder&gt;);
+        </script>
+        <property action="set" name="OUT_ONLY" value="true"/>
+        <log level="full"/>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService" format="pox"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+    <sequence name="mtom_proxy">
+        <log level="full"/>
+        <property action="set" name="OUT_ONLY" value="true"/>
+        <header name="Action" value="urn:oneWayUploadUsingMTOM"/>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/MTOMSwASampleService" optimize="mtom"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+    <sequence name="pox_proxy">
+        <property action="set" name="OUT_ONLY" value="true"/>
+        <header name="Action" value="urn:placeOrder"/>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService" format="soap11"/>
+            </endpoint>
+        </send>
+    </sequence>
+
+    <sequence name="out">
+        <send/>
+    </sequence>
+
+    <proxy name="JMSFileUploadProxy" transports="jms">
+        <target inSequence="mtom_proxy" outSequence="out"/>
+        <parameter name="transport.jms.ContentType">
+            <rules>
+                <bytesMessage>application/octet-stream</bytesMessage>
+            </rules>
+        </parameter>
+        <parameter name="Wrapper">{http://services.samples/xsd}element</parameter>
+    </proxy>
+
+    <proxy name="JMSTextProxy" transports="jms">
+        <target inSequence="text_proxy" outSequence="out"/>
+        <parameter name="transport.jms.ContentType">
+            <rules>
+                <textMessage>text/plain</textMessage>
+            </rules>
+        </parameter>
+        <parameter name="Wrapper">{http://services.samples/xsd}text</parameter>
+    </proxy>
+
+    <proxy name="JMSPoxProxy" transports="jms">
+        <target inSequence="pox_proxy" outSequence="out"/>
+        <parameter name="transport.jms.ContentType">application/xml</parameter>
+    </proxy>
+
+</definitions>

@@ -1,0 +1,11 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd">
+
+    <localEntry key="local-entry-sequence-key"
+                src="file:repository/samples/resources/sequence/dynamic_seq_1.xml"/>
+
+    <sequence name="main">
+            <sequence key="local-entry-sequence-key"/>
+    </sequence>
+</definitions>

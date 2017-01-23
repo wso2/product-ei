@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <proxy name="httpEndPoint"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9000"/>
+                <property name="uri.var.servicePath" value="services"/>
+                <property name="uri.var.serviceName" value="SimpleStockQuoteService"/>
+                <send>
+                    <endpoint key="HTTPEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="deleteEPProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9009"/>
+                <property name="uri.var.servicePath" value="services"/>
+                <property name="uri.var.serviceName" value="StudentService"/>
+                <property name="uri.var.args" expression="$axis2:REST_URL_POSTFIX"/>
+                <send>
+                    <endpoint key="DELETEEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="putEPProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9009"/>
+                <property name="uri.var.servicePath" value="services"/>
+                <property name="uri.var.serviceName" value="StudentService"/>
+                <send>
+                    <endpoint key="PUTEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="getEPProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9009"/>
+                <property name="uri.var.servicePath" value="services"/>
+                <property name="uri.var.serviceName" value="StudentService"/>
+                <property name="uri.var.args" expression="$axis2:REST_URL_POSTFIX"/>
+                <send>
+                    <endpoint key="GETEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="missingVariableEndPoint"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9000"/>
+                <property name="uri.var.serviceName" value="SimpleStockQuoteService"/>
+                <property name="uri.var.serviceName" value="SimpleStockQuoteService"/>
+                <send>
+                    <endpoint key="HTTPEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="postEPProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9009"/>
+                <property name="uri.var.servicePath" value="services"/>
+                <property name="uri.var.serviceName" value="StudentService"/>
+                <send>
+                    <endpoint key="POSTEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="invalidHttpEndPoint"
+           transports="http https"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint key="InvalidEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="headEPProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="uri.var.port" value="9009"/>
+                <property name="uri.var.servicePath" value="services"/>
+                <property name="uri.var.serviceName" value="StudentService"/>
+                <send>
+                    <endpoint key="HEADEndpoint"/>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <endpoint name="DELETEEndpoint">
+        <http method="delete"
+              uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}{uri.var.args}"/>
+    </endpoint>
+    <endpoint name="HTTPEndpoint">
+        <http method="POST"
+              uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}"/>
+    </endpoint>
+    <endpoint name="POSTEndpoint">
+        <http method="post"
+              uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}"/>
+    </endpoint>
+    <endpoint name="InvalidEndpoint">
+        <http method="POST"
+              uri-template="http://localhost:9010/services/SimpleStockQuoteService"/>
+    </endpoint>
+    <endpoint name="GETEndpoint">
+        <http method="get"
+              uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}{uri.var.args}"/>
+    </endpoint>
+    <endpoint name="PUTEndpoint">
+        <http method="put"
+              uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}"/>
+    </endpoint>
+    <endpoint name="HEADEndpoint">
+        <http method="head"
+              uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}"/>
+    </endpoint>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+        </in>
+        <out>
+            <log level="full"/>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+</definitions>

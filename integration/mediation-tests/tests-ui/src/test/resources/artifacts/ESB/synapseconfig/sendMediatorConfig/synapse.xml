@@ -1,0 +1,1539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <!--###################Build Message Before Sending =No , Receiving sequence = Default#####################-->
+
+    <proxy name="addressEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="defaultEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="wsdlEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="failoverEndPoint" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--###################Build Message Before Sending =Yes , Receiving sequence = Default#####################-->
+
+    <proxy name="addressEndPointBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="defaultEndPointBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true"/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="wsdlEndPointBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="failoverEndPointBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--###################Build Message Before Sending =No , Receiving sequence = Static/Config Reg############-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_ConfigReg" transports="http,https">
+        <target >
+            <inSequence>
+                <send receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="defaultEndPoint_Receiving_Sequence_ConfigReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="conf:/test_sequences_config/receivingSequence_Conf.xml"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="wsdlEndPoint_Receiving_Sequence_ConfigReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="failOverEndPoint_Receiving_Sequence_ConfigReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--###################Build Message Before Sending =No , Receiving sequence = Static/Gov Reg###############-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_GovReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_GovReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="gov:/test_sequences_gov/receivingSequence_Gov.xml"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_GovReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_GovReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--###################Build Message Before Sending =No , Receiving sequence = Static/Local Reg#############-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_LocalReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="local:/test_sequences_local/receivingSequence_Local.xml">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_LocalReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="local:/test_sequences_local/receivingSequence_Local.xml"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_LocalReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="local:/test_sequences_local/receivingSequence_Local.xml">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_LocalReg" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="local:/test_sequences_local/receivingSequence_Local.xml">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--###################Build Message Before Sending =Yes , Receiving sequence = Static/Config Reg###########-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_ConfigRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_ConfigRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="conf:/test_sequences_config/receivingSequence_Conf.xml"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_ConfigRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_ConfigRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--###################Build Message Before Sending =Yes , Receiving sequence = Static/Gov Reg##############-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_GovRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_GovRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="gov:/test_sequences_gov/receivingSequence_Gov.xml"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_GovRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_GovRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--#################Build Message Before Sending =Yes , Receiving sequence = Static/Local Reg##############-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_LocalRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send  buildmessage="true" receive="local:/test_sequences_local/receivingSequence_Local.xml">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_LocalRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send  buildmessage="true" receive="local:/test_sequences_local/receivingSequence_Local.xml"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_LocalRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="local:/test_sequences_local/receivingSequence_Local.xml">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_LocalRegBM" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="local:/test_sequences_local/receivingSequence_Local.xml">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--####################Build Message Before Sending =No , Receiving Sequence = Dynamic####################-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_Dynamic" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_Dynamic" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send receive="{get-property('receiving_sequence')}"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_Dynamic" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_Dynamic" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--####################Build Message Before Sending =Yes , Receiving Sequence = Dynamic####################-->
+
+    <proxy name="addressEndPoint_Receiving_Sequence_Dynamic_BM" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send buildmessage="true" receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="defaultEndPoint_Receiving_Sequence_Dynamic_BM" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send buildmessage="true" receive="{get-property('receiving_sequence')}"/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="wsdlEndPoint_Receiving_Sequence_Dynamic_BM" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send buildmessage="true" receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <wsdl uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="failOverEndPoint_Receiving_Sequence_Dynamic_BM" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send buildmessage="true" receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <failover>
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/SimpleStockQuoteService">
+                                    <enableAddressing/>
+                                    <suspendDurationOnFailure>2</suspendDurationOnFailure>
+                                </address>
+                            </endpoint>
+                        </failover>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--#####################################Load Balancing Endpoint############################################-->
+
+
+    <proxy name="loadBalancingEndPoint1" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint2" transports="http,https">
+        <target>
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>                               4
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint3" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint4" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint5" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint6" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint7" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint8" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="conf:/test_sequences_config/receivingSequence_Conf.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint9" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint10" transports="http,https">
+        <target>
+            <inSequence>
+                <send receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint11" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint12" transports="http,https">
+        <target>
+            <inSequence>
+                <send buildmessage="true" receive="gov:/test_sequences_gov/receivingSequence_Gov.xml">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint13" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint14" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint15" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send buildmessage="true" receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.WeightedRoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="2"/>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                                <property name="loadbalance.weight" value="1"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="loadBalancingEndPoint16" transports="http,https">
+        <target>
+            <inSequence>
+                <property name="receiving_sequence"
+                          value="dynamic_receiving_sequence"
+                          scope="default"
+                          type="STRING"/>
+                <send buildmessage="true" receive="{get-property('receiving_sequence')}">
+                    <endpoint>
+                        <loadbalance
+                                algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint>
+                                <address uri="http://localhost:9001/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9002/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                            <endpoint>
+                                <address uri="http://localhost:9003/services/LBService1">
+                                    <enableAddressing/>
+                                    <suspendOnFailure>
+                                        <initialDuration>1000</initialDuration>
+                                        <progressionFactor>1.0</progressionFactor>
+                                    </suspendOnFailure>
+                                </address>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <drop/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <!--########################################################################################################-->
+
+    <!--#####################################Dynamic Receiving Sequence#########################################-->
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="dynamic_receiving_sequence">
+        <send/>
+        <log xmlns="http://ws.apache.org/ns/synapse">
+            <property name="Receiving Sequence" value="Config Reg" ></property>
+        </log>
+    </sequence>
+
+    <!--########################################################################################################-->
+
+
+
+    <!--########################################################################################################-->
+
+</definitions>
+
+

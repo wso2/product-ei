@@ -1,0 +1,110 @@
+<!--
+
+Call Mediator with Iterate/Aggregate
+
+Console Log
+===========
+
+-Ditr=2
+
+STATE = INSEQ S1
+STATE = SEQ1 S1
+STATE = ITERATE1 S1
+STATE = ITERATE1 S1
+STATE = ITERATE1 S2
+STATE = ITERATE1 S2
+STATE = SEQ1 S2
+STATE = SEQ1 S2
+STATE = AGGREGATE S1
+STATE = AGGREGATE S2
+STATE = SEQ1 S3
+STATE = INSEQ S2
+
+
+-->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="TestCallProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="STATE" value="INSEQ S1"/>
+                </log>
+                <sequence key="SEQ1"/>
+                <log level="custom">
+                    <property name="STATE" value="INSEQ S2"/>
+                </log>
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true"/>
+                <send/>
+            </inSequence>
+        </target>
+    </proxy>
+
+    <endpoint name="EP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+
+    <sequence name="SEQ1">
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S1"/>
+        </log>
+        <iterate xmlns:m0="http://services.samples"
+                 preservePayload="true"
+                 attachPath="//m0:getQuote"
+                 expression="//m0:getQuote/m0:request">
+            <target>
+                <sequence>
+                    <log level="custom">
+                        <property name="STATE" value="ITERATE1 S1"/>
+                    </log>
+                    <call>
+                        <endpoint key="EP"/>
+                    </call>
+                    <log level="custom">
+                        <property name="STATE" value="ITERATE1 S2"/>
+                    </log>
+                </sequence>
+            </target>
+        </iterate>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S2"/>
+        </log>
+        <aggregate>
+            <completeCondition>
+                <messageCount/>
+            </completeCondition>
+            <onComplete xmlns:m0="http://services.samples" expression="//m0:getQuoteResponse">
+                <log level="custom">
+                    <property name="STATE" value="AGGREGATE S1"/>
+                </log>
+                <header name="Action" value="urn:getQuote"/>
+                <payloadFactory>
+                    <format>
+                        <m0:getQuote>
+                            <m0:request>
+                                <m0:symbol>AGG</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <call>
+                    <endpoint key="EP"/>
+                </call>
+                <log level="custom">
+                    <property name="STATE" value="AGGREGATE S2"/>
+                </log>
+            </onComplete>
+        </aggregate>
+        <log level="custom">
+            <property name="STATE" value="SEQ1 S3"/>
+        </log>
+    </sequence>
+
+</definitions>

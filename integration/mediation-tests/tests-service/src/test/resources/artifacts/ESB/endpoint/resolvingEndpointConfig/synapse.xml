@@ -1,0 +1,17 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="StockQuoteProxy">
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="KEY_VALUE" expression="$url:myKey"/>
+                </log>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+            <endpoint key-expression="$url:myKey"/>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <description/>
+    </proxy>
+</definitions>
