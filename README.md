@@ -1,4 +1,4 @@
-# product-ei
+# WSO2 Enterprise Integrator 6.0
 Product EI is an unified distribution of WSO2 Enterprise Service Bus, Application Server, Data Services Server alongside Analytics, Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of each runtime.
 
 ## Startup
