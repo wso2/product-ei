@@ -997,13 +997,7 @@
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/dbscripts/metrics</outputDirectory>
         </fileSet>
-        <!--<fileSet>-->
-            <!--<directory>./src/broker/conf/tomcat</directory>-->
-            <!--<outputDirectory>-->
-                <!--wso2ei-${pom.version}/wso2/broker/conf/tomcat-->
-            <!--</outputDirectory>-->
-        <!--</fileSet>-->
-
+        
         <fileSet>
             <directory>./src/broker/conf/advanced</directory>
             <outputDirectory>
