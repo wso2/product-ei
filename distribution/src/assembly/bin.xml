@@ -937,6 +937,7 @@
                 <exclude>**/wso2</exclude>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
+                <exclude>**/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
                 <exclude>**/conf/carbon.xml</exclude>
@@ -996,12 +997,12 @@
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/dbscripts/metrics</outputDirectory>
         </fileSet>
-        <fileSet>
-            <directory>./src/broker/conf/tomcat</directory>
-            <outputDirectory>
-                wso2ei-${pom.version}/wso2/broker/conf/tomcat
-            </outputDirectory>
-        </fileSet>
+        <!--<fileSet>-->
+            <!--<directory>./src/broker/conf/tomcat</directory>-->
+            <!--<outputDirectory>-->
+                <!--wso2ei-${pom.version}/wso2/broker/conf/tomcat-->
+            <!--</outputDirectory>-->
+        <!--</fileSet>-->
 
         <fileSet>
             <directory>./src/broker/conf/advanced</directory>
@@ -2777,6 +2778,16 @@
             </source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/business-process/conf/tomcat/carbon/WEB-INF/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                ./src/broker/conf/tomcat/carbon/WEB-INF/web.xml
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/carbon/WEB-INF/
             </outputDirectory>
             <fileMode>644</fileMode>
         </file>
