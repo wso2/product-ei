@@ -1004,7 +1004,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>./src/broker/conf/advanced</directory>
+            <directory>src/broker/conf/advanced</directory>
             <outputDirectory>
                 wso2ei-${pom.version}/wso2/broker/conf/advanced
             </outputDirectory>
