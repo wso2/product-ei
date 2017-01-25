@@ -218,12 +218,13 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf</outputDirectory>
             <excludes>
                 <exclude>**/wso2</exclude>
+                <exclude>**/log4j.properties</exclude>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
-                <exclude>**/conf/carbon.xml</exclude>
+                <exclude>**/carbon.xml</exclude>
                 <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
                 </exclude>
@@ -2839,8 +2840,6 @@
         <file>
             <source>src/broker/conf/carbon.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/</outputDirectory>
-            <destName>carbon.xml</destName>
-            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -2879,11 +2878,6 @@
         </file>
         <file>
             <source>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/metrics.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/log4j.properties</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
@@ -2939,11 +2933,6 @@
         </file>
         <file>
             <source>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/metrics.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/log4j.properties</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
