@@ -136,9 +136,6 @@
                                     org.wso2.carbon.mediation:org.wso2.carbon.mediation.clustering.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.wso2.carbon.mediator.bam.feature:${carbon.mediation.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.application.mgt.synapse.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -594,10 +591,6 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.mediation.clustering.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.mediator.bam.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
@@ -1159,10 +1152,6 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.mediation.clustering.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.mediator.bam.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>

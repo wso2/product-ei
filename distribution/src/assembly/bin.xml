@@ -194,7 +194,7 @@
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
-        
+
 
         <fileSet>
             <directory>src/scripts</directory>
@@ -997,7 +997,7 @@
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/dbscripts/metrics</outputDirectory>
         </fileSet>
-        
+
         <fileSet>
             <directory>./src/broker/conf/advanced</directory>
             <outputDirectory>
@@ -2570,7 +2570,7 @@
             <source>
                 target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed/xalan-2.7.2.wso2v2.jar
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/lib/endorsed/</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib/endorsed/</outputDirectory>
             <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
             <!--filtered>true</filtered-->
             <fileMode>644</fileMode>
