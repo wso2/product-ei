@@ -79,24 +79,27 @@ public class Utils {
      * @return meta data for webapp
      */
     public static WebApplication getStartedTenantWebapp(String tenantDomain, String path, String hostName) {
-
-        ConfigurationContextService contextService = IntegratorComponent.getContextService();
-        ConfigurationContext configContext;
-        ConfigurationContext tenantContext;
-        if (null != contextService) {
-            // Getting server's configContext instance
-            configContext = contextService.getServerConfigContext();
-            tenantContext = TenantAxisUtils.getTenantConfigurationContext(tenantDomain, configContext);
-            Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(tenantContext);
-            WebApplication matchedWebApplication = null;
-            for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
-                for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
-                    if (path.contains(webApplication.getContextName()) && webApplication.getHostName().equals(hostName)) {
-                        matchedWebApplication = webApplication;
-                        return matchedWebApplication;
+        try {
+            ConfigurationContextService contextService = IntegratorComponent.getContextService();
+            ConfigurationContext configContext;
+            ConfigurationContext tenantContext;
+            if (null != contextService) {
+                // Getting server's configContext instance
+                configContext = contextService.getServerConfigContext();
+                tenantContext = TenantAxisUtils.getTenantConfigurationContext(tenantDomain, configContext);
+                Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(tenantContext);
+                WebApplication matchedWebApplication = null;
+                for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
+                    for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
+                        if (path.contains(webApplication.getContextName()) && webApplication.getHostName().equals(hostName)) {
+                            matchedWebApplication = webApplication;
+                            return matchedWebApplication;
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            //ignore
         }
         return null;
     }
