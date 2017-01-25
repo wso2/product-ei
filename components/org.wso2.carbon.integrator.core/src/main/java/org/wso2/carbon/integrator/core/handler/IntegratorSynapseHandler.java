@@ -48,7 +48,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     public boolean handleRequestInFlow(MessageContext messageContext) {
         boolean isPreserveHeadersContained = false;
         try {
-            if (messageContext.getTo() != null) {
+            if (((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TransportInURL") != null) {
                 String uri = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TransportInURL").toString();
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
