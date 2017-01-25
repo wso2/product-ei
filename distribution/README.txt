@@ -1,21 +1,14 @@
 ================================================================================
-                        WSO2 Enterprise Service Bus 5.0.0
+                        WSO2 Enterprise Integrator 6.0.0
 ================================================================================
 
-Welcome to the WSO2 ESB 5.0.0 release
+Welcome to the WSO2 EI 6.0.0 release
 
-WSO2 ESB is a lightweight and easy-to-use Open Source Enterprise Service Bus
-(ESB) available under the Apache Software License v2.0. WSO2 ESB allows
-administrators to simply and easily configure message routing, intermediation,
-transformation, logging, task scheduling, load balancing, failover routing,
-event brokering, etc.. The runtime has been designed to be completely
-asynchronous, non-blocking and streaming based on the Apache Synapse core.
+Product EI is an unified distribution of WSO2 Enterprise Service Bus, Application Server, Data Services Server alongside Analytics,
+Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of
+each runtime.
 
-This is based on the revolutionary WSO2 Carbon [Middleware a' la carte]
-framework. All the major features have been developed as pluggable Carbon
-components.
-
-Key Features of WSO2 ESB
+Key Features of WSO2 EI
 ==================================
 
 1. Proxy services - facilitating synchronous/asynchronous transport, interface
@@ -67,8 +60,10 @@ Key Features of WSO2 ESB
 Installation & Running
 ==================================
 
-1. Extract the wso2esb-5.0.0.zip and go to the extracted directory
-2. Run the wso2server.sh or wso2server.bat as appropriate
+Running Enterprise Integrator
+==================================
+1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
+2. Run integrator.sh or integrator.bat.
 3. Point your favourite browser to
 
     https://localhost:9443/carbon
@@ -78,30 +73,85 @@ Installation & Running
     username : admin
     password : admin
 
-5. Sample configurations can be started with wso2esb-samples.sh or
-   wso2esb-samples.bat as appropriate specifying the sample number with the -sn
-   option, for example to run sample 0 the command is
+Running all runtimes (Integrator,Analytics,Broker,Business-Process)
+==================================================================
 
-    ./wso2esb-samples.sh -sn 0
-     wso2esb-samples.bat -sn 0
+1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
+2. Run start-all.sh or start-all.bat.
+3. Access appropriate url for the related runtime. (ex:  https://localhost:9443/carbon)
 
-WSO2 ESB 5.0.0 distribution directory structure
+Running other runtimes individually (Analytics,Broker,Business-Process)
+======================================================================
+1. Extract  wso2ei-6.0.0.zip and go to the extracted directory.
+2. Go to wso2ei-6.0.0/wso2 directory.
+3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
+4. Execute wso2server.sh or wso2server.bat.
+
+WSO2 EI 6.0.0 distribution directory structure
 =============================================
 
 	CARBON_HOME
 		|- bin <folder>
+		|- conf <folder>
 		|- dbscripts <folder>
+		|- dropins <folder>
+		|- extensions <folder>
 		|- lib <folder>
+		|- patches <folder>
 		|- repository <folder>
-			|-- logs <folder>
+			|--- axis2 <folder>
+			|--- data <folder>
 			|--- database <folder>
-			|--- conf <folder>
+			|--- deployment <folder>
+			|--- logs <folder>
+			|--- resources <folder>
+			|--- samples <folder>
+			|---tenants <folder>
 		|- resources <folder>
 		|- samples <folder>
-		|- tmp <folder>
+		|- servicepacks <folder>
+		|- webapp-mode <folder>
 		|- LICENSE.txt <file>
 		|- README.txt <file>
 		|- release-notes.html <file>
+		|- wso2 <folder>
+		   |--- analytics <folder>
+		         |--- bin <folder>
+		         |--- conf <folder>
+		         |--- dbscripts <folder>
+		         |--- lib_managed <folder>
+		         |--- migration <folder>
+		         |--- modules <folder>
+		         |--- repository <folder>
+		         |--- resources <folder>
+		         |--- temp <folder>
+		   |--- broker <folder>
+		         |--- bin <folder>
+		         |--- conf <folder>
+		         |--- dbscripts <folder>
+		         |--- repository <folder>
+		         |--- temp <folder>
+		   |--- business-process <folder>
+		         |--- bin <folder>
+		         |--- conf <folder>
+		         |--- dbscripts <folder>
+		         |--- modules <folder>
+		         |--- repository <folder>
+		         |--- resources <folder>
+		         |--- temp <folder>
+		   |--- components <folder>
+		         |--- plugins <folder>
+		         |--- p2 <folder>
+		         |--- features <folder>
+		         |--- default <folder>
+		         |--- worker <folder>
+		         |--- business-process-default <folder>
+		         |--- business-process-worker <folder>
+		         |--- broker-default <folder>
+		         |--- analytics-default <folder>
+		         |--- artifacts.xml <file>
+		   |--- lib <folder>
+		   |--- temp <folder>
 
     - bin
 	  Contains various scripts .sh & .bat scripts
@@ -113,20 +163,18 @@ WSO2 ESB 5.0.0 distribution directory structure
 	  Contains all the database scripts
 
     - lib
-	  Contains the basic set of libraries required to startup ESB
+	  Contains the basic set of libraries required to startup EI
 	  in standalone mode
 
     - repository
-	  The repository where services and modules deployed in WSO2 ESB
-	  are stored. In addition to this the components directory inside the
-	  repository directory contains the carbon runtime and the user added
-	  jar files including mediators third party libraries and so on..
+	  The repository where services and modules deployed in WSO2 EI
+	  are stored.
 	
 	- conf
-	  Contains configuration files
+	  Contains configuration files specific to EI
 
 	- logs
-	  Contains all log files created during execution
+	  Contains all log files created during execution of EI
 
     - resources
 	  Contains additional resources that may be required, including sample
@@ -134,7 +182,7 @@ WSO2 ESB 5.0.0 distribution directory structure
 
     - samples
 	  Contains some sample services and client applications that demonstrate
-	  the functionality and capabilities of WSO2 ESB
+	  the functionality and capabilities of WSO2 EI
 
     - tmp
 	  Used for storing temporary files, and is pointed to by the
@@ -142,13 +190,60 @@ WSO2 ESB 5.0.0 distribution directory structure
 
     - LICENSE.txt
 	  Apache License 2.0 and the relevant other licenses under which
-	  WSO2 ESB is distributed.
+	  WSO2 EI is distributed.
 
     - README.txt
 	  This document.
 
     - release-notes.html
-	  Release information for WSO2 ESB 5.0.0
+	  Release information for WSO2 EI 6.0.0
+
+	- patches
+	  Used to add patches related for all runtimes.
+
+	-dropins
+	  Used to add external jars(dependencies) of all runtimes.
+
+	-extensions
+	  Used to add carbon extensions.
+
+	-servicepacks
+	 Used to add service packs related to all runtimes.
+
+	-webapp-mode
+
+	-wso2/components
+	 Contains profiles for all runtimes and the plugins folder
+
+	-wso2/lib
+	  Contains jars that are required/shared by all runtimes.
+
+	-wso2/analytics
+	  Contains analytics runtime related files/folders.
+
+	-wso2/analytics/conf
+	  Analytics runtime specific configuration files.
+
+    -wso2/analytics/repository
+	  Where deployments of Analytics runtime is stored.
+
+	-wso2/business-process
+      Contains business-process runtime related files/folders.
+
+   -wso2/business-process/conf
+      Business-process runtime specific configuration files.
+
+   -wso2/busines-process/repository
+      Where deployments of business-process runtime is stored.
+
+   -wso2/broker
+      Contains broker runtime related files/folders.
+
+   -wso2/broker/conf
+      Broker runtime specific configuration files.
+
+   -wso2/broker/repository
+      Where deployments of broker runtime is stored.
 
 Support
 ==================================
@@ -159,18 +254,15 @@ hours, to premium 24x7 phone support.
 
 For additional support information please refer to http://wso2.com/support/
 
-For more information on WSO2 ESB, visit the WSO2 Oxygen Tank (http://wso2.org)
+For more information on WSO2 EI, visit the WSO2 Oxygen Tank (http://wso2.org)
 
-Known issues of WSO2 ESB 5.0.0
+Known issues of WSO2 EI 6.0.0
 ==================================
 
- * Dependency management within the configuration is not handled properly
 
 Issue Tracker
 ==================================
 
-  https://wso2.org/jira/browse/CARBON
-  https://wso2.org/jira/browse/ESBJAVA
 
 Crypto Notice
 ==================================

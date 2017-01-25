@@ -221,7 +221,7 @@
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
-                <exclude>**/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
                 <exclude>**/carbon.xml</exclude>
@@ -2737,12 +2737,8 @@
         </file>
 
         <file>
-            <source>
-                src/broker/conf/tomcat/carbon/WEB-INF/web.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/carbon/WEB-INF/
-            </outputDirectory>
+            <source>src/broker/conf/tomcat/carbon/WEB-INF/web.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/carbon/WEB-INF/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
