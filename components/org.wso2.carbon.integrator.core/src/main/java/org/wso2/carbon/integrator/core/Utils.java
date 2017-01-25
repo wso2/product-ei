@@ -53,16 +53,15 @@ public class Utils {
     /**
      * Get the details of a deployed webApp
      *
-     * @param path
-     * @param hostName
+     * @param path URI path
      * @return meta data for webapp
      */
-    public static WebApplication getStartedWebapp(String path, String hostName) {
+    public static WebApplication getStartedWebapp(String path) {
         Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(CarbonConfigurationContextFactory.getConfigurationContext());
         WebApplication matchedWebApplication = null;
         for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
             for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
-                if (path.contains(webApplication.getContextName()) && webApplication.getHostName().equals(hostName)) {
+                if (path.contains(webApplication.getContextName())) {
                     matchedWebApplication = webApplication;
                     return matchedWebApplication;
                 }
@@ -74,11 +73,10 @@ public class Utils {
     /**
      * Get the details of a deployed webapp
      *
-     * @param path
-     * @param hostName
+     * @param path URI path
      * @return meta data for webapp
      */
-    public static WebApplication getStartedTenantWebapp(String tenantDomain, String path, String hostName) {
+    public static WebApplication getStartedTenantWebapp(String tenantDomain, String path) {
         try {
             ConfigurationContextService contextService = IntegratorComponent.getContextService();
             ConfigurationContext configContext;
@@ -91,7 +89,7 @@ public class Utils {
                 WebApplication matchedWebApplication = null;
                 for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
                     for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
-                        if (path.contains(webApplication.getContextName()) && webApplication.getHostName().equals(hostName)) {
+                        if (path.contains(webApplication.getContextName())) {
                             matchedWebApplication = webApplication;
                             return matchedWebApplication;
                         }
