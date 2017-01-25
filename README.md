@@ -13,4 +13,4 @@ All the open issues pertaining to WSO2 Enterprise Integrator are reported at the
 ## Build from the source
 - Get a clone or download source from [github](https://github.com/wso2/product-ei)
 - Run the Maven command ``mvn clean install`` from the root directory
-- Extract the ballerina distribution created at product-ei/distribution/target/wso2ei-6.0.0-SNAPSHOT.zip in to your local directory
+- Extract the Product EI distribution created at product-ei/distribution/target/wso2ei-6.0.0-SNAPSHOT.zip in to your local directory
