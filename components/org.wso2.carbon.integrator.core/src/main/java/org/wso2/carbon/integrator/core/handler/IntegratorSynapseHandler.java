@@ -64,7 +64,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                     } else {
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
                         if (tenantDomain != null) {
-                            WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri, host);
+                            WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
                             if (webApplication != null) {
                                 configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                                 isPreserveHeadersContained = true;
@@ -76,7 +76,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                                 return sendMediator.mediate(messageContext);
                             }
                         } else {
-                            WebApplication webApplication = Utils.getStartedWebapp(uri, host);
+                            WebApplication webApplication = Utils.getStartedWebapp(uri);
                             if (webApplication != null) {
                                 configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                                 isPreserveHeadersContained = true;
