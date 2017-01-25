@@ -913,9 +913,6 @@
             </includes>
         </fileSet>
 
-
-        <!-- Adding Analytics related files to distribution -->
-
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics</outputDirectory>
@@ -958,41 +955,6 @@
         </fileSet>
 
         <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf</outputDirectory>
-            <excludes>
-                <exclude>**/*.sh</exclude>
-                <exclude>**/axis2/axis2.xml</exclude>
-                <exclude>**/axis2/tenant-axis2.xml</exclude>
-                <exclude>**/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
-                <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
-                <exclude>**/version.txt</exclude>
-                <exclude>**/wso2carbon-version.txt</exclude>
-                <exclude>**/wso2server.bat</exclude>
-                <exclude>**/README.txt</exclude>
-                <exclude>**/LICENSE.txt</exclude>
-                <exclude>**/release-notes.html</exclude>
-                <exclude>**/carbon.xml</exclude>
-                <exclude>**/repository/components/plugins/saxon*.jar</exclude>
-                <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**//tomcat/catalina-server.xml</exclude>
-                <exclude>**//registry.xml</exclude>
-                <exclude>**/tomcat/web.xml</exclude>
-                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
-                <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
             <directory>
                 ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/mb-store
             </directory>
@@ -1032,6 +994,7 @@
                 <exclude>**/repository/conf/**</exclude>
                 <exclude>**/repository/components/**</exclude>
                 <exclude>**/wso2/components/**</exclude>
+                <exclude>**/wso2/**</exclude>
                 <exclude>**/lib/**</exclude>
                 <exclude>**/bin/**</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
@@ -2009,19 +1972,7 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-        <!-- Commenting out as part of Carbon 4.4.2 version upgrade -->
-        <!--<file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/webapp-mode/README.txt</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/webapp-mode/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>-->
-        <file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/repository/components/README.txt</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/components/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+
         <file>
             <source>target/wso2carbon-core-${carbon.kernel.version}/repository/database/README.txt</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/database/</outputDirectory>
@@ -2854,6 +2805,11 @@
         </file>
         <!--End copying bps updated files -->
         <!-- Updated broker files-->
+        <file>
+            <source>src/broker/conf/log4j.properties</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
         <file>
             <source>./src/business-process/conf/axis2/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/axis2</outputDirectory>

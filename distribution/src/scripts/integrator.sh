@@ -296,6 +296,7 @@ do
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
     -Dcarbon.home="$CARBON_HOME" \
+    -Dlogger.server.name="EI-Core" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
     -Dcarbon.components.dir.path="$CARBON_HOME/wso2/components" \

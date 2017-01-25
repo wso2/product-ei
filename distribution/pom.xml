@@ -170,16 +170,6 @@
                                             dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components/">
                                     </fileset>
                                 </copy>
-                                <!--<copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/analytics/"-->
-                                <!--overwrite="false">-->
-                                <!--<fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/analytics/">-->
-                                <!--</fileset>-->
-                                <!--</copy>-->
-                                <!--<copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components"-->
-                                <!--overwrite="false">-->
-                                <!--<fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components">-->
-                                <!--</fileset>-->
-                                <!--</copy>-->
                                 <delete file="target/wso2ei-${product.ei.version}.zip"/>
                                 <delete dir="${tempdir}"/>
                                 <mkdir dir="${tempdir}"/>
