@@ -304,6 +304,7 @@ do
     -DandesConfig=broker.xml \
     -Dqpid.conf="/conf/advanced/" \
     -Dcarbon.home="$CARBON_HOME" \
+    -Dlogger.server.name="EI-Broker" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
     -Dcarbon.repository.dir.path="$CARBON_HOME/repository" \

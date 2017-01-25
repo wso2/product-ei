@@ -1,7 +1,19 @@
-#!/bin/bash
-# Process name ( For display )
-# OS specific support.  $var _must_ be set to either true or false.
-#ulimit -n 100000
+#!/bin/sh
+#start-all.sh
+# ----------------------------------------------------------------------------
+#  Copyright 2016 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 cygwin=false;
 darwin=false;
@@ -42,35 +54,6 @@ PRGDIR=`dirname "$PRG"`
 # Only set CARBON_HOME if not already set
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
-
-## Set AXIS2_HOME. Needed for One Click JAR Download
-#AXIS2_HOME="$CARBON_HOME"
-
-# For Cygwin, ensure paths are in UNIX format before anything is touched
-if $cygwin; then
-  [ -n "$CARBON_HOME" ] && CARBON_HOME=`cygpath --unix "$CARBON_HOME"`
-fi
-
-# For OS400
-if $os400; then
-  # Set job priority to standard for interactive (interactive - 6) by using
-  # the interactive priority - 6, the helper threads that respond to requests
-  # will be running at the same priority as interactive jobs.
-  COMMAND='chgjob job('$JOBNAME') runpty(6)'
-  system $COMMAND
-
-  # Enable multi threading
-  QIBM_MULTI_THREADED=Y
-  export QIBM_MULTI_THREADED
-fi
-
-# For Migwn, ensure paths are in UNIX format before anything is touched
-if $mingw ; then
-  [ -n "$CARBON_HOME" ] &&
-    CARBON_HOME="`(cd "$CARBON_HOME"; pwd)`"
-  # TODO classpath?
-fi
-
 ###########################################################################
 NAME=start-all
 # Daemon name, where is the actual executable
@@ -79,19 +62,27 @@ ANALYTICS_INIT_SCRIPT="$CARBON_HOME/wso2/analytics/bin/wso2server.sh"
 BPS_INIT_SCRIPT="$CARBON_HOME/wso2/business-process/bin/wso2server.sh"
 MB_INIT_SCRIPT="$CARBON_HOME/wso2/broker/bin/wso2server.sh"
 
-analyticsoffset=1
-bpsoffset=2
-mboffset=3
-
-echo "$CARBON_HOME"
-
 # If the daemon is not there, then exit.
-test -x $EI_INIT_SCRIPT || exit 5
 
-$EI_INIT_SCRIPT &
-sleep 5
-nohup sh $ANALYTICS_INIT_SCRIPT start -DportOffset="$analyticsoffset" -Dprofile="analytics-default" &
-sleep 5
-nohup sh $BPS_INIT_SCRIPT start -DportOffset="$bpsoffset" -Dprofile="business-process-default" &
-sleep 5
-nohup sh $MB_INIT_SCRIPT start -DportOffset="$mboffset" -Dprofile="broker-default" &
+if [ ! -z "$*" ]; then
+    exit;
+else
+    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" SIGINT SIGTERM
+fi
+sh $EI_INIT_SCRIPT $* &
+sleep 10
+sh $ANALYTICS_INIT_SCRIPT -Dprofile="analytics-default" $* &
+sleep 20
+sh $BPS_INIT_SCRIPT -Dprofile="business-process-default" $* &
+sleep 30
+sh $MB_INIT_SCRIPT -Dprofile="broker-default" $* &
+
+if [ ! -z "$*" ]; then
+    exit;
+else
+    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" SIGINT SIGTERM
+    while :
+    do
+            sleep 60
+    done
+fi
