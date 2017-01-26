@@ -23,18 +23,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>
-      WSO2 ESB - User Guide
+      WSO2 EI - User Guide
     </title>
-    <link href="css/esb-docs.css" rel="stylesheet"/>
+    <link href="css/EI-docs.css" rel="stylesheet"/>
     <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
   </head>
   <body>
       [ <a href="docs_index.html"> Documentation Index </a> ]
     <h1>
-      WSO2 Enterprise Service Bus (ESB) User Guide
+      WSO2 Enterprise Integrator (EI) User Guide
     </h1>
     <p>
-      The User Guide describes how to configure WSO2 ESB using the
+      The User Guide describes how to configure WSO2 EI using the
       Web based management console. The WSO2 Management Console has been tested
       on the Mozilla Firefox 2.0, 3.0 and Internet Explorer 6.0, 7.0 Web Browsers at a
       resolution of 1024x768.
@@ -43,10 +43,10 @@
     <div class="toc">
       <ul>
         <li>
-          <a href="#Installing">Installing and Running the WSO2 ESB</a>
+          <a href="#Installing">Installing and Running the WSO2 EI</a>
         </li>
         <li>
-          <a href="#Accessing">Accessing the ESB Web based Management Console</a>
+          <a href="#Accessing">Accessing the EI Web based Management Console</a>
         </li>
         <li>
           <a href="#Signing">Signing In</a>
@@ -125,30 +125,30 @@
       </ul>
     </div>
     <h2 id="Installing">
-      Installing and Running the WSO2 ESB
+      Installing and Running the WSO2 EI
     </h2>
     <p>
       Please refer the <a href="installation_guide.html">Installation Guide</a>
-      for details on how to install and run the WSO2 ESB.
+      for details on how to install and run the WSO2 EI.
     </p>
     <p>
       <a id="access"/>
     </p>
     <h2 id="Accessing">
-      Accessing the ESB Web based Management Console
+      Accessing the EI Web based Management Console
     </h2>
     <p>
-      Once WSO2 ESB has been successfully installed and started, launch a Web
+      Once WSO2 EI has been successfully installed and started, launch a Web
       browser instance and point it to the URL <a
       href="https://localhost:9443/carbon">https://localhost:9443/carbon</a>.
-      This will take you to the <em>Sign In</em> page of the WSO2 ESB
+      This will take you to the <em>Sign In</em> page of the WSO2 EI
       Management Console.
     </p>
     <h2 id="Signing">
       Signing In
     </h2>
     <p>
-      Enter your user name and password to log on to the ESB Management Console.
+      Enter your user name and password to log on to the EI Management Console.
     </p>
     <p>
       <strong>The default username / password is : admin / admin</strong>
@@ -330,16 +330,16 @@
     <p>
       The <a href="configuration_language.html">Synapse configuration
       language</a> consists of endpoints, sequences, registry entries,
-      tasks, proxy services and more. Messages coming into ESB are processed by the
+      tasks, proxy services and more. Messages coming into EI are processed by the
       underlying Synapse engine through mediation sequences and delivered to the
       specified endpoints. In addition, scheduled tasks may inject new messages
-      into the ESB periodically or execute other tasks.
+      into the EI periodically or execute other tasks.
     </p>
     <h3 id="Proxy">
       Proxy Services
     </h3>
     <p>
-      Proxy services define virtual services hosted on the ESB that can accept
+      Proxy services define virtual services hosted on the EI that can accept
       requests, mediate them, and deliver them to an actual service. Proxy
       services could perform transport or interface switching and expose
       different semantics than the actual service, i.e., WSDL, policies, and QoS
@@ -439,8 +439,8 @@
       automate recurring processes and facilitate reporting etc. The tasks are
       simple Java classes that must implement org.apache.synapse.startup.Task
       interface that just defines a single 'public void execute();' method. A
-      Task may thus use the ESB/Apache Synapse APIs to poll external services,
-      inject messages into the ESB or perform any task that could be implemented
+      Task may thus use the EI/Apache Synapse APIs to poll external services,
+      inject messages into the EI or perform any task that could be implemented
       in Java.
     </p>
     <p>
@@ -469,10 +469,10 @@
     <p>
       A sequence element is used to define a sequence of mediators that can be
       invoked later as a sequence. If the configuration defines a sequence named
-      Main, then it is considered as the main mediation sequence of the ESB. If
+      Main, then it is considered as the main mediation sequence of the EI. If
       such a sequence is not defined locally, and a registry has been specified,
       the registry is looked up for a key named "main" to find the main mediator
-      sequence. If User doesn't define a main or fault sequence ESB will create default sequences.
+      sequence. If User doesn't define a main or fault sequence EI will create default sequences.
     </p>
    <p>
        Please refer the <a href="sequences/docs/userguide.html">documentation</a> on managing
@@ -483,7 +483,7 @@
           Message Stores
       </h3>
       <p>
-          A Message Store element is used to define a Message store that can be used to store ESB
+          A Message Store element is used to define a Message store that can be used to store EI
           Messages. Store mediator can be used to store the messages in a message store.Message processor
           associated with Message store can be used to implement different messaging patterns.
       </p>
@@ -491,7 +491,7 @@
         Associated Message processors can be used to consume messages from message stores and do processing.
       </p>
       <p>
-          Users can create there own message store implementations and use it. WSO2 ESB ships with in memory
+          Users can create there own message store implementations and use it. WSO2 EI ships with in memory
           message store and a jms message store.
       </p>
       <p>
@@ -637,11 +637,11 @@
       </ul>
     </blockquote>
     <h3 id="Configurat">
-      ESB Configuration (Source View)
+      EI Configuration (Source View)
     </h3>
     <p>
       This function commits the configuration changes you have made to the local
-      storage of the host running the ESB. The XML code for your configuration
+      storage of the host running the EI. The XML code for your configuration
       is displayed in the Current Configuration text area. You can also make any
       changes directly in the XML code.
     </p>
@@ -669,11 +669,11 @@
     </h2>
     <p>
       The registry provides a mechanism of creating and storing configuration
-      elements outside the ESB. These registry contents can be dynamically
-      loaded or modified, which will allow runtime modification of the ESB
+      elements outside the EI. These registry contents can be dynamically
+      loaded or modified, which will allow runtime modification of the EI
       behaviors. The folder structure gives a clear view of the available files
       and easy access to modifying the files. Once these files are loaded, their
-      content are cached in the ESB for the specified duration, and is updated
+      content are cached in the EI for the specified duration, and is updated
       at the end of the caching period.
     </p>
     <p>
@@ -691,7 +691,7 @@
       Monitoring the System
     </h2>
     <p>
-      This feature provides runtime information about the ESB on the Administrator
+      This feature provides runtime information about the EI on the Administrator
       Console. It displays <a href="statistics/docs/userguide.html">system statistics</a>,
         <a href="mediationstats/docs/userguide.html">mediation statistics</a>,
         <a href="transport/docs/userguide.html">transport statistics</a>, 
@@ -701,7 +701,7 @@
         <a href="viewflows/docs/userguide.html">Message flows</a>.
     </p>
     <p>
-      A detailed guide on monitoring WSO2 ESB can be found
+      A detailed guide on monitoring WSO2 EI can be found
       <a href="monitoring.html" target="_blank">here</a>.
     </p>
     <p/>
@@ -710,10 +710,10 @@
       References
     </h2>
     <p>
-      <a href="installation_guide.html">WSO2 ESB Installation Guide</a>
+      <a href="installation_guide.html">WSO2 EI Installation Guide</a>
     </p>
     <p>
-      <a href="configuration_language.html">ESB Configuration Language</a>
+      <a href="configuration_language.html">EI Configuration Language</a>
     </p>
     <p/>
   </body>

@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - Proxy Service Samples </title>
+  <title>WSO2 EI - Proxy Service Samples </title>
 </head>
 
 <body>
-<h1>Running the Proxy Services samples with WSO2 Enterprise Service Bus (ESB)</h1>
+<h1>Running the Proxy Services samples with WSO2 Enterprise Integrator (EI)</h1>
 
 <h2><a name="Sample150">Sample 150: Introduction to proxy services</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
@@ -44,14 +44,14 @@
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
 
-<p><strong>Objective: Introduction to ESB proxy services</strong> </p>
+<p><strong>Objective: Introduction to EI proxy services</strong> </p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 150: i.e. wso2esb-samples -sn 150<br />
+Start the Synapse configuration numbered 150: i.e. wso2EI-samples -sn 150<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
 
-<p>Once ESB starts, you could go to
+<p>Once EI starts, you could go to
 http://localhost:8280/services/StockQuoteProxy?wsdl and view the WSDL generated
 for the proxy service defined in the configuration. This WSDL is based on the
 source WSDL supplied in the proxy service definition, and is updated to
@@ -66,7 +66,7 @@ message would be handled after the proxy service receives the message. In the
 above example, the request received is forwarded to the sample service hosted
 on Axis2. The 'outSequence' defines how the response is handled before it is
 sent back to the client. By default, a proxy service is exposed over all
-transports configured for ESB, unless these are specifically mentioned
+transports configured for EI, unless these are specifically mentioned
 through the 'transports' attribute. </p>
 
 <h2><a name="Sample151">Sample 151: Custom sequences and endpoints with proxy
@@ -101,7 +101,7 @@ services</a> </h2>
 mediation with proxy services</strong> </p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 151: i.e. wso2esb-samples -sn 151<br />
+Start the Synapse configuration numbered 151: i.e. wso2EI-samples -sn 151<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
 
@@ -137,7 +137,7 @@ from SOAP to REST/POX</a> </h2>
 </p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 152: i.e. wso2esb-samples -sn 152 </p>
+Start the Synapse configuration numbered 152: i.e. wso2EI-samples -sn 152 </p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not
 already done </p>
@@ -225,18 +225,18 @@ You may also need to download and install the unlimited strength policy files
 for your JDK before using Apache Rampart (e.g. see
 <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>) </p>
 
-<p>Start the Synapse configuration numbered 153: i.e. wso2esb-samples -sn 153<br
+<p>Start the Synapse configuration numbered 153: i.e. wso2EI-samples -sn 153<br
 />
 Start the Axis2 server and deploy the SecureStockQuoteService if not already
 done </p>
 
 <p>The proxy service will receive secure messages with security headers which
 are MustUnderstand. But hence element 'engageSec' is not present in the proxy
-configuration ESB will not engage that Apache Rampart on this proxy service.
+configuration EI will not engage that Apache Rampart on this proxy service.
 It is expected that an MustUnderstand failure exception on the AxisEngine
-would occur before the message arrives ESB. But ESB handles this message and
+would occur before the message arrives EI. But EI handles this message and
 gets it in by setting all the headers which are MustUnderstand and not
-processed to processed state. This will enable ESB to route the messages
+processed to processed state. This will enable EI to route the messages
 without reading the Security headers (just routing the messages from client
 to service, both of which are secure). To execute the client, send a stock
 quote request to the proxy service, and sign and encrypt the request by
@@ -249,10 +249,10 @@ looking up the WSDL of the proxy service by requesting the URL
 http://localhost:8280/services/StockQuoteProxy?wsdl reveals the security policy
 attachments are not there and security is not engaged. When sending the
 message to the backend service, you could verify that the security headers
-were there as in the original message to ESB from client, and that the
+were there as in the original message to EI from client, and that the
 response received does use WS-Security, and forwarded back to the client
 without any modification. You should note that this wont be a security hole
-because the message inside ESB is signed and encrypted and can only be
+because the message inside EI is signed and encrypted and can only be
 forwarded to a secure service to be useful. </p>
 
 <h2><a name="Sample154">Sample 154: Load Balancing with Proxy Services </a> </h2>
@@ -318,7 +318,7 @@ forwarded to a secure service to be useful. </p>
 
 <p>Sample setup is same as LoadBalance endpoints (#53 to #54). </p>
 
-<p>Start the Synapse configuration numbered 154: i.e. wso2esb-samples -sn 154<br
+<p>Start the Synapse configuration numbered 154: i.e. wso2EI-samples -sn 154<br
 />
 Start the Axis2 server and deploy the LoadbalanceFailoverService if not already
 done </p>
@@ -352,7 +352,7 @@ done </p>
     </p>
     <p>
       <strong>Prerequisites:</strong><br/> Start the Synapse
-      configuration numbered 155: i.e. wso2esb-samples -sn 155<br/> Start the
+      configuration numbered 155: i.e. wso2EI-samples -sn 155<br/> Start the
       Axis2 server and deploy the SimpleStockQuoteService if not already done
     </p>
     <p/>
@@ -477,7 +477,7 @@ done </p>
         of sample 100 is also applied here.
     </p>
     <p>Start the Synapse
-      configuration numbered 156: i.e. wso2esb-samples -sn 156<br/> Start the
+      configuration numbered 156: i.e. wso2EI-samples -sn 156<br/> Start the
       Axis2 server and deploy the SimpleStockQuoteService if not already done.
     </p>
     <p>
@@ -585,7 +585,7 @@ done </p>
       <strong>Objective: Routing Messages based on the HTTP Transport properties.</strong>
     </p>
     <p>
-      <strong>Prerequisites:</strong><br/> Start the Synapse configuration numbered 157: i.e. wso2esb-samples -sn 157
+      <strong>Prerequisites:</strong><br/> Start the Synapse configuration numbered 157: i.e. wso2EI-samples -sn 157
         <br/>Start the Axis2 server and deploy the SimpleStockQuoteService if not already done.
         For this particular case we will be using 'curl' to send requests with custom HTTP Headers to the proxy service. You may use a similar tool with facilitate those requirements.
         <br/><br/>The request file : stockQuoteReq.xml, should contain the following request.

@@ -24,14 +24,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Priority Mediation
+            WSO2 EI - Priority Mediation
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) Priority Mediation</h1>
+        <h1>WSO2 Enterprise Integrator (EI) Priority Mediation</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -51,14 +51,14 @@
         </div>
         <h2 id="intro" >Introduction</h2>
         <p>
-            An ESB can be deployed as a front end for various services with a very high load passing through it. The traffic passing through it may be of different priorities and can have different load charasterisitcs. Also in some situations load of different types of messages can vary dramatically over time.</p>
+            An EI can be deployed as a front end for various services with a very high load passing through it. The traffic passing through it may be of different priorities and can have different load charasterisitcs. Also in some situations load of different types of messages can vary dramatically over time.</p>
         <p>
-            The goal is to serve high priority traffic when there are resources available in the system regardless of the low priority traffic. The serving of different priority messages should be independent as much as possible. For example an ESB can be bombarded with very high volume of low priority traffic. Even in this case ESB should obey its contract to serve high priority traffic. </p>
-        <p>Usually a person deploying an ESB expects a certain guarantee of message deliverance from the ESB. ESB should be able to honor that.</p>
+            The goal is to serve high priority traffic when there are resources available in the system regardless of the low priority traffic. The serving of different priority messages should be independent as much as possible. For example an EI can be bombarded with very high volume of low priority traffic. Even in this case EI should obey its contract to serve high priority traffic. </p>
+        <p>Usually a person deploying an EI expects a certain guarantee of message deliverance from the EI. EI should be able to honor that.</p>
         <p>
             Here is a possible scenario with a high volume of traffic.</p>
         <p>
-            Lets assume ESB is configured to serve two types of messages with different priorities. Message type m1 has the priority p1 and message type m2 has priority p2. p1 is about ten times the priority of p2. In a very high volume traffic scenario the services can afford to loose some amount of m2 messages. But it cannot afford to loose any of m1 messages.</p>
+            Lets assume EI is configured to serve two types of messages with different priorities. Message type m1 has the priority p1 and message type m2 has priority p2. p1 is about ten times the priority of p2. In a very high volume traffic scenario the services can afford to loose some amount of m2 messages. But it cannot afford to loose any of m1 messages.</p>
         <p>
             In normal operation mode, volume of m2 is about twice as m1. But in some situations m1 can be higher and m2 can be low.</p>
         <p>
@@ -90,7 +90,7 @@
         <p>
             A Queue can have a size and a priority. If the queues has unlimited length, no more than core threads will be used.</p>
         <p>
-            A Priority Executor has a core number of threads. When ESB is started with the priority executor, this number of threads will be created. Max is the maximum number of threads this executor will have. If the number of threads in the executor exceeds the core threads, they will be in active for the keep-alive time only. After the keep-alive time those threads will be be removed from the system.
+            A Priority Executor has a core number of threads. When EI is started with the priority executor, this number of threads will be created. Max is the maximum number of threads this executor will have. If the number of threads in the executor exceeds the core threads, they will be in active for the keep-alive time only. After the keep-alive time those threads will be be removed from the system.
         </p>
         <h2 id="h3">HTTP Level Configuration</h2>
         <p>

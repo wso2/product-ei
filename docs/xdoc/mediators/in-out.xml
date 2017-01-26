@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - In/Out Mediators </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - In/Out Mediators </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -14,8 +14,8 @@
 <h2>In/Out Mediators</h2>
 
 <p>These mediators act as predefined filters. Messages which are in the in path
-of the ESB will traverse through the child mediators of the in mediator.
-Messages which are in the out path of ESB will traverse through the child
+of the EI will traverse through the child mediators of the in mediator.
+Messages which are in the out path of EI will traverse through the child
 mediators of out mediator.</p>
 
 <h3>Syntax</h3>
@@ -49,7 +49,7 @@ mediators of out mediator.</p>
       &lt;/syn:out&gt;
   &lt;/syn:sequence&gt;</pre>
 
-<p>Main sequence with in and out mediators. Messages coming to the ESB will be
+<p>Main sequence with in and out mediators. Messages coming to the EI will be
 sent using wsa:to address and responses will be sent back to the requester. </p>
 
 <h3>Remarks</h3>

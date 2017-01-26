@@ -24,14 +24,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Transactions
+            WSO2 EI - Transactions
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) Transaction support</h1>
+        <h1>WSO2 Enterprise Integrator (EI) Transaction support</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -58,7 +58,7 @@
             Transaction plays a major role in today's business world. It adds a very important functionality to your
             system, which you will only see in a system crash. Having a good transactional support will
             ensure correct functionality in a system crash. This guide describes the transaction support avilable
-            in WSO2 ESB.
+            in WSO2 EI.
         </p>
         <hr/>
         <h3 id="tx_mediator">
@@ -115,15 +115,15 @@
             </tr>
         </table>
         <p>To use the transaction mediator you need to have a JTA provider in your environment. What this mean is you
-        need to deploy WSO2 ESB in an application sever which provide the JTA service. JBoss is an example of such
-        application server. Refer the <a href="#references">Reference</a> section to see how you can deploy ESB on JBoss.</p>
+        need to deploy WSO2 EI in an application sever which provide the JTA service. JBoss is an example of such
+        application server. Refer the <a href="#references">Reference</a> section to see how you can deploy EI on JBoss.</p>
         <p>An example is avilable in the article(see <a href="#references">Reference</a> section) which demostrate the
             distributed transaction support.
         </p>
         <hr/>
         <h3 id="jms_tx">Java Message Service(JMS) transactions</h3>
-        <p> In addition to the distributed transactions, WSO2 ESB also has the support for JMS transactions. The JMS
-            transport which ships with WSO2 ESB has the support for both local and distrbuted transactions.
+        <p> In addition to the distributed transactions, WSO2 EI also has the support for JMS transactions. The JMS
+            transport which ships with WSO2 EI has the support for both local and distrbuted transactions.
         </p>
 
         <h4><a id="jms_local_tx">JMS local transaction</a></h4>
@@ -149,7 +149,7 @@
         section).</p>
 
         <h4><a id="jms_distributed_tx">JMS distribued transaction</a></h4>
-        <p>WSO2 ESB also has the support for distributed JMS transaction. You can use JMS transport with more than one
+        <p>WSO2 EI also has the support for distributed JMS transaction. You can use JMS transport with more than one
         distributed resources( for example a JMS queue and a remote database server).</p>
         <p>Transaction mediator can be used to mark a distributed transaction which involves a distrbution transaction
         which span through mulitple JMS resources.</p>
@@ -159,7 +159,7 @@
         <h4><a id="references">References</a></h4>
         <ul>
             <li>
-                <a href="http://wso2.org/library/knowledge-base/2010/03/deploying-wso2esb300-jboss510ga">Deploying ESB on JBOSS</a>
+                <a href="http://wso2.org/library/knowledge-base/2010/03/deploying-wso2EI300-jboss510ga">Deploying EI on JBOSS</a>
             </li>
             <li>
                 Check WSO2 Oxygen tank for the transaction article.

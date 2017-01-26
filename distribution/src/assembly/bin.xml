@@ -587,6 +587,14 @@
 
         <fileSet>
             <directory>
+                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/identity
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/dbscripts/identity
+            </outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>
                 ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/dbscripts/metrics

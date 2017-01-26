@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - URL Rewrite Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - URL Rewrite Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -110,7 +110,7 @@ For instance; if our request is as follows,
 </p>
 <p><strong>"ant stockquote -Daddurl=http://localhost:8280/services/StockQuoteProxy1"</strong></p>
 <p>the address URL of the  request contains the context 'soap'. 
-In ESB server all the services are deployed under a context named 'services' by default. So,'To' header will be re written by replacing the 'soap' context with 'services'.
+In EI server all the services are deployed under a context named 'services' by default. So,'To' header will be re written by replacing the 'soap' context with 'services'.
  Hence the requests will be delivered to the  server successfully.
  </p>
  

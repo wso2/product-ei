@@ -21,15 +21,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Rule Samples </title>
+  <title>WSO2 EI - Rule Samples </title>
 </head>
 
 <body>
-<h1>Running the Rule samples with WSO2 Enterprise Service Bus (ESB) </h1>
+<h1>Running the Rule samples with WSO2 Enterprise Integrator (EI) </h1>
 
 <h2>Introduction</h2>
 
-<p>Rule mediator integrates the WSO2 rules component into the WSO2 ESB to
+<p>Rule mediator integrates the WSO2 rules component into the WSO2 EI to
 provide you with a suitable capability to define your organization's
 dynamic integration decisions in terms of rules.This guide provides you with
 two samples, which are quite simple. The goal of the samples is to make you
@@ -93,7 +93,7 @@ for message transformation. </p>
 
 <p><strong>Prerequisites:</strong></p>
 
-<p>Start the Synapse configuration numbered 600: (i.e. ./wso2esb-samples.sh -sn
+<p>Start the Synapse configuration numbered 600: (i.e. ./wso2EI-samples.sh -sn
 600)</p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
@@ -219,7 +219,7 @@ Decision According to the Rules - Rule Mediator as Switch mediator </h2>
 decision according to the rules. </p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 601: i.e. (i.e. ./wso2esb-samples.sh
+Start the Synapse configuration numbered 601: i.e. (i.e. ./wso2EI-samples.sh
 -sn 601)</p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already

@@ -25,30 +25,30 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Installation Guide
+            WSO2 EI - Installation Guide
         </title>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
         <h1>
-            WSO2 Enterprise Service Bus (ESB) Installation Guide
+            WSO2 Enterprise Integrator (EI) Installation Guide
         </h1>
         <p/>
 
         <p>This installation guide provides information on,</p>
         <ol>
-            <li>Prerequisites for installing WSO2 ESB</li>
+            <li>Prerequisites for installing WSO2 EI</li>
             <li>Installation instructions</li>
-            <li>Starting up WSO2 ESB</li>
+            <li>Starting up WSO2 EI</li>
             <li>Accessing the management console</li>
         </ol>
 
         <p>
-            This document describes the distribution packages available in WSO2 ESB -
+            This document describes the distribution packages available in WSO2 EI -
             the binary distribution and the source distribution for more advanced
             users. It is followed by simple instructions on how to install and run
-            WSO2 ESB using the binary distribution and how to build WSO2 ESB using the
+            WSO2 EI using the binary distribution and how to build WSO2 EI using the
             source distribution.
         </p>
 
@@ -59,7 +59,7 @@
                     <a href="#Distributi">Distribution Packages</a>
                 </li>
                 <li>
-                    <a href="#Installing">Installing and Running WSO2 ESB using the
+                    <a href="#Installing">Installing and Running WSO2 EI using the
                         Binary Distribution
                     </a>
                     <ul>
@@ -75,7 +75,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#Building">Building WSO2 ESB Using the Source Distribution</a>
+                    <a href="#Building">Building WSO2 EI Using the Source Distribution</a>
                     <ul>
                         <li>
                             <a href="#Prerequisi1">Prerequisites</a>
@@ -84,7 +84,7 @@
                             <a href="#Setting">Setting Up the Environment and Tools</a>
                         </li>
                         <li>
-                            <a href="#Building1">Building WSO2 ESB</a>
+                            <a href="#Building1">Building WSO2 EI</a>
                         </li>
                     </ul>
                 </li>
@@ -95,7 +95,7 @@
         </h2>
         <p>
             The following distribution packages are available for <a
-                href="http://wso2.org/downloads/esb/">download</a>.
+                href="http://wso2.org/downloads/EI/">download</a>.
         </p>
         <p>
             1. Binary Distribution : Includes binary files for both MS Windows and
@@ -108,7 +108,7 @@
             Recommended for more advanced users.
         </p>
         <h2 id="Installing">
-            Installing and Running WSO2 ESB using the Binary Distribution
+            Installing and Running WSO2 EI using the Binary Distribution
         </h2>
         <h3 id="Prerequisi">
             Prerequisites
@@ -127,7 +127,7 @@
                         systems, visit <a href="http://java.sun.com">http://www.oracle.com/technetwork/java/index.html</a>)
                         <p/>
                         <p>
-                            To build WSO2 ESB from the Source distribution, it is necessary
+                            To build WSO2 EI from the Source distribution, it is necessary
                             that you have JDK 1.6.x version and Maven 2.2.0 or later
                         </p>
                     </td>
@@ -139,11 +139,11 @@
                     </td>
                     <td>
                         <p>
-                            Apache ActiveMQ 5.0.0 or higher is required to enable the WSO2 ESB JMS
+                            Apache ActiveMQ 5.0.0 or higher is required to enable the WSO2 EI JMS
                             transport and try out JMS samples. The ActiveMQ client libraries must
-                            be installed in the ESB classpath before you can enable the JMS transport.
+                            be installed in the EI classpath before you can enable the JMS transport.
                             Alternatively you may use the built-in Qpid broker that comes with
-                            WSO2 ESB.
+                            WSO2 EI.
                         </p>
                         <p>
                             If you are using any other JMS provider (eg: IBM Websphere), you will need
@@ -154,7 +154,7 @@
                 <tr>
                     <td>
                         <a href="http://ant.apache.org/">Apache Ant</a>
-                        - To run ESB samples
+                        - To run EI samples
                     </td>
                     <td>
                         <p>
@@ -166,23 +166,23 @@
                 <tr>
                     <td>
                         <a href="http://maven.apache.org/">Apache Maven</a>- To
-                        build ESB from Source
+                        build EI from Source
                     </td>
                     <td>
-                        To build the WSO2 ESB from its source distribution, you will need
+                        To build the WSO2 EI from its source distribution, you will need
                         Maven 2.2.0 or later
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Web browser - To start the ESB Management Console
+                        Web browser - To start the EI Management Console
                     </td>
                     <td>
                         Mozilla Firefox 3.0 or higher at a resolution of 1024x768 is recommended. MS
                         Internet Explorer 7 or Google Chrome may be used as well. Once
-                        the WSO2 ESB is started with the default settings, point the browser to
+                        the WSO2 EI is started with the default settings, point the browser to
                         https://localhost:9443/carbon in order to access your Management Console.
-                        See the <a href="user_guide.html">WSO2 ESB User Guide</a> for more details.
+                        See the <a href="user_guide.html">WSO2 EI User Guide</a> for more details.
                     </td>
                 </tr>
                 <tr>
@@ -211,7 +211,7 @@
                     </td>
                     <td>
                         Linux, Solaris, MS Windows - XP/2003/2008 (Not fully tested on Windows
-                        Vista or Windows 7). Since WSO2 ESB is a Java application, it will generally
+                        Vista or Windows 7). Since WSO2 EI is a Java application, it will generally
                         be possible to run it on other operating systems with a JDK 1.6.x
                         runtime. Linux/Solaris is recommended for a production deployment.
                     </td>
@@ -227,10 +227,10 @@
         </p>
         <ol>
             <li>
-                <a href="http://wso2.org/downloads/esb/">Download</a> the WSO2 ESB binary distribution.
+                <a href="http://wso2.org/downloads/EI/">Download</a> the WSO2 EI binary distribution.
             </li>
             <li>
-                Extract the zip archive where you want the WSO2 ESB installed (e.g. into /opt)
+                Extract the zip archive where you want the WSO2 EI installed (e.g. into /opt)
             </li>
             <li>
                 Set the <a href="setting_java_home.html">JAVA_HOME</a> environment variable to your
@@ -238,13 +238,13 @@
                 directory to your PATH
             </li>
             <li>
-                Execute the WSO2 ESB start script or the daemon script from the bin
+                Execute the WSO2 EI start script or the daemon script from the bin
                 directory. e.g. ./wso2server.sh OR ./daemon.sh start OR
                 ./wso2server.sh --console
             </li>
             <li>
-                Check your WSO2 ESB instance using the URL https://localhost:9443/carbon
-                which will take you to the WSO2 ESB Management Console. (Note that server
+                Check your WSO2 EI instance using the URL https://localhost:9443/carbon
+                which will take you to the WSO2 EI Management Console. (Note that server
                 start up may take time)
             </li>
             <li>
@@ -261,32 +261,32 @@
         </p>
         <ol>
             <li>
-                <a href="http://wso2.org/downloads/esb/">Download</a> the WSO2 ESB binary distribution.
+                <a href="http://wso2.org/downloads/EI/">Download</a> the WSO2 EI binary distribution.
             </li>
             <li>
-                Extract the zip archive where you want the WSO2 ESB installed
+                Extract the zip archive where you want the WSO2 EI installed
             </li>
             <li>
                 Set the <a href="setting_java_home.html">JAVA_HOME</a> environment variable to your
                 Java installation, and the PATH environment variable to the Java /bin directory.
             </li>
             <li>
-                Execute the WSO2 ESB start script from the bin folder. e.g. wso2server.bat
+                Execute the WSO2 EI start script from the bin folder. e.g. wso2server.bat
             </li>
             <li>
-                If you would like to install the WSO2 ESB as a Windows service, use the
+                If you would like to install the WSO2 EI as a Windows service, use the
                 install.bat script
             </li>
             <li>
-                Check your WSO2 ESB instance using the URL https://localhost:9443/carbon
-                which will take you to the WSO2 ESB Management Console.
+                Check your WSO2 EI instance using the URL https://localhost:9443/carbon
+                which will take you to the WSO2 EI Management Console.
             </li>
             <li>
                 Login as "admin" using the default password "admin"
             </li>
         </ol>
         <h2 id="Building">
-            Building WSO2 ESB Using the Source Distribution
+            Building WSO2 EI Using the Source Distribution
         </h2>
         <h3 id="Prerequisi1">
             Prerequisites
@@ -308,10 +308,10 @@
                 <tr>
                     <td>
                         <a href="http://maven.apache.org/">Apache Maven</a>- To
-                        build ESB from Source
+                        build EI from Source
                     </td>
                     <td>
-                        To build the WSO2 ESB from its source distribution, you will need
+                        To build the WSO2 EI from its source distribution, you will need
                         Maven 2.2.0 or later
                     </td>
                 </tr>
@@ -335,9 +335,9 @@
             <strong>Maven:</strong>
         </p>
         <p>
-            The WSO2 ESB build is based on <a href="http://maven.apache.org/">Apache
+            The WSO2 EI build is based on <a href="http://maven.apache.org/">Apache
             Maven 2</a>. Hence, it is a prerequisite to have Maven (version 2.2.0 or later)
-            and JDK (version 1.6.x) installed in order to build WSO2 ESB from the
+            and JDK (version 1.6.x) installed in order to build WSO2 EI from the
             source distribution. Extensive instructions on using Maven 2 are available
             on the Maven website.
         </p>
@@ -393,14 +393,14 @@
             </li>
         </ol>
         <p>
-            Once Maven is properly installed, you can start building the WSO2 ESB.
+            Once Maven is properly installed, you can start building the WSO2 EI.
         </p>
         <h3 id="Building1">
-            Building WSO2 ESB
+            Building WSO2 EI
         </h3>
         <ol>
             <li>
-                <a href="http://wso2.org/downloads/esb/">Download</a>
+                <a href="http://wso2.org/downloads/EI/">Download</a>
                 the source distribution, which is available as a zip archive.
             </li>
             <li>
@@ -411,7 +411,7 @@
             </li>
             <li>
                 You can run the following command inside that directory to build the
-                WSO2 ESB. Note that you will require a connection to the Internet for the Maven build
+                WSO2 EI. Note that you will require a connection to the Internet for the Maven build
                 to download dependencies required for the build.
                 <br/>
                 <p>
@@ -427,7 +427,7 @@
         <p>
             Note: The first time you run Maven it will automatically download the
             dependency jar files. Therefore, the first run will take more time. It is also
-            recommended to allocate for memory for Maven since the ESB build process takes up
+            recommended to allocate for memory for Maven since the EI build process takes up
             a significant amount of resources. More memory can be allocated for Maven by setting
             the MAVEN_OPTS environment variable.
         </p>

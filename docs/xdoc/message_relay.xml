@@ -24,14 +24,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Message Relay
+            WSO2 EI - Message Relay
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) Message Relay</h1>
+        <h1>WSO2 Enterprise Integrator (EI) Message Relay</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -57,20 +57,20 @@
         </div>
         <h3 id="intro" >Introduction</h3>
         <p>
-            Message Relay is a Message Pass through mechanism for ESB. Message relay enables ESB to pass the messages
+            Message Relay is a Message Pass through mechanism for EI. Message relay enables EI to pass the messages
             without building or processing the message.
         </p>
         <p>
-            When message relay is configured incoming requests to the ESB are not built and processed unless
+            When message relay is configured incoming requests to the EI are not built and processed unless
             specifically requested to do so. A incoming message is wrapped inside a default SOAP envelope as
-            binary content and sent through the ESB.
+            binary content and sent through the EI.
         </p>
         <p>
-            Some of the ESB scenarios doesn't require the full message to be built. Instead ESB can work on other
+            Some of the EI scenarios doesn't require the full message to be built. Instead EI can work on other
             message properties like request URLs or transport headers.
         </p>
         <p>
-            With message relay ESB can achieve a very high throughput.
+            With message relay EI can achieve a very high throughput.
         </p>
         <hr/>
         <h3 id="building_blocks">
@@ -83,21 +83,21 @@
             <li>Axis2 Message Builder</li>
             <li>Axis2 Message Formatter</li>
         </ul>
-        <p>A message builder is used to build an incoming message to the ESB. A message formatter is used to build the
-            out going stream from the message inside ESB.</p>
+        <p>A message builder is used to build an incoming message to the EI. A message formatter is used to build the
+            out going stream from the message inside EI.</p>
         <p>
-            So in a typical ESB routing scenario here is the flow
+            So in a typical EI routing scenario here is the flow
         </p>
         <p>
-            Client &lt;---- Outgoing Message ----&gt; Message Formatter &lt;---- ESB &lt;---- Message Builder &lt;---- Incoming Message &lt;---- Service Provider
+            Client &lt;---- Outgoing Message ----&gt; Message Formatter &lt;---- EI &lt;---- Message Builder &lt;---- Incoming Message &lt;---- Service Provider
         </p>
         <p>
-            Client &lt;---- Outgoing Message ----&gt; Message Formatter &lt;---- ESB &lt;---- Message Builder &lt;---- Incoming Message &lt;---- Service Provider
+            Client &lt;---- Outgoing Message ----&gt; Message Formatter &lt;---- EI &lt;---- Message Builder &lt;---- Incoming Message &lt;---- Service Provider
         </p>
         <p>
             When Relay Message builder and formatter are specified for a content type, message 
-            coming with that content type will not be built by the ESB. Instead they will pass 
-            through the ESB as it is.
+            coming with that content type will not be built by the EI. Instead they will pass
+            through the EI as it is.
         </p>
         <p>
             Message builders and formatters are specified in the axis2.xml under messageBuilders 
@@ -105,12 +105,12 @@
             chosen based on the content type of the message.
         </p>
         <p>
-            ESB has few default Message message builders. Even if the user doesn't specify them 
+            EI has few default Message message builders. Even if the user doesn't specify them
             in the axis2.xml they will take effect. These can be overridden using the message 
             builder configurations in the axis2.xml.
         </p>
         <p> 
-            ESB doesn't have default Message formatters. So it is important to specify all of 
+            EI doesn't have default Message formatters. So it is important to specify all of
             them in the axis2.xml configuration.
         </p>
         <p> 
@@ -147,7 +147,7 @@
         </h3>
         <p>In the axis2.xml file there are two configuration sections called messageBuilders and 
         messageFormatters. User can replace the expected content types with the relay message 
-        builder and formattter to pass these messages through the ESB without building them.
+        builder and formattter to pass these messages through the EI without building them.
         </p>
         <p>Message relay builder and formatter class names.</p>
         <pre xml:space="preserve">
@@ -188,8 +188,8 @@
         <hr/>
         <h3 id="mediator">Builder mediator</h3>
         <p>Builder mediator can be used to build the actual SOAP message from a message coming in 
-        to ESB through the message relay. One usage is to use this before trying to log the 
-        actual message in case of a error. Also with the builder mediator ESB can be configured 
+        to EI through the message relay. One usage is to use this before trying to log the
+        actual message in case of a error. Also with the builder mediator EI can be configured
         to build some of the messages while passing the others along.</p>
         <p>Syntax of builder mediator</p>
         <pre>
@@ -213,14 +213,14 @@
         <pre>&lt;module ref=&quot;relay&quot;/&gt;</pre>
         <p>Also user has to put the following phase in to the InFlow of axis2.</p>
         <pre>&lt;phase name=&quot;BuildingPhase&quot;/&gt;</pre>
-        <p>This module is designed to be used by Admin Services that runs inside the ESB. 
+        <p>This module is designed to be used by Admin Services that runs inside the EI.
         All the admin services are running with content type: application/soap+xml. So if 
-        a user wants to use admin console and use the ESB for receiving message with content 
+        a user wants to use admin console and use the EI for receiving message with content
         type application/soap+xml, this module should be used.
         </p><p> 
         User can configure the module by going to the modules section in admin console and then 
         going to the relay module. The module configuration is specified as a module policy. 
-        After changing the policy user has to restart the ESB for changes to take effect.</p>
+        After changing the policy user has to restart the EI for changes to take effect.</p>
         <h3 id="policy">Message Relay Module Policy</h3>
         <pre xml:space="preserve">
 &lt;wsp:Policy wsu:Id=&quot;MessageRelayPolicy&quot; xmlns:wsp=&quot;http://schemas.xmlsoap.org/ws/2004/09/policy&quot;

@@ -24,23 +24,23 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
   <title>
-      WSO2 ESB - Samples Guide Index
+      WSO2 EI - Samples Guide Index
   </title>
 </head>
 
 <body>
     [ <a href="docs_index.html"> Documentation Index </a> ]
-<h1>Running the WSO2 Enterprise Service Bus (ESB) Samples </h1>
+<h1>Running the WSO2 Enterprise Integrator (EI) Samples </h1>
 
 <p>While the <a href="samples_setup_guide.html">Samples Setup Guide</a>
 document above gives you a generic description on how to set up and run
-the WSO2 ESB samples, this document takes each sample, one by one and
+the WSO2 EI samples, this document takes each sample, one by one and
 discusses the objective of the sample, its prerequisites, and its expected
 behavior when the sample is built. </p>
 
-<p><strong>Note:</strong> The ESB configurations listed below, with each
+<p><strong>Note:</strong> The EI configurations listed below, with each
 sample, is the raw source XML serialization of the sample configuration. This
-may be viewed graphically through the WSO2 ESB administration console after
+may be viewed graphically through the WSO2 EI administration console after
 logging into the console. </p>
 
 <h2><a name="TOC">Table of Contents</a> </h2>
@@ -50,7 +50,7 @@ logging into the console. </p>
   <li><a href="samples_setup_guide.html#Overview">Overview</a> </li>
   <li><a href="samples/message_mediation_samples.html">Message mediation samples</a>
     <ul>
-      <li><a href="samples/message_mediation_samples.html#Sample0">Sample 0: Introduction to ESB</a> </li>
+      <li><a href="samples/message_mediation_samples.html#Sample0">Sample 0: Introduction to EI</a> </li>
       <li><a href="samples/message_mediation_samples.html#Sample1">Sample 1: Simple content based routing (CBR) of
         messages</a> </li>
       <li><a href="samples/message_mediation_samples.html#Sample2">Sample 2: CBR with the Switch-case mediator,
@@ -74,7 +74,7 @@ logging into the console. </p>
       <li><a href="samples/message_mediation_samples.html#Sample11">Sample 11: A full registry based configuration,
         and sharing a configuration between multiple instances</a> </li>
       <li><a href="samples/message_mediation_samples.html#Sample12">Sample 12: One way messaging / fireAndForget
-        through ESB</a></li>
+        through EI</a></li>
       <li><a href="samples/message_mediation_samples.html#Sample13">Sample 13: Dual channel invocation through synapse</a></li>
       <li><a href="samples/message_mediation_samples.html#Sample14">Sample 14: Sequences and Endpoints as local registry items</a></li>
       <li><a href="samples/message_mediation_samples.html#Sample15">Sample 15: Message Enrichment through Synapse</a></li>
@@ -106,12 +106,12 @@ logging into the console. </p>
       <li><a href="samples/qos_mediation_samples.html#Sample100">Sample 100: Using WS-Security for outgoing
         messages</a> </li>
       <li><a href="samples/qos_mediation_samples.html#Sample101">Sample 101: Reliable message exchange between
-        ESB and the back-end server using WS-ReliableMessaging</a> </li>
+        EI and the back-end server using WS-ReliableMessaging</a> </li>
       <li><a href="samples/qos_mediation_samples.html#Sample102">Sample 102: Reliable message exchange between
-        ESB and the back-end server using WS-ReliableMessaging 1.1</a></li>  
+        EI and the back-end server using WS-ReliableMessaging 1.1</a></li>
     </ul>
   </li>
-  <li><a href="samples/proxy_samples.html">ESB Proxy service samples</a>
+  <li><a href="samples/proxy_samples.html">EI Proxy service samples</a>
     <ul>
       <li><a href="samples/proxy_samples.html#Sample150">Sample 150: Introduction to proxy services</a>
       </li>
@@ -172,7 +172,7 @@ logging into the console. </p>
       <li><a href="samples/transport_samples.html#Sample266">Sample 268: Proxy services with the Local transport</a></li>
     </ul>
   </li>
-  <li><a href="samples/task_samples.html">Introduction to ESB tasks</a>
+  <li><a href="samples/task_samples.html">Introduction to EI tasks</a>
     <ul>
       <li><a href="samples/task_samples.html#Sample300">Sample 300: Introduction to tasks with simple
         trigger</a> </li>
@@ -248,7 +248,7 @@ logging into the console. </p>
       <li><a href="samples/advanced_mediation_samples.html#Cache">Caching the responses over the requests</a>
         <ul>
           <li><a href="samples/advanced_mediation_samples.html#Sample420">Sample 420: Simple cache implemented on
-            ESB for the actual service</a> </li>
+            EI for the actual service</a> </li>
         </ul>
       </li>
       <li><a href="samples/advanced_mediation_samples.html#Callout">Synchronize web service invocation with Callout

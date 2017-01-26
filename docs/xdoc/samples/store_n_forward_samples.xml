@@ -23,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - Store and Forward Messaging patterns with Message Stores and Message Processors </title>
+  <title>WSO2 EI - Store and Forward Messaging patterns with Message Stores and Message Processors </title>
 </head>
 
 <body>
@@ -65,7 +65,7 @@
     <p>
     <strong>Objective: </strong>Introduction to Message Stores</p>
     <p><strong>Prerequisites</strong>:
-        <br/>Start the configuration numbered 700: i.e. wso2esb-samples -sn 700
+        <br/>Start the configuration numbered 700: i.e. wso2EI-samples -sn 700
     </p>
     <p>To Execute the Client : </p>
     <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dmode=placeorder
@@ -122,7 +122,7 @@
             <strong>Objective:</strong>Introduction to Message Sampling Processor
         </p>
         <p><strong>Prerequisites</strong>:
-        <br/>Start the configuration numbered 701: i.e. wso2esb-samples -sn 701 </p>
+        <br/>Start the configuration numbered 701: i.e. wso2EI-samples -sn 701 </p>
         <p>Start the SimpleStockQuoteService if its not already started</p>
         <p>To Execute the Client few times:</p>
         <pre xml:space="preserve">ant stockquote
@@ -187,7 +187,7 @@
    <p> <strong>Prerequisites</strong>:
 
     <br/>
-    Start the configuration numbered 702: i.e. wso2esb-samples -sn 702 </p>
+    Start the configuration numbered 702: i.e. wso2EI-samples -sn 702 </p>
 
     <p>To Execute the Client: </p>
     <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dmode=placeorder

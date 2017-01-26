@@ -24,14 +24,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 Enterprise Service Bus (ESB) Templates
+            WSO2 Enterprise Integrator (EI) Templates
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1> WSO2 Enterprise Service Bus (ESB) Templates</h1>
+        <h1> WSO2 Enterprise Integrator (EI) Templates</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -57,30 +57,30 @@
         </div>
         <h2 id="intro" >Introduction</h2>
 
-        <p>ESB configuration language is a very powerful and robust way of driving enterprise
-data/messages through ESB mediation engine. However your requirements can become
+        <p>EI configuration language is a very powerful and robust way of driving enterprise
+data/messages through EI mediation engine. However your requirements can become
 such that very large amount of configuration files in the form of sequences,
 endpoints ,proxies and transformations would be required to satisfy all the
 mediation requirements of your system. In such cases number of configuration files
 will be scattered all over and would be extremely hard to manage. What would be
 frustrating to note is that , most of the configurations of particular types are
 redundant in nature.</p>
-        <p>ESB Templates try to minimize this redundancy by creating prototypes that users
+        <p>EI Templates try to minimize this redundancy by creating prototypes that users
 can re-use and utilize as and when needed. This is very much analogous to classes
 and instances of classes where-as, a template is a class that can be used to wield
-instance objects such as templates and endpoints. Thus ESB Templates is an ideal
-way to improve re-usability and readability of ESB configurations/xml s. Addition
+instance objects such as templates and endpoints. Thus EI Templates is an ideal
+way to improve re-usability and readability of EI configurations/xml s. Addition
 to that users can utilize predefined Templates that reflect commonly used EIP
-patterns for rapid development of ESB message/mediation flows.
+patterns for rapid development of EI message/mediation flows.
 </p>
 
         <h2 id="templates" >Templates</h2>
-        <p>ESB templates comes in two different forms.
+        <p>EI templates comes in two different forms.
 </p>
 
         <ul>
             <li>Sequence Templates
-                <p>This defines a templated form of a ESB sequence. Sequence
+                <p>This defines a templated form of a EI sequence. Sequence
                     Template has the ability to parameterize xpath expressions used
                     within a sequence defined inside a template. We invoke a Sequence
                     Template with a mediator named call-template by passing parameter
@@ -114,14 +114,14 @@ patterns for rapid development of ESB message/mediation flows.
         <h2 id="seqt">Sequence Template Configuration</h2>
 
         <p>
-Template is a parametrized sequence defined in ESB. Parameters of a template are defined in the form
+Template is a parametrized sequence defined in EI. Parameters of a template are defined in the form
 of xpath statement/s.
 Callers can invoke such a template by populating parameters with static values /xpath  expressions . We call such an artifact, Call-Template mediator.
         </p>
 
-        <p>In other words template sequence is an abstract/generic form of a ESB sequence. Only a call template mediator can make
+        <p>In other words template sequence is an abstract/generic form of a EI sequence. Only a call template mediator can make
 a sequence template in to a concrete sequence. Let's illustrate this with a simple example. Suppose we have a sequence which
-logs hello world in four different languages. You would do that in ESB in following way,</p>
+logs hello world in four different languages. You would do that in EI in following way,</p>
 
         <pre xml:space="preserve">&lt;sequence&gt;
    &lt;switch source=&quot;//m0:greeting/m0:lang&quot; xmlns:m0=&quot;http://services.samples&quot;&gt;
@@ -200,7 +200,7 @@ you may name "HelloWorld_Logger".</p>
 &lt;/sequence&gt;</pre>
 
         <p>Note how call template mediator/s point to the same template "HelloWorld_Logger" and pass different arguments to it. This way sequence templates make it easy to
-stereotype different workflows inside ESB. </p>
+stereotype different workflows inside EI. </p>
 
 
         <h3>Syntax</h3>
@@ -215,7 +215,7 @@ stereotype different workflows inside ESB. </p>
    &lt;/sequence&gt;
  &lt;/template&gt;</pre>
         <p>
-sequence template is a top level element defined with the name attribute in ESB
+sequence template is a top level element defined with the name attribute in EI
 configuration. Both endpoint and sequence template starts with a template element.
 Parameters (ie:-&lt;parameter&gt;) are the inputs supported by this sequence template .
 These sequence template parameters can be referred by a xpath expression defined
@@ -273,7 +273,7 @@ to the mediator.  Following shows how users can declare parameters inside call-t
     </p>
     <p>Figure 2: Passing Values with Call Template Mediator </p>
         <h2 id="ept">Endpoint Template Configuration</h2>
-        <p>Endpoint Template is a generalized form of endpoint configuration used in ESB. Unlike sequence
+        <p>Endpoint Template is a generalized form of endpoint configuration used in EI. Unlike sequence
 templates , endpoint templates are always parameterized using '$' prefixed values (ie:- NOT xpath expressions).</p>
         <p>Template Endpoint is the artifact that makes a template of endpoint type into a concrete endpoint. In other words an
 endpoint template would be useless without a Template Endpoint referring to it.
@@ -287,7 +287,7 @@ For example lets say we have two default endpoints with following hypothetical c
                      &lt;progressionFactor&gt;1.0&lt;/progressionFactor&gt;
                 &lt;/suspendOnFailure&gt;
                 &lt;markForSuspension&gt;
-                     &lt;retriesBeforeSuspension&gt;5&lt;/retriesBeforeSuspension&gt;
+                     &lt;retriEIeforeSuspension&gt;5&lt;/retriEIeforeSuspension&gt;
                      &lt;retryDelay&gt;0&lt;/retryDelay&gt;
                 &lt;/markForSuspension&gt;
             &lt;/default&gt;
@@ -299,7 +299,7 @@ For example lets say we have two default endpoints with following hypothetical c
                      &lt;progressionFactor&gt;2.0&lt;/progressionFactor&gt;
                 &lt;/suspendOnFailure&gt;
                 &lt;markForSuspension&gt;
-                     &lt;retriesBeforeSuspension&gt;3&lt;/retriesBeforeSuspension&gt;
+                     &lt;retriEIeforeSuspension&gt;3&lt;/retriEIeforeSuspension&gt;
                      &lt;retryDelay&gt;0&lt;/retryDelay&gt;
                 &lt;/markForSuspension&gt;
             &lt;/default&gt;
@@ -319,7 +319,7 @@ For example lets say we have two default endpoints with following hypothetical c
                      &lt;progressionFactor&gt;$factor&lt;/progressionFactor&gt;
                 &lt;/suspendOnFailure&gt;
                 &lt;markForSuspension&gt;
-                     &lt;retriesBeforeSuspension&gt;$retries&lt;/retriesBeforeSuspension&gt;
+                     &lt;retriEIeforeSuspension&gt;$retries&lt;/retriEIeforeSuspension&gt;
                      &lt;retryDelay&gt;0&lt;/retryDelay&gt;
                 &lt;/markForSuspension&gt;
             &lt;/default&gt;
@@ -341,7 +341,7 @@ For example lets say we have two default endpoints with following hypothetical c
 &lt;/endpoint&gt;</pre>
 
         <p>As with call-template mediator , above template endpoint will stereotype endpoints with customized configuration parameters.
-            This makes it very easy to understand and maintain certain ESB configurations and improves reusability in a certain way.</p>
+            This makes it very easy to understand and maintain certain EI configurations and improves reusability in a certain way.</p>
 
         <h3>Syntax</h3>
         <pre xml:space="preserve">&lt;template name=&quot;string&quot;&gt;
@@ -357,7 +357,7 @@ endpoint | fail-over-endpoint
 &lt;/template&gt;</pre>
 
         <p>Similar to sequence templates ,endpoint templates are defined as top level element
-(with the name specified by the name attribute )of ESB configuration
+(with the name specified by the name attribute )of EI configuration
 Parameters (ie:-&lt;parameter&gt;) are the inputs supported by this endpoint template .
 These endpoint template parameters can be referred by $ prefixed parameter name.
 For example parameter named 'foo' can be referred by $foo. Most of the parameters
@@ -372,7 +372,7 @@ shown in the following extract,</p>
                      &lt;progressionFactor&gt;$bar&lt;/progressionFactor&gt;
                 &lt;/suspendOnFailure&gt;
                 &lt;markForSuspension&gt;
-                     &lt;retriesBeforeSuspension&gt;0&lt;/retriesBeforeSuspension&gt;
+                     &lt;retriEIeforeSuspension&gt;0&lt;/retriEIeforeSuspension&gt;
                      &lt;retryDelay&gt;0&lt;/retryDelay&gt;
                 &lt;/markForSuspension&gt;
             &lt;/default&gt;

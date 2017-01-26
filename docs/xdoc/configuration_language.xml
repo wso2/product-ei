@@ -20,16 +20,16 @@
 <html>
 <head>
   <title>
-      WSO2 ESB - Configuration Language
+      WSO2 EI - Configuration Language
   </title>
-  <link href="css/esb-docs.css" rel="stylesheet" type="text/css" media="all"/>
+  <link href="css/EI-docs.css" rel="stylesheet" type="text/css" media="all"/>
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 
 <body>
     [ <a href="docs_index.html"> Documentation Index </a> ]
 <h1>
-  WSO2 Enterprise Service Bus (ESB) Configuration
+  WSO2 Enterprise Integrator (EI) Configuration
 </h1>
 <h2>Contents</h2>
 <p>
@@ -84,7 +84,7 @@
                 <li><a href="#extension-mediators">Extension Mediators</a></li>
             </ul>
         </li>
-        <li><a href="#ext-esb">Extensibility of WSO2 ESB</a>
+        <li><a href="#ext-EI">Extensibility of WSO2 EI</a>
             <ul>
                 <li><a href="#spring-conf">Spring Configuration</a></li>
                 <li><a href="#spring">Spring Mediator</a></li>
@@ -96,18 +96,18 @@
 
 
 <h2 id="Overview">Overview</h2>
-<p>The mediation engine of WSO2 ESB is driven off a set of XML configuration files.
+<p>The mediation engine of WSO2 EI is driven off a set of XML configuration files.
 This allows the mediation configuration to be easily
 hand edited, backed up from the file system, or even included into version
 control for easier management and administration (e.g. moving a configuration from
 development, through QA, staging and into production). The configuration files
-that drives the mediation engine are stored in the ESB_HOME/repository/conf/synapse-config
+that drives the mediation engine are stored in the EI_HOME/repository/conf/synapse-config
 directory. These configuration files are written using the Synapse configuration language
 which is a simple and easy to learn domain specific language based on XML.</p>
 
 <p>It is always recommended to use the graphical wizards and tools provided in the
-WSO2 ESB management console to setup the mediation configuration, thus avoiding having to
-write XML configurations manually. The ESB management console offers a rich set of tools
+WSO2 EI management console to setup the mediation configuration, thus avoiding having to
+write XML configurations manually. The EI management console offers a rich set of tools
 that allows you to build mediation configurations easily without writing a single line of XML.
 However it is helpful to have a basic understanding
 on the Synapse configuration language as well as on how the mediation configuration is
@@ -117,46 +117,46 @@ how the files are stored will allow you to use third party tools and scripts for
 management activities.</p>
 
 <p>This guide walks you through the Synapse configuration language and how various
-configuration files are stored under the synapse-config directory of the ESB. It starts
+configuration files are stored under the synapse-config directory of the EI. It starts
 off with a breif introduction to the high level concepts associated with mediation and then
 explores into how such concepts can be implemented using the Synapse configuration
-language in WSO2 ESB.</p>
+language in WSO2 EI.</p>
 
 <h2 id="MediationEngine">The Mediation Engine and Modes of Operation</h2>
 <p>As the diagram below depicts, the mediation engine consists of Proxy
-services, Endpoints, Sequences and Startup jobs managed by the ESB. It
+services, Endpoints, Sequences and Startup jobs managed by the EI. It
 also contains the interface to the Registry/Repository being used by the mediation engine.
 Items like sequences, endpoints and proxy services could be made to
 reference different configuration elements that
 are served through the Registry. When using the Registry to hold
 pieces of the configuration, certain elements such as endpoint definitions,
-sequences and local entries could be updated dynamically while the ESB
+sequences and local entries could be updated dynamically while the EI
 is executing, and the Registry could trigger a re-load as configured.</p>
 
 <p><img alt="Synapse message flow" src="images/synapse-flow.png" width="400"
 height="300" /> </p>
 
-<p>Typically the ESB is deployed between the actual client and a backend
+<p>Typically the EI is deployed between the actual client and a backend
 service implementation to mediate the message flow in between. Thus WSO2
-ESB can accept a message on behalf of the actual service, perform
+EI can accept a message on behalf of the actual service, perform
 authentication, validation, transformation, logging, routing based on the
 content etc. and then decide the destination target endpoint for the message
-and direct it to an actual service implementation. The ESB can also
+and direct it to an actual service implementation. The EI can also
 detect timeouts, transport failures during communication or introduce load
 balancing, throttling or caching where necessary. For fault scenarios such as
-authentication failure, or schema validation failure, the WSO2 ESB can be
+authentication failure, or schema validation failure, the WSO2 EI can be
 configured to return a custom message or a SOAP fault to the requesting client
 without forwarding the request to the actual service. </p>
 
-<p>WSO2 ESB can operate in four modes of operation: </p>
+<p>WSO2 EI can operate in four modes of operation: </p>
 
 <h3 id="ServiceMediation">Service mediation (Proxy services)</h3>
 
-<p>In Service mediation, the ESB exposes a service endpoint on the ESB,
+<p>In Service mediation, the EI exposes a service endpoint on the EI,
 that accepts messages from clients. Typically these services acts as proxies
-for existing (external) services, and the role of the ESB would be to "mediate"
+for existing (external) services, and the role of the EI would be to "mediate"
 these messages before they are proxied to the actual service. In this mode,
-WSO2 ESB could expose a service already available in one transport, over a
+WSO2 EI could expose a service already available in one transport, over a
 different transport; or expose a service that uses one schema or WSDL as a
 service that uses a different schema or WSDL etc. A Proxy service could define
 the transports over which the service is exposed, and point to the mediation
@@ -167,35 +167,35 @@ as JMS and VFS file systems - e.g. CSV content being the payload </p>
 
 <h3 id="MessageMediation">Message mediation (Sequences)</h3>
 
-<p>In Message mediation, WSO2 ESB can act as a transparent proxy for clients -
-if they are directed to point to WSO2 ESB as a http proxy. This way,
-WSO2 ESB could be configured to filter all messages on a network for logging,
+<p>In Message mediation, WSO2 EI can act as a transparent proxy for clients -
+if they are directed to point to WSO2 EI as a http proxy. This way,
+WSO2 EI could be configured to filter all messages on a network for logging,
 access control etc, and could "mediate" messages without the explicit knowledge
-of the original client. If the ESB receives a message that is not accepted by
+of the original client. If the EI receives a message that is not accepted by
 any proxy service, this message is handled through message mediation as well.
 Message mediation always processes messages according to the mediation sequence
 defined as "main". </p>
 
 <h3 id="TaskScheduling">Task Scheduling (Startup jobs)</h3>
-<p>With the task scheduling capabilities of WSO2 ESB, one or more tasks can be
-configured to execute in a periodic manner in the ESB runtime. Tasks are
-custom developed Java code which are deployed into the ESB by the user. Tasks
+<p>With the task scheduling capabilities of WSO2 EI, one or more tasks can be
+configured to execute in a periodic manner in the EI runtime. Tasks are
+custom developed Java code which are deployed into the EI by the user. Tasks
 could be written to inject messages into the service bus periodically, poll
 databases and message queues, cleanup the environment and ping backend services
 to check availability.</p>
 
 <h3 id="Eventing">Eventing (Event Sources)</h3>
-<p>With event sources and the event publisher mediator, WSO2 ESB can act as an
+<p>With event sources and the event publisher mediator, WSO2 EI can act as an
 event broker. It can receive and manage subscription requests from client applications
 and then dispatch events to the subscribers based on a pre configured criteria.
 Also if required events can be mediated through sequences before delivering them
 to the subscribers. The subscription manager implementation is pluggable and WSO2
-ESB ships with a registry based subscription manager and an in memory subscription
+EI ships with a registry based subscription manager and an in memory subscription
 manager.</p>
 
 <h2 id="Concepts">Concepts and Configuration Elements</h2>
 <p>The following section explaing the high level concepts associated with the WSO2
-ESB mediation engine and how they map to various configuration elements in the ESB
+EI mediation engine and how they map to various configuration elements in the EI
 configuration. It is very important to understand these high level concepts regardless
 of how you are planning to develop mediation configuration. Even if you are using
 the graphical tools to develop configuration it is still necessary to understand these
@@ -204,7 +204,7 @@ concepts.</p>
 <h3 id="MediatorConcept"><a href="#mediator">Mediators</a> and <a href="#sequence">Mediation
 Sequences</a> </h3>
 
-<p>WSO2 ESB defines a 'mediator' as a component that performs some
+<p>WSO2 EI defines a 'mediator' as a component that performs some
 mediation action on a message during the process flow. Thus a mediator gets
 full access to a message at the point where it is defined to gain control, and
 could inspect the message, modify it or take an external action depending on
@@ -221,10 +221,10 @@ Apache BSF script (e.g. Javascript, Ruby, Groovy etc) for mediation. </p>
 <p>A mediation configuration holds two special sequences named "main" and
 "fault". These may be defined within the synapse.xml, or externally via the
 Registry. If either is not found, a suitable default is generated at runtime by
-the ESB. The default "main" sequence will simply send a message without
+the EI. The default "main" sequence will simply send a message without
 mediation, while the default "fault" sequence would log the message including
 the payload and any error/exception encountered and stop further processing.
-The 'fault' sequence executes whenever WSO2 ESB itself encounters an error while
+The 'fault' sequence executes whenever WSO2 EI itself encounters an error while
 processing a message - or when a fault handler has not been defined to handle
 exceptions. A sequence can assign another named sequence as its "fault" handler
 sequence, and control branches to the fault handler if an error is encountered
@@ -236,14 +236,14 @@ during the execution of the initial sequence. </p>
 and any attributes or semantics that should be followed when communicating with
 that endpoint. An endpoint definition can be named for re-use, or defined
 in-line or anonymously within a configuration. Typically an endpoint would be
-based on a service Address or a WSDL. Additionally WSO2 ESB supports
+based on a service Address or a WSDL. Additionally WSO2 EI supports
 Failover and Load-balance endpoints - which are defined over a group of
 endpoints. Endpoints may be defined within the synapse-config configuration or
 within the Registry. </p>
 
 <h3 id="ProxyConcept"><a href="#proxy">Proxy Services</a></h3>
 
-<p>A proxy service is a virtual services hosted in the ESB runtime. For a service client it
+<p>A proxy service is a virtual services hosted in the EI runtime. For a service client it
 appears to be a real Web Service which accepts service requests. The proxy service mediates
 any accepted requests and forwards them to a specified endpoint, most of the time to an
 actual Web Service. The responses coming back from the target endpoint are mediated back to
@@ -292,10 +292,10 @@ not be based on REST.
 <p>A Task is a custom Java class that implements the
 org.apache.synapse.startup.Task interface that defines a single "public void
 execute()" method. Such a task can be scheduled and managed via the
-ESB. The scheduling information for a task can be specified in the cron format
+EI. The scheduling information for a task can be specified in the cron format
 or a simple format by the user. A task may also be specified as a one-time task
 where required, and can be used to trigger a callout or inject a message into
-the ESB. </p>
+the EI. </p>
 
 <h3 id="RegistryConcept"><a href="#registry">Remote Registry</a> and <a
 href="#localEntry">Local Registry (Local Entries)</a> </h3>
@@ -305,12 +305,12 @@ resources used such as WSDL's, Schemas, Scripts, XSLT or XQuery transformations
 etc. One or more remote registries may be hidden or merged behind a local
 Registry interface defined to a Synapse configuration. Resources from an
 external registry are looked up using "keys" - which are known to the external
-registry. WSO2 ESB ships with a simple URL based registry implementation
+registry. WSO2 EI ships with a simple URL based registry implementation
 that uses the file system for storage of resources, and URL's or fragments as
 "keys". </p>
 
 <p>A Registry may define a duration for which a resource served may be cached
-by the ESB runtime. If such a duration is specified, WSO2 ESB is
+by the EI runtime. If such a duration is specified, WSO2 EI is
 capable of refreshing the resource after cache expiry to support dynamic
 re-loading of resource at runtime. Optionally, a configuration could define
 certain "keys" to map to locally defined entities. These entities may refer to
@@ -318,13 +318,13 @@ a source URL or file, or defined as in-line XML or text within the
 configuration itself. If a Registry contains a resource whose "key" matches the
 key of a locally defined entry, the local entry shadows the resource available
 in the Registry. Thus it is possible to override Registry resources locally
-from within a configuration. To integrate WSO2 ESB with a custom / new Registry
+from within a configuration. To integrate WSO2 EI with a custom / new Registry
 or repository, one needs to implement the org.apache.synapse.registry.Registry
 interface to suit the actual Registry being used. </p>
 
 <h3 id="EventConcept">Event Sources</h3>
 <p>An event source is used to define the event source and the subscription manager
-configuration used in the eventing implementation of WSO2 ESB. An event source provides
+configuration used in the eventing implementation of WSO2 EI. An event source provides
 a service URL that can be used to the send subscriptions and events (events that are
 not required to go through a mediation flow).
 </p>
@@ -341,7 +341,7 @@ not required to go through a mediation flow).
 <h2 id="DirContents">The Contents of the synapse-config Directory</h2>
 
 <p>The synapse-config directory which houses the mediation configuration (Synapse configuration)
-of WSO2 ESB contains several files and subdirectories. Usually the following set of child
+of WSO2 EI contains several files and subdirectories. Usually the following set of child
 directories are available in the synapse-config directory.</p>
 
 <ul>
@@ -361,12 +361,12 @@ subdirectory can house zero or more XML files that contain endpoint configuratio
 
 <p>Inaddition to the above mentioned subdirectories, there can be files named synapse.xml and
 registry.xml at the top level of the synapse-config directory. The registry.xml contains
-the registry definition for the ESB. The synapse.xml can contain any type of configuration
+the registry definition for the EI. The synapse.xml can contain any type of configuration
 elements wrapped in a top level &lt;definitions&gt; element. This file is mainly there for backward
-compatibility reasons. Older versions of WSO2 ESB had only a single flat XML file named synapse.xml
+compatibility reasons. Older versions of WSO2 EI had only a single flat XML file named synapse.xml
 to load the entire Synapse configuration from. The synapse.xml file in the synapse-config directory
 resembles this flat configuration file so that a user could easily port an old configuration
-to a new ESB distribution. Basically a user can get the content of the old synapse.xml file and
+to a new EI distribution. Basically a user can get the content of the old synapse.xml file and
 put it in the synapse-config/synapse.xml file.</p>
 
 <p>A Synapse configuration looks like the following at the top level synapse.xml file: </p>
@@ -383,7 +383,7 @@ put it in the synapse-config/synapse.xml file.</p>
    <a href="#mediator">mediator</a>*
  &lt;/definitions&gt;</pre>
 
-<p>The &lt;definitions&gt; elements in the synapse.xml holds the ESB
+<p>The &lt;definitions&gt; elements in the synapse.xml holds the EI
 configuration. While the &lt;registry&gt;, &lt;sequence&gt;, &lt;endpoint&gt;,
 &lt;proxy&gt;, &lt;task&gt; and &lt;localEntry&gt; elements refer to those
 discussed above, the built-in mediator elements names are already registered
@@ -411,10 +411,10 @@ is found. Hence it is possible to define configuration elements such as
 or XSDs off the registry, and update the configuration as these are allowed to
 dynamically change over time. </p>
 
-<p>WSO2 ESB ships with a built-in file system based registry implementation called the
+<p>WSO2 EI ships with a built-in file system based registry implementation called the
 "FileSystemRegistry" and this can be configured as follows: </p>
 <pre xml:space="preserve">e.g.
-&lt;registry provider="org.wso2.carbon.mediation.registry.ESBRegistry"&gt;
+&lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
   &lt;parameter name="root"&gt;file:./repository/samples/resources/&lt;/parameter&gt;
   &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
 &lt;/registry&gt;</pre>
@@ -425,7 +425,7 @@ with the root prefix would form the full URL for the referenced resource. The
 "cachableDuration" parameter specifies the number of milliseconds for which
 resources loaded from the Registry should be cached. More advanced registry
 implementations allows different cachable durations to be specified for
-different resources, or mark some resources as never expires. By default WSO2 ESB
+different resources, or mark some resources as never expires. By default WSO2 EI
 uses the WSO2 Governance Registry for storing resources. It is configured as
 follows:</p>
 <pre xml:space="preserve">e.g.
@@ -439,7 +439,7 @@ registry.xml file in the synapse-config directory.</p>
 <h3 id="localEntry">Local Registry / Local Entries</h3>
 
 <p>The &lt;localEntry&gt; element is used to declare registry entries that are
-local to the ESB instance, as shown below </p>
+local to the EI instance, as shown below </p>
 <pre xml:space="preserve">  &lt;localEntry key="string" [src="url"]&gt;text | xml&lt;/localEntry&gt;</pre>
 
 <p>These entries are top level entries which are globally visible within the
@@ -471,7 +471,7 @@ any message that is accepted for '<a href="#message_mediation">Message
 Mediation</a>', and the "fault" sequence is invoked if Synapse encounters a
 fault, and a custom fault handler is not specified for the sequence via its
 "onError" attribute. If the "main" or "fault" sequences are not defined locally
-or not found in the Registry, the Synapse ESB defines suitable defaults at
+or not found in the Registry, the Synapse EI defines suitable defaults at
 initialization.</p>
 
 <p>A Dynamic Sequence may be defined by specifying a key reference to a
@@ -499,7 +499,7 @@ where "sequence/dynamic_seq_1.xml" refers to the following sequence definition f
 
 <p>Sequences can be defined in the top level synapse.xml file or in the
 synapse-config/sequences directory. The default main sequence and the fault
-sequence that ships with WSO2 ESB can be found in the sequences directory
+sequence that ships with WSO2 EI can be found in the sequences directory
 in two files named main.xml and fault.xml respectively.</p>
 
 <h2 id="endpoint">Endpoints</h2>
@@ -576,7 +576,7 @@ be specified using the 'policy' attributes. </p>
 
   &lt;markForSuspension&gt;
     [&lt;errorCodes&gt;xxx,yyy&lt;/errorCodes&gt;]
-    &lt;retriesBeforeSuspension&gt;m&lt;/retriesBeforeSuspension&gt;
+    &lt;retriEIeforeSuspension&gt;m&lt;/retriEIeforeSuspension&gt;
     &lt;retryDelay&gt;d&lt;/retryDelay&gt;
   &lt;/markForSuspension&gt;
 
@@ -680,7 +680,7 @@ and timeout elements are same as for an Address endpoint. </p>
 
   &lt;markForSuspension&gt;
     [&lt;errorCodes&gt;xxx,yyy&lt;/errorCodes&gt;]
-    &lt;retriesBeforeSuspension&gt;m&lt;/retriesBeforeSuspension&gt;
+    &lt;retriEIeforeSuspension&gt;m&lt;/retriEIeforeSuspension&gt;
     &lt;retryDelay&gt;d&lt;/retryDelay&gt;
   &lt;/markForSuspension&gt;
 
@@ -1091,8 +1091,8 @@ A &lt;eventSource&gt; element is used to define an event source.
         &lt;/subscriptionManager&gt;
 &lt;/eventSource&gt;</pre>
 <p>
-An event source is required to implement eventing in WSO2 ESB. Event sources are
-used to inject subscription messages into the ESB and provide a service URL for the
+An event source is required to implement eventing in WSO2 EI. Event sources are
+used to inject subscription messages into the EI and provide a service URL for the
 users to send subscription requests. User can send messages to manage the subscriptions
 (unsubscribe, renew, get-status) in the event source as well.
 </p>
@@ -1128,7 +1128,7 @@ required to setup the subscription manager can be set as parameters.
     core threads will be used.
 </p>
 <p>
-    A Priority Executor has a core number of threads. When ESB is started with the priority
+    A Priority Executor has a core number of threads. When EI is started with the priority
     executor, this number of threads will be created. Max is the maximum number of threads this
     executor will have. If the number of threads in the executor exceeds the core threads, they
     will be in active for the keep-alive time only. After the keep-alive time those threads will
@@ -1957,7 +1957,7 @@ in a way natural to the scripting language. For example when using JavaScript
 getPayloadXML and setPayloadXML, E4X XML objects, and when using Ruby, REXML
 documents. </p>
 
-<h2 id="ext-esb">Extensibility of WSO2 ESB</h2>
+<h2 id="ext-EI">Extensibility of WSO2 EI</h2>
 
 <p>The Synapse configuration language could be easily extended, with
 configuration extensions as well as mediation extensions. The Spring mediator
@@ -1991,7 +1991,7 @@ ApplicationContext/Configuration used for the bean </p>
 
 <h3 id="rule">Rule Mediator - Java Rule mediator</h3>
 
-<p>Rule mediator is to integrate the WSO2 Rules component to the WSO2 ESB in
+<p>Rule mediator is to integrate the WSO2 Rules component to the WSO2 EI in
 order to define dynamic integration decisions in terms of rules.</p>
 <pre> &lt;ruleMediator backendRuntimeFactory=&quot;xs:string&quot;&gt;
     &lt;source xpath=&quot;//&quot; &gt;soapBody|soapHeader|$foo|$bar&lt;/source&gt;
@@ -2025,7 +2025,7 @@ order to define dynamic integration decisions in terms of rules.</p>
     rule engine execution. </p>
 
 <h2>UI Integration</h2>
-<p>As mentioned earlier the ESB management console provides tools that can be
+<p>As mentioned earlier the EI management console provides tools that can be
 used to construct mediation configurations. When these tools are used to create
 endpoints, sequences, proxy services and other configuration elements they are
 also saved under the appropriate child directory under the synapse-config
@@ -2034,7 +2034,7 @@ be saved to a file named 'foo.xml' in the synapse-config/endpoints directory.
 Further modifications to the endpoint 'foo' will be saved to the same configuration
 file.</p>
 <p>However there is a slight exception with the Synapse configuration editor in the
-ESB management console (available under the 'Configure' menu). New elements add
+EI management console (available under the 'Configure' menu). New elements add
 through this editor will be saved to the top level synapse.xml file in the
 synapse-config directory. Anyway, if an existing item is modified through the Synapse
 configuration editor it will be still saved back to the original file where it was

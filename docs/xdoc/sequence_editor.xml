@@ -22,8 +22,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Sequence Editor </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Sequence Editor </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -33,7 +33,7 @@
 
 <p>A sequence is the basis of message mediation. A sequence is a collection of
 mediators. Sequence editor allows creation of sequences from the UI. Sequences
-can be created as named sequences and refer later from other parts of ESB
+can be created as named sequences and refer later from other parts of EI
 configuration. Some configurations expects sequences to be defined in the place
 they are used. We call this type of sequences inline sequences. Sequence editor
 is used in both these cases for creating a sequence. </p>
