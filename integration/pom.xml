@@ -34,7 +34,7 @@
 
     <modules>
         <module>automation-extensions</module>
-        <!--<module>mediation-tests</module>-->
+        <module>mediation-tests</module>
     </modules>
 
 </project>
