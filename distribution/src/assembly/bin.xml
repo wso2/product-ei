@@ -2538,7 +2538,7 @@
 
         <file>
             <source>
-                target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/catalina-server.xml
+                src/analytics/conf/tomcat/catalina-server.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/tomcat/</outputDirectory>
             <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
