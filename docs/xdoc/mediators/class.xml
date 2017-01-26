@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Class Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Class Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -89,7 +89,7 @@
 
     &lt;/definitions&gt;</pre>
 
-    <p>In this configuration, ESB hands over the request message to the specified endpoint, which sends it to the
+    <p>In this configuration, EI hands over the request message to the specified endpoint, which sends it to the
         Axis2 server running on port 9000. But the response message is passed through the class mediator before sending it
         back to the client. Two parameters named "varible1" and "varible2" are passed to the instance mediator
         implementation class(SimpleClassMediator). Look at the following sample class mediator. Note how the

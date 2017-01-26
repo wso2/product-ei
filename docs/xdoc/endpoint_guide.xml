@@ -24,9 +24,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
   <title>
-      WSO2 ESB - Endpoint Catalog
+      WSO2 EI - Endpoint Catalog
   </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -34,8 +34,8 @@
 
 <body xml:lang="en">
     [ <a href="docs_index.html"> Documentation Index </a> ]
-<h1>WSO2 Enterprise Service Bus (ESB) Endpoint Catalog</h1>
-<p>The endpoints catalog wlks you through the endpoints which are there inside the WSO2 ESB.
+<h1>WSO2 Enterprise Integrator (EI) Endpoint Catalog</h1>
+<p>The endpoints catalog wlks you through the endpoints which are there inside the WSO2 EI.
 This will cover the very basics of the endpoints and dive deeper in to the configurtion details and
 the technical implementation details as well</p>
 
@@ -90,7 +90,7 @@ the technical implementation details as well</p>
 <h2 id="Intro">Endpoints - Introduction</h2>
 <p>An endpoint
 defines an external destination for an outgoing message through WSO2
-ESB. An &lt;endpoint&gt; element defines an endpoint in the
+EI. An &lt;endpoint&gt; element defines an endpoint in the
 configuration. An endpoint may be specified as an address endpoint, WSDL based endpoint, a load
 balancing endpoint or a fail-over endpoint as follows:
 </p>
@@ -112,7 +112,7 @@ the following endpoint can be used in any place, where "foo" has to be used.
 <p>This let the users to reuse the already defined endpoints  in several places.</p>
 <p>The endpoints also have a trace attribute which turns on detailed trace information for messages being sent to the
     endpoint. These are available in the trace.log configured via the log4j.properties file(which can be found within
-    lib folder once you unzip wso2 ESB zip). Setting the trace log level to TRACE will dump detailed trace information
+    lib folder once you unzip wso2 EI zip). Setting the trace log level to TRACE will dump detailed trace information
     including message payloads.
 </p>
 <p>
@@ -223,7 +223,7 @@ The state transition between states can be shown as follows.
 
     &lt;markForSuspension&gt;
         [&lt;errorCodes&gt;xxx,yyy&lt;/errorCodes&gt;]
-        &lt;retriesBeforeSuspension&gt;m&lt;/retriesBeforeSuspension&gt;
+        &lt;retriEIeforeSuspension&gt;m&lt;/retriEIeforeSuspension&gt;
         &lt;retryDelay&gt;d&lt;/retryDelay&gt;
     &lt;/markForSuspension&gt;
 
@@ -274,7 +274,7 @@ The state transition between states can be shown as follows.
     later, or to trigger a fault. Synapse has a periodic timeout handler that triggers itself at each 15 seconds
     interval. Thus endpoint timeout will have a +/- erroce on trigger time. Though this can be minimized by
     setting a System property "synapse.timeout_handler_interval"(This property can be set in synapse.properties
-    synpase property file which is located in conf directory inside repository once you unzipped WSO2 ESB )
+    synpase property file which is located in conf directory inside repository once you unzipped WSO2 EI )
     to a millisecond duration below the   desired endpoint timeout, <b>care must be taken as a lesser value may have a
     higher overhead on the system.</b></p>
 
@@ -297,7 +297,7 @@ The state transition between states can be shown as follows.
         returned by the endpoint. See <a title="SynpaseConstant"
         href="https://svn.apache.org/repos/asf/synapse/trunk/java/modules/core/src/main/java/org/apache/synapse/SynapseConstants.java"
         >SynpaseConstant</a> class for a possible list of error codes. <br/></td></tr>
-        <tr><td>retriesBeforeSuspension</td><td>Number of retries before go into suspended
+        <tr><td>retriEIeforeSuspension</td><td>Number of retries before go into suspended
             state.<br/></td></tr>
         <tr><td>retryDelay</td><td>The delay between each try.</td></tr>
     </tbody></table></div>
@@ -423,7 +423,7 @@ maximumDuration
 
     &lt;markForSuspension&gt;
         [&lt;errorCodes&gt;xxx,yyy&lt;/errorCodes&gt;]
-        &lt;retriesBeforeSuspension&gt;m&lt;/retriesBeforeSuspension&gt;
+        &lt;retriEIeforeSuspension&gt;m&lt;/retriEIeforeSuspension&gt;
         &lt;retryDelay&gt;d&lt;/retryDelay&gt;
     &lt;/markForSuspension&gt;
 
@@ -459,7 +459,7 @@ maximumDuration
 
     &lt;markForSuspension&gt;
         [&lt;errorCodes&gt;xxx,yyy&lt;/errorCodes&gt;]
-        &lt;retriesBeforeSuspension&gt;m&lt;/retriesBeforeSuspension&gt;
+        &lt;retriEIeforeSuspension&gt;m&lt;/retriEIeforeSuspension&gt;
         &lt;retryDelay&gt;d&lt;/retryDelay&gt;
     &lt;/markForSuspension&gt;
 

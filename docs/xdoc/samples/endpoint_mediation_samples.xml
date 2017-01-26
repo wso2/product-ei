@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - Endpoint samples </title>
+  <title>WSO2 EI - Endpoint samples </title>
 </head>
 
 <body>
-<h1>Running the Endpoint Mediation samples with WSO2 Enterprise Service Bus (ESB) </h1>
+<h1>Running the Endpoint Mediation samples with WSO2 Enterprise Integrator (EI) </h1>
 
 <h2><a name="Sample50">Sample 50: POX to SOAP conversion</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
@@ -46,7 +46,7 @@
 <p><strong>Objective: POX to SOAP conversion</strong> </p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 50: i.e. wso2esb-samples -sn 50 </p>
+Start the Synapse configuration numbered 50: i.e. wso2EI-samples -sn 50 </p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not
 already done </p>
@@ -107,7 +107,7 @@ request/response correlation</a> </h2>
 correlation</strong> </p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 51: i.e. wso2esb-samples -sn 51<br />
+Start the Synapse configuration numbered 51: i.e. wso2EI-samples -sn 51<br />
 Start the Axis2 server and deploy the MTOMSwASampleService if not already
 done </p>
 
@@ -119,7 +119,7 @@ done </p>
 the message to 'http://localhost:9000/services/MTOMSwASampleService' optimizing
 binary content as MTOM. By sending this message through TCPMon you would be
 able to see the actual message sent over the http transport if required. Thus
-during response processing, by checking the local message property ESB could
+during response processing, by checking the local message property EI could
 identify the past information about the current message context, and uses
 this knowledge to transform the response back to the client in the same
 format as the original request. </p>
@@ -257,16 +257,16 @@ endpoints</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start ESB with sample configuration 52. (i.e. wso2esb-samples -sn 52) </p>
+<p>Start EI with sample configuration 52. (i.e. wso2EI-samples -sn 52) </p>
 
-<p>Deploy the LoadbalanceFailoverService by switching to &lt;ESB installation
+<p>Deploy the LoadbalanceFailoverService by switching to &lt;EI installation
 directory&gt;/samples/axis2Server/src/LoadbalanceFailoverService directory
 and running ant. </p>
 
 <p>Start three instances of sample Axis2 server on HTTP ports 9001, 9002 and
 9003 and give some unique names to each server. </p>
 
-<p>Example commands to run sample Axis2 servers from the &lt;ESB installation
+<p>Example commands to run sample Axis2 servers from the &lt;EI installation
 directory&gt;/samples/axis2Server directory in Linux are listed below: </p>
 <pre xml:space="preserve">./axis2server.sh -http 9001 -https 9005 -name MyServer1
 ./axis2server.sh -http 9002 -https 9006 -name MyServer2
@@ -277,7 +277,7 @@ Start the load balance and failover client using the following command: </p>
 <pre xml:space="preserve">ant loadbalancefailover -Di=100</pre>
 
 <p>This client sends 100 requests to the LoadbalanceFailoverService through
-ESB. ESB will distribute the load among the three endpoints mentioned in the
+EI. EI will distribute the load among the three endpoints mentioned in the
 configuration in round-robin manner. LoadbalanceFailoverService appends the
 name of the server to the response, so that client can determine which server
 has processed the message. If you examine the console output of the client,
@@ -368,7 +368,7 @@ for 60 seconds after detecting the failure. </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start ESB with sample configuration 53 (i.e. wso2esb-samples -sn 53) </p>
+<p>Start EI with sample configuration 53 (i.e. wso2EI-samples -sn 53) </p>
 
 <p>Deploy the LoadbalanceFailoverService and start three instances of sample
 Axis2 server as mentioned in sample 52. </p>
@@ -468,7 +468,7 @@ using client initiated sessions</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start ESB with sample configuration 54 (i.e. wso2esb-samples -sn 54). </p>
+<p>Start EI with sample configuration 54 (i.e. wso2EI-samples -sn 54). </p>
 
 <p>Deploy the LoadbalanceFailoverService and start three instances of the
 sample Axis2 server as in sample 52. </p>
@@ -478,7 +478,7 @@ sample Axis2 server as in sample 52. </p>
 is a client initiated session, which means that the client generates the
 session identifier and sends it to with each request. In this sample session
 type, client adds a SOAP header named ClientID containing the identifier of
-the client. ESB binds this ID with a server on the first request and sends
+the client. EI binds this ID with a server on the first request and sends
 all seccessive requests containing that ID to the same server. Now switch to
 samples/axis2Client directory and run the client using the following command
 to check this in action.</p>
@@ -577,7 +577,7 @@ with failover capability</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start ESB with sample configuration 55 (i.e. wso2esb-samples -sn 55). </p>
+<p>Start EI with sample configuration 55 (i.e. wso2EI-samples -sn 55). </p>
 
 <p>Deploy the LoadbalanceFailoverService and start four sample Axis2 servers
 on http ports 9001, 9002, 9003 and 9004 respectively (make sure to specify
@@ -652,7 +652,7 @@ shutdown after the request 534. </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start the Synapse configuration numbered 56 (i.e. wso2esb-samples -sn 56).
+<p>Start the Synapse configuration numbered 56 (i.e. wso2EI-samples -sn 56).
 </p>
 
 <p>Deploy the SimpleStockQuoteService and start the sample Axis2 server. </p>
@@ -681,7 +681,7 @@ WSDL. Now run the client using the following command. </p>
 <pre xml:space="preserve">ant stockquote -Dsymbol=IBM -Dmode=quote -Daddurl=http://localhost:8280</pre>
 
 <p>Client will print the quote price for IBM received from the server running
-on port 9000. Observe the Axis2 console and the ESB console to verify this
+on port 9000. Observe the Axis2 console and the EI console to verify this
 behavior. </p>
     <h2>
 <a name="Sample57">Sample 57: Dynamic load balancing between 3 nodes</a></h2>
@@ -724,12 +724,12 @@ behavior. </p>
 <p>
 <strong>Prerequisites:</strong> </p>
 <p>
-    Enable clustering and group management in the &lt;ESB installation directory&gt;/ repository/conf/axis2.xml
+    Enable clustering and group management in the &lt;EI installation directory&gt;/ repository/conf/axis2.xml
     file. This can be done by setting the &quot;enable&quot; attribute of the &quot;cluster&quot; and
     &quot;groupManagement&quot; elements. Also provide the IP address of you machine as the values of the
     &quot;mcastBindAddress&quot; and &quot;localMemberHost&quot; parameters.
 </p>
-<p>Start ESB with sample configuration 57. (i.e. wso2esb-samples -sn 57) </p>
+<p>Start EI with sample configuration 57. (i.e. wso2EI-samples -sn 57) </p>
 <p>
     Deploy the LoadbalanceFailoverService by switching to &lt;Synapse installation directory&gt;/samples/axis2Server/src/LoadbalanceFailoverService
     directory and running ant.
@@ -807,7 +807,7 @@ behavior. </p>
 <strong>Objective: Demonstrate the simple static load balancing among a set of nodes</strong> </p>
 <p>
 <strong>Prerequisites:</strong> </p>
-<p>Start Synapse with sample configuration 58. (i.e. wso2esb-samples -sn 58) </p>
+<p>Start Synapse with sample configuration 58. (i.e. wso2EI-samples -sn 58) </p>
 <p>Deploy the LoadbalanceFailoverService by switching to &lt;Synapse installation directory&gt;/samples/axis2Server/src/LoadbalanceFailoverService directory and running ant. </p>
 <p>Start three instances of sample Axis2 server on HTTP ports 9001, 9002 and 9003 and give some unique names to each server. </p>
 <p>Example commands to run sample Axis2 servers from the &lt;Synapse installation directory&gt;/samples/axis2Server directory in Linux are listed below: </p>
@@ -899,7 +899,7 @@ endpoints</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start ESB with sample configuration 59. (i.e. wso2esb-samples -sn 59) </p>
+<p>Start EI with sample configuration 59. (i.e. wso2EI-samples -sn 59) </p>
 
 <p>Deploy the LoadbalanceFailoverService and start three instances of sample Axis2 server as mentioned in sample 52.</p>
 
@@ -910,7 +910,7 @@ If weight of a endpoint is x, x number of requests will send to that endpoint be
 <pre xml:space="preserve">ant loadbalancefailover -Di=100</pre>
 
 <p>This client sends 100 requests to the LoadbalanceFailoverService through
-ESB. ESB will distribute the load among the three endpoints mentioned in the
+EI. EI will distribute the load among the three endpoints mentioned in the
 configuration in weighted round-robin manner. LoadbalanceFailoverService appends the
 name of the server to the response, so that client can determine which server
 has processed the message. If you examine the console output of the client,

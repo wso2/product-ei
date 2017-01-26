@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Header Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Header Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -63,9 +63,9 @@ src="../header-mediator/docs/images/header_mediator_screenshot.jpg" /> </p>
       &lt;send/&gt;
   &lt;/out&gt;</pre>
 
-<p>ESB receives a non reliable message and it forward it to an endpoint that
-supports reliable messaging. In this example when ESB recieves a message we
-send it using Reliable messaging. So the response ESB receives is having
+<p>EI receives a non reliable message and it forward it to an endpoint that
+supports reliable messaging. In this example when EI recieves a message we
+send it using Reliable messaging. So the response EI receives is having
 Reliable messaging headers. We don't want to send these headers to the client
 who doesn't support reliable messaging. So we remove the reliable messaging
 headers before sending the reponse to the client.</p>

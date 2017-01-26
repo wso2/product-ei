@@ -24,14 +24,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - XPath Functions &amp; Variables
+            WSO2 EI - XPath Functions &amp; Variables
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) XPath Extensions Catalog</h1>
+        <h1>WSO2 Enterprise Integrator (EI) XPath Extensions Catalog</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -66,15 +66,15 @@
         </div>
         <h3 id="intro" >Introduction</h3>
         <p>
-            WSO2 ESB supports standard XPath functions and variables through its underlying XPath
-            engine. All these standard XPath features are available for configuring the ESB.
+            WSO2 EI supports standard XPath functions and variables through its underlying XPath
+            engine. All these standard XPath features are available for configuring the EI.
             XPath allows to build custom functions to extend its functionality. There are several
-            custom XPath functions and variables defined by the WSO2 ESB for accessing various
+            custom XPath functions and variables defined by the WSO2 EI for accessing various
             message properties.
         </p>
         <h3 id="functions">Functions</h3>
         <p>
-        There are two custom functions supported by the ESB.</p>
+        There are two custom functions supported by the EI.</p>
         <ol>
             <li>get-property</li>
             <li>base64Encode</li>
@@ -155,7 +155,7 @@
                 <tr>
                     <td>OperationName</td>
                     <td>Operation name corresponding to the message. A proxy service with a WSDL can
-                        have different operations. If the WSDL is not defined ESB defines fixed
+                        have different operations. If the WSDL is not defined EI defines fixed
                         operations
                     </td>
                 </tr>
@@ -169,8 +169,8 @@
         <p>Returns the base64 encoded value of the argument.</p>
 
         <h3 id="var">Variables</h3>
-        <p>There are several variables supported by the ESB. These are used for accessing various
-            properties and refer to fixed parts in the ESB.</p>
+        <p>There are several variables supported by the EI. These are used for accessing various
+            properties and refer to fixed parts in the EI.</p>
         <ol>
             <li>$axis2</li>
             <li>$trp</li>

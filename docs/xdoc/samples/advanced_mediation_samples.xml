@@ -22,19 +22,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" />
-  <title>WSO2 ESB - Advanced Mediation Samples </title>
+  <title>WSO2 EI - Advanced Mediation Samples </title>
 </head>
 
 <body>
-<h1>Running the Advanced Mediation samples with WSO2 Enterprise Service Bus
-(ESB) </h1>
+<h1>Running the Advanced Mediation samples with WSO2 Enterprise Integrator
+(EI) </h1>
 
 <h2><a name="ScriptMediator">Using scripts in mediation (Script Mediator)</a>
 </h2>
 
-<p>The ESB Script Mediator is a ESB extension, and thus all prerequisites are
-not bundled by default with the ESB distribution. Before you use some script
-mediators you may need to manually add the required jar files to the ESB lib
+<p>The EI Script Mediator is a EI extension, and thus all prerequisites are
+not bundled by default with the EI distribution. Before you use some script
+mediators you may need to manually add the required jar files to the EI lib
 directory, and optionally perform other installation tasks as may be required
 by the individual scripting language. This is explained in the <a
 href="../samples_setup_guide.html#script">Samples Setup guide</a>. </p>
@@ -85,7 +85,7 @@ js scripts</a></h2>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start the Synapse configuration numbered 350: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 350: i.e. wso2EI-samples -sn
 350<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
@@ -99,7 +99,7 @@ attribute to specify which function should be invoked. Use the stock quote
 client to issue a custom quote client as follows.: </p>
 <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dmode=customquote</pre>
 
-<p>ESB uses the script mediator and the specified Javascript function to
+<p>EI uses the script mediator and the specified Javascript function to
 convert the custom request to a standard quote request. Subsequently the
 response received is transformed and sent back to the client. </p>
 
@@ -142,13 +142,13 @@ JavaScript</a> </h2>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start the Synapse configuration numbered 351: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 351: i.e. wso2EI-samples -sn
 351<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
 
 <p>This example is functionally equivalent to sample # 350 and sample # 8, and
-demonstrates in-line script mediation in ESB. Use the stock quote client to
+demonstrates in-line script mediation in EI. Use the stock quote client to
 send a custom quote as in example # 350 to test this example. </p>
 
 <h2><a name="Sample352">Sample 352: Accessing Synapse message context API
@@ -175,7 +175,7 @@ languages</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start the Synapse configuration numbered 352: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 352: i.e. wso2EI-samples -sn
 352<br />
 </p>
 
@@ -233,10 +233,10 @@ end
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>This sample uses Ruby so first setup support for this in ESB as described at
+<p>This sample uses Ruby so first setup support for this in EI as described at
 <a href="../samples_setup_guide.html#script">Configuring JRuby</a>. </p>
 
-<p>Start the Synapse configuration numbered 353: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 353: i.e. wso2EI-samples -sn
 353<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
@@ -291,10 +291,10 @@ Script)</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>This sample uses Ruby so first setup support for this in ESB as described at
+<p>This sample uses Ruby so first setup support for this in EI as described at
 <a href="../samples_setup_guide.html#script">Configuring JRuby</a>. </p>
 
-<p>Start the Synapse configuration numbered 354: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 354: i.e. wso2EI-samples -sn
 354<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
@@ -338,9 +338,9 @@ through the samples. </p>
                 &lt;connection&gt;
                     &lt;pool&gt;
                         &lt;driver&gt;org.apache.derby.jdbc.ClientDriver&lt;/driver&gt;
-                        &lt;url&gt;jdbc:derby://localhost:1527/esbdb;create=false&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;url&gt;jdbc:derby://localhost:1527/EIdb;create=false&lt;/url&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -416,13 +416,13 @@ through the samples. </p>
 <p><strong>Prerequisites:</strong> Setting up Derby database as explained
 above. </p>
 
-<p>Start the Synapse configuration numbered 360: i.e. wso2esb-samples -sn 360
+<p>Start the Synapse configuration numbered 360: i.e. wso2EI-samples -sn 360
 </p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
 
-<p>This sample demonstrates simple database read operations through ESB. When a
+<p>This sample demonstrates simple database read operations through EI. When a
 message arrives at dblookup mediator, it opens a connection to the database and
 executes the SQL query. The SQL query use '?' character for attributes that
 will be filled at runtime. The parameters define how to calculate the value of
@@ -434,20 +434,20 @@ will be done by a switch mediator. </p>
 <p>When the IBM stock quote is requested, </p>
 <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=IBM</pre>
 
-<p>ESB console shows </p>
+<p>EI console shows </p>
 <pre xml:space="preserve">INFO LogMediator text = ** Looking up from the Database **INFO LogMediator text = Company ID ? c1<br /></pre>
 
 <p>For the SUN stock quote, </p>
 <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=SUN</pre>
 
-<p>ESB console shows </p>
+<p>EI console shows </p>
 <pre xml:space="preserve">INFO LogMediator text = ** Looking up from the Database **INFO LogMediator text = Company ID ? c2<br /></pre>
 
 <p>and for the MSFT stock quote, </p>
 <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=MSFT</pre>
 <pre xml:space="preserve">INFO LogMediator text = ** Looking up from the Database **<br />INFO LogMediator text = Company ID ? c2</pre>
 
-<p>For any other symbols, ESB console shows </p>
+<p>For any other symbols, EI console shows </p>
 <pre xml:space="preserve">INFO LogMediator text = ** Unrecognized Company ID **</pre>
 
 <p>and the client gets a response which has following message. </p>
@@ -477,9 +477,9 @@ will be done by a switch mediator. </p>
                 &lt;connection&gt;
                     &lt;pool&gt;
                         &lt;driver&gt;org.apache.derby.jdbc.ClientDriver&lt;/driver&gt;
-                        &lt;url&gt;jdbc:derby://localhost:1527/esbdb;create=false&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;url&gt;jdbc:derby://localhost:1527/EIdb;create=false&lt;/url&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -501,7 +501,7 @@ will be done by a switch mediator. </p>
 
 <p><strong>Prerequisites:</strong> Setting up Derby database as above. </p>
 
-<p>Start the Synapse configuration numbered 361: i.e. wso2esb-samples -sn 361
+<p>Start the Synapse configuration numbered 361: i.e. wso2EI-samples -sn 361
 </p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
@@ -552,9 +552,9 @@ together</a> </h2>
                 &lt;connection&gt;
                     &lt;pool&gt;
                         &lt;driver&gt;org.apache.derby.jdbc.ClientDriver&lt;/driver&gt;
-                        &lt;url&gt;jdbc:derby://localhost:1527/esbdb;create=false&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;url&gt;jdbc:derby://localhost:1527/EIdb;create=false&lt;/url&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -573,9 +573,9 @@ together</a> </h2>
                 &lt;connection&gt;
                     &lt;pool&gt;
                         &lt;driver&gt;org.apache.derby.jdbc.ClientDriver&lt;/driver&gt;
-                        &lt;url&gt;jdbc:derby://localhost:1527/esbdb;create=false&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;url&gt;jdbc:derby://localhost:1527/EIdb;create=false&lt;/url&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -600,7 +600,7 @@ mediators</strong> </p>
 
 <p><strong>Prerequisites:</strong> Setting up Derby database as above. </p>
 
-<p>Start the Synapse configuration numbered 362: i.e. wso2esb-samples -sn 362
+<p>Start the Synapse configuration numbered 362: i.e. wso2EI-samples -sn 362
 </p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
@@ -614,7 +614,7 @@ database and logs it. </p>
 <p>When running client, </p>
 <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=IBM</pre>
 
-<p>ESB console shows, </p>
+<p>EI console shows, </p>
 <pre xml:space="preserve">INFO LogMediator text = ** Reporting to the Database **<br /><br />...<br /><br />INFO LogMediator text = ** Looking up from the Database **<br /><br />...<br /><br />INFO LogMediator text = Stock price - 153.47886496064808</pre>
 
 <h2><a name="Sample363">Sample 363: Reusable database connection pools</a> </h2>
@@ -645,8 +645,8 @@ database and logs it. </p>
                         &lt;dsName&gt;lookupdb&lt;/dsName&gt;
                         &lt;icClass&gt;com.sun.jndi.rmi.registry.RegistryContextFactory&lt;/icClass&gt;
                         &lt;url&gt;rmi://localhost:2199&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -720,8 +720,8 @@ database and logs it. </p>
                         &lt;dsName&gt;reportdb&lt;/dsName&gt;
                         &lt;icClass&gt;com.sun.jndi.rmi.registry.RegistryContextFactory&lt;/icClass&gt;
                         &lt;url&gt;rmi://localhost:2199&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -742,8 +742,8 @@ database and logs it. </p>
                         &lt;dsName&gt;reportdb&lt;/dsName&gt;
                         &lt;icClass&gt;com.sun.jndi.rmi.registry.RegistryContextFactory&lt;/icClass&gt;
                         &lt;url&gt;rmi://localhost:2199&lt;/url&gt;
-                        &lt;user&gt;esb&lt;/user&gt;
-                        &lt;password&gt;esb&lt;/password&gt;
+                        &lt;user&gt;EI&lt;/user&gt;
+                        &lt;password&gt;EI&lt;/password&gt;
                     &lt;/pool&gt;
                 &lt;/connection&gt;
                 &lt;statement&gt;
@@ -771,7 +771,7 @@ connection pools</p>
 <p><strong>Prerequisites:</strong> Setting up DataBase and DataSources
 according to the sample setup guide.</p>
 
-<p>Start the Synapse configuration numbered 363: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 363: i.e. wso2EI-samples -sn
 363</p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
@@ -865,7 +865,7 @@ done</p>
 
 <p><strong>Prerequisites:</strong> Set up MySQL database server according to the sample setup guide.</p>
 
-<p>Start the Synapse configuration numbered 364: i.e. wso2esb-samples -sn
+<p>Start the Synapse configuration numbered 364: i.e. wso2EI-samples -sn
 364</p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not already
@@ -943,7 +943,7 @@ concurrency throttling</p>
 <p>Deploy the SimpleStockQuoteService in sample Axis2 server and start it on
 port 9000. </p>
 
-<p>Start ESB with the sample configuration 370 (i.e. wso2esb-samples -sn 370).
+<p>Start EI with the sample configuration 370 (i.e. wso2EI-samples -sn 370).
 </p>
 
 <p>Above configuration specifies a throttle mediator inside the in mediator.
@@ -1040,7 +1040,7 @@ request counts</strong> </p>
 <p>Deploy the SimpleStockQuoteService in sample Axis2 server and start it on
 port 9000. </p>
 
-<p>Start ESB with the sample configuration 371 (i.e. wso2esb-samples -sn 371).
+<p>Start EI with the sample configuration 371 (i.e. wso2EI-samples -sn 371).
 </p>
 
 <p>Above configuration specifies a throttle mediator inside the in mediator.
@@ -1065,7 +1065,7 @@ follows. </p>
 <p>Maximum number of requests within 800000 milliseconds is specified as 4 for
 any server (including localhost) other than the explicitly specified ones.
 Therefore, our fifth request is denied by the throttle mediator. You can verify
-this by looking at the ESB console. </p>
+this by looking at the EI console. </p>
 <pre xml:space="preserve">[HttpServerWorker-1] INFO  LogMediator - text = **Access Accept**
 [HttpServerWorker-2] INFO  LogMediator - text = **Access Accept**
 [HttpServerWorker-3] INFO  LogMediator - text = **Access Accept**
@@ -1077,7 +1077,7 @@ request rate based throttling </a> </h2>
 <pre xml:space="preserve">&lt;!-- Use of both concurrency throttling and request rate based throttling --&gt;
 &lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
-    &lt;registry provider="org.wso2.carbon.mediation.registry.ESBRegistry"&gt;
+    &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
         &lt;parameter name="root"&gt;file:repository/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
@@ -1133,7 +1133,7 @@ throttling </strong> </p>
 <p><strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample
 Axis2 server and start it on port 9000. </p>
 
-<p>Start ESB with the sample configuration 372 (i.e. wso2esb-samples -sn 372).
+<p>Start EI with the sample configuration 372 (i.e. wso2EI-samples -sn 372).
 </p>
 
 <p>Throttle policy is loaded from the ?throttle_policy.xml? .That policy
@@ -1154,7 +1154,7 @@ will be different due to affect of concurrency throttling. </p>
 
 <p>Class mediator can be used to write your own custom mediation in Java and
 you have access to the SynapseMessageContext and to the full Synapse API in
-there. This is a useful extension mechanism within ESB to extend its
+there. This is a useful extension mechanism within EI to extend its
 functionality. This class can contain fields for which you can assign values at
 runtime through the configuration. </p>
 
@@ -1194,12 +1194,12 @@ mediation functionality</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
-<p>Start ESB with the sample configuration 380 (i.e. wso2esb-samples -sn 380)
+<p>Start EI with the sample configuration 380 (i.e. wso2EI-samples -sn 380)
 </p>
 
 <p>Start the sample Axis2 server and deploy the SimpleStockQuoteService. </p>
 
-<p>In this configuration, ESB hands over the request message to the specified
+<p>In this configuration, EI hands over the request message to the specified
 endpoint, which sends it to the Axis2 server running on port 9000. </p>
 
 <p>But the response message is passed through the class mediator before sending
@@ -1374,7 +1374,7 @@ Discounted price: 138.77458254967408</pre>
 Configure JMS transport using ActiveMQ (refer <a href="../samples_setup_guide.html#Setting">Sample Configuration Guide</a>) 
 </p>
 
-<p>Start ESB with the sample configuration 381 (i.e. wso2esb-samples -sn 381)
+<p>Start EI with the sample configuration 381 (i.e. wso2EI-samples -sn 381)
 </p>
 
 <p>Start the sample Axis2 server and deploy the SimpleStockQuoteService. </p>
@@ -1413,7 +1413,7 @@ Configure JMS transport using ActiveMQ (refer <a href="../samples_setup_guide.ht
 &lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
     &lt;!-- the SimpleURLRegistry allows access to a URL based registry (e.g. file:/// or http://) --&gt;
-    &lt;registry provider="org.wso2.esb.registry.ESBRegistry"&gt;
+    &lt;registry provider="org.wso2.EI.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
         &lt;parameter name="root"&gt;file:repository/samples/resources/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
@@ -1466,7 +1466,7 @@ document with in XQuery </a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
     &lt;!-- the SimpleURLRegistry allows access to  URL based registry (e.g. file:/// or http://) --&gt;
-    &lt;registry provider="org.wso2.carbon.mediation.registry.ESBRegistry"&gt;
+    &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
         &lt;parameter name="root"&gt;file:repository/samples/resources/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
@@ -1502,7 +1502,7 @@ XML documents to the XQuery engine</strong></p>
 <p><strong>Prerequisites:</strong>Deploy the SimpleStockQuoteService in sample
 Axis2 server and start it on port 9000. </p>
 
-<p>Start ESB with the sample configuration 391 (i.e. wso2esb-samples -sn 391).
+<p>Start EI with the sample configuration 391 (i.e. wso2EI-samples -sn 391).
 </p>
 
 <p>In this sample, data from commission.xml document is used inside XQUERY
@@ -1551,18 +1551,18 @@ responses</a> </h2>
 
 <p><strong>Objective: Demonstrate the use of Iterate mediator to split the
 messages in to parts and process them asynchronously and then aggregate the
-responses coming in to ESB</strong></p>
+responses coming in to EI</strong></p>
 
 <p><strong>Prerequisites:</strong>Deploy the SimpleStockQuoteService in sample
 Axis2 server and start it on port 9000. </p>
 
-<p>Start ESB with the sample configuration 400 (i.e. wso2esb-samples -sn 400).
+<p>Start EI with the sample configuration 400 (i.e. wso2EI-samples -sn 400).
 </p>
 
-<p>In this sample, the message sent to ESB has embedded with a number of
-elements of the same type in one message. When ESB received this message it
+<p>In this sample, the message sent to EI has embedded with a number of
+elements of the same type in one message. When EI received this message it
 will iterate through those elements and then sent to the specified endpoint.
-When all the responses appear in to ESB then those messages will be aggregated
+When all the responses appear in to EI then those messages will be aggregated
 to form the resultant response and sent back to the client. </p>
 
 <p>Invoke the client as follows. </p>
@@ -1578,7 +1578,7 @@ mediator should be used with sence, because it is not applicable for each and
 every service (for example services with dynamic responses for a particular
 release) </p>
 
-<h2><a name="Sample420">Sample 420: Simple cache implemented on ESB for the
+<h2><a name="Sample420">Sample 420: Simple cache implemented on EI for the
 actual service</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
     &lt;in&gt;
@@ -1605,13 +1605,13 @@ request</strong></p>
 <p><strong>Prerequisites:</strong>Deploy the SimpleStockQuoteService in sample
 Axis2 server and start it on port 9000. </p>
 
-<p>Start ESB with the sample configuration 420 (i.e. wso2esb-samples -sn 420).
+<p>Start EI with the sample configuration 420 (i.e. wso2EI-samples -sn 420).
 </p>
 
-<p>In this sample, the message sent to ESB is checked for an existing cached
+<p>In this sample, the message sent to EI is checked for an existing cached
 response by calculating the hash value of the request. If there is a cache hit
-in ESB then this request will not be forwarded to the actual service, rather
-ESB respond to the client with the cached response. In case of a cache miss
+in EI then this request will not be forwarded to the actual service, rather
+EI respond to the client with the cached response. In case of a cache miss
 that particular message will be forwarded to the actual service and cached that
 response in the out path for the use of consecutive requests of the same type.
 </p>
@@ -1621,7 +1621,7 @@ response in the out path for the use of consecutive requests of the same type.
 
 <p>You could notice that if you send more than one requests within 20 seconds
 only the first request is forwarded to the actual service, and the rest of the
-requests will be served by the cache inside ESB. You could observe this by
+requests will be served by the cache inside EI. You could observe this by
 looking at the printed line of the axis2 server, as well as by observing a
 constant rate as the response to the client instead of the random rate, which
 changes by each and every 20 seconds.<br />
@@ -1664,7 +1664,7 @@ the synchronized web service invocation </p>
 <p><strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample
 Axis2 server and start it on port 9000. </p>
 
-<p>Start Synapse with the sample configuration 430 (i.e. wso2esb-samples -sn
+<p>Start Synapse with the sample configuration 430 (i.e. wso2EI-samples -sn
 430). </p>
 
 <p>In this sample, Callout mediator does the direct service invocation to the
@@ -1679,7 +1679,7 @@ is sent back to the client. </p>
 
 <h2><a name="JSON">Mediating JSON Messages</a> </h2>
 
-<p>Supporting JSON messages in ESB</p>
+<p>Supporting JSON messages in EI</p>
 
 <h2><a name="Sample440">Sample 440: Exposing a SOAP Service Over JSON</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;
@@ -1727,7 +1727,7 @@ is sent back to the client. </p>
 <p><strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample
 Axis2 server and start it on port 9000. </p>
 
-<p>Start Synapse with the sample configuration 440 (i.e. wso2esb-samples -sn
+<p>Start Synapse with the sample configuration 440 (i.e. wso2EI-samples -sn
 440).</p>
 <p>Setup Synapse and the sample Axis2 client for JSON (Refer Synapse Samples Setup Guide for details) </p>
 
@@ -1795,7 +1795,7 @@ Axis2 server and start it on port 9000. </p>
         and start it on port 9000.
     </p>
     <p>
-        Start ESB with the sample configuration 450 (i.e. wso2esb-samples -sn 450).
+        Start EI with the sample configuration 450 (i.e. wso2EI-samples -sn 450).
     </p>
     <p>
         Invoke the client as follows.
@@ -1804,7 +1804,7 @@ Axis2 server and start it on port 9000. </p>
     <p>
         Note that the address URL of the client request contains the context 'soap'. But in the
         Axis2 server all the services are deployed under a context named 'services' by default.
-        ESB will rewrite the To header of the request by replacing the 'soap' context with 'services.
+        EI will rewrite the To header of the request by replacing the 'soap' context with 'services.
         Hence the request will be delivered to the Axis2 server and the Axis2 client will receive a
         valid response.
     </p>
@@ -1846,12 +1846,12 @@ Axis2 server and start it on port 9000. </p>
         and start it on port 9000.
     </p>
     <p>
-        Start ESB with the sample configuration 451 (i.e. wso2esb-samples -sn 451).
+        Start EI with the sample configuration 451 (i.e. wso2EI-samples -sn 451).
     </p>
     <p>
-        Invoke the Axis2 client and send some requests to ESB with different address URL values.
+        Invoke the Axis2 client and send some requests to EI with different address URL values.
         If the address URL value contains localhost as the hostname and https as the protocol
-        prefix, ESB will route the message as it is. But if the hostname is localhost and the
+        prefix, EI will route the message as it is. But if the hostname is localhost and the
         protocol is not https, Synapse will rewrite the URL by setting https as the protocol. The
         port number will also be set to the HTTPS port of the Axis2 server.
     </p>
@@ -1906,7 +1906,7 @@ Axis2 server and start it on port 9000. </p>
         and start it on port 9000.
     </p>
     <p>
-        Start ESB with the sample configuration 452 (i.e. wso2esb-samples -sn 452).
+        Start EI with the sample configuration 452 (i.e. wso2EI-samples -sn 452).
     </p>
     <p>
         Invoke the Axis2 client as follows.
@@ -1929,13 +1929,13 @@ Axis2 server and start it on port 9000. </p>
 
 <h2><a name="Event">Publishing Events to Topics Using the Event Mediator</a></h2>
 <p>
-    WSO2 ESB can be used as an event broker. It comes with a built-in eventing implementation and
-    a lightweight event broker based on Apache Qpid. You can use the ESB management console to
+    WSO2 EI can be used as an event broker. It comes with a built-in eventing implementation and
+    a lightweight event broker based on Apache Qpid. You can use the EI management console to
     create event topics and clients can subscribe to those topics by sending WS-Eventing
     subscription requests. The management console also allows creating static subscription.
 </p>
 <p>
-    WSO2 ESB is also equipped with an event mediator which can be used to publish messages to
+    WSO2 EI is also equipped with an event mediator which can be used to publish messages to
     predefined topics. With this mediator it is possible for a sequence or a proxy service to
     directly publish a received request or a response to a topic as an event.
 </p>
@@ -1958,10 +1958,10 @@ Axis2 server and start it on port 9000. </p>
         and start it on port 9000.
     </p>
     <p>
-        Start ESB with the sample configuration 460 (i.e. wso2esb-samples -sn 460).
+        Start EI with the sample configuration 460 (i.e. wso2EI-samples -sn 460).
     </p>
     <p>
-        Now sign in to the ESB management console can select 'Topics > Add' option from the 'Manage'
+        Now sign in to the EI management console can select 'Topics > Add' option from the 'Manage'
         menu. Enter the name 'stockquote' for the topic and click 'Add Topic'. This will create an
         event topic named 'stockquote' and you will be directed to the 'Topic Browser' tree view. The
         newly created topic will be shown on the tree. Click on this topic and select the 'Subscribe'
@@ -1978,7 +1978,7 @@ Axis2 server and start it on port 9000. </p>
         log entry in the Axis2 server console indicating the receipt of the place order request.
     </p>
     <p>
-        Note that the provided ESB configuration does not explicitly specify the endpoint of the Axis2
+        Note that the provided EI configuration does not explicitly specify the endpoint of the Axis2
         server. Also we don't set the actual EPR of the service on the request when sending the message
         from the client either. Therefore the only reason that Axis2 receives the message is because
         it is subscribed to the 'stockquote' event topic.
@@ -2030,7 +2030,7 @@ Axis2 server and start it on port 9000. </p>
         and start it on port 9000.
     </p>
     <p>
-        Start ESB with the sample configuration 470 (i.e. wso2esb-samples -sn 470).
+        Start EI with the sample configuration 470 (i.e. wso2EI-samples -sn 470).
     </p>
     <p>
        In this sample, the Spring Bean, SpringCustomLogger get initialized using

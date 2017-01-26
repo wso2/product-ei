@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-  <title>WSO2 ESB - QoS Proxy Service Samples </title>
+  <title>WSO2 EI - QoS Proxy Service Samples </title>
 </head>
 
 <body>
-<h1>Running QoS addition and deduction proxy service samples with WSO2 ESB </h1>
+<h1>Running QoS addition and deduction proxy service samples with WSO2 EI </h1>
  <h2><a name="Sample200">Sample 200: Using WS-Security with policy attachments
 for proxy services</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
@@ -61,7 +61,7 @@ You may also need to download and install the unlimited strength policy files
 for your JDK before using Apache Rampart (e.g. see
 <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>) </p>
 
-<p>Start the Synapse configuration numbered 200: i.e. wso2esb-samples -sn 200<br
+<p>Start the Synapse configuration numbered 200: i.e. wso2EI-samples -sn 200<br
 />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
@@ -74,7 +74,7 @@ if Rampart rejects any request messages that does not conform to the
 specified policy, those messages will never reach the 'inSequence' to be
 processed. Since the proxy service is forwarding the received request to the
 simple stock quote service that does not use WS-Security, we are instructing
-ESB to remove the wsse:Security header from the outgoing message. To execute
+EI to remove the wsse:Security header from the outgoing message. To execute
 the client, send a stock quote request to the proxy service, and sign and
 encrypt the request by specifying the client side security policy as follows:
 </p>
@@ -116,26 +116,26 @@ client and proxy services using WS-ReliableMessaging</a> </h2>
 &lt;/definitions&gt;</pre>
 
 <p><strong>Objective: Demonstrate the reliable message exchange between the
-client and ESB using WS-ReliableMessaging (WS-RM)</strong> </p>
+client and EI using WS-ReliableMessaging (WS-RM)</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
 <p>Deploy the SimpleStockQuoteService in the sample Axis2 server and start it
 on port 9000. </p>
 
-<p>Start ESB with the sample configuration number 201 (i.e. wso2esb-samples -sn 201). </p>
+<p>Start EI with the sample configuration number 201 (i.e. wso2EI-samples -sn 201). </p>
 
 <p>In the above configuration, a proxy service is created with WS-RM enabled
 using the &lt;enableRM/&gt; tag. Therefore, this proxy service is capable of
 communicating with a WS-RM client. It also removes the WS-RM headers in the
 In Sequence before the message is sent to the back end server. This is
 required as the reliable messaging is applicable only between the client and
-ESB. Now start the client with WS-RM as follows: </p>
+EI. Now start the client with WS-RM as follows: </p>
 <pre xml:space="preserve">ant stockquote -Dsymbol=IBM -Dmode=quote -Daddurl=http://localhost:8280/services/StockQuoteProxy -Dwsrm=true</pre>
 
-<p>In this case, client sends WS-RM enabled request to ESB where ESB sends
+<p>In this case, client sends WS-RM enabled request to EI where EI sends
 normal request to the server. This can be observed by examining the wire
-level messages between the client and ESB. These messages would be similar to
+level messages between the client and EI. These messages would be similar to
 the wire level messages shown in sample 101. Each message would perform a
 similar function to the messages discussed in sample 53. </p>
 
@@ -168,26 +168,26 @@ client and proxy services using WS-ReliableMessaging 1.1</a> </h2>
 </pre>
 
 <p><strong>Objective: Demonstrate the reliable message exchange between the
-client and ESB using WS-ReliableMessaging (WS-RM)</strong> </p>
+client and EI using WS-ReliableMessaging (WS-RM)</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
 
 <p>Deploy the SimpleStockQuoteService in the sample Axis2 server and start it
 on port 9000. </p>
 
-<p>Start ESB with the sample configuration number 202 (i.e. wso2esb-samples -sn 202). </p>
+<p>Start EI with the sample configuration number 202 (i.e. wso2EI-samples -sn 202). </p>
 
 <p>In the above configuration, a proxy service is created with WS-RM enabled
 using the &lt;enableRM/&gt; tag. Therefore, this proxy service is capable of
 communicating with a WS-RM client. It also removes the WS-RM 1.1 headers in the
 In Sequence before the message is sent to the back end server. This is
 required as the reliable messaging is applicable only between the client and
-ESB. Now start the client with WS-RM as follows: </p>
+EI. Now start the client with WS-RM as follows: </p>
 <pre xml:space="preserve">ant stockquote -Dsymbol=IBM -Dmode=quote -Daddurl=http://localhost:8280/services/StockQuoteProxy -Dwsrm11=true</pre>
 
-<p>In this case, client sends WS-RM enabled request to ESB where ESB sends
+<p>In this case, client sends WS-RM enabled request to EI where EI sends
 normal request to the server. This can be observed by examining the wire
-level messages between the client and ESB. These messages would be similar to
+level messages between the client and EI. These messages would be similar to
 the wire level messages shown in sample 102. Each message would perform a
 similar function to the messages discussed in sample 53. </p>
 </body>

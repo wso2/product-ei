@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Validate Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Validate Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -93,10 +93,10 @@ specified validation is performed against the first child of the SOAP body</p>
     configuration, it creates a SOAP fault using <strong>makefault</strong>
     mediator and send back that to requested party. </li>
 </ol>
-<p> <strong>Note: </strong>If user configure WSO2 ESB with WSO2 Governance Registry and if he uploads all the required files as *.gar file (described in WSO2 GREG documentation),
+<p> <strong>Note: </strong>If user configure WSO2 EI with WSO2 Governance Registry and if he uploads all the required files as *.gar file (described in WSO2 GREG documentation),
  uer can  provide only the base schema when he provides schemas.
-There is no need to provide all required imported schemas since ESB is able to resolve the imported resources using only the base schema.
-Please note that for the above function user needs to uncomment the following lines @ synapse.properties file which is avilable in ESB_HOME/lib/core/WEB_INF/classes folder.
+There is no need to provide all required imported schemas since EI is able to resolve the imported resources using only the base schema.
+Please note that for the above function user needs to uncomment the following lines @ synapse.properties file which is avilable in EI_HOME/lib/core/WEB_INF/classes folder.
 </p>
 <p><strong>
 synapse.schema.resolver=org.wso2.carbon.mediation.initializer.RegistryXmlSchemaURIResolver

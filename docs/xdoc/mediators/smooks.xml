@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Smooks Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Smooks Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -117,7 +117,7 @@
 		&lt;/order&gt;
 	</pre>
 
-	<p>ESB Smooks Mediator Configuration is as follows.</p>
+	<p>EI Smooks Mediator Configuration is as follows.</p>
 
 	<pre xml:space="preserve">&lt;smooks config-key=&quot;smooks-key&quot;&gt;
                     &lt;input type=&quot;xml&quot;/&gt;
@@ -157,7 +157,7 @@
 	    &lt;/order-items&gt;
 	&lt;/order&gt;</pre>
 
-	<p>ESB Smooks Mediator Configuration is as follows. The Smooks transformation definition
+	<p>EI Smooks Mediator Configuration is as follows. The Smooks transformation definition
 	 guide for Entity Persistence Framework (JPA) support can be found from here. </p>
  
 	<pre xml:space="preserve">&lt;smooks config-key=&quot;smooks-key&quot; persistence-unit=&quot;db&quot;&gt;

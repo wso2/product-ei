@@ -10,17 +10,17 @@
     </listeners>
     <test name="Server-Stratup" preserve-order="true" verbose="2">
         <classes>
-            <class name="org.wso2.carbon.esb.samples.test.messaging.Sample250TestCase"/>
-           <!-- <class name="org.wso2.carbon.esb.samples.test.mediation.Sample11TestCase"/>
+            <class name="org.wso2.carbon.esb.samples.test.mediation.Sample16TestCase"/>
+            <class name="org.wso2.carbon.esb.samples.test.mediation.Sample11TestCase"/>
             <class name="org.wso2.carbon.esb.samples.test.mediation.Sample13TestCase">
                 <methods>
                     <exclude name="testDualChannelInvocation"/>
                 </methods>
-            </class>-->
+            </class>
         </classes>
     </test>
 
-   <!-- <test name="ESB-Sample-Advance-Test" preserve-order="true" verbose="2">
+    <test name="ESB-Sample-Advance-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.samples.test.advanced.*"/>
         </packages>
@@ -43,7 +43,7 @@
     </test>
     <test name="ESB-Sample-Messaging-Test-2" preserve-order="true" verbose="2">
         <packages>
-        <package name="org.wso2.carbon.esb.samples.test.messaging.*"/>
+            <package name="org.wso2.carbon.esb.samples.test.messaging.*"/>
         </packages>
         <classes>
             <class name="org.wso2.carbon.esb.samples.test.messaging.Sample705TestCase">
@@ -164,6 +164,6 @@
         <packages>
             <package name="org.wso2.carbon.esb.samples.test.mediation.priorityexecutor.*"/>
         </packages>
-    </test>-->
+    </test>
 </suite>
 

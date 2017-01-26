@@ -23,72 +23,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-        <title>WSO2 ESB v5.0.0 Released - August 2016</title>
+        <title>WSO2 EI v6.0.0 Released - February 2017</title>
     </head>
     <body>
         <div id="header">
         </div>
 
         <div id="main-content">
-            <h1>The WSO2 Enterprise Service Bus (ESB) 5.0.0 Released!</h1>
+            <h1>The WSO2 Enterprise Integrator (EI) 6.0.0 Released!</h1>
 
             <p>
-                WSO2 ESB team is pleased to announce the release of version 5.0.0 of
-                the Open Source Enterprise Service Bus (ESB).
+                WSO2 EI team is pleased to announce the release of version 6.0.0 of
+                the Open Source Enterprise Integrator (EI).
             </p>
 
             <p>
-                WSO2 ESB is a fast, lightweight and user friendly open source Enterprise Service
-                Bus (ESB) distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache
-                Software License v2.0</a>. WSO2 ESB allows system administrators and developers to
-                easily configure message routing, intermediation, transformation, logging, task
-                scheduling, fail over routing and load balancing. It also supports transport
-                switching, eventing, rule based mediation and priority based mediation for advanced
-                integration requirements. The ESB runtime is designed to be completely asynchronous,
-                non-blocking and streaming based on the <a href="http://synapse.apache.org">Apache
-                Synapse</a> mediation engine.
+                Product EI is an unified distribution of WSO2 Enterprise Integrator, Application Server, Data Services Server alongside Analytics,
+                Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of
+                each runtime.
             </p>
 
-            <p>
-                WSO2 ESB 5.0.0 is developed on top of the revolutionary
-                <a href="http://wso2.org/projects/carbon">WSO2 Carbon platform</a> (Middleware a' la carte),
-                an OSGi based framework that provides seamless modularity to your SOA via
-                componentization. This release also contains many new features and a range of optional
-                components (add-ons) that can be installed to customize the behavior of the ESB. Further, any
-                existing features of the ESB which are not required to your environment can be easily
-                removed using the underlying provisioning framework of Carbon. In brief, WSO2 ESB can
-                be fully customized and tailored to meet your exact SOA needs.
-            </p>
-
-            <p>
-                You can download this distribution from <a href="http://wso2.com/products/enterprise-service-bus/">
-                http://wso2.com/products/enterprise-service-bus/</a> and give it a try.</p>
 
             <h2>How to Run </h2>
             <ol>
                 <li>Extract the downloaded zip</li>
                 <li>Go to the bin directory in the extracted folder</li>
-                <li>Run the wso2server.sh or wso2server.bat as appropriate</li>
+                <li>Run the integrator.sh or integrator.bat as appropriate</li>
                 <li>Point your browser to the URL https://localhost:9443/carbon</li>
                 <li>Use "admin", "admin" as the username and password to login as an admin</li>
                 <li>If you need to start the OSGi console with the server use the property
                     -DosgiConsole when starting the server.</li>
-                <li>Sample configurations can be started by the wso2esb-samples script passing
-                    the sample number with the -sn option (Please
-                    have a look at the samples guide for more information, on running samples)</li>
             </ol>
 
-            <h2>Enhancements in WSO2 ESB 5.0.0</h2>
+            <h2>Enhancements in WSO2 EI 6.0.0</h2>
 			<ul>
-				<li>WebSockets Connectivity - Adding websockets support for WSO2 ESB.</li>
-				<li>Message Flow Tracing - Comprehensive message flow tracing with the Data Analytics Server (DAS) integration.</li>
-				<li>Message Flow Statistics - Advanced application level statistics (Proxy, API, Sequence, Mediator).</li>
-                <li>Mediation Flow Debugger - Adding debugging capability to ESB mediation flows from the WSO2 Developer Studio tool.</li>
-                <li>JMS 2.0 support - Adding JMS 2.0 specification support for existing JMS messaging features.</li>
-                <li>Updating Smooks - To achieve better performance, Smooks bundle has been updated to latest stable released version 1.5.1.</li>
+
             </ul>
 
-            <h2>Key Features of WSO2 ESB</h2>
+            <h2>Key Features of WSO2 EI</h2>
             <ul>
                 <li>Proxy services - facilitating synchronous/asynchronous transport, interface
                     (WSDL/Schema/Policy), message format (SOAP 1.1/1.2, POX/REST, Text, Binary),
@@ -130,23 +102,21 @@
 
             <h2>Bugs Fixed in This Release</h2>
             <p>
-                This release of WSO2 ESB comes with a number of bug fixes, both in the base
-                framework and the ESB specific components. All the issues which have been
-                fixed in ESB 5.0.0 are recorded at following locations:
+
             </p>
             <ul>
 				<li><a href="https://wso2.org/jira/issues/?filter=12393">
-                    Fixed ESB specific issues</a></li>
+                    Fixed EI specific issues</a></li>
             </ul>
 
             <h2>Known Issues</h2>
             <p>
-                All the open issues pertaining to WSO2 ESB 5.0.0 are reported at following
+                All the open issues pertaining to WSO2 EI 6.0.0 are reported at following
                 locations:
             </p>
             <ul>
                 <li><a href="https://wso2.org/jira/issues/?filter=12394">
-                    WSO2 ESB 5.0.0 component issues</a></li>
+                    WSO2 EI 6.0.0 component issues</a></li>
             </ul>
 
             <h2>How You Can Contribute</h2>
@@ -168,7 +138,7 @@
             </h3>
             <p>
                 We encourage you to report issues, documentation faults and feature requests regarding
-                WSO2 ESB through the public <a href="http://www.wso2.org/jira/browse/ESBJAVA">ESB JIRA</a>. You
+                WSO2 EI through the public <a href="http://www.wso2.org/jira/browse/EIJAVA">EI JIRA</a>. You
                 can use the <a href="http://www.wso2.org/jira/browse/CARBON">Carbon JIRA</a> to report any
                 issues related to the Carbon base framework or associated Carbon components.
             </p>
@@ -192,12 +162,12 @@
                 visit <a href="http://wso2.com/support">http://wso2.com/support</a>.
             </p>
             <p>
-                For more information about WSO2 ESB please see <a href="http://wso2.com/products/enterprise-service-bus/">
-                http://wso2.com/products/enterprise-service-bus</a>.
+                For more information about WSO2 EI please see <a href="http://wso2.com/products/enterprise-integrator/">
+                http://wso2.com/products/enterprise-integrator</a>.
             </p>
 
 
-            <p><i>-- The WSO2 ESB Team --</i> </p>
+            <p><i>-- The WSO2 EI Team --</i> </p>
         </div>
     </body>
 </html>
