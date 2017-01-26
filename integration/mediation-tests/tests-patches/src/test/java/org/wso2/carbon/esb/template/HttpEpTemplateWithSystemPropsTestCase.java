@@ -24,13 +24,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.integration.common.admin.client.AuthenticatorClient;
-import org.wso2.carbon.integration.common.tests.CarbonTestServerManager;
 import org.wso2.carbon.integration.common.utils.ClientConnectionUtil;
+import org.wso2.esb.integration.common.extensions.carbonserver.CarbonTestServerManager;
 import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuoteClient;
 
@@ -60,9 +59,9 @@ public class HttpEpTemplateWithSystemPropsTestCase {
 		esbUtils = new ESBTestCaseUtils();
 		startupParameterMap.put("-DportOffset", String.valueOf(OFFSET));
 		startupParameterMap.put("-Dhname", HOST);
+		startupParameterMap.put("startupScript", "integrator");
 		startupParameterMap.put("-Dhport", "9000");
-		server2 = new CarbonTestServerManager(context, System.getProperty("carbon.zip"),
-				startupParameterMap);
+		server2 = new CarbonTestServerManager(context, System.getProperty("carbon.zip"), startupParameterMap);
 		server2.startServer();
 		deploySynapseConfig();
 	}

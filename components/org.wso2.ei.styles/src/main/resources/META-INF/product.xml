@@ -18,10 +18,10 @@
 <product xmlns="http://products.wso2.org/carbon">
     <properties>
        <property name="userforum">http://wso2.org/forum/187</property>
-       <property name="userguide">https://docs.wso2.com/display/ESB500/WSO2+Enterprise+Service+Bus+Documentation</property>
+       <property name="userguide">https://docs.wso2.com/display/INT600/WSO2+Enterprise+Integrator+Documentation</property>
        <property name="mailinglist">http://wso2.org/mail</property>
-       <property name="issuetracker">https://wso2.org/jira/browse/ESBJAVA</property>
+       <property name="issuetracker">https://github.com/wso2/product-ei/issues</property>
        <property name="collapsedmenus">region1_configure_menu,region3_registry_menu,region4_monitor_menu,region5_tools_menu</property>
-       <property name="webAdminConsoleTitle">WSO2 Enterprise Integrator (WSO2 ESB)</property>
+       <property name="webAdminConsoleTitle">WSO2 Enterprise Integrator (WSO2 EI)</property>
     </properties>
 </product>
