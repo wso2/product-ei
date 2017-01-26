@@ -33,7 +33,7 @@ public class TestServerManager {
     protected CarbonServerManager carbonServer;
     protected String carbonZip;
     protected int portOffset;
-    protected Map<String, String> commandMap = new HashMap<String, String>();
+    protected Map<String, String> commandMap = new HashMap<>();
     private static final Log log = LogFactory.getLog(TestServerManager.class);
     protected String carbonHome;
 

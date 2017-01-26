@@ -24,16 +24,16 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.automation.extensions.servers.carbonserver.MultipleServersManager;
+import org.wso2.esb.integration.common.extensions.carbonserver.CarbonTestServerManager;
+import org.wso2.esb.integration.common.extensions.carbonserver.MultipleServersManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewInstanceTestCase {
     private MultipleServersManager manager = new MultipleServersManager();
-    private Map<String, String> startupParameterMap1 = new HashMap<String, String>();
-    private Map<String, String> startupParameterMap2 = new HashMap<String, String>();
+    private HashMap<String, String> startupParameterMap1 = new HashMap<>();
+    private HashMap<String, String> startupParameterMap2 = new HashMap<>();
     private AutomationContext context;
 
 
@@ -42,9 +42,13 @@ public class NewInstanceTestCase {
     public void testStartServers() throws Exception {
         context = new AutomationContext();
         startupParameterMap1.put("-DportOffset", "10");
+        startupParameterMap1.put("startupScript", "integrator");
+
         CarbonTestServerManager server1 = new CarbonTestServerManager(context, System.getProperty("carbon.zip"),
                                                                       startupParameterMap1);
         startupParameterMap2.put("-DportOffset", "20");
+        startupParameterMap2.put("startupScript", "integrator");
+
         CarbonTestServerManager server2 = new CarbonTestServerManager(context, System.getProperty("carbon.zip"),
                                                                       startupParameterMap2);
         manager.startServers(server1, server2);
