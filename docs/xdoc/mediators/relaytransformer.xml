@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Relay Transformer Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Relay Transformer Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -39,7 +39,7 @@ exactly the same way as the corresponding element in a &lt;proxy&gt; definition
 mediator. In addition to those features, it supports streaming transformation,
 where the incoming stream is given directly to the underlying XSLT processor to
 do the XSLT transformation. When using the Relay Transformer mediator in streaming
-mode, the ESB should be started in Message Relay mode. This will give high
+mode, the EI should be started in Message Relay mode. This will give high
 performance numbers.</p>
 
 <h3>Syntax</h3>

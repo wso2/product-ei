@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-  <title>WSO2 ESB - QoS Samples </title>
+  <title>WSO2 EI - QoS Samples </title>
 </head>
 
 <body>
-<h1>Running the QoS addition and deduction samples with WSO2 ESB</h1>
+<h1>Running the QoS addition and deduction samples with WSO2 EI</h1>
 
 <h2><a name="Sample100">Sample 100: Using WS-Security for outgoing messages</a>
 </h2>
@@ -61,22 +61,22 @@ messages</strong> </p>
 files for your JDK before using Apache Rampart (e.g. see
 <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>) </p>
 
-<p>Start the Synapse configuration numbered 100: i.e. wso2esb-samples -sn 100<br
+<p>Start the Synapse configuration numbered 100: i.e. wso2EI-samples -sn 100<br
 />
 Start the Axis2 server and deploy the SecureStockQuoteService if not already
 done </p>
 
-<p>Use the stock quote client to send a request without WS-Security. ESB is
+<p>Use the stock quote client to send a request without WS-Security. EI is
 configured to enable WS-Security as per the policy specified by
 'policy_3.xml' for the outgoing messages to the SecureStockQuoteService
-endpoint hosted on the Axis2 instance. The debug log messages on ESB shows
+endpoint hosted on the Axis2 instance. The debug log messages on EI shows
 the encrypted message flowing to the service and the encrypted response being
-received by ESB. The wsse:Security header is then removed from the decrypted
+received by EI. The wsse:Security header is then removed from the decrypted
 message and the response is delivered back to the client, as expected. You
 may execute the client as follows: </p>
 <pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280/</pre>
 
-<p>The message sent by ESB to the secure service can be seen as follows, when
+<p>The message sent by EI to the secure service can be seen as follows, when
 TCPMon is used. </p>
 <pre xml:space="preserve">POST http://localhost:9001/services/SecureStockQuoteService HTTP/1.1
 Host: 127.0.0.1
@@ -123,7 +123,7 @@ User-Agent: Synapse-HttpComponents-NIO
       &lt;/soapenv:Body&gt;
    &lt;/soapenv:Envelope&gt;0</pre>
 
-<h2><a name="Sample101">Sample 101: Reliable message exchange between ESB and
+<h2><a name="Sample101">Sample 101: Reliable message exchange between EI and
 the back-end server using WS-ReliableMessaging</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
@@ -150,7 +150,7 @@ the back-end server using WS-ReliableMessaging</a> </h2>
 
 &lt;/definitions&gt;</pre>
 
-<p><strong>Objective: Demonstrate the message exchange between ESB and the
+<p><strong>Objective: Demonstrate the message exchange between EI and the
 server using WS-ReliableMessaging (WS-RM)</strong> </p>
 
 <p><strong>Prerequisites:</strong> </p>
@@ -161,7 +161,7 @@ and running ant. </p>
 
 <p>Start the sample Axis2 server on port 9000. </p>
 
-<p>Start ESB with the sample configuration 101 (i.e. wso2esb-samples -sn 101).
+<p>Start EI with the sample configuration 101 (i.e. wso2EI-samples -sn 101).
 </p>
 
 <p>In the above configuration, WS-RM is engaged to the endpoint using the
@@ -170,10 +170,10 @@ WSDL endpoints using this tag. In addition to the RM enabled endpoint,
 RMSequence mediator is specified before the send mediator. This mediator is
 used to specify the set of messages to be sent using a single RM sequence. In
 this sample it is specified as single message per sequence. It also specifies
-the version of the WS-RM to be used. Refer to the <a href="../configuration_language.html">ESB configuration language</a>
+the version of the WS-RM to be used. Refer to the <a href="../configuration_language.html">EI configuration language</a>
 documentation for more information about the RMSequence mediator. RM related
 SOAP headers are removed from the message in the out mediator as WS-RM
-message exchange happens only between the ESB and the server. Now run the
+message exchange happens only between the EI and the server. Now run the
 sample client using the following command. </p>
 <pre xml:space="preserve">ant stockquote -Dsymbol=IBM -Dmode=quote -Daddurl=http://localhost:8280</pre>
 
@@ -184,7 +184,7 @@ follows: </p>
 <p>There is no difference to be observed between the normal message exchange
 and WS-RM enabled message exchange as far as client and server outputs are
 considered. But if you look at the wire level messages, you would observe
-additional WS-RM messages and WS-RM elements. ESB, the initiator of the RM
+additional WS-RM messages and WS-RM elements. EI, the initiator of the RM
 sequence, first try to create a sequence by sending a message with
 CreateSequence element. </p>
 <pre xml:space="preserve">...
@@ -215,7 +215,7 @@ message: </p>
 &lt;/soapenv:Body&gt;
 ...</pre>
 
-<p>Once the sequence is established, ESB sends the request to the server with
+<p>Once the sequence is established, EI sends the request to the server with
 the pre-negotiated sequence ID. </p>
 <pre xml:space="preserve">&lt;soapenv:Envelope xmlns:wsa="http://www.w3.org/2005/08/addressing"
                   xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
@@ -239,7 +239,7 @@ the pre-negotiated sequence ID. </p>
     &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;</pre>
 
-<p>ESB keeps on sending above message till the server responds with a valid
+<p>EI keeps on sending above message till the server responds with a valid
 response message with 200 OK HTTP header. If the server is not ready with a
 response, it will respond with 202 Accepted HTTP header for all requests.
 Once the server is ready with a response it will send the response message
@@ -267,8 +267,8 @@ with sequence ID as follows. </p>
         &lt;ns:getQuoteResponse xmlns:ns="http://services.samples/xsd"&gt;
 ...</pre>
 
-<p>Now both ESB and the server are done with the actual message exchange.
-Then ESB sends a request to terminate the sequence as follows: </p>
+<p>Now both EI and the server are done with the actual message exchange.
+Then EI sends a request to terminate the sequence as follows: </p>
 <pre xml:space="preserve">&lt;soapenv:Envelope xmlns:wsa="http://www.w3.org/2005/08/addressing"
                   xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
     &lt;soapenv:Header&gt;
@@ -310,7 +310,7 @@ terminate the sequence as follows. </p>
 most cases they will be exchanged in a single socket connection as HTTP
 Keep-Alive header is used. </p>
 
-<h2><a name="Sample102">Sample 102: Reliable message exchange between ESB and
+<h2><a name="Sample102">Sample 102: Reliable message exchange between EI and
 the back-end server using WS-ReliableMessaging 1.1</a> </h2>
     <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
     &lt;in&gt;
@@ -335,7 +335,7 @@ the back-end server using WS-ReliableMessaging 1.1</a> </h2>
     &lt;/out&gt;
 &lt;/definitions&gt;</pre>
 
-<p><strong>Objective: Demonstrate the message exchange between ESB and the
+<p><strong>Objective: Demonstrate the message exchange between EI and the
 server using WS-ReliableMessaging 1.1 Specification (WS-RM).</strong>This sample is similar
     to sample 101 except it uses the RM 1.1 for the communication.</p>
 
@@ -347,7 +347,7 @@ and running ant. </p>
 
 <p>Start the sample Axis2 server on port 9000. </p>
 
-<p>Start ESB with the sample configuration 102 (i.e. wso2esb-samples -sn 102).
+<p>Start EI with the sample configuration 102 (i.e. wso2EI-samples -sn 102).
 </p>
 
 <p>In the above configuration, WS-RM is engaged to the endpoint using the
@@ -356,17 +356,17 @@ WSDL endpoints using this tag. In addition to the RM enabled endpoint,
 RMSequence mediator is specified before the send mediator. This mediator is
 used to specify the set of messages to be sent using a single RM sequence. Also it specifies the RM version. In
 this sample it is specified as single message per sequence. It also specifies
-the version of the WS-RM to be used. Refer to the <a href="../configuration_language.html">ESB configuration language</a>
+the version of the WS-RM to be used. Refer to the <a href="../configuration_language.html">EI configuration language</a>
 documentation for more information about the RMSequence mediator. RM related
 SOAP headers are removed from the message in the out mediator as WS-RM
-message exchange happens only between the ESB and the server. Now run the
+message exchange happens only between the EI and the server. Now run the
 sample client using the following command. </p>
 <pre xml:space="preserve">ant stockquote -Dsymbol=IBM -Dmode=quote -Daddurl=http://localhost:8280</pre>
 
 <p>You can observe the client output displaying the quote price for IBM as
 follows: </p>
 <pre xml:space="preserve">[java] Standard :: Stock price = $189.2521262517493</pre>
-<p>You can observer the set of messages exchnaged between ESB and back end service using a tool like TCPMon</p>
+<p>You can observer the set of messages exchnaged between EI and back end service using a tool like TCPMon</p>
 
 </body>
 </html>

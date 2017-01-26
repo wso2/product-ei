@@ -233,7 +233,7 @@
 						%>
 
                         <p>Tryit tool can be used as a simple Web Service client which can be used to try your services
-                            within Enterprise Service Bus itself.</p>
+                            within Enterprise Integrator itself.</p>
 
                     </div>
                 </td>

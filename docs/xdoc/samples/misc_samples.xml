@@ -23,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - Miscellaneous Samples </title>
+  <title>WSO2 EI - Miscellaneous Samples </title>
 </head>
 
 <body>
@@ -66,11 +66,11 @@
         9000.
       </p>
       <p>
-        Start ESB with the sample configuration 650 (i.e. wso2esb-samples.sh -sn 650).
+        Start EI with the sample configuration 650 (i.e. wso2EI-samples.sh -sn 650).
       </p>
       <p>
          Go to the repository/samples directory and locate the subdirectory named synapse_sample_650.xml
-         within it. When ESB is started with the sample configuration 650, ESB will load the configuration from
+         within it. When EI is started with the sample configuration 650, EI will load the configuration from
          this directory. You will find a number of subdirectories and a set of XML files in each of those directories.
          Synapse will parse all the XML files in this file hierarchy and construct the full Synapse configuration at startup.
          As a result when this sample is executed Synapse will start with four proxy services, several sequences, a task, an event
@@ -111,12 +111,12 @@
           SynapseObserver interface
       </p>
       <p>
-        Open the synapse.properties file in the ESB_HOME/webapps/ROOT/WEB-INF/classes directory using a text editor and add the following
+        Open the synapse.properties file in the EI_HOME/webapps/ROOT/WEB-INF/classes directory using a text editor and add the following
           line to the synapse.properties file. This entry defines the simple logging Synapse observer.
       </p>
       <pre xml:space="preserve">synapse.observers=samples.userguide.SimpleLoggingObserver</pre>
       <p>
-        Open the log4j.properties file in the ESB_HOME/repository/conf directory and add the followin line which sets the INFO log
+        Open the log4j.properties file in the EI_HOME/repository/conf directory and add the followin line which sets the INFO log
         level to the samples.userguide package.
       </p>
       <pre xml:space="preserve">log4j.category.samples.userguide=INFO</pre>
@@ -195,27 +195,27 @@
 &lt;/definitions&gt;</pre>
        <div>
          <p>
-           <strong>Objective:</strong> Demonstrate the priority based mediation capability of ESB.
+           <strong>Objective:</strong> Demonstrate the priority based mediation capability of EI.
          </p>
          <p>
            <strong>Prerequisites:</strong> Deploy the
            SimpleStockQuoteService in sample Axis2 server and start it on port
-           9000. Priority is applied only when ESB is loaded with enough messages to consume its core number of threads.
+           9000. Priority is applied only when EI is loaded with enough messages to consume its core number of threads.
              So to observe the priority based mediation, it is required to use a load testing tool like JMeter, SOAP UI or Apache bench.
          </p>
          <p>
-           Start ESB with the sample configuration 652 (i.e. wso2esb-samples.sh -sn 652).
+           Start EI with the sample configuration 652 (i.e. wso2EI-samples.sh -sn 652).
          </p>
          <p>
            In this sample, client should send a HTTP header that specifies the priority of the message.This header name is priority.
-             This header is retrieved in the ESB configuration using the $trp:priority XPath expression. Then it is matched against
+             This header is retrieved in the EI configuration using the $trp:priority XPath expression. Then it is matched against
              the value 1. If it has the value 1, message is executed with priority 1. Otherwise the message is executed with priority 10.
          </p>
            <p>
                Here are two sample XML files that can be used to invoke the service using a tool like JMeter, or Ab. For SOAP UI,
                user can use the WSDL repository/samples/resources/proxy/sample_proxy_1.wsdl to create the request. The only
                difference between the two demonstrated requests here is the symbol. One has the symbol as IBM and other has MSFT. For one type of
-               request set the priority header to 1 and for the next set the priority header to 10. Then load ESB with high
+               request set the priority header to 1 and for the next set the priority header to 10. Then load EI with high
                volume of traffic from both types of requests using the load testing tool. In the back end server it prints the
                symbol of the incoming requests. User should be able to see more of high priority symbol.
            </p>
@@ -291,7 +291,7 @@
          <p>
            <strong>Prerequisites:</strong> Deploy the
            SimpleStockQuoteService in sample Axis2 server and start it on port
-           9000. Priority is applied only when ESB is loaded with enough messages to consume its core number of threads.
+           9000. Priority is applied only when EI is loaded with enough messages to consume its core number of threads.
              So to observe the priority based dispatching, it is required to use a load testing tool like JMeter, SOAP UI or Apache bench.
          </p>
          <p>
@@ -299,7 +299,7 @@
              <strong>priorityConfigFile</strong>. Set the value to repository/samples/resources/priority/priority-configuration.xml
          </p>
          <p>
-          We'll use the sample number 150. Start ESB with the sample configuration 150 (i.e. wso2esb-samples.sh -sn 150).
+          We'll use the sample number 150. Start EI with the sample configuration 150 (i.e. wso2EI-samples.sh -sn 150).
          </p>
          <p>
            In this sample, client should send a HTTP header that specifies the priority of the message.This header name is priority.
@@ -310,7 +310,7 @@
                Here are two sample XML files that can be used to invoke the service using a tool like JMeter, or Apache Ab. For SOAP UI,
                user can use the WSDL repository/conf/sample/resources/proxy/sample_proxy_1.wsdl to create the request. The only
                difference between the two demonstrated requests here is the symbol. One has the symbol as IBM and other has MSFT. For one type of
-               request set the priority header to 1 and for the next set the priority header to 10. Then load ESB with high
+               request set the priority header to 1 and for the next set the priority header to 10. Then load EI with high
                volume of traffic from both types of requests using the load testing tool. In the back end server it prints the
                symbol of the incoming requests. User should be able to see more of high priority symbol.
            </p>
@@ -418,7 +418,7 @@
                <li>transport.vfs.ActionAfterFailure</li>
            </ul>
          <p>
-           Start ESB with the sample configuration 654 (i.e. wso2esb-samples.sh -sn 654).
+           Start EI with the sample configuration 654 (i.e. wso2EI-samples.sh -sn 654).
          </p>
          <p>Drop the edi.txt file found in the repository/samples/resources/smooks directory to the transport.vfs.FileURI parameter specified directory.</p>
        </div>
@@ -430,7 +430,7 @@
          &#xa0;
        </p>
     <p>
-        This sample is similar to sample 150 except we have added two log mediators to show the actual message going through the ESB.
+        This sample is similar to sample 150 except we have added two log mediators to show the actual message going through the EI.
     </p>
    <pre xml:space="preserve">&lt;?xml version=&quot;1.0&quot;?&gt;
 &lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
@@ -574,7 +574,7 @@
             &lt;transaction action=&quot;new&quot;/&gt;
 
             &lt;log level=&quot;custom&quot;&gt;
-                &lt;property name=&quot;text&quot; value=&quot;** Reporting to the Database esbdb**&quot;/&gt;
+                &lt;property name=&quot;text&quot; value=&quot;** Reporting to the Database EIdb**&quot;/&gt;
             &lt;/log&gt;
             &lt;dbreport useTransaction=&quot;true&quot; xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
                 &lt;connection&gt;
@@ -596,7 +596,7 @@
             &lt;/dbreport&gt;
 
             &lt;log level=&quot;custom&quot;&gt;
-                &lt;property name=&quot;text&quot; value=&quot;** Reporting to the Database esbdb1**&quot;/&gt;
+                &lt;property name=&quot;text&quot; value=&quot;** Reporting to the Database EIdb1**&quot;/&gt;
             &lt;/log&gt;
             &lt;dbreport useTransaction=&quot;true&quot; xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
                 &lt;connection&gt;
@@ -624,7 +624,7 @@
          </p>
 	</div>
          <p><strong>Prerequisites:</strong><br />
-        Start the Synapse configuration numbered 267: i.e. wso2esb-samples -sn 267<br />
+        Start the Synapse configuration numbered 267: i.e. wso2EI-samples -sn 267<br />
         Start the Axis2 server and deploy the SimpleStockQuoteService if not already done</p>
         <p>
             To run this sample it is required to deploy synpase on JBoss application server(This is only tested with JBoss application sever),
@@ -692,7 +692,7 @@
 	 <p>Edit the following configuraion of smooks-config-658.xml found in the repository/samples/resources/smooks directory</p>
 	 <pre xml:space="preserve">&lt;file:destinationDirectoryPattern&gt;/home/lakmali/dev/test/smooks/orders&lt;/file:destinationDirectoryPattern&gt;</pre>
          <p>
-           Start ESB with the sample configuration 658 (i.e. wso2esb-samples.sh -sn 658).
+           Start EI with the sample configuration 658 (i.e. wso2EI-samples.sh -sn 658).
          </p>
          <p>Drop the huge input XML message in to the transport.vfs.FileURI parameter specified directory. The XML message should be 
 	in the format of input-message-658.xml file found in the repository/samples/resources/smooks directory.</p>
@@ -756,7 +756,7 @@
 	 <p>Edit the following configuraion of smooks-config-659.xml found in the repository/samples/resources/smooks directory</p>
 	 <pre xml:space="preserve">&lt;file:destinationDirectoryPattern&gt;/home/lakmali/dev/test/smooks/orders&lt;/file:destinationDirectoryPattern&gt;</pre>
          <p>
-           Start ESB with the sample configuration 659 (i.e. wso2esb-samples.sh -sn 659).
+           Start EI with the sample configuration 659 (i.e. wso2EI-samples.sh -sn 659).
          </p>
          <p>Drop the huge input EDI message in to the transport.vfs.FileURI parameter specified directory. The XML message should be
 	 in the format of input-message-659.txt file found in the repository/samples/resources/smooks directory.</p>
@@ -817,7 +817,7 @@
                <li>transport.vfs.ActionAfterFailure</li>
            </ul>
 	 <p>
-           Start ESB with the sample configuration 660 (i.e. wso2esb-samples.sh -sn 660).
+           Start EI with the sample configuration 660 (i.e. wso2EI-samples.sh -sn 660).
          </p>
          <p>Drop the input-message-660.xml file found in the repository/samples/resources/smooks directory to the transport.vfs.FileURI 
 	parameter specified directory.</p>
@@ -877,9 +877,9 @@
 
 	 <p>mysql&gt; source CreateOrdersDB.sql</p>
 	 
-	 <p>Add the mysql-connector-java-5.x.x.jar to the ESB_HOME/repository/components/lib directory</p>
+	 <p>Add the mysql-connector-java-5.x.x.jar to the EI_HOME/repository/components/lib directory</p>
 	 <p>
-           Start ESB with the sample configuration 661 (i.e. wso2esb-samples.sh -sn 661).
+           Start EI with the sample configuration 661 (i.e. wso2EI-samples.sh -sn 661).
          </p>
          <p>Drop the input-message-661.xml file found in the repository/samples/resources/smooks directory 
 		to the transport.vfs.FileURI parameter specified directory.</p>

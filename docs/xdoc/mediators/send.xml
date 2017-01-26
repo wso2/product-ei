@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Send Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Send Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -13,9 +13,9 @@
 <body>
 <h2>Send Mediator</h2>
 
-<p>Send is considered as one of the most widely used mediators in ESB. It is
-built in to the core of the ESB. It performs a fundamental task of any ESB.
-This fundamental task is to send a message out from ESB.</p>
+<p>Send is considered as one of the most widely used mediators in EI. It is
+built in to the core of the EI. It performs a fundamental task of any EI.
+This fundamental task is to send a message out from EI.</p>
 
 <p>There are two modes of operation in a send mediator.</p>
 <ol>
@@ -25,14 +25,14 @@ This fundamental task is to send a message out from ESB.</p>
 
 <p>If we don't provide an Endpoint it will try to send the message using the
 wsa:to address of the message. Also if we use a send mediator in the out path
-of the ESB, without specifying an Endpoint it will send the message as a
+of the EI, without specifying an Endpoint it will send the message as a
 reply.</p>
 
 <p>If we provide an Endpoint, it will send the message according to the
 information in the Endpoint. Have a look at the endpoint guide for more
 details.</p>
 
-<p>Send mediator is the only way to send a message out from the ESB. If you
+<p>Send mediator is the only way to send a message out from the EI. If you
 want to forward the message to an Endpoint or to send the reply back this
 mediator must be used.</p>
 

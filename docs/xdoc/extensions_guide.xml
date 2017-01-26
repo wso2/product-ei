@@ -25,21 +25,21 @@
   <head>
     <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
     <title>
-      WSO2 ESB - Extending
+      WSO2 EI - Extending
     </title>
-    <link href="css/esb-docs.css" rel="stylesheet"/>
+    <link href="css/EI-docs.css" rel="stylesheet"/>
     <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
 
   </head>
   <body>
       [ <a href="docs_index.html"> Documentation Index </a> ]
     <h1>
-      Extending WSO2 Enterprise Service Bus (ESB)
+      Extending WSO2 Enterprise Integrator (EI)
     </h1>
     <p>
       This document explains how to write custom mediator implementations and
       custom configuration implementations for mediators by extending Apache
-      Synapse through WSO2 ESB. It also provides guidelines on how to configure
+      Synapse through WSO2 EI. It also provides guidelines on how to configure
       these mediators.
     </p>
     <h2>Contents</h2>
@@ -386,7 +386,7 @@ public interface <span style="font-weight: bold;">FilterMediator </span>extends 
       an XML configuration. The custom MediatorFactory and MediatorSerializer
       implementations and the mediator class/es must be bundled as a "Synapse-Core" fragment bundle, 
       which exporting these classes (See the description for Extensions below for more
-      details and examples) and placed into the ESB_HOME/repository/components/dropins
+      details and examples) and placed into the EI_HOME/repository/components/dropins
       folder, so that the Synapse runtime could find and load the definition.
     </p>
 	<p>
@@ -408,7 +408,7 @@ public interface <span style="font-weight: bold;">FilterMediator </span>extends 
 	,org.apache.axiom.soap;resolution:=optional,org.apache.commons.loggin
 	g;resolution:=optional,org.apache.synapse;resolution:=optional,org.ap
 	ache.synapse.config.xml;resolution:=optional,org.apache.synapse.media
-	tors;resolution:=optional,org.jaxen;resolution:=optional,org.wso2.esb
+	tors;resolution:=optional,org.jaxen;resolution:=optional,org.wso2.EI
 	.tutorial.mediators;resolution:=optional
 	</pre>	
     <p>
@@ -423,7 +423,7 @@ public interface <span style="font-weight: bold;">FilterMediator </span>extends 
     </p>
 	
 	<p><strong>Note:</strong>
-	However there is a limitation with this custom mediators. Currently ESB supports them as
+	However there is a limitation with this custom mediators. Currently EI supports them as
 	fragments of synapse-core, since that custom mediators can not own their Activator classes.
 	So,they can not override the information present in the host bundle, which is the synapse-core.
 	</p>
@@ -529,9 +529,9 @@ public interface MediatorSerializer {
 
 <p></p>
 
-<p>Task is a one of method to automatically driving the mediation in the ESB.
-This is an implementation of ESB Startup which allowed adding tasks should run
-at ESB startup. Task is a Startup and it is based on Quartz, an open source job
+<p>Task is a one of method to automatically driving the mediation in the EI.
+This is an implementation of EI Startup which allowed adding tasks should run
+at EI startup. Task is a Startup and it is based on Quartz, an open source job
 scheduling system. Task can be used to create simple or complex schedules. A
 simple schedule may be a schedule to run a task periodically. A complex
 schedule may be a schedule to run at specific time in future. A complex
@@ -555,9 +555,9 @@ implementation class</p>
 executed at the specified interval/s, and name specifies an identifier for the
 scheduled task.</p>
 
-<p> In the current ESB , there is only one implementation -
+<p> In the current EI , there is only one implementation -
 <strong>org.apache.synapse.startup.tasks.MessageInjector</strong>.This can be
-used to inject messages at ESB startup.</p>
+used to inject messages at EI startup.</p>
 
 <p></p>
 
@@ -575,7 +575,7 @@ task will run a 'count' number of times at specified intervals. A trigger may
 also be specified as a cron trigger using a cron expression. A one-time trigger
 is specified using the 'once' attribute as true in the definition and could be
 specified as true in which case this task will be executed only once just after
-the initialization of ESB. You can give a list of Synapse server names where
+the initialization of EI. You can give a list of Synapse server names where
 this task should be started using pinnedServers attribute. Refer to the
 explanation of this attribute under proxy services for more information.</p>
 
@@ -604,7 +604,7 @@ public interface Task {
             Xpath Extension Framework
         </h2>
         <p>
-            WSO2 ESB configuration language is a powerful and flexible tool to perform
+            WSO2 EI configuration language is a powerful and flexible tool to perform
             authentication, validation, transformation, logging, routing based on the content etc.
             It could be easily extended, with configuration extensions , mediation extensions and
             even expression level extension. An expression is a lowest level particle in the
@@ -657,7 +657,7 @@ public interface Task {
         </p>
         <pre xml:space="preserve">
             &lt;HELLO_WORLD&gt;
-            &lt;name&gt;WSO2-ESB&lt;/name&gt;
+            &lt;name&gt;WSO2-EI&lt;/name&gt;
             &lt;version&gt;4.0.0&lt;/version&gt;
             &lt;release_date&gt;20/12/2010&lt;/release_date&gt;
             &lt;/HELLO_WORLD&gt;
@@ -883,7 +883,7 @@ public interface Task {
         </pre>
         <p>
             If multiple function / variable extesnions are needed comma delimited list can be
-            declared. WSO2 ESB at startup will register all these declared extensions (defined under
+            declared. WSO2 EI at startup will register all these declared extensions (defined under
             its CLASSPATH) and our HELLO-WORLD xpath extensions will be ready to roll.
         </p>
 </body>

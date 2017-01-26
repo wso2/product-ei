@@ -22,6 +22,6 @@
        <property name="mailinglist">http://wso2.org/mail</property>
        <property name="issuetracker">https://wso2.org/jira/browse/ESBJAVA</property>
        <property name="collapsedmenus">region1_configure_menu,region3_registry_menu,region4_monitor_menu,region5_tools_menu</property>
-       <property name="webAdminConsoleTitle">WSO2 Enterprise Service Bus (WSO2 ESB)</property>
+       <property name="webAdminConsoleTitle">WSO2 Enterprise Integrator (WSO2 ESB)</property>
     </properties>
 </product>

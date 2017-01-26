@@ -17,7 +17,7 @@
   ~  under the License.
   -->
 
-<project name="WSO2 Enterprise Service Bus">
+<project name="WSO2 Enterprise Integrator">
 
     <!--<bannerLeft>-->
       <!--<name>WSO2 ESB</name>-->

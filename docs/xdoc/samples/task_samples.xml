@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-  <title>WSO2 ESB - Tasks Samples </title>
+  <title>WSO2 EI - Tasks Samples </title>
 </head>
 
 <body>
-<h1>Running the Tasks samples with WSO2 Enterprise Service Bus (ESB) </h1>
+<h1>Running the Tasks samples with WSO2 Enterprise Integrator (EI) </h1>
 
     <h2><a name="Sample300">Sample 300: Introduction to tasks with simple
     trigger</a> </h2>
@@ -64,9 +64,9 @@
 
     <p><strong>Prerequisites:</strong><br />
     You will need access to build the SimpleStockQuoteService as mentioned in the
-    above and start the sample axis2 server before staring ESB. </p>
+    above and start the sample axis2 server before staring EI. </p>
 
-    <p>When ever ESB gets started with this configuration (i.e. ./wso2esb-samples -sn 300), this task will run
+    <p>When ever EI gets started with this configuration (i.e. ./wso2EI-samples -sn 300), this task will run
     periodically in 5 second intervals. You could limit the number of times that
     you want to run this task by adding a count attribute with an integer as the
     value, if the count is not present as in this sample this task will run
@@ -75,7 +75,7 @@
     <p>One can write his own task class implementing the
     org.apache.synapse.startup.Task interface and implementing the execute method
     to do the task. For this particular sample we have used the MessageInjector
-    which just injects a message specified into the ESB environment. </p>
+    which just injects a message specified into the EI environment. </p>
 
 </body>
 </html>

@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Rule Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Rule Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -13,7 +13,7 @@
 <body>
 <h2>Rule Mediator</h2>
 
-<p>Rule mediator is to integrate the WSO2 Rules component to the WSO2 ESB in
+<p>Rule mediator is to integrate the WSO2 Rules component to the WSO2 EI in
 order to define dynamic integration decisions in terms of rules.</p>
 
 <h3>Syntax</h3>
@@ -71,7 +71,7 @@ session is optional and the default one is stateful.</p>
   <li>name - the unique name</li>
   <li>value - Represents any static value</li>
   <li>expression - XPath expression for extracting data from the message being
-    passed between ESB components. The default value is the first child of the
+    passed between EI components. The default value is the first child of the
     SOAP Body. </li>
   <li>type - Defines the type of the input data. There are a few built in types
     such as Message, Context, Map, POJO and Mediator and there are samples

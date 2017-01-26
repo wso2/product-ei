@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - Transport Switching Samples </title>
+  <title>WSO2 EI - Transport Switching Samples </title>
 </head>
 
 <body>
-<h1>Running the Transport samples with WSO2 Enterprise Service Bus (ESB)</h1>
+<h1>Running the Transport samples with WSO2 Enterprise Integrator (EI)</h1>
 <h2><a name="Sample250">Sample 250: Introduction to switching transports - JMS
 to http/s</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
@@ -61,26 +61,26 @@ services</strong> </p>
 <p><strong>Prerequisites:</strong><br />
 Start the Axis2 server and deploy the SimpleStockQuoteService (Refer steps
 above)<br />
-Download, install and start a JMS server, and configure ESB to listen on JMS
+Download, install and start a JMS server, and configure EI to listen on JMS
 (refer notes below)<br />
-Start the Synapse configuration numbered 250: i.e. wso2esb-samples -sn 250<br />
+Start the Synapse configuration numbered 250: i.e. wso2EI-samples -sn 250<br />
 For this example we would use ActiveMQ as the JMS provider. Once ActiveMQ is
 installed and started you should get a message as follows: </p>
 <pre xml:space="preserve">INFO BrokerService - ActiveMQ JMS Message Broker (localhost) started</pre>
 
-<p>You will now need to configure the Axis2 instance used by ESB (not the
+<p>You will now need to configure the Axis2 instance used by EI (not the
 sample Axis2 server) to enable JMS support using the above provider. Refer to
 the Axis2 documentation on setting up JMS for more details
 (<a href="http://ws.apache.org/axis2/1_1/jms-transport.html">http://ws.apache.org/axis2/1_1/jms-transport.html</a>). You will also need to
 copy the ActiveMQ client jar files 
 activemq-core-5.2.0.jar and geronimo-j2ee-management_1.0_spec-1.0.jar into
-the repository/components/lib directory to allow ESB to connect to the JMS provider. </p>
+the repository/components/lib directory to allow EI to connect to the JMS provider. </p>
 
 <p>For a default ActiveMQ v4.0 installation, you may uncomment the Axis2
 transport listener configuration found at repository/conf/axis2.xml as </p>
 <pre xml:space="preserve">&lt;transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener"&gt; ...</pre>
 
-<p>You need to enable the JMS transport sender for the ESB to be able to send
+<p>You need to enable the JMS transport sender for the EI to be able to send
 messages over the JMS transport. To enable the JMS transport sender uncomment
 the Axis2 transport sender configuration found at repository/conf/axis2.xml as </p>
 <pre xml:space="preserve">&lt;transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender" /&gt;</pre>
@@ -94,7 +94,7 @@ configuration specified this requirement in the proxy service definition. </p>
 client as follows: </p>
 <pre xml:space="preserve">ant jmsclient -Djms_type=pox -Djms_dest=dynamicQueues/StockQuoteProxy -Djms_payload=MSFT</pre>
 
-<p>On the ESB debug log you will notice that the JMS listener received the
+<p>On the EI debug log you will notice that the JMS listener received the
 request message as: </p>
 <pre xml:space="preserve">[JMSWorker-1] DEBUG ProxyServiceMessageReceiver -Proxy Service StockQuoteProxy received a new message...</pre>
 
@@ -104,9 +104,9 @@ see a message indicating that the server has accepted an order as follows:
 <pre xml:space="preserve">Accepted order for : 16517 stocks of MSFT at $ 169.14622538721846</pre>
 
 <p>In this sample, client sends the request message to the proxy service
-exposed over JMS in Synapse. ESB forwards this message to the HTTP EPR of the
+exposed over JMS in Synapse. EI forwards this message to the HTTP EPR of the
 simple stock quote service hosted on the sample Axis2 server, which sends a
-202 Accepted response back to the ESB. Since the placeOrder operation is an
+202 Accepted response back to the EI. Since the placeOrder operation is an
 in-only service operation the JMS client does not receive any response in this
 sample.</p>
 
@@ -143,7 +143,7 @@ Download, install and start a JMS server </p>
 Start the Axis2 server and deploy the SimpleStockQuoteService (see below)<br
 />
 Configure the Synapse JMS transport (refer notes above - sample 250)<br />
-Start the Synapse configuration numbered 251: i.e. wso2esb-samples -sn 251 </p>
+Start the Synapse configuration numbered 251: i.e. wso2EI-samples -sn 251 </p>
 
 <p>To switch from HTTP to JMS, edit the
 samples/axis2Server/repository/conf/axis2.xml for the sample Axis2 server and
@@ -157,13 +157,13 @@ QueueConnectionFactory&amp;java.naming.factory.initial=org.apache.activemq.jndi.
 java.naming.provider.url=tcp://localhost:61616</pre>
 
 <p>You may also notice that the simple stock quote proxy service exposed in
-ESB is now available only in HTTP as we have specified transport for that
+EI is now available only in HTTP as we have specified transport for that
 service as HTTP. To observe this, access the WSDL of stock quote proxy
 service at http://localhost:8280/services/StockQuoteProxy?wsdl. </p>
 
-<p>This ESB configuration creates a proxy service over HTTP and forwards
+<p>This EI configuration creates a proxy service over HTTP and forwards
 received messages to the above EPR using JMS. To test this, send a place
-order request to ESB using HTTP as follows: </p>
+order request to EI using HTTP as follows: </p>
 <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:8280/services/StockQuoteProxy -Dmode=placeorder -Dsymbol=MSFT</pre>
 
 <p>The sample Axis2 server console will print a message indicating that it
@@ -237,8 +237,8 @@ with JMS</a> </h2>
 MTOM</strong> </p>
 
 <p><strong>Prerequisites:</strong><br />
-Configure JMS for ESB (Refer notes)<br />
-Start the Synapse configuration numbered 252: i.e. wso2esb-samples -sn 252<br />
+Configure JMS for EI (Refer notes)<br />
+Start the Synapse configuration numbered 252: i.e. wso2EI-samples -sn 252<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService and the
 MTOMSwASampleService if not already done </p>
 
@@ -246,9 +246,9 @@ MTOMSwASampleService if not already done </p>
 JMSFileUploadProxy, JMSTextProxy and JMSPoxProxy exposed over JMS queues with
 the same names as the services. The first part of this example demonstrates
 the pure text message support with JMS, where a user sends a space separated
-text JMS message of the form "&lt;price&gt; &lt;qty&gt; &lt;symbol&gt;". ESB
+text JMS message of the form "&lt;price&gt; &lt;qty&gt; &lt;symbol&gt;". EI
 converts this message into a SOAP message and sends this to the
-SimpleStockQuoteServices' placeOrder operation. ESB uses the script mediator
+SimpleStockQuoteServices' placeOrder operation. EI uses the script mediator
 to transform the text message into a XML payload using the Javascript support
 available to tokenize the string. The proxy service property named
 "transport.jms.Wrapper" defines a custom wrapper element QName, to be used
@@ -259,7 +259,7 @@ the content defined (e.g. "12.33 1000 ACP") to the specified JMS destination
 - dynamicQueues/JMSTextProxy </p>
 <pre xml:space="preserve">ant jmsclient -Djms_type=text -Djms_payload="12.33 1000 ACP" -Djms_dest=dynamicQueues/JMSTextProxy</pre>
 
-<p>Following the debug logs, you could notice that ESB received the JMS text
+<p>Following the debug logs, you could notice that EI received the JMS text
 message and transformed it into a SOAP payload as follows. Notice that the
 wrapper element "{http://services.samples/xsd}text" has been used to hold the
 text message content. </p>
@@ -284,7 +284,7 @@ following message: </p>
 <pre xml:space="preserve">Wed Apr 25 19:50:56 LKT 2007 samples.services.SimpleStockQuoteService :: Accepted order for : 1000 stocks of ACP at $ 12.33</pre>
 
 <p>The next section of this example demonstrates how a pure binary JMS
-message could be received and processed through ESB. The configuration
+message could be received and processed through EI. The configuration
 creates a proxy service named 'JMSFileUploadProxy' that accepts binary
 messages and wraps them into a custom element
 '{http://services.samples/xsd}element'. The received message is then
@@ -296,7 +296,7 @@ containing the file
 destination 'dynamicQueues/JMSFileUploadProxy' as follows: </p>
 <pre xml:space="preserve">ant jmsclient -Djms_type=binary -Djms_dest=dynamicQueues/JMSFileUploadProxy -Djms_payload=./../../repository/samples/resources/mtom/asf-logo.gif</pre>
 
-<p>Examining the ESB debug logs reveals that the binary content was received
+<p>Examining the EI debug logs reveals that the binary content was received
 over JMS and wrapped with the specified element into a SOAP infoset as
 follows: </p>
 <pre xml:space="preserve">[JMSWorker-1] DEBUG ProxyServiceMessageReceiver - Proxy Service JMSFileUploadProxy received a new message...
@@ -314,13 +314,13 @@ correctness. </p>
 <pre xml:space="preserve">Wrote to file : ./../../work/temp/sampleServer/mtom-29208.gif</pre>
 
 <p>The final section of this example shows how a POX JMS message received by
-ESB is sent to the SimpleStockQuoteService as a SOAP message. Use the JMS
+EI is sent to the SimpleStockQuoteService as a SOAP message. Use the JMS
 client as follows to create a POX (Plain Old XML) message with a stock quote
 request payload (without a SOAP envelope), and send it to the JMS destination
 'dynamicQueues/JMSPoxProxy' as follows: </p>
 <pre xml:space="preserve">ant jmsclient -Djms_type=pox -Djms_dest=dynamicQueues/JMSPoxProxy -Djms_payload=MSFT</pre>
 
-<p>You can see that ESB received the POX message and displays it as follows
+<p>You can see that EI received the POX message and displays it as follows
 in the debug logs, and then converts it into a SOAP payload and sends to the
 SimpleStockQuoteService after setting the SOAP action as 'urn:placeOrder'.
 </p>
@@ -398,23 +398,23 @@ and replying with a http 202 Accepted response</strong> </p>
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already
 done </p>
 
-<p>Start the Synapse configuration numbered 253: i.e. wso2esb-samples -sn 253
+<p>Start the Synapse configuration numbered 253: i.e. wso2EI-samples -sn 253
 </p>
 
 <p>This example invokes the one-way 'placeOrder' operation on the
 SimpleStockQuoteService using the Axis2 ServiceClient.fireAndForget() API at
 the client. To test this, use 'ant -Dmode=placeorder...' and you will notice
-the one way JMS message flowing through ESB into the sample Axis2 server
+the one way JMS message flowing through EI into the sample Axis2 server
 instance over http, and Axis2 acknowledging it with a http 202 Accepted
 response. </p>
 <pre xml:space="preserve">ant stockquote -Dmode=placeorder -Dtrpurl="jms:/JMStoHTTPStockQuoteProxy?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;java.naming.provider.url=tcp://localhost:61616&amp;transport.jms.ContentTypeProperty=Content-Type&amp;transport.jms.DestinationType=queue"</pre>
 <pre xml:space="preserve">SimpleStockQuoteService :: Accepted order for : 7482 stocks of IBM at $ 169.27205579038733</pre>
 
-<p>The second example shows how ESB could be made to respond with a http 202
+<p>The second example shows how EI could be made to respond with a http 202
 Accepted response to a request received. The proxy service simply logs the
-message received and acknowledges it. On the ESB console you could see the
+message received and acknowledges it. On the EI console you could see the
 logged message, and if TCPMon was used at the client, you would see the 202
-Accepted response sent back to the client from ESB </p>
+Accepted response sent back to the client from EI </p>
 <pre xml:space="preserve">ant stockquote -Dmode=placeorder -Dtrpurl=http://localhost:8280/services/OneWayProxy</pre>
 <pre xml:space="preserve">HTTP/1.1 202 Accepted
 Content-Type: text/xml; charset=UTF-8
@@ -466,7 +466,7 @@ already done </p>
 
 <p>Create three new directories in a test directory. e.g. in, out, original
 in /home/user/test. Open
-ESB_HOME/repository/samples/synapse_sample_254.xml and edit the following
+EI_HOME/repository/samples/synapse_sample_254.xml and edit the following
 values. Change transport.vfs.FileURI, transport.vfs.MoveAfterProcess,
 transport.vfs.MoveAfterFailure parameter values to the above in, original,
 original directories respectively. Change outSequence endpoint address uri to
@@ -475,10 +475,10 @@ marked with &lt;!--CHANGE--&gt;. </p>
 
 <p>In the axis2.xml uncomment the VFS transport listener and sender.</p>
 
-<p>Start the Synapse configuration numbered 254: i.e. wso2esb-samples -sn 254
+<p>Start the Synapse configuration numbered 254: i.e. wso2EI-samples -sn 254
 </p>
 
-<p>Copy ESB_HOME/repository/samples/resources/vfs/test.xml to the
+<p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the
 directory given in transport.vfs.FileURI above. </p>
 
 <p>test.xml file content is as follows </p>
@@ -538,21 +538,21 @@ You will need access to an FTP server and an SMTP server to try this sample.
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not
 already done </p>
 
-<p>Enable mail transport sender in the ESB axis2.xml. See <a
+<p>Enable mail transport sender in the EI axis2.xml. See <a
 href="../samples_setup_guide.html#mailsender">Setting up mail transport sender</a>
 </p>
 
 <p>Create a new test directory in the FTP server. Open
-ESB_HOME/repository/samples/synapse_sample_255.xml and edit the following
+EI_HOME/repository/samples/synapse_sample_255.xml and edit the following
 values. Change transport.vfs.FileURI parameter value point to the test
 directory at the FTP server. Change outSequence endpoint address uri email
 address to a working email address. Values you have to change are marked with
 &lt;!--CHANGE--&gt;. </p>
 
-<p>Start the Synapse configuration numbered 255: i.e. wso2esb-samples -sn 255
+<p>Start the Synapse configuration numbered 255: i.e. wso2EI-samples -sn 255
 </p>
 
-<p>Copy ESB_HOME/repository/samples/resources/vfs/test.xml to the ftp
+<p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the ftp
 directory given in transport.vfs.FileURI above. </p>
 
 <p>VFS transport listener will pick the file from the directory in the ftp
@@ -612,18 +612,18 @@ You will need access to an email account </p>
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not
 already done </p>
 
-<p>Enable mail transport listener in the ESB axis2.xml. Simply uncomment the relevant
+<p>Enable mail transport listener in the EI axis2.xml. Simply uncomment the relevant
 transport receiver entry in the file.</p>
 
-<p>Enable mail transport sender in the ESB axis2.xml. See <a
+<p>Enable mail transport sender in the EI axis2.xml. See <a
 href="../samples_setup_guide.html#mailsender">Setting up mail transport sender</a>
 </p>
 
-<p>Enable mail transport receiver in the ESB axis2.xml. See <a
+<p>Enable mail transport receiver in the EI axis2.xml. See <a
 href="../samples_setup_guide.html#mailreceiver">Setting up mail transport listener</a>
 </p>
 
-<p>Start the Synapse configuration numbered 256: i.e. wso2esb-samples -sn 256
+<p>Start the Synapse configuration numbered 256: i.e. wso2EI-samples -sn 256
 </p>
 
 <p>Send a plain/text email with the following body and any custom Subject
@@ -675,7 +675,7 @@ because most standard mail clients don't allow the user to explicitly set the co
       <strong>Prerequisites:</strong><br/>
        You will need the two sample FIX applications that come with Quickfix/J
        (Banzai and Executor). Configure the two applications to establish
-       sessions with the ESB. See <a href="../samples_setup_guide.html#fixsamplesconfig">
+       sessions with the EI. See <a href="../samples_setup_guide.html#fixsamplesconfig">
        Configuring Sample FIX Applications</a>
     </p>
     <p>
@@ -688,22 +688,22 @@ because most standard mail clients don't allow the user to explicitly set the co
     </p>
     <p>
       Configure Synapse for FIX samples. See <a href="../samples_setup_guide.html#fixsamples">
-      Configuring WSO2 ESB for FIX Samples</a>
+      Configuring WSO2 EI for FIX Samples</a>
     </p>
     <p>
-      Open up the ESB_HOME/repository/samples/synapse_sample_257.xml file
+      Open up the EI_HOME/repository/samples/synapse_sample_257.xml file
       and make sure that transport.fix.AcceptorConfigURL property points to the
       fix-synapse.cfg file you created. Also make sure that transport.fix.
       InitiatorConfigURL property points to the synapse-sender.cfg file you
       created. Once done you can start the Synapse configuration numbered 257:
-      i.e. wso2esb-samples -sn 257. Note that the ESB creates a new FIX session with
+      i.e. wso2EI-samples -sn 257. Note that the EI creates a new FIX session with
       Banzai at this point.
     </p>
     <p>
-      Send an order request from Banzai to the ESB.
+      Send an order request from Banzai to the EI.
     </p>
     <p>
-      WSO2 ESB will create a session with Executor and forward the order request. The
+      WSO2 EI will create a session with Executor and forward the order request. The
       responses coming from the Executor will be sent back to Banzai.
     </p>
     <h2>
@@ -757,10 +757,10 @@ because most standard mail clients don't allow the user to explicitly set the co
       file for this sample. Having only the synapse-sender.cfg file is sufficient.
     </p>
     <p>
-      Go to the ESB_HOME/repository/samples/synapse_sample_258.xml
+      Go to the EI_HOME/repository/samples/synapse_sample_258.xml
       file and make sure that transport.fix.InitiatorConfigURL property
       points to the synapse-sender.cfg file you created. Once done you can
-      start the Synapse configuration numbered 258: i.e. wso2esb-samples -sn 258
+      start the Synapse configuration numbered 258: i.e. wso2EI-samples -sn 258
     </p>
     <p>
       Invoke the FIX Client as follows. This command sends a FIX message
@@ -811,11 +811,11 @@ because most standard mail clients don't allow the user to explicitly set the co
 <p>Start Banzai </p>
 <p>Enable FIX transport in the Synapse axis2.xml. See
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
-<p>Configure ESB for FIX samples. See
-<a href="../samples_setup_guide.html#fixsamples">Configuring the ESB for FIX Samples</a> </p>
-<p>Open up the ESB_HOME/repository/samples/synapse_sample_259.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 259: i.e. wso2esb-samples -sn 259. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Configure EI for FIX samples. See
+<a href="../samples_setup_guide.html#fixsamples">Configuring the EI for FIX Samples</a> </p>
+<p>Open up the EI_HOME/repository/samples/synapse_sample_259.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 259: i.e. wso2EI-samples -sn 259. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy DELL 1000 @ 100. User has to send a 'Limit' Order because price is a mandatory field for 'placeOrder' operation. </p>
-<p>ESB will forward the order request to one-way 'placeOrder' operation on the SimpleStockQuoteService. ESB uses a simple XSLT mediator to transform the incoming FIX to a SOAP message. </p>
+<p>EI will forward the order request to one-way 'placeOrder' operation on the SimpleStockQuoteService. EI uses a simple XSLT mediator to transform the incoming FIX to a SOAP message. </p>
 <pre xml:space="preserve">&lt;xsl:stylesheet version=&quot;2.0&quot;
     xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
     xmlns:fn=&quot;http://www.w3.org/2005/02/xpath-functions&quot;&gt;
@@ -866,16 +866,16 @@ because most standard mail clients don't allow the user to explicitly set the co
 <strong>Prerequisites:</strong>
 <br></br> You will need the sample FIX blotter that comes with Quickfix/J (Banzai). Configure the blotter to establish sessions with Synapse. See
 <a href="../samples_setup_guide.html#fixsamplesconfig">Configuring Sample FIX Applications</a> </p>
-<p>Configure the AMQP transport for WSO2 ESB. See
-<a href="../samples_setup_guide.html#setupamqpjms">Configure ESB for AMQP Transport</a> </p>
+<p>Configure the AMQP transport for WSO2 EI. See
+<a href="../samples_setup_guide.html#setupamqpjms">Configure EI for AMQP Transport</a> </p>
 <p>Start the AMQP consumer, by switching to samples/axis2Client directory and running the consumer using the following command. Consumer will listen to the queue 'QpidStockQuoteService', accept the orders and reply to the queue 'replyQueue'. </p>
-<pre xml:space="preserve">ant amqpconsumer -Dpropfile=$ESB_HOME/repository/samples/resources/fix/direct.properties</pre>
+<pre xml:space="preserve">ant amqpconsumer -Dpropfile=$EI_HOME/repository/samples/resources/fix/direct.properties</pre>
 <p>Start Banzai </p>
 <p>Enable FIX transport in the Synapse axis2.xml. See
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
 <p>Configure Synapse for FIX samples. See
 <a href="../samples_setup_guide.html#fixsamples">Configuring Synapse for FIX Samples</a> </p>
-<p>Open up the ESB_HOME/repository/samples/synapse_sample_260.xml file and make sure that the transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 260: i.e. wso2esb-samples -sn 260. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Open up the EI_HOME/repository/samples/synapse_sample_260.xml file and make sure that the transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 260: i.e. wso2EI-samples -sn 260. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy DELL 1000 @ MKT. </p>
 <p>Synapse will forward the order request by binding it to a JMS message payload and sending it to the AMQP consumer. AMQP consumer will send a execution back to Banzai. </p>
 
@@ -904,7 +904,7 @@ because most standard mail clients don't allow the user to explicitly set the co
 <a href="../samples_setup_guide.html#fixsamplesconfig">Configuring Sample FIX Applications.</a> </p>
 <p>Add the following lines to the Banzai configuration file (banzai.cfg). </p>
 <pre xml:space="preserve">DataDictionary=~/etc/spec/FIX40-synapse.xml</pre>
-<p>Note: FIX40-synapse.xml can be found at $ESB_HOME/repository/sampless/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
+<p>Note: FIX40-synapse.xml can be found at $EI_HOME/repository/sampless/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
 <p>Add the following lines to the Executor configuration file (executor.cfg). </p>
 <pre xml:space="preserve">[session]
 BeginString=FIX.4.1
@@ -912,8 +912,8 @@ SocketAcceptPort=19877</pre>
 <p>Start Banzai and Executor using the custom configuration files. </p>
 <p>Enable FIX transport in the Synapse axis2.xml. See
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
-<p>Configure Synapse for FIX samples. We will be using two custom configuration files for Synapse in this sample. These two custom configuration files can be found at ESB_HOME/repository/conf/sample/resources/fix directory. The two files are called fix-synapse-m40.cfg and synapse-sender-m.cfg. You can point your Synapse configuration to these two files (this is already done in the supplied synapse_sample_261.xml file) or you may create copies of them and point the Synapse configuration to the copies. In either case make sure that the properties like FileStorePath and FileLogPath in the two files point to valid locations in your local file system. </p>
-<p>Open up the $ESB_HOME/repository/samples/synapse_sample_261.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse-m40.cfg file described above and transport.fix.InitiatorConfigURL points to the synapse-sender-m.cfg file described above. Once done you can start the Synapse configuration numbered 261: i.e. wso2esb-samples -sn 261. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Configure Synapse for FIX samples. We will be using two custom configuration files for Synapse in this sample. These two custom configuration files can be found at EI_HOME/repository/conf/sample/resources/fix directory. The two files are called fix-synapse-m40.cfg and synapse-sender-m.cfg. You can point your Synapse configuration to these two files (this is already done in the supplied synapse_sample_261.xml file) or you may create copies of them and point the Synapse configuration to the copies. In either case make sure that the properties like FileStorePath and FileLogPath in the two files point to valid locations in your local file system. </p>
+<p>Open up the $EI_HOME/repository/samples/synapse_sample_261.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse-m40.cfg file described above and transport.fix.InitiatorConfigURL points to the synapse-sender-m.cfg file described above. Once done you can start the Synapse configuration numbered 261: i.e. wso2EI-samples -sn 261. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy DELL 1000 @ MKT. </p>
 <p>Synapse will forward the order request from FIX4.0 to the Executor that accepts FIX4.1 messages. Executor will send an ack and an execution back to Banzai. </p>
 
@@ -970,7 +970,7 @@ SocketAcceptPort=19877</pre>
 <a href="../samples_setup_guide.html#fixsamplesconfig">Configuring Sample FIX Applications</a> </p>
 <p>Add the following lines to banzai.cfg. </p>
 <pre xml:space="preserve">DataDictionary=~/etc/spec/FIX40-synapse.xml</pre>
-<p>Note: FIX40-synapse.xml can be found at $ESB_HOME/repository/samples/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
+<p>Note: FIX40-synapse.xml can be found at $EI_HOME/repository/samples/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
 <p>Add the following lines to executor.cfg </p>
 <pre xml:space="preserve">[session]
 BeginString=FIX.4.1
@@ -980,7 +980,7 @@ SocketAcceptPort=19877</pre>
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
 <p>Configure Synapse for FIX samples. See
 <a href="../samples_setup_guide.html#fixsamples">Configuring Synapse for FIX Samples</a> </p>
-<p>Open up the ESB_HOME/repository/samples/synapse_sample_262.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created and transport.fix.InitiatorConfigURL points to the synapse-sender.cfg file you created. Once done you can start the Synapse configuration numbered 262: i.e. wso2esb-samples -sn 262. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Open up the EI_HOME/repository/samples/synapse_sample_262.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created and transport.fix.InitiatorConfigURL points to the synapse-sender.cfg file you created. Once done you can start the Synapse configuration numbered 262: i.e. wso2EI-samples -sn 262. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy GOOG 1000 @ MKT, Buy MSFT 3000 @ MKT, Buy SUNW 500 @ 100.20 </p>
 <p>Synapse will forward the order requests with symbol 'GOOG' to FIX endpoint FIX-4.0 @ localhost:19876.</p>
 <p>Synapse will forward the order requests with symbol 'MSFT' to FIX endpoint FIX-4.1 @ localhost:19877.</p>
@@ -1017,7 +1017,7 @@ SocketAcceptPort=19877</pre>
 <strong>Prerequisites:</strong>
 <br></br> Start the Axis2 server and deploy the SimpleStockQuoteService (Refer steps above)
 <br></br> <a href="http://jboss.org/jbossmessaging/">Download</a>, install and start JBM server, and configure Synapse to listen on JBM (refer notes below)
-<br></br> Start the ESB configuration numbered 263: i.e. wso2esb-samples -sn 263
+<br></br> Start the EI configuration numbered 263: i.e. wso2EI-samples -sn 263
 <br></br> We need to configure the required queues in JBM. Add the following entry to JBM jms configuration inside file-config/stand-alone/non-clustered/jbm-jms.xml.
     </p>
 <pre xml:space="preserve">
@@ -1028,7 +1028,7 @@ SocketAcceptPort=19877</pre>
 <p>Once you started the JBM server with the above changes you'll be able to see the following on STDOUT.</p>
 <pre xml:space="preserve">10:18:02,673 INFO [org.jboss.messaging.core.server.impl.MessagingServerImpl]  JBoss Messaging Server version 2.0.0.BETA3 (maggot, 104) started </pre>
 <p>You also need to copy the jbm-core-client.jar, jbm-jms-client.jar, jnp-client.jar(these jars are inside $JBOSS_MESSAGING/client folder) and
-    jbm-transports.jar, netty.jar(these jars are from $JBOSS_MESSAGING/lib folder) jars from JBM into the $ESB_HOME/repository/components/lib directory. This was tested with JBM 2.0.0.BETA3 </p>
+    jbm-transports.jar, netty.jar(these jars are from $JBOSS_MESSAGING/lib folder) jars from JBM into the $EI_HOME/repository/components/lib directory. This was tested with JBM 2.0.0.BETA3 </p>
 
 <p>You need to add the following configuration for Axis2 JMS transport listener in axis2.xml found at repository/conf/axis2.xml.</p>
 <pre xml:space="preserve">
@@ -1041,7 +1041,7 @@ SocketAcceptPort=19877</pre>
     &lt;/parameter&gt;
 &lt;/transportReceiver&gt;
 </pre>
-<p>Once you start ESB configuration 263 and request for the WSDL of the proxy service (http://localhost:8280/services/StockQuoteProxy?wsdl) you will notice that its exposed only on the JMS transport. This is because the configuration specified this requirement in the proxy service definition. </p>
+<p>Once you start EI configuration 263 and request for the WSDL of the proxy service (http://localhost:8280/services/StockQuoteProxy?wsdl) you will notice that its exposed only on the JMS transport. This is because the configuration specified this requirement in the proxy service definition. </p>
 <p>Before running the JMS client you need to open the build.xml ant script and uncomment the following block under the
 jmsclient target.</p>
 &lt;!--&lt;sysproperty key="java.naming.provider.url" value="${java.naming.provider.url}"/&gt;
@@ -1049,7 +1049,7 @@ jmsclient target.</p>
 &lt;sysproperty key="java.naming.factory.url.pkg" value="${java.naming.factory.url.pkg}"/&gt;--&gt;
 <p>Now lets send a stock quote request on JMS, using the dumb stock quote client as follows: </p>
 <pre xml:space="preserve">ant jmsclient -Djms_type=pox -Djms_dest=StockQuoteProxy -Djms_payload=MSFT -Djava.naming.provider.url=jnp://localhost:1099 -Djava.naming.factory.initial=org.jnp.interfaces.NamingContextFactory -Djava.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces</pre>
-<p>On the ESB debug(you'll need to enable debug log in ESB) log you will notice that the JMS listener received the request message as: </p>
+<p>On the EI debug(you'll need to enable debug log in EI) log you will notice that the JMS listener received the request message as: </p>
 <pre xml:space="preserve">[JMSWorker-1] DEBUG ProxyServiceMessageReceiver -Proxy Service StockQuoteProxy received a new message...</pre>
 <p>Now if you examine the console running the sample Axis2 server, you will see a message indicating that the server has accepted an order as follows: </p>
 <pre xml:space="preserve">Accepted order for : 16517 stocks of MSFT at $ 169.14622538721846</pre>
@@ -1088,7 +1088,7 @@ it will first try to read the content type from the 'contentType' message proper
  </p>
  <p>
    <strong>Prerequisites:</strong>
-   <br></br>You need to set up ESB and axis2 server to use the JMS transport. See
+   <br></br>You need to set up EI and axis2 server to use the JMS transport. See
    <a href="#Sample251">Sample 251</a> for more details.
  </p>
  <p>
@@ -1098,8 +1098,8 @@ it will first try to read the content type from the 'contentType' message proper
  <p>
    In the out path we remove the message context property <strong>TRANSPORT_HEADERS</strong>. If these property is not removed JMS headers will be passed to the client.
  </p>
- <p>Start ESB using sample 264.</p>
- <pre xml:space="preserve">wso2esb-samples -sn 264</pre>
+ <p>Start EI using sample 264.</p>
+ <pre xml:space="preserve">wso2EI-samples -sn 264</pre>
  <p>Start Axis2 server with SimpleStockService deployed</p>
  <p>Invoke the stockquote client using the following command.</p>
  <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:8280/services/StockQuoteProxy -Dsymbol=MSFT</pre>
@@ -1150,21 +1150,21 @@ You will need access a windows shared folder. Just create a folder(called 'test'
 and create three sub folders in, out and original inside that folder.Then assign the permission
 to the network users to read and write into the root 'test' folder and the folders inside that directory.</p>
 <p>
-Open ESB_HOME/repository/samples/synapse_sample_265.xml and edit the following values. Change transport.vfs.FileURI,
+Open EI_HOME/repository/samples/synapse_sample_265.xml and edit the following values. Change transport.vfs.FileURI,
 transport.vfs.MoveAfterProcess, transport.vfs.MoveAfterFailure parameter values to the above in, original, original
 directories respectively. Change outSequence endpoint address uri to out directory with the prefix vfs:.
 Values you have to change are marked with &lt;!--CHANGE--&gt;.     
 </p>
 
-<p>Copy ESB_HOME/repository/samples/resources/vfs/test.xml to the directory given in transport.vfs.FileURI above.</p>
+<p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the directory given in transport.vfs.FileURI above.</p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not
 already done </p>
 
-<p>Enable vfs transport receiver and the vfs transport sender in the ESB axis2.xml. Just uncomment the
+<p>Enable vfs transport receiver and the vfs transport sender in the EI axis2.xml. Just uncomment the
     VFSTransportListener and the VFSTransportSender in axis2.xml</p>
 
-<p>Start the Synapse configuration numbered 265: i.e. wso2esb-samples -sn 265
+<p>Start the Synapse configuration numbered 265: i.e. wso2EI-samples -sn 265
 </p>
 
 <p>VFS transport listener will pick the file from in directory and send it to the Axis2 service. The request XML
@@ -1337,7 +1337,7 @@ Invoke the stockquote client using the following command. Note the UDP URL in th
     between proxy services.</p>
 
 <p><strong>Prerequisites:</strong><br />
-Start the Synapse configuration numbered 268: i.e. wso2esb-samples -sn 268<br />
+Start the Synapse configuration numbered 268: i.e. wso2EI-samples -sn 268<br />
 Start the Axis2 server and deploy the SimpleStockQuoteService if not already done</p>
 
 <p>Execute the stock quote client by requesting for a stock quote on the

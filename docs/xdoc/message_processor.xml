@@ -24,14 +24,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Message Processors
+            WSO2 EI - Message Processors
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 ESB Message Processors</h1>
+        <h1>WSO2 EI Message Processors</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -55,11 +55,11 @@
         <p>
             Message processors can consume the messages in message stores and perform some processing on them.
         </p>
-        <p>For example think of a scenario where we have a back-end service that can only accept messages at a given rate and incoming traffic to the ESB has
+        <p>For example think of a scenario where we have a back-end service that can only accept messages at a given rate and incoming traffic to the EI has
             a different message rate. So to serve that inbound traffic using the available back-end services we can have a message store that
             temporarily stores the messages and a message processor that will consume those messages and send to the back end service at a predefined rate.</p>
         <p>
-            Users can write their own message processor implementations and plug them using the Synapse configuration. WSO2 ESB ships two message processors implementations
+            Users can write their own message processor implementations and plug them using the Synapse configuration. WSO2 EI ships two message processors implementations
 	    that can be used out of the box.
         </p>
         <ol>
@@ -77,7 +77,7 @@
             &lt;/messageProcessor&gt;
         </pre>
         <p>
-            Message processor is a top level ESB configuration element where it should be given a unique name.
+            Message processor is a top level EI configuration element where it should be given a unique name.
         </p>
         <p>
             The 'class' attribute value is the fully qualified class name of the underlying message processor implementation.</p>

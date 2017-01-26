@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Router Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Router Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -87,7 +87,7 @@ alt="" /> </p>
 <h3>Example</h3>
 <pre xml:space="preserve">
 &lt;router&gt;
-    &lt;route xmlns="http://ws.apache.org/ns/synapse" xmlns:ns1="http://org.apache.synapse/xsd" xmlns:ns="http://org.apache.synapse/xsd" expression="header/sourcefile/@name" match="esb*"&gt;
+    &lt;route xmlns="http://ws.apache.org/ns/synapse" xmlns:ns1="http://org.apache.synapse/xsd" xmlns:ns="http://org.apache.synapse/xsd" expression="header/sourcefile/@name" match="EI*"&gt;
     &lt;target&gt;
       &lt;endpoint name="endpoint_urn_uuid_867AD5A624748DD63619739416601328-2078896617"&gt;
          &lt;default /&gt;
