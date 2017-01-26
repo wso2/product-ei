@@ -617,6 +617,28 @@
             </outputDirectory>
         </fileSet>
 
+        <fileSet>
+            <directory>src/broker/styles/css</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/resources/allthemes/Default/admin/
+            </outputDirectory>
+            <includes>
+                <include>**/**.css</include>
+            </includes>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/broker/styles/images</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/resources/allthemes/Default/images/
+            </outputDirectory>
+            <includes>
+                <include>**/**.gif</include>
+                <include>**/**.png</include>
+            </includes>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+
         <!--Broker scripts: end -->
 
         <fileSet>
@@ -1531,6 +1553,29 @@
     <!-- End of Analytics dependencies -->
 
     <dependencySets>
+        <!--broker related:start-->
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/client-lib</outputDirectory>
+            <includes>
+                <include>org.wso2.andes.wso2:andes-client:jar</include>
+                <include>org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:jar</include>
+                <include>org.wso2.carbon:org.wso2.carbon.event.client.stub:jar</include>
+                <include>org.wso2.carbon:org.wso2.carbon.event.client:jar</include>
+                <include>slf4j.wso2:slf4j:jar</include>
+                <include>log4j:log4j:jar</include>
+                <include>org.wso2.securevault:org.wso2.securevault:jar</include>
+                <include>org.wso2.carbon:org.wso2.carbon.logging:jar</include>
+            </includes>
+        </dependencySet>
+
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/repository/lib</outputDirectory>
+            <includes>
+                <include>jline:jline:jar</include>
+            </includes>
+        </dependencySet>
+
+        <!-- broker related:end-->
         <!-- use the new tool to create a bundles -->
         <dependencySet>
             <outputDirectory>wso2ei-${pom.version}/wso2/lib/core/WEB-INF/lib</outputDirectory>

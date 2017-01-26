@@ -948,6 +948,22 @@
                 <artifactId>org.wso2.ciphertool</artifactId>
                 <version>${cipher.tool.version}</version>
             </dependency>
+            <!-- dependencies specific for broker client-lib-->
+            <dependency>
+                <groupId>jline</groupId>
+                <artifactId>jline</artifactId>
+                <version>${jline.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.andes.wso2</groupId>
+                <artifactId>andes-client</artifactId>
+                <version>${andes.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>slf4j.wso2</groupId>
+                <artifactId>slf4j</artifactId>
+                <version>${slf4j.wso2.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1001,6 +1017,9 @@
         <carbon.messaging.version>3.1.13-SNAPSHOT</carbon.messaging.version>
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
+        <jline.version>1.0</jline.version>
+        <andes.version>3.1.12-SNAPSHOT</andes.version>
+        <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
 
         <!-- Axis2 -->
         <axis2.wso2.version>1.6.1.wso2v20</axis2.wso2.version>
