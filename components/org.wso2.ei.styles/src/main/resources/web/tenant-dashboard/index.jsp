@@ -71,7 +71,7 @@
         background-image: url(../../carbon/tenant-dashboard/images/message-tracing.png);
     }
 </style>
- <h2 class="dashboard-title">WSO2 ESB Quick Start Dashboard</h2>
+ <h2 class="dashboard-title">WSO2 EI Quick Start Dashboard</h2>
         <table class="tip-table">
             <tr>
                 <td class="tip-top proxy"></td>
@@ -134,7 +134,7 @@
 						<%
 							}
 						%>
-                        <p>Endpoints represent the third party services or other endpoints the ESB is talking to, this
+                        <p>Endpoints represent the third party services or other endpoints the EI is talking to, this
                         configuration allows you to record a set of meta data about the external endpoint apart from it's
                         EPR</p>
 
@@ -154,7 +154,7 @@
 							<%
 							}
 						%>
-                        <p>Job scheduling facility in the ESB with quartz scheduler, helping several tasks to be initiated and scheduled by the ESB.</p>
+                        <p>Job scheduling facility in the EI with quartz scheduler, helping several tasks to be initiated and scheduled by the EI.</p>
 
                     </div>
                 </td>
