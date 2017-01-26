@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # ----------------------------------------------------------------------------
 #  Copyright 2005-2012 WSO2, Inc. http://www.wso2.org
 #
@@ -278,9 +278,15 @@ echo "Using Java memory options: $JVM_MEM_OPTS"
 
 
 #setting up profile parameter for runtime in EI
-if [[ "$@" != *"-Dprofile"* ]]
-   then
-        NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
+PROFILE_SELECTED="false"
+for i in "$@"; do
+   if echo "$i" | grep -q "-Dprofile"; then
+      PROFILE_SELECTED="true"
+   fi
+done
+
+if [ "$PROFILE_SELECTED" = false ] ; then
+   NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
 fi
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
@@ -316,7 +322,7 @@ do
     -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
-    -Dconf.location="$CARBON_HOME/conf"\
+    -Dconf.location="$CARBON_HOME/conf" \
     -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \
