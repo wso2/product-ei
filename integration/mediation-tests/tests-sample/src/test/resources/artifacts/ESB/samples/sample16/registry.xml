@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registry xmlns="http://ws.apache.org/ns/synapse"
+          provider="org.wso2.carbon.mediation.registry.ESBRegistry">
+    <parameter name="root">file:repository/samples/resources/</parameter>
+    <parameter name="cachableDuration">15000</parameter>
+</registry>
