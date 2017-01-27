@@ -69,7 +69,7 @@ timeout /T 10
 start %CARBON_HOME%\wso2\analytics\bin\wso2server.bat --run -Dprofile="analytics-default"
 timeout /T 10
 start %CARBON_HOME%\wso2\business-process\bin\wso2server.bat --run -Dprofile="business-process-default"
-timout /T 10
+timeout /T 10
 start %CARBON_HOME%\wso2\broker\bin\wso2server.bat --run -Dprofile="broker-default"
 
 :end
