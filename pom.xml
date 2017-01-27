@@ -954,16 +954,6 @@
                 <artifactId>jline</artifactId>
                 <version>${jline.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.wso2.andes.wso2</groupId>
-                <artifactId>andes-client</artifactId>
-                <version>${andes.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>slf4j.wso2</groupId>
-                <artifactId>slf4j</artifactId>
-                <version>${slf4j.wso2.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
