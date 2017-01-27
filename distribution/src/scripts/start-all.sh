@@ -72,9 +72,9 @@ fi
 sh $EI_INIT_SCRIPT $* &
 sleep 10
 sh $ANALYTICS_INIT_SCRIPT -Dprofile="analytics-default" $* &
-sleep 20
+sleep 10
 sh $BPS_INIT_SCRIPT -Dprofile="business-process-default" $* &
-sleep 30
+sleep 10
 sh $MB_INIT_SCRIPT -Dprofile="broker-default" $* &
 
 if [ ! -z "$*" ]; then
