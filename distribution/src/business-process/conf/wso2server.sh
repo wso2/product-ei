@@ -280,7 +280,7 @@ echo "Using Java memory options: $JVM_MEM_OPTS"
 #setting up profile parameter for runtime in EI
 PROFILE_SELECTED="false"
 for i in "$@"; do
-   if echo "$i" | grep -q "-Dprofile"; then
+   if echo "$i" | grep -q "Dprofile"; then
       PROFILE_SELECTED="true"
    fi
 done

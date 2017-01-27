@@ -67,20 +67,20 @@ MB_INIT_SCRIPT="$CARBON_HOME/wso2/broker/bin/wso2server.sh"
 if [ ! -z "$*" ]; then
     exit;
 else
-    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" SIGINT SIGTERM
+    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" INT TERM
 fi
 sh $EI_INIT_SCRIPT $* &
 sleep 10
 sh $ANALYTICS_INIT_SCRIPT -Dprofile="analytics-default" $* &
-sleep 20
+sleep 10
 sh $BPS_INIT_SCRIPT -Dprofile="business-process-default" $* &
-sleep 30
+sleep 10
 sh $MB_INIT_SCRIPT -Dprofile="broker-default" $* &
 
 if [ ! -z "$*" ]; then
     exit;
 else
-    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" SIGINT SIGTERM
+    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" INT TERM
     while :
     do
             sleep 60

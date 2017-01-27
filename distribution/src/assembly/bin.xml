@@ -1025,6 +1025,7 @@
                 <exclude>**/repository/conf/**</exclude>
                 <exclude>**/repository/components/**</exclude>
                 <exclude>**/wso2/components/**</exclude>
+                <exclude>**/wso2</exclude>
                 <exclude>**/lib/**</exclude>
                 <exclude>**/bin/**</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>

@@ -375,7 +375,7 @@
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
-                                    org.wso2.analytics.esb:org.wso2.das4esb.styles.feature:${esb.analytics.version}
+                                    org.wso2.ei:org.wso2.ei.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -496,9 +496,10 @@
                                     <id>org.wso2.carbon.core.ui.feature.group</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
+
                                 <feature>
-                                    <id>org.wso2.das4esb.styles.feature.group</id>
-                                    <version>${esb.analytics.version}</version>
+                                    <id>org.wso2.ei.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
 
                                 <!-- ********* START - Registry related  *********** -->
