@@ -35,9 +35,7 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>org.wso2.carbon.integrator.core</artifactId>
-            <version>${product.ei.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
