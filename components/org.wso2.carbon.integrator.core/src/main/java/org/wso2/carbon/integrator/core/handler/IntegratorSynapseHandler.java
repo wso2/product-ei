@@ -56,7 +56,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap && contextPath != null) {
                     host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
-                    if (uri.contains("/carbon") || "/odata".equals(contextPath) || contextPath.contains("/fileupload")) {
+                    if (uri.contains("/carbon") || "/odata".equals(contextPath) || uri.contains("/fileupload") || uri.endsWith("?tryit")) {
                         configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                         isPreserveHeadersContained = true;
                         Utils.setIntegratorHeader(messageContext);
