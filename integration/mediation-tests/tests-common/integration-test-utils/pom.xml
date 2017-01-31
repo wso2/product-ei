@@ -15,7 +15,6 @@
          <dependency>
              <groupId>org.wso2.ei</groupId>
              <artifactId>admin-clients</artifactId>
-             <version>${product.ei.version}</version>
          </dependency>
          <dependency>
              <groupId>org.wso2.carbon.mediation</groupId>
