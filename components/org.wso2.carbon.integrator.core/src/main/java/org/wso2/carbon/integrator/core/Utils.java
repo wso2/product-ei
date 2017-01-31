@@ -44,6 +44,7 @@ import org.wso2.carbon.webapp.mgt.utils.WebAppUtils;
 import javax.xml.namespace.QName;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 public class Utils {
@@ -183,6 +184,16 @@ public class Utils {
         }
     }
 
+    public static String getPassThruHttpPort() {
+        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("http").
+                getParameter("port").getValue().toString();
+    }
+
+    public static String getPassThruHttpsPort() {
+        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("https").
+                getParameter("port").getValue().toString();
+    }
+
     public static boolean validateHeader(String key, String uri) {
         String input = uri + System.getProperty(CarbonConstants.START_TIME);
         return (UUID.nameUUIDFromBytes(input.getBytes()).toString().equals(key));
@@ -198,7 +209,7 @@ public class Utils {
             headersMap.put(Constants.INTEGRATOR_HEADER, Utils.getUniqueRequestID(uri));
         }
         if (headers == null) {
-            Map headersMap = new HashMap();
+            Map<String, String> headersMap = new HashMap<String, String>();
             headersMap.put(Constants.INTEGRATOR_HEADER, Utils.getUniqueRequestID(uri));
             axis2MessageCtx.setProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS, headersMap);
         }
@@ -208,6 +219,30 @@ public class Utils {
     public static boolean isDataService(org.apache.axis2.context.MessageContext messageContext) {
         String filePath = messageContext.getAxisService().getFileName().getPath();
         return filePath.contains("dataservices");
+    }
+
+    public static String rewriteLocationHeader(String location,MessageContext messageContext ) {
+        if (location.contains(":")) {
+            String[] tmp = location.split(":");
+            String protocol = tmp[0];
+            String host = tmp[1].substring(tmp[1].lastIndexOf("/") + 1);
+            String port = tmp[2].substring(0, tmp[2].indexOf("/"));
+            String oldEndpoint = protocol + "://" + host + ":" + port;
+            String newPort;
+            if ("http".equals(protocol)) {
+                newPort =getPassThruHttpPort();
+            } else {
+                newPort = getPassThruHttpsPort();
+            }
+            if (endpointHashMap.containsKey(oldEndpoint)) {
+                location = location.replace(port, newPort);
+                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+                if (headers instanceof TreeMap) {
+                    ((TreeMap) headers).put("Location", location);
+                }
+            }
+        }
+        return location;
     }
 
 }
