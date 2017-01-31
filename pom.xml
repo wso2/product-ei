@@ -997,7 +997,7 @@
 
         <!--Product Version-->
 
-        <product.ei.version>6.0.0-SNAPSHOT</product.ei.version>
+        <product.ei.version>6.0.0-m2</product.ei.version>
 
         <!--Business-Process-->
         <carbon.business-process.version>4.4.10</carbon.business-process.version>
