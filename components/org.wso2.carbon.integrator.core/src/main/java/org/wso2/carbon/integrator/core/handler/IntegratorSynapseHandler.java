@@ -56,19 +56,13 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap && contextPath != null) {
                     host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
-                    if ("/carbon".equals(contextPath)) {
+                    if (uri.contains("/carbon") || "/odata".equals(contextPath) || contextPath.contains("/fileupload")) {
                         configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                         isPreserveHeadersContained = true;
                         Utils.setIntegratorHeader(messageContext);
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
                         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
                         return sendMediator.mediate(messageContext);
-                    } else if ("/odata".equals(contextPath)) {
-                        configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
-                        isPreserveHeadersContained = true;
-                        Utils.setIntegratorHeader(messageContext);
-                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
-                        sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
                     } else {
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
                         if (tenantDomain != null) {
