@@ -104,7 +104,7 @@ public class CarbonServerManager {
                     cmdArray = new String[]{"cmd.exe", "/c", carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".bat"};
                 } else {
                     commandDir = new File(carbonHome + File.separator + "bin");
-                    cmdArray = new String[]{"cmd.exe", "/c", scriptName + ".bat"};
+                    cmdArray = new String[]{"cmd.exe", "/c", commandDir + File.separator + scriptName + ".bat"};
                 }
 
                 cmdArray = mergePropertiesToCommandArray(parameters, cmdArray);
@@ -116,7 +116,7 @@ public class CarbonServerManager {
                     cmdArray = new String[]{"sh", carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".sh"};
                 } else {
                     commandDir = new File(carbonHome + File.separator + "bin");
-                    cmdArray = new String[]{"sh", "bin/" + scriptName + ".sh"};
+                    cmdArray = new String[]{"sh", commandDir + File.separator + scriptName + ".sh"};
                 }
 
                 cmdArray = mergePropertiesToCommandArray(parameters, cmdArray);
