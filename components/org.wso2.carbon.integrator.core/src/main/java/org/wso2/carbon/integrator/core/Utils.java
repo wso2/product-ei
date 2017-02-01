@@ -34,6 +34,7 @@ import org.wso2.carbon.CarbonConstants;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.CarbonConfigurationContextFactory;
 import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
+import org.wso2.carbon.integrator.core.handler.EndpointHolder;
 import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.tomcat.api.CarbonTomcatService;
 import org.wso2.carbon.utils.ConfigurationContextService;
@@ -54,7 +55,6 @@ public class Utils {
     private static final QName ADDRESS_Q = new QName(SynapseConstants.SYNAPSE_NAMESPACE, "address");
     private static OMElement endpoint = fac.createOMElement(ENDPOINT_Q);
     private static OMElement address = fac.createOMElement(ADDRESS_Q);
-    private static HashMap<String, Endpoint> endpointHashMap = new HashMap<>(2);
 
     public static int getProtocolPort(String protocol) {
         CarbonTomcatService webAppAdminService;
@@ -145,14 +145,14 @@ public class Utils {
     }
 
     public static Endpoint createEndpoint(String addressURI, SynapseEnvironment environment) {
-        if (endpointHashMap.get(addressURI) != null) {
-            return endpointHashMap.get(addressURI);
+        if (EndpointHolder.getInstance().getEndpoint(addressURI) != null) {
+            return EndpointHolder.getInstance().getEndpoint(addressURI);
         } else {
             address.addAttribute("uri", addressURI, null);
             endpoint.addChild(address);
             Endpoint ep = EndpointFactory.getEndpointFromElement(endpoint, true, null);
             ep.init(environment);
-            endpointHashMap.put(addressURI, ep);
+            EndpointHolder.getInstance().putEndpoint(addressURI, ep);
             return ep;
         }
     }
@@ -221,20 +221,37 @@ public class Utils {
         return filePath.contains("dataservices");
     }
 
-    public static String rewriteLocationHeader(String location,MessageContext messageContext ) {
+    /**
+     * In this method we rewrite the location header which comes from the tomcat transport.
+     * @param location location url
+     * @param messageContext message context.
+     */
+    public static void rewriteLocationHeader(String location, MessageContext messageContext) {
         if (location.contains(":")) {
             String[] tmp = location.split(":");
+            if (tmp.length == 2) {
+                return;
+            }
             String protocol = tmp[0];
-            String host = tmp[1].substring(tmp[1].lastIndexOf("/") + 1);
-            String port = tmp[2].substring(0, tmp[2].indexOf("/"));
-            String oldEndpoint = protocol + "://" + host + ":" + port;
+            String host = null;
+            for (String tmpname : tmp[1].split("/")) {
+                if (!tmpname.isEmpty()) {
+                    host = tmpname;
+                    break;
+                }
+            }
             String newPort;
+            String port = null;
             if ("http".equals(protocol)) {
-                newPort =getPassThruHttpPort();
+                newPort = getPassThruHttpPort();
             } else {
                 newPort = getPassThruHttpsPort();
             }
-            if (endpointHashMap.containsKey(oldEndpoint)) {
+            if (tmp.length > 2) {
+                port = tmp[2].substring(0, tmp[2].indexOf("/"));
+            }
+            String oldEndpoint = protocol + "://" + host + ":" + port;
+            if (EndpointHolder.getInstance().containsEndpoint(oldEndpoint)) {
                 location = location.replace(port, newPort);
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
@@ -242,7 +259,6 @@ public class Utils {
                 }
             }
         }
-        return location;
     }
 
 }
