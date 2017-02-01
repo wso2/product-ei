@@ -1,0 +1,20 @@
+{
+  "id": "EIAnalytics-Gadget-Search_Box",
+  "title": "Search Box",
+  "type": "widget",
+  "category": "Widgets",
+  "thumbnail": "store://gadget/usa-business-revenue/index.png",
+  "data": {
+    "url": "store://gadget/EIAnalytics-Gadget-Search_Box/index.xml"
+  },
+  "styles": {
+    "borders": false,
+    "title": false
+  },
+  "toolbarButtons":{
+    "default":{
+        "maximize": false,
+        "configurations": false
+    }
+  }
+}

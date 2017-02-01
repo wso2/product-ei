@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Generic Stats" description="g1" height="250">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+
+          <!-- Custom Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
+
+          <!-- jQuery -->
+          <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+
+          <!-- Include VizGrammar -->
+          <script src="../EIAnalytics-Gadget-commons/js/d3.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/vega.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/VizGrammar.min.js"></script>
+          <script src="/portal/extensions/themes/analytics/js/colorbrewer.js"></script>
+          <script src="/portal/extensions/themes/analytics/js/VizGrammarSettings.js"></script>
+
+          <!-- Custom -->
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+
+          <script src="js/gadgetconf.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body>
+
+            <div id="canvas">
+                <div id="gadget-messge"></div>
+                <div class="row no-gutter" style="display:none;" id="stats">
+                    <div class="col-5">
+                        <div class="stats add-padding-5x">
+                            <div class="row no-gutter">
+                                <div class="stats-total add-padding-top-1x">
+                                    <h2><b>Total</b> requests</h2>
+                                    <h4><span id="title"><!-- Dynamic Text --></span></h4>
+                                    <h1 id="totalCount"></h1>
+                                </div>
+                                <!--<div class="col-5 stats-breakdown text-right">
+                                    <div class="icon-danger">
+                                        <h1><span id="failedPercent"></span>%</h1>
+                                         Failed</h2>
+                                    </div>
+                                    <div class="icon-success">
+                                        <h1><span id="successPercent"></span>%</h1>
+                                        <h2><span id="successCount"></span> Success</h2>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-7 clearfix">
+                        <div class="pull-right clearfix">
+                            <div class="pull-left chart-breakdown hidden">
+                                <h2>Min.</h2>
+                                <h1>25</h1>
+                                <hr>
+                                <h2>Avg.</h2>
+                                <h1>25</h1>
+                                <hr>
+                                <h2>Max.</h2>
+                                <h1>25</h1>
+                            </div>
+                            <div class="pull-left arc-chart">
+                                <div id="dChartTrue"></div>
+                                <div class="chart-label-count"><span id="successCount"></span> Requests</div>
+                                <div class="chart-label">Success Rate</div>
+                            </div>
+                            <div class="pull-left chart-breakdown hidden">
+                                <h2>Min.</h2>
+                                <h1>25</h1>
+                                <hr>
+                                <h2>Avg.</h2>
+                                <h1>25</h1>
+                                <hr>
+                                <h2>Max.</h2>
+                                <h1>25</h1>
+                            </div>
+                            <div class="pull-left arc-chart">
+                                <div id="dChartFalse"></div>
+                                <div class="chart-label-count"><span id="failedCount"></span> Requests</div>
+                                <div class="chart-label">Failure Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+        ]]>
+    </Content>
+</Module>

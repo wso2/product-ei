@@ -17,9 +17,7 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>p2-profile</artifactId>
         <groupId>org.wso2.ei</groupId>
@@ -983,8 +981,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
-                                <mkdir
-                                        dir="target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps"/>
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps" />
                             </tasks>
                         </configuration>
                         <goals>
@@ -995,9 +992,8 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="false" value="true"
-                                         dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
-                                    <include name="**/bundles.info"/>
+                                <replace token="false" value="true" dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
+                                    <include name="**/bundles.info" />
                                 </replace>
                             </tasks>
                         </configuration>

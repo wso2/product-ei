@@ -29,7 +29,7 @@
         </classes>
     </test>
 
-<!--    <test name="Sequence-mediator-Test" preserve-order="true" verbose="2">
+    <test name="Sequence-mediator-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.sequence"/>
         </packages>
@@ -151,5 +151,5 @@
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.publishevent"/>
         </packages>
-    </test>-->
+    </test>
 </suite>

@@ -53,13 +53,15 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
                 String contextPath = Utils.getContext(uri);
-                if (((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS") instanceof TreeMap && contextPath != null) {
-                    host = Utils.getHostname((String) ((TreeMap) ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS")).get("Host"));
-                    if ("/odata".equals(contextPath)) {
+                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+                if (headers instanceof TreeMap && contextPath != null) {
+                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
+                    if (uri.contains("/carbon") || "/odata".equals(contextPath) || uri.contains("/fileupload") || uri.endsWith("?tryit")) {
                         configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                         isPreserveHeadersContained = true;
                         Utils.setIntegratorHeader(messageContext);
-                        messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
+                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                        sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
                         return sendMediator.mediate(messageContext);
                     } else {
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
@@ -69,10 +71,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                                 configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                                 isPreserveHeadersContained = true;
                                 Utils.setIntegratorHeader(messageContext);
-                                messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
-/*                                Object httpConnection = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("pass-through.Source-Connection");
-                                String remoteAddr = Utils.getRemoteAddress(httpConnection);
-                                messageContext.setFrom(new EndpointReference(protocol + ":/" + remoteAddr));*/
+                                String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                                messageContext.setTo(new EndpointReference(endpoint + uri));
+                                sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
                                 return sendMediator.mediate(messageContext);
                             }
                         } else {
@@ -81,7 +82,8 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                                 configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                                 isPreserveHeadersContained = true;
                                 Utils.setIntegratorHeader(messageContext);
-                                messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
+                                String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                                sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
                                 return sendMediator.mediate(messageContext);
                             }
                         }
@@ -106,6 +108,13 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleResponseInFlow(MessageContext messageContext) {
+        Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+        if (headers instanceof TreeMap) {
+            String locationHeader = (String) ((TreeMap) headers).get("Location");
+            if (locationHeader != null) {
+                Utils.rewriteLocationHeader(locationHeader, messageContext);
+            }
+        }
         return true;
     }
 

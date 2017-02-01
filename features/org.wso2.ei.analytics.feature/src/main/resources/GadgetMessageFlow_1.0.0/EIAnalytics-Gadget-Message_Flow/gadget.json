@@ -1,0 +1,32 @@
+{
+    "id": "EIAnalytics-Gadget-Message_Flow",
+    "title": "Message Flow",
+    "type": "gadget",
+    "category": "Widgets",
+    "thumbnail": "store://gadget/EIAnalytics-Gadget-Message_Flow/index.png",
+    "data": {
+        "url": "store://gadget/EIAnalytics-Gadget-Message_Flow/index.xml"
+    },
+    "listen": {
+        "subscriber": {
+            "type": "date-range",
+            "description": "This notifies message generated in publisher"
+        }
+    },
+    "notify": {
+        "node-clicked": {
+            "type": "mediator-info",
+            "description": "This notifies message generated in publisher"
+        }
+    },
+    "styles": {
+        "borders": false,
+        "title": false
+    },
+    "toolbarButtons":{
+        "default":{
+            "maximize": true,
+            "configurations": false
+        }
+    }
+}

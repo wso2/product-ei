@@ -1,0 +1,90 @@
+{
+  "name": "org.wso2.esb.analytics.stream.MediatorStatPerMinute",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "tenantId",
+      "type": "INT"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "year",
+      "type": "INT"
+    },
+    {
+      "name": "month",
+      "type": "INT"
+    },
+    {
+      "name": "day",
+      "type": "INT"
+    },
+    {
+      "name": "hour",
+      "type": "INT"
+    },
+    {
+      "name": "minute",
+      "type": "INT"
+    },
+    {
+      "name": "entryPoint",
+      "type": "STRING"
+    },
+    {
+      "name": "entryPointHashcode",
+      "type": "STRING"
+    },
+    {
+      "name": "componentId",
+      "type": "STRING"
+    },
+    {
+      "name": "hashCode",
+      "type": "STRING"
+    },
+    {
+      "name": "componentName",
+      "type": "STRING"
+    },
+    {
+      "name": "componentType",
+      "type": "STRING"
+    },
+    {
+      "name": "totalDuration",
+      "type": "LONG"
+    },
+    {
+      "name": "minDuration",
+      "type": "LONG"
+    },
+    {
+      "name": "maxDuration",
+      "type": "LONG"
+    },
+    {
+      "name": "noOfInvocation",
+      "type": "LONG"
+    },
+    {
+      "name": "faultCount",
+      "type": "LONG"
+    },
+    {
+      "name": "startTime",
+      "type": "LONG"
+    },
+    {
+      "name": "facetStartTime",
+      "type": "STRING"
+    },
+    {
+      "name": "_timestamp",
+      "type": "LONG"
+    }
+  ]
+}

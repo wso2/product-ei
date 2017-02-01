@@ -246,7 +246,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>admin-clients</artifactId>
-            <version>${product.ei.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -258,7 +257,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>integration-test-utils</artifactId>
-            <version>${product.ei.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -269,12 +267,10 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>service-samples</artifactId>
-            <version>${product.ei.version}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>automation-extensions</artifactId>
-            <version>${product.ei.version}</version>
         </dependency>
         <!-- Jacoco Dependency-->
         <dependency>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Publisher" description="Publisher">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+        <Require feature="setprefs"/>
+    </ModulePrefs>
+    <UserPref name="role" display_name="Gadet Role" required="true" />
+    <Content type="html">
+        <![CDATA[
+        <head>
+
+          <!-- Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- jQuery -->
+          <script src="../EIAnalytics-Gadget-commons/js/jquery-1.10.2.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+
+          <!-- Include VizGrammar -->
+          <script src="../EIAnalytics-Gadget-commons/js/d3.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/vega.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/VizGrammar.min.js"></script>
+          <script src="/portal/extensions/themes/analytics/js/colorbrewer.js"></script>
+          <script src="/portal/extensions/themes/analytics/js/VizGrammarSettings.js"></script>
+
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
+          <script src="js/gadgetconf.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body>
+
+            <div id="canvas"></div>
+        </body>
+        ]]>
+    </Content>
+</Module>

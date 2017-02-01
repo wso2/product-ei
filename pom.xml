@@ -1011,6 +1011,61 @@
                 <artifactId>commons-lang</artifactId>
                 <version>2.6</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.samples</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.carbon.integrator.core</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.styles</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.analytics.styles</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>admin-clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>admin-clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>integration-test-utils</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>service-samples</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>automation-extensions</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>ui-pages</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${orbit.version.joda-time}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1063,11 +1118,11 @@
         <orbit.version.axis2>1.6.1.wso2v19</orbit.version.axis2>
 
         <!--MB-->
-        <carbon.messaging.version>3.1.13-SNAPSHOT</carbon.messaging.version>
+        <carbon.messaging.version>3.1.13</carbon.messaging.version>
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.1.12-SNAPSHOT</andes.version>
+        <andes.version>3.1.12</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
 
         <!-- Axis2 -->
@@ -1088,7 +1143,7 @@
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.11-SNAPSHOT</carbon.mediation.version>
+        <carbon.mediation.version>4.6.11</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.12</carbon.kernel.version>
@@ -1166,6 +1221,7 @@
         <carbon.event-processing.version>2.1.4</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.2</carbon.metrics.version>
+        <orbit.version.joda-time>2.8.2.wso2v1</orbit.version.joda-time>
 
         <!-- Misc -->
         <!-- TODO: remove after refactor with ndatasource <carbon.datasource.version>4.2.0</carbon.datasource.version>-->
@@ -1341,7 +1397,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <configuration>
                         <preparationGoals>clean install</preparationGoals>
-                        <autoVersionSubmodules>false</autoVersionSubmodules>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
                     </configuration>
                 </plugin>
                 <plugin>

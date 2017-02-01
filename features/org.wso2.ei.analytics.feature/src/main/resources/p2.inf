@@ -1,0 +1,13 @@
+instructions.configure = \
+org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../deployment/);\
+org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../deployment/server/);\
+org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../deployment/server/carbonapps/);\
+org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../../capps/);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../features/org.wso2.ei.analytics_${feature.version}/org.wso2.ei.analytics.realtime-1.0.0.car,target:${installFolder}/../../../capps/org.wso2.ei.analytics.realtime-1.0.0.car,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../features/org.wso2.ei.analytics_${feature.version}/org.wso2.ei.analytics.offline-1.0.0.car,target:${installFolder}/../../../capps/org.wso2.ei.analytics.offline-1.0.0.car,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../features/org.wso2.ei.analytics_${feature.version}/org.wso2.ei.analytics.realtime-1.0.0.car,target:${installFolder}/../../deployment/server/carbonapps/org.wso2.ei.analytics.realtime-1.0.0.car,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../features/org.wso2.ei.analytics_${feature.version}/eianalytics.jag,target:${installFolder}/../../deployment/server/jaggeryapps/portal/controllers/apis/eianalytics.jag,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../features/org.wso2.ei.analytics_${feature.version}/eianalytics-utils.jag,target:${installFolder}/../../deployment/server/jaggeryapps/portal/controllers/apis/eianalytics-utils.jag,overwrite:true);\
+
+instructions.uninstall = \
+org.eclipse.equinox.p2.touchpoint.natives.remove(path:${installFolder}/../../deployment/server/carbonapps/org.wso2.ei.analytics.realtime-1.0.0.car,overwrite:true);\

@@ -1,0 +1,104 @@
+.stats h1,
+.stats h2,
+.stats h3,
+.stats h4,
+.stats h5,
+.stats h6 {
+    margin: 0;
+}
+
+.stats-total h1 {
+    font-size: 90px;
+    margin-top: -10px;
+}
+
+.stats-total h2 {
+    font-size: 30px;
+}
+
+.stats-total h4 > span {
+    font-size: 24px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.stats-breakdown h1 {
+    font-size: 25px;
+}
+
+.stats-breakdown h2 {
+    font-size: 15px;
+    margin-top: -2px;
+}
+
+.stats-breakdown > :first-child h1 {
+    font-size: 60px;
+}
+
+.stats-breakdown > :first-child h2 {
+    font-size: 17px;
+    margin-top: -8px;
+}
+
+.stats-breakdown > :first-child {
+    margin-bottom: 10px;
+}
+
+svg.marks .mark-group .background {
+    fill: transparent !important;
+}
+
+.arc-chart {
+    position: relative;
+}
+
+.chart-breakdown {
+    margin: 40px 0;
+    width: 100px;
+    text-align: center;
+    color: #A9ABAF;
+}
+
+.chart-breakdown > hr {
+    margin: 10px 0;
+    border-top-color: #353B48;
+}
+
+.chart-breakdown h1 {
+    font-size: 25px;
+    margin: 0;
+    color: #fff;
+}
+
+.chart-breakdown h2 {
+    font-size: 14px;
+    margin: 0;
+}
+
+.chart-label-count {
+    font-size: 12px;
+    text-align: center;
+    color: #A9ABAF;
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+}
+
+.chart-label {
+    font-size: 16px;
+    text-align: center;
+    margin-top: -10px;
+}
+
+body.drak .chart-label {
+    color: #ECEEF3;
+}

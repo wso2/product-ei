@@ -19,9 +19,7 @@
   ~
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>p2-profile</artifactId>
         <groupId>org.wso2.ei</groupId>
@@ -371,11 +369,11 @@
 
                                 <!-- ESB Analytics features -->
                                 <featureArtifactDef>
-                                    org.wso2.analytics.esb:org.wso2.analytics.esb.feature:${esb.analytics.version}
+                                    org.wso2.ei:org.wso2.ei.analytics.feature:${product.ei.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
-                                    org.wso2.analytics.esb:org.wso2.das4esb.styles.feature:${esb.analytics.version}
+                                    org.wso2.ei:org.wso2.ei.analytics.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -464,8 +462,8 @@
                                     <version>${carbon.dashboard.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.analytics.esb.feature.group</id>
-                                    <version>${esb.analytics.version}</version>
+                                    <id>org.wso2.ei.analytics.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.analytics.messageconsole.feature.group</id>
@@ -496,9 +494,10 @@
                                     <id>org.wso2.carbon.core.ui.feature.group</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
+
                                 <feature>
-                                    <id>org.wso2.das4esb.styles.feature.group</id>
-                                    <version>${esb.analytics.version}</version>
+                                    <id>org.wso2.ei.analytics.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
 
                                 <!-- ********* START - Registry related  *********** -->
@@ -770,10 +769,9 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
-                                <mkdir
-                                        dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/bundle-config/hadoop-client"/>
-                                <mkdir
-                                        dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/analytics/spark"/>
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/bundle-config/hadoop-client" />
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/analytics/spark" />
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server" />
                             </tasks>
                         </configuration>
                         <goals>
@@ -784,8 +782,7 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="false" value="true"
-                                         dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
+                                <replace token="false" value="true" dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
                                     <include name="**/bundles.info" />
                                 </replace>
                             </tasks>

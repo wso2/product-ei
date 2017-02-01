@@ -44,7 +44,6 @@ goto end
 rem ----- Only set CARBON_HOME if not already set ----------------------------
 :checkServer
 rem %~sdp0 is expanded pathname of the current script under NT with spaces in the path removed
-echo %~sdp0..
 SET CARBON_HOME=%~sdp0..
 SET curDrive=%cd:~0,1%
 SET wsasDrive=%CARBON_HOME:~0,1%
@@ -155,11 +154,11 @@ rem ----------------- Execute The Requested Command ----------------------------
 cd %CARBON_HOME%
 
 rem ------------------ Remove tmp folder on startup -----------------------------
-set TMP_DIR=%CARBON_HOME%\tmp
+set TMP_DIR=%CARBON_HOME%\wso2\tmp
 cd "%TMP_DIR%"
 del *.* /s /q > nul
 FOR /d %%G in ("*.*") DO rmdir %%G /s /q
-cd ..
+cd ..\..
 
 rem ---------- Add jars to classpath ----------------
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="EIAnalytics-Gadget-Breadcrumb" description="g1" height="30">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+          <!-- Custom Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- jQuery -->
+          <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
+          <script src="js/custom.js"></script>
+          <script src="js/main.js"></script>
+        </head>
+        <body>
+            <div class="breadcrumb-wrapper">
+                <ol class="breadcrumb">
+                    <li><a id="homeLink" href=""><i class="icon fw fw-home"></i> Overview</a></li>
+                </ol>
+            </div>
+        </body>
+        ]]>
+    </Content>
+</Module>

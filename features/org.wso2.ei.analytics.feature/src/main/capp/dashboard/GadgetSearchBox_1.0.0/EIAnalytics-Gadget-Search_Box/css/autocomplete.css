@@ -1,0 +1,69 @@
+.twitter-typeahead, .twitter-typeahead:focus {
+    width: 100%;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #438cad;
+}
+
+body.dark .tt-menu {
+    background-color: #1E2531;
+    color: #E3E5E6;
+    border: 1px solid #6B7992;
+}
+
+.tt-menu {
+    background-color: #fff;
+    color: #1E2531;
+    outline: 0;
+    border: 1px solid #ccc;
+    right: 0;
+    left: 0;
+}
+
+.tt-highlight {
+    color: #438cad;
+    font-weight: normal;
+}
+
+/* Date Range Picker Gadget */
+.ues-component-box.widget .gadget-body .tt-menu {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.tt-suggestion {
+    padding: 2px 8px;
+}
+
+.tt-suggestion.tt-selectable:hover {
+    background: #ccc;
+    cursor: pointer;
+}
+
+body.dark .tt-suggestion.tt-selectable:hover {
+    color: #1E2531;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+pre {
+    display: none;
+}
+
+body.dark .tt-hint {
+    background: transparent !important;
+}
+
+body.dark .tt-input {
+    border: 1px solid #6B7992  !important;
+    color: #E3E5E6;
+}

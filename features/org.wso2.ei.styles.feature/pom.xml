@@ -36,7 +36,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>org.wso2.ei.styles</artifactId>
-            <version>${product.ei.version}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
