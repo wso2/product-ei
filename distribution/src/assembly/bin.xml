@@ -1272,7 +1272,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>src/analytics/styles/product/src/main/resources/web/styles/css</directory>
+            <directory>../components/org.wso2.ei.analytics.styles/src/main/resources/web/styles/css</directory>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/analytics/resources/allthemes/Default/admin
             </outputDirectory>
@@ -1281,7 +1281,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>src/analytics/styles/product/src/main/resources/web/styles/images</directory>
+            <directory>../components/org.wso2.ei.analytics.styles/src/main/resources/web/styles/images</directory>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/analytics/resources/allthemes/Default/images
             </outputDirectory>

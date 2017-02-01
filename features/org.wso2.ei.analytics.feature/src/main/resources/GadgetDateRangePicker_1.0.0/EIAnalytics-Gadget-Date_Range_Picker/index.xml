@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="EIAnalytics-Gadget-Date_Range_Picker" description="g1" height="250">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+
+          <!-- Custom Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- jQuery -->
+          <script src="../EIAnalytics-Gadget-commons/js/jquery-1.10.2.js"></script>
+
+          <!-- Include Date Range Picker -->
+          <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+          <link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
+          <script type="text/javascript" src="js/moment.min.js"></script>
+          <script type="text/javascript" src="js/daterangepicker.js"></script>
+
+          <!-- Custom -->
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body class="widget">
+
+            <div class="clearfix">
+                <div class="btn-group pull-right" id="date-select">
+                    <div class="btn-group pull-right" role="group">
+                        <button role="date-update" data-value="LastHour" type="button" class="btn btn-default hidden-xs">Last Hour</button>
+                        <button role="date-update" data-value="LastDay" type="button" class="btn btn-default hidden-xs">Last 24 Hours</button>
+                        <button role="date-update" data-value="LastMonth" type="button" class="btn btn-default hidden-xs">Last 30 Days</button>
+                        <button role="date-update" data-value="LastYear" type="button" class="btn btn-default hidden-xs">Last Year</button>
+                        <button id="btnCustomRange" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i> Custom
+                            <b class="caret"></b>
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right date-shortcuts" role="group">
+                        <button id="btnDropdown" type="button" class="btn btn-default dropdown-toggle hidden-sm hidden-md hidden-lg" data-toggle="dropdown">
+                            <span>Last Hour</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu btn-dropdown-menu pull-right" role="menu">
+                            <li><a href="javascript:void(0)" role="date-update" data-value="LastHour">Last Hour</a></li>
+                            <li><a href="javascript:void(0)" role="date-update" data-value="LastDay">Last 24 Hours</a></li>
+                            <li><a href="javascript:void(0)" role="date-update" data-value="LastMonth"s>Last 30 Days</a></li>
+                            <li><a href="javascript:void(0)" role="date-update" data-value="LastYear">Last Year</a></li>
+                        </ul>
+                    </div>
+                    <span id="reportrange" class="btn-label"></span>
+                </div>
+            </div>
+
+            <script src="/portal/libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+
+        </body>
+        ]]>
+    </Content>
+</Module>

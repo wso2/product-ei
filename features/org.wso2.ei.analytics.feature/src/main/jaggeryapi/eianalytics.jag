@@ -1,0 +1,1214 @@
+<%
+(function () {
+    var TYPE = "type";
+    var CONTENT_TYPE_JSON = "application/json";
+    var AUTHORIZATION_HEADER = "Authorization";
+    var USER_TOKEN = "user";
+    var USERNAME = "username";
+    var DOMAIN = "domain";
+    var HTTP_USER_NOT_AUTHENTICATED = 403;
+    var HTTP_INTERNAL_ERROR = 500;
+    var log = new Log();
+    var carbon = require('carbon');
+    var configs = require('/configs/designer.json');
+    var utils = require('/modules/utils.js');
+    var esbanalyticsUtils = require('eianalytics-utils.jag');
+    var server = new carbon.server.Server();
+    var JSUtils = Packages.org.wso2.carbon.analytics.jsservice.Utils;
+    var AnalyticsCachedJSServiceConnector = Packages.org.wso2.carbon.analytics.jsservice.AnalyticsCachedJSServiceConnector;
+    var AnalyticsCache = Packages.org.wso2.carbon.analytics.jsservice.AnalyticsCachedJSServiceConnector.AnalyticsCache;
+    var cacheTimeoutSeconds = 5;
+    var loggedInUser = null;
+    var tenantId = -1;
+    var superTenantId = -1234;
+    var timeRangeUtil = Packages.org.wso2.analytics.esb.util.TimeRangeUtils;
+    var timeRange = Packages.org.wso2.analytics.esb.bean.TimeRange;
+
+    //operation types
+    var TYPE_OVERALL_TPS = 1;
+    var TYPE_OVERALL_MESSAGE_COUNT = 2;
+    var TYPE_TOP_INVOKED_PROXIES = 4;
+    var TYPE_TOP_INVOKED_APIS = 5;
+    var TYPE_PROXY_NAMES = 6;
+    var TYPE_PROXY_MESSAGE_RATE = 7;
+    var TYPE_PROXY_LATENCY = 8;
+    var TYPE_PROXY_MESSAGES = 9;
+    var TYPE_PROXY_MESSAGE_FLOW = 10;
+    var TYPE_API_NAMES = 11;
+    var TYPE_API_MESSAGE_RATE = 12;
+    var TYPE_API_LATENCY = 13;
+    var TYPE_API_MESSAGES = 14;
+    var TYPE_API_MESSAGE_FLOW = 15;
+    var TYPE_MEDIATOR_NAMES = 16;
+    var TYPE_MEDIATOR_MESSAGE_RATE = 17;
+    var TYPE_MEDIATOR_LATENCY = 18;
+    var TYPE_MEDIATOR_MESSAGES = 19;
+    var TYPE_MESSAGE_FLOW = 22;
+    var TYPE_MESSAGE_LIST = 23;
+    var TYPE_ENDPOINT_NAMES = 24;
+    var TYPE_ENDPOINT_MESSAGE_RATE = 25;
+    var TYPE_ENDPOINT_LATENCY = 26;
+    var TYPE_ENDPOINT_MESSAGES = 27;
+    var TYPE_SEQUENCE_NAMES = 28;
+    var TYPE_SEQUENCE_MESSAGE_RATE = 29;
+    var TYPE_SEQUENCE_LATENCY = 30;
+    var TYPE_SEQUENCE_MESSAGES = 31;
+    var TYPE_SEQUENCE_MESSAGE_FLOW = 32;
+    var TYPE_INBOUND_ENDPOINT_NAMES = 33;
+    var TYPE_INBOUND_ENDPOINT_MESSAGE_RATE = 34;
+    var TYPE_INBOUND_ENDPOINT_LATENCY = 35;
+    var TYPE_INBOUND_ENDPOINT_MESSAGES = 36;
+    var TYPE_INBOUND_ENDPOINT_MESSAGE_FLOW = 37;
+    var TYPE_OVERALL_STATS = 38;
+    var TYPE_PROXY_STATS = 39;
+    var TYPE_API_STATS = 40;
+    var TYPE_SEQUENCE_STATS = 41;
+    var TYPE_MEDIATOR_STATS = 42;
+    var TYPE_ENDPOINT_STATS = 43;
+    var TYPE_INBOUND_ENDPOINT_STATS = 44;
+    var TYPE_TOP_INVOKED_ENDPOINTS = 45;
+    var TYPE_TOP_INVOKED_INBOUNDS = 46;
+    var TYPE_TOP_INVOKED_SEQUENCES = 47;
+    var TYPE_MESSAGE_COMPARISON = 48;
+
+
+    if (configs.cacheTimeoutSeconds) {
+        cacheTimeoutSeconds = parseInt(configs.cacheTimeoutSeconds);
+    }
+    var cacheSizeBytes = 1024 * 1024 * 1024; // 1GB
+    if (configs.cacheSizeBytes) {
+        cacheSizeBytes = parseInt(configs.cacheSizeBytes);
+    }
+
+    response.contentType = CONTENT_TYPE_JSON;
+
+    var authParam = request.getHeader(AUTHORIZATION_HEADER);
+    if (authParam != null) {
+        credentials = JSUtils.authenticate(authParam);
+        loggedInUser = credentials[0];
+    } else {
+        var token = session.get(USER_TOKEN);
+        if (token != null) {
+            loggedInUser = token[USERNAME] + "@" + token[DOMAIN] ;
+        } else {
+            log.error("user is not authenticated!");
+            response.status = HTTP_USER_NOT_AUTHENTICATED;
+            print('{ "status": "Failed", "message": "User is not authenticated." }');
+            return;
+        }
+    }
+    var user = carbon.server.tenantUser(loggedInUser);
+    tenantId = user.tenantId;
+
+    var cache = application.get("AnalyticsWebServiceCache");
+    if (cache == null) {
+        cache = new AnalyticsCache(cacheTimeoutSeconds, cacheSizeBytes);
+        application.put("AnalyticsWebServiceCache", cache);
+    }
+
+    var connector = new AnalyticsCachedJSServiceConnector(cache);
+
+    var type = 0;
+    var typeParam = request.getParameter(TYPE);
+    if (typeParam != null) {
+        type = parseInt(typeParam);
+    }
+
+    if (type == 0) {
+        log.error("operation type is not specified!");
+        response.status = HTTP_INTERNAL_ERROR;
+        print('{ "status": "Failed", "message": "Operation type is not specified" }');
+        return;
+    }
+
+    var content = request.getContent();
+    if (content != '' && content != null) {
+        if (log.isDebugEnabled()) {
+            log.debug("value of content: " + stringify(contentAsString));
+        }
+    }
+    if (connector != null && loggedInUser != null) {
+        var result = null;
+        var query = null;
+        var resp = null;
+        var timeFrom = request.getParameter("timeFrom");
+        var timeTo = request.getParameter("timeTo");
+        switch (type) {
+            case TYPE_OVERALL_TPS:
+            {
+                result = [];
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableSuffix = "";
+                if (timeUnit == "SECOND" || timeUnit == "MINUTE") {
+                    tableSuffix = "ALL";
+                }
+
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit + tableSuffix;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                query = stringify({
+                    query: "_componentId : ALL AND startTime : [" + timeFrom + " TO " + timeTo + "} AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    "start": 0,
+                    "count": 200
+                });
+                resp = connector.search(superTenantId, tableName, query);
+                if (resp.status == "success") {
+                    var dataPoints = [];
+                    try {
+                        dataPoints = JSON.parse(resp.getMessage());
+                    } catch (error) {
+                        log.error(error);
+                    }
+
+                    var divider = 1;
+                    if (timeUnit == 'MONTH') {
+                        divider = 3600 * 24 * 30;
+                    } else if (timeUnit == 'DAY') {
+                        divider = 3600 * 24;
+                    } else if (timeUnit == 'HOUR') {
+                        divider = 3600;
+                    } else if (timeUnit == 'MINUTE') {
+                        divider = 60;
+                    }
+                    for (var i = 0; i < dataPoints.length; i++) {
+                        var obj = dataPoints[i];
+                        if (obj != null && obj.values != null) {
+                            if (timeUnit == 'MONTH') {
+                                divider = timeRangeUtil.getNoOfSecondForMonthInGivenTimestamp(obj.values.facetStartTime[0]);
+                            }
+                            if (obj != null) {
+                                result.push({
+                                    "timestamp": obj.values.facetStartTime,
+                                    "tps": obj.values.noOfInvocation / divider
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    log.error(resp.getMessage());
+                }
+                break;
+            }
+            case TYPE_OVERALL_MESSAGE_COUNT:
+            {
+                result = [];
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableSuffix = "";
+                if (timeUnit == "SECOND" || timeUnit == "MINUTE") {
+                    tableSuffix = "ALL";
+                }
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit + tableSuffix;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                query = stringify({
+                    query: "_componentId : ALL AND startTime : [" + timeFrom + " TO " + timeTo + "} AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    "start": 0,
+                    "count": 200
+                });
+                resp = connector.search(superTenantId, tableName, query);
+                var dataPoints = [];
+                if (resp.status == "success") {
+                    try {
+                        dataPoints = JSON.parse(resp.getMessage());
+                    } catch (error) {
+                        log.error(error);
+                    }
+                    for (var i = 0; i < dataPoints.length; i++) {
+                        var obj = dataPoints[i];
+                        if (obj != null && obj.values != null) {
+                            var success = obj.values.noOfInvocation - obj.values.faultCount;
+                            if (success < 0) {
+                                success = 0;
+                            }
+                            result.push({
+                                "timestamp": obj.values.facetStartTime,
+                                "success": success,
+                                "faults": obj.values.faultCount
+                            });
+                        }
+                    }
+                } else {
+                    log.error(resp.getMessage());
+                }
+                break;
+            }
+            case TYPE_TOP_INVOKED_PROXIES:
+            {
+                var result = esbanalyticsUtils.getMostInvokedComponentNames(connector, superTenantId, "Proxy Service", tenantId);
+                break;
+            }
+            case TYPE_TOP_INVOKED_APIS:
+            {
+                var result = esbanalyticsUtils.getMostInvokedComponentNames(connector, superTenantId, "API", tenantId);
+                break;
+            }
+            case TYPE_PROXY_NAMES:
+            {
+                var result = esbanalyticsUtils.getComponentNames(connector, superTenantId, "Proxy Service", tenantId);
+                break;
+            }
+            case TYPE_PROXY_MESSAGE_RATE:
+            {
+                var componentName = request.getParameter("id");
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                result = esbanalyticsUtils.getMessageRate(connector, superTenantId, timeFrom, timeTo, tableName, componentName, null, tenantId);
+                break;
+            }
+            case TYPE_PROXY_LATENCY:
+            {
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                var componentName = request.getParameter("id");
+                result = esbanalyticsUtils.getLatency(connector, superTenantId, timeFrom, timeTo, tableName, componentName, null, tenantId);
+                break;
+            }
+            case TYPE_PROXY_MESSAGE_FLOW:
+            {
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var result = esbanalyticsUtils.getEntrypointMessageFlow(connector, superTenantId, timeRanges, tenantId);
+                break;
+            }
+            case TYPE_PROXY_MESSAGES:
+            {
+                var proxyName = request.getParameter("id");
+                var result = esbanalyticsUtils.getComponentMessages(connector, superTenantId, proxyName, "Proxy Service", null, timeRangeUtil, tenantId);
+                break;
+            }
+            case TYPE_API_NAMES:
+            {
+                var result = esbanalyticsUtils.getComponentNames(connector, superTenantId, "API", tenantId);
+                break;
+            }
+            case TYPE_API_MESSAGE_RATE:
+            {
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit;
+                var componentName = request.getParameter("id");
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                result = esbanalyticsUtils.getMessageRate(connector, superTenantId, timeFrom, timeTo, tableName, componentName, null, tenantId);
+                break;
+            }
+            case TYPE_API_LATENCY:
+            {
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit;
+                var componentName = request.getParameter("id");
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                result = esbanalyticsUtils.getLatency(connector, superTenantId, timeFrom, timeTo, tableName, componentName, null, tenantId);
+                break;
+            }
+            case TYPE_API_MESSAGE_FLOW:
+            {
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var result = esbanalyticsUtils.getEntrypointMessageFlow(connector, superTenantId, timeRanges, tenantId);
+                break;
+            }
+            case TYPE_API_MESSAGES:
+            {
+                var apiName = request.getParameter("id");
+                var result = esbanalyticsUtils.getComponentMessages(connector, superTenantId, apiName, "API", null, timeRangeUtil, tenantId);
+                break;
+            }
+            case TYPE_MEDIATOR_NAMES:
+            {
+                var result = ["Foo", "Bar", "Baz"];
+                break;
+            }
+            case TYPE_MEDIATOR_MESSAGE_RATE:
+            {
+                result = [];
+                var componentId = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_MediatorStatPer" + timeUnit;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                query = "entryPoint : " + entryPoint + " AND _componentId : \"" + componentId + "\" AND startTime : [" + timeFrom + " TO " + timeTo + "} AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]";
+                query = stringify({
+                    tableName: tableName,
+                    groupByField: "facetStartTime",
+                    query: query,
+                    aggregateFields: [
+                        {
+                            fields: ["noOfInvocation"],
+                            aggregate: "SUM",
+                            alias: "total_invocation_sum"
+                        },
+                        {
+                            fields: ["faultCount"],
+                            aggregate: "SUM",
+                            alias: "total_fault_count"
+                        }
+                    ],
+                    aggregateLevel: 0,
+                    parentPath: []
+                });
+                resp = connector.searchWithAggregates(superTenantId, tableName, query);
+                var dataPoints = [];
+                if (resp.status == "success") {
+                    try {
+                        dataPoints = JSON.parse(resp.getMessage());
+                    } catch (error) {
+                        log.error(error);
+                    }
+                    for (var i = 0; i < dataPoints.length; i++) {
+                        var obj = dataPoints[i];
+                        if (obj != null && obj.values != null) {
+                            result.push({
+                                "timestamp": obj.values.facetStartTime[0],
+                                "success": obj.values.total_invocation_sum,
+                                "faults": obj.values.total_fault_count
+                            });
+                        }
+                    }
+                } else {
+                    log.error(resp.getMessage());
+                }
+                break;
+            }
+            case TYPE_MEDIATOR_LATENCY:
+            {
+                result = [];
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_MediatorStatPer" + timeUnit;
+                var componentId = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                query = stringify({
+                    tableName: tableName,
+                    query: "entryPoint : " + entryPoint + " AND _componentId : \"" + componentId + "\" AND startTime : [" + timeFrom + " TO " + timeTo + "} AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    start: 0,
+                    count: 60
+                });
+                resp = connector.search(superTenantId, tableName, query);
+                var dataPoints = [];
+                if (resp.status == "success") {
+                    try {
+                        dataPoints = JSON.parse(resp.getMessage());
+                    } catch (error) {
+                        log.error(error);
+                    }
+                    for (var i = 0; i < dataPoints.length; i++) {
+                        var obj = dataPoints[i];
+                        if (obj != null && obj.values != null) {
+                            result.push({
+                                "timestamp": obj.values.facetStartTime,
+                                "min": obj.values.minDuration,
+                                "max": obj.values.maxDuration,
+                                "avg": obj.values.totalDuration / obj.values.noOfInvocation
+                            });
+                        }
+                    }
+                } else {
+                    log.error(resp.getMessage());
+                }
+                break;
+            }
+            case TYPE_MEDIATOR_MESSAGES:
+            {
+                var componentId = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var result = esbanalyticsUtils.getComponentMessages(connector, superTenantId, componentId, "Mediator", entryPoint, timeRangeUtil, tenantId);
+                break;
+            }
+            case TYPE_MESSAGE_FLOW:
+            {
+                var result = [];
+                var tmpResult = [];
+                var messageId = request.getParameter("id");
+                var tableName = "org_wso2_esb_analytics_stream_Event";
+                // Get Message details
+                var query = stringify({
+                    "tableName": tableName,
+                    "query": "messageFlowId : \"" + messageId + "\" AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    "start": 0,
+                    "count": 10000
+                });
+                var components = null;
+                var resp = connector.search(superTenantId, tableName, query);
+                if (resp.status == "success") {
+                    components = JSON.parse(resp.getMessage());
+
+                    if (components[0] != null && components[0]["values"] != null) {
+                        var entryPointHashCode = components[0]["values"]["entryPointHashcode"];
+                        var entryPoint = components[0]["values"]["entryPoint"];
+                    }
+                } else {
+                    log.error(resp.getMessage());
+                }
+
+                // Get schema
+                var tableName = "ORG_WSO2_ESB_ANALYTICS_STREAM_CONFIGENTRY";
+                var query = stringify({
+                    "query": "_hashcode : \"" + entryPointHashCode + "\" meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    "start": 0,
+                    "count": 1
+                });
+
+                var config =  null;
+                var resp = connector.search(superTenantId, tableName, query);
+                if (resp.status == "success") {
+                    config = JSON.parse(resp.getMessage())[0];
+                } else {
+                    log.error(resp.getMessage());
+                }
+
+                if (config != null) {
+                    var schema = JSON.parse(config["values"]["configData"]);
+
+                    // Prepare component map
+                    var componentMap = {};
+                    if (components != null) {
+                        for (var i = 0; i < components.length; i++) {
+                            var component = components[i];
+                            var componentInfo = component["values"];
+
+                            if (componentInfo != null) {
+                                var componentId = componentInfo["componentId"];
+
+                                // get schema of referenced sequences and add it to the overall schema
+                                if("Sequence" == componentInfo["componentType"]) {
+                                    var query = stringify({
+                                        "query": "_hashcode : \"" + componentInfo["hashCode"] + "\" AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                                        "start": 0,
+                                        "count": 1
+                                    });
+                                    var seqConfigResp = connector.search(superTenantId, tableName, query);
+                                    var seqConfig = JSON.parse(seqConfigResp.getMessage())[0];
+                                    if (seqConfig != null) {
+                                        var seqSchema = JSON.parse(seqConfig["values"]["configData"]);
+                                        for (var j = 0; j < seqSchema.length; j++) {
+                                            schema.push(seqSchema[j]);
+                                        }
+                                    }
+                                }
+                                componentMap[componentId] = componentInfo;
+                            }
+                        }
+                    }
+
+                    var removedComponents = [];
+                    // Populate table data
+                    var componentNameRegex = new RegExp("^.*@\\d*:(.*)");
+                    var groups = [];
+                    var compIds = [];
+                    for (var i = 0; i < schema.length; i++) {
+                        var groupLabel;
+                        if (schema[i] != null) {
+                            var groupId = schema[i]["group"];
+                            var componentId = schema[i]["id"];
+
+                            var isIndirectComponent = componentId.indexOf("@indirect");
+                            var originalCompId = componentId;
+                            if (isIndirectComponent > 0) {
+                                // PaymentServiceEp@14:PaymentServiceEp@indirect --> PaymentServiceEp@0:PaymentServiceEp
+                                var splitByAt = componentId.split("@"); // ["PaymentServiceEp", "14:PaymentServiceEp", "indirect"]
+                                var splitByColon = splitByAt[1].split(":"); // ["14", "PaymentServiceEp"]
+                                componentId = splitByAt[0] + "@0:" + splitByColon[1];
+                                for (var j = 0; j < schema.length; j++) {
+                                    if (schema[j] != null) {
+                                        var componentIdTmp = schema[j]["id"];
+                                        var componentIdParentTmp = schema[j]["parentId"];
+                                        var tempGroupId = schema[j]["group"];
+                                        if (componentIdTmp == componentId) {
+                                            schema[j]["id"] = originalCompId;
+                                        }
+                                        if (componentIdParentTmp == componentId){
+                                            schema[j]["parentId"] = originalCompId;
+                                        }
+                                        if (tempGroupId == componentId) {
+                                            schema[j]["group"] = originalCompId;
+                                        }
+                                    }
+                                }
+                            }
+
+                            var componentInfo  = null;
+                            if (componentId != null) {
+                                componentInfo = componentMap[componentId];
+                            }
+                            var dataAttributes = [];
+                            var hiddenAttributes = [];
+                            var componentLabel = componentNameRegex.exec(componentId)[1];
+
+                            // Find unique groups
+                            if (schema[i]["group"] != null && groups.indexOf(schema[i]["group"]) == -1) {
+                                groups.push(schema[i]["group"]);
+                            }
+
+
+                            // Create data attributes
+                            if (componentInfo != null) {
+                                dataAttributes.push({"name": "Duration", "value": componentInfo["duration"]});
+                                if (componentInfo["faultCount"] == 0) {
+                                    dataAttributes.push({"name": "Status", "value": "Success"});
+                                } else {
+                                    dataAttributes.push({"name": "Status", "value": "Failed"});
+                                }
+                                componentType = componentInfo["componentType"];
+                                hashCode = componentInfo["hashCode"];
+
+                                hiddenAttributes.push({"name": "entryPoint", "value": entryPoint});
+                                hiddenAttributes.push({"name": "hashCode", "value": hashCode});
+
+                                // for Sequences and Endpoints, id should be the "name", since name is used for drill down searches
+                                if (componentType == "Endpoint" || componentType == "Sequence") {
+                                    hiddenAttributes.push({"name": "id", "value": componentLabel});
+                                } else {
+                                    hiddenAttributes.push({"name": "id", "value": componentId});
+                                }
+
+                                var compId = schema[i]["id"];
+                                var parentId = schema[i]["parentId"];
+                                if (compIds.indexOf(compId) < 0) {
+                                    compIds.push(compId);
+                                }
+                                if (parentId != null && (compIds.indexOf(parentId) < 0)) {
+                                    compIds.splice(compIds.indexOf(compId), 1);
+                                } else if (schema[i]["parentId"] == schema[i]["group"]) {
+                                    tmpResult.push({
+                                        "id": originalCompId,
+                                        "label": componentLabel,
+                                        "parents": [],
+                                        "group": schema[i]["group"],
+                                        "type": componentType,
+                                        "dataAttributes": dataAttributes,
+                                        "hiddenAttributes": hiddenAttributes,
+                                        "modifiedId": componentId
+                                    });
+                                } else {
+                                    tmpResult.push({
+                                        "id": originalCompId,
+                                        "label": componentLabel,
+                                        "parents": [schema[i]["parentId"]],
+                                        "group": schema[i]["group"],
+                                        "type": componentType,
+                                        "dataAttributes": dataAttributes,
+                                        "hiddenAttributes": hiddenAttributes,
+                                        "modifiedId": componentId
+                                    });
+                                }
+                            } else {
+                                removedComponents.push(componentId);
+                            }
+                        }
+                    }
+                    compIds = null;
+
+                    // Cleanup
+                    for (var k = 0; k < tmpResult.length; k++) {
+                        var group = tmpResult[k]["group"];
+                        var parentId = tmpResult[k]["parents"];
+                        if (removedComponents.indexOf(group) == -1 && removedComponents.indexOf(parentId[0]) == -1) {
+                            result.push(tmpResult[k]);
+                        }
+                    }
+
+
+                    for (var j = 0; j < result.length; j++) {
+                        if (groups.indexOf(result[j]["id"]) >= 0) {
+                            result[j]["type"] = "group";
+                        }
+                    }
+                }
+                break;
+            }
+            case TYPE_ENDPOINT_NAMES:
+            {
+                var result = [];
+                var excludeEndpoints = ["AnonymousEndpoint"];
+                var allEndpoints = esbanalyticsUtils.getComponentNames(connector, superTenantId, "Endpoint", tenantId);
+                for (key in allEndpoints) {
+                    var endpointName = allEndpoints[key];
+                    if (excludeEndpoints.indexOf(endpointName) == -1) {
+                        result.push(allEndpoints[key]);
+                    }
+                }
+                break;
+            }
+            case TYPE_ENDPOINT_MESSAGE_RATE:
+            {
+                var componentName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_MediatorStatPer" + timeUnit;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                var result = esbanalyticsUtils.getMessageRate(connector, superTenantId, timeFrom, timeTo, tableName, componentName, entryPoint, tenantId);
+                break;
+            }
+            case TYPE_ENDPOINT_LATENCY:
+            {
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_MediatorStatPer" + timeUnit;
+                var componentName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                var result = esbanalyticsUtils.getLatency(connector, superTenantId, timeFrom, timeTo, tableName, componentName, entryPoint, tenantId);
+                break;
+            }
+            case TYPE_ENDPOINT_MESSAGES:
+            {
+                var endpointName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var result = esbanalyticsUtils.getComponentMessages(connector, superTenantId, endpointName, "Endpoint", entryPoint, timeRangeUtil, tenantId);
+                break;
+            }
+            case TYPE_SEQUENCE_NAMES:
+            {
+                var result = [];
+                var excludeSequences = ["PROXY_INSEQ", "PROXY_OUTSEQ", "PROXY_FAULTSEQ", "API_OUTSEQ", "API_INSEQ", "API_FAULTSEQ", "AnonymousSequence"];
+                var allSequences = esbanalyticsUtils.getComponentNames(connector, superTenantId, "Sequence", tenantId);
+                // Remove well-known sequences
+                for (key in allSequences) {
+                    var sequenceName = allSequences[key];
+                    if (excludeSequences.indexOf(sequenceName) == -1) {
+                        result.push(allSequences[key]);
+                    }
+                }
+                break;
+            }
+            case TYPE_SEQUENCE_MESSAGE_RATE:
+            {
+                var componentName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_MediatorStatPer" + timeUnit;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                result = esbanalyticsUtils.getMessageRate(connector, superTenantId, timeFrom, timeTo, tableName, componentName, entryPoint, tenantId);
+                break;
+            }
+            case TYPE_SEQUENCE_LATENCY:
+            {
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_MediatorStatPer" + timeUnit;
+                var componentName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                var result = esbanalyticsUtils.getLatency(connector, superTenantId, timeFrom, timeTo, tableName, componentName, entryPoint, tenantId);
+                break;
+            }
+            case TYPE_SEQUENCE_MESSAGES:
+            {
+                var sequenceName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var result = esbanalyticsUtils.getComponentMessages(connector, superTenantId, sequenceName, "Sequence", entryPoint, timeRangeUtil, tenantId);
+                break;
+            }
+            case TYPE_SEQUENCE_MESSAGE_FLOW:
+            {
+                var result = [];
+                var entryName = request.getParameter("id");
+                // get schema
+                var tableName = "ORG_WSO2_ESB_ANALYTICS_STREAM_CONFIGENTRY";
+                var query = stringify({
+                    "query": "_entryName : \"" + entryName + "\" AND _timestamp : [0000000000 TO " + timeTo + "] AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    "start": 0,
+                    "count": 100,
+                    "sortBy": [
+                        {
+                            "field": "_timestamp",
+                            "sortType": "DESC",
+                            "reversed": "false"
+                        }
+                    ]
+                });
+                var config = null;
+                var resp = connector.search(superTenantId, tableName, query);
+                if (resp.status == "success") {
+                    config = JSON.parse(resp.getMessage())[0];
+                } else {
+                    log.error(resp.getMessage());
+                }
+
+                if (config != null) {
+                    var schema = null;
+                    var entryHashCode = null;
+                    if (config["values"] != null) {
+                        schema = JSON.parse(config["values"]["configData"]);
+                        entryHashCode = config["values"]["hashcode"];
+                    }
+                    query = stringify({
+                        "query": "hashcode : \"" + entryHashCode + "\" AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                        "start": 0,
+                        "count": 100,
+                        "sortBy": [
+                            {
+                                "field": "_timestamp",
+                                "sortType": "ASC",
+                                "reversed": "false"
+                            }
+                        ]
+                    });
+                    resp = connector.search(superTenantId, tableName, query);
+                    if (resp.status == "success") {
+                        config = JSON.parse(resp.getMessage())[0];
+                    } else {
+                        log.error(resp.getMessage());
+                    }
+                    var artifactFirstEntryTime = null;
+                    if (config["values"] != null) {
+                        artifactFirstEntryTime = config["timestamp"];
+                    }
+
+                    var componentIdArray = [];
+                    for (var j = 0; j < schema.length; j++) {
+                        if (schema[j] != null) {
+                            var componentId = schema[j]["id"];
+                            var isIndirectComponent = componentId.indexOf("@indirect");
+                            var originalCompId = componentId;
+                            if (isIndirectComponent > 0) {
+                                // PaymentServiceEp@14:PaymentServiceEp@indirect --> PaymentServiceEp@0:PaymentServiceEp
+                                var splitByAt = componentId.split("@"); // ["PaymentServiceEp", "14:PaymentServiceEp", "indirect"]
+                                var splitByColon = splitByAt[1].split(":"); // ["14", "PaymentServiceEp"]
+                                componentId = splitByAt[0] + "@0:" + splitByColon[1];
+                            }
+                            componentIdArray.push(componentId);
+                        }
+                    }
+                    // get components info from different tables
+                    var dataFetchTime = artifactFirstEntryTime;
+                    if (timeFrom < artifactFirstEntryTime ) {
+                        dataFetchTime = timeFrom;
+                    }
+                    var timeRanges = timeRangeUtil.getDateTimeRanges(dataFetchTime, timeTo);
+                    var searchParams = [];
+                    var aggregateFields = [];
+                    aggregateFields.push({fields: ["totalDuration"], aggregate: "SUM", alias: "TotalDuration"});
+                    aggregateFields.push({fields: ["maxDuration"], aggregate: "MAX", alias: "MaxDuration"});
+                    aggregateFields.push({fields: ["noOfInvocation"], aggregate: "SUM", alias: "Invocations"});
+                    aggregateFields.push({fields: ["faultCount"], aggregate: "SUM", alias: "Faults"});
+                    aggregateFields.push({fields: ["entryPoint"], aggregate: "FIRST", alias: "entryPoint"});
+                    aggregateFields.push({fields: ["componentType"], aggregate: "FIRST", alias: "componentType"});
+                    for (var i = 0; i < timeRanges.size(); i++) {
+                        timeRange = timeRanges.get(i);
+                        for (var j=0; j < componentIdArray.length; j++) {
+                            var comId = componentIdArray[j];
+                            var searchParam = {
+                                tableName: "org_wso2_esb_analytics_stream_MediatorStatPer" + timeRange.unit,
+                                groupByField: "componentId",
+                                query: "componentId : \"" + comId + "\" AND startTime : [" + timeRange.range[0] + " TO " + timeRange.range[1] + "} AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                                aggregateLevel: 0,
+                                parentPath: [],
+                                noOfRecords: 10000
+                            }
+                            searchParam.aggregateFields = aggregateFields;
+                            searchParams.push(searchParam);
+                        }
+                    }
+                    var resp = connector.searchMultiTablesWithAggregates(superTenantId, JSON.stringify(searchParams));
+                    var componentMap = {};
+                    if (resp.status == "success") {
+                        var allTables = JSON.parse(resp.getMessage());
+                        // Aggregate all tables and prepare component map
+                        var fields = ["Invocations", "TotalDuration", "MaxDuration", "Faults"];
+                        for (var i = 0; i < allTables.length; i++) {
+                            var table = allTables[i];
+                            if (table != null && table.length != 0) {
+                                for (var j = 0; j < table.length; j++) {
+                                    var componentInfo = table[j]["values"];
+                                    if (componentInfo != null && componentInfo["componentId"] != null){
+                                        var componentId = componentInfo["componentId"][0];
+                                        if (componentMap[componentId] == null) {
+                                            componentMap[componentId] = componentInfo;
+                                        } else {
+                                            for (field in fields) {
+                                                fieldName = fields[field];
+                                                componentMap[componentId][fieldName] = componentMap[componentId][fieldName] + componentInfo[fieldName];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        log.error(resp.getMessage());
+                    }
+
+                    // Populate tabel data
+                    var componentNameRegex = new RegExp("^.*@\\d*:(.*)");
+                    var groups = [];
+                    for (var i = 0; i < schema.length; i++) {
+                        var groupLabel;
+                        var groupId = schema[i]["group"];
+                        var componentId = schema[i]["id"];
+
+                        var isIndirectComponent = componentId.indexOf("@indirect");
+                        var originalCompId = componentId;
+                        if (isIndirectComponent > 0) {
+                            // PaymentServiceEp@14:PaymentServiceEp@indirect --> PaymentServiceEp@0:PaymentServiceEp
+                            var splitByAt = componentId.split("@"); // ["PaymentServiceEp", "14:PaymentServiceEp", "indirect"]
+                            var splitByColon = splitByAt[1].split(":"); // ["14", "PaymentServiceEp"]
+                            componentId = splitByAt[0] + "@0:" + splitByColon[1];
+                            for (var j = 0; j < schema.length; j++) {
+                                if (schema[j] != null) {
+                                    var componentIdTmp = schema[j]["id"];
+                                    var componentIdParentTmp = schema[j]["parentId"];
+                                    var tempGroupId = schema[j]["group"];
+                                    if (componentIdTmp == componentId) {
+                                        schema[j]["id"] = originalCompId;
+                                    } else if (componentIdParentTmp == componentId){
+                                        schema[j]["parentId"] = originalCompId;
+                                    }
+                                    if (tempGroupId == componentId) {
+                                        schema[j]["group"] = originalCompId;
+                                    }
+                                }
+                            }
+                        }
+
+                        var componentInfo = componentMap[componentId];
+                        var dataAttributes = [];
+
+                        // Find unique groups
+                        if (schema[i]["group"] != null && groups.indexOf(schema[i]["group"]) == -1) {
+                            groups.push(schema[i]["group"]);
+                        }
+
+                        // Create data attributes
+                        for (field in fields) {
+                            var fieldName = fields[field];
+                            if (componentInfo != null) {
+                                if (fieldName == "TotalDuration") {
+                                    dataAttributes.push({
+                                        "name": "AvgDuration",
+                                        "value": (componentInfo[fieldName] / componentInfo["Invocations"]).toFixed(2)
+                                    });
+                                } else {
+                                    dataAttributes.push({"name": fieldName, "value": componentInfo[fieldName]});
+                                }
+                            } else {
+                                dataAttributes.push({"name": fieldName, "value": 0});
+                            }
+                        }
+
+                        var componentLabel = componentNameRegex.exec(componentId)[1];
+                        if (componentInfo != null) {
+                            componentType = componentInfo["componentType"];
+                        } else {
+                            componentType = "UNKNOWN";
+                        }
+
+                        // Create hidden attributes
+                        var hiddenAttributes = [];
+                        if (componentInfo != null) {
+                            hiddenAttributes.push({"name": "entryPoint", "value": componentInfo["entryPoint"]});
+                        }
+                        if (componentType == "Endpoint" || componentType == "Sequence") {
+                            hiddenAttributes.push({"name": "id", "value": componentLabel});
+                        } else {
+                            hiddenAttributes.push({"name": "id", "value": componentId});
+                        }
+
+                        if (schema[i]["parentId"] == schema[i]["group"]) {
+                            result.push({
+                                "id": originalCompId,
+                                "label": componentLabel,
+                                "parents": [],
+                                "group": schema[i]["group"],
+                                "type": componentType,
+                                "dataAttributes": dataAttributes,
+                                "hiddenAttributes": hiddenAttributes,
+                                "modifiedId": componentId
+                            });
+                        } else {
+                            result.push({
+                                "id": originalCompId,
+                                "label": componentLabel,
+                                "parents": [schema[i]["parentId"]],
+                                "group": schema[i]["group"],
+                                "type": componentType,
+                                "dataAttributes": dataAttributes,
+                                "hiddenAttributes": hiddenAttributes,
+                                "modifiedId": componentId
+                            });
+                        }
+                    }
+                    // Defining groups
+                    for (var j = 0; j < result.length; j++) {
+                        if (groups.indexOf(result[j]["id"]) >= 0) {
+                            result[j]["type"] = "group";
+                        }
+                    }
+                }
+                break;
+            }
+            case TYPE_INBOUND_ENDPOINT_NAMES:
+            {
+                var result = esbanalyticsUtils.getComponentNames(connector, superTenantId, "Inbound EndPoint", tenantId);
+                break;
+            }
+            case TYPE_INBOUND_ENDPOINT_MESSAGE_RATE:
+            {
+                var componentName = request.getParameter("id");
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit;
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                result = esbanalyticsUtils.getMessageRate(connector, superTenantId, timeFrom, timeTo, tableName, componentName, null, tenantId);
+                break;
+            }
+            case TYPE_INBOUND_ENDPOINT_LATENCY:
+            {
+                var timeUnit = timeRangeUtil.getSuitableTimeRangeUnit(timeFrom, timeTo);
+                var tableName = "org_wso2_esb_analytics_stream_StatPer" + timeUnit;
+                var componentName = request.getParameter("id");
+                timeFrom = timeRangeUtil.roundFloor(timeFrom, timeUnit);
+                result = esbanalyticsUtils.getLatency(connector, superTenantId, timeFrom, timeTo, tableName, componentName, null, tenantId);
+                break;
+            }
+            case TYPE_INBOUND_ENDPOINT_MESSAGES:
+            {
+                var inboundEndpointName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var result = esbanalyticsUtils.getComponentMessages(connector, superTenantId, inboundEndpointName, "Inbound EndPoint", entryPoint, timeRangeUtil, tenantId);
+                break;
+            }
+            case TYPE_INBOUND_ENDPOINT_MESSAGE_FLOW:
+            {
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var result = esbanalyticsUtils.getEntrypointMessageFlow(connector, superTenantId, timeRanges, tenantId);
+                break;
+            }
+            case TYPE_OVERALL_STATS:
+            {
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var table = "org_wso2_esb_analytics_stream_StatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "ALL", "ALL", null, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_PROXY_STATS:
+            {
+                var componentName = request.getParameter("id");
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var table = "org_wso2_esb_analytics_stream_StatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "Proxy", componentName, null, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_API_STATS:
+            {
+                var componentName = request.getParameter("id");
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var table = "org_wso2_esb_analytics_stream_StatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "API", componentName, null, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_SEQUENCE_STATS:
+            {
+                var componentName = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var table = "org_wso2_esb_analytics_stream_MediatorStatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "Sequence", componentName, entryPoint, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_ENDPOINT_STATS:
+            {
+                var componentName = request.getParameter("id");
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var entryPoint = request.getParameter("entryPoint");
+                var table = "org_wso2_esb_analytics_stream_MediatorStatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "Endpoint", componentName, entryPoint, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_INBOUND_ENDPOINT_STATS:
+            {
+                var componentName = request.getParameter("id");
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var table = "org_wso2_esb_analytics_stream_StatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "Inbound", componentName, null, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_MEDIATOR_STATS:
+            {
+                var componentId = request.getParameter("id");
+                var entryPoint = request.getParameter("entryPoint");
+                var timeRanges = timeRangeUtil.getDateTimeRanges(timeFrom, timeTo);
+                var table = "org_wso2_esb_analytics_stream_MediatorStatPer";
+                var result = esbanalyticsUtils.getStats(connector, superTenantId, "Mediator", componentId, entryPoint, timeRanges, table, tenantId);
+                break;
+            }
+            case TYPE_TOP_INVOKED_ENDPOINTS:
+            {
+                var result = [];
+                var excludeEndpoints = ["AnonymousEndpoint"];
+                var allEndpoints = esbanalyticsUtils.getMostInvokedComponentNames(connector, superTenantId, "Endpoint", tenantId);
+                // Remove well-known Endpoints
+                for (key in allEndpoints) {
+                    var endpointName = allEndpoints[key]["name"];
+                    if (excludeEndpoints.indexOf(endpointName) == -1) {
+                        result.push(allEndpoints[key]);
+                    }
+                }
+                break;
+            }
+            case TYPE_TOP_INVOKED_INBOUNDS:
+            {
+                var result = esbanalyticsUtils.getMostInvokedComponentNames(connector, superTenantId, "Inbound EndPoint", tenantId);
+                break;
+            }
+            case TYPE_TOP_INVOKED_SEQUENCES:
+            {
+                var result = [];
+                var allSequences = esbanalyticsUtils.getMostInvokedComponentNames(connector, superTenantId, "Sequence", tenantId);
+                var excludeSequences = ["PROXY_INSEQ", "PROXY_OUTSEQ", "PROXY_FAULTSEQ", "API_OUTSEQ", "API_INSEQ", "API_FAULTSEQ", "AnonymousSequence", "fault"];
+                // Remove well-known sequences
+                for (key in allSequences) {
+                    var sequenceName = allSequences[key]["name"];
+                    if (excludeSequences.indexOf(sequenceName) == -1) {
+                        result.push(allSequences[key]);
+                    }
+                }
+                break;
+            }
+            case TYPE_MESSAGE_COMPARISON:
+            {
+                var result = {};
+                var messageId = request.getParameter("id");
+                var componentId = request.getParameter("componentId");
+                var tableName = "org_wso2_esb_analytics_stream_Event";
+                // Get Message details for the current component
+                var query = stringify({
+                    "tableName": tableName,
+                    "query": "_messageFlowId : \"" + messageId + "\" AND _componentId :\"" + componentId + "\" AND meta_tenantId : [" + tenantId + " TO " + tenantId + "]",
+                    "start": 0,
+                    "count": 10000
+                });
+                var resp = connector.search(superTenantId, tableName, query);
+                if (resp.status == "success") {
+                    var messageInfoBefore = JSON.parse(resp.getMessage())[0]["values"];
+
+                    // Get Message details of the child component
+                    if (messageInfoBefore["children"] != null && messageInfoBefore["children"] != "null") {
+                        var childIndex = JSON.parse(messageInfoBefore["children"])[0];
+                        var query = stringify({
+                            "tableName": tableName,
+                            "query": "_messageFlowId : \"" + messageId + "\" AND meta_tenantId : [" + tenantId + " TO " + tenantId + "] AND componentIndex :" + childIndex,
+                            "start": 0,
+                            "count": 10000
+                        });
+                        var resp = connector.search(superTenantId, tableName, query);
+                        if (resp.status == "success") {
+                            var component = JSON.parse(resp.getMessage())[0];
+                            if (component != null) {
+                                var messageInfoAfter = component["values"];
+                            }
+                        }
+                    }
+
+                    // add payloads
+                    result["payload"] = {
+                        "before": messageInfoBefore["beforePayload"],
+                        "after": messageInfoBefore["afterPayload"]
+                    };
+
+                    var transportProperties = [];
+                    var contextProperties = [];
+
+                    if (messageInfoBefore["transportPropertyMap"] != null) {
+                        var transportPropertyMapBefore = esbanalyticsUtils.processProperties(messageInfoBefore["transportPropertyMap"]);
+                    } else {
+                        var transportPropertyMapBefore = {};
+                    }
+                    if (messageInfoBefore["contextPropertyMap"] != null) {
+                        var contextPropertyMapBefore = esbanalyticsUtils.processProperties(messageInfoBefore["contextPropertyMap"]);
+                    } else {
+                        var contextPropertyMapBefore = {};
+                    }
+
+                    var allTransportProperties = Object.keys(transportPropertyMapBefore);
+                    var allContextProperties = Object.keys(contextPropertyMapBefore);
+
+                    if (messageInfoAfter != null) {
+                        if (messageInfoAfter["transportPropertyMap"] != null) {
+                            var transportPorpertyMapAfter = esbanalyticsUtils.processProperties(messageInfoAfter["transportPropertyMap"]);
+                        } else {
+                            var transportPorpertyMapAfter = {};
+                        }
+                        if (messageInfoAfter["contextPropertyMap"] != null) {
+                            var contextPorpertyMapAfter = esbanalyticsUtils.processProperties(messageInfoAfter["contextPropertyMap"]);
+                        } else {
+                            var contextPorpertyMapAfter = {};
+                        }
+
+                        for (var property in transportPorpertyMapAfter) {
+                            if (allTransportProperties.indexOf(property) < 0) {
+                                allTransportProperties.push(property);
+                            }
+                        }
+                        for (var property in contextPorpertyMapAfter) {
+                            if (allContextProperties.indexOf(property) < 0) {
+                                allContextProperties.push(property);
+                            }
+                        }
+                    }
+                    // Add Transport Properties
+                    for (var property in allTransportProperties) {
+                        var propertyName = allTransportProperties[property];
+                        if (transportPropertyMapBefore.hasOwnProperty(propertyName)) {
+                            var beforeValue = transportPropertyMapBefore[propertyName];
+                        } else {
+                            var beforeValue = "N/A";
+                        }
+                        if (messageInfoAfter != null) {
+                            if (transportPorpertyMapAfter.hasOwnProperty(propertyName)) {
+                                var afterValue = transportPorpertyMapAfter[propertyName];
+                            } else {
+                                var afterValue = "N/A";
+                            }
+                        } else {
+                            var afterValue = beforeValue;
+                        }
+                        transportProperties.push({"name": propertyName, "before": beforeValue, "after": afterValue});
+                    }
+                    result["transportProperties"] = transportProperties;
+
+                    // Add Context Properties
+                    for (var property in allContextProperties) {
+                        var propertyName = allContextProperties[property];
+                        if (contextPropertyMapBefore.hasOwnProperty(propertyName)) {
+                            var beforeValue = contextPropertyMapBefore[propertyName];
+                        } else {
+                            var beforeValue = "N/A";
+                        }
+                        if (messageInfoAfter != null) {
+                            if (contextPorpertyMapAfter.hasOwnProperty(propertyName)) {
+                                var afterValue = contextPorpertyMapAfter[propertyName];
+                            } else {
+                                var afterValue = "N/A";
+                            }
+                        } else {
+                            var afterValue = beforeValue;
+                        }
+                        contextProperties.push({"name": propertyName, "before": beforeValue, "after": afterValue});
+                    }
+                    result["contextProperties"] = contextProperties;
+                } else {
+                    log.error(resp.getMessage());
+                }
+                break;
+            }
+            default:
+            {
+                result = '{ "status": "Failed", "message": "Unidentified operation" }';
+                break;
+            }
+        }
+        if (result != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("value of result: " + result);
+            }
+            if (type == TYPE_PROXY_MESSAGES || type == TYPE_SEQUENCE_MESSAGES || type == TYPE_API_MESSAGES || type == TYPE_MEDIATOR_MESSAGES || type == TYPE_ENDPOINT_MESSAGES || type == TYPE_INBOUND_ENDPOINT_MESSAGES) {
+                finalResult = result;
+            } else {
+                var finalResult = {
+                    status: "success",
+                    message: result
+                }
+            }
+            print(finalResult);
+        }
+    } else {
+        print('{ "status": "Failed", "statusCode": "500", "message": "AnalyticsCachedWebServiceConnector is unavailable" }');
+    }
+
+}());
+%>

@@ -1,0 +1,21 @@
+{
+    "id": "EIAnalytics-Gadget-Mediator_Properties",
+    "title": "Mediator Properties",
+    "type": "gadget",
+    "thumbnail": "store://gadget/usa-business-revenue/index.png",
+    "data": {
+        "url": "store://gadget/EIAnalytics-Gadget-Mediator_Properties/index.xml"
+    },
+    "listen": {
+        "subscriber": {
+            "type": "mediator-info",
+            "description": "Used to listen to Any message of type state"
+        }
+    },
+    "toolbarButtons":{
+        "default":{
+            "maximize": false,
+            "configurations": false
+        }
+    }
+}

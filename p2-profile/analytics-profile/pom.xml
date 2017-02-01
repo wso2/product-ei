@@ -369,11 +369,11 @@
 
                                 <!-- ESB Analytics features -->
                                 <featureArtifactDef>
-                                    org.wso2.analytics.esb:org.wso2.analytics.esb.feature:${esb.analytics.version}
+                                    org.wso2.ei:org.wso2.ei.analytics.feature:${product.ei.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
-                                    org.wso2.ei:org.wso2.ei.styles.feature:${product.ei.version}
+                                    org.wso2.ei:org.wso2.ei.analytics.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -462,8 +462,8 @@
                                     <version>${carbon.dashboard.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.analytics.esb.feature.group</id>
-                                    <version>${esb.analytics.version}</version>
+                                    <id>org.wso2.ei.analytics.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.analytics.messageconsole.feature.group</id>
@@ -496,7 +496,7 @@
                                 </feature>
 
                                 <feature>
-                                    <id>org.wso2.ei.styles.feature.group</id>
+                                    <id>org.wso2.ei.analytics.styles.feature.group</id>
                                     <version>${product.ei.version}</version>
                                 </feature>
 
@@ -771,6 +771,7 @@
                             <tasks>
                                 <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/bundle-config/hadoop-client" />
                                 <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/analytics/spark" />
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server" />
                             </tasks>
                         </configuration>
                         <goals>
