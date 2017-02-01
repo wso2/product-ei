@@ -971,6 +971,11 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.analytics.styles</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
                 <artifactId>admin-clients</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
@@ -998,6 +1003,11 @@
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>ui-pages</artifactId>
                 <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${orbit.version.joda-time}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -1152,6 +1162,7 @@
         <carbon.event-processing.version>2.1.4</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.2</carbon.metrics.version>
+        <orbit.version.joda-time>2.8.2.wso2v1</orbit.version.joda-time>
 
         <!-- Misc -->
         <!-- TODO: remove after refactor with ndatasource <carbon.datasource.version>4.2.0</carbon.datasource.version>-->

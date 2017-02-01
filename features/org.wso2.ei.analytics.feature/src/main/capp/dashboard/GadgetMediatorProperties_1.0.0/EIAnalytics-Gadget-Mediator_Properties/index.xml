@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Subscriber" description="Subscriber">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+
+          <!-- Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/nanoscroller.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- jQuery -->
+          <script src="../EIAnalytics-Gadget-commons/js/jquery-1.10.2.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/jquery.nanoscroller.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/dataTables.bootstrap.css">
+          <script type="text/javascript" src="../EIAnalytics-Gadget-commons/js/jquery.dataTables.min.js"></script>
+          <script src="js/gadgetconf.js"></script>
+          <script src="js/main.js"></script>
+
+          <style>
+
+            .table {
+                table-layout: fixed;
+            }
+
+            .table .table {
+                table-layout: auto;
+                background-color: transparent;
+            }
+
+            .table tr td {
+                white-space: pre-wrap;
+                word-break:break-all;
+            }
+
+          </style>
+
+        </head>
+        <body class="nano">
+            <div id="gadget-message"></div>
+            <div class="nano-content">
+               <div id="props" class="container-fluid" style="display: none;">
+                 <div class="add-padding-5x">
+
+                   <table class="table table-condensed table-responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th><h3>Before</h3></th>
+                            <th><h3>After</h3></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><h4>Payload</h4></td>
+                            <td><div id="payloadBfr">N/A</div></td>
+                            <td><div id="payloadAftr">N/A</div></td>
+                        </tr>
+                      <tr>
+                        <td><h4>Transport Properties</h4></td>
+                            <td>
+                          <table id="tblTransportBfr" class="table table-condensed">
+                            <tbody></tbody>
+                          </table>
+                        </td>
+                            <td>
+                          <table id="tblTransportAftr" class="table table-condensed">
+                            <tbody></tbody>
+                          </table>
+                        </td>
+                        </tr>
+                      <tr>
+                        <td><h4>Context Properties</h4></td>
+                            <td>
+                          <table id="tblCtxtBfr" class="table table-condensed">
+                            <tbody></tbody>
+                          </table>
+                        </td>
+                            <td>
+                          <table id="tblCtxtAftr" class="table table-condensed">
+                            <tbody></tbody>
+                          </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                  </table>
+
+
+                 </div>
+               </div>
+            </div>
+        </body>
+        ]]>
+    </Content>
+</Module>

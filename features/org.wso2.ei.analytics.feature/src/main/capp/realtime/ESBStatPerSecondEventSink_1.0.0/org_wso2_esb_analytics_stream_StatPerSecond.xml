@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  ~
+  -->
+
+<EventStoreConfiguration>
+    <TableSchema>
+        <ColumnDefinition>
+            <Name>meta_tenantId</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>year</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>month</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>day</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>hour</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>minute</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>second</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>INTEGER</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>componentId</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>FACET</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>componentName</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>FACET</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>componentType</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>true</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>FACET</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>totalDuration</Name>
+            <EnableIndexing>false</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>LONG</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>minDuration</Name>
+            <EnableIndexing>false</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>LONG</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>maxDuration</Name>
+            <EnableIndexing>false</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>LONG</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>noOfInvocation</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>true</EnableScoreParam>
+            <Type>LONG</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>faultCount</Name>
+            <EnableIndexing>false</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>LONG</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>startTime</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>LONG</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>facetStartTime</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>FACET</Type>
+        </ColumnDefinition>
+        <ColumnDefinition>
+            <Name>entryPoint</Name>
+            <EnableIndexing>true</EnableIndexing>
+            <IsPrimaryKey>false</IsPrimaryKey>
+            <EnableScoreParam>false</EnableScoreParam>
+            <Type>FACET</Type>
+        </ColumnDefinition>
+    </TableSchema>
+    <Source>
+        <StreamId>org.wso2.esb.analytics.stream.StatPerSecond:1.0.0</StreamId>
+    </Source>
+    <MergeSchema>false</MergeSchema>
+    <RecordStoreName>EVENT_STORE_WO</RecordStoreName>
+</EventStoreConfiguration>

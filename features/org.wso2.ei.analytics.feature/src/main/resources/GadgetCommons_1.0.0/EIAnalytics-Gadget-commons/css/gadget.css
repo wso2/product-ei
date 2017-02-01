@@ -1,0 +1,272 @@
+body {
+    background: #fff;
+    color: #444;
+}
+
+body.dark {
+    background: #1E2531;
+    color: #fff;
+}
+
+body.widget {
+    background: transparent;
+    overflow: hidden;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    float: left;
+}
+
+.col-1 {
+    width: 8.33333333%;
+}
+
+.col-2 {
+    width: 16.66666667%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.33333333%;
+}
+
+.col-5 {
+    width: 41.66666667%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-7 {
+    width: 58.33333333%;
+}
+
+.col-8 {
+    width: 66.66666667%;
+}
+
+.col-9 {
+    width: 75%;
+}
+
+.col-10 {
+    width: 83.33333333%;
+}
+
+.col-11 {
+    width: 91.66666667%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.status-message {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.status-message > .message-info,
+.status-message > .message-warning,
+.status-message > .message-danger,
+.status-message > .message-success {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* Dark Theme Styles */
+body.dark .form-control-btn {
+    color: #E3E5E6;
+}
+
+body.dark .stats {
+    color: #E3E5E6 !important;
+}
+
+body.dark .message {
+    background: #1E2531;
+    color: #E3E5E6 !important;
+}
+
+.breadcrumb {
+    background: #1E2531;
+}
+
+.breadcrumb a:visited {
+    color: #E3E5E6;
+}
+
+#canvas-tooltip {
+    background: #c4c4c4 !important;
+    color: #000;
+    opacity: 0.9;
+    font-size: 12px;
+}
+
+body.dark #canvas-tooltip {
+    background: #000 !important;
+    color: #fff;
+}
+
+/* DataTables issue fixing */
+.table {
+    font-size: 14px;
+}
+
+div.dataTables_length select {
+    background: transparent;
+}
+
+body.dark div.dataTables_length select {
+    color: #fff;
+    border-color: #353C48;
+}
+
+.dataTables_filter input {
+    margin: 0 0 0 14px !important;
+    background: transparent;
+    padding: 0 5px;
+    border: 1px solid #747F8F;
+}
+
+div.dataTables_length select option {
+    color: #31383e;
+}
+
+div.dataTables_processing {
+    background: transparent !important;
+    padding-top: 30px !important;
+}
+
+.dataTablesBottom {
+    margin: 20px 0 0 0;
+}
+
+.table > tbody > tr > td {
+    border-top: 1px solid #ddd;
+}
+
+.dark .table > tbody > tr > td {
+    border-top: 1px solid #353C48;
+}
+
+.table.table-clickable > tbody > tr:hover > td {
+    background-color: #bcbcbc;
+    cursor: pointer;
+}
+
+.dark .table.table-clickable > tbody > tr:hover > td {
+    background-color: #353C48;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span, .pagination >
+.active > span:focus,
+.pagination > .active > span:hover {
+    background: #438CAD;
+    border-color: #438CAD;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+    background: transparent;
+    color: #353C48;
+}
+
+body.dark .pagination > li > a,
+body.dark .pagination > li > a:focus,
+body.dark .pagination > li > span,
+body.dark .pagination > li.active > span:hover,
+body.dark .pagination > li.active > a:hover {
+    color: #E3E5E6;
+    border-color: #353C48;
+}
+
+body.dark .pagination > li > span:hover,
+body.dark .pagination > li > a:hover,
+body.dark .pagination > li > span:focus,
+body.dark .pagination > li > a:focus {
+    background-color: #353C48;
+}
+
+body.dark .pagination > li.active > span:hover,
+body.dark .pagination > li.active > a:hover,
+body.dark .pagination > li.active > span:focus,
+body.dark .pagination > li.active > a:focus {
+    background-color: #438CAD;
+}
+
+.pagination > li > span:hover,
+.pagination > li > a:hover {
+    color: #353C48;
+}
+
+body[media-screen=xs] .hidden-xs,
+body[media-screen=sm] .hidden-sm,
+body[media-screen=md] .hidden-md,
+body[media-screen=lg] .hidden-lg {
+    display: none !important;    
+}
+
+body[media-screen=xs] .visible-xs,
+body[media-screen=sm] .visible-sm,
+body[media-screen=md] .visible-md,
+body[media-screen=lg] .visible-lg {
+    display: block !important;    
+}
+
+body[media-screen=xs] .visible-inline-xs,
+body[media-screen=sm] .visible-inline-sm,
+body[media-screen=md] .visible-inline-md,
+body[media-screen=lg] .visible-inline-lg {
+    display: inline !important;    
+}
+
+body[media-screen=xs] .visible-inline-block-xs,
+body[media-screen=sm] .visible-inline-block-sm,
+body[media-screen=md] .visible-inline-block-md,
+body[media-screen=lg] .visible-inline-block-lg {
+    display: inline-block !important;    
+}
+
+.nano > .nano-pane {
+    border-radius: 0;
+}
+
+.nano > .nano-pane > .nano-slider {
+    border-radius: 0;
+    background: #272c30;
+}
+
+.dark .nano > .nano-pane > .nano-slider,
+.dark.nano > .nano-pane > .nano-slider {
+    background: #E3E5E6;
+}

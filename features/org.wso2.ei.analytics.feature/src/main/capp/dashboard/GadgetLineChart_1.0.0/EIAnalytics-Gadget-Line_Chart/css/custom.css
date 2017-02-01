@@ -1,0 +1,11 @@
+body.dark svg.marks .mark-group .background {
+    fill: #121822 !important;
+}
+
+body.dark svg.marks .mark-group .mark-text text {
+    fill: #7D8596 !important;
+}
+
+body.dark svg.marks .mark-group .mark-rule line {
+    stroke: #E3E5E6 !important;
+}

@@ -1,0 +1,32 @@
+{
+  "id": "EIAnalytics-Gadget-Date_Range_Picker",
+  "title": "Date Range Picker",
+  "type": "widget",
+  "category": "Widgets",
+  "thumbnail": "store://gadget/EIAnalytics-Gadget-Date_Range_Picker/index.png",
+  "data": {
+    "url": "store://gadget/EIAnalytics-Gadget-Date_Range_Picker/index.xml"
+  },
+  "styles": {
+    "borders": false,
+    "title": false
+  },
+  "notify": {
+    "range-selected": {
+      "type": "date-range",
+      "description": "This notifies selected state"
+    }
+  },
+  "listen": {
+        "chart-zoomed": {
+            "type": "date-range",
+            "description": "This notifies message generated in publisher"
+        }
+  },
+  "toolbarButtons":{
+    "default":{
+        "maximize": false,
+        "configurations": false
+    }
+  }
+}

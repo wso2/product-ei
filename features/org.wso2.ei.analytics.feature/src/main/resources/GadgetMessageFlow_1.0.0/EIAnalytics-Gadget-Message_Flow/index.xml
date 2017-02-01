@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Message Flow" description="g1" height="250">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+
+          <!-- Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- Common JS -->
+          <script src="../EIAnalytics-Gadget-commons/js/jquery-1.10.2.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+
+          <!-- D3 Gagre -->
+          <script src="../EIAnalytics-Gadget-commons/js/d3.min.js" charset="utf-8"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/dagre-d3.js"></script>
+
+          <!-- NanoScroller -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/nanoscroller_0.8.7/nanoscroller.css" />
+          <script src="/portal/libs/nanoscroller_0.8.7/jquery.nanoscroller.min.js"></script>
+
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
+          <script src="js/gadgetconf.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body>
+
+            <div class="nano">
+                <div class="nano-content">
+                    <div class="page-content-wrapper">
+                        <button class="btn btn-primary btn-lg" id="btnViewToggle"><i class="icon fw fw-expand"></i> Maximize View</button>
+                        <div id="canvas"></div>
+                        <svg id="svg-canvas" width="100%" height="400"></svg>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+        ]]>
+    </Content>
+    <Content type="html" view="full">
+        <![CDATA[
+        <head>
+
+          <!-- Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- Common JS -->
+          <script src="../EIAnalytics-Gadget-commons/js/jquery-1.10.2.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+
+          <!-- D3 Gagre -->
+          <script src="../EIAnalytics-Gadget-commons/js/d3.min.js" charset="utf-8"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/dagre-d3.js"></script>
+
+          <!-- NanoScroller -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/nanoscroller_0.8.7/nanoscroller.css" />
+          <script src="/portal/libs/nanoscroller_0.8.7/jquery.nanoscroller.min.js"></script>
+
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
+          <script src="js/gadgetconf.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body>
+
+            <div class="nano">
+                <div class="nano-content">
+                    <div class="page-content-wrapper">
+                        <button class="btn btn-primary btn-lg" id="btnViewToggle"><i class="icon fw fw-contract"></i> Minimize View</button>
+                        <div id="canvas"></div>
+                        <svg id="svg-canvas" width="100%" height="100%"></svg>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+        ]]>
+    </Content>
+</Module>

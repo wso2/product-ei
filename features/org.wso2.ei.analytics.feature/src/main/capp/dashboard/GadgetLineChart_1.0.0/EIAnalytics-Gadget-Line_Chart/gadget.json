@@ -1,0 +1,27 @@
+{
+    "id": "EIAnalytics-Gadget-Line_Chart",
+    "title": "Line Chart",
+    "type": "gadget",
+    "thumbnail": "store://gadget/usa-business-revenue/index.png",
+    "data": {
+        "url": "store://gadget/EIAnalytics-Gadget-Line_Chart/index.xml"
+    },
+    "listen": {
+        "subscriber": {
+            "type": "date-range",
+            "description": "This notifies message generated in publisher"
+        }
+    },
+    "notify": {
+        "chart-zoomed": {
+            "type": "date-range",
+            "description": "This notifies message generated in publisher"
+        }
+    },
+    "toolbarButtons":{
+        "default":{
+            "maximize": false,
+            "configurations": false
+        }
+    }
+}
