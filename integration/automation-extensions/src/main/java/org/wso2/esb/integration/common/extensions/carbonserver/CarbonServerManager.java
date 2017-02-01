@@ -413,26 +413,13 @@ public class CarbonServerManager {
 
         String jacocoAgentFile = CodeCoverageUtils.getJacocoAgentJarLocation();
         coverageDumpFilePath = FrameworkPathUtil.getCoverageDumpFilePath();
-        Map<String,String> runtimeCommandMap = getCommandMap();
-        String componentBinPath = runtimeCommandMap.get("runtimePath");
-        scriptName = runtimeCommandMap.get("startupScript");
-        if(componentBinPath !=null){
             CodeCoverageUtils.insertStringToFile(
-                    new File(carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".sh"),
-                    new File(carbonHome + File.separator +  "tmp" + File.separator + scriptName + ".sh"),
+                    new File(carbonHome + File.separator + "bin" + File.separator + scriptName + ".sh"),
+                    new File(carbonHome + File.separator + "tmp" + File.separator + scriptName + ".sh"),
                     "-Dwso2.server.standalone=true",
                     "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
                             ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
-        }
-
-        else {
-        CodeCoverageUtils.insertStringToFile(
-                    new File(carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".sh"),
-                    new File(carbonHome + File.separator +  "tmp" + File.separator + scriptName + ".sh"),
-                    "-Dwso2.server.standalone=true",
-                    "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
-                            ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
-        }
+        
     }
 
 
