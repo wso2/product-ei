@@ -61,7 +61,6 @@ public class CarbonServerManager {
     private static int defaultHttpPort = Integer.parseInt(FrameworkConstants.SERVER_DEFAULT_HTTP_PORT);
     private static int defaultHttpsPort = Integer.parseInt(FrameworkConstants.SERVER_DEFAULT_HTTPS_PORT);
 
-
     public CarbonServerManager(AutomationContext context) {
         this.automationContext = context;
     }
@@ -85,21 +84,41 @@ public class CarbonServerManager {
 
             log.info("Starting carbon server............. ");
             String scriptName = commandMap.get("startupScript");
-            if (scriptName == null) {
+            String componentPath = commandMap.get("runtimePath");
+            if (scriptName == null && componentPath != null ) {
+                scriptName = TestFrameworkUtils.getStartupScriptFileName(carbonHome);
+            }
+            else if (scriptName == null && componentPath == null ) {
                 scriptName = TestFrameworkUtils.getStartupScriptFileName(carbonHome);
             }
             String[] parameters = expandServerStartupCommandList(commandMap);
 
             String[] cmdArray;
+            String componentBinPath = commandMap.get("runtimePath");
 
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                commandDir = new File(carbonHome + File.separator + "bin");
-                cmdArray = new String[]{"cmd.exe", "/c", scriptName + ".bat"};
+                //For other runtime based bins (Business-process etc)
+
+                if (componentBinPath != null) {
+                    commandDir = new File(carbonHome + File.separator + componentBinPath);
+                    cmdArray = new String[]{"cmd.exe", "/c", carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".bat"};
+                } else {
+                    commandDir = new File(carbonHome + File.separator + "bin");
+                    cmdArray = new String[]{"cmd.exe", "/c", scriptName + ".bat"};
+                }
+
                 cmdArray = mergePropertiesToCommandArray(parameters, cmdArray);
                 tempProcess = Runtime.getRuntime().exec(cmdArray, null, commandDir);
 
             } else {
-                cmdArray = new String[]{"sh", "bin/" + scriptName + ".sh"};
+                if (componentBinPath != null) {
+                    commandDir = new File(carbonHome + File.separator + componentBinPath);
+                    cmdArray = new String[]{"sh", carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".sh"};
+                } else {
+                    commandDir = new File(carbonHome + File.separator + "bin");
+                    cmdArray = new String[]{"sh", "bin/" + scriptName + ".sh"};
+                }
+
                 cmdArray = mergePropertiesToCommandArray(parameters, cmdArray);
                 tempProcess = Runtime.getRuntime().exec(cmdArray, null, commandDir);
             }
@@ -394,13 +413,26 @@ public class CarbonServerManager {
 
         String jacocoAgentFile = CodeCoverageUtils.getJacocoAgentJarLocation();
         coverageDumpFilePath = FrameworkPathUtil.getCoverageDumpFilePath();
+        Map<String,String> runtimeCommandMap = getCommandMap();
+        String componentBinPath = runtimeCommandMap.get("runtimePath");
+        scriptName = runtimeCommandMap.get("startupScript");
+        if(componentBinPath !=null){
+            CodeCoverageUtils.insertStringToFile(
+                    new File(carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".sh"),
+                    new File(carbonHome + File.separator +  "tmp" + File.separator + scriptName + ".sh"),
+                    "-Dwso2.server.standalone=true",
+                    "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
+                            ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
+        }
 
+        else {
         CodeCoverageUtils.insertStringToFile(
-                new File(carbonHome + File.separator + "bin" + File.separator + scriptName + ".sh"),
-                new File(carbonHome + File.separator + "tmp" + File.separator + scriptName + ".sh"),
-                "-Dwso2.server.standalone=true",
-                "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
-                ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
+                    new File(carbonHome + File.separator + componentBinPath + File.separator + scriptName + ".sh"),
+                    new File(carbonHome + File.separator +  "tmp" + File.separator + scriptName + ".sh"),
+                    "-Dwso2.server.standalone=true",
+                    "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
+                            ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
+        }
     }
 
 

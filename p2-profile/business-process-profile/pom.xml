@@ -203,6 +203,12 @@
                                     org.wso2.carbon.business-process:org.wso2.carbon.bpmn.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.wso2.carbon.business-process:org.wso2.carbon.bpel.analytics.publisher.feature:${carbon.business-process.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.business-process:org.wso2.carbon.bpmn.analytics.publisher.feature:${carbon.business-process.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.business-process:org.wso2.carbon.application.mgt.bpel.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -540,6 +546,14 @@
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>org.wso2.carbon.bpel.analytics.publisher.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpmn.analytics.publisher.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.humantask.feature.group</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
@@ -860,6 +874,14 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.bpmn.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpel.analytics.publisher.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpmn.analytics.publisher.feature.group</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
