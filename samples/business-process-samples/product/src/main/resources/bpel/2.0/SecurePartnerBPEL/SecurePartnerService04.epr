@@ -1,0 +1,15 @@
+<wsa:EndpointReference
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:wsa="http://www.w3.org/2005/08/addressing"
+        xmlns:wsdl11="http://schemas.xmlsoap.org/wsdl/">
+    <wsa:Address>http://localhost:9000/services/SecurePartnerService4/</wsa:Address>
+    <wsa:Metadata>
+	<id>Service04InvokeEPR</id>
+
+        <qos>
+            <enableAddressing version="final" separateListener="true"/>
+	    <enableWsSec policy="file:PolicySecurePartnerService04.xml"/>
+        </qos>
+    </wsa:Metadata>
+
+</wsa:EndpointReference>

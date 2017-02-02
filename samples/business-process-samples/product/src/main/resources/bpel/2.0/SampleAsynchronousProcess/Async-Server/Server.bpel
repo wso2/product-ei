@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+
+<bpel:process name="Server" targetNamespace="urn:ode-apache-org:example:async:server" suppressJoinFailure="yes"
+  xmlns:tns="urn:ode-apache-org:example:async:server" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+  <bpel:import location="ServerArtifacts.wsdl" namespace="urn:ode-apache-org:example:async:server"
+    importType="http://schemas.xmlsoap.org/wsdl/" />
+  <bpel:partnerLinks>
+    <bpel:partnerLink name="client" partnerLinkType="tns:Server" myRole="ServerProvider" partnerRole="ServerRequester" />
+  </bpel:partnerLinks>
+  <bpel:variables>
+    <bpel:variable name="input" messageType="tns:ServerRequestMessage" />
+    <bpel:variable name="output" messageType="tns:ServerResponseMessage" />
+  </bpel:variables>
+  <bpel:sequence name="main">
+    <bpel:receive name="receiveInput" partnerLink="client" portType="tns:Server" operation="initiate"
+      variable="input" createInstance="yes" />
+    <bpel:assign validate="no" name="assignResult">
+      <bpel:copy>
+        <bpel:from>
+          <bpel:literal xml:space="preserve"><tns:ServerResponse><tns:id></tns:id><tns:result></tns:result></tns:ServerResponse></bpel:literal>
+        </bpel:from>
+        <bpel:to variable="output" part="payload"></bpel:to>
+      </bpel:copy>
+      <bpel:copy>
+        <!--<bpel:from><![CDATA[concat('Server says ', $input.payload/tns:input)]]></bpel:from>-->
+	<bpel:from><![CDATA[$input.payload/tns:id]]></bpel:from>
+        <bpel:to part="payload" variable="output">
+          <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:id]]></bpel:query>
+        </bpel:to>
+      </bpel:copy>
+      <bpel:copy>
+        <bpel:from><![CDATA[concat('Server says ', $input.payload/tns:input)]]></bpel:from>
+        <bpel:to part="payload" variable="output">
+          <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
+        </bpel:to>
+      </bpel:copy>
+    </bpel:assign>
+    <bpel:invoke name="callbackClient" partnerLink="client" portType="tns:ServerCallback" operation="onResult"
+      inputVariable="output" />
+  </bpel:sequence>
+</bpel:process>

@@ -1,0 +1,27 @@
+<ServerProfile xmlns="http://wso2.org/analytics/3.0" name="AnalyticsServerProfile" type="thrift">
+    <Connection receiverURLSet="tcp://localhost:7611" authURLSet="ssl://localhost:7711" />
+    <Credential userName="admin" password="admin" securePassword="false" />
+    <!--Credential userName="admin"
+                password="kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=" securePassword="true" /-->
+    <Streams>
+        <Stream name="org.wso2.das.phone.retail.store.kpi" version="1.0.0" nickName="Phone_Retail_Shop" description="Phone Sales">
+            <Data>
+		<Key name="brand" type="payload" dataType="STRING">
+                    <From variable="brand"/>
+                </Key>
+                <Key name="quantity" type="payload" dataType="INTEGER">
+                    <From variable="quantity"/>
+                </Key>
+                <Key name="user" type="payload" dataType="STRING">
+                    <From variable="user"/>
+                </Key>
+                <Key name="total" type="payload" dataType="LONG">
+                    <From variable="total"/>
+                </Key>
+                <Key name="clientType" type="meta" dataType="STRING">
+                    <From variable="clientType"/>
+                </Key>
+            </Data>
+        </Stream>
+    </Streams>
+</ServerProfile>

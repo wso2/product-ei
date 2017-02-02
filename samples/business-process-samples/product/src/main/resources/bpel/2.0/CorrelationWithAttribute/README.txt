@@ -1,0 +1,1 @@
+This sample demonstrates how correlation works in an asynchronous bpel process. Where the callback operation matches each instance correctly.

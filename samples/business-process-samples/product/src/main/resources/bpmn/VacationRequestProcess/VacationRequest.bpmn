@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="VacationRequest" name="Vacation Request" isExecutable="true">
+    <startEvent id="startevent1" name="Start" activiti:initiator="clerk">
+      <extensionElements>
+        <activiti:formProperty id="name" name="Name" type="string" variable="name"></activiti:formProperty>
+        <activiti:formProperty id="numberOfDays" name="Number Of Days" type="long" variable="numberOfDays"></activiti:formProperty>
+        <activiti:formProperty id="reason" name="Reason" type="string" variable="reason"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
+    <userTask id="usertask2" name="Accept vacation request" activiti:assignee="manager">
+      <extensionElements>
+        <activiti:formProperty id="Name of user" name="Name" type="string" variable="name" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="NumberOfDays" name="Number Of Days " type="long" variable="numberOfDays" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="reason" name="Reason" type="string" variable="reason"></activiti:formProperty>
+        <activiti:formProperty id="approve" name="Confirm Request" type="enum" variable="approve">
+          <activiti:value id="true" name="approve"></activiti:value>
+          <activiti:value id="false" name="reject"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow4" sourceRef="startevent1" targetRef="usertask2"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="usertask2" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_VacationRequest">
+    <bpmndi:BPMNPlane bpmnElement="VacationRequest" id="BPMNPlane_VacationRequest">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="70.0" y="163.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
+        <omgdc:Bounds height="61.0" width="105.0" x="170.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="330.0" y="163.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="105.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="170.0" y="180.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="275.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="180.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

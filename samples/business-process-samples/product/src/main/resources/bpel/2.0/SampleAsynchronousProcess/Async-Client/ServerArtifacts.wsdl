@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<definitions name="Server" targetNamespace="urn:ode-apache-org:example:async:server" xmlns:tns="urn:ode-apache-org:example:async:server"
+  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" >
+  <types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:ode-apache-org:example:async:server"
+      xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="ServerRequest">
+        <complexType>
+          <sequence>
+	    <element name="id" type="string" />
+            <element name="input" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ServerResponse">
+        <complexType>
+          <sequence>
+	    <element name="id" type="string" />
+            <element name="result" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="ServerRequestMessage">
+    <part name="payload" element="tns:ServerRequest" />
+  </message>
+  <message name="ServerResponseMessage">
+    <part name="payload" element="tns:ServerResponse" />
+  </message>
+  <portType name="Server">
+    <operation name="initiate">
+      <input message="tns:ServerRequestMessage" />
+    </operation>
+  </portType>
+  <portType name="ServerCallback">
+    <operation name="onResult">
+      <input message="tns:ServerResponseMessage" wsaw:Action="http://wso2.org/onResult" />
+    </operation>
+  </portType>
+  <plnk:partnerLinkType name="Server">
+    <plnk:role name="ServerProvider" portType="tns:Server" />
+    <plnk:role name="ServerRequester" portType="tns:ServerCallback" />
+  </plnk:partnerLinkType>
+  <binding name="ServerBinding" type="tns:Server">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="initiate">
+      <soap:operation soapAction="urn:ode-apache-org:example:async/initiate" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+  </binding>
+  <binding name="ServerCallbackBinding" type="tns:ServerCallback">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="onResult">
+	<soap:operation soapAction="http://wso2.org/onResult" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+    </operation>
+  </binding>
+  <service name="ServerService">
+    <port name="ServerPort" binding="tns:ServerBinding">
+	<soap:address location="http://localhost:9673/services/ServerService"/>
+    </port>
+  </service>
+  <service name="ExampleServerCallbackService">
+    <port name="ExampleServerCallbackPort" binding="tns:ServerCallbackBinding">
+      <soap:address location="http://www.example.org/" />
+    </port>
+  </service>
+</definitions>

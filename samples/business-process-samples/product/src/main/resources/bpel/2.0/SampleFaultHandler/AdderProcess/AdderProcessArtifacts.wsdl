@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<definitions name="AdderProcess"
+        targetNamespace="http://wso2.org/wso2con/2011/sample/adder"
+        xmlns:tns="http://wso2.org/wso2con/2011/sample/adder"
+        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <types>
+        <schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+                targetNamespace="http://wso2.org/wso2con/2011/sample/adder" 
+                xmlns="http://www.w3.org/2001/XMLSchema">
+
+            <element name="AdderProcessRequest">
+                <complexType>
+                    <sequence>
+                    	<element name="a" type="int" minOccurs="1" maxOccurs="1"/>
+                    	<element name="b" type="int" minOccurs="1" maxOccurs="1"></element>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="AdderProcessResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="AdderProcessRequestMessage">
+        <part name="payload" element="tns:AdderProcessRequest"/>
+    </message>
+    <message name="AdderProcessResponseMessage">
+        <part name="payload" element="tns:AdderProcessResponse"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the AdderProcess BPEL process -->
+    <portType name="AdderProcess">
+        <operation name="process">
+            <input  message="tns:AdderProcessRequestMessage" />
+            <output message="tns:AdderProcessResponseMessage"/>
+        </operation>
+    </portType>
+  
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="AdderProcess">
+        <plnk:role name="AdderProcessProvider" portType="tns:AdderProcess"/>
+    </plnk:partnerLinkType>
+    
+    <binding name="AdderProcessBinding" type="tns:AdderProcess">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="process">
+    		<soap:operation
+    			soapAction="http://wso2.org/wso2con/2011/sample/adder/process" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    </binding>
+    <service name="AdderProcessService">
+    	<port name="AdderProcessPort" binding="tns:AdderProcessBinding">
+    		<soap:address location="http://www.example.org/" />
+    	</port>
+    </service>
+</definitions>

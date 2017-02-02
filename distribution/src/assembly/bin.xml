@@ -522,6 +522,32 @@
                 ${pom.artifactId}-${pom.version}/wso2/business-process/dbscripts/bps/bpel/upgrade/300_350
             </outputDirectory>
         </fileSet>
+        <!-- BPEL Samples -->
+        <fileSet>
+            <directory>target/samples/bpel</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/repository/samples/bpel</outputDirectory>
+        </fileSet>
+
+        <!-- Human Task Samples-->
+        <fileSet>
+            <directory>target/samples/humantask</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/repository/samples/humantask</outputDirectory>
+        </fileSet>
+        <!-- BPMN Samples-->
+        <fileSet>
+            <directory>target/samples/bpmn-jar</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/lib
+            </outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/samples/bpmn</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/repository/samples/bpmn</outputDirectory>
+        </fileSet>
 
         <!--BPS scripts: End -->
 

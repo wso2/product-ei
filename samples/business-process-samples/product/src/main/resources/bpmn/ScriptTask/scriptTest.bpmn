@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="testScriptTask" name="Test Script Task" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <scriptTask id="checkQuantity" name="Check Quantity" scriptFormat="javascript" activiti:autoStoreVariables="false">
+      <script>var status;
+var qty = execution.getVariable("qty");
+var productName=execution.getVariable("productName");
+if (qty&gt;50) {
+    status = "Quantity too big";
+} else {
+    status = "Quantity too small";
+} 
+execution.setVariable("productName", productName);
+execution.setVariable("qty", qty);
+execution.setVariable("statusProduct", status);</script>
+    </scriptTask>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <userTask id="statusofQty" name="Status of Qty" activiti:assignee="admin" activiti:candidateGroups="admin">
+      <extensionElements>
+        <activiti:formProperty id="productName" name="Product Name" type="string" variable="productName" required="true"></activiti:formProperty>
+        <activiti:formProperty id="qty" name="Quantity" type="long" variable="qty" required="true"></activiti:formProperty>
+        <activiti:formProperty id="statusProduct" name="Status" type="string" variable="statusProduct" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="orderProduct" name="Order Product" activiti:assignee="admin" activiti:candidateGroups="admin">
+      <extensionElements>
+        <activiti:formProperty id="productName" name="Product Name" type="string" variable="productName" required="true"></activiti:formProperty>
+        <activiti:formProperty id="qty" name="Quantity" type="long" variable="qty" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow5" sourceRef="startevent1" targetRef="orderProduct"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="orderProduct" targetRef="checkQuantity"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="checkQuantity" targetRef="statusofQty"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_testScriptTask">
+    <bpmndi:BPMNPlane bpmnElement="testScriptTask" id="BPMNPlane_testScriptTask">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="110.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="checkQuantity" id="BPMNShape_checkQuantity">
+        <omgdc:Bounds height="55.0" width="105.0" x="330.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="620.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="statusofQty" id="BPMNShape_statusofQty">
+        <omgdc:Bounds height="55.0" width="101.0" x="480.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="orderProduct" id="BPMNShape_orderProduct">
+        <omgdc:Bounds height="55.0" width="105.0" x="180.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="145.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="180.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="285.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="435.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="480.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

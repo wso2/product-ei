@@ -1,0 +1,7 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<wsdl:definitions xmlns:bpdm="http://www.intalio/designer/business-process-data-modeling" xmlns:bpel="http://schemas.xmlsoap.org/ws/2004/03/business-process/" xmlns:diag="http://example.com/NewDiagram" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:Pool="http://example.com/NewDiagram/Pool" xmlns:Pool0="http://example.com/NewDiagram/Pool0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:pnlk="http://schemas.xmlsoap.org/ws/2004/03/partner-link/" targetNamespace="http://example.com/NewDiagram">
+    <wsdl:import namespace="http://example.com/NewDiagram/Pool" location="NewDiagram-Pool.wsdl"/>
+    <pnlk:partnerLinkType name="Pool0AndPool">
+        <pnlk:role name="Pool_for_Pool0" portType="Pool:ForPool0"/>
+    </pnlk:partnerLinkType>
+</wsdl:definitions>

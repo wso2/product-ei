@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:sample="http://wso2.org/bps/sample" xmlns:services.core.ndatasource.carbon.wso2.org="http://services.core.ndatasource.carbon.wso2.org">
+  <process name="sample:AdminServiceInvokeSample">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="sample:AdminServiceInvokeSample" port="AdminServiceInvokeSamplePort"/>
+    </provide>
+    <invoke partnerLink="dataSourcePL">
+      <service name="services.core.ndatasource.carbon.wso2.org:NDataSourceAdmin" port="NDataSourceAdminHttpsSoap11Endpoint">
+		<endpoint xmlns="http://wso2.org/bps/bpel/endpoint/config" endpointReference="datasourceService.epr" />
+      </service>
+    </invoke>
+  </process>
+</deploy>

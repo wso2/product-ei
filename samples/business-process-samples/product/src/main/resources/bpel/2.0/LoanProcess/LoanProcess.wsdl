@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<definitions name="LoanProcess" targetNamespace="http://wso2.org/bps/samples/LoanProcess"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://wso2.org/bps/samples/LoanProcess"
+    xmlns:ns="http://wso2.org/bps/samples/loan_process/schema"
+    xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/varprop" 
+    xmlns:ns1="http://wso2.org/bps/samples/LoanService">
+
+    <import location="LoanService.wsdl" namespace="http://wso2.org/bps/samples/LoanService"/>
+    <types>
+        <xsd:schema targetNamespace="http://wso2.org/bps/samples/LoanProcess">
+            <xsd:import namespace="http://wso2.org/bps/samples/loan_process/schema" schemaLocation="loan.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="laonRequestRequest">
+        <part name="part" element="ns:LoanRequest"/>
+    </message>
+    <message name="laonRequestResponse">
+        <part name="part" element="ns:LoanOffer"/>
+    </message>
+    <portType name="LoanProcessPortType">
+        <operation name="laonRequest">
+            <input name="input" message="tns:laonRequestRequest"/>
+            <output name="output" message="tns:laonRequestResponse"/>
+        </operation>
+    </portType>
+    <binding name="LoanProcessBinding" type="tns:LoanProcessPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="laonRequest">
+            <soap:operation soapAction="http://wso2.org/bps/process/loanprocess/laonRequest"/>
+            <input name="input">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="LoanProcessService">
+        <port name="LoanProcessPort" binding="tns:LoanProcessBinding">
+			<soap:address location="http://localhost:9763/services/LoanProcessService"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="LoanProcess">
+        <plnk:role name="LoanProcessPortTypeRole" portType="tns:LoanProcessPortType"/>
+    </plnk:partnerLinkType>
+
+     <bpws:property name="correlatorProp" type="ns:CustomerIDType"/>
+
+    <bpws:propertyAlias
+        propertyName="tns:correlatorProp"
+        messageType="tns:laonRequestRequest"
+        part="part">
+        <bpws:query>/ns:CustomerInfo/ns:CustomerID</bpws:query>
+    </bpws:propertyAlias>
+
+    <bpws:propertyAlias
+        propertyName="tns:correlatorProp"
+        messageType="ns1:getLoanOfferResponse"
+        part="part">
+        <bpws:query>/ns:CustomerInfo/ns:CustomerID</bpws:query>
+    </bpws:propertyAlias>
+</definitions>

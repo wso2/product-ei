@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+			xmlns:p="http://www.w3.org/2001/XMLSchema" 
+			xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+			xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+			xmlns:tns="http://wso2.org/bpel/sample" 
+			xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" 
+			xmlns:wsdl="http://echo.services.core.carbon.wso2.org" 
+			name="MyRoleMexTestProcess" 
+			targetNamespace="http://wso2.org/bpel/sample">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <property name="coorProp" type="p:string" xmlns="http://docs.oasis-open.org/wsbpel/2.0/varprop"/>
+    <propertyAlias messageType="tns:MyRoleMexTestProcessRequestMessage" part="payload" propertyName="tns:coorProp" xmlns="http://docs.oasis-open.org/wsbpel/2.0/varprop">
+    <query><![CDATA[/tns:input]]></query>
+  </propertyAlias>
+    <propertyAlias messageType="tns:processRequest" part="parameters" propertyName="tns:coorProp" xmlns="http://docs.oasis-open.org/wsbpel/2.0/varprop">
+    <query><![CDATA[/tns:in]]></query>
+  </propertyAlias>
+    <plnk:partnerLinkType name="echoPLT">
+    <plnk:role name="echo" portType="wsdl:echoPortType"/>
+  </plnk:partnerLinkType>
+    <import location="echo.wsdl" namespace="http://echo.services.core.carbon.wso2.org"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wso2.org/bpel/sample">
+
+            <element name="MyRoleMexTestProcessRequest">
+                <complexType>
+                    <sequence>
+                        <element name="input" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="MyRoleMexTestProcessResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="process">
+            	<complexType>
+            		<sequence>
+            			<element name="in" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="processResponse">
+            	<complexType>
+            		<sequence>
+            			<element name="out" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="MyRoleMexTestProcessRequestMessage">
+        <part element="tns:MyRoleMexTestProcessRequest" name="payload"/>
+    </message>
+    <message name="MyRoleMexTestProcessResponseMessage">
+        <part element="tns:MyRoleMexTestProcessResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the MyRoleMexTestProcess BPEL process -->
+    <message name="processRequest">
+    	<part element="tns:process" name="parameters"/>
+    </message>
+    <message name="processResponse">
+    	<part element="tns:processResponse" name="parameters"/>
+    </message>
+    <portType name="MyRoleMexTestProcess">
+        <operation name="init">
+            <input message="tns:MyRoleMexTestProcessRequestMessage"/>
+            <output message="tns:MyRoleMexTestProcessResponseMessage"/>
+        </operation>
+        <operation name="process">
+        	<input message="tns:processRequest"/>
+        	<output message="tns:processResponse"/>
+        </operation>
+    </portType>
+  
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="MyRoleMexTestProcess">
+        <plnk:role name="MyRoleMexTestProcessProvider" portType="tns:MyRoleMexTestProcess"/>
+    </plnk:partnerLinkType>
+    
+    <binding name="NewBinding" type="tns:MyRoleMexTestProcess">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<operation name="init">
+    		<soap:operation soapAction="http://wso2.org/bpel/sample/init"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    	</operation>
+    	<operation name="process">
+    		<soap:operation soapAction="http://wso2.org/bpel/sample/process"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    	</operation>
+    </binding>
+    <service name="MyRoleMexTestProcessService">
+    	<port binding="tns:NewBinding" name="MyRoleMexTestProcessPort">
+    		<soap:address location="http://www.example.org/"/>
+    	</port>
+    </service>
+</definitions>

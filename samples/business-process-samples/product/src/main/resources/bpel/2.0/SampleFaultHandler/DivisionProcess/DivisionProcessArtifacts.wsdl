@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<definitions name="DivisionProcess"
+        targetNamespace="http://wso2.org/wso2con/2011/sample/division"
+        xmlns:tns="http://wso2.org/wso2con/2011/sample/division"
+        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:p="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <types>
+        <schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+                targetNamespace="http://wso2.org/wso2con/2011/sample/division" 
+                xmlns="http://www.w3.org/2001/XMLSchema">
+
+            <element name="DivisionProcessRequest">
+                <complexType>
+                    <sequence>
+                    	<element name="dividend" type="int" minOccurs="1" maxOccurs="1"/>
+                    	<element name="divisor" type="int" minOccurs="1" maxOccurs="1"></element>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="DivisionProcessResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="DivisionFault">
+            	<complexType>
+            		<sequence>
+            			<element name="DivideByZero" type="string"></element>
+            		</sequence>
+            	</complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="DivisionProcessRequestMessage">
+        <part name="payload" element="tns:DivisionProcessRequest"/>
+    </message>
+    <message name="DivisionProcessResponseMessage">
+        <part name="payload" element="tns:DivisionProcessResponse"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the DivisionProcess BPEL process -->
+    <message name="processFault">
+    	<part name="parameters" element="tns:DivisionFault"></part>
+    </message>
+    <portType name="DivisionProcess">
+        <operation name="process">
+            <input  message="tns:DivisionProcessRequestMessage" />
+            <output message="tns:DivisionProcessResponseMessage"/>
+            <fault name="fault" message="tns:processFault"></fault>
+        </operation>
+    </portType>
+  
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="DivisionProcess">
+        <plnk:role name="DivisionProcessProvider" portType="tns:DivisionProcess"/>
+    </plnk:partnerLinkType>
+    
+    <binding name="DivisionProcessBinding" type="tns:DivisionProcess">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="process">
+    		<soap:operation
+    			soapAction="http://wso2.org/wso2con/2011/sample/division/process" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    		<fault name="fault">
+    			<soap:fault use="literal" name="fault" />
+    		</fault>
+    	</operation>
+    </binding>
+    <service name="DivisionProcessService">
+    	<port name="DivisionProcessPort" binding="tns:DivisionProcessBinding">
+    		<soap:address location="http://www.example.org/" />
+    	</port>
+    </service>
+</definitions>

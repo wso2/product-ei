@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<process
+    name="XKLoanService"
+    targetNamespace="http://wso2.org/bps/samples/XKLoanService"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:tns="http://wso2.org/bps/samples/XKLoanService" xmlns:ls="http://wso2.org/bps/samples/loan_process/schema">
+    <import namespace="http://wso2.org/bps/samples/LoanService" location="LoanService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://wso2.org/bps/samples/loan_process/schema" location="loan.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <partnerLinks>
+        <partnerLink name="XKLoanServicePL" xmlns:tns="http://wso2.org/bps/samples/LoanService" partnerLinkType="tns:LoanServicePT" myRole="LoanServiceRole" partnerRole="LoanServiceClientRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="output" xmlns:tns="http://wso2.org/bps/samples/LoanService" messageType="tns:getLoanOfferResponse"/>
+        <variable name="input" xmlns:tns="http://wso2.org/bps/samples/LoanService" messageType="tns:getLoanOfferRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveGetLoanOffer" createInstance="yes" partnerLink="XKLoanServicePL" operation="getLoanOffer" xmlns:tns="http://wso2.org/bps/samples/LoanService" portType="tns:LoanServicePortType" variable="input"/>
+        <assign name="prepareLoanOffer">
+			<copy>
+				<from>
+					<literal>
+						<ls:LoanOffer>
+							<ls:ProviderName>XK Loan Service</ls:ProviderName>
+							<ls:selected>false</ls:selected>
+							<ls:approved>true</ls:approved>
+							<ls:AnualInterestRate>11.4</ls:AnualInterestRate>
+                            <ls:CustomerInfo>
+                                <ls:Name></ls:Name>
+                                <ls:Email></ls:Email>
+                                <ls:CustomerID></ls:CustomerID>
+                                <ls:CreditRating></ls:CreditRating>
+                            </ls:CustomerInfo>
+						</ls:LoanOffer>
+					</literal>
+				</from>
+				<to variable="output" part="part"/>
+			</copy>
+            <copy>
+                <from>$input.part/ls:CustomerInfo/ls:Name</from>
+                <to>$output.part/ls:CustomerInfo/ls:Name</to>
+            </copy>
+            <copy>
+                <from>$input.part/ls:CustomerInfo/ls:Email</from>
+                <to>$output.part/ls:CustomerInfo/ls:Email</to>
+            </copy>
+            <copy>
+                <from>$input.part/ls:CustomerInfo/ls:CustomerID</from>
+                <to>$output.part/ls:CustomerInfo/ls:CustomerID</to>
+            </copy>
+            <copy>
+                <from>$input.part/ls:CustomerInfo/ls:CreditRating</from>
+                <to>$output.part/ls:CustomerInfo/ls:CreditRating</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeOnLoanOffer" partnerLink="XKLoanServicePL" operation="onLoanOffer" xmlns:tns="http://wso2.org/bps/samples/LoanService" portType="tns:LoanServiceCallbackPortType" inputVariable="output"/>
+    </sequence>
+</process>

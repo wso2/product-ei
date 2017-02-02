@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://ws.apache.org/axis2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.apache.org/axis2">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://ws.apache.org/axis2">
+            <xs:element name="testRest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="issue" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="testRestResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="testRestRequest">
+        <wsdl:part name="parameters" element="ns:testRest"/>
+    </wsdl:message>
+    <wsdl:message name="testRestResponse">
+        <wsdl:part name="parameters" element="ns:testRestResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="RestTestServicePortType">
+        <wsdl:operation name="testRest">
+            <wsdl:input message="ns:testRestRequest" wsaw:Action="urn:testRest"/>
+            <wsdl:output message="ns:testRestResponse" wsaw:Action="urn:testRestResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RestTestServiceSoap11Binding" type="ns:RestTestServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="testRest">
+            <soap:operation soapAction="urn:testRest" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="RestTestServiceSoap12Binding" type="ns:RestTestServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="testRest">
+            <soap12:operation soapAction="urn:testRest" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="RestTestServiceHttpBinding" type="ns:RestTestServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="testRest">
+            <http:operation location="RestTestService/testRest"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="testRest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="testRest"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="RestTestService">
+        <wsdl:port name="RestTestServiceHttpSoap11Endpoint" binding="ns:RestTestServiceSoap11Binding">
+            <soap:address location="http://10.100.0.23:9763/services/RestTestService.RestTestServicehttpRestTestServiceSoap11BindingEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="RestTestServiceHttpSoap12Endpoint" binding="ns:RestTestServiceSoap12Binding">
+            <soap12:address location="http://10.100.0.23:9763/services/RestTestService.RestTestServiceHttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="RestTestServiceHttpEndpoint" binding="ns:RestTestServiceHttpBinding">
+            <http:address location="http://10.100.0.23:9763/services/RestTestService.RestTestServiceHttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

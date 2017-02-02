@@ -919,12 +919,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.registry</groupId>
-                <artifactId>org.wso2.carbon.registry.resource.stub</artifactId>
-                <version>${carbon.registry.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.dataservice.integration.common.clients</artifactId>
                 <version>${product.ei.version}</version>
@@ -975,6 +969,64 @@
                 <artifactId>org.wso2.carbon.bpmn.stub</artifactId>
                 <version>${carbon.business-process.version}</version>
             </dependency>
+            <!--business-process samples related-->
+            <dependency>
+                <groupId>org.wso2.carbon.identity.framework</groupId>
+                <artifactId>org.wso2.carbon.user.mgt.stub</artifactId>
+                <version>${carbon.identity.framework.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-codec.wso2</groupId>
+                        <artifactId>commons-codec</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xmlbeans.wso2</groupId>
+                <artifactId>xmlbeans</artifactId>
+                <version>${orbit.version.org.apache.xmlbeans.wso2.xmlbeans}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.org.apache.ode</groupId>
+                <artifactId>ode</artifactId>
+                <version>${orbit.version.ode}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.business-process</groupId>
+                <artifactId>org.wso2.carbon.humantask</artifactId>
+                <version>${carbon.business-process.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-web-api</artifactId>
+                <version>${javaee.web.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.logging</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>axis</groupId>
+                <artifactId>axis-jaxrpc</artifactId>
+                <version>1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.org.activiti</groupId>
+                <artifactId>activiti-all</artifactId>
+                <version>${org.activiti.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>wsdl4j.wso2</groupId>
+                <artifactId>wsdl4j</artifactId>
+                <version>${wsdl4j.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.registry</groupId>
+                <artifactId>org.wso2.carbon.registry.resource.stub</artifactId>
+                <version>${carbon.registry.version}</version>
+            </dependency>
+            <!--bps process-samples realted: END-->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpmime</artifactId>
@@ -1029,11 +1081,6 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.analytics.styles</artifactId>
-                <version>${product.ei.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.ei</groupId>
-                <artifactId>admin-clients</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
             <dependency>
@@ -1116,6 +1163,13 @@
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1.wso2v19</orbit.version.axis2>
+        <orbit.version.ode>1.3.5-wso2v16</orbit.version.ode>
+        <org.activiti.wso2.version>5.21.0.wso2v1</org.activiti.wso2.version>
+        <orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1
+        </orbit.version.org.apache.xmlbeans.wso2.xmlbeans>
+        <wsdl4j.wso2.version>1.6.2.wso2v3</wsdl4j.wso2.version>
+        <javaee.web.api.version>6.0</javaee.web.api.version>
+        <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
         <carbon.messaging.version>3.1.13</carbon.messaging.version>

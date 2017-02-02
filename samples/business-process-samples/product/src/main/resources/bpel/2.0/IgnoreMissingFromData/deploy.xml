@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:ns1="test:test">
+  <process name="ns1:TestIgnoreMissingFromData">
+    <active>true</active>
+    <provide partnerLink="client">
+      <service name="ns1:TestIgnoreMissingFromDataService" port="TestIgnoreMissingFromDataPort"/>
+    </provide>
+  </process>
+</deploy>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:adder="http://wso2.org/wso2con/2011/sample/adder">
+  <process name="adder:AdderProcess">
+    <active>true</active>
+    <retired>false</retired>
+    <in-memory>false</in-memory>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="adder:AdderProcessService" port="AdderProcessPort"/>
+    </provide>
+  </process>
+</deploy>

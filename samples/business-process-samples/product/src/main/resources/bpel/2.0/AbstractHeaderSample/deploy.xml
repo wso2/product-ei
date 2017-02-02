@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:EnrollmentProcess="http://bps.wso2.org/services/EnrollmentProcess" xmlns:EnrollmentService="http://www.bps.wso2.org/EnrollmentService/" xmlns:EntrollmentService="EntrollmentService">
+  <process name="EntrollmentService:EntrollmentService">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="EnrollmentService:EnrollmentService" port="EnrollmentServiceSOAP"/>
+    </provide>
+  </process>
+  <process name="EnrollmentProcess:EnrollmentProcess">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="EnrollmentProcess:EnrollmentProcess" port="EnrollmentProcessPort"/>
+    </provide>
+    <invoke partnerLink="EPL">
+      <service name="EnrollmentService:EnrollmentService" port="EnrollmentServiceSOAP"/>
+    </invoke>
+  </process>
+</deploy>

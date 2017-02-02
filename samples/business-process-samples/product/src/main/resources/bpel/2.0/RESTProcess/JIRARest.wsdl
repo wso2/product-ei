@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="JIRARest" targetNamespace="http://mpathirage.com/JIRARest/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://mpathirage.com/JIRARest/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ignore="http://wso2.org/bps/ignorens">
+    
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://wso2.org/bps/ignorens">
+            <xs:element name="getIssueXML">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="issue" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="rss">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:any/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getIssueXMLRequest">
+        <wsdl:part name="part1" element="tns:getIssueXML"/>
+    </wsdl:message>
+    <wsdl:message name="getIssueXMLResponse">
+        <wsdl:part name="part" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:portType name="JIRARest">
+        <wsdl:operation name="getIssueXML">
+            <wsdl:input message="tns:getIssueXMLRequest"/>
+            <wsdl:output message="tns:getIssueXMLResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="JIRARestHTTP" type="tns:JIRARest">
+        <http:binding verb="GET"/>
+        <wsdl:operation name="getIssueXML">
+            <http:operation location="/jira/si/jira.issueviews:issue-xml/CARBON-9659/CARBON-9659.xml/getIssueXML"/>
+            <wsdl:input>
+                <http:urlEncoded/>
+            </wsdl:input>
+            <wsdl:output>
+              <mime:content part="part" type="text/xml"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="JIRARest">
+        <wsdl:port binding="tns:JIRARestHTTP" name="JIRARestHTTP">
+            <http:address location="https://wso2.org/jira/si/jira.issueviews:issue-xml/CARBON-5434/CARBON-5434.xml"/>
+        </wsdl:port>
+    </wsdl:service>
+    <plnk:partnerLinkType name="JIRARestPT">
+        <plnk:role name="JIRARestProvider" portType="tns:JIRARest"/>
+    </plnk:partnerLinkType>
+</wsdl:definitions>
+
+

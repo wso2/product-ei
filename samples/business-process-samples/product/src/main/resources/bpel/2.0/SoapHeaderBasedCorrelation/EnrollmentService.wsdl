@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.bps.wso2.org/EnrollmentService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EnrollmentService" targetNamespace="http://www.bps.wso2.org/EnrollmentService/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.bps.wso2.org/EnrollmentService/">
+      <xsd:element name="enrollHeader">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="courseId" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="enroll">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="age" type="xsd:int"></xsd:element>
+            <xsd:element name="course" type="xsd:string"></xsd:element>
+            <xsd:element name="courseId" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="enrollResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="enrollRequest">
+    <wsdl:part element="tns:enroll" name="parameters"/>
+    <wsdl:part  element="tns:enrollHeader" name="enrollHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enrollResponse">
+    <wsdl:part element="tns:enrollResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="EnrollmentService">
+    <wsdl:operation name="enroll">
+      <wsdl:input message="tns:enrollRequest"/>
+      <wsdl:output message="tns:enrollResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EnrollmentServiceSOAP" type="tns:EnrollmentService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="enroll">
+      <soap:operation soapAction="http://www.bps.wso2.org/EnrollmentService/enroll"/>
+      <wsdl:input>
+        <soap:header part="enrollHeader" message="tns:enrollRequest" use="literal" />
+        <soap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EnrollmentService">
+    <wsdl:port binding="tns:EnrollmentServiceSOAP" name="EnrollmentServiceSOAP">
+      <soap:address location="http://localhost:8088/mockEnrollmentServiceSOAP"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

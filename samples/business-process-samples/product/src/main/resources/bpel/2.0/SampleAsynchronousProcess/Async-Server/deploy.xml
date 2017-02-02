@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:client="urn:ode-apache-org:example:async:client"
+  xmlns:server="urn:ode-apache-org:example:async:server">
+  <process name="server:Server">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all" />
+    <provide partnerLink="client">
+      <service name="server:ServerService" port="ServerPort" />
+    </provide>
+    <invoke partnerLink="client">
+      <!--<service name="client:ServerCallbackService" port="ServerCallbackPort" />-->
+	<service name="client:ServerCallbackService" port="ServerCallbackPort">
+		<endpoint xmlns="http://wso2.org/bps/bpel/endpoint/config"
+                          endpointReference="uep.epr"/>
+	</service>
+    </invoke>
+  </process>
+  <!--<process name="client:Client">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all" />
+    <provide partnerLink="client">
+      <service name="client:ClientService" port="ClientPort" />
+    </provide>
+    <provide partnerLink="server">
+      <service name="client:ServerCallbackService" port="ServerCallbackPort" />
+    </provide>
+    <invoke partnerLink="server">
+      <service name="server:ServerService" port="ServerPort" />
+    </invoke>
+  </process>-->
+</deploy>

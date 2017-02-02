@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+	xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+	typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+	targetNamespace="http://wso2.org/samples/bpmn/subprocess">
+	<process id="SubProcess" name="SubProcess" isExecutable="true">
+		<startEvent id="StartEvent" name="Start"
+			activiti:initiator="customer">
+			<extensionElements>
+				<activiti:formProperty id="userName" name="Enter name"
+					type="string" variable="userName" required="true"></activiti:formProperty>
+				<activiti:formProperty id="destination" name="Destination"
+					type="string" variable="destination" required="true"></activiti:formProperty>
+				<activiti:formProperty id="platformId" name="Enter platform"
+					type="long" variable="platformId" required="true"></activiti:formProperty>
+			</extensionElements>
+		</startEvent>
+		<subProcess id="subprocess1" name="Sub Process">
+			<startEvent id="StartEvent2" name="Start"></startEvent>
+			<parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
+			<userTask id="CheckTicketDetailsTask" name="check ticket details"
+				activiti:assignee="inspector">
+				<extensionElements>
+					<activiti:formProperty id="UserName" name="Name of user"
+						type="string" variable="userName" writable="false"></activiti:formProperty>
+					<activiti:formProperty id="Destination" name="Destination"
+						type="string" variable="destination" writable="false"></activiti:formProperty>
+					<activiti:formProperty id="ApproveDetails"
+						name="Approve information" type="enum" variable="approveDetails"
+						required="true">
+						<activiti:value id="true" name="Approve"></activiti:value>
+					</activiti:formProperty>
+				</extensionElements>
+			</userTask>
+			<userTask id="CheckBoardingDetailsTask" name="check boarding details"
+				activiti:assignee="inspector">
+				<extensionElements>
+					<activiti:formProperty id="UserName" name="Name of user"
+						type="string" variable="userName" writable="false"></activiti:formProperty>
+					<activiti:formProperty id="PlatformId" name="Id of platform"
+						type="long" variable="platformId" writable="false"></activiti:formProperty>
+					<activiti:formProperty id="approvePlatform"
+						name="Approve information" type="enum" variable="approvePlatform"
+						required="true">
+						<activiti:value id="true" name="Approve"></activiti:value>
+					</activiti:formProperty>
+				</extensionElements>
+			</userTask>
+			<endEvent id="endevent1" name="End"></endEvent>
+			<sequenceFlow id="flow2" sourceRef="StartEvent2"
+				targetRef="parallelgateway1"></sequenceFlow>
+			<sequenceFlow id="flow3" sourceRef="parallelgateway1"
+				targetRef="CheckTicketDetailsTask"></sequenceFlow>
+			<sequenceFlow id="flow4" sourceRef="parallelgateway1"
+				targetRef="CheckBoardingDetailsTask"></sequenceFlow>
+			<parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
+			<sequenceFlow id="flow5" sourceRef="CheckTicketDetailsTask"
+				targetRef="parallelgateway2"></sequenceFlow>
+			<sequenceFlow id="flow6" sourceRef="CheckBoardingDetailsTask"
+				targetRef="parallelgateway2"></sequenceFlow>
+			<sequenceFlow id="flow7" sourceRef="parallelgateway2"
+				targetRef="endevent1"></sequenceFlow>
+		</subProcess>
+		<endEvent id="EndEvent2" name="End"></endEvent>
+		<boundaryEvent id="boundarytimer1" name="Timer"
+			attachedToRef="subprocess1" cancelActivity="true">
+			<timerEventDefinition>
+				<timeDuration>PT1M</timeDuration>
+			</timerEventDefinition>
+		</boundaryEvent>
+		<userTask id="usertask3" name="failure to board train"
+			activiti:assignee="customer">
+			<documentation>${userName} Sorry you are unable to board in this
+				train schedule.</documentation>
+		</userTask>
+		<endEvent id="endevent3" name="End"></endEvent>
+		<userTask id="DepartureTask" name="Train departure"
+			activiti:assignee="customer">
+			<documentation>${userName} your train boarding review is completed.
+				Please be ready for train departure.</documentation>
+		</userTask>
+		<sequenceFlow id="flow8" sourceRef="subprocess1"
+			targetRef="DepartureTask"></sequenceFlow>
+		<sequenceFlow id="flow9" sourceRef="DepartureTask"
+			targetRef="EndEvent2"></sequenceFlow>
+		<sequenceFlow id="flow10" sourceRef="boundarytimer1"
+			targetRef="usertask3"></sequenceFlow>
+		<sequenceFlow id="flow11" sourceRef="usertask3"
+			targetRef="endevent3"></sequenceFlow>
+		<sequenceFlow id="flow12" sourceRef="StartEvent"
+			targetRef="subprocess1"></sequenceFlow>
+	</process>
+	<bpmndi:BPMNDiagram id="BPMNDiagram_SubProcess">
+		<bpmndi:BPMNPlane bpmnElement="SubProcess" id="BPMNPlane_SubProcess">
+			<bpmndi:BPMNShape bpmnElement="StartEvent" id="BPMNShape_StartEvent">
+				<omgdc:Bounds height="35.0" width="35.0" x="21.0" y="140.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="subprocess1"
+				id="BPMNShape_subprocess1">
+				<omgdc:Bounds height="265.0" width="381.0" x="110.0" y="25.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="StartEvent2"
+				id="BPMNShape_StartEvent2">
+				<omgdc:Bounds height="35.0" width="35.0" x="120.0" y="129.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="parallelgateway1"
+				id="BPMNShape_parallelgateway1">
+				<omgdc:Bounds height="40.0" width="40.0" x="180.0" y="126.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="CheckTicketDetailsTask"
+				id="BPMNShape_CheckTicketDetailsTask">
+				<omgdc:Bounds height="55.0" width="105.0" x="240.0" y="51.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="CheckBoardingDetailsTask"
+				id="BPMNShape_CheckBoardingDetailsTask">
+				<omgdc:Bounds height="55.0" width="105.0" x="240.0" y="170.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+				<omgdc:Bounds height="35.0" width="35.0" x="430.0" y="129.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="parallelgateway2"
+				id="BPMNShape_parallelgateway2">
+				<omgdc:Bounds height="40.0" width="40.0" x="360.0" y="126.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="boundarytimer1"
+				id="BPMNShape_boundarytimer1">
+				<omgdc:Bounds height="30.0" width="30.0" x="278.0" y="270.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="EndEvent2" id="BPMNShape_EndEvent2">
+				<omgdc:Bounds height="35.0" width="35.0" x="660.0" y="140.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="usertask3" id="BPMNShape_usertask3">
+				<omgdc:Bounds height="55.0" width="105.0" x="240.0" y="340.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="endevent3" id="BPMNShape_endevent3">
+				<omgdc:Bounds height="35.0" width="35.0" x="660.0" y="350.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="DepartureTask"
+				id="BPMNShape_DepartureTask">
+				<omgdc:Bounds height="55.0" width="105.0" x="530.0" y="130.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+				<omgdi:waypoint x="155.0" y="146.0"></omgdi:waypoint>
+				<omgdi:waypoint x="180.0" y="146.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+				<omgdi:waypoint x="200.0" y="126.0"></omgdi:waypoint>
+				<omgdi:waypoint x="200.0" y="83.0"></omgdi:waypoint>
+				<omgdi:waypoint x="240.0" y="78.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+				<omgdi:waypoint x="200.0" y="166.0"></omgdi:waypoint>
+				<omgdi:waypoint x="200.0" y="193.0"></omgdi:waypoint>
+				<omgdi:waypoint x="240.0" y="197.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+				<omgdi:waypoint x="345.0" y="78.0"></omgdi:waypoint>
+				<omgdi:waypoint x="380.0" y="83.0"></omgdi:waypoint>
+				<omgdi:waypoint x="380.0" y="126.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+				<omgdi:waypoint x="345.0" y="197.0"></omgdi:waypoint>
+				<omgdi:waypoint x="380.0" y="193.0"></omgdi:waypoint>
+				<omgdi:waypoint x="380.0" y="166.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+				<omgdi:waypoint x="400.0" y="146.0"></omgdi:waypoint>
+				<omgdi:waypoint x="430.0" y="146.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+				<omgdi:waypoint x="491.0" y="157.0"></omgdi:waypoint>
+				<omgdi:waypoint x="530.0" y="157.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+				<omgdi:waypoint x="635.0" y="157.0"></omgdi:waypoint>
+				<omgdi:waypoint x="660.0" y="157.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+				<omgdi:waypoint x="293.0" y="300.0"></omgdi:waypoint>
+				<omgdi:waypoint x="292.0" y="340.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+				<omgdi:waypoint x="345.0" y="367.0"></omgdi:waypoint>
+				<omgdi:waypoint x="660.0" y="367.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+				<omgdi:waypoint x="56.0" y="157.0"></omgdi:waypoint>
+				<omgdi:waypoint x="110.0" y="157.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+		</bpmndi:BPMNPlane>
+	</bpmndi:BPMNDiagram>
+</definitions>

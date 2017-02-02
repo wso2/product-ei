@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dd:deploy xmlns:dd="http://ode.fivesight.com/schemas/2006/06/27/dd">
+<dd:process xmlns:diag="http://example.com/NewDiagram" xmlns:Pool0="http://example.com/NewDiagram/Pool0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:this="http://example.com/NewDiagram/Pool" name="this:Pool" fileName="NewDiagram-Pool.bpel">
+  <dd:property name="PATH">NewDiagram</dd:property>
+  <dd:property name="SVG">NewDiagram.svg</dd:property>
+  <dd:provide partnerLink="pool0AndPoolPlkVar">
+    <dd:service name="this:TestAssignDateService" port="canonicPort"/>
+  </dd:provide>
+</dd:process>
+</dd:deploy>

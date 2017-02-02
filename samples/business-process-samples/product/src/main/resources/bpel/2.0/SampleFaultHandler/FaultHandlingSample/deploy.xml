@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:adder="http://wso2.org/wso2con/2011/sample/adder" xmlns:division="http://wso2.org/wso2con/2011/sample/division" xmlns:faulthandling="http://wso2.org/wso2con/2011/sample/faulthandling">
+  <process name="faulthandling:FaultHandlingSample">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events>
+      <enable-event>activityLifecycle</enable-event>
+    </process-events>
+    <provide partnerLink="client">
+      <service name="faulthandling:FaultHandlingService" port="FaultHandlingPort"/>
+    </provide>
+    <invoke partnerLink="AdderPL">
+      <service name="adder:AdderProcessService" port="AdderProcessPort"/>
+    </invoke>
+    <invoke partnerLink="DivisionPL">
+      <service name="division:DivisionProcessService" port="DivisionProcessPort"/>
+    </invoke>
+  </process>
+</deploy>
