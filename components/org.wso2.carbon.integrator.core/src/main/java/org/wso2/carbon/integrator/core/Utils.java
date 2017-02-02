@@ -229,7 +229,7 @@ public class Utils {
     public static void rewriteLocationHeader(String location, MessageContext messageContext) {
         if (location.contains(":")) {
             String[] tmp = location.split(":");
-            if (tmp.length == 2) {
+            if (tmp.length <= 2) {
                 return;
             }
             String protocol = tmp[0];
