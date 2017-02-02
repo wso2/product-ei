@@ -84,17 +84,14 @@ public class CarbonServerManager {
 
             log.info("Starting carbon server............. ");
             String scriptName = commandMap.get("startupScript");
-            String componentPath = commandMap.get("runtimePath");
-            if (scriptName == null && componentPath != null ) {
-                scriptName = TestFrameworkUtils.getStartupScriptFileName(carbonHome);
-            }
-            else if (scriptName == null && componentPath == null ) {
+            String componentBinPath = commandMap.get("runtimePath");
+
+             if (scriptName == null && componentBinPath == null ) {
                 scriptName = TestFrameworkUtils.getStartupScriptFileName(carbonHome);
             }
             String[] parameters = expandServerStartupCommandList(commandMap);
 
             String[] cmdArray;
-            String componentBinPath = commandMap.get("runtimePath");
 
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
                 //For other runtime based bins (Business-process etc)
