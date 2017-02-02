@@ -643,6 +643,7 @@
 	</phase>
         <phase name="Validation"/>
         <phase name="Transport">
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
             <handler name="RequestURIBasedDispatcher"
                      class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
                 <order phase="Transport"/>
