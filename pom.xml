@@ -954,6 +954,63 @@
                 <artifactId>jline</artifactId>
                 <version>${jline.version}</version>
             </dependency>
+            <!-- business-process-test-specific-->
+            <dependency>
+                <groupId>org.apache.axis2.wso2</groupId>
+                <artifactId>axis2-client</artifactId>
+                <version>${orbit.version.axis2}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.business-process</groupId>
+                <artifactId>org.wso2.carbon.bpel.stub</artifactId>
+                <version>${carbon.business-process.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.business-process</groupId>
+                <artifactId>org.wso2.carbon.humantask.stub</artifactId>
+                <version>${carbon.business-process.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.business-process</groupId>
+                <artifactId>org.wso2.carbon.bpmn.stub</artifactId>
+                <version>${carbon.business-process.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>4.3.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20080701</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.bps.integration.common.clients</artifactId>
+                <version>6.0.0-SNAPSHOT</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.bps.integration.common.utils</artifactId>
+                <version>6.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.bps.integration.ui.pages</artifactId>
+                <version>6.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.samples</artifactId>
@@ -1055,8 +1112,10 @@
         <product.ei.version>6.0.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.10</carbon.business-process.version>
+        <carbon.business-process.version>4.4.11</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
+        <!--Business-Process-tests-->
+        <orbit.version.axis2>1.6.1.wso2v19</orbit.version.axis2>
 
         <!--MB-->
         <carbon.messaging.version>3.1.13</carbon.messaging.version>
@@ -1212,7 +1271,7 @@
         <cipher.tool.version>1.0.0-wso2v3</cipher.tool.version>
         <commons.io.version>2.2</commons.io.version>
 
-        <!-- Automation Framework versions -->
+        <!-- auto Framework versions -->
         <automation.framework.version>4.4.3</automation.framework.version>
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <jettison.orbit.version>1.3.4.wso2v1</jettison.orbit.version>

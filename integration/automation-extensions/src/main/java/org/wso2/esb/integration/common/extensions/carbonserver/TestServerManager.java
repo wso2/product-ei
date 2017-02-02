@@ -36,6 +36,7 @@ public class TestServerManager {
     protected Map<String, String> commandMap = new HashMap<>();
     private static final Log log = LogFactory.getLog(TestServerManager.class);
     protected String carbonHome;
+    protected String runtimePath;
 
     public TestServerManager(AutomationContext context) {
         carbonServer = new CarbonServerManager(context);
@@ -76,6 +77,8 @@ public class TestServerManager {
         return portOffset;
     }
 
+    public String getRuntimePath() { return runtimePath; }
+
     public void configureServer() throws AutomationFrameworkException {
 
     }
@@ -112,6 +115,10 @@ public class TestServerManager {
             this.portOffset = Integer.parseInt(commandMap.get(ExtensionConstants.SERVER_STARTUP_PORT_OFFSET_COMMAND));
         } else {
             this.portOffset = 0;
+        }
+
+        if(commandMap.get("runtimePath") != null){
+            this.runtimePath = commandMap.get("runtimePath");
         }
         carbonServer.startServerUsingCarbonHome(carbonHome, commandMap);
         return carbonHome;
