@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Subscriber" description="Subscriber">
+        <Require feature="pubsub-2"/>
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+
+          <!-- Theme -->
+          <link rel="stylesheet" type="text/css" href="/portal/libs/bootstrap_3.3.5/css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/font-wso2_1.0.0/css/font-wso2.min.css" />
+          <link rel="stylesheet" type="text/css" href="/portal/libs/theme-wso2_1.0/css/theme-wso2.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/nanoscroller.css" />
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/gadget.css" />
+
+          <!-- jQuery -->
+          <script src="../EIAnalytics-Gadget-commons/js/jquery-1.10.2.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/jquery.nanoscroller.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/moment.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/gadget-utils.js"></script>
+
+          <!-- Custom -->
+          <link rel="stylesheet" type="text/css" href="../EIAnalytics-Gadget-commons/css/dataTables.bootstrap.css">
+          <script src="../EIAnalytics-Gadget-commons/js/jquery.dataTables.min.js"></script>
+          <script src="../EIAnalytics-Gadget-commons/js/dataTables.bootstrap.js"></script>
+          <script src="js/gadgetconf.js"></script>
+          <script src="js/main.js"></script>
+
+        </head>
+        <body class="nano">
+            <div class="nano-content">
+              <div id="canvas" class="add-padding-5x">
+                   <table id="tblMessages" class="table table-clickable" cellspacing="0" width="100%">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+               </div>
+            </div>
+        </body>
+        ]]>
+    </Content>
+</Module>

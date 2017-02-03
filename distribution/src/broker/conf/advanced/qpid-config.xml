@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~   WSO2 Inc. licenses this file to you under the Apache License,
+  ~   Version 2.0 (the "License"); you may not use this file except
+  ~   in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing,
+  ~   software distributed under the License is distributed on an
+  ~   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~   KIND, either express or implied.  See the License for the
+  ~   specific language governing permissions and limitations
+  ~   under the License.
+  -->
+
+<broker>
+    <prefix>${ANDES_HOME}</prefix>
+    <work>${QPID_WORK}</work>
+    <conf>${prefix}</conf>
+
+    <plugin-directory>${ANDES_HOME}/lib/plugins</plugin-directory>
+    <cache-directory>${QPID_WORK}/cache</cache-directory>
+
+    <connector>
+        <qpidnio>false</qpidnio>
+        <protectio>
+            <enabled>false</enabled>
+            <readBufferLimitSize>262144</readBufferLimitSize>
+            <writeBufferLimitSize>262144</writeBufferLimitSize>
+        </protectio>
+        <transport>nio</transport>
+        <socketReceiveBuffer>32768</socketReceiveBuffer>
+        <socketSendBuffer>32768</socketSendBuffer>
+    </connector>
+    <management>
+        <enabled>true</enabled>
+        <jmxport>8999</jmxport>
+        <ssl>
+            <enabled>false</enabled>
+            <!-- Update below path to your keystore location, or run the bin/create-example-ssl-stores(.sh|.bat)
+                 script from within the etc/ folder to generate an example store with self-signed cert -->
+            <keyStorePath>${conf}/qpid.keystore</keyStorePath>
+            <keyStorePassword>password</keyStorePassword>
+        </ssl>
+    </management>
+    <advanced>
+        <filterchain enableExecutorPool="true"/>
+        <enablePooledAllocator>false</enablePooledAllocator>
+        <enableDirectBuffers>false</enableDirectBuffers>
+        <framesize>65535</framesize>
+        <compressBufferOnQueue>false</compressBufferOnQueue>
+        <enableJMSXUserID>false</enableJMSXUserID>
+        <locale>en_US</locale>
+    </advanced>
+
+    <security>
+        <pd-auth-manager>
+            <principal-database>
+                <class>org.wso2.carbon.andes.authentication.andes.CarbonBasedPrincipalDatabase</class>
+                <!--attributes>
+                    <attribute>
+                        <name>name</name>
+                        <value>carbon-user-store</value>
+                    </attribute>
+                </attributes-->
+            </principal-database>
+        </pd-auth-manager>
+
+        <msg-auth>false</msg-auth>
+    </security>
+
+    <virtualhosts>${conf}/qpid-virtualhosts.xml</virtualhosts>
+
+    <heartbeat>
+        <delay>0</delay>
+        <timeoutFactor>2.0</timeoutFactor>
+    </heartbeat>
+    <queue>
+        <auto_register>true</auto_register>
+        <!-- Enable this into 'true' will activate the queue message counters and message count of each queue
+             wil be displayed in the admin console by default. When this is 'false' message count can be read from
+             console on user demand-->
+        <viewMessageCounts>false</viewMessageCounts>
+    </queue>
+
+    <status-updates>ON</status-updates>
+
+</broker>
+
+

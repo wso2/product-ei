@@ -24,20 +24,20 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
   <title>
-      WSO2 ESB - Mediator Catalog
+      WSO2 EI - Mediator Catalog
   </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
 
 <body xml:lang="en">
     [ <a href="docs_index.html"> Documentation Index </a> ]
-<h1>WSO2 Enterprise Service Bus (ESB) Mediator Catalog</h1>
-    <p>Mediators are the basic component of a mediation framework and the WSO2 ESB has a
+<h1>WSO2 Enterprise Integrator (EI) Mediator Catalog</h1>
+    <p>Mediators are the basic component of a mediation framework and the WSO2 EI has a
         comprehensive set of mediators. This guide will walk you through the genral concept of
-        mediation inside the WSO2 ESB and will also describe each and every mediator shipped with
-        WSO2 ESB, one by one</p>
+        mediation inside the WSO2 EI and will also describe each and every mediator shipped with
+        WSO2 EI, one by one</p>
 <h2>Contents</h2>
 <ul>
     <li><a href="#Intro">Introduction</a></li>
@@ -57,26 +57,26 @@
     <li><a href="#MediatorCatalog">The Mediator Catalog</a></li>
 </ul>
 <h2 id="Intro">Introduction</h2>
-<p>Message mediation is a fundamental part of any ESB. WSO2 ESB achieves
-message mediation through it's mediators. ESB comes with a rich set of 30 plus
+<p>Message mediation is a fundamental part of any EI. WSO2 EI achieves
+message mediation through it's mediators. EI comes with a rich set of 30 plus
 mediators to support the most common mediation functionalities as well as
 advanced functionalities.</p>
 
-<p>Built in mediator capabilities of ESB provide functionality to match
+<p>Built in mediator capabilities of EI provide functionality to match
 incompatible protocols, data formats and interaction patterns across different
-resources. Data can be split, cloned, aggregated and enriched, allowing ESB to
+resources. Data can be split, cloned, aggregated and enriched, allowing EI to
 match the different capabilities of services. XQuery and XSLT allows rich
 transformations on the messages. Rule based message mediation allows user to
 cope with the uncertainty of business logic. Content based routing using XPath
 filtering is supported in different flavors, allowing users to get the most
 convenient configuration experience. Built in capability to handle transactions
-allows message mediation to be done transactionally inside the ESB. With the
-Eventing capabilities of ESB, EDA based components can be easily
+allows message mediation to be done transactionally inside the EI. With the
+Eventing capabilities of EI, EDA based components can be easily
 interconnected. With features like throttling and caching integrated in to the
-message mediation, powerful interconnections can be made, allowing ESB to be
+message mediation, powerful interconnections can be made, allowing EI to be
 used in the front end of organizations SOA infrastructure.</p>
 
-<p>ESB mediation framework is designed from the ground up to be extensible.
+<p>EI mediation framework is designed from the ground up to be extensible.
 Everyday users write their own custom mediators to facilitate their custom
 requirements. </p>
 
@@ -84,12 +84,12 @@ requirements. </p>
 
 <h2 id="HowMediatorWorks">How does a mediator work?</h2>
 
-<p>A mediator is a full powered processing unit in ESB. In run-time it has
-access to all the parts of ESB along with the current message. Usually a
+<p>A mediator is a full powered processing unit in EI. In run-time it has
+access to all the parts of EI along with the current message. Usually a
 mediator is configured using XML. Different mediators have their own XML
 configurations. </p>
 
-<p>At the run-time a Message is injected in to the mediator with the ESB
+<p>At the run-time a Message is injected in to the mediator with the EI
 run-time information. Then this mediator can do virtually anything with the
 message. Here are some examples of mediator functionalities. </p>
 <ul>
@@ -105,14 +105,14 @@ message. Here are some examples of mediator functionalities. </p>
 <p>Wide range usage of mediators is visible through the above few examples.</p>
 
 <p>Also mediators are considered as one of the main mechanisms for extending
-ESB. A user can write a mediator and put it in to ESB. This custom mediator and
+EI. A user can write a mediator and put it in to EI. This custom mediator and
 any other built in mediator will be exactly same from the API and the
 privileges.</p>
 
 <h2 id="Sequences">Sequences</h2>
 
-<p>Sequence is a List Mediator of the ESB. That means it can hold other
-mediators and execute them. It is a part of the core of ESB and message
+<p>Sequence is a List Mediator of the EI. That means it can hold other
+mediators and execute them. It is a part of the core of EI and message
 mediation cannot live without this mediator. When a message is delivered to a
 sequence, it sends the message through all it's child mediators.</p>
 
@@ -165,14 +165,14 @@ specified, fault sequence will be treated as the error handler.</p>
 
 <h2 id="HowMessageMediate">How does a message comes to a mediator?</h2>
 
-<p>There are two operational modes in the ESB. They are message mediation and
+<p>There are two operational modes in the EI. They are message mediation and
 proxy services. Message mediation is all about mediators. Proxy services can
 use message mediation as well.</p>
 
 <h3 id="MessageMediation">Message Mediation</h3>
 
-<p>A message comes to the main sequence of the ESB if the message is not for
-any of the proxy services defined in the ESB.</p>
+<p>A message comes to the main sequence of the EI if the message is not for
+any of the proxy services defined in the EI.</p>
 
 <p>Then this message goes through each of the mediators inside the main
 sequence.</p>
@@ -202,10 +202,10 @@ three sequences can be executed. All the three sequences are optional.</p>
 <p>As mentioned earlier, every sequence is a collection of mediators. A message
 delivered to a sequence will go through all its child mediators.</p>
 
-<p>WSO2 ESB has a built in sequence editor which helps user to develop/edit
+<p>WSO2 EI has a built in sequence editor which helps user to develop/edit
 sequences. The <a href="sequence_editor.html">Sequence Editor Guide</a> gives
 an introduction to the usage of the sequence editor. Following is the catalog
-of the built in mediators of WSO2 ESB.</p>
+of the built in mediators of WSO2 EI.</p>
 
 <h2 id="MediatorCatalog">The Mediator Catalog</h2>
 
@@ -266,12 +266,12 @@ of the built in mediators of WSO2 ESB.</p>
     <tr>
       <td/>
       <td><a href="mediators/in-out.html">Out</a> </td>
-      <td>Inbuilt filter for choosing messages in ESB out path </td>
+      <td>Inbuilt filter for choosing messages in EI out path </td>
     </tr>
     <tr>
       <td/>
       <td><a href="mediators/in-out.html">In</a></td>
-      <td>Inbuilt filter for choosing messages in ESB in path </td>
+      <td>Inbuilt filter for choosing messages in EI in path </td>
     </tr>
     <tr>
       <td/>
@@ -326,7 +326,7 @@ of the built in mediators of WSO2 ESB.</p>
     <tr>
       <td>Advanced </td>
       <td><a href="mediators/cache.html">Cache</a></td>
-      <td>Evaluate messages based on weather the same message came to the ESB
+      <td>Evaluate messages based on weather the same message came to the EI
       </td>
     </tr>
     <tr>

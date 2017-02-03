@@ -19,9 +19,7 @@
   ~
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>p2-profile</artifactId>
         <groupId>org.wso2.ei</groupId>
@@ -134,9 +132,6 @@
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.mediation.clustering.feature:${carbon.mediation.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.wso2.carbon.mediator.bam.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.application.mgt.synapse.feature:${carbon.mediation.version}
@@ -437,9 +432,6 @@
                                 <featureArtifactDef>
                                     org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}
                                 </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.wso2.carbon.cloud.gateway.agent.feature:${carbon.mediation.version}
-                                </featureArtifactDef>
                                 <!--<featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.bam.mediation.agent.feature:${carbon.mediation.version}
                                 </featureArtifactDef>-->
@@ -594,10 +586,6 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.mediation.clustering.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.mediator.bam.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
@@ -1031,10 +1019,6 @@
                                     <id>org.wso2.carbon.websocket.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.cloud.gateway.agent.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
 
                                 <feature>
                                     <id>org.wso2.carbon.dataservices.feature.group</id>
@@ -1159,10 +1143,6 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.mediation.clustering.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.mediator.bam.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
@@ -1646,10 +1626,6 @@
                                     <id>org.wso2.carbon.websocket.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.cloud.gateway.agent.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
                                 <!--<feature>
                                     <id>org.wso2.carbon.bam.mediation.agent.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
@@ -1689,8 +1665,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
-                                <mkdir
-                                        dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server"/>
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server" />
                             </tasks>
                         </configuration>
                         <goals>
@@ -1704,9 +1679,8 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <replace token="false" value="true"
-                                         dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
-                                    <include name="**/bundles.info"/>
+                                <replace token="false" value="true" dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
+                                    <include name="**/bundles.info" />
                                 </replace>
                             </tasks>
                         </configuration>

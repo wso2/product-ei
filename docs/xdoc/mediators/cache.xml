@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Cache Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Cache Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -17,7 +17,7 @@
 seen before. If the message is seen before it will execute a specified
 sequence. It uses message hashes for checking the equivalence of messages. Once the Cache 
 meditor finds that the message is a cached message, it will fetch
-the cached response and prepare ESB for sending the response. If a
+the cached response and prepare EI for sending the response. If a
 sequence is specified for a cache hit, user can send back the response message
 within this sequence using a send mediator. If a sequence is not specified
 cached response is sent back to the requestor. </p>

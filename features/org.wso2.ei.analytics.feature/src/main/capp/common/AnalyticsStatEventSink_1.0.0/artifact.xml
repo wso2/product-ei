@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="AnalyticsStatEventSink" version="1.0.0" type="analytics/eventstore" serverRole="DataAnalyticsServer">
+    <file>org_wso2_esb_analytics_stream_FlowEntry.xml</file>
+</artifact>

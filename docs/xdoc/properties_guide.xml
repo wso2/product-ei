@@ -5,14 +5,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            ESB Properties and Parameters Catalog
+            EI Properties and Parameters Catalog
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) and Parameters Catalog</h1>
+        <h1>WSO2 Enterprise Integrator (EI) and Parameters Catalog</h1>
         <h2>Contents</h2>
         <div class="toc">
             <ol>
@@ -32,8 +32,8 @@
         </div>
         <h2 id="intro">Introduction</h2>
         <p>Properties provide the means of accessing various information regarding a message
-            passing through the ESB. Also properties can be used to control the behaviour of the
-            ESB for a particular message as well.</p>
+            passing through the EI. Also properties can be used to control the behaviour of the
+            EI for a particular message as well.</p>
         <h2 id="gp">Generic Properties</h2>
         <h3>Property: synapse.isresponse</h3>
         <table border="1">
@@ -56,7 +56,7 @@
             <tr>
                 <td><strong>Description</strong></td>
                 <td>
-                    Once this property is set to 'true' on a message, the ESB will start treating it
+                    Once this property is set to 'true' on a message, the EI will start treating it
                     as a response message. It is generally used to route a request message back to its
                     source as the response.
                 </td>
@@ -90,8 +90,8 @@
             <tr>
                 <td><strong>Description</strong></td>
                 <td>
-                    By default the ESB adds a new set of WS-Addressing headers to the messages forwarded
-                    from the ESB. If this property is set to 'true' on a message the ESB will forward it
+                    By default the EI adds a new set of WS-Addressing headers to the messages forwarded
+                    from the EI. If this property is set to 'true' on a message the EI will forward it
                     without altering its existing WS-Addressing headers.
                 </td>
             </tr>
@@ -158,9 +158,9 @@
                 <td><strong>Description</strong></td>
                 <td>
                     Set this property to 'true' on a message to indicate that no response message is
-                    expected for it once it is forwarded from the ESB. In other words the ESB will do
+                    expected for it once it is forwarded from the EI. In other words the EI will do
                     an out-only invocation with such messages. It is very important to set this property
-                    on messages that are involved in out-only invocations to prevent the ESB from registering
+                    on messages that are involved in out-only invocations to prevent the EI from registering
                     unnecessary callbacks for response handling and eventually running out of memory.
                 </td>
             </tr>
@@ -263,7 +263,7 @@
             <tr>
                 <td><strong>Description</strong></td>
                 <td>
-                    Use this property to set the exception stacktrace in case of an error. If the ESB
+                    Use this property to set the exception stacktrace in case of an error. If the EI
                     encounters an error while mediation or routing this property will be automatically
                     populated.
                 </td>
@@ -431,7 +431,7 @@
             <tr>
                 <td><strong>Description</strong></td>
                 <td>
-                    Set this property to 'true' if you do not want the ESB to add WS-Addressing headers
+                    Set this property to 'true' if you do not want the EI to add WS-Addressing headers
                     to outgoing messages. This property can affect messages sent to backend services as
                     well as the responses routed back to clients.
                 </td>
@@ -524,7 +524,7 @@
                     <strong>Possible Values</strong>
                 </td>
                 <td>
-                    IP address or hostname of the ESB host
+                    IP address or hostname of the EI host
                 </td>
             </tr>
             <tr>
@@ -608,7 +608,7 @@
                     <strong>Description</strong>
                 </td>
                 <td>
-                    This property makes the outgoing URL of the ESB a complete URL. This is
+                    This property makes the outgoing URL of the EI a complete URL. This is
                     important when we talk through a proxy server.
                 </td>
             </tr>
@@ -711,9 +711,9 @@
                     <strong>Description</strong>
                 </td>
                 <td>
-                    In situations where the ESB is receiving HTTP response messages without the
+                    In situations where the EI is receiving HTTP response messages without the
                     Content-type header, this property can be used to specify a default content type
-                    to be used. If no such content type is specified for responses the ESB will
+                    to be used. If no such content type is specified for responses the EI will
                     default to 'application/octet-stream'.
                 </td>
             </tr>
@@ -766,7 +766,7 @@
                 </td>
                 <td>
                     This property should be removed if a user want to generate a response from the
-                    ESB to a request without an entity body. i.e. GET request
+                    EI to a request without an entity body. i.e. GET request
                 </td>
             </tr>
             <tr>
@@ -920,7 +920,7 @@
                     <strong>Description</strong>
                 </td>
                 <td>
-                    When ESB receives a soap fault as a HTTP 500 message ESB will forward this fault
+                    When EI receives a soap fault as a HTTP 500 message EI will forward this fault
                     to client with status code 200
                 </td>
             </tr>

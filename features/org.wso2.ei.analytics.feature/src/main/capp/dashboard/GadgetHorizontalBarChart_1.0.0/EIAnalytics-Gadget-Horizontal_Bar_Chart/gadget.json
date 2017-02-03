@@ -1,0 +1,21 @@
+{
+    "id": "EIAnalytics-Gadget-Horizontal_Bar_Chart",
+    "title": "Top Five",
+    "type": "gadget",
+    "thumbnail": "store://gadget/usa-business-revenue/index.png",
+    "data": {
+        "url": "store://gadget/EIAnalytics-Gadget-Horizontal_Bar_Chart/index.xml"
+    },
+    "listen": {
+        "subscriber": {
+            "type": "date-range",
+            "description": "Used to listen to Any message of type state"
+        }
+    },
+    "toolbarButtons":{
+        "default":{
+            "maximize": false,
+            "configurations": false
+        }
+    }
+}

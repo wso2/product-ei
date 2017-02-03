@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>WSO2 ESB - Aggregate Mediator </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <title>WSO2 EI - Aggregate Mediator </title>
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
@@ -101,7 +101,7 @@ expression specified by the attribute 'expression' on the 'onComplete' element.
 &lt;/outSequence&gt;
 </pre>
 
-<p>In this scenario the mediator aggregates the responses coming in to ESB and on completion it sends the
+<p>In this scenario the mediator aggregates the responses coming in to EI and on completion it sends the
     aggregated message through the send mediator. </p>
 </body>
 </html>

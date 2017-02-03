@@ -1,0 +1,90 @@
+{
+  "name": "org.wso2.esb.analytics.stream.Event",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "tenantId",
+      "type": "INT"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "messageFlowId",
+      "type": "STRING"
+    },
+    {
+      "name": "host",
+      "type": "STRING"
+    },
+    {
+      "name": "hashCode",
+      "type": "STRING"
+    },
+    {
+      "name": "componentName",
+      "type": "STRING"
+    },
+    {
+      "name": "componentType",
+      "type": "STRING"
+    },
+    {
+      "name": "componentIndex",
+      "type": "INT"
+    },
+    {
+      "name": "componentId",
+      "type": "STRING"
+    },
+    {
+      "name": "startTime",
+      "type": "LONG"
+    },
+    {
+      "name": "endTime",
+      "type": "LONG"
+    },
+    {
+      "name": "duration",
+      "type": "LONG"
+    },
+    {
+      "name": "beforePayload",
+      "type": "STRING"
+    },
+    {
+      "name": "afterPayload",
+      "type": "STRING"
+    },
+    {
+      "name": "contextPropertyMap",
+      "type": "STRING"
+    },
+    {
+      "name": "transportPropertyMap",
+      "type": "STRING"
+    },
+    {
+      "name": "children",
+      "type": "STRING"
+    },
+    {
+      "name": "entryPoint",
+      "type": "STRING"
+    },
+    {
+      "name": "entryPointHashcode",
+      "type": "STRING"
+    },
+    {
+      "name": "faultCount",
+      "type": "INT"
+    },
+    {
+      "name": "_timestamp",
+      "type": "LONG"
+    }
+  ]
+}

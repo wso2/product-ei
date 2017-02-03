@@ -18,7 +18,6 @@
 
 package org.wso2.carbon.integrator.core.handler;
 
-import org.apache.axis2.addressing.EndpointReference;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.protocol.HTTP;
@@ -29,6 +28,7 @@ import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.builtin.SendMediator;
 import org.apache.synapse.transport.passthru.core.PassThroughSenderManager;
 import org.wso2.carbon.integrator.core.Utils;
+import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 
 import java.util.TreeMap;
@@ -48,41 +48,31 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     public boolean handleRequestInFlow(MessageContext messageContext) {
         boolean isPreserveHeadersContained = false;
         try {
-            if (messageContext.getTo() != null) {
-                String uri = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TransportInURL").toString();
+            org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
+            if (axis2MessageContext.getProperty("TransportInURL") != null) {
+                String uri = axis2MessageContext.getProperty("TransportInURL").toString();
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
                 String contextPath = Utils.getContext(uri);
-                if (((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS") instanceof TreeMap && contextPath != null) {
-                    host = Utils.getHostname((String) ((TreeMap) ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS")).get("Host"));
-                    if ("/odata".equals(contextPath)) {
-                        configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+                if (headers instanceof TreeMap && contextPath != null) {
+                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
+                    if (validateWhiteListsWithUri(uri) || "/odata".equals(contextPath) || uri.endsWith("?tryit")) {
                         isPreserveHeadersContained = true;
-                        Utils.setIntegratorHeader(messageContext);
-                        messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
-                        return sendMediator.mediate(messageContext);
+                        return dispatchMessage(protocol, host, uri, messageContext);
                     } else {
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
                         if (tenantDomain != null) {
-                            WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri, host);
+                            WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
                             if (webApplication != null) {
-                                configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                                 isPreserveHeadersContained = true;
-                                Utils.setIntegratorHeader(messageContext);
-                                messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
-/*                                Object httpConnection = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("pass-through.Source-Connection");
-                                String remoteAddr = Utils.getRemoteAddress(httpConnection);
-                                messageContext.setFrom(new EndpointReference(protocol + ":/" + remoteAddr));*/
-                                return sendMediator.mediate(messageContext);
+                                return dispatchMessage(protocol, host, uri, messageContext);
                             }
                         } else {
-                            WebApplication webApplication = Utils.getStartedWebapp(uri, host);
+                            WebApplication webApplication = Utils.getStartedWebapp(uri);
                             if (webApplication != null) {
-                                configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
                                 isPreserveHeadersContained = true;
-                                Utils.setIntegratorHeader(messageContext);
-                                messageContext.setTo(new EndpointReference(protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri));
-                                return sendMediator.mediate(messageContext);
+                                return dispatchMessage(protocol, host, uri, messageContext);
                             }
                         }
                     }
@@ -106,6 +96,13 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleResponseInFlow(MessageContext messageContext) {
+        Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+        if (headers instanceof TreeMap) {
+            String locationHeader = (String) ((TreeMap) headers).get("Location");
+            if (locationHeader != null) {
+                Utils.rewriteLocationHeader(locationHeader, messageContext);
+            }
+        }
         return true;
     }
 
@@ -120,5 +117,29 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
             msgContext.getServiceLog().error(msg, e);
         }
         throw new SynapseException(msg, e);
+    }
+
+    private void setREST_URL_POSTFIX(org.apache.axis2.context.MessageContext messageContext, String to) {
+        if (messageContext.getProperty("REST_URL_POSTFIX") != null) {
+            messageContext.setProperty("REST_URL_POSTFIX", to);
+        }
+    }
+
+    private boolean dispatchMessage(String protocol, String host, String uri, MessageContext messageContext) {
+        configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+        Utils.setIntegratorHeader(messageContext);
+        setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
+        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+        sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
+        return sendMediator.mediate(messageContext);
+    }
+
+    private boolean validateWhiteListsWithUri(String uri) {
+        for (String contextPath : IntegratorComponent.getWhiteListContextPaths()) {
+            if (uri.contains(contextPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

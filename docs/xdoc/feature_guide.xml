@@ -24,60 +24,60 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
   <title>
-      WSO2 ESB - Feature Guide
+      WSO2 EI - Feature Guide
   </title>
-  <link href="css/esb-docs.css" rel="stylesheet" />
+  <link href="css/EI-docs.css" rel="stylesheet" />
   <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
   media="all" />
 </head>
 
 <body xml:lang="en">
     [ <a href="docs_index.html"> Documentation Index </a> ]
-<h1>WSO2 Enterprise Service Bus (ESB) - Feature Guide</h1>
+<h1>WSO2 Enterprise Integrator (EI) - Feature Guide</h1>
     <p>WSO2 Carbon is an OSGi-based component framework allows the complete set of products to leverage
         shared components, ensuring a consistent set of features between products, a consistent user
         experience, and reusing of identical components.WSO2 Carbon provides the core capabilities
         for security, clustering, logging,statistics, and management, and through a technology
         called OSGi, higher level capabilities can be readily added as components to this core.
-        WSO2 ESB can be considered as WSO2 Carbon and bunch of features related to ESB.
+        WSO2 EI can be considered as WSO2 Carbon and bunch of features related to EI.
         With the power of componentized architecture of WSO2 Platform, user can add/remove various
         features from all WSO2 product.</p>
 
 
 <h2 id="Intro">Introduction</h2>
-<p>This documentation provides guideline on feature management related to WSO2 ESB.</p>
+<p>This documentation provides guideline on feature management related to WSO2 EI.</p>
 
-<h2 id="OtherFeatures">Installing various features in WSO2 ESB?</h2>
+<h2 id="OtherFeatures">Installing various features in WSO2 EI?</h2>
 
 <p>Using the Feature Manager (Configure > Feature in the tabbed pane) you can install any feature
 available in the feature repository(p2-repo). Please refer
 <a href="http://wso2.org/project/carbon/3.2.0/docs/component-mgt/docs/userguide.html">Feature Manager Documentation.</a></p>
 <p>
-  <img alt="BPEL Feature installed on ESB" src="images/bpel_feature_esb.png"/>
+  <img alt="BPEL Feature installed on EI" src="images/bpel_feature_EI.png"/>
     <br/>
 </p>
 
-<h2 id="ESBFeatureOnCarbonServer">Installing ESB features on other WSO2 Products</h2>
+<h2 id="EIFeatureOnCarbonServer">Installing EI features on other WSO2 Products</h2>
     <p>
-        Also there can be cases where we need to install the ESB related features inside other WSO2 Products.
-        For instance, we might have to install the ESB Features on raw Carbon Server. For such cases, ESB provides
-        a single feature which install all the ESB Related features. Using the Feature Manager
-        (Configure > Feature in the tabbed pane) you can install 'ESB Mediation' feature to get the functionality
-        of ESB in to any other WSO2 Product.
+        Also there can be cases where we need to install the EI related features inside other WSO2 Products.
+        For instance, we might have to install the EI Features on raw Carbon Server. For such cases, EI provides
+        a single feature which install all the EI Related features. Using the Feature Manager
+        (Configure > Feature in the tabbed pane) you can install 'EI Mediation' feature to get the functionality
+        of EI in to any other WSO2 Product.
     </p>
     <p>
         <br/>
-        <img alt="Installing ESB Mediation Feature in Carbon Server" src="images/esb_mediation_feature.png"/>
+        <img alt="Installing EI Mediation Feature in Carbon Server" src="images/EI_mediation_feature.png"/>
         <br/>
-        <img alt="ESB Mediation Feature installed on Carbon Server" src="images/carbon_server_with_esb.png"/><br/>
+        <img alt="EI Mediation Feature installed on Carbon Server" src="images/carbon_server_with_EI.png"/><br/>
     </p>
 
     <p>In addition to that you have to modify some configuration files to get the complete functionality of the
-        ESB.</p>
+        EI.</p>
     <ul>
-        <li>Replace $CARBON_HOME/repository/conf/axis2.xml with <a href="http://svn.wso2.org/repos/wso2/branches/carbon/3.2.0/products/esb/4.0.0/modules/distribution/product/src/main/conf/axis2.xml">axis2.xml file for ESB.</a> </li>
-        <li>Copy <a href="https://svn.wso2.org/repos/wso2/branches/carbon/3.2.0/products/esb/4.0.0/modules/distribution/product/src/main/conf/synapse.properties">synapse.properties</a> to $CARBON_HOMElib/core/WEB-INF/classes/</li>
-        <li>Replace $CARBON_HOME/lib/log4j.properties with ESB <a href="https://svn.wso2.org/repos/wso2/branches/carbon/3.2.0/products/esb/4.0.0/modules/distribution/product/src/main/conf/log4j.properties">log4j.properties.</a> </li>
+        <li>Replace $CARBON_HOME/repository/conf/axis2.xml with <a href="http://svn.wso2.org/repos/wso2/branches/carbon/3.2.0/products/EI/4.0.0/modules/distribution/product/src/main/conf/axis2.xml">axis2.xml file for EI.</a> </li>
+        <li>Copy <a href="https://svn.wso2.org/repos/wso2/branches/carbon/3.2.0/products/EI/4.0.0/modules/distribution/product/src/main/conf/synapse.properties">synapse.properties</a> to $CARBON_HOMElib/core/WEB-INF/classes/</li>
+        <li>Replace $CARBON_HOME/lib/log4j.properties with EI <a href="https://svn.wso2.org/repos/wso2/branches/carbon/3.2.0/products/EI/4.0.0/modules/distribution/product/src/main/conf/log4j.properties">log4j.properties.</a> </li>
     </ul>
     <p>After applying above changes, we have to restart the Carbon Server.</p>
 </body>

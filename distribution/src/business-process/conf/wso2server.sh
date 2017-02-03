@@ -137,10 +137,12 @@ fi
 
 # ----- Process the input command ----------------------------------------------
 args=""
-NODE_PARAMS="-DdisableMl=false "
 for c in $*
 do
-    if [ "$CMD" = "--debug" ]; then
+    if [ "$c" = "--debug" ] || [ "$c" = "-debug" ] || [ "$c" = "debug" ]; then
+          CMD="--debug"
+          continue
+    elif [ "$CMD" = "--debug" ]; then
           if [ -z "$PORT" ]; then
                 PORT=$c
           fi
@@ -179,7 +181,7 @@ elif [ "$CMD" = "start" ]; then
   fi
   export CARBON_HOME="$CARBON_HOME"
 # using nohup sh to avoid erros in solaris OS.TODO
-  nohup sh $CARBON_HOME/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
+  nohup sh "$CARBON_HOME"/bin/wso2server.sh $args > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "stop" ]; then
   export CARBON_HOME="$CARBON_HOME"
@@ -198,7 +200,7 @@ elif [ "$CMD" = "restart" ]; then
   done
 
 # using nohup sh to avoid erros in solaris OS.TODO
-  nohup sh "$CARBON_HOME"/bin/wso2server.sh $args $NODE_PARAMS > /dev/null 2>&1 &
+  nohup sh "$CARBON_HOME"/bin/wso2server.sh $args > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "test" ]; then
     JAVACMD="exec "$JAVACMD""
@@ -218,7 +220,7 @@ fi
 CARBON_XBOOTCLASSPATH=""
 for f in "$CARBON_HOME"/../lib/xboot/*.jar
 do
-    if [ "$f" != "$CARBON_HOME/../lib/xboot/*.jar" ];then
+    if [ "$f" != "$CARBON_HOME/wso2/lib/xboot/*.jar" ];then
         CARBON_XBOOTCLASSPATH="$CARBON_XBOOTCLASSPATH":$f
     fi
 done
@@ -227,7 +229,7 @@ JAVA_ENDORSED_DIRS="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":
 
 CARBON_CLASSPATH=""
 if [ -e "$JAVA_HOME/lib/tools.jar" ]; then
-    CARBON_CLASSPATH="$JAVA_HOME/lib/tools.jar"
+    CARBON_CLASSPATH="$JAVA_HOME/../lib/tools.jar"
 fi
 for f in "$CARBON_HOME"/bin/*.jar
 do
@@ -267,12 +269,25 @@ status=$START_EXIT_STATUS
 
 if [ -z "$JVM_MEM_OPTS" ]; then
    java_version=$("$JAVACMD" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-   JVM_MEM_OPTS="-Xms256m -Xmx2048m"
+   JVM_MEM_OPTS="-Xms256m -Xmx1024m"
    if [ "$java_version" \< "1.8" ]; then
       JVM_MEM_OPTS="$JVM_MEM_OPTS -XX:MaxPermSize=256m"
    fi
 fi
 echo "Using Java memory options: $JVM_MEM_OPTS"
+
+
+#setting up profile parameter for runtime in EI
+PROFILE_SELECTED="false"
+for i in "$@"; do
+   if echo "$i" | grep -q "Dprofile"; then
+      PROFILE_SELECTED="true"
+   fi
+done
+
+if [ "$PROFILE_SELECTED" = false ] ; then
+   NODE_PARAMS="$NODE_PARAMS -Dprofile=business-process-default"
+fi
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
@@ -294,6 +309,7 @@ do
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
     -Dcarbon.home="$CARBON_HOME" \
+    -Dlogger.server.name="EI-Business-Process" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
     -Dcarbon.repository.dir.path="$CARBON_HOME/repository" \
@@ -306,7 +322,7 @@ do
     -Dcarbon.internal.lib.dir.path="$CARBON_HOME/../lib" \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
-    -Dconf.location="$CARBON_HOME/conf"\
+    -Dconf.location="$CARBON_HOME/conf" \
     -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \

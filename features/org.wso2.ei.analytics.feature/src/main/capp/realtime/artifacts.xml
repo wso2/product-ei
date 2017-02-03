@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+    <artifact name="org.wso2.analytics.ei.realtime" version="1.0.0" type="carbon/application">
+	    <dependency artifact="AnalyticsStatEventStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <!-- dependency artifact="AnalyticsStatEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/ -->
+        <dependency artifact="AnalyticsStatEventReceiver" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="AnalyticsConfigEventStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="AnalyticsConfigEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="AnalyticsConfigEventReceiver" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="Sparkscripts" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerSecondStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerSecondEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerMinuteStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerMinuteEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerSecondAllStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerSecondAllEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerMinuteAllStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatPerMinuteAllEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="MediatorStatPerSecondStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="MediatorStatPerSecondEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="MediatorStatPerMinuteStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="MediatorStatPerMinuteEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatStream" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBStatEventSink" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="ESBAnalyticsExecutionPlan" version="1.0.0" include="true" serverRole="ComplexEventProcessor"/>
+        <!-- Gadgets -->
+        <dependency artifact="GadgetCommons" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetDateRangePicker" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetSearchBox" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetLineChart" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetHorizontalBarChart" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetStatsChart" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetMessageTable" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetMessageFlow" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetBreadcrumb" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="GadgetMediatorProperties" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <!-- Dashboard Definition -->
+        <dependency artifact="Dashboard" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+    </artifact>
+</artifacts>

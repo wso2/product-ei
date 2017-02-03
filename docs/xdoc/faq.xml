@@ -24,81 +24,81 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Frequently Asked Questions
+            WSO2 EI - Frequently Asked Questions
         </title>
-        <link href="css/esb-docs.css" rel="stylesheet"/>
+        <link href="css/EI-docs.css" rel="stylesheet"/>
         <link href="styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
     <body xml:lang="en">
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) Frequently Asked Questions</h1>
+        <h1>WSO2 Enterprise Integrator (EI) Frequently Asked Questions</h1>
         <p>
-            This article provides answers to most commonly asked questions regarding WSO2 ESB,
-            its underlying Carbon framework, ESB deployment and configuration.
+            This article provides answers to most commonly asked questions regarding WSO2 EI,
+            its underlying Carbon framework, EI deployment and configuration.
         </p>
         <h2>Contents</h2>
 
 
         <div class="toc">
-            <h3>General (General ESB questions - Non technical)</h3>
+            <h3>General (General EI questions - Non technical)</h3>
             <ol>
                 <li>
-                    <a href="#general-whatis">What is WSO2 ESB?</a>
+                    <a href="#general-whatis">What is WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#general-unique-esb">What makes WSO2 ESB unique?</a>
+                    <a href="#general-unique-EI">What makes WSO2 EI unique?</a>
                 </li>
                 <li>
-                    <a href="#general-license">What is the Open Source License of WSO2 ESB?</a>
+                    <a href="#general-license">What is the Open Source License of WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#general-get-esb">How do I get WSO2 ESB?</a>
+                    <a href="#general-get-EI">How do I get WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#general-performance">Does WSO2 ESB has performance comparison with other popular ESBs?</a>
+                    <a href="#general-performance">Does WSO2 EI has performance comparison with other popular EIs?</a>
                 </li>
                 <li>
-                    <a href="#general-support">Is their commercial support available for WSO2 ESB?</a>
+                    <a href="#general-support">Is their commercial support available for WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#general-get-invloved">Can I get involved with the ESB development activities?</a>
+                    <a href="#general-get-invloved">Can I get involved with the EI development activities?</a>
                 </li>
             </ol>
 
             <h3>Core (Questions related to the Carbon core and underlying framework)</h3>
             <ol>
                 <li>
-                    <a href="#core-underneath-tech">What are the technologies used underneath WSO2 ESB?</a>
+                    <a href="#core-underneath-tech">What are the technologies used underneath WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#core-requirement">What are the minimum requirements to run WSO2 ESB?</a>
+                    <a href="#core-requirement">What are the minimum requirements to run WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#core-esb-fast">What makes WSO2 ESB so fast?</a>
+                    <a href="#core-EI-fast">What makes WSO2 EI so fast?</a>
                 </li>
                 <li>
-                    <a href="#core-esb-clustering">Does WSO2 ESB support clustering?</a>
+                    <a href="#core-EI-clustering">Does WSO2 EI support clustering?</a>
                 </li>
                 <li>
-                    <a href="#core-deploy-libs-occasions">In what occasions do I have to deploy a third party library into WSO2 ESB?</a>
+                    <a href="#core-deploy-libs-occasions">In what occasions do I have to deploy a third party library into WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#core-how-to-deploy-libs">How do I deploy a third party library into the ESB?</a>
+                    <a href="#core-how-to-deploy-libs">How do I deploy a third party library into the EI?</a>
                 </li>
                 <li>
                     <a href="#core-extend-mgmt-console">Can I extend the management console UI to add custom UIs ?</a>
                 </li>
                 <li>
-                    <a href="#core-external-store">Can I use an external user store to manage and authenticate WSO2 ESB users?</a>
+                    <a href="#core-external-store">Can I use an external user store to manage and authenticate WSO2 EI users?</a>
                 </li>
                 <li>
-                    <a href="#core-dotnet-interop">Does WSO2 ESB interop with a .net client/service?</a>
+                    <a href="#core-dotnet-interop">Does WSO2 EI interop with a .net client/service?</a>
                 </li>
                 <li>
-                    <a href="#core-hessian-binary-ws">Does WSO2 ESB support hessian binary web service protocol</a>
+                    <a href="#core-hessian-binary-ws">Does WSO2 EI support hessian binary web service protocol</a>
                 </li>
                 <li>
-                    <a href="#core-omit-features">I don't want some of the features that come with WSO2 ESB. Can I get rid of them?</a>
+                    <a href="#core-omit-features">I don't want some of the features that come with WSO2 EI. Can I get rid of them?</a>
                 </li>
                 <li>
                     <a href="#core-multiple-languages">Can I add support for other language for the management console ?</a>
@@ -111,19 +111,19 @@
                     <a href="#mediation-proxy-service">What is a proxy service?</a>
                 </li>
                 <li>
-                    <a href="#mediation-transactions">Does WSO2 ESB has support for transactions ?</a>
+                    <a href="#mediation-transactions">Does WSO2 EI has support for transactions ?</a>
                 </li>
                 <li>
-                    <a href="#mediation-peppol-support">Does WSO2 ESB has support for PEPPOL?</a>
+                    <a href="#mediation-peppol-support">Does WSO2 EI has support for PEPPOL?</a>
                 </li>
                 <li>
-                    <a href="#mediation-put-mediators">Where do I have to put my custom mediators in WSO2 ESB?</a>
+                    <a href="#mediation-put-mediators">Where do I have to put my custom mediators in WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#mediation-load-config">Where does WSO2 ESB load its configuration from?</a>
+                    <a href="#mediation-load-config">Where does WSO2 EI load its configuration from?</a>
                 </li>
                 <li>
-                    <a href="#mediation-load-config-reg">Can I get the ESB to load mediation configuration from the registry?</a>
+                    <a href="#mediation-load-config-reg">Can I get the EI to load mediation configuration from the registry?</a>
                 </li>
                 <li>
                     <a href="#mediation-mediator">What is a mediator?</a>
@@ -154,8 +154,8 @@
                 </li>
                 <li>
                     <a href="#mediation-binary-content-mediation">
-                        I want to mediate messages containing binary content through the ESB. What are the features
-                        available in WSO2 ESB to support my requirement?
+                        I want to mediate messages containing binary content through the EI. What are the features
+                        available in WSO2 EI to support my requirement?
                     </a>
                 </li>
                 <li>
@@ -163,7 +163,7 @@
                 </li>
                 <li>
                     <a href="#mediation-persistence-details">
-                        I have some dynamic sequences which are loaded from the registry. What will happen to my ESB if
+                        I have some dynamic sequences which are loaded from the registry. What will happen to my EI if
                         the registry goes down or registry becomes unusable for a while?
                     </a>
                 </li>
@@ -172,16 +172,16 @@
             <h3>Transports (Transport related questions)</h3>
             <ol>
                 <li>
-                    <a href="#transports-supported">What are the transports supported by the WSO2 ESB?</a>
+                    <a href="#transports-supported">What are the transports supported by the WSO2 EI?</a>
                 </li>
                 <li>
                     <a href="#transport-jms">Do I need a external JMS broker for the JMS transport?</a>
                 </li>
                 <li>
-                    <a href="#transport-amqp">Does WSO2 ESB support AMQP ?</a>
+                    <a href="#transport-amqp">Does WSO2 EI support AMQP ?</a>
                 </li>
                 <li>
-                    <a href="#transport-change-host">How to change the host name in WSO2 ESB?</a>
+                    <a href="#transport-change-host">How to change the host name in WSO2 EI?</a>
                 </li>
                 <li>
                     <a href="#transport-proxies-connection-factories">
@@ -190,10 +190,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#transport-2way-jms">Does WSO2 ESB support two way JMS scenario (request/response) ?</a>
+                    <a href="#transport-2way-jms">Does WSO2 EI support two way JMS scenario (request/response) ?</a>
                 </li>
                 <li>
-                    <a href="#transport-jms-brokers">What are the JMS brokers that work with WSO2 ESB?</a>
+                    <a href="#transport-jms-brokers">What are the JMS brokers that work with WSO2 EI?</a>
                 </li>
                 <li>
                     <a href="#nhttp-what-is-nhttp">What is the NHTTP transport?</a>
@@ -222,18 +222,18 @@
                 </li>
                 <li>
                     <a href="#production-greg">I already have a WSO2 Governance Registry instance that contains my organization's SOA metadata.
-                    Can I get WSO2 ESB to use that registry instance as the metadata store?</a>
+                    Can I get WSO2 EI to use that registry instance as the metadata store?</a>
                 </li><li>
                 <a href="#production-clustering">
-                    I need to setup a cluster of ESB instances. How can I share the same configuration
-                    among all the ESB nodes?</a>
+                    I need to setup a cluster of EI instances. How can I share the same configuration
+                    among all the EI nodes?</a>
                 </li>
             </ol>
 
-            <h3>Deployment Questions (Questions related to ESB deployments)</h3>
+            <h3>Deployment Questions (Questions related to EI deployments)</h3>
             <ol>
                 <li>
-                    <a href="#deploy-jdk-verions">What are the versions of Java supported by the ESB?</a>
+                    <a href="#deploy-jdk-verions">What are the versions of Java supported by the EI?</a>
                 </li>
                 <li>
                     <a href="#deployment-minimum-artifacts">What are the minimum artifacts required to deploy WSO2?</a>
@@ -242,35 +242,35 @@
                     <a href="#deployment-disable-mgmt-console">How can I disable the management console ?</a>
                 </li>
                 <li>
-                    <a href="#deployment-appservers">Does WSO2 ESB supports application server deployments?</a>
+                    <a href="#deployment-appservers">Does WSO2 EI supports application server deployments?</a>
                 </li>
                 <li>
-                    <a href="#deployment-sysreq">What are the recommended hardware and software configurations for a typical WSO2 ESB deployment?</a>
+                    <a href="#deployment-sysreq">What are the recommended hardware and software configurations for a typical WSO2 EI deployment?</a>
                 </li>
                 <li>
                     <a href="#deployment-customtask">How can I deploy a custom task?</a>
                 </li>
                 <li>
-                    <a href="#deployment-custom-registry">How do I embed a third party registry with WSO2 ESB?</a>
+                    <a href="#deployment-custom-registry">How do I embed a third party registry with WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#deployment-dbms">What is the database management system used in WSO2 ESB?</a>
+                    <a href="#deployment-dbms">What is the database management system used in WSO2 EI?</a>
                 </li>
                 <li>
-                    <a href="#deployment-memallocation">How can I change the memory allocation for the WSO2 ESB?</a>
+                    <a href="#deployment-memallocation">How can I change the memory allocation for the WSO2 EI?</a>
                 </li>
             </ol>
 
             <h3>Monitoring</h3>
             <ol>
                 <li>
-                    <a href="#monitoring-jmx">Does ESB supports JMX monitoring?</a>
+                    <a href="#monitoring-jmx">Does EI supports JMX monitoring?</a>
                 </li>
                 <li>
-                    <a href="#monitoring-custom-stat-col">Does ESB allows custom statistics collection?</a>
+                    <a href="#monitoring-custom-stat-col">Does EI allows custom statistics collection?</a>
                 </li>
                 <li>
-                    <a href="#monitoring-logging">What is logging framework used in WSO2 ESB?</a>
+                    <a href="#monitoring-logging">What is logging framework used in WSO2 EI?</a>
                 </li>
                 <li>
                     <a href="#monitoring-debug-seq">
@@ -280,45 +280,45 @@
                 </li>
                 <li>
                     <a href="#monitoring-debug-stat">
-                        My WSO2 ESB instance is receiving messages. But why I don't see any statistics on the
+                        My WSO2 EI instance is receiving messages. But why I don't see any statistics on the
                         mediation statistics page?
                     </a>
                 </li>
                 <li>
                     <a href="#monitoring-debug-issues">
-                        My ESB instance is behaving weird for certain input messages. What are the tools provided
-                        in the ESB to help me debug the issue?
+                        My EI instance is behaving weird for certain input messages. What are the tools provided
+                        in the EI to help me debug the issue?
                     </a>
                 </li>
             </ol>
         </div>
 
-        <h2>General (General ESB questions - Non technical)</h2>
+        <h2>General (General EI questions - Non technical)</h2>
         <ol>
             <li>
                 <h3 id="general-whatis">
-                    What is WSO2 ESB?
+                    What is WSO2 EI?
                 </h3>
                 <p>
-                    WSO2 ESB is a fast, lightweight, open source Enterprise Service Bus implementation. It supports
+                    WSO2 EI is a fast, lightweight, open source Enterprise Integrator implementation. It supports
                     message routing, inter-mediation, transformation, logging, load balancing, fail over routing,
                     task scheduling, eventing and much more.
                 </p>
             </li>
             <li>
-                <h3 id="general-unique-esb">
-                    What makes WSO2 ESB unique?
+                <h3 id="general-unique-EI">
+                    What makes WSO2 EI unique?
                 </h3>
                 <p>
-                    WSO2 ESB is fast and able to handle thousands of concurrent connections with constant memory usage.
+                    WSO2 EI is fast and able to handle thousands of concurrent connections with constant memory usage.
                     It comes with a rich set of mediators to support almost any integration scenario out of the box.
                     It is also easily extensible and highly customizable. The feature rich admin console makes it
-                    so easy to configure, control and monitor the ESB runtime.
+                    so easy to configure, control and monitor the EI runtime.
                 </p>
             </li>
             <li>
                 <h3 id="general-license">
-                    What is the Open Source License of WSO2 ESB?
+                    What is the Open Source License of WSO2 EI?
                 </h3>
                 <p>
                     It is released under <a href="http://www.apache.org/licenses/LICENSE-2.0">
@@ -326,19 +326,19 @@
                 </p>
             </li>
             <li>
-                <h3 id="general-get-esb">
-                    How do I get WSO2 ESB?
+                <h3 id="general-get-EI">
+                    How do I get WSO2 EI?
                 </h3>
                 <p>
-                    WSO2 ESB is distributed completely free and all the distribution packs can be downloaded from the
-                    WSO2 Oxygen Tank. WSO2 ESB can be downloaded as a binary distribution or a source distribution and
+                    WSO2 EI is distributed completely free and all the distribution packs can be downloaded from the
+                    WSO2 Oxygen Tank. WSO2 EI can be downloaded as a binary distribution or a source distribution and
                     if required one can even checkout the complete source code from the
                     <a href="http://wso2.org/svn" >WSO2 SVN repository.</a>
                 </p>
             </li>
             <li>
                 <h3 id="general-performance">
-                    Does WSO2 ESB has performance comparison with other popular ESBs?
+                    Does WSO2 EI has performance comparison with other popular EIs?
                 </h3>
                 <p>
                     Yes, several rounds of performance comparison has been carried out and the results are available
@@ -347,7 +347,7 @@
             </li>
             <li>
                <h3 id="general-support">
-                   Is their commercial support available for WSO2 ESB?
+                   Is their commercial support available for WSO2 EI?
                </h3>
                 <p>
                     We are committed to ensuring that your enterprise middleware deployment is completely supported
@@ -360,7 +360,7 @@
             </li>
             <li>
                 <h3 id="general-get-invloved">
-                    Can I get involved with the ESB development activities?
+                    Can I get involved with the EI development activities?
                 </h3>
                 <p>
                     Not only you are allowed, but it is encouraged. You can start by subscribing to carbon-dev@wso2.org
@@ -375,17 +375,17 @@
         <ol>
             <li>
                 <h3 id="core-underneath-tech">
-                    What are the technologies used underneath WSO2 ESB?
+                    What are the technologies used underneath WSO2 EI?
                 </h3>
                 <p>
-                    WSO2 ESB is built on top of WSO2 Carbon, an OSGi based components framework for SOA. It uses
+                    WSO2 EI is built on top of WSO2 Carbon, an OSGi based components framework for SOA. It uses
                     <a href="http://synapse.apache.org">Apache Synapse</a> as the underlying mediation engine.
-                    Java is the primary programming language used to develop WSO2 ESB.
+                    Java is the primary programming language used to develop WSO2 EI.
                 </p>
             </li>
             <li>
                 <h3 id="core-requirement">
-                    What are the minimum requirements to run WSO2 ESB?
+                    What are the minimum requirements to run WSO2 EI?
                 </h3>
                 <ul>
                     <li>
@@ -393,8 +393,8 @@
                         <ul>
                             <li>Pentium 800MHz or equivalent processor</li>
                             <li>256 MB of memory</li>
-                            <li>The extracted binary distribution of WSO2 ESB takes up about 130 MB of disk space
-                                (WSO2 ESB will require more disk space at runtime to keep temporary files,
+                            <li>The extracted binary distribution of WSO2 EI takes up about 130 MB of disk space
+                                (WSO2 EI will require more disk space at runtime to keep temporary files,
                                 server logs etc)
                             </li>
                         </ul>
@@ -408,24 +408,24 @@
                 </ul>
             </li>
             <li>
-                <h3 id="core-esb-fast">
-                    What makes WSO2 ESB so fast?
+                <h3 id="core-EI-fast">
+                    What makes WSO2 EI so fast?
                 </h3>
                 <p>
-                    The mediation core of WSO2 ESB is designed to be completely asynchronous, non-blocking and
+                    The mediation core of WSO2 EI is designed to be completely asynchronous, non-blocking and
                     streaming. It comes with a non-blocking HTTP transport adapter based on Apache HTTP Core-NIO which
-                    is capable of handling a large number of concurrent connections. WSO2 ESB also uses Apache AXIOM, a
-                    StAX based XML infoset model, to process XML and SOAP. This enables WSO2 ESB to stream messages
+                    is capable of handling a large number of concurrent connections. WSO2 EI also uses Apache AXIOM, a
+                    StAX based XML infoset model, to process XML and SOAP. This enables WSO2 EI to stream messages
                     through the mediation engine without having to invoke slow XML processing routines for each and
                     every message.
                 </p>
             </li>
                                                                 
             <li>
-                <h3 id="core-esb-clustering">
-                        Does WSO2 ESB support clustering?
+                <h3 id="core-EI-clustering">
+                        Does WSO2 EI support clustering?
                 </h3>
-                <p>Yes, it supports clustered deployment. WSO2 ESB uses the Apache Axis2 clustering framework to
+                <p>Yes, it supports clustered deployment. WSO2 EI uses the Apache Axis2 clustering framework to
                     support the following two clustering schemes:</p>
                 <ul>
                     <li>Multicast based clustering</li>
@@ -435,7 +435,7 @@
 
             <li>
                 <h3 id="core-deploy-libs-occasions">
-                     In what occasions do I have to deploy a third party library into WSO2 ESB?
+                     In what occasions do I have to deploy a third party library into WSO2 EI?
                 </h3>
                 <ul>
                     <li>When enabling a new transport you will have to deploy the libraries required by the
@@ -449,11 +449,11 @@
 
             <li>
                 <h3 id="core-how-to-deploy-libs">
-                    How do I deploy a third party library into the ESB?
+                    How do I deploy a third party library into the EI?
                 </h3>
                 <p>
                     You can deploy any third party jar into the repository/components/lib directory. You also need to
-                    restart the server for the newly deployed jars to be picked up by the server runtime. WSO2 ESB will
+                    restart the server for the newly deployed jars to be picked up by the server runtime. WSO2 EI will
                     convert any jar files copied into the above location into OSGi bundles. These OSGi bundles are
                     placed in the repository/components/dropins directory.                                                
                 </p>
@@ -470,10 +470,10 @@
 
             <li>
                 <h3 id="core-external-store">
-                    Can I use an external user store to manage and authenticate WSO2 ESB users?
+                    Can I use an external user store to manage and authenticate WSO2 EI users?
                 </h3>
                 <p>
-                    Yes you can. You can connect WSO2 ESB with any external user store implementation.
+                    Yes you can. You can connect WSO2 EI with any external user store implementation.
                     The user store could be LDAP based, JDBC based or a custom developed user store. Please
                     refer <a href="user.core/admin_guide.html">user core documentation</a> for more details.
                 </p>
@@ -481,17 +481,17 @@
 
             <li>
                 <h3 id="core-dotnet-interop">
-                    Does WSO2 ESB interop with a .net client/service?
+                    Does WSO2 EI interop with a .net client/service?
                 </h3>
                 <p>
-                    Yes, it does with both. WSO2 ESB can be easily configured to bridge Java services with .NET clients
+                    Yes, it does with both. WSO2 EI can be easily configured to bridge Java services with .NET clients
                     and .NET services with Java clients.
                 </p>
             </li>
 
             <li>
                 <h3 id="core-hessian-binary-ws">
-                    Does WSO2 ESB support hessian binary web service protocol
+                    Does WSO2 EI support hessian binary web service protocol
                 </h3>
                 <p>
                     Yes, it does
@@ -500,10 +500,10 @@
 
             <li>
                 <h3 id="core-omit-features">
-                    I don't want some of the features that come with WSO2 ESB. Can I get rid of them?
+                    I don't want some of the features that come with WSO2 EI. Can I get rid of them?
                 </h3>
                 <p>
-                    Yes you can. Login to the ESB management console and browse to the Feature Manager. Open the
+                    Yes you can. Login to the EI management console and browse to the Feature Manager. Open the
                     'Installed Features' tab. From here you can uninstall any unwanted features.
                 </p>
             </li>
@@ -513,7 +513,7 @@
                     Can I add support for other language for the management console ? 
                 </h3>
                 <p>
-                    Yes, WSO2 ESB comes with a UI framework which supports i18n (internationalization) which lets you
+                    Yes, WSO2 EI comes with a UI framework which supports i18n (internationalization) which lets you
                     to use a language of your choice for the management console.
                 </p>
             </li>
@@ -527,7 +527,7 @@
                     What is a proxy service?
                 </h3>
                 <p>
-                    A proxy service is a virtual service hosted on the ESB. It can accept requests from service clients,
+                    A proxy service is a virtual service hosted on the EI. It can accept requests from service clients,
                     just like a real Web Service. A proxy service can process requests and forward them to an actual
                     Web Service (back end service) to be further processed. The responses coming back from the back
                     end service can be routed back to the original client. Proxy services are mostly used
@@ -537,7 +537,7 @@
 
             <li>
                 <h3 id="mediation-transactions">
-                    Does WSO2 ESB has support for transactions ?
+                    Does WSO2 EI has support for transactions ?
                 </h3>
                 <p>
                     Yes it does. It has support for distributed transaction, local JMS transactions and distributed JMS
@@ -546,28 +546,28 @@
             </li>
             <li>
                 <h3 id="mediation-peppol-support">
-                    Does WSO2 ESB has support for PEPPOL?
+                    Does WSO2 EI has support for PEPPOL?
                 </h3>
                 <p>
-                    Yes it does. You can use WSO2 ESB in an Access point.
+                    Yes it does. You can use WSO2 EI in an Access point.
                 </p>
             </li>
             <li>
                 <h3 id="mediation-put-mediators">
-                    Where do I have to put my custom mediators in WSO2 ESB? 
+                    Where do I have to put my custom mediators in WSO2 EI?
                 </h3>
                 <p>
                     In version 3.0.1 you can place your non-OSGi custom mediators and class mediators in
-                    $ESB_HOME/repository/components/mediators and OSGi bundles
-                    in $ESB_HOME/repository/components/dropins.
+                    $EI_HOME/repository/components/mediators and OSGi bundles
+                    in $EI_HOME/repository/components/dropins.
                 </p>
             </li>
             <li>
                 <h3 id="mediation-load-config">
-                    Where does WSO2 ESB load its configuration from?
+                    Where does WSO2 EI load its configuration from?
                 </h3>
                 <p>
-                    WSO2 ESB reads its mediation configuration from a set of XML files located at
+                    WSO2 EI reads its mediation configuration from a set of XML files located at
                     repository/conf/synapse-config directory. XML files are written in the Synapse configuration
                     language. Any changes done to the configuration through the UI are saved back to the configuration
                     files. (Configuration is also written to the registry by default)
@@ -575,11 +575,11 @@
             </li>
             <li>
                 <h3 id="mediation-load-config-reg">
-                    Can I get the ESB to load mediation configuration from the registry?
+                    Can I get the EI to load mediation configuration from the registry?
                 </h3>
                 <p>
                     Yes you can. The necessary steps are given in the <a href="admin_guide.html#Registry">
-                    ESB administrator guide</a>.
+                    EI administrator guide</a>.
                 </p>
             </li>
 
@@ -588,8 +588,8 @@
                     What is a mediator?
                 </h3>
                 <p>
-                    A mediator is the basic message processing unit in the ESB. A mediator can take a message, carry
-                    out some predefined actions on it and output the modified message. WSO2 ESB ships with a range of
+                    A mediator is the basic message processing unit in the EI. A mediator can take a message, carry
+                    out some predefined actions on it and output the modified message. WSO2 EI ships with a range of
                     mediators capable of carrying out various tasks on input messages.
                 </p>
                 <ul>
@@ -674,7 +674,7 @@
                     configurations are loaded to the mediation configuration at runtime. Once loaded they will be cached
                     for a specified duration in the memory. Once the cache is expired it will be loaded again from the
                     registry. Therefore changes done to dynamic sequences and endpoints at runtime will take effect
-                    once the ESB reloads them after a cache timeout.
+                    once the EI reloads them after a cache timeout.
                 </p>
                 <p>To use dynamic sequences and endpoints the mediation registry must be included in the
                     mediation configuration as follows:
@@ -711,7 +711,7 @@
                     I have heard of dynamic sequences and endpoints. Are there also dynamic proxy services?
                 </h3>
                 <p>
-                    WSO2 ESB does not support dynamic proxy services. But a proxy service may use a dynamic
+                    WSO2 EI does not support dynamic proxy services. But a proxy service may use a dynamic
                     endpoint as the target endpoint and dynamic sequences as the in sequence and the out sequence.
                     This effectively makes the entire proxy service dynamic.
                 </p>
@@ -719,8 +719,8 @@
 
             <li>
                 <h3 id="mediation-binary-content-mediation">
-                    I want to mediate messages containing binary content through the ESB. What are the features
-                    available in WSO2 ESB to support my requirement?
+                    I want to mediate messages containing binary content through the EI. What are the features
+                    available in WSO2 EI to support my requirement?
                 </h3>
                 <p>
                 </p>
@@ -739,14 +739,14 @@
 
             <li>
                 <h3 id="mediation-persistence-details">
-                    I have some dynamic sequences which are loaded from the registry. What will happen to my ESB if
+                    I have some dynamic sequences which are loaded from the registry. What will happen to my EI if
                     the registry goes down or registry becomes unusable for a while?
                 </h3>
                 <p>
-                    If the dynamic sequences are loaded to the memory at least once, the ESB will continue to use the
+                    If the dynamic sequences are loaded to the memory at least once, the EI will continue to use the
                     cached version of the sequence, as long as the registry is unreachable. A warning will be logged
-                    every time ESB attempts to load the sequence from the registry and fails. As soon as the registry
-                    comes back on-line, ESB will load the sequence from the registry.
+                    every time EI attempts to load the sequence from the registry and fails. As soon as the registry
+                    comes back on-line, EI will load the sequence from the registry.
                 </p>
             </li>
         </ol>
@@ -755,7 +755,7 @@
         <ol>
             <li>
                 <h3 id="transport-supported">
-                    What are the transports supported by the WSO2 ESB?
+                    What are the transports supported by the WSO2 EI?
                 </h3>
                 <p>
                     HTTP, HTTPS, VFS based file transport, FIX, Hessian, HL7,UDP, JMS, Mail, TCP, XMPP
@@ -767,17 +767,17 @@
                     Do I need an external JMS broker for the JMS transport?
                 </h3>
                 <p>
-                    Yes, WSO2 ESB requires an external JMS broker like <a href="http://activemq.apache.org">
+                    Yes, WSO2 EI requires an external JMS broker like <a href="http://activemq.apache.org">
                     Apache ActiveMQ</a>.
                 </p>
             </li>
 
             <li>
                 <h3 id="transport-amqp">
-                    Does WSO2 ESB support AMQP?
+                    Does WSO2 EI support AMQP?
                 </h3>
                 <p>
-                    WSO2 ESB supports AMQP through its JMS transport. The JMS transport can be configured to
+                    WSO2 EI supports AMQP through its JMS transport. The JMS transport can be configured to
                     connect to an AMQP broker as if it was connecting to a JMS broker. This functionality has been
                     tested with <a href="http://qpid.apache.org">Apache Qpid</a> and RabbitMQ.
                 </p>
@@ -785,11 +785,11 @@
 
             <li>
                 <h3 id="transport-change-host">
-                    How to change the host name in WSO2 ESB?
+                    How to change the host name in WSO2 EI?
                 </h3>
                 <p>
                     You can edit parameter bind-address in http/https transport receiver to change the host name of WSO2
-                    ESB. This hostname will be displayed on service endpoints and generated WSDLs.
+                    EI. This hostname will be displayed on service endpoints and generated WSDLs.
                 </p>
             </li>
 
@@ -813,7 +813,7 @@
 
             <li>
                 <h3 id="transport-2way-jms">
-                    Does WSO2 ESB support two way JMS scenario (request/response) ?
+                    Does WSO2 EI support two way JMS scenario (request/response) ?
                 </h3>
                 <p>
                     Yes, you can refer <a href="samples/transport_samples.html#Sample264">sample 264</a>
@@ -823,11 +823,11 @@
 
             <li>
                 <h3 id="transport-jms-brokers">
-                    What are the JMS brokers that work with WSO2 ESB?
+                    What are the JMS brokers that work with WSO2 EI?
                 </h3>
                 <p>
-                    Any JMS broker that provides JNDI support can be integrated with WSO2 ESB. The default
-                    configurations are for Apache ActiveMQ. WSO2 ESB has also been tested with IBM Websphere MQ,
+                    Any JMS broker that provides JNDI support can be integrated with WSO2 EI. The default
+                    configurations are for Apache ActiveMQ. WSO2 EI has also been tested with IBM Websphere MQ,
                     Swift MQ and JBOSS MQ.
                 </p>
             </li>
@@ -836,11 +836,11 @@
                     What is the NHTTP transport?
                 </h3>
                 <p>
-                    This is the default HTTP transport used by WSO2 ESB. NHTTP stands for non-blocking HTTP.
+                    This is the default HTTP transport used by WSO2 EI. NHTTP stands for non-blocking HTTP.
                     NHTTP transport uses the Java Non-blocking I/O API. This allows the NHTTP transport to scale into
                     handling hundreds of connections without blocking the threads. The server worker threads used
-                    by the NHTTP transport do not get blocked on I/O until the ESB receives responses for the already
-                    forwarded requests. Therefore WSO2 ESB can accept more concurrent connections and requests than
+                    by the NHTTP transport do not get blocked on I/O until the EI receives responses for the already
+                    forwarded requests. Therefore WSO2 EI can accept more concurrent connections and requests than
                     most HTTP server products.
                 </p>
             </li>
@@ -863,7 +863,7 @@
                 <p>
                     There is a file called nhttp.properties in the webapps/ROOT/WEB-INF/classes directory. User can
                     change various configuration parameters like number of threads, keep alive connections through
-                    this file. More information can be found in the <a href="admin_guide.html#PerfTune">ESB Administrator Guide</a>.
+                    this file. More information can be found in the <a href="admin_guide.html#PerfTune">EI Administrator Guide</a>.
                 </p>
             </li>
 
@@ -898,7 +898,7 @@
                     What is a graceful shut down?
                 </h3>
                 <p>
-                    When a graceful shut down is initiated ESB will serve the accepted requests but stops processing
+                    When a graceful shut down is initiated EI will serve the accepted requests but stops processing
                     new requests
                 </p>
             </li>
@@ -917,31 +917,31 @@
             <li>
                 <h3 id="production-greg">
                     I already have a WSO2 Governance Registry instance that contains my organization's SOA metadata.
-                    Can I get WSO2 ESB to use that registry instance as the metadata store?
+                    Can I get WSO2 EI to use that registry instance as the metadata store?
                 </h3>
                 <p>
-                    WSO2 ESB integrates with WSO2 Governance Registry out of the box. Refer the administrator
+                    WSO2 EI integrates with WSO2 Governance Registry out of the box. Refer the administrator
                     guide for the necessary steps involved in remote registry configuration.
                 </p>
             </li>
 
             <li>
                 <h3 id="production-clustering">
-                    I need to setup a cluster of ESB instances. How can I share the same configuration
-                    among all the ESB nodes?
+                    I need to setup a cluster of EI instances. How can I share the same configuration
+                    among all the EI nodes?
                 </h3>
                 <p>
-                    You just need to put the configuration into the registry and point all ESB instances to that
+                    You just need to put the configuration into the registry and point all EI instances to that
                     registry instance.
                 </p>
             </li>
         </ol>
 
-        <h2>Deployment (Questions related to ESB deployments)</h2>
+        <h2>Deployment (Questions related to EI deployments)</h2>
         <ol>
             <li>
                 <h3 id="deployment-java-support">
-                    What are the versions of Java supported by the ESB?
+                    What are the versions of Java supported by the EI?
                 </h3>
                 <p>
                     It is tested on JDK 1.5 and JDK 1.6. Sun JDK and IBM JDK are supported.
@@ -953,7 +953,7 @@
                     What are the minimum artifacts required to deploy WSO2?
                 </h3>
                 <p>
-                    When deploying you can remove, $ESB_HOME/samples and $ESB_HOME/repository/samples from the
+                    When deploying you can remove, $EI_HOME/samples and $EI_HOME/repository/samples from the
                     standard distribution. 
                 </p>
             </li>
@@ -970,7 +970,7 @@
 
            <li>
                 <h3 id="deployment-appservers">
-                    Does WSO2 ESB supports application server deployments? 
+                    Does WSO2 EI supports application server deployments?
                 </h3>
                 <p>
                     Yes it has been tested on the following app servers. JBoss, Weblogic, Websphere and Tomcat.
@@ -979,7 +979,7 @@
 
             <li>
                 <h3 id="deployment-sysreq">
-                    What are the recommended hardware and software configurations for a typical WSO2 ESB deployment?
+                    What are the recommended hardware and software configurations for a typical WSO2 EI deployment?
                 </h3>
                 <ul>
                     <li>
@@ -987,8 +987,8 @@
                         <ul>
                             <li>2 GHz Multicore processor</li>
                             <li>2 GB of memory</li>
-                            <li>The extracted binary distribution of WSO2 ESB takes up about 130 MB of disk space
-                                (WSO2 ESB will require more disk space at runtime to keep temporary files,
+                            <li>The extracted binary distribution of WSO2 EI takes up about 130 MB of disk space
+                                (WSO2 EI will require more disk space at runtime to keep temporary files,
                                 server logs etc)
                             </li>
                         </ul>
@@ -1008,36 +1008,36 @@
                 </h3>
                 <p>
                     See the documentation to see how to write a custom task. Put your non-OSGi task jar
-                    into $esbhome/repository/components/lib directory. WSO2 ESB will automatically deploy
+                    into $EIhome/repository/components/lib directory. WSO2 EI will automatically deploy
                     your custom task.
                 </p>
             </li>
 
             <li>
                 <h3 id="deployment-custom-registry">
-                    How do I embed a third party registry with WSO2 ESB?
+                    How do I embed a third party registry with WSO2 EI?
                 </h3>
                 <p>
                     You need to write a class implementing the org.apache.synapse.registry.Registry interface to
-                    integrate the third party registry to WSO2 ESB.
+                    integrate the third party registry to WSO2 EI.
                 </p>
             </li>
 
             <li>
                 <h3 id="deployment-dbms">
-                    What is the database management system used in WSO2 ESB?
+                    What is the database management system used in WSO2 EI?
                 </h3>
                 <p>
-                    WSO2 ESB ships with an embedded H2 database. However any database management system can be plugged
-                    into the ESB via JDBC. The relevant database configurations are available in
-                    repository/conf/registry.xml and repository/cong/user-mgt.xml files. WSO2 ESB has been tested
+                    WSO2 EI ships with an embedded H2 database. However any database management system can be plugged
+                    into the EI via JDBC. The relevant database configurations are available in
+                    repository/conf/registry.xml and repository/cong/user-mgt.xml files. WSO2 EI has been tested
                     with MySQL, Oracle, MSSQL and PostgreSQL databases.
                 </p>
             </li>
 
             <li>
                 <h3 id="deployment-memallocation">
-                    How can I change the memory allocation for the WSO2 ESB?
+                    How can I change the memory allocation for the WSO2 EI?
                 </h3>
                 <p>
                     The memory allocation setting are in the wso2server.sh. The user can change the memory allocation
@@ -1056,7 +1056,7 @@
         <ol>
             <li>
                 <h3 id="monitoring-jmx">
-                    Does ESB supports JMX monitoring?
+                    Does EI supports JMX monitoring?
                 </h3>
                 <p>
                     Yes it support JMX monitoring. Users can use the JConsole for simple monitoring and use
@@ -1066,20 +1066,20 @@
             </li>
             <li>
                 <h3 id="monitoring-custom-stat-col">
-                     Does ESB allows custom statistics collection?
+                     Does EI allows custom statistics collection?
                 </h3>
                 <p>
-                    Users can write and plug their own statistics collection mechanisms to the ESB. This allows users
+                    Users can write and plug their own statistics collection mechanisms to the EI. This allows users
                     to report statistics to their own statistics collection systems.
                 </p>
             </li>
 
             <li>
                 <h3 id="monitoring-logging">
-                    What is logging framework used in WSO2 ESB?
+                    What is logging framework used in WSO2 EI?
                 </h3>
                 <p>
-                    WSO2 ESB uses Apache Log4/J over Apache Commons Logging as the logging framework.
+                    WSO2 EI uses Apache Log4/J over Apache Commons Logging as the logging framework.
                     Logging configuration is loaded from the log4j.properties file in the lib directory.
                     The UI also allows configuring logging at runtime. The generated server logs can be found in
                     the repository/logs directory.
@@ -1092,21 +1092,21 @@
                     wrong with it?
                 </h3>
                 <p>
-                    Login to the ESB management console and go to the sequence management page. Enable tracing for the
+                    Login to the EI management console and go to the sequence management page. Enable tracing for the
                     sequence you want to debug. Send a few messages to the sequence and go to the system logs viewer in
-                    the UI (or open the wso2-esb.log file in repository/logs). Go through the generated trace logs and
+                    the UI (or open the wso2-EI.log file in repository/logs). Go through the generated trace logs and
                     locate the problem.
                 </p>
             </li>
 
             <li>
                 <h3 id="monitoring-debug-stat">
-                    My WSO2 ESB instance is receiving messages. But why I don't see any statistics on the
+                    My WSO2 EI instance is receiving messages. But why I don't see any statistics on the
                     mediation statistics page?
                 </h3>
                 <p>
-                    You  need to enable statistics on sequences, endpoints, proxy services for the ESB to collect
-                    statistics on them. By default WSO2 ESB does not collect statistics on anything to keep the overhead
+                    You  need to enable statistics on sequences, endpoints, proxy services for the EI to collect
+                    statistics on them. By default WSO2 EI does not collect statistics on anything to keep the overhead
                     at a minimum. Simply enable statistics for the items you are interested in using the UI and
                     mediation statistics page will start to get updated.
                 </p>
@@ -1114,13 +1114,13 @@
 
             <li>
                 <h3 id="monitoring-debug-issues">
-                    My ESB instance is behaving weird for certain input messages. What are the tools provided
-                    in the ESB to help me debug the issue?
+                    My EI instance is behaving weird for certain input messages. What are the tools provided
+                    in the EI to help me debug the issue?
                 </h3>
                 <p>
                     You can use the SOAP tracer in the UI to capture and monitor actual content of the incoming
                     messages. Enable tracing on the appropriate sequences to trace the flow of messages through
-                    the ESB. ESB also comes with Apache TCPMon which is a simple but extremely useful too for
+                    the EI. EI also comes with Apache TCPMon which is a simple but extremely useful too for
                     monitoring message flows.
                 </p>
             </li>

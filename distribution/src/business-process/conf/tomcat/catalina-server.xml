@@ -27,7 +27,7 @@
     -->
     <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
                 port="9763"
-                redirectPort="9443" 
+                redirectPort="9443"
                 bindOnInit="false"
                 maxHttpHeaderSize="8192"
                 acceptorThreadCount="2"
@@ -41,9 +41,9 @@
                 compression="on"
                 compressionMinSize="2048"
                 noCompressionUserAgents="gozilla, traviata"
-                compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg" 
+                compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
                 URIEncoding="UTF-8"/>
-   
+
     <!--
 	optional attributes:
 
@@ -78,14 +78,16 @@
                    URIEncoding="UTF-8"/>
 
 
-   
+
     <Engine name="Catalina" defaultHost="localhost">
 
       <!--Realm className="org.apache.catalina.realm.MemoryRealm" pathname="${carbon.home}/repository/conf/tomcat/tomcat-users.xml"/-->
 
       <Realm className="org.wso2.carbon.tomcat.ext.realms.CarbonTomcatRealm"/>
 
-      <Host name="localhost" unpackWARs="true" deployOnStartup="false" autoDeploy="false" appBase="${carbon.home}/repository/deployment/server/webapps/">
+      <Host name="localhost" unpackWARs="true" deployOnStartup="false" autoDeploy="false"
+            appBase="${carbon.home}/repository/deployment/server/webapps/"
+            workDir="${carbon.home}/../lib/tomcat/work-business-process">
           <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonContextCreatorValve"/>
           <Valve className="org.apache.catalina.valves.AccessLogValve" directory="${carbon.home}/repository/logs"
                prefix="http_access_" suffix=".log"

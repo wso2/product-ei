@@ -23,11 +23,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - Templates Samples </title>
+  <title>WSO2 EI - Templates Samples </title>
 </head>
 
 <body>
-<h1>Running Templates with WSO2 Enterprise Service Bus (ESB)</h1>
+<h1>Running Templates with WSO2 Enterprise Integrator (EI)</h1>
 
     <h2><a name="Sample750">Sample 750: Stereotyping XSLT Transformations with Templates </a> </h2>
     <pre xml:space="preserve">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
@@ -76,10 +76,10 @@
         &lt;localEntry key=&quot;xslt-key-back&quot; src=&quot;file:repository/samples/resources/transform/transform_back.xslt&quot;/&gt;
     &lt;/definitions&gt;</pre>
 
-    <p><strong>Objective: Introduction to ESB Sequence Templates</strong> </p>
+    <p><strong>Objective: Introduction to EI Sequence Templates</strong> </p>
 
     <p><strong>Prerequisites:</strong><br />
-    Start the Synapse configuration numbered 750: i.e. wso2esb-samples -sn 750<br />
+    Start the Synapse configuration numbered 750: i.e. wso2EI-samples -sn 750<br />
     Start the Axis2 server and deploy the SimpleStockQuoteService if not already
     done </p>
 
@@ -87,10 +87,10 @@
     proxy service as follows: </p>
     <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:8280/services/StockQuoteProxy  -Dmode=customquote</pre>
 
-    <p> ESB Sequence Template can act a reusable function. Here proxy service reuses template xslt_func which will transform requests with the given xslt local entry key And will log
+    <p> EI Sequence Template can act a reusable function. Here proxy service reuses template xslt_func which will transform requests with the given xslt local entry key And will log
         the message before and after. It takes xslt transformation corresponding to local entry key as an
         argument (for insequence this key is xslt-key-req and out sequence it is xslt-key-back). We use
-        call-template mediator for passing the xslt key parameter to a sequence template. ESB console
+        call-template mediator for passing the xslt key parameter to a sequence template. EI console
         will display how the custom stockquote is transformed and the transformed response from the service.   </p>
 
 
@@ -160,12 +160,12 @@
     <p><strong>Prerequisites:</strong>Deploy the SimpleStockQuoteService in sample
     Axis2 server and start it on port 9000. </p>
 
-    <p>Start ESB with the sample configuration 751 (i.e. wso2esb-samples -sn 751).
+    <p>Start EI with the sample configuration 751 (i.e. wso2EI-samples -sn 751).
     </p>
 
     <p>This will be the same sample demonstrated in advanced mediation with Iterate mediator used to split the
     messages in to parts and process them asynchronously and then aggregate the
-    responses coming in to ESB. Only addition will be two sequence  templates 'iter_func' and
+    responses coming in to EI. Only addition will be two sequence  templates 'iter_func' and
     'aggr_func' which will split the message and aggregate the responses back , respectively.</p>
 
     <p>Invoke the client as follows. </p>
@@ -237,7 +237,7 @@
 
     <p><strong>Prerequisites:</strong>Sample setup is same as LoadBalance endpoint scenario (#154).
 
-Start the Synapse configuration numbered 752: i.e. wso2esb-samples -sn 752
+Start the Synapse configuration numbered 752: i.e. wso2EI-samples -sn 752
 Start the Axis2 server and deploy the LoadbalanceFailoverService if not already done
 
  </p>

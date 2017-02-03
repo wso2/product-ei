@@ -24,15 +24,15 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
         <title>
-            WSO2 ESB - Source Repository
+            WSO2 EI - Source Repository
         </title>
     </head>
     <body>
         [ <a href="docs_index.html"> Documentation Index </a> ]
-        <h1>WSO2 Enterprise Service Bus (ESB) Source Repository</h1>
-        WSO2 ESB is developed on top of the revolutionary WSO2 Carbon platform. You might need the
-        source of the Carbon platform as well apart from the ESB source code. Please note that both
-        ESB and the Carbon platform is open source and the code is available under the Apache
+        <h1>WSO2 Enterprise Integrator (EI) Source Repository</h1>
+        WSO2 EI is developed on top of the revolutionary WSO2 Carbon platform. You might need the
+        source of the Carbon platform as well apart from the EI source code. Please note that both
+        EI and the Carbon platform is open source and the code is available under the Apache
         Software License v2.0.
 
         <h2>Overview</h2>
@@ -40,23 +40,23 @@
         to manage its source code. Instructions on Subversion use can be found at
             <a href="http://svnbook.red-bean.com/">http://svnbook.red-bean.com/</a>.</p>
 
-        <h2>Source code of the ESB 4.0.0 release</h2>
-        <p>The following is a link to the online source tag of the WSO2 ESB 4.0.0 release.</p>
+        <h2>Source code of the EI 4.0.0 release</h2>
+        <p>The following is a link to the online source tag of the WSO2 EI 4.0.0 release.</p>
         <div class="source">
-            <pre><a href="http://svn.wso2.org/repos/wso2/tags/esb/java/4.0.0/">http://svn.wso2.org/repos/wso2/tags/esb/java/4.0.0/</a></pre>
+            <pre><a href="http://svn.wso2.org/repos/wso2/tags/EI/java/4.0.0/">http://svn.wso2.org/repos/wso2/tags/EI/java/4.0.0/</a></pre>
         </div>
         <p>The complete source including the carbon platform can be checked out anonymously from
             SVN with this command:</p>
         <div class="source">
-            <pre>$ svn checkout http://svn.wso2.org/repos/wso2/tags/esb/java/4.0.0 wso2esb</pre>
+            <pre>$ svn checkout http://svn.wso2.org/repos/wso2/tags/EI/java/4.0.0 wso2EI</pre>
         </div>
 
-        <p>This code base contains the ESB product source code inside the directory "product" and
+        <p>This code base contains the EI product source code inside the directory "product" and
         it also contains the source for the platform under the directory "carbon-pltform". Further
-        there will be a "build.sh" script to build the ESB with the platform.</p>
+        there will be a "build.sh" script to build the EI with the platform.</p>
 
         <p>This script accepts any of the maven related system properties, but the property to skip
-         the tests has been shortned to "-ts", for example to build the ESB with the platform on
+         the tests has been shortned to "-ts", for example to build the EI with the platform on
          skipping tests the command is;</p>
 
         <div class="source">
@@ -67,12 +67,12 @@
         need to build either the product or a specific part of the platform (for example Synapse)
         you just need to traverse to that directory and use maven to build any of the projects.</p>
 
-        <h2>Source code of the WSO2 ESB trunk</h2>
+        <h2>Source code of the WSO2 EI trunk</h2>
         <p>Everyone can access the Subversion repository via HTTPS, but Committers must checkout
             the Subversion repository via HTTPS.
         </p>
         <div class="source">
-            <pre>$ svn checkout https://svn.wso2.org/repos/wso2/trunk/esb/java wso2esb</pre>
+            <pre>$ svn checkout https://svn.wso2.org/repos/wso2/trunk/EI/java wso2EI</pre>
         </div>
 
         <p>The Carbon framework related source code can be checked out from the
@@ -88,12 +88,12 @@
 
         <p>The Carbon project is the root project of the OSGi platform on whcih all the Java
             product stack is built on top of, and the carbon-components contains all the components
-            not just ESB specific components. So you obviously need to build just the set of
-            components required by the ESB, which can be achieved through;
+            not just EI specific components. So you obviously need to build just the set of
+            components required by the EI, which can be achieved through;
         </p>
 
         <div class="source">
-            <pre>$ mvn clean install -Dproduct=esb</pre>
+            <pre>$ mvn clean install -Dproduct=EI</pre>
         </div>
 
         <p>To commit changes to the repository, execute the following command (svn will prompt
@@ -108,7 +108,7 @@
             to the Subversion repository, you can try to access it via the developer connection:
         </p>
         <div class="source">
-            <pre>$ svn checkout https://svn.wso2.org/repos/wso2/trunk/esb/java wso2esb</pre>
+            <pre>$ svn checkout https://svn.wso2.org/repos/wso2/trunk/EI/java wso2EI</pre>
         </div>
         <h2>Access through a proxy</h2>
         <p>The Subversion client can go through a proxy, if you configure it to do so.

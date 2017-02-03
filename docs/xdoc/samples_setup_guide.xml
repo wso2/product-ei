@@ -24,17 +24,17 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
   <title>
-      WSO2 ESB - Samples Setup Guide
+      WSO2 EI - Samples Setup Guide
   </title>
 </head>
 
 <body>
     [ <a href="docs_index.html"> Documentation Index </a> ]
-<h1>WSO2 Enterprise Service Bus (ESB) Samples Setup Guide </h1>
+<h1>WSO2 Enterprise Integrator (EI) Samples Setup Guide </h1>
 
 <h1>Overview </h1>
 
-<p>The WSO2 ESB ships with a set of working examples that demonstrate some of
+<p>The WSO2 EI ships with a set of working examples that demonstrate some of
 the basic features and capabilities of itself. A set of sample clients and
 services are provided in addition to the sample configurations. Scripts are
 provided to execute the sample scenarios as explained below. </p>
@@ -70,16 +70,16 @@ the sample server, deploy a service, and run the client. </p>
       <li><a href="#L169">3. MTOMSwASampleService</a> </li>
     </ul>
   </li>
-  <li><a href="#config">Starting Sample ESB Configurations</a> </li>
+  <li><a href="#config">Starting Sample EI Configurations</a> </li>
   <li><a href="#Setting">Setting up the JMS Listener</a> </li>
   <li><a href="#mailsender">Setting up Mail Transport Sender</a> </li>
   <li><a href="#mailreceiver">Setting up Mail Transport Receiver</a> </li>
-  <li><a href="#fixtransport">Configuring WSO2 ESB for the FIX Transport</a> </li>
-  <li><a href="#setupamqpjms">Configuring WSO2 ESB for the AMQP Transport</a> </li>
-  <li><a href="#setuptcp">Configuring WSO2 ESB for the TCP Transport</a> </li>
-  <li><a href="#setupudp">Configuring WSO2 ESB for the UDP Transport</a> </li>
-  <li><a href="#setupjson">Configuring WSO2 ESB for supporting JSON</a> </li>
-  <li><a href="#script">Configuring the ESB for Script Mediator Support</a>
+  <li><a href="#fixtransport">Configuring WSO2 EI for the FIX Transport</a> </li>
+  <li><a href="#setupamqpjms">Configuring WSO2 EI for the AMQP Transport</a> </li>
+  <li><a href="#setuptcp">Configuring WSO2 EI for the TCP Transport</a> </li>
+  <li><a href="#setupudp">Configuring WSO2 EI for the UDP Transport</a> </li>
+  <li><a href="#setupjson">Configuring WSO2 EI for supporting JSON</a> </li>
+  <li><a href="#script">Configuring the EI for Script Mediator Support</a>
     <ul>
       <li><a href="#JavaScript">JavaScript Support</a> </li>
       <li><a href="#Ruby">Ruby Support</a> </li>
@@ -104,7 +104,7 @@ the build.xml file which resides in that directory using ant. You could do this
 by typing 'ant' on a console in this directory.</p>
 
 <p>Note*: The samples and the documentation assumes that you are running the
-ESB in DEBUG mode. You can switch from the default INFO log messages to DEBUG
+EI in DEBUG mode. You can switch from the default INFO log messages to DEBUG
 log messages by changing the line "log4j.category.org.apache.synapse=INFO" as
 "log4j.category.org.apache.synapse=DEBUG" in the
 lib/log4j.properties file. </p>
@@ -115,12 +115,12 @@ lib/log4j.properties file. </p>
   <tbody>
     <tr>
       <td><b>Client</b> </td>
-      <td><b>WSO2 ESB</b> </td>
+      <td><b>WSO2 EI</b> </td>
       <td><b>Service</b> </td>
     </tr>
     <tr>
       <td>ant stockquote </td>
-      <td>./wso2esb-samples.sh -sn &lt;n&gt; </td>
+      <td>./wso2EI-samples.sh -sn &lt;n&gt; </td>
       <td>SimpleStockQuoteService </td>
     </tr>
     <tr>
@@ -131,12 +131,12 @@ lib/log4j.properties file. </p>
   </tbody>
 </table>
 
-<p>The above table depicts the interactions between the clients, the ESB
+<p>The above table depicts the interactions between the clients, the EI
 and services at a high level. The Clients are able to send SOAP/REST or POX
 messages over transports such as HTTP/HTTPS or JMS with WS-Addressing,
 WS-Security, or WS-Reliable messaging. They could send binary optimized
 content using MTOM or SwA or binary or plain text JMS messages. After
-mediation through the ESB, the requests are passed over to the sample
+mediation through the EI, the requests are passed over to the sample
 services. The sample clients and services are explained below. </p>
 
 <h2 id="Using">Using the Sample Clients </h2>
@@ -169,7 +169,7 @@ payloads listed below as SOAP messages: </p>
   &lt;/m:request&gt;
 &lt;/m:getQuote&gt;</pre>
   </li>
-  <li>customquote - sends a quote request in a custom format. The ESB would
+  <li>customquote - sends a quote request in a custom format. The EI would
     transform this custom request into the standard stock quote request
     format and send it to the service. Upon receipt of the response, it would
     be transformed again to a custom response format and returned to the
@@ -215,29 +215,29 @@ for sample responses expected by the clients. </p>
 <p>The 'addurl' property sets the WS-Addressing EPR, and the 'trpurl' sets a
 transport URL for a message. Thus by specifying both properties, the client
 can operate in the 'smart client' mode, where the addressing EPR could
-specify the ultimate receiver, while the transport URL set to the ESB ensures
+specify the ultimate receiver, while the transport URL set to the EI ensures
 that any necessary mediation takes place before the message is delivered to
 the ultimate reciver. </p>
 
-<pre xml:space="preserve">e.g: ant stockquote -Daddurl=&lt;addressingEPR&gt; -Dtrpurl=&lt;esb&gt;</pre>
+<pre xml:space="preserve">e.g: ant stockquote -Daddurl=&lt;addressingEPR&gt; -Dtrpurl=&lt;EI&gt;</pre>
 
 <h3 id="Gateway">Gateway / Dumb Client Mode: </h3>
 
 <p>By specifying only a transport URL, the client operates in the 'dumb
-client' mode, where it sends the message to the ESB and depends on the ESB
+client' mode, where it sends the message to the EI and depends on the EI
 rules for proper mediation and routing of the message to the ultimate
 destination. </p>
 
-<pre xml:space="preserve">e.g: ant stockquote -Dtrpurl=&lt;esb&gt;</pre>
+<pre xml:space="preserve">e.g: ant stockquote -Dtrpurl=&lt;EI&gt;</pre>
 
 <h3 id="Proxy">Proxy Client Mode: </h3>
 
 <p>In this mode, the client uses the 'prxurl' as an HTTP proxy to send the
-request. Thus by setting the 'prxurl' to the ESB, the client could ensure
-that the message would reach the ESB for mediation. The client could
+request. Thus by setting the 'prxurl' to the EI, the client could ensure
+that the message would reach the EI for mediation. The client could
 optionally set a WS-Addressing EPR if required. </p>
 
-<pre xml:space="preserve">e.g: ant stockquote -Dprxurl=&lt;esb&gt; [-Daddurl=&lt;addressingEPR&gt;]</pre>
+<pre xml:space="preserve">e.g: ant stockquote -Dprxurl=&lt;EI&gt; [-Daddurl=&lt;addressingEPR&gt;]</pre>
 
 <h3 id="Specifying">Specifying a Policy </h3>
 
@@ -292,12 +292,12 @@ Messaging. It also handles binary content using MTOM and SwA. </p>
 <p>The sample services can be found in the samples/axis2Server/src directory
 and can be built and deployed using Ant from each service directory. </p>
 
-<pre xml:space="preserve">user@host:/tmp/wso2esb-2.0/samples/axis2Server/src/SimpleStockQuoteService$ ant
+<pre xml:space="preserve">user@host:/tmp/wso2EI-2.0/samples/axis2Server/src/SimpleStockQuoteService$ ant
 Buildfile: build.xml
  ...
 build-service:
    ....
-      [jar] Building jar: /tmp/wso2esb-2.0/samples/axis2Server/repository/services/SimpleStockQuoteService.aar
+      [jar] Building jar: /tmp/wso2EI-2.0/samples/axis2Server/repository/services/SimpleStockQuoteService.aar
 
 BUILD SUCCESSFUL
 Total time: 3 seconds</pre>
@@ -337,18 +337,18 @@ uploadFileUsingSwA operations accept a binary image from the SOAP request as
 MTOM and SwA, and returns this image back again as the response, while the
 oneWayUploadUsingMTOM saves the request message to the disk. </p>
 
-<h2 id="config">Starting Sample ESB Configurations </h2>
+<h2 id="config">Starting Sample EI Configurations </h2>
 
-<p>To start the WSO2 ESB with the sample default configuration, execute the
+<p>To start the WSO2 EI with the sample default configuration, execute the
 wso2server.bat or wso2server.sh script found in the /bin directory. This starts
-up an instance of the ESB using the Synapse and Axis2 configuration files
+up an instance of the EI using the Synapse and Axis2 configuration files
 located in the conf directory. The repository/samples directory contains
 the sample configurations available as synapse_sample_&lt;n&gt;.xml files. To
-start a specific sample configuration of the ESB, use the wso2esb-samples.sh or
-wso2esb-samples.bat as follows: </p>
+start a specific sample configuration of the EI, use the wso2EI-samples.sh or
+wso2EI-samples.bat as follows: </p>
 
-<pre xml:space="preserve">wso2esb-samples.bat -sn &lt;n&gt;
- ./wso2esb-samples.sh -sn &lt;n&gt;</pre>
+<pre xml:space="preserve">wso2EI-samples.bat -sn &lt;n&gt;
+ ./wso2EI-samples.sh -sn &lt;n&gt;</pre>
 
 <h2 id="Setting">Setting up the JMS Listener </h2>
 
@@ -359,7 +359,7 @@ ActiveMQ</a> (5.1.0 or higher) installation, which is properly installed and sta
 listener configuration. If you are using a JMS provider other than ActiveMQ,
 this configuration should be updated to reflect your environment. Once
 uncommented, the default configuration should be as follows. To enable JMS
-for the ESB, the repository/conf/axis2.xml must be updated. To
+for the EI, the repository/conf/axis2.xml must be updated. To
 enable JMS support for the sample Axis2 server, the
 samples/axis2Server/repository/conf/axis2.xml file must be updated. </p>
 
@@ -412,7 +412,7 @@ correct parameters for a valid mail account at service level.</p>
     &lt;/transportReceiver&gt;</pre>
 
 <h2 id="fixtransport">
-      Configuring WSO2 ESB for the FIX Transport
+      Configuring WSO2 EI for the FIX Transport
     </h2>
     <h3 id="fix-transport">
       Setting up the FIX Transport
@@ -426,20 +426,20 @@ correct parameters for a valid mail account at service level.</p>
       Simply uncomment the FIX transport sender and FIX transport receiver configurations
       in the repository/conf/axis2.xml. Alternatively if the
       FIX transport management bundle is in use you can enable the FIX transport
-      listener and the sender from the WSO2 ESB management console. Login to the
+      listener and the sender from the WSO2 EI management console. Login to the
       console and navigate to 'Transports' on management menu. Scroll down to
       locate the sections related to the FIX transport. Simply click on 'Enable'
       links to enable the FIX listener and the sender.
     </p>
     <p/>
     <h3 id="fixsamples">
-      Configuring the ESB for FIX Samples
+      Configuring the EI for FIX Samples
     </h3>
     <p>
-	In order to configure WSO2 ESB to run the FIX samples given in this
+	In order to configure WSO2 EI to run the FIX samples given in this
 	guide you will need to create some FIX configuration files as
 	specified below (You can find the config files from
-    $ESB_HOME/repository/conf/sample/resources/fix folder.
+    $EI_HOME/repository/conf/sample/resources/fix folder.
     </p>
     <p>
 	The FileStorePath property in the following two files should point
@@ -500,7 +500,7 @@ correct parameters for a valid mail account at service level.</p>
     <p>
     You can pass the new configuration file as a command line parameter too, in that case you don't
     need to modify the quickfixj-examples.jar.
-    You can copy the config files from $ESB_HOME/repository/conf/sample/resources/fix folder to
+    You can copy the config files from $EI_HOME/repository/conf/sample/resources/fix folder to
     $QFJ_HOME/etc folder. Execute the sample apps from $QFJ_HOME/bin, ./banzai.sh/bat ../etc/banzai.cfg
     executor.sh/bat ../etc/executor.sh.
 
@@ -562,7 +562,7 @@ correct parameters for a valid mail account at service level.</p>
     <p/>
 
     <h2 id="setupamqpjms">
-      Configure WSO2 ESB for AMQP Transport
+      Configure WSO2 EI for AMQP Transport
     </h2>
     <p/>
     <p>
@@ -585,7 +585,7 @@ correct parameters for a valid mail account at service level.</p>
         </p>
     <p>
       To enable the AMQP over JMS transport, you need to uncomment the JMS transport
-      listener configuration. To enable AMQP over JMS for ESB, the repository/conf/axis2.xml must be updated,
+      listener configuration. To enable AMQP over JMS for EI, the repository/conf/axis2.xml must be updated,
       while to enable JMS support for the sample Axis2 server the
       samples/axis2Server/repository/conf/axis2.xml file must be updated.
     </p>
@@ -611,7 +611,7 @@ correct parameters for a valid mail account at service level.</p>
             destination.directQueue = direct://amq.direct//QpidStockQuoteService?routingkey='QpidStockQuoteService'
             destination.replyQueue = direct://amq.direct//replyQueue?routingkey='replyQueue'</pre>
     <p>
-        Locate and edit the AMQP connection settings file for WSO2 ESB, this fle is usually named con.properties
+        Locate and edit the AMQP connection settings file for WSO2 EI, this fle is usually named con.properties
         and can be found in the repository/samples/resources/fix directory.
     </p>
         <pre>
@@ -627,7 +627,7 @@ correct parameters for a valid mail account at service level.</p>
 
 
 <h2 id="setuptcp">
-  Configure WSO2 ESB for TCP Transport
+  Configure WSO2 EI for TCP Transport
 </h2>
 <p/>
 <p>
@@ -650,7 +650,7 @@ correct parameters for a valid mail account at service level.</p>
 
 
 <h2 id="setupudp">
-  Configure WSO2 ESB for UDP Transport
+  Configure WSO2 EI for UDP Transport
 </h2>
 <p/>
 <p>
@@ -670,7 +670,7 @@ correct parameters for a valid mail account at service level.</p>
 
 
 <h2 id="setupjson">
-    Configuring WSO2 ESB for supporting JSON
+    Configuring WSO2 EI for supporting JSON
 </h2>
 <p/>
 <p>
@@ -701,11 +701,11 @@ correct parameters for a valid mail account at service level.</p>
 </p>
 
 
-<h2 id="script">Configuring the ESB for Script Mediator Support </h2>
+<h2 id="script">Configuring the EI for Script Mediator Support </h2>
 
 <p>The Script Mediator is a Synapse extension, and thus all pre-requisites
 for all BSF supported scripting languages may not be bundled by default with
-the ESB distribution. Before you use some script mediators, you may need to
+the EI distribution. Before you use some script mediators, you may need to
 manually add the required .jar files to the lib
 directory('lib/extensions'), and optionally perform other installation
 tasks as may be required by the individual scripting language. This is
@@ -714,7 +714,7 @@ detailed in the following sections. </p>
 <h3 id="JavaScript"><a name="JavaScript">JavaScript Support</a></h3>
 
 <p>The JavaScript/E4X support is enabled by default and comes ready-to-use
-with the WSO2 ESB distribution. </p>
+with the WSO2 EI distribution. </p>
 
 <h3><a name="Ruby">Ruby Support</a></h3>
 
@@ -738,7 +738,7 @@ with the WSO2 ESB distribution. </p>
       <li>
         Create and open a connection to the database using the Derby client
         driver<br/>
-        <pre> CONNECT 'jdbc:derby://localhost:1527/esbdb;user=esb;password=esb;create=true';</pre>
+        <pre> CONNECT 'jdbc:derby://localhost:1527/EIdb;user=EI;password=EI;create=true';</pre>
       </li>
       <li>
         Create a table using the following statement
@@ -754,12 +754,12 @@ with the WSO2 ESB distribution. </p>
 
 <p>When using Derby, you need to add derby.jar, derbyclient.jar and
 derbynet.jar to the classpath. This can be done by putting the above three
-jars into the ESB lib/extensions directory. For testing these samples Derby10.3.2.1
+jars into the EI lib/extensions directory. For testing these samples Derby10.3.2.1
 binary distribution was used. </p>
 
 <p>You can use any other database product instead of Derby. Then you have to
 change the database connection details accordingly. Also you have to copy the
-required database driver jars to the ESB classpath. </p>
+required database driver jars to the EI classpath. </p>
 
 <h2><a name="datasource">Setting up Synapse DataSources</a></h2>
 
@@ -778,7 +778,7 @@ sample 363.</p>
 Database server) steps to create the two databases
 <strong>'jdbc:derby://localhost:1527/lookupdb'</strong>,
 <strong>'jdbc:derby://localhost:1527/reportdb'</strong> using the user name and
-password as '<strong>esb</strong>'. Fill in the data for those two databases as
+password as '<strong>EI</strong>'. Fill in the data for those two databases as
 per described in the above section</p>
 
 <div>
@@ -799,9 +799,9 @@ synapse.datasources.lookupds.driverClassName=org.apache.derby.jdbc.ClientDriver
 synapse.datasources.lookupds.url=jdbc:derby://localhost:1527/lookupdb;create=false
 # Optionally you can specifiy a specific password provider implementation which overrides any globally configured provider
 synapse.datasources.lookupds.secretProvider=org.apache.synapse.commons.security.secret.handler.SharedSecretCallbackHandler
-synapse.datasources.lookupds.username=esb
+synapse.datasources.lookupds.username=EI
 # Depending on the password provider used, you may have to use an encrypted password here!
-synapse.datasources.lookupds.password=esb
+synapse.datasources.lookupds.password=EI
 synapse.datasources.lookupds.dsName=lookupdb
 synapse.datasources.lookupds.maxActive=100
 synapse.datasources.lookupds.maxIdle=20
@@ -817,9 +817,9 @@ synapse.datasources.reportds.driverClassName=org.apache.derby.jdbc.ClientDriver
 synapse.datasources.reportds.url=jdbc:derby://localhost:1527/reportdb;create=false
 # Optionally you can specifiy a specific password provider implementation which overrides any globally configured provider
 synapse.datasources.reportds.secretProvider=org.apache.synapse.commons.security.secret.handler.SharedSecretCallbackHandler
-synapse.datasources.reportds.username=esb
+synapse.datasources.reportds.username=EI
 # Depending on the password provider used, you may have to use an encrypted password here!
-synapse.datasources.reportds.password=esb
+synapse.datasources.reportds.password=EI
 synapse.datasources.reportds.maxActive=100
 synapse.datasources.reportds.maxIdle=20
 synapse.datasources.reportds.maxWait=10000</pre>

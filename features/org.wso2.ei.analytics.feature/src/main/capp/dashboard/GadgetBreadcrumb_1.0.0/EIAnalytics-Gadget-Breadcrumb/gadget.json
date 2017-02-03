@@ -1,0 +1,20 @@
+{
+  "id": "EIAnalytics-Gadget-Breadcrumb",
+  "title": "EIAnalytics-Gadget-Breadcrumb",
+  "type": "widget",
+  "category": "Widget",
+  "thumbnail": "store://gadget/EIAnalytics-Gadget-Breadcrumb/index.png",
+  "data": {
+    "url": "store://gadget/EIAnalytics-Gadget-Breadcrumb/index.xml"
+  },
+  "styles": {
+    "borders": false,
+    "title": false
+  },
+  "toolbarButtons":{
+    "default":{
+        "maximize": false,
+        "configurations": false
+    }
+  }
+}

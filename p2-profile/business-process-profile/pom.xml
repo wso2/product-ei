@@ -17,9 +17,7 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>p2-profile</artifactId>
         <groupId>org.wso2.ei</groupId>
@@ -203,6 +201,12 @@
                                     org.wso2.carbon.business-process:org.wso2.carbon.bpmn.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.wso2.carbon.business-process:org.wso2.carbon.bpel.analytics.publisher.feature:${carbon.business-process.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.business-process:org.wso2.carbon.bpmn.analytics.publisher.feature:${carbon.business-process.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.business-process:org.wso2.carbon.application.mgt.bpel.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -236,6 +240,9 @@
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.feature:${carbon.deployment.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.server.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}
@@ -537,6 +544,14 @@
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>org.wso2.carbon.bpel.analytics.publisher.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpmn.analytics.publisher.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.humantask.feature.group</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
@@ -582,7 +597,7 @@
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.webapp.mgt.feature.group</id>
+                                    <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
                                 <!-- as-runtimes-->
@@ -845,7 +860,7 @@
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.webapp.mgt.feature.group</id>
+                                    <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
 
@@ -857,6 +872,14 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.bpmn.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpel.analytics.publisher.feature.group</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpmn.analytics.publisher.feature.group</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
@@ -958,8 +981,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
-                                <mkdir
-                                        dir="target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps"/>
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps" />
                             </tasks>
                         </configuration>
                         <goals>
@@ -970,9 +992,8 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="false" value="true"
-                                         dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
-                                    <include name="**/bundles.info"/>
+                                <replace token="false" value="true" dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
+                                    <include name="**/bundles.info" />
                                 </replace>
                             </tasks>
                         </configuration>

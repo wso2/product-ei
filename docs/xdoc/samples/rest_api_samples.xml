@@ -23,13 +23,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-  <title>WSO2 ESB - REST API Samples </title>
+  <title>WSO2 EI - REST API Samples </title>
 </head>
 
 <body>
-<h1>Running the REST API Samples with WSO2 Enterprise Service Bus (ESB)</h1>
+<h1>Running the REST API Samples with WSO2 Enterprise Integrator (EI)</h1>
 <h2><a name="Sample800">Sample 800: Introduction to REST API</a> </h2>
-<pre xml:space="preserve">&lt;!-- An empty flat synapse configuration shipped with the WSO2 ESB --&gt;
+<pre xml:space="preserve">&lt;!-- An empty flat synapse configuration shipped with the WSO2 EI --&gt;
 &lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
     &lt;!-- You can add any flat sequences, endpoints, etc.. to this synapse.xml file if you do
@@ -77,14 +77,14 @@
 
 <p><strong>Prerequisites:</strong><br />
 Start the Axis2 server and deploy the SimpleStockQuoteService <br />
-Start the Synapse configuration numbered 800: i.e. wso2esb-samples -sn 800<br />
+Start the Synapse configuration numbered 800: i.e. wso2EI-samples -sn 800<br />
 You might need a REST client like curl to test this</p>
 <pre xml:space="preserve">curl -v http://127.0.0.1:8280/stockquote/view/IBM</pre>
 <pre xml:space="preserve">curl -v http://127.0.0.1:8280/stockquote/view/MSFT</pre>
 
 <p>The above GET calls will be handled by the first resource in the StockQuoteAPI. These REST calls will get converted into SOAP calls and will be sent to the Axis2 server. Response will be sent to the client in POX format. </p>
 
-<p>The following command POSTs a simple XML to the ESB. Save following sample place order request as  "placeorder.xml" file in your local file system and execute the command. That is used to invoke a SOAP service. ESB returns the 202 response back to the client.</p>
+<p>The following command POSTs a simple XML to the EI. Save following sample place order request as  "placeorder.xml" file in your local file system and execute the command. That is used to invoke a SOAP service. EI returns the 202 response back to the client.</p>
 
 <pre xml:space="preserve">curl -v -d @placeorder.xml -H "Content-type: application/xml" http://127.0.0.1:8280/stockquote/order/</pre>
 
