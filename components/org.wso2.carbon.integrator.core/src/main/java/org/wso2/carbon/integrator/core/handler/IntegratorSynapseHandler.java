@@ -137,7 +137,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private boolean dispatchMessage(String endpoint, String uri, MessageContext messageContext) {
         configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
-        Utils.setIntegratorHeader(messageContext);
+        Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
         return sendMediator.mediate(messageContext);

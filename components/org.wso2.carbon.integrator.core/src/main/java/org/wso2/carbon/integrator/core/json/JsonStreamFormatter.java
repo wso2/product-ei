@@ -49,22 +49,22 @@ public class JsonStreamFormatter implements MessageFormatter {
 
     public JsonStreamFormatter()
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        Class synapseFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getPassThroughJsonFormatter());
+        Class<?> synapseFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getPassThroughJsonFormatter());
         this.synapseFormatter = synapseFormatterClass.newInstance();
-        this.synapseFormatter_getBytesMethod = synapseFormatterClass.getMethod("getBytes", new Class[]{MessageContext.class, OMOutputFormat.class});
-        this.synapseFormatter_writeToMethod = synapseFormatterClass.getMethod("writeTo", new Class[]{MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class});
-        this.synapseFormatter_getContentTypeMethod = synapseFormatterClass.getMethod("getContentType", new Class[]{MessageContext.class, OMOutputFormat.class, String.class});
-        this.synapseFormatter_getTargetAddressMethod = synapseFormatterClass.getMethod("getTargetAddress", new Class[]{MessageContext.class, OMOutputFormat.class, URL.class});
-        this.synapseFormatter_formatSOAPActionMethod = synapseFormatterClass.getMethod("formatSOAPAction", new Class[]{MessageContext.class, OMOutputFormat.class, String.class});
+        this.synapseFormatter_getBytesMethod = synapseFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
+        this.synapseFormatter_writeToMethod = synapseFormatterClass.getMethod("writeTo", MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class);
+        this.synapseFormatter_getContentTypeMethod = synapseFormatterClass.getMethod("getContentType", MessageContext.class, OMOutputFormat.class, String.class);
+        this.synapseFormatter_getTargetAddressMethod = synapseFormatterClass.getMethod("getTargetAddress", MessageContext.class, OMOutputFormat.class, URL.class);
+        this.synapseFormatter_formatSOAPActionMethod = synapseFormatterClass.getMethod("formatSOAPAction", MessageContext.class, OMOutputFormat.class, String.class);
 
 
-        Class axis2GsonFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getDSSJsonFormatter());
+        Class<?> axis2GsonFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getDSSJsonFormatter());
         this.axis2GsonFormatter = axis2GsonFormatterClass.newInstance();
-        this.axis2GsonFormatter_getBytesMethod = axis2GsonFormatterClass.getMethod("getBytes", new Class[]{MessageContext.class, OMOutputFormat.class});
-        this.axis2GsonFormatter_writeToMethod = axis2GsonFormatterClass.getMethod("writeTo", new Class[]{MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class});
-        this.axis2GsonFormatter_getContentTypeMethod = axis2GsonFormatterClass.getMethod("getContentType", new Class[]{MessageContext.class, OMOutputFormat.class, String.class});
-        this.axis2GsonFormatter_getTargetAddressMethod = axis2GsonFormatterClass.getMethod("getTargetAddress", new Class[]{MessageContext.class, OMOutputFormat.class, URL.class});
-        this.axis2GsonFormatter_formatSOAPActionMethod = axis2GsonFormatterClass.getMethod("formatSOAPAction", new Class[]{MessageContext.class, OMOutputFormat.class, String.class});
+        this.axis2GsonFormatter_getBytesMethod = axis2GsonFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
+        this.axis2GsonFormatter_writeToMethod = axis2GsonFormatterClass.getMethod("writeTo", MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class);
+        this.axis2GsonFormatter_getContentTypeMethod = axis2GsonFormatterClass.getMethod("getContentType", MessageContext.class, OMOutputFormat.class, String.class);
+        this.axis2GsonFormatter_getTargetAddressMethod = axis2GsonFormatterClass.getMethod("getTargetAddress", MessageContext.class, OMOutputFormat.class, URL.class);
+        this.axis2GsonFormatter_formatSOAPActionMethod = axis2GsonFormatterClass.getMethod("formatSOAPAction", MessageContext.class, OMOutputFormat.class, String.class);
     }
 
     public byte[] getBytes(MessageContext messageContext, OMOutputFormat omOutputFormat) throws AxisFault {
