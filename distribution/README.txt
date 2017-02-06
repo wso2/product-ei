@@ -1,159 +1,51 @@
-================================================================================
-                        WSO2 Enterprise Integrator 6.0.0
-================================================================================
+ WSO2 Enterprise Integrator 6.0.0
+======================================================================
 
 Welcome to the WSO2 EI 6.0.0 release
 
-Product EI is an unified distribution of WSO2 Enterprise Integrator, Application Server, Data Services Server alongside Analytics,
-Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of
-each runtime.
+WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus, Application Server and Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
-Key Features of WSO2 EI
+WSO2 EI simplifies integration by allowing administrators to easily configure message routing, inter-mediation,transformation, logging, task scheduling, load balancing, failover routing, event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI. These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
+
+Key features of WSO2 EI 6.0.0
 ==================================
 
-1. Proxy services - facilitating synchronous/asynchronous transport, interface
-   (WSDL/Schema/Policy), message format (SOAP 1.1/1.2, POX/REST, Text, Binary),
-   QoS (WS-Addressing/WS-Security) and optimization switching (MTOM/SwA).
-2. API facilitating building REST services.
-3. Non-blocking HTTP/S transports based on Apache HttpCore for ultrafast
-   execution and support for thousands of connections at high concurreny with
-   constant memory usage.
-4. Built in Registry/Repository, facilitating dynamic updating and reloading
-   of the configuration and associated resources (e.g. XSLTs, XSD, WSDL,
-   Policies, JS, Configurations ..)
-5. Easily extendable via custom Java class (mediator and command)/Spring
-   mediators, or BSF Scripting languages (Javascript, Ruby, Groovy, etc.)
-6. Built in support for scheduling tasks using the Quartz scheduler.
-7. Load-balancing (with or without sticky sessions)/Fail-over, and clustered
-   Throttling and Caching support
-8. WS-Security, Caching & Throttling configurable via
-   (message/operation/service level) WS-Policies
-9. Lightweight, XML and Web services centric messaging model
-10. Support for industrial standards (Hessian binary web service protocol/
-   Financial Information eXchange protocol and optional Helth Level-7 protocol)
-11. Enhanced support for the VFS(File/FTP/SFTP)/JMS/Mail transports with
-    optional TCP/UDP transports and transport switching for any of the above
-    transports
-12. Support for message splitting & aggregation using the EIP and service
-    callouts
-13. Database lookup & store support with DBMediators with reusable database
-    connection pools
-14. Transactions support via the JMS transport and Transaction mediator for
-    database mediators
-15. Internationalized GUI management console with user/permission management for
-    configuration development and monitoring support with statistics,
-    configurable logging and tracing
-16. JMX monitoring support and JMX management capabilities like,
-    Gracefull/Forcefull shutdown/restart
-17. Inbound endpoint is  a message source that can be configured dynamically.
-    Inbound endpoints support all transports to work in a multi-tenant mode. 
-    The behaviour of an inbound endpoint can be Polling, Busy wait or Listening 
-    based on the implementation
-18. Guaranteed message delivery pattern is supported with cluster coordination 
-    support added to the new Message store and Message processor implementation
-19. Message queueing protocol support has been extended with MQTT, RabbitMQ, Kafka
-    and HL7 Inbound endpoint/transport implementations.
-20. Dynamic SSL profiles support added to configure keystores dynamically without 
-    even restarting the server
+See the online WSO2 EI documentation for more information on product features: https://docs.wso2.com/display/EI600/WSO2+Enterprise+Integrator+Documentation
 
 
 Installation & Running
 ==================================
 
-Running Enterprise Integrator
+Running the Integrator
 ==================================
 1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
 2. Run integrator.sh or integrator.bat.
-3. Point your favourite browser to
-
-    https://localhost:9443/carbon
-
+3. Point your favourite browser to  https://localhost:9443/carbon
 4. Use the following username and password to login
+   username : admin
+   password : admin
 
-    username : admin
-    password : admin
+Running other runtimes individually (Analytics, Broker, Business-Process)
+========================================================
+1. Extract wso2ei-6.0.0.zip and go to the extracted directory.
+2. Go to wso2ei-6.0.0/wso2 directory.
+3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
+4. Execute wso2server.sh or wso2server.bat.
+3. Access the url related to the required runtime. (For example, use https://localhost:9443/carbon for the integrator runtime.)
 
-Running all runtimes (Integrator,Analytics,Broker,Business-Process)
+Running all runtimes (Integrator, Analytics, Broker, Business-Process)
 ==================================================================
 
 1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
 2. Run start-all.sh or start-all.bat.
-3. Access appropriate url for the related runtime. (ex:  https://localhost:9443/carbon)
+3. Access appropriate url for the related runtime. (For example, use  https://localhost:8243/carbon for the Integrator runtime)
 
-Running other runtimes individually (Analytics,Broker,Business-Process)
-======================================================================
-1. Extract  wso2ei-6.0.0.zip and go to the extracted directory.
-2. Go to wso2ei-6.0.0/wso2 directory.
-3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
-4. Execute wso2server.sh or wso2server.bat.
 
-WSO2 EI 6.0.0 distribution directory structure
+
+WSO2 EI distribution directory
 =============================================
 
-	CARBON_HOME
-		|- bin <folder>
-		|- conf <folder>
-		|- dbscripts <folder>
-		|- dropins <folder>
-		|- extensions <folder>
-		|- lib <folder>
-		|- patches <folder>
-		|- repository <folder>
-			|--- axis2 <folder>
-			|--- data <folder>
-			|--- database <folder>
-			|--- deployment <folder>
-			|--- logs <folder>
-			|--- resources <folder>
-			|--- samples <folder>
-			|---tenants <folder>
-		|- resources <folder>
-		|- samples <folder>
-		|- servicepacks <folder>
-		|- webapp-mode <folder>
-		|- LICENSE.txt <file>
-		|- README.txt <file>
-		|- release-notes.html <file>
-		|- wso2 <folder>
-		   |--- analytics <folder>
-		         |--- bin <folder>
-		         |--- conf <folder>
-		         |--- dbscripts <folder>
-		         |--- lib_managed <folder>
-		         |--- migration <folder>
-		         |--- modules <folder>
-		         |--- repository <folder>
-		         |--- resources <folder>
-		         |--- temp <folder>
-		   |--- broker <folder>
-		         |--- bin <folder>
-		         |--- conf <folder>
-		         |--- dbscripts <folder>
-		         |--- repository <folder>
-		         |--- temp <folder>
-		   |--- business-process <folder>
-		         |--- bin <folder>
-		         |--- conf <folder>
-		         |--- dbscripts <folder>
-		         |--- modules <folder>
-		         |--- repository <folder>
-		         |--- resources <folder>
-		         |--- temp <folder>
-		   |--- components <folder>
-		         |--- plugins <folder>
-		         |--- p2 <folder>
-		         |--- features <folder>
-		         |--- default <folder>
-		         |--- worker <folder>
-		         |--- business-process-default <folder>
-		         |--- business-process-worker <folder>
-		         |--- broker-default <folder>
-		         |--- analytics-default <folder>
-		         |--- artifacts.xml <file>
-		   |--- lib <folder>
-		   |--- temp <folder>
-
-    - bin
+ - bin
 	  Contains various scripts .sh & .bat scripts
 
     - database
@@ -169,7 +61,7 @@ WSO2 EI 6.0.0 distribution directory structure
     - repository
 	  The repository where services and modules deployed in WSO2 EI
 	  are stored.
-	
+
 	- conf
 	  Contains configuration files specific to EI
 
@@ -245,6 +137,11 @@ WSO2 EI 6.0.0 distribution directory structure
    -wso2/broker/repository
       Where deployments of broker runtime is stored.
 
+Known issues of WSO2 EI 6.0.0
+==================================
+
+     - https://github.com/wso2/product-ei/issues
+
 Support
 ==================================
 
@@ -255,14 +152,6 @@ hours, to premium 24x7 phone support.
 For additional support information please refer to http://wso2.com/support/
 
 For more information on WSO2 EI, visit the WSO2 Oxygen Tank (http://wso2.org)
-
-Known issues of WSO2 EI 6.0.0
-==================================
-
-
-Issue Tracker
-==================================
-
 
 Crypto Notice
 ==================================
@@ -296,6 +185,7 @@ Crypto Notice
 
 --------------------------------------------------------------------------------
 (c) Copyright 2016 WSO2 Inc.
+
 
 
 
