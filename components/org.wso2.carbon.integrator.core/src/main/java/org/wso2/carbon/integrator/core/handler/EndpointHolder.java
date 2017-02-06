@@ -100,7 +100,7 @@ public class EndpointHolder implements Runnable {
         try {
             this.cleanupMap();
         } catch (Exception e) {
-            log.warn("Error occurred while cleaning up OAuth code map, Error - " + e.getMessage(), e);
+            log.warn("Error occurred while cleaning up Endpoint map, Error - " + e.getMessage(), e);
         }
     }
 }
