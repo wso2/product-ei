@@ -45,7 +45,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     }
 
     private SendMediator sendMediator;
-    private PassThroughSenderManager configuration = PassThroughSenderManager.getInstance();
+    private PassThroughSenderManager passThroughSenderManager = PassThroughSenderManager.getInstance();
 
     @Override
     public boolean handleRequestInFlow(MessageContext messageContext) {
@@ -94,7 +94,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
             return true;
         } finally {
             if (isPreserveHeadersContained) {
-                configuration.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
+                    passThroughSenderManager.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                }
             }
         }
     }
@@ -136,7 +138,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     }
 
     private boolean dispatchMessage(String endpoint, String uri, MessageContext messageContext) {
-        configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+        if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
+            passThroughSenderManager.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+        }
         Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
