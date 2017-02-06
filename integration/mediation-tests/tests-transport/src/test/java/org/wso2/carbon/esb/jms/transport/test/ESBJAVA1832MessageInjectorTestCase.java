@@ -36,11 +36,14 @@ import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 
 public class ESBJAVA1832MessageInjectorTestCase extends ESBIntegrationTest {
 
+    private JMSQueueMessageConsumer consumer;
+
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
         OMElement msgProessor = esbUtils.loadResource("/artifacts/ESB/jms/transport/msgInjection/msg_store.xml");
         OMElement task = esbUtils.loadResource("/artifacts/ESB/jms/transport/msgInjection/msg_injecting_task.xml");
+        consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
         updateESBConfiguration(JMSEndpointManager.setConfigurations(msgProessor));
         esbUtils.addScheduleTask(contextUrls.getBackEndUrl(),getSessionCookie(), task);
     }
@@ -50,7 +53,6 @@ public class ESBJAVA1832MessageInjectorTestCase extends ESBIntegrationTest {
         String queueName = "jmsQueue";
         int numberOfMsgToExpect = 10;
         TimeUnit.SECONDS.sleep(15);
-        JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
         try {
             consumer.connect(queueName);
             for (int i = 0; i < numberOfMsgToExpect; i++) {

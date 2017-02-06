@@ -58,7 +58,7 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
 
     @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
-        if (isStatefulService(axisService) && messageContext.getProperty("transport.http.servletRequest") == null) {
+        if (isStatefulService(axisService) && messageContext.getProperty("transport.http.servletRequest") == null && messageContext.getProperty("pass-through.pipe") != null) {
             try {
                 messageContext.setAxisService((AxisService) synapseHandler_findServiceMethod.invoke(synapseHandler, messageContext));
                 messageContext.setProperty("raplacedAxisService","true");

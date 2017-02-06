@@ -124,7 +124,6 @@ public class PttMaximumOpenConnections extends ESBIntegrationTest {
         try {
             super.cleanup();
         } finally {
-            Thread.sleep(3000);
             serverConfigurationManagerProp.restoreToLastConfiguration(false);
             serverConfigurationManagerProp = null;
             serverConfigurationManagerAxis2.restoreToLastConfiguration();
