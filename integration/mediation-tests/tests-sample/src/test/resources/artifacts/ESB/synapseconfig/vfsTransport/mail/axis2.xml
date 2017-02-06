@@ -833,8 +833,7 @@ check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more det
         <phase name="MsgInObservation"/>
         <phase name="Validation"/>
         <phase name="Transport">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
             </handler>
             <handler name="SOAPActionBasedDispatcher"
@@ -862,8 +861,7 @@ check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more det
             <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
         </phase>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
@@ -929,8 +927,7 @@ check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more det
         <phase name="MsgInObservation"/>
         <phase name="Validation"/>
         <phase name="Transport">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
             </handler>
             <handler name="SOAPActionBasedDispatcher"
@@ -947,8 +944,7 @@ check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more det
         <phase name="Security"/>
         <phase name="PreDispatch"/>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
