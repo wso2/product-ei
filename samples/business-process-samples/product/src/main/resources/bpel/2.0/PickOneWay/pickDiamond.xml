@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pic="http://www.stark.com/PickService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <pic:pickDiamond>
+         <pic:Deck>One</pic:Deck>
+      </pic:pickDiamond>
+   </soapenv:Body>
+</soapenv:Envelope>
+

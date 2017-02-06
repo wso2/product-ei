@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:RepeatUntil="http://wso2.org/bps/samples/RepeatUntil" xmlns:testRepeatUntil="http://wso2.org/bps/samples/testRepeatUntil">
+  <process name="RepeatUntil:RepeatUntil">
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="RepeatUntil:RepeatUntilService" port="RepeatUntilServicePort"/>
+    </provide>
+  </process>
+</deploy>

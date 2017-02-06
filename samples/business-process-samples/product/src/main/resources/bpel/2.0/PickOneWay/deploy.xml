@@ -1,0 +1,11 @@
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
+	xmlns:srvns="http://www.stark.com/PickService"
+	xmlns:procns="http://emcs/www.stark.com/PickProcess">
+
+	<process name="procns:PickProcess">
+		<provide partnerLink="IncomingLink">
+			<service name="srvns:PickService" port="PickServiceSoapPort"/>
+		</provide>
+		<cleanup on="always"/>
+	</process>
+</deploy>

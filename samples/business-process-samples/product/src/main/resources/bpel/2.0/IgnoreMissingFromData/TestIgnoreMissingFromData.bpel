@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process exitOnStandardFault="yes"
+    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+    name="TestIgnoreMissingFromData"
+    queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+    suppressJoinFailure="yes" targetNamespace="test:test"
+    xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:ode="http://www.apache.org/ode/type/extension"
+    xmlns:tns="test:test" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <bpel:import importType="http://schemas.xmlsoap.org/wsdl/"
+        location="TestIgnoreMissingFromData.wsdl" namespace="test:test"/>
+    <bpel:partnerLinks>
+        <bpel:partnerLink myRole="ServiceProvider" name="client" partnerLinkType="tns:ServicePartnerLinkType"/>
+    </bpel:partnerLinks>
+    <bpel:variables>
+        <bpel:variable messageType="tns:InputMessage" name="input"/>
+        <bpel:variable messageType="tns:OutputMessage" name="output"/>
+        <bpel:variable element="tns:TestElement" name="TestVar"/>
+    </bpel:variables>
+    <bpel:sequence name="process">
+        <bpel:receive createInstance="yes" name="ReceiveInput"
+            operation="process" partnerLink="client"
+            portType="tns:ServicePortType" variable="input"/>
+        <bpel:assign name="Assign" validate="no">
+            <bpel:copy>
+                <bpel:from>
+                    <bpel:literal>
+                        <tns:TestElement xmlns:tns="test:test"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="test:test TestIgnoreMissingFromData.wsdl "></tns:TestElement>
+                    </bpel:literal>
+                </bpel:from>
+                <bpel:to variable="TestVar"/>
+            </bpel:copy>
+            <bpel:copy ignoreMissingFromData="yes">
+                <bpel:from variable="TestVar">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">tns:OptionalElement></bpel:query>
+                </bpel:from>
+                <bpel:to part="payload" variable="output"/>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA["Test passed."]]></bpel:from>
+                <bpel:to part="payload" variable="output"/>
+            </bpel:copy>
+        </bpel:assign>
+        <bpel:reply name="ReplyWithOutput" operation="process"
+            partnerLink="client" portType="tns:ServicePortType" variable="output"/>
+    </bpel:sequence>
+</bpel:process>

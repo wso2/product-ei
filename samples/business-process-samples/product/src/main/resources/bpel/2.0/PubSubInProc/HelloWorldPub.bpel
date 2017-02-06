@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:pnlk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Start="http://ode/bpel/unit-test/Start" xmlns:HelloWorld="http://ode/bpel/unit-test/HelloWorld" xmlns:this="http://ode/bpel/unit-test" xmlns:diag="http://ode/bpel/unit-test.wsdl" xmlns:tns="http://ode/bpel/unit-test.wsdl" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:atomic="http://ode.apache.org/atomicScope" queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0" name="HelloWorldPub" targetNamespace="http://ode/bpel/unit-test">
+  <bpel:import namespace="http://ode/bpel/unit-test.wsdl" location="HelloWorld.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <bpel:import namespace="http://ode/bpel/unit-test.wsdl" location="HelloWorldPub.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <bpel:partnerLinks>
+    <bpel:partnerLink name="helloWorldAndPoolForHelloPortPlkVar" partnerLinkType="diag:HelloWorldAndPoolForHelloPortPlk" initializePartnerRole="true" partnerRole="HelloWorld_for_Pool"/>
+    <bpel:partnerLink name="poolAndStartForHelloPortPlkVar" partnerLinkType="diag:PoolAndStartForHelloPortPlk" myRole="Pool_for_Start"/>
+  </bpel:partnerLinks>
+  <bpel:variables>
+    <bpel:variable name="tnsHelloRequestMsg" messageType="tns:HelloMessage"/>
+    <bpel:variable name="tnsHelloResponseMsg" messageType="tns:HelloMessage"/>
+  </bpel:variables>
+  <bpel:sequence>
+    <bpel:receive partnerLink="poolAndStartForHelloPortPlkVar" portType="tns:HelloPortType" operation="hello" variable="tnsHelloRequestMsg" createInstance="yes"/>
+	<bpel:invoke partnerLink="helloWorldAndPoolForHelloPortPlkVar" portType="tns:HelloPortType" operation="hello" inputVariable="tnsHelloRequestMsg" outputVariable="tnsHelloResponseMsg"/>
+    <bpel:reply partnerLink="poolAndStartForHelloPortPlkVar" portType="tns:HelloPortType" operation="hello" variable="tnsHelloResponseMsg"/>
+  </bpel:sequence>
+</bpel:process>

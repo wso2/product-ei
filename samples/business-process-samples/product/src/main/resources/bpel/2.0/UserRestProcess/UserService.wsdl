@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ode/bpel/test/userservice"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:odex="http://www.apache.org/ode/type/extension/http"
+	xmlns:ignore="http://wso2.org/bps/ignorens" targetNamespace="http://ode/bpel/test/userservice">
+
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="qualified"
+			elementFormDefault="unqualified" targetNamespace="http://wso2.org/bps/ignorens">
+			<xsd:element name="user">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="uid" nillable="true"
+							type="xsd:string" />
+						<xsd:element minOccurs="0" name="uname" nillable="true"
+							type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="userID">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="uid" nillable="true"
+							type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+
+	<!-- Get Message -->
+	<wsdl:message name="getUserNameRequest">
+		<wsdl:part name="userID" element="ignore:userID" />
+	</wsdl:message>
+	<wsdl:message name="getUserNameResponse">
+		<wsdl:part name="userName" type="xsd:string" />
+	</wsdl:message>
+
+	<!-- Put Message -->
+	<wsdl:message name="putUserNameRequest">
+		<wsdl:part name="user" element="ignore:user" />
+	</wsdl:message>
+	<wsdl:message name="putUserNameResponse">
+		<wsdl:part name="part" type="xsd:string" />
+	</wsdl:message>
+
+	<!-- Post Message -->
+	<wsdl:message name="postUserNameRequest">
+		<wsdl:part name="user" element="ignore:user" />
+	</wsdl:message>
+	<wsdl:message name="postUserNameResponse">
+		<wsdl:part name="part" type="xsd:string" />
+	</wsdl:message>
+
+	<!-- Delete Message -->
+	<wsdl:message name="deleteUserNameRequest">
+		<wsdl:part name="user" element="ignore:userID" />
+	</wsdl:message>
+	<wsdl:message name="deleteUserNameResponse">
+		<wsdl:part name="part" type="xsd:string" />
+	</wsdl:message>
+
+
+	<!-- Get PortType -->
+	<wsdl:portType name="UserServiceGetPT">
+		<wsdl:operation name="getUserName">
+			<wsdl:input message="tns:getUserNameRequest" />
+			<wsdl:output message="tns:getUserNameResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- Put PortType -->
+	<wsdl:portType name="UserServicePutPT">
+		<wsdl:operation name="putUserName">
+			<wsdl:input message="tns:putUserNameRequest" />
+			<wsdl:output message="tns:putUserNameResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- Post PortType -->
+	<wsdl:portType name="UserServicePostPT">
+		<wsdl:operation name="postUserName">
+			<wsdl:input message="tns:postUserNameRequest" />
+			<wsdl:output message="tns:postUserNameResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+	<!-- Delete PortType -->
+	<wsdl:portType name="UserServiceDeletePT">
+		<wsdl:operation name="deleteUserName">
+			<wsdl:input message="tns:deleteUserNameRequest" />
+			<wsdl:output message="tns:deleteUserNameResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- Get Binding -->
+	<wsdl:binding name="UserServiceGetHTTP" type="tns:UserServiceGetPT">
+		<http:binding verb="GET" />
+		<wsdl:operation name="getUserName">
+			<http:operation
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}" />
+			<wsdl:input>
+				<http:urlReplacement />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="userName" type="text/xml" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+		<!-- Put Binding -->
+	<wsdl:binding name="UserServicePutHTTP" type="tns:UserServicePutPT">
+		<http:binding verb="PUT" />
+		<wsdl:operation name="putUserName">
+			<http:operation
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}/{uname}" />
+			<wsdl:input>
+				<http:urlReplacement />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="part" type="text/xml" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+			<!-- Post Binding -->
+	<wsdl:binding name="UserServicePostHTTP" type="tns:UserServicePostPT">
+		<http:binding verb="POST" />
+		<wsdl:operation name="postUserName">
+			<http:operation
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}/{uname}" />
+			<wsdl:input>
+				<http:urlReplacement />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="part" type="text/xml" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+			<!-- Delete Binding -->
+	<wsdl:binding name="UserServiceDeleteHTTP" type="tns:UserServiceDeletePT">
+		<http:binding verb="DELETE" />
+		<wsdl:operation name="deleteUserName">
+			<http:operation
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}" />
+			<wsdl:input>
+				<http:urlReplacement />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content part="part" type="text/xml" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<!-- Get Service -->
+	<wsdl:service name="UserServiceGet">
+		<wsdl:port binding="tns:UserServiceGetHTTP" name="UserServiceGetHTTP">
+			<http:address
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+		</wsdl:port>
+	</wsdl:service>
+	
+	<!-- Put Service -->
+	<wsdl:service name="UserServicePut">
+		<wsdl:port binding="tns:UserServicePutHTTP" name="UserServicePutHTTP">
+			<http:address
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+		</wsdl:port>
+	</wsdl:service>
+	
+	<!-- Post Service -->
+	<wsdl:service name="UserServicePost">
+		<wsdl:port binding="tns:UserServicePostHTTP" name="UserServicePostHTTP">
+			<http:address
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+		</wsdl:port>
+	</wsdl:service>
+	
+	<!-- Delete Service -->
+	<wsdl:service name="UserServiceDelete">
+		<wsdl:port binding="tns:UserServiceDeleteHTTP" name="UserServiceDeleteHTTP">
+			<http:address
+				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

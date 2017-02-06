@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:tns="EntrollmentServiceArtifacts" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://www.bps.wso2.org/EnrollmentService/" name="EntrollmentServiceArtifacts" targetNamespace="EntrollmentServiceArtifacts" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <plnk:partnerLinkType name="clientPLT">
+    <plnk:role name="clientProvider" portType="wsdl:EnrollmentService"/>
+  </plnk:partnerLinkType>
+  <import location="EnrollmentService.wsdl" namespace="http://www.bps.wso2.org/EnrollmentService/"/>
+</definitions>

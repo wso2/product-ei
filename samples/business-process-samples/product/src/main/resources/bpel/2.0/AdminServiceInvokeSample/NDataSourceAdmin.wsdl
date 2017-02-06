@@ -1,0 +1,610 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://services.core.ndatasource.carbon.wso2.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ax2223="http://common.ndatasource.carbon.wso2.org/xsd" xmlns:ax2226="http://core.ndatasource.carbon.wso2.org/xsd" xmlns:ax2225="http://services.core.ndatasource.carbon.wso2.org/xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://services.core.ndatasource.carbon.wso2.org">
+    <wsdl:documentation>NDataSourceAdmin</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:ax2227="http://core.ndatasource.carbon.wso2.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://services.core.ndatasource.carbon.wso2.org/xsd">
+            <xs:import namespace="http://core.ndatasource.carbon.wso2.org/xsd"/>
+            <xs:complexType name="WSDataSourceMetaInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="definition" nillable="true" type="ax2225:WSDataSourceMetaInfo_WSDataSourceDefinition"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="jndiConfig" nillable="true" type="ax2227:JNDIConfig"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="system" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="WSDataSourceMetaInfo_WSDataSourceDefinition">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="dsXMLConfiguration" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="type" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="WSDataSourceInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="dsMetaInfo" nillable="true" type="ax2225:WSDataSourceMetaInfo"/>
+                    <xs:element minOccurs="0" name="dsStatus" nillable="true" type="ax2227:DataSourceStatus"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax2228="http://services.core.ndatasource.carbon.wso2.org/xsd" xmlns:ns="http://org.apache.axis2/xsd" xmlns:ax2224="http://common.ndatasource.carbon.wso2.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://org.apache.axis2/xsd">
+            <xs:import namespace="http://common.ndatasource.carbon.wso2.org/xsd"/>
+            <xs:import namespace="http://services.core.ndatasource.carbon.wso2.org/xsd"/>
+            <xs:element name="NDataSourceAdminDataSourceException">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="DataSourceException" nillable="true" type="ax2224:DataSourceException"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="testDataSourceConnection">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dsmInfo" nillable="true" type="ax2228:WSDataSourceMetaInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="testDataSourceConnectionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="reloadDataSource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dsName" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="reloadDataSourceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="reloadAllDataSources">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="reloadAllDataSourcesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getDataSourceTypes">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getDataSourceTypesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getDataSource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dsName" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getDataSourceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2228:WSDataSourceInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllDataSourcesForType">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dsType" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllDataSourcesForTypeResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax2228:WSDataSourceInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllDataSources">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllDataSourcesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax2228:WSDataSourceInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteDataSource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dsName" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteDataSourceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addDataSource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dsmInfo" nillable="true" type="ax2228:WSDataSourceMetaInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addDataSourceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://core.ndatasource.carbon.wso2.org/xsd">
+            <xs:complexType name="JNDIConfig">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="environment" nillable="true" type="ax2226:JNDIConfig_EnvEntry"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="useDataSourceFactory" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="JNDIConfig_EnvEntry">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="encrypted" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DataSourceStatus">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="details" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mode" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://common.ndatasource.carbon.wso2.org/xsd">
+            <xs:complexType name="DataSourceException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="errorMessage" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getDataSourceTypesRequest">
+        <wsdl:part name="parameters" element="ns1:getDataSourceTypes"/>
+    </wsdl:message>
+    <wsdl:message name="getDataSourceTypesResponse">
+        <wsdl:part name="parameters" element="ns1:getDataSourceTypesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="NDataSourceAdminDataSourceException">
+        <wsdl:part name="parameters" element="ns1:NDataSourceAdminDataSourceException"/>
+    </wsdl:message>
+    <wsdl:message name="testDataSourceConnectionRequest">
+        <wsdl:part name="parameters" element="ns1:testDataSourceConnection"/>
+    </wsdl:message>
+    <wsdl:message name="testDataSourceConnectionResponse">
+        <wsdl:part name="parameters" element="ns1:testDataSourceConnectionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="reloadAllDataSourcesRequest">
+        <wsdl:part name="parameters" element="ns1:reloadAllDataSources"/>
+    </wsdl:message>
+    <wsdl:message name="reloadAllDataSourcesResponse">
+        <wsdl:part name="parameters" element="ns1:reloadAllDataSourcesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="reloadDataSourceRequest">
+        <wsdl:part name="parameters" element="ns1:reloadDataSource"/>
+    </wsdl:message>
+    <wsdl:message name="reloadDataSourceResponse">
+        <wsdl:part name="parameters" element="ns1:reloadDataSourceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getDataSourceRequest">
+        <wsdl:part name="parameters" element="ns1:getDataSource"/>
+    </wsdl:message>
+    <wsdl:message name="getDataSourceResponse">
+        <wsdl:part name="parameters" element="ns1:getDataSourceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getAllDataSourcesForTypeRequest">
+        <wsdl:part name="parameters" element="ns1:getAllDataSourcesForType"/>
+    </wsdl:message>
+    <wsdl:message name="getAllDataSourcesForTypeResponse">
+        <wsdl:part name="parameters" element="ns1:getAllDataSourcesForTypeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addDataSourceRequest">
+        <wsdl:part name="parameters" element="ns1:addDataSource"/>
+    </wsdl:message>
+    <wsdl:message name="addDataSourceResponse">
+        <wsdl:part name="parameters" element="ns1:addDataSourceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getAllDataSourcesRequest">
+        <wsdl:part name="parameters" element="ns1:getAllDataSources"/>
+    </wsdl:message>
+    <wsdl:message name="getAllDataSourcesResponse">
+        <wsdl:part name="parameters" element="ns1:getAllDataSourcesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteDataSourceRequest">
+        <wsdl:part name="parameters" element="ns1:deleteDataSource"/>
+    </wsdl:message>
+    <wsdl:message name="deleteDataSourceResponse">
+        <wsdl:part name="parameters" element="ns1:deleteDataSourceResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="NDataSourceAdminPortType">
+        <wsdl:operation name="getDataSourceTypes">
+            <wsdl:input message="tns:getDataSourceTypesRequest" wsaw:Action="urn:getDataSourceTypes"/>
+            <wsdl:output message="tns:getDataSourceTypesResponse" wsaw:Action="urn:getDataSourceTypesResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:getDataSourceTypesNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="testDataSourceConnection">
+            <wsdl:input message="tns:testDataSourceConnectionRequest" wsaw:Action="urn:testDataSourceConnection"/>
+            <wsdl:output message="tns:testDataSourceConnectionResponse" wsaw:Action="urn:testDataSourceConnectionResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:testDataSourceConnectionNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="reloadAllDataSources">
+            <wsdl:input message="tns:reloadAllDataSourcesRequest" wsaw:Action="urn:reloadAllDataSources"/>
+            <wsdl:output message="tns:reloadAllDataSourcesResponse" wsaw:Action="urn:reloadAllDataSourcesResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:reloadAllDataSourcesNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="reloadDataSource">
+            <wsdl:input message="tns:reloadDataSourceRequest" wsaw:Action="urn:reloadDataSource"/>
+            <wsdl:output message="tns:reloadDataSourceResponse" wsaw:Action="urn:reloadDataSourceResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:reloadDataSourceNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSource">
+            <wsdl:input message="tns:getDataSourceRequest" wsaw:Action="urn:getDataSource"/>
+            <wsdl:output message="tns:getDataSourceResponse" wsaw:Action="urn:getDataSourceResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:getDataSourceNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSourcesForType">
+            <wsdl:input message="tns:getAllDataSourcesForTypeRequest" wsaw:Action="urn:getAllDataSourcesForType"/>
+            <wsdl:output message="tns:getAllDataSourcesForTypeResponse" wsaw:Action="urn:getAllDataSourcesForTypeResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:getAllDataSourcesForTypeNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="addDataSource">
+            <wsdl:input message="tns:addDataSourceRequest" wsaw:Action="urn:addDataSource"/>
+            <wsdl:output message="tns:addDataSourceResponse" wsaw:Action="urn:addDataSourceResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:addDataSourceNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSources">
+            <wsdl:input message="tns:getAllDataSourcesRequest" wsaw:Action="urn:getAllDataSources"/>
+            <wsdl:output message="tns:getAllDataSourcesResponse" wsaw:Action="urn:getAllDataSourcesResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:getAllDataSourcesNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteDataSource">
+            <wsdl:input message="tns:deleteDataSourceRequest" wsaw:Action="urn:deleteDataSource"/>
+            <wsdl:output message="tns:deleteDataSourceResponse" wsaw:Action="urn:deleteDataSourceResponse"/>
+            <wsdl:fault message="tns:NDataSourceAdminDataSourceException" name="NDataSourceAdminDataSourceException" wsaw:Action="urn:deleteDataSourceNDataSourceAdminDataSourceException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="NDataSourceAdminSoap11Binding" type="tns:NDataSourceAdminPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="testDataSourceConnection">
+            <soap:operation soapAction="urn:testDataSourceConnection" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSourceTypes">
+            <soap:operation soapAction="urn:getDataSourceTypes" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="reloadAllDataSources">
+            <soap:operation soapAction="urn:reloadAllDataSources" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="reloadDataSource">
+            <soap:operation soapAction="urn:reloadDataSource" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSource">
+            <soap:operation soapAction="urn:getDataSource" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSourcesForType">
+            <soap:operation soapAction="urn:getAllDataSourcesForType" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addDataSource">
+            <soap:operation soapAction="urn:addDataSource" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSources">
+            <soap:operation soapAction="urn:getAllDataSources" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteDataSource">
+            <soap:operation soapAction="urn:deleteDataSource" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="NDataSourceAdminSoap12Binding" type="tns:NDataSourceAdminPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="testDataSourceConnection">
+            <soap12:operation soapAction="urn:testDataSourceConnection" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSourceTypes">
+            <soap12:operation soapAction="urn:getDataSourceTypes" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="reloadAllDataSources">
+            <soap12:operation soapAction="urn:reloadAllDataSources" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="reloadDataSource">
+            <soap12:operation soapAction="urn:reloadDataSource" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSource">
+            <soap12:operation soapAction="urn:getDataSource" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSourcesForType">
+            <soap12:operation soapAction="urn:getAllDataSourcesForType" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addDataSource">
+            <soap12:operation soapAction="urn:addDataSource" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSources">
+            <soap12:operation soapAction="urn:getAllDataSources" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteDataSource">
+            <soap12:operation soapAction="urn:deleteDataSource" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NDataSourceAdminDataSourceException">
+                <soap12:fault use="literal" name="NDataSourceAdminDataSourceException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="NDataSourceAdminHttpBinding" type="tns:NDataSourceAdminPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="testDataSourceConnection">
+            <http:operation location="testDataSourceConnection"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSourceTypes">
+            <http:operation location="getDataSourceTypes"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="reloadAllDataSources">
+            <http:operation location="reloadAllDataSources"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="reloadDataSource">
+            <http:operation location="reloadDataSource"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getDataSource">
+            <http:operation location="getDataSource"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSourcesForType">
+            <http:operation location="getAllDataSourcesForType"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addDataSource">
+            <http:operation location="addDataSource"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAllDataSources">
+            <http:operation location="getAllDataSources"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteDataSource">
+            <http:operation location="deleteDataSource"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="NDataSourceAdmin">
+        <wsdl:port name="NDataSourceAdminHttpsSoap11Endpoint" binding="tns:NDataSourceAdminSoap11Binding">
+            <soap:address location="https://localhost:9443/services/NDataSourceAdmin.NDataSourceAdminHttpsSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="NDataSourceAdminHttpsSoap12Endpoint" binding="tns:NDataSourceAdminSoap12Binding">
+            <soap12:address location="https://localhost:9443/services/NDataSourceAdmin.NDataSourceAdminHttpsSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="NDataSourceAdminHttpsEndpoint" binding="tns:NDataSourceAdminHttpBinding">
+            <http:address location="https://localhost:9443/services/NDataSourceAdmin.NDataSourceAdminHttpsEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

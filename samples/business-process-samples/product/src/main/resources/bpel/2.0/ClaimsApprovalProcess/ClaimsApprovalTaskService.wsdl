@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ClaimApproval" targetNamespace="http://www.example.com/claims/"
+	xmlns:tns="http://www.example.com/claims/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tschema="http://www.example.com/claims/schema"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+	<wsdl:documentation>
+		Example for WS-HumanTask 1.1 - WS-HumanTask Task Interface Definition
+	</wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.com/claims/schema"
+			xmlns:tns="http://www.example.com/claims/schema" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified">
+			<xsd:element name="ClaimApprovalData" type="tns:ClaimApprovalDataType" />
+			<xsd:complexType name="ClaimApprovalDataType">
+				<xsd:sequence>
+					<xsd:element name="cust">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="id" type="xsd:string">
+								</xsd:element>
+								<xsd:element name="firstname" type="xsd:string">
+								</xsd:element>
+								<xsd:element name="lastname" type="xsd:string">
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+
+					<xsd:element name="amount" type="xsd:double" />
+					<xsd:element name="region" type="xsd:string" />
+					<xsd:element name="priority" type="xsd:int" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ClaimApprovalNotificationData" type="tns:ClaimApprovalNotificationDataType" />
+			<xsd:complexType name="ClaimApprovalNotificationDataType">
+				<xsd:sequence>
+					<xsd:element name="firstname" type="xsd:string" />
+					<xsd:element name="lastname" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ClaimApprovalResponse" type="tns:ClaimApprovalResponseType"></xsd:element>
+			<xsd:complexType name="ClaimApprovalResponseType">
+        		<xsd:sequence>
+        			<xsd:element name="approved" type="xsd:boolean"></xsd:element>
+        		</xsd:sequence>
+        	</xsd:complexType>
+		</xsd:schema>
+    </wsdl:types>
+
+	<wsdl:message name="ClaimApprovalRequest">
+		<wsdl:part name="ClaimApprovalRequest" element="tschema:ClaimApprovalData" />
+	</wsdl:message>
+
+	<wsdl:message name="ClaimApprovalResponse">
+		<wsdl:part name="ClaimApprovalResponse" element="tschema:ClaimApprovalResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="ClaimApprovalNotificationRequest">
+		<wsdl:part name="ClaimApprovalNotificationRequest" element="tschema:ClaimApprovalNotificationData" />
+	</wsdl:message>
+
+	<wsdl:portType name="ClaimsHandlingPT">
+		<wsdl:operation name="approve">
+			<wsdl:input message="tns:ClaimApprovalRequest" />
+		</wsdl:operation>
+
+		<wsdl:operation name="escalate">
+			<wsdl:input message="tns:ClaimApprovalRequest" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:portType name="ClaimsHandlingCallbackPT">
+		<wsdl:operation name="approvalResponse">
+			<wsdl:input message="tns:ClaimApprovalResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:portType name="ClaimApprovalReminderPT">
+		<wsdl:operation name="notify">
+			<wsdl:input message="tns:ClaimApprovalNotificationRequest" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="ClaimSoapBinding" type="tns:ClaimsHandlingPT">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="approve">
+			<soap:operation soapAction="urn:approve" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" namespace="http://www.example.com/claims/" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="escalate">
+			<soap:operation soapAction="urn:escalate" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ClaimSoapBindingReminder" type="tns:ClaimApprovalReminderPT">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="notify">
+			<soap:operation soapAction="urn:notify" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ClaimSoapBindingCB" type="tns:ClaimsHandlingCallbackPT">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="approvalResponse">
+			<soap:operation soapAction="urn:approvalResponse"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="ClaimService">
+		<wsdl:port name="ClaimPort" binding="tns:ClaimSoapBinding">
+			<soap:address location="http://localhost:9763/services/ClaimService" />
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="ClaimReminderService">
+		<wsdl:port name="ClaimReminderPort" binding="tns:ClaimSoapBindingReminder">
+			<soap:address location="http://localhost:9763/services/ClaimReminderService" />
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="ClaimServiceCB">
+		<wsdl:port name="ClaimPortCB" binding="tns:ClaimSoapBindingCB">
+			<soap:address location="http://localhost:9763/services/ClaimServiceCB" />
+		</wsdl:port>
+
+	</wsdl:service>
+
+	<plnk:partnerLinkType name="b4pPartnerLinkType">
+		<plnk:role name="hi" portType="tns:ClaimsHandlingPT" />
+		<plnk:role name="bpel" portType="tns:ClaimsHandlingCallbackPT" />
+	</plnk:partnerLinkType>
+	<plnk:partnerLinkType name="b4pNPartnerLinkType">
+		<plnk:role name="hi" portType="tns:ClaimApprovalReminderPT" />
+	</plnk:partnerLinkType>
+
+</wsdl:definitions>

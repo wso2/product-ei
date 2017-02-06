@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<definitions name="CreditRating" targetNamespace="http://wso2.org/bps/samples/CreditRating"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://wso2.org/bps/samples/CreditRating" xmlns:ns="http://wso2.org/bps/samples/loan_process/schema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://wso2.org/bps/samples/CreditRating">
+            <xsd:import namespace="http://wso2.org/bps/samples/loan_process/schema" schemaLocation="loan.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="getCreditRatingRequest">
+        <part name="part" element="ns:CustomerSSN"/>
+    </message>
+    <message name="getCreditRatingResponse">
+        <part name="part" element="ns:CreditRating"/>
+    </message>
+    <portType name="CreditRatingPortType">
+        <operation name="getCreditRating">
+            <input name="input" message="tns:getCreditRatingRequest"/>
+            <output name="output" message="tns:getCreditRatingResponse"/>
+        </operation>
+    </portType>
+    <binding name="CreditRatingBinding" type="tns:CreditRatingPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getCreditRating">
+            <soap:operation/>
+            <input name="input">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="CreditRatingService">
+        <port name="CreditRatingPort" binding="tns:CreditRatingBinding">
+            <soap:address location="http://localhost:9763/CreditRatingService"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="CreditRating">        
+        <plnk:role name="CreditRatingService" portType="tns:CreditRatingPortType"/>
+    </plnk:partnerLinkType>
+</definitions>

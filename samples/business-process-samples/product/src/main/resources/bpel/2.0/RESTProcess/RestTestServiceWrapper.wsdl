@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RestTestServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/RestTestServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/RestTestServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://ws.apache.org/axis2">
+    <import location="RestTestService.wsdl" namespace="http://ws.apache.org/axis2"/>
+    <plnk:partnerLinkType name="RestTestServiceLinkType">
+        <plnk:role name="RestTestProvider" portType="ns:RestTestServicePortType"/>
+    </plnk:partnerLinkType>
+</definitions>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<definitions name="TestIgnoreMissingFromData"
+        targetNamespace="test:test"
+        xmlns:tns="test:test"
+        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        >
+
+    <types>
+        <schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+                targetNamespace="test:test" 
+                xmlns="http://www.w3.org/2001/XMLSchema">
+
+            <element name="Input" type="string" />
+            <element name="Output" type="string" />
+        
+            <element name="TestElement">
+            	<complexType>
+            		<sequence>
+            			<element name="OptionalElement" type="string" minOccurs="0" maxOccurs="1"></element>
+            		</sequence>
+            	</complexType>
+            </element>
+        </schema>
+    </types>
+
+    <message name="InputMessage">
+        <part name="payload" element="tns:Input"/>
+    </message>
+    <message name="OutputMessage">
+        <part name="payload" element="tns:Output"/>
+    </message>
+
+    <portType name="ServicePortType">
+        <operation name="process">
+            <input  message="tns:InputMessage" />
+            <output message="tns:OutputMessage"/>
+        </operation>
+    </portType>
+     
+    <plnk:partnerLinkType name="ServicePartnerLinkType">
+        <plnk:role name="ServiceProvider" portType="tns:ServicePortType"/>
+    </plnk:partnerLinkType>
+    
+    <binding name="ServiceBinding" type="tns:ServicePortType">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="process">
+    		<soap:operation soapAction="test:test/process" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    </binding>
+    
+    <service name="TestIgnoreMissingFromDataService">
+        <port name="TestIgnoreMissingFromDataPort" binding="tns:ServiceBinding">
+        	<soap:address location="http://localhost:9763/services/TestIgnoreMissingFromDataService" />
+        </port>
+    </service>
+</definitions>

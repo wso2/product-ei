@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="SoapClientProcess" name="SoapClientProcess" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="SoapTask" name="SoapTask" activiti:class="org.wso2.carbon.bpmn.extensions.soap.SOAPTask">
+      <extensionElements>
+        <activiti:field name="serviceURL">
+          <activiti:expression><![CDATA[https://localhost:9443/services/echo]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="soapAction">
+          <activiti:string><![CDATA[urn:echoString]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="payload">
+          <activiti:string><![CDATA[<echo:echoString xmlns:echo="http://echo.services.core.carbon.wso2.org"><in>Hello</in></echo:echoString>]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="soapVersion">
+          <activiti:string><![CDATA[soap11]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="outputVariable">
+          <activiti:string><![CDATA[output]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="SoapTask"></sequenceFlow>
+    <userTask id="usertask1" name="Echo Service Response" activiti:assignee="admin">
+      <documentation>This task display the echo soap service invocation response https://localhost:9443/services/echo</documentation>
+      <extensionElements>
+        <activiti:formProperty id="output" name="SoapOutput" type="string" variable="output" writable="false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="SoapTask" targetRef="usertask1"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow3" sourceRef="usertask1" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_SoapClientProcess">
+    <bpmndi:BPMNPlane bpmnElement="SoapClientProcess" id="BPMNPlane_SoapClientProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="120.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="SoapTask" id="BPMNShape_SoapTask">
+        <omgdc:Bounds height="55.0" width="105.0" x="270.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="500.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="710.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="155.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="270.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="375.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="605.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

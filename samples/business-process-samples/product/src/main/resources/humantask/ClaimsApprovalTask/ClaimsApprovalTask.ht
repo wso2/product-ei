@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) OASIS Open 2009. All Rights Reserved.
+-->
+<htd:humanInteractions
+        xmlns:htd="http://docs.oasis-open.org/ns/bpel4people/ws-humantask/200803"
+        xmlns:htt="http://docs.oasis-open.org/ns/bpel4people/ws-humantask/types/200803"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:cl="http://www.example.com/claims/"
+        xmlns:tns="http://www.example.com"
+        xmlns:wso2="http://wso2.org/ht/schema/renderings/"
+        targetNamespace="http://www.example.com"
+        xmlns:test10="http://www.example.com/claims/schema"
+        xsi:schemaLocation="http://docs.oasis-open.org/ns/bpel4people/ws-humantask/200803 ../../xml/ws-humantask.xsd">
+
+    <htd:documentation>
+        Example for WS-HumanTask 1.1 - WS-HumanTask Task Definition
+    </htd:documentation>
+
+    <htd:import importType="http://schemas.xmlsoap.org/wsdl/"
+                location="sample.wsdl"
+                namespace="http://www.example.com/claims/"/>
+
+    <htd:logicalPeopleGroups>
+        <htd:logicalPeopleGroup name="regionalClerks">
+            <htd:documentation xml:lang="en-US">
+                The group of clerks responsible for the region specified.
+            </htd:documentation>
+            <htd:parameter name="role" type="xsd:string"/>
+        </htd:logicalPeopleGroup>
+        <htd:logicalPeopleGroup name="regionalManager">
+            <htd:documentation xml:lang="en-US">
+                The manager responsible for the region specified.
+            </htd:documentation>
+            <htd:parameter name="role" type="xsd:string"/>
+        </htd:logicalPeopleGroup>
+        <htd:logicalPeopleGroup name="clerksManager">
+            <htd:documentation xml:lang="en-US">
+                The manager of the clerk whose user ID is passed as parameter.
+            </htd:documentation>
+            <htd:parameter name="role" type="xsd:string"/>
+        </htd:logicalPeopleGroup>
+
+        <htd:logicalPeopleGroup name="directorClaims">
+            <htd:documentation xml:lang="en-US">
+                The functional director responsible for claims processing.
+            </htd:documentation>
+        </htd:logicalPeopleGroup>
+    </htd:logicalPeopleGroups>
+
+
+    <htd:tasks>
+        <htd:task name="ApproveClaim">
+            <htd:documentation xml:lang="en-US">
+                This task is used to handle claims that require manual
+                approval.
+            </htd:documentation>
+
+            <htd:interface portType="cl:ClaimsHandlingPT"
+                           operation="approve"
+                           responsePortType="cl:ClaimsHandlingCallbackPT"
+                           responseOperation="approvalResponse"/>
+
+            <htd:priority>
+                htd:getInput("ClaimApprovalRequest")/test10:priority
+            </htd:priority>
+
+            <htd:peopleAssignments>
+                <htd:potentialOwners>
+                    <htd:from logicalPeopleGroup="regionalClerks">
+                        <htd:argument name="role">
+                            regionalClerksRole
+                        </htd:argument>
+                    </htd:from>
+                </htd:potentialOwners>
+                <htd:businessAdministrators>
+                    <htd:from logicalPeopleGroup="regionalManager">
+                        <htd:argument name="role">
+                            regionalManagerRole
+                        </htd:argument>
+                    </htd:from>
+                </htd:businessAdministrators>
+            </htd:peopleAssignments>
+
+            <htd:delegation potentialDelegatees="nobody"/>
+
+            <htd:presentationElements>
+                <htd:name xml:lang="en-US">Approve Claim</htd:name>
+                <htd:name xml:lang="de-DE">
+                    Genehmigung der Schadensforderung
+                </htd:name>
+                <htd:presentationParameters>
+                    <htd:presentationParameter name="firstname"
+                                               type="xsd:string">
+                        htd:getInput("ClaimApprovalRequest")/test10:cust/test10:firstname
+                    </htd:presentationParameter>
+                    <htd:presentationParameter name="lastname"
+                                               type="xsd:string">
+                        htd:getInput("ClaimApprovalRequest")/test10:cust/test10:lastname
+                    </htd:presentationParameter>
+                    <htd:presentationParameter name="euroAmount"
+                                               type="xsd:double">
+                        htd:getInput("ClaimApprovalRequest")/test10:amount
+                    </htd:presentationParameter>
+                </htd:presentationParameters>
+
+                <htd:subject xml:lang="en-US">
+                    Approve the insurance claim for €$euroAmount$ on behalf of
+                    $firstname$ $lastname$
+                </htd:subject>
+                <htd:subject xml:lang="de-DE">
+                    Genehmigung der Schadensforderung über €$euroAmount$ für
+                    $firstname$ $lastname$
+                </htd:subject>
+                <htd:description xml:lang="en-US" contentType="text/plain">
+                    Approve this claim following corporate guideline
+                    #4711.0815/7 ...
+                </htd:description>
+                <htd:description xml:lang="en-US" contentType="text/html">
+                    <![CDATA[
+                      <p>
+                        Approve this claim following corporate guideline
+                        <b>#4711.0815/7</b>
+                      </p>
+                    ]]>
+                </htd:description>
+                <htd:description xml:lang="de-DE" contentType="text/plain">
+                    Genehmigen Sie diese Schadensforderung entsprechend
+                    Richtlinie Nr. 4711.0815/7 ...
+                </htd:description>
+                <htd:description xml:lang="de-DE" contentType="text/html">
+                    <![CDATA[
+                      <p>
+                        Genehmigen Sie diese Schadensforderung entsprechend
+                        Richtlinie
+                        <b>Nr. 4711.0815/7</b>
+                        ...
+                      </p>
+                    ]]>
+                </htd:description>
+            </htd:presentationElements>
+
+            <htd:renderings>
+                <!-- Display Input Information to the User -->
+                <htd:rendering type="wso2:input">
+                    <wso2:inputs>
+                        <wso2:element id="fname">
+                            <wso2:label>First Name</wso2:label>
+                            <wso2:value>$firstname$</wso2:value>
+                        </wso2:element>
+                        <wso2:element id="lname">
+                            <wso2:label>Last Name</wso2:label>
+                            <wso2:value>$lastname$</wso2:value>
+                        </wso2:element>
+                        <wso2:element id="amount">
+                            <wso2:label>Loan Amount</wso2:label>
+                            <wso2:value>$euroAmount$</wso2:value>
+                        </wso2:element>
+                        <wso2:element id="custId">
+                            <wso2:label>Customer Identifier</wso2:label>
+                            <wso2:value>/test10:ClaimApprovalData/test10:cust/test10:id</wso2:value>
+                        </wso2:element>
+                    </wso2:inputs>
+                </htd:rendering>
+
+                <!-- Display elements to the user workspace which implements output message -->
+                <htd:rendering type="wso2:output">
+                    <wso2:outputs>
+                        <wso2:element id="approved">
+                            <wso2:label>Loan Approval Status</wso2:label>
+                            <wso2:xpath>/test10:ClaimApprovalResponse/test10:approved</wso2:xpath>
+                            <wso2:value type="boolean">Approved, Disapproved</wso2:value>
+                            <wso2:default>Disapproved</wso2:default>
+                        </wso2:element>
+                    </wso2:outputs>
+                </htd:rendering>
+            </htd:renderings>
+
+        </htd:task>
+    </htd:tasks>
+
+
+    <htd:notifications>
+        <htd:notification name="ClaimApprovalReminder">
+            <htd:documentation xml:lang="en-US">
+                This notification is used to remind people of pending
+                out-dated claim approvals. Recipients of this notification
+                maybe overriden when it is referenced.
+            </htd:documentation>
+            <htd:interface portType="cl:ClaimApprovalReminderPT"
+                           operation="notify"/>
+            <htd:peopleAssignments>
+                <htd:recipients>
+                    <htd:from logicalPeopleGroup="regionalClerks">
+                        <htd:argument name="role">
+                            regionalClerksRole
+                        </htd:argument>
+                    </htd:from>
+                    <!--htd:from>
+                        <htd:literal>
+                            <htt:organizationalEntity>
+                                <htt:user>Alan</htt:user>
+                                <htt:user>Dieter</htt:user>
+                                <htt:user>Frank</htt:user>
+                                <htt:user>Gerhard</htt:user>
+                                <htt:user>Ivana</htt:user>
+                                <htt:user>Karsten</htt:user>
+                                <htt:user>Matthias</htt:user>
+                                <htt:user>Patrick</htt:user>
+                            </htt:organizationalEntity>
+                        </htd:literal>
+                    </htd:from-->
+                </htd:recipients>
+            </htd:peopleAssignments>
+
+            <htd:presentationElements>
+                <htd:name xml:lang="en-US">Approve Claim</htd:name>
+                <htd:name xml:lang="de-DE">
+                    Genehmigung der Schadensforderung
+                </htd:name>
+                <htd:presentationParameters>
+                    <!--htd:presentationParameter name="firstname"
+                                               type="xsd:string">
+                        htd:getInput("firstname")
+                    </htd:presentationParameter>
+                    <htd:presentationParameter name="lastname"
+                                               type="xsd:string">
+                        htd:getInput("lastname")
+                    </htd:presentationParameter-->
+                    <htd:presentationParameter name="firstname"
+                                               type="xsd:string">
+                        htd:getInput("ClaimApprovalNotificationRequest")/test10:firstname
+                    </htd:presentationParameter>
+                    <htd:presentationParameter name="lastname"
+                                               type="xsd:string">
+                        htd:getInput("ClaimApprovalNotificationRequest")/test10:lastname
+                    </htd:presentationParameter>
+                    <!--htd:presentationParameter name="id" type="xsd:string">
+                        htd:getInput("taskId")
+                    </htd:presentationParameter-->
+                </htd:presentationParameters>
+                <htd:subject xml:lang="en-US">
+                    Claim approval for $firstname$, $lastname$ is overdue.
+                </htd:subject>
+            </htd:presentationElements>
+        </htd:notification>
+    </htd:notifications>
+</htd:humanInteractions>

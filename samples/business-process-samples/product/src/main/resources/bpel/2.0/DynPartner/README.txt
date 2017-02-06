@@ -1,0 +1,1 @@
+This sample  demonstrates on how to set dynamic value to the partner link of a bpel process.

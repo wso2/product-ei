@@ -1,0 +1,18 @@
+<wsa:EndpointReference
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.w3schools.com uep_schema.xsd"
+        xmlns:wsa="http://www.w3.org/2005/08/addressing"
+        xmlns:wsdl11="http://schemas.xmlsoap.org/wsdl/">
+    <wsa:Address>https://localhost:9443/services/SecurePartnerService1/</wsa:Address>
+    <wsa:Metadata>
+        <id>SInvokeEPR</id>
+
+        <qos>
+            <enableAddressing version="final" separateListener="true"/>
+	    <enableWsSec policy="file:PolicySecurePartnerService01.xml"/>
+        </qos>
+    </wsa:Metadata>
+
+</wsa:EndpointReference>
+
+

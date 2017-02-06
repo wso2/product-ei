@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="FlexibleAssign"
+         targetNamespace="http://wso2.org/bps/process/FlexibleAssign"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace"
+         xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+         xmlns:wsdlNS="http://wso2.org/bps/process/FlexibleAssign"
+         xmlns:ns1="http://wso2.org/bps/process/FlexibleAssign"
+         xmlns:ns2="http://wso2.org/bps/schema/FlexibleAssign"
+         xmlns:ns3="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+	 queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+	 expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+    <import namespace="http://wso2.org/bps/schema/FlexibleAssign"
+            location="FlexibleAssign.xsd"
+            importType="http://www.w3.org/2001/XMLSchema"/>
+
+    <import namespace="http://wso2.org/bps/process/FlexibleAssign"
+            location="FlexibleAssign.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+    <partnerLinks>
+        <partnerLink
+            name="FlexibleAssign"
+            partnerLinkType="ns1:partnerlinktype1"
+            myRole="partnerlinktyperole1">
+        </partnerLink>
+    </partnerLinks>
+
+    <variables>
+        <variable name="outputVar" messageType="ns1:responseMessage">
+        </variable>
+
+        <variable name="inputVar" messageType="ns1:requestMessage">
+        </variable>
+        
+        <variable name="inputFlexAssignVar" element="ns2:typeA">
+        </variable>
+    </variables>
+
+    <sequence>
+
+        <receive
+            name="start"
+            partnerLink="FlexibleAssign"
+            operation="operation1"
+            portType="ns1:portType1"
+            variable="inputVar"
+            createInstance="yes">
+        </receive>
+	
+	<assign name="FlexAssign">
+            <copy insertMissingToData="yes">
+                <from>$inputVar.inputType/ns2:paramA</from>
+                <to>$inputFlexAssignVar/child::ns2:args0</to>
+            </copy>
+        </assign>
+        
+        <assign name="init2">
+		<copy>
+			<from>
+				<literal xml:space="preserve">
+					<tns:typeA xmlns:tns="http://wso2.org/bps/schema/FlexibleAssign" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  					<tns:paramA></tns:paramA>
+					</tns:typeA>
+				</literal>
+			</from>
+			<to>$outputVar.resultType</to>
+		</copy>
+	</assign>
+
+        <assign name="Assign1">
+	    <copy insertMissingToData="yes">
+                <from>$inputVar.inputType/ns2:paramA</from>
+                <to>$outputVar.resultType/child::ns2:paramA</to>
+            </copy>
+        </assign>
+        
+        <reply
+            name="end"
+            partnerLink="FlexibleAssign"
+            operation="operation1"
+            portType="ns1:portType1"
+            variable="outputVar">
+        </reply>
+    </sequence>
+</process>
+

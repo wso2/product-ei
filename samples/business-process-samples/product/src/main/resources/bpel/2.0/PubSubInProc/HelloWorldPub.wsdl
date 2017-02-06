@@ -1,0 +1,11 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<wsdl:definitions xmlns:bpdm="http://www.intalio/designer/business-process-data-modeling" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:diag="http://ode/bpel/unit-test.wsdl" xmlns:Start="http://ode/bpel/unit-test.wsdl/Start" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ode/bpel/unit-test.wsdl" xmlns:Pool="http://example.com/diagram/Pool" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:pnlk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://ode/bpel/unit-test.wsdl">
+    <wsdl:import namespace="http://ode/bpel/unit-test.wsdl" location="HelloWorld.wsdl"/>
+    <wsdl:import namespace="http://ode/bpel/unit-test.wsdl" location="HelloWorldExternal.wsdl"/>
+    <pnlk:partnerLinkType name="HelloWorldAndPoolForHelloPortPlk">
+        <pnlk:role name="HelloWorld_for_Pool" portType="tns:HelloPortType"/>
+    </pnlk:partnerLinkType>
+    <pnlk:partnerLinkType name="PoolAndStartForHelloPortPlk">
+        <pnlk:role name="Pool_for_Start" portType="tns:HelloPortType"/>
+    </pnlk:partnerLinkType>
+</wsdl:definitions>

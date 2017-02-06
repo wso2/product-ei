@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:EnrollmentService="http://www.bps.wso2.org/EnrollmentService/" xmlns:HeaderCorrelation="http://wso2.org/bps/HeaderCorrelation">
+  <process name="HeaderCorrelation:HeaderCorrelation">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="EnrollmentPL">
+      <service name="EnrollmentService:EnrollmentService" port="EnrollmentServiceSOAP"/>
+    </provide>
+  </process>
+</deploy>

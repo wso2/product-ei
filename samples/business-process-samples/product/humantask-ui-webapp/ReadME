@@ -1,0 +1,45 @@
+WSO2 Business Process Server HumanTask Sample Web Application
+...................................................................
+Human Task Web App sample provides how we can use HumanTaskClientAPIService to build our own external web application with user interface for human tasks. Here we have build web app on claim approval tasks.
+Web App includes 
+1) Task view on different query categories,
+2) Start task
+3) Stop task
+4) Complete task
+options.
+You can use other service methods and extend and modify the web app your own human task.
+
+Configuration
+...................................................................
+Before build the app please change the back end server url ,client trust store path,password and type in config.properties file.
+
+wso2.bps.backend.url=https://localhost:9443
+clientTrustStorePath=/home/waruna/wso2bps-3.5.0-SNAPSHOT/repository/resources/security/wso2carbon.jks
+clientTrustStorePassword=wso2carbon
+clientTrustStoreType=JKS
+
+change to your configuration,
+
+wso2.bps.backend.url={your bps server url}
+clientTrustStorePath={your wso2carbon.jks file path }
+clientTrustStorePassword={your key store password}
+clientTrustStoreType={key store type}-You can keep default JKS
+
+Development
+...................................................................
+
+Classes 			- Description
+HumanTaskClientAPIServiceClient	-Java client for humantaskclient api service
+LoginManager	-Manage web app sign in and out
+TaskManager	- Manage different task operations given human task. It will call the HumanTaskClientAPIServiceClient for required operation.
+HumanTaskSampleConstants - Constants required for apps
+HumanTaskSampleUtil - Util methods required for web app
+HTAppServletContextListener - Initialize required configuration parameters
+
+Pages
+Login.jsp	- Login page
+Home.jsp	- Provides tasks lists on different query categories
+Task.jsp	- Provides task information and operation
+
+resources/config.properties	- Property file includes back end server url and path to jks file
+resources/log4j.properties	- Log4j configuration file

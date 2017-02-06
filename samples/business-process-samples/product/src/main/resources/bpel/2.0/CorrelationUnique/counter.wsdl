@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+  targetNamespace="http://example.com/bpel/counter" 
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+  xmlns:v="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+  xmlns:t="http://example.com/bpel/counter">
+  
+  <wsdl:message name="requestMessage">
+    <wsdl:part name="name" type="xsd:string" />
+    <wsdl:part name="alias" type="xsd:string" />
+  </wsdl:message>
+  
+  <wsdl:message name="responseMessage">
+    <wsdl:part name="name" type="xsd:string" />
+    <wsdl:part name="value" type="xsd:int" />
+  </wsdl:message>
+  
+  <wsdl:message name="emptyResponse" />
+  
+  <wsdl:portType name="port">
+    <wsdl:operation name="init">
+      <wsdl:input message="t:requestMessage" />
+      <wsdl:output message="t:emptyResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <wsdl:input message="t:requestMessage" />
+      <wsdl:output message="t:responseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getAndIncrement">
+      <wsdl:input message="t:requestMessage" />
+      <wsdl:output message="t:responseMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="close">
+      <wsdl:input message="t:requestMessage" />
+      <wsdl:output message="t:emptyResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="binding" type="t:port">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="init">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input>
+        <soap:body namespace="http://example.com/bpel/counter" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://example.com/bpel/counter" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input>
+        <soap:body namespace="http://example.com/bpel/counter" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://example.com/bpel/counter" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAndIncrement">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input>
+        <soap:body namespace="http://example.com/bpel/counter" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://example.com/bpel/counter" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="counterService2">
+    <wsdl:port name="port" binding="t:binding">
+      <soap:address location="http://localhost:9763/services/counterService2"/>
+    </wsdl:port>
+  </wsdl:service>
+  
+  <p:partnerLinkType name="plink">
+    <p:role name="me" portType="t:port" />
+    <p:role name="you" portType="t:port" />
+  </p:partnerLinkType>
+  
+  <v:property name="initProp" type="xsd:string" />
+  <v:property name="incrProp" type="xsd:string" />
+  <v:property name="getProp" type="xsd:string" />
+  
+  <v:propertyAlias propertyName="t:initProp" part="name" messageType="t:requestMessage" />
+  <v:propertyAlias propertyName="t:incrProp" part="alias" messageType="t:requestMessage" />
+  <v:propertyAlias propertyName="t:incrProp" part="name" messageType="t:responseMessage" />
+  <v:propertyAlias propertyName="t:getProp" part="name" messageType="t:responseMessage" />
+  <v:propertyAlias propertyName="t:getProp" part="alias" messageType="t:requestMessage" />
+</wsdl:definitions>
