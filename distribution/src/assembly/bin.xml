@@ -1537,19 +1537,6 @@
                 <include>**/*.car</include>
             </includes>
         </fileSet>
-
-        <fileSet>
-            <directory>
-                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins
-            </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/siddhilib
-            </outputDirectory>
-            <includes>
-                <include>**/siddhi-extension-*.jar</include>
-                <include>**/org.wso2.analytics.esb_*.jar</include>
-            </includes>
-        </fileSet>
-
     </fileSets>
     <!-- End of Analytics dependencies -->
 
@@ -2602,13 +2589,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/lib/README.txt</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/lib/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
             <source>target/wso2carbon-core-${carbon.kernel.version}/repository/database/README.txt
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/repository/database/
@@ -3106,13 +3086,6 @@
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/bin</outputDirectory>
         </file>
-        <file>
-            <source>
-                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/lib/org.wso2.ciphertool-${cipher.tool.version}.jar
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/lib</outputDirectory>
-        </file>
-
         <file>
             <source>src/analytics/conf/security/cipher-text.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/security
