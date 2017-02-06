@@ -34,7 +34,7 @@ import org.wso2.carbon.webapp.mgt.WebApplication;
 import java.util.TreeMap;
 
 /**
- * This
+ * This handler is written to dispatch messages to tomcat servlet transport.
  */
 public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
@@ -133,6 +133,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private void setREST_URL_POSTFIX(org.apache.axis2.context.MessageContext messageContext, String to) {
         if (messageContext.getProperty("REST_URL_POSTFIX") != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("message's REST_URL_POSTFIX is changing from " + messageContext.getProperty("REST_URL_POSTFIX") + " to " + to);
+            }
             messageContext.setProperty("REST_URL_POSTFIX", to);
         }
     }
@@ -140,6 +143,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     private boolean dispatchMessage(String endpoint, String uri, MessageContext messageContext) {
         if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
             passThroughSenderManager.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+        }
+        if(log.isDebugEnabled()) {
+            log.debug("Dispatching message to " + uri);
         }
         Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
@@ -150,6 +156,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     private boolean validateWhiteListsWithUri(String uri) {
         for (String contextPath : IntegratorComponent.getWhiteListContextPaths()) {
             if (uri.contains(contextPath)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Whitelisting the URI " + uri + " for " + contextPath + " context.");
+                }
                 return true;
             }
         }

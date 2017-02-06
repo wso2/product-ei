@@ -119,7 +119,7 @@
     </filter>
 
     <!-- Integrator specific filter -->
-<!--    <filter>
+ <!--   <filter>
         <filter-name>IntegratorFilter</filter-name>
         <filter-class>org.wso2.carbon.integrator.core.IntegratorFilter</filter-class>
     </filter>
