@@ -199,7 +199,7 @@ rmdir "%TMP_DIR%" /s /q
 
 rem ---------- Add jars to classpath ----------------
 
-set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%;"%CARBON_HOME%\..\components\plugins"
 
 set JAVA_ENDORSED=".\..\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
