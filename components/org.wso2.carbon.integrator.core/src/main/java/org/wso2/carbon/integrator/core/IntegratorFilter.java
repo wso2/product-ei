@@ -28,6 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This filter is written to block the direct requests to the tomcat servlet transport. This filter allows only requests
+ * which has the integrator header. This integrator header is set by the synapse handler.
+ */
 public class IntegratorFilter implements Filter {
 
     @Override
@@ -39,15 +43,15 @@ public class IntegratorFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String uri = httpRequest.getRequestURI();
-        if (!validateURI(uri)) {
-            String integratorHeader = httpRequest.getHeader(Constants.INTEGRATOR_HEADER);
-            if (Utils.validateHeader(integratorHeader, uri)) {
-                filterChain.doFilter(new HeaderMapRequestWrapper(httpRequest), servletResponse);
-            } else {
-                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "the error message");
-            }
+        String queryString = httpRequest.getQueryString();
+        if (queryString != null) {
+            uri = uri + '?' + queryString;
+        }
+        String integratorHeader = httpRequest.getHeader(Constants.INTEGRATOR_HEADER);
+        if (Utils.validateHeader(integratorHeader, uri)) {
+            filterChain.doFilter(new HeaderMapRequestWrapper(httpRequest), servletResponse);
         } else {
-            filterChain.doFilter(servletRequest, servletResponse);
+            ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "the error message");
         }
     }
 
@@ -55,20 +59,4 @@ public class IntegratorFilter implements Filter {
     public void destroy() {
     }
 
-    private boolean validateURI(String contextPath) {
-        //skipping carbon context uri
-        if(contextPath.contains("/carbon")) {
-            return true;
-        }
-
-        if(contextPath.contains("/fileupload")) {
-            return true;
-        }
-
-        if(contextPath.endsWith("?tryit")) {
-            return true;
-        }
-
-        return false;
-    }
 }

@@ -86,7 +86,7 @@ public class Utils {
     }
 
     /**
-     * Get the details of a deployed webapp
+     * Get the details of a deployed webapp for tenants
      *
      * @param path URI path
      * @return meta data for webapp
@@ -184,23 +184,22 @@ public class Utils {
         }
     }
 
-    public static String getPassThruHttpPort() {
+    private static String getPassThruHttpPort() {
         return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("http").
                 getParameter("port").getValue().toString();
     }
 
-    public static String getPassThruHttpsPort() {
+    private static String getPassThruHttpsPort() {
         return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("https").
                 getParameter("port").getValue().toString();
     }
 
-    public static boolean validateHeader(String key, String uri) {
+    static boolean validateHeader(String key, String uri) {
         String input = uri + System.getProperty(CarbonConstants.START_TIME);
         return (UUID.nameUUIDFromBytes(input.getBytes()).toString().equals(key));
     }
 
-    public static void setIntegratorHeader(MessageContext synCtx) {
-        String uri = synCtx.getTo().getAddress();
+    public static void setIntegratorHeader(MessageContext synCtx, String uri) {
         Axis2MessageContext axis2smc = (Axis2MessageContext) synCtx;
         org.apache.axis2.context.MessageContext axis2MessageCtx = axis2smc.getAxis2MessageContext();
         Object headers = axis2MessageCtx.getProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);

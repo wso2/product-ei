@@ -40,21 +40,21 @@ public class JsonStreamBuilder implements Builder {
 
     public JsonStreamBuilder()
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        Class synapseBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getPassThroughJsonBuilder());
+        Class<?> synapseBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getPassThroughJsonBuilder());
         this.synapseBuilder = synapseBuilderClass.newInstance();
-        this.synapseBuilder_processDocumentMethod = synapseBuilderClass.getMethod("processDocument", new Class[]{InputStream.class, String.class, MessageContext.class});
-        Class axis2GsonBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getDSSJsonBuilder());
+        this.synapseBuilder_processDocumentMethod = synapseBuilderClass.getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
+        Class<?> axis2GsonBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getDSSJsonBuilder());
         this.axis2GsonBuilder = axis2GsonBuilderClass.newInstance();
-        this.axis2GsonBuilder_processDocumentMethod = axis2GsonBuilderClass.getMethod("processDocument", new Class[]{InputStream.class, String.class, MessageContext.class});
+        this.axis2GsonBuilder_processDocumentMethod = axis2GsonBuilderClass.getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
     }
 
     public OMElement processDocument(InputStream inputStream, String s, MessageContext messageContext)
             throws AxisFault {
         try {
             if (Utils.isDataService(messageContext)) {
-                return (OMElement) axis2GsonBuilder_processDocumentMethod.invoke(axis2GsonBuilder, new Object[]{inputStream, s, messageContext});
+                return (OMElement) axis2GsonBuilder_processDocumentMethod.invoke(axis2GsonBuilder, inputStream, s, messageContext);
             } else {
-                return (OMElement) synapseBuilder_processDocumentMethod.invoke(synapseBuilder, new Object[]{inputStream, s, messageContext});
+                return (OMElement) synapseBuilder_processDocumentMethod.invoke(synapseBuilder, inputStream, s, messageContext);
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
