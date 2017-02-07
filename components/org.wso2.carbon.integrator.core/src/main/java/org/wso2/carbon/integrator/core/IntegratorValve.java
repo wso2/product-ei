@@ -18,6 +18,13 @@
 
 package org.wso2.carbon.integrator.core;
 
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.apache.catalina.valves.ValveBase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.wso2.carbon.integrator.core.handler.IntegratorSynapseHandler;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -29,34 +36,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This filter is written to block the direct requests to the tomcat servlet transport. This filter allows only requests
+ * This Valve is written to block the direct requests to the tomcat servlet transport. This valve allows only requests
  * which has the integrator header. This integrator header is set by the synapse handler.
  */
-public class IntegratorFilter implements Filter {
+public class IntegratorValve extends ValveBase {
+    private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        String uri = httpRequest.getRequestURI();
-        String queryString = httpRequest.getQueryString();
+    public void invoke(Request request, Response response) throws IOException, ServletException {
+        String uri = request.getRequestURI();
+        String queryString = request.getQueryString();
         if (queryString != null) {
             uri = uri + '?' + queryString;
         }
-        String integratorHeader = httpRequest.getHeader(Constants.INTEGRATOR_HEADER);
+        String integratorHeader = request.getHeader(Constants.INTEGRATOR_HEADER);
         if (Utils.validateHeader(integratorHeader, uri)) {
-            filterChain.doFilter(new HeaderMapRequestWrapper(httpRequest), servletResponse);
+            getNext().invoke(request, response);
         } else {
-            ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "the error message");
+            if (log.isDebugEnabled()) {
+                log.debug("Blocking request :" + request.toString());
+            }
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "This port is closed.");
         }
     }
-
-    @Override
-    public void destroy() {
-    }
-
 }

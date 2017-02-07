@@ -172,7 +172,7 @@
 
         <!--JSON Message Formatters-->
         <messageFormatter contentType="application/json"
-                          class="org.apache.synapse.commons.json.JsonStreamFormatter"/>
+                          class="org.wso2.carbon.integrator.core.json.JsonStreamFormatter"/>
         <!--messageFormatter contentType="application/x-www-form-urlencoded"
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
         <!--messageFormatter contentType="multipart/form-data"
@@ -212,7 +212,7 @@
 
         <!--JSON Message Builders-->
         <messageBuilder contentType="application/json"
-                        class="org.apache.synapse.commons.json.JsonStreamBuilder"/>
+                        class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder"/>
 	    <!--messageBuilder contentType="application/xml"
                         class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
         <!--messageBuilder contentType="application/x-www-form-urlencoded"

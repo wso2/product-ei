@@ -26,6 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.integrator.core.Utils;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 
@@ -39,7 +41,7 @@ public class JsonStreamBuilder implements Builder {
     private static final Log logger = LogFactory.getLog(JsonStreamBuilder.class.getName());
 
     public JsonStreamBuilder()
-            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, IOException, XMLStreamException {
         Class<?> synapseBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getPassThroughJsonBuilder());
         this.synapseBuilder = synapseBuilderClass.newInstance();
         this.synapseBuilderProcessDocumentMethod = synapseBuilderClass.getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
