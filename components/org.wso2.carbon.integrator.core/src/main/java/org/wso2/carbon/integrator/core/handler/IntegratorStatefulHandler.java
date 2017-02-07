@@ -28,45 +28,32 @@ import org.apache.axis2.dispatchers.RequestURIBasedServiceDispatcher;
 import org.apache.axis2.engine.AbstractDispatcher;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.synapse.core.axis2.SynapseDispatcher;
 
 import java.lang.reflect.Method;
 
 /**
  * This Axis2 handler is written to dispatch messages to synapse environment, when the message is received for a stateful service.
- *
  */
 public class IntegratorStatefulHandler extends AbstractDispatcher {
     private static final String NAME = "IntegratorStatefulHandler";
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
-    private static Object synapseHandler;
-    private static Method synapseHandlerFindOperationMethod;
-    private static Method synapseHandlerFindServiceMethod;
+    private SynapseDispatcher synapseDispatcher = new SynapseDispatcher();
     private RequestURIBasedServiceDispatcher rubsd = new RequestURIBasedServiceDispatcher();
 
     public IntegratorStatefulHandler() {
     }
 
-    static {
-        try {
-            Class<?> synapseHandlerClass = IntegratorStatefulHandler.class.getClassLoader().loadClass("org.apache.synapse.core.axis2.SynapseDispatcher");
-            synapseHandler = synapseHandlerClass.newInstance();
-            synapseHandlerFindServiceMethod = synapseHandlerClass.getMethod("findService", MessageContext.class);
-            synapseHandlerFindOperationMethod = synapseHandlerClass.getMethod("findOperation", AxisService.class, MessageContext.class);
-        } catch (Exception e) {
-            log.error("Error occurred while initializing IntegratorStatefulHandler");
-        }
-    }
-
     @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
-        if (isStatefulService(axisService) && messageContext.getProperty("transport.http.servletRequest") == null && messageContext.getProperty("pass-through.pipe") != null) {
+        if (isStatefulService(axisService) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
-                messageContext.setAxisService((AxisService) synapseHandlerFindServiceMethod.invoke(synapseHandler, messageContext));
-                if(log.isDebugEnabled()) {
+                messageContext.setAxisService(synapseDispatcher.findService(messageContext));
+                if (log.isDebugEnabled()) {
                     log.debug("AxisService is changing from " + axisService.getName() + " to " + messageContext.getAxisService().getName());
                 }
-                messageContext.setProperty("raplacedAxisService","true");
-                return (AxisOperation) synapseHandlerFindOperationMethod.invoke(synapseHandler, messageContext.getAxisService(), messageContext);
+                messageContext.setProperty("raplacedAxisService", "true");
+                return synapseDispatcher.findOperation(messageContext.getAxisService(), messageContext);
             } catch (Exception e) {
                 log.error("Error occurred while invoking stateful service.");
                 return null;
