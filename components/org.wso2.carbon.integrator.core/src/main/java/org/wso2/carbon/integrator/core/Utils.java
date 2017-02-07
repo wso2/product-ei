@@ -23,6 +23,7 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.description.Parameter;
+import org.apache.axis2.util.XMLUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseConstants;
 import org.apache.synapse.config.xml.XMLConfigConstants;
@@ -31,6 +32,7 @@ import org.apache.synapse.core.SynapseEnvironment;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.endpoints.Endpoint;
 import org.wso2.carbon.CarbonConstants;
+import org.wso2.carbon.base.CarbonBaseUtils;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.CarbonConfigurationContextFactory;
 import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
@@ -43,10 +45,13 @@ import org.wso2.carbon.webapp.mgt.WebApplicationsHolder;
 import org.wso2.carbon.webapp.mgt.utils.WebAppUtils;
 
 import javax.xml.namespace.QName;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.UUID;
+import javax.xml.stream.XMLStreamException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Utils {
 
@@ -55,6 +60,7 @@ public class Utils {
     private static final QName ADDRESS_Q = new QName(SynapseConstants.SYNAPSE_NAMESPACE, "address");
     private static OMElement endpoint = fac.createOMElement(ENDPOINT_Q);
     private static OMElement address = fac.createOMElement(ADDRESS_Q);
+    private static OMElement axis2Config;
 
     public static int getProtocolPort(String protocol) {
         CarbonTomcatService webAppAdminService;
@@ -135,12 +141,12 @@ public class Utils {
         return UUID.nameUUIDFromBytes(input.getBytes()).toString();
     }
 
-    public static String getDSSJsonBuilder() {
-        Parameter dssJsonBuilder = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.DATASERVICE_JSON_BUILDER);
+    public static String getDSSJsonBuilder() throws IOException, XMLStreamException {
+        String dssJsonBuilder = getPropertyFromAxisConf(Constants.DATASERVICE_JSON_BUILDER);
         if (dssJsonBuilder == null) {
             return "org.apache.axis2.json.gson.JsonBuilder";
         } else {
-            return dssJsonBuilder.getValue().toString();
+            return dssJsonBuilder;
         }
     }
 
@@ -157,30 +163,30 @@ public class Utils {
         }
     }
 
-    public static String getPassThroughJsonBuilder() {
-        Parameter psJsonBuilder = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.PASSTHRU_JSON_BUILDER);
+    public static String getPassThroughJsonBuilder() throws IOException, XMLStreamException {
+        String psJsonBuilder = getPropertyFromAxisConf(Constants.PASSTHRU_JSON_BUILDER);
         if (psJsonBuilder == null) {
             return "org.apache.synapse.commons.json.JsonStreamBuilder";
         } else {
-            return psJsonBuilder.getValue().toString();
+            return psJsonBuilder;
         }
     }
 
-    public static String getDSSJsonFormatter() {
-        Parameter dssJsonFormatter = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.DATASERVICE_JSON_FORMATTER);
+    public static String getDSSJsonFormatter() throws IOException, XMLStreamException {
+        String dssJsonFormatter = getPropertyFromAxisConf(Constants.DATASERVICE_JSON_FORMATTER);
         if (dssJsonFormatter == null) {
             return "org.apache.axis2.json.gson.JsonFormatter";
         } else {
-            return dssJsonFormatter.getValue().toString();
+            return dssJsonFormatter;
         }
     }
 
-    public static String getPassThroughJsonFormatter() {
-        Parameter psJsonFormatter = CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getParameter(Constants.PASSTHRU_JSON_FORMATTER);
+    public static String getPassThroughJsonFormatter() throws IOException, XMLStreamException {
+        String psJsonFormatter = getPropertyFromAxisConf(Constants.PASSTHRU_JSON_FORMATTER);
         if (psJsonFormatter == null) {
             return "org.apache.synapse.commons.json.JsonStreamFormatter";
         } else {
-            return psJsonFormatter.getValue().toString();
+            return psJsonFormatter;
         }
     }
 
@@ -257,6 +263,26 @@ public class Utils {
                     ((TreeMap) headers).put("Location", location);
                 }
             }
+        }
+    }
+
+    private static String getPropertyFromAxisConf(String parameter) throws IOException, XMLStreamException {
+        try (InputStream file = new FileInputStream(Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "axis2", "axis2.xml").toString())) {
+           if(axis2Config == null) {
+               OMElement element = (OMElement) XMLUtils.toOM(file);
+               element.build();
+               axis2Config = element;
+           }
+            Iterator parameters = axis2Config.getChildrenWithName(new QName("parameter"));
+            while (parameters.hasNext()) {
+                OMElement parameterElement = (OMElement) parameters.next();
+                if (parameter.equals(parameterElement.getAttribute(new QName("name")).getAttributeValue())) {
+                    return parameterElement.getText();
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            throw e;
         }
     }
 

@@ -32,7 +32,7 @@ import java.io.IOException;
  * This filter is written to block the direct requests to the tomcat servlet transport. This filter allows only requests
  * which has the integrator header. This integrator header is set by the synapse handler.
  */
-public class IntegratorFilter implements Filter {
+public class IntegratorValve implements Valve {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
