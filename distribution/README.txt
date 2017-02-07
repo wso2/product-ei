@@ -20,7 +20,7 @@ Running the Integrator
 ==================================
 1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
 2. Run integrator.sh or integrator.bat.
-3. Point your favourite browser to  https://localhost:9443/carbon
+3. Point your favourite browser to  https://localhost:8243/carbon
 4. Use the following username and password to login
    username : admin
    password : admin
@@ -31,7 +31,7 @@ Running other runtimes individually (Analytics, Broker, Business-Process)
 2. Go to wso2ei-6.0.0/wso2 directory.
 3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
 4. Execute wso2server.sh or wso2server.bat.
-3. Access the url related to the required runtime. (For example, use https://localhost:9443/carbon for the integrator runtime.)
+3. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)
 
 Running all runtimes (Integrator, Analytics, Broker, Business-Process)
 ==================================================================
