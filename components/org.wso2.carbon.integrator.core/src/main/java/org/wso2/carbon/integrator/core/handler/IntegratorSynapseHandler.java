@@ -52,15 +52,16 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         boolean isPreserveHeadersContained = false;
         try {
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            if (axis2MessageContext.getProperty("TransportInURL") != null) {
+            Object isApi = messageContext.getProperty("SYNAPSE_REST_API");
+            Object isProxy = messageContext.getProperty("proxy.name");
+            if (axis2MessageContext.getProperty("TransportInURL") != null && isApi == null && isProxy == null) {
                 String uri = axis2MessageContext.getProperty("TransportInURL").toString();
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
-                String contextPath = Utils.getContext(uri);
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
-                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
-                    if (validateWhiteListsWithUri(uri) || "/odata".equals(contextPath) || uri.endsWith("?tryit")) {
+                    host = "localhost";
+                    if (validateWhiteListsWithUri(uri)) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
                         return dispatchMessage(endpoint, uri, messageContext);
@@ -144,7 +145,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
             passThroughSenderManager.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
         }
-        if(log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug("Dispatching message to " + uri);
         }
         Utils.setIntegratorHeader(messageContext, uri);
