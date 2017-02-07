@@ -60,7 +60,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 String host;
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
-                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
+                    host = "localhost";
                     if (validateWhiteListsWithUri(uri)) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
