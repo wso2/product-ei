@@ -26,6 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.integrator.core.Utils;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -48,7 +50,7 @@ public class JsonStreamFormatter implements MessageFormatter {
     private static final Log logger = LogFactory.getLog(JsonStreamFormatter.class.getName());
 
     public JsonStreamFormatter()
-            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, IOException, XMLStreamException {
         Class<?> synapseFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getPassThroughJsonFormatter());
         this.synapseFormatter = synapseFormatterClass.newInstance();
         this.synapseFormatterGetBytesMethod = synapseFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
