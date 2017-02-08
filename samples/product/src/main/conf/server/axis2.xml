@@ -288,7 +288,8 @@
     <phaseOrder type="InFlow">
         <!--  System pre defined phases       -->
         <phase name="Transport">
-            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
+            <handler name="RequestURIBasedDispatcher"
+                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
                 <order phase="Transport"/>
             </handler>
             <handler name="SOAPActionBasedDispatcher"
@@ -305,7 +306,8 @@
         <phase name="Security"/>
         <phase name="PreDispatch"/>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
+            <handler name="RequestURIBasedDispatcher"
+                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
@@ -345,7 +347,8 @@
         <phase name="Security"/>
         <phase name="PreDispatch"/>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
+            <handler name="RequestURIBasedDispatcher"
+                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
