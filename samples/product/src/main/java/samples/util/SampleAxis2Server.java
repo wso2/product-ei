@@ -22,6 +22,11 @@ package samples.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 public class SampleAxis2Server {
 
     private static final Log log = LogFactory.getLog(SampleAxis2Server.class);
@@ -37,6 +42,9 @@ public class SampleAxis2Server {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
+        if (System.getProperty("carbon.components.dir.path") != null) {
+            addJarFileUrls(new File(System.getProperty("carbon.components.dir.path")));
+        }
         startServer(args);
         addShutdownHook();
     }
@@ -57,10 +65,40 @@ public class SampleAxis2Server {
         Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
-    public static void startServer(String[] args) throws Exception {
+    private static void startServer(String[] args) throws Exception {
         SampleAxis2ServerManager.getInstance().start(args);
     }
-    public static void stopServer() throws Exception {
+
+    private static void stopServer() throws Exception {
         SampleAxis2ServerManager.getInstance().stop();
+    }
+
+    /**
+     * Add JAR files found in the given directory to the Classpath. This fix is done due to terminal's argument character limitation.
+     *
+     * @param root the directory to recursively search for JAR files.
+     * @throws java.net.MalformedURLException If a provided JAR file URL is malformed
+     */
+    private static void addJarFileUrls(File root) throws Exception {
+        File[] children = root.listFiles();
+        if (children == null) {
+            return;
+        }
+        for (File child : children) {
+            if (child.isFile() && child.canRead() &&
+                    child.getName().toLowerCase().endsWith(".jar") && !child.getName().toLowerCase().startsWith("org.apache.synapse.module") && !child.getName().toLowerCase().startsWith("wss4j") && !child.getName().contains("slf4j")) {
+                addPath(child.getPath());
+            }
+        }
+    }
+
+    private static void addPath(String s) throws Exception {
+        File f = new File(s);
+        URL u = f.toURL();
+        URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+        Class<URLClassLoader> urlClass = URLClassLoader.class;
+        Method method = urlClass.getDeclaredMethod("addURL", URL.class);
+        method.setAccessible(true);
+        method.invoke(urlClassLoader, u);
     }
 }
