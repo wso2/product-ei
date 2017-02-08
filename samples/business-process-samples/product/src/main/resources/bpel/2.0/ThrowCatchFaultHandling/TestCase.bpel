@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--This BPEL explains some basic exception handling, where the exceptions are thrown and caught in the child and parent scopes-->
+<bpel:process  xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing"
+               xmlns:saw="workflowns"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               name="TestCase" targetNamespace="workflowns"
+               queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+               expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+               suppressJoinFailure="no" exitOnStandardFault="no" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+    <bpel:import namespace="workflowns" location="TestCase.wsdl" importType="http://schemas.xmlsoap.org/wsdl/" />
+    <bpel:partnerLinks>
+        <bpel:partnerLink name="TestCase" partnerLinkType="saw:TestCase" myRole="WorkflowRole" />
+    </bpel:partnerLinks>
+    <bpel:variables>
+        <bpel:variable name="In" messageType="saw:ExecuteWorkflowSoapIn" />
+        <bpel:variable name="value" type="xs:string" />
+	
+    </bpel:variables>
+    <bpel:sequence name="Outer_Workflow">
+        <bpel:receive name="Receive" partnerLink="TestCase" portType="saw:Workflow" operation="ExecuteWorkflow" variable="In" createInstance="yes"/>
+    
+		<bpel:assign validate="no" name="InitValue">
+                <bpel:copy>
+                                <bpel:from>
+                                    <bpel:literal xml:space="preserve">0</bpel:literal>
+                                </bpel:from>
+                                <bpel:to variable="value"></bpel:to>
+                            </bpel:copy>
+                <bpel:copy>
+                    <bpel:from>
+                            <![CDATA[$In.parameters/*[local-name() = 'value']]]>
+                        </bpel:from>
+                    <bpel:to variable="value"></bpel:to>
+                </bpel:copy>
+            </bpel:assign>
+
+
+            <bpel:scope>
+<bpel:faultHandlers>
+			<bpel:catch faultName="saw:InputException1">
+		            <bpel:if name="ExceptionCondition2">
+		                     <bpel:condition> true() </bpel:condition>
+		        	     <bpel:throw faultName="saw:InputException2" />
+		                 <bpel:else>
+		           	    <bpel:throw faultName="saw:TransitionConditionOutOfRangeException2" />
+		                 </bpel:else>
+		            </bpel:if>
+			    <!--<bpel:throw faultName="saw:CatchedInputException1" />-->
+		        </bpel:catch>
+                        <!--<bpel:catch faultName="saw:InputException2">
+		            <bpel:empty/>
+		        </bpel:catch>
+		        <bpel:catchAll>
+		             <bpel:rethrow/>
+		        </bpel:catchAll>-->
+            </bpel:faultHandlers>
+            <bpel:scope>
+
+                <bpel:if name="ExceptionCondition1">
+		        <bpel:condition>number($value)=number(1)</bpel:condition>
+				<bpel:throw faultName="saw:InputException1" />
+		        
+		        <bpel:else>
+		            <bpel:throw faultName="saw:TransitionConditionOutOfRangeException1" />
+		        </bpel:else>
+            	</bpel:if>
+
+		    <!--<bpel:if name="ExceptionCondition2">
+		        
+		        <bpel:condition>number($value)=number(2)</bpel:condition>
+		        	<bpel:throw faultName="saw:InputException2" />
+		        <bpel:else>
+		           	<bpel:throw faultName="saw:TransitionConditionOutOfRangeException2" />
+		        </bpel:else>
+		    </bpel:if>
+
+		<bpel:if name="ExceptionCondition3">
+		        <bpel:condition>number($value)=number(3)</bpel:condition>
+		        	<bpel:throw faultName="saw:InputException3" />
+		        <bpel:else>
+		           	<bpel:throw faultName="saw:TransitionConditionOutOfRangeException3" />
+		        </bpel:else>
+		    </bpel:if>-->
+
+		
+            </bpel:scope>
+</bpel:scope>
+        <bpel:reply name="Reply" partnerLink="TestCase" portType="saw:Workflow" operation="ExecuteWorkflow" variable="In"/>
+    </bpel:sequence>
+</bpel:process>

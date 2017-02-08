@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<bpel:process name="Client" targetNamespace="urn:ode-apache-org:example:async:client"
+              suppressJoinFailure="yes"
+              xmlns:tns="urn:ode-apache-org:example:async:client"
+              xmlns:server="urn:ode-apache-org:example:async:server"
+              xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+    <bpel:import location="ClientArtifacts.wsdl" namespace="urn:ode-apache-org:example:async:client"
+                 importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <bpel:import location="ServerArtifacts.wsdl" namespace="urn:ode-apache-org:example:async:server"
+                 importType="http://schemas.xmlsoap.org/wsdl/"/>
+    
+        <bpel:correlationSets>
+        <bpel:correlationSet name="CorrelationByRequest" properties="tns:refProperty"/>
+    </bpel:correlationSets>
+    <bpel:partnerLinks>
+        <bpel:partnerLink name="client" partnerLinkType="tns:Client" myRole="ClientProvider"/>
+        <bpel:partnerLink name="server" partnerLinkType="server:Server" partnerRole="ServerProvider"
+                          myRole="ServerRequester"></bpel:partnerLink>
+    </bpel:partnerLinks>
+
+    <bpel:variables>
+        <bpel:variable name="input" messageType="tns:ClientRequestMessage"/>
+        <bpel:variable name="output" messageType="tns:ClientResponseMessage"/>
+        <bpel:variable name="serverRequest"
+                       messageType="server:ServerRequestMessage"></bpel:variable>
+        <bpel:variable name="serverResponse"
+                       messageType="server:ServerResponseMessage"></bpel:variable>
+    </bpel:variables>
+    <bpel:sequence name="main">
+        <bpel:receive name="receiveInput" partnerLink="client" portType="tns:Client"
+                      operation="process"
+                      variable="input" createInstance="yes">
+            <bpel:correlations>
+                <bpel:correlation set="CorrelationByRequest" initiate="yes"></bpel:correlation>
+            </bpel:correlations>
+	</bpel:receive>
+        <bpel:assign validate="no" name="createServerRequest">
+            <bpel:copy>
+                <bpel:from>
+                    <bpel:literal xml:space="preserve">
+                        <server:ServerRequest>
+			    <server:id></server:id>
+                            <server:input></server:input>
+                        </server:ServerRequest>
+                    </bpel:literal>
+                </bpel:from>
+                <bpel:to variable="serverRequest" part="payload"></bpel:to>
+            </bpel:copy>
+	    <bpel:copy>
+                <bpel:from part="payload" variable="input">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:id]]></bpel:query>
+                </bpel:from>
+                <bpel:to part="payload" variable="serverRequest">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[server:id]]></bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from part="payload" variable="input">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:input]]></bpel:query>
+                </bpel:from>
+                <bpel:to part="payload" variable="serverRequest">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[server:input]]></bpel:query>
+                </bpel:to>
+            </bpel:copy>
+        </bpel:assign>
+        <bpel:invoke name="invokeServer" partnerLink="server" operation="initiate"
+                     portType="server:Server"
+                     inputVariable="serverRequest">
+        </bpel:invoke>
+        <bpel:receive name="receiveCallback" partnerLink="server" operation="onResult"
+                      portType="server:ServerCallback"
+                      variable="serverResponse">
+
+            <bpel:correlations>
+                <bpel:correlation set="CorrelationByRequest" initiate="no"></bpel:correlation>
+            </bpel:correlations>
+
+        </bpel:receive>
+        <bpel:assign validate="no" name="createOutput">
+            <bpel:copy>
+                <bpel:from>
+                    <bpel:literal xml:space="preserve">
+                        <tns:ClientResponse>
+			    <tns:id></tns:id>
+                            <tns:result></tns:result>
+                        </tns:ClientResponse>
+                    </bpel:literal>
+                </bpel:from>
+                <bpel:to variable="output" part="payload"></bpel:to>
+            </bpel:copy>
+	    <bpel:copy>
+                <bpel:from part="payload" variable="serverResponse">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[server:id]]></bpel:query>
+                </bpel:from>
+                <bpel:to part="payload" variable="output">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:id]]></bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from part="payload" variable="serverResponse">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[server:result]]></bpel:query>
+                </bpel:from>
+                <bpel:to part="payload" variable="output">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:result]]></bpel:query>
+                </bpel:to>
+            </bpel:copy>
+        </bpel:assign>
+        <bpel:reply name="replyOutput" partnerLink="client" portType="tns:Client"
+                    operation="process" variable="output"/>
+    </bpel:sequence>
+</bpel:process>

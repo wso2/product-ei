@@ -616,8 +616,7 @@ check com.sun.mail.smtp package documentation for descriptions of properties
     </phase>
     <phase name="Validation"/>
     <phase name="Transport">
-        <handler name="RequestURIBasedDispatcher"
-                 class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
+        <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
             <order phase="Transport"/>
         </handler>
         <handler name="CarbonContextConfigurator"
@@ -646,8 +645,7 @@ check com.sun.mail.smtp package documentation for descriptions of properties
         <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
     </phase>
     <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-        <handler name="RequestURIBasedDispatcher"
-                 class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
+        <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
         <handler name="SOAPActionBasedDispatcher"
                  class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
         <handler name="RequestURIOperationDispatcher"

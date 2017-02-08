@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<wsdl:definitions
+    targetNamespace="http://ode/bpel/unit-test.wsdl"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://ode/bpel/unit-test.wsdl"
+    xmlns:resp="http://ode/bpel/responder.wsdl"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsa="http://www.w3.org/2005/08/addressing"
+    xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+    xmlns:prop="http://docs.oasis-open.org/wsbpel/2.0/varprop">
+
+  <import namespace="http://ode/bpel/responder.wsdl" location="Responder.wsdl"/>
+
+  <wsdl:types>
+        <xsd:schema targetNamespace="http://ode/bpel/unit-test.wsdl">
+            <xsd:element name="result" type="xsd:string"/>
+        </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="ResultMessage">
+    <wsdl:part name="ack" element="tns:result"/>
+  </wsdl:message>
+
+  <wsdl:portType name="DynMainPortType">
+    <wsdl:operation name="execute">
+      <wsdl:input message="resp:DummyMessage" name="dummy"/>
+      <wsdl:output message="tns:ResultMessage" name="result"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="DynMainBinding" type="tns:DynMainPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="execute">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input>
+        <soap:body namespace="http://ode/bpel/unit-test.wsdl" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://ode/bpel/unit-test.wsdl" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="DynMainService">
+    <wsdl:port name="DynMainPort" binding="tns:DynMainBinding">
+      <soap:address location="http://localhost:8080/ode/processes/DynMainService"/>
+    </wsdl:port>
+  </wsdl:service>
+
+  <plnk:partnerLinkType name="InitiatorPartnerLinkType">
+      <plnk:role name="me" portType="tns:DynMainPortType"/>
+  </plnk:partnerLinkType>
+
+  <prop:property name="dummyProp" type="xsd:string"/>
+  <prop:propertyAlias propertyName="tns:dummyProp" messageType="resp:DummyMessage"
+                      part="payload"/>
+  <prop:propertyAlias propertyName="tns:dummyProp" messageType="resp:Dummy2Message"
+                      part="payload"/>
+
+</wsdl:definitions>

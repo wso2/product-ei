@@ -33,6 +33,9 @@ import org.wso2.carbon.webapp.mgt.WebApplication;
 
 import java.util.TreeMap;
 
+/**
+ * This handler is written to dispatch messages to tomcat servlet transport.
+ */
 public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
@@ -42,37 +45,45 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     }
 
     private SendMediator sendMediator;
-    private PassThroughSenderManager configuration = PassThroughSenderManager.getInstance();
+    private PassThroughSenderManager passThroughSenderManager = PassThroughSenderManager.getInstance();
 
     @Override
     public boolean handleRequestInFlow(MessageContext messageContext) {
         boolean isPreserveHeadersContained = false;
         try {
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            if (axis2MessageContext.getProperty("TransportInURL") != null) {
+            Object isApi = messageContext.getProperty("SYNAPSE_REST_API");
+            Object isProxy = messageContext.getProperty("proxy.name");
+            if (axis2MessageContext.getProperty("TransportInURL") != null && isApi == null && isProxy == null) {
                 String uri = axis2MessageContext.getProperty("TransportInURL").toString();
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
-                String contextPath = Utils.getContext(uri);
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
-                if (headers instanceof TreeMap && contextPath != null) {
-                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
-                    if (validateWhiteListsWithUri(uri) || "/odata".equals(contextPath) || uri.endsWith("?tryit")) {
+                if (headers instanceof TreeMap) {
+                    host = "localhost";
+                    if (validateWhiteListsWithUri(uri)) {
                         isPreserveHeadersContained = true;
-                        return dispatchMessage(protocol, host, uri, messageContext);
+                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                        return dispatchMessage(endpoint, uri, messageContext);
+                    } else if (axis2MessageContext.getProperty("raplacedAxisService") != null) {
+                        isPreserveHeadersContained = true;
+                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
+                        return dispatchMessage(endpoint, uri, messageContext);
                     } else {
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
                         if (tenantDomain != null) {
                             WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
                             if (webApplication != null) {
                                 isPreserveHeadersContained = true;
-                                return dispatchMessage(protocol, host, uri, messageContext);
+                                String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                                return dispatchMessage(endpoint, uri, messageContext);
                             }
                         } else {
                             WebApplication webApplication = Utils.getStartedWebapp(uri);
                             if (webApplication != null) {
                                 isPreserveHeadersContained = true;
-                                return dispatchMessage(protocol, host, uri, messageContext);
+                                String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                                return dispatchMessage(endpoint, uri, messageContext);
                             }
                         }
                     }
@@ -84,7 +95,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
             return true;
         } finally {
             if (isPreserveHeadersContained) {
-                configuration.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
+                    passThroughSenderManager.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                }
             }
         }
     }
@@ -121,15 +134,22 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private void setREST_URL_POSTFIX(org.apache.axis2.context.MessageContext messageContext, String to) {
         if (messageContext.getProperty("REST_URL_POSTFIX") != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("message's REST_URL_POSTFIX is changing from " + messageContext.getProperty("REST_URL_POSTFIX") + " to " + to);
+            }
             messageContext.setProperty("REST_URL_POSTFIX", to);
         }
     }
 
-    private boolean dispatchMessage(String protocol, String host, String uri, MessageContext messageContext) {
-        configuration.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
-        Utils.setIntegratorHeader(messageContext);
+    private boolean dispatchMessage(String endpoint, String uri, MessageContext messageContext) {
+        if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
+            passThroughSenderManager.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("Dispatching message to " + uri);
+        }
+        Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
-        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
         return sendMediator.mediate(messageContext);
     }
@@ -137,6 +157,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     private boolean validateWhiteListsWithUri(String uri) {
         for (String contextPath : IntegratorComponent.getWhiteListContextPaths()) {
             if (uri.contains(contextPath)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Whitelisting the URI " + uri + " for " + contextPath + " context.");
+                }
                 return true;
             }
         }

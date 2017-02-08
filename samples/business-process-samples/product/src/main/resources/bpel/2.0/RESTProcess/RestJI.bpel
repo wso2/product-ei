@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="RestJI"
+    targetNamespace="http://enterprise.netbeans.org/bpel/RestTest/RestJI"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/RestTest/RestJI"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:axis="http://ws.apache.org/axis2"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:sref = "http://docs.oasis-open.org/wsbpel/2.0/serviceref"
+    xmlns:resji="http://mpathirage.com/JIRARest/" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+    <import namespace="http://mpathirage.com/JIRARest/" location="JIRARest.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/RestTestServiceWrapper" location="RestTestServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://ws.apache.org/axis2" location="RestTestService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://enterprise.netbeans.org/bpel/RestTestServiceWrapper" partnerLinkType="tns:RestTestServiceLinkType" myRole="RestTestProvider"/>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://mpathirage.com/JIRARest/" partnerLinkType="tns:JIRARestPT" partnerRole="JIRARestProvider"/>
+    </partnerLinks>
+    <variables>
+        <variable name="GetIssueXMLOut" xmlns:tns="http://mpathirage.com/JIRARest/" messageType="tns:getIssueXMLResponse"/>
+        <variable name="GetIssueXMLIn" xmlns:tns="http://mpathirage.com/JIRARest/" messageType="tns:getIssueXMLRequest"/>
+        <variable name="TestRestOut" xmlns:ns="http://ws.apache.org/axis2" messageType="ns:testRestResponse"/>
+        <variable name="TestRestIn" xmlns:ns="http://ws.apache.org/axis2" messageType="ns:testRestRequest"/>
+        <variable name="dynURL" type="xsd:string"></variable>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink2" operation="testRest" xmlns:ns="http://ws.apache.org/axis2" portType="ns:RestTestServicePortType" variable="TestRestIn"/>
+        <assign name="Assign2">
+            <copy>
+                <from>
+                    <literal>
+                        <resji:getIssueXML>
+                            <resji:issue/>
+                        </resji:getIssueXML>
+                    </literal>
+                </from>
+                <to variable="GetIssueXMLIn" part="part1"></to>
+            </copy>
+            <copy>
+                <from>$TestRestIn.parameters/issue</from>
+                <to>$GetIssueXMLIn.part1/resji:issue</to>
+            </copy>
+            
+              <copy>
+                <from>
+                	<literal>
+        <sref:service-ref>
+          <soap:address location="https://wso2.org"/>
+        </sref:service-ref>
+      </literal>
+                </from>
+                <to partnerLink="PartnerLink1"/>
+              </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="PartnerLink1" operation="getIssueXML" xmlns:tns="http://mpathirage.com/JIRARest/" portType="tns:JIRARest" inputVariable="GetIssueXMLIn" outputVariable="GetIssueXMLOut"/>
+        <assign name="Assign1">
+            <copy>
+                <from>
+                    <literal>
+                        <axis:testRestResponse>
+                            <axis:return/>
+                        </axis:testRestResponse>
+                    </literal>
+                </from>
+                <to>$TestRestOut.parameters</to>
+            </copy>
+            <copy>
+                <from variable="GetIssueXMLOut" part="part"></from>
+                <to>$TestRestOut.parameters/axis:return</to>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="PartnerLink2" operation="testRest" xmlns:ns="http://ws.apache.org/axis2" portType="ns:RestTestServicePortType" variable="TestRestOut"/>
+    </sequence>
+</process>
+
+
+

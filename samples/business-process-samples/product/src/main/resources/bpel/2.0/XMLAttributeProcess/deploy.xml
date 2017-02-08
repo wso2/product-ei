@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" 
+		xmlns:sample="http://eclipse.org/bpel/sample">
+  <process name="sample:XMLAttributeProcess">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="sample:XMLAttributeProcessService" port="XMLAttributeProcessPort"/>
+    </provide>
+  </process>
+</deploy>

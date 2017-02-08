@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="TestCase"  
+				  xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"  
+				  xmlns:saw="workflowns"  
+				  xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing"  
+				  xmlns:xs="http://www.w3.org/2001/XMLSchema"  
+				  xmlns="http://schemas.xmlsoap.org/wsdl/"  
+				  targetNamespace="workflowns"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" 
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="workflowns">
+        <xsd:element name="ExecuteWorkflow">
+			<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="value" type="xsd:string"/>
+					</xsd:sequence>
+			</xsd:complexType>
+			</xsd:element>
+		<xsd:element name="ExecuteWorkflowResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="value" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ExecuteWorkflowSoapIn">
+    <wsdl:part name="parameters" element="saw:ExecuteWorkflow"/>
+  </wsdl:message>
+  <wsdl:message name="ExecuteWorkflowSoapOut">
+    <wsdl:part name="parameters" element="saw:ExecuteWorkflowResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="Workflow">
+    <wsdl:operation name="ExecuteWorkflow">
+      <wsdl:input message="saw:ExecuteWorkflowSoapIn"/>
+      <wsdl:output message="saw:ExecuteWorkflowSoapIn"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WorkflowSOAP" type="saw:Workflow">
+    <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ExecuteWorkflow">
+    <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="workflowns/ExecuteWorkflow"/>
+      <wsdl:input>
+    <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+    <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding> 
+  <wsdl:service name="LinkTest">
+	<wsdl:port name="Workflow" binding="saw:WorkflowSOAP">
+		<soap:address location="http://localhost:9763/services/LinkTest"/>
+	</wsdl:port>
+  </wsdl:service>
+  <plnk:partnerLinkType name="TestCase">
+	<plnk:role name="WorkflowRole" portType="saw:Workflow"/>
+  </plnk:partnerLinkType>  
+</wsdl:definitions>

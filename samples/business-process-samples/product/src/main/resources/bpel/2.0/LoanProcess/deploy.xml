@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
+        xmlns:wns="http://wso2.org/bps/samples/LoanService"
+        xmlns:dins="http://wso2.org/bps/samples/DILoanService"
+        xmlns:xkns="http://wso2.org/bps/samples/XKLoanService"
+        xmlns:lpns="http://wso2.org/bps/samples/LoanProcess"
+        xmlns:cins="http://wso2.org/bps/samples/CustomerInfo"
+        xmlns:crns="http://wso2.org/bps/samples/CreditRating">
+    <process name="lpns:LoanProcess">
+        <active>true</active>
+        <provide partnerLink="Client">
+            <service name="lpns:LoanProcessService" port="LoanProcessPort"/>
+        </provide>
+        <provide partnerLink="DILoanServicePL">
+            <service name="wns:LoanServiceCallback" port="LoanServiceCallbackPort"/>
+        </provide>
+        <invoke partnerLink="CustomerInfoPL">
+            <service name="cins:CustomerInfoService" port="CustomerInfoPort"/>
+        </invoke>
+        <invoke partnerLink="CreditRatingPL">
+            <service name="crns:CreditRatingService" port="CreditRatingPort">
+                <endpoint xmlns="http://wso2.org/bps/bpel/endpoint/config"
+                          endpointReference="CreditRatingService.epr"/>
+            </service>
+        </invoke>
+        <invoke partnerLink="DILoanServicePL">
+            <service name="wns:DILoanService" port="LoanServicePort"/>
+        </invoke>
+    </process>
+</deploy>

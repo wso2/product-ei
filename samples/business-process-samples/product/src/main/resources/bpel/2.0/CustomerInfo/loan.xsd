@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://wso2.org/bps/samples/loan_process/schema" xmlns:tns="http://wso2.org/bps/samples/loan_process/schema" elementFormDefault="qualified">
+
+	<element name="LoanRequest" type="tns:LoanRequestType"/>
+
+	<element name="CreditRating" type="tns:CreditRatingType"/>
+
+	<element name="LoanOffer" type="tns:LoanOfferType"></element>
+
+	<element name="CustomerInfo" type="tns:CustomerInfoType"/>
+
+	<element name="SSN" type="tns:CustomerSSNType"/>
+
+	<element name="CustomerSSN" type="tns:CustomerSSNType"/>
+
+	<complexType name="LoanRequestType">
+		<sequence>
+			<element name="CustomerInfo" type="tns:CustomerInfoType"/>
+			<element name="LoanInfo" type="tns:LoanInfoType"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="CustomerInfoType">
+    	<sequence>
+    		<element name="Name" type="string"/>
+    		<element name="Email" type="string"/>
+    		<element name="CustomerID" type="tns:CustomerIDType"/>
+    		<element name="CreditRating" type="int"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="CustomerSSNType">
+    	<sequence>
+    		<element name="SSN" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="CreditRatingType">
+    	<sequence>
+    		<element name="SSN" type="string"/>
+    		<element name="rating" type="int"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="LoanOfferType">
+    	<sequence>
+    		<element name="ProviderName" type="string"/>
+    		<element name="selected" type="boolean"/>
+    		<element name="approved" type="boolean"/>
+    		<element name="AnualInterestRate" type="decimal"/>
+    	</sequence>
+    </complexType>
+
+    <complexType name="LoanInfoType">
+    	<sequence>
+    		<element name="Amount" type="double"/>
+    		<element name="Years" type="int"/>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="CustomerIDType">
+    	<restriction base="string">
+    		<pattern value="ZF-[0-9]{4}"/>
+    	</restriction>
+    </simpleType>
+
+</schema>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://wso2.org/bps/sample" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://services.core.ndatasource.carbon.wso2.org" name="AdminServiceInvokeSample" targetNamespace="http://wso2.org/bps/sample">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="dataSourcePLT">
+    <plnk:role name="dsRole" portType="wsdl:NDataSourceAdminPortType"/>
+  </plnk:partnerLinkType>
+    <import location="NDataSourceAdmin.wsdl" namespace="http://services.core.ndatasource.carbon.wso2.org"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wso2.org/bps/sample">
+
+            <element name="AdminServiceInvokeSampleRequest"/>
+
+            <element name="AdminServiceInvokeSampleResponse">
+                <complexType>
+                    <sequence>
+                        <element name="return" type="tns:WSDataSourceInfo"/>
+                    </sequence>
+                </complexType>
+            </element>
+        
+            <complexType name="WSDataSourceInfo">
+            	<sequence>
+            		<element name="dsMetaInfo" type="tns:WSDataSourceMetaInfo"></element>
+            		<element name="dsStatus" type="tns:DataSourceStatus"></element>
+            	</sequence>
+            </complexType>
+        
+            <complexType name="DataSourceStatus">
+            	<sequence>
+            		<element name="details" type="string"></element>
+            		<element name="mode" type="string"></element>
+            	</sequence>
+            </complexType>
+            
+            <complexType name="WSDataSourceMetaInfo">
+            	<sequence>
+            		<element name="definition"
+            			type="tns:WSDataSourceMetaInfo_WSDataSourceDefinition">
+            		</element>
+            		<element name="description" type="string"></element>
+            		<element name="jndiConfig" type="tns:JNDIConfig"></element>
+            		<element name="name" type="string"></element>
+            		<element name="system" type="boolean"></element>
+            	</sequence>
+            </complexType>
+        
+            <complexType
+            	name="WSDataSourceMetaInfo_WSDataSourceDefinition">
+            	<sequence>
+            		<element name="dsXMLConfiguration" type="string"></element>
+            		<element name="type" type="string"></element>
+            	</sequence>
+            </complexType>
+        
+            <complexType name="JNDIConfig">
+            	<sequence>
+            		<element name="environment" type="string"></element>
+            		<element name="name" type="string"></element>
+            		<element name="useDataSourceFactory" type="boolean"></element>
+            	</sequence>
+            </complexType>
+        
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="AdminServiceInvokeSampleRequestMessage">
+        <part element="tns:AdminServiceInvokeSampleRequest" name="payload"/>
+    </message>
+    <message name="AdminServiceInvokeSampleResponseMessage">
+        <part element="tns:AdminServiceInvokeSampleResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the AdminServiceInvokeSample BPEL process -->
+    <portType name="AdminServiceInvokeSample">
+        <operation name="process">
+            <input message="tns:AdminServiceInvokeSampleRequestMessage"/>
+            <output message="tns:AdminServiceInvokeSampleResponseMessage"/>
+        </operation>
+    </portType>   
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="AdminServiceInvokeSample">
+        <plnk:role name="AdminServiceInvokeSampleProvider" portType="tns:AdminServiceInvokeSample"/>
+    </plnk:partnerLinkType>
+    
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="AdminServiceInvokeSampleBinding" type="tns:AdminServiceInvokeSample">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<operation name="process">
+    		<soap:operation soapAction="http://wso2.org/bps/sample/process"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    	</operation>
+    </binding>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="AdminServiceInvokeSample">
+    	<port binding="tns:AdminServiceInvokeSampleBinding" name="AdminServiceInvokeSamplePort">
+    		<soap:address location="http://localhost:8080/AdminServiceInvokeSample"/>
+    	</port>
+    </service>
+</definitions>

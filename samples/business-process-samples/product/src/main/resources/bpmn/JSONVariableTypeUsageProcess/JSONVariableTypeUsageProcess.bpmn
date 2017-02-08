@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="JsonDemoProcess" name="JsonUssageSampleProcess_4_BPS_360" isExecutable="true">
+    <startEvent id="startevent1" name="Start">
+      <extensionElements>
+        <activiti:formProperty id="executeJavaTask" name="Execute Java Task" type="boolean" required="true"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
+    <scriptTask id="scripttask1" name="CreateJsonVariables" scriptFormat="javascript" activiti:autoStoreVariables="false">
+      <script>print("Script Execution : CreateJsonVariables\n");
+
+var executeJava = Boolean(execution.getVariable("executeJavaTask"));
+
+//create Json Variable
+var jsonJSVar = JSONUtil.parse("{\"execInfo\":{\"execJava\":"+ executeJava +"},\"firstName\":\"John\", \"lastName\":\"Doe\", \"data\": {\"data1\":\"data1value\", \"data2\" : \"data2Value\"}, \"array\":[{\"arrData1\":\"value\"},{\"arrData2\":\"value2\",\"moreData\":456}]}");
+
+//Json variable stringify
+print("JSON Stringify : " + JSONUtil.stringify(jsonJSVar) + "\n");
+
+//Jsonpath evaluation
+print("JSON jsonpath evaluation ($.firstName): " + jsonJSVar.jsonPath("$.firstName") + "\n");
+print("JSON jsonpath evaluation ($.execInfo): " + jsonJSVar.jsonPath("$.execInfo") + "\n");
+
+//Set Json variable
+execution.setVariable("jsonJSVar", jsonJSVar);
+
+print("END of Script Execution : CreateJsonVariables -------------------------------------------------------------------\n");</script>
+    </scriptTask>
+    <scriptTask id="scripttask2" name="ReadJSONVariables" scriptFormat="javascript" activiti:autoStoreVariables="false">
+      <script>print("START Script Execution :Executing ReadJSONVariables script task\n");
+print("Query Json variable by parsing to native JS Json type\n")
+
+//when we do getVariable, we do not get the Native JS Json variable. instead we get JsonNode object, 
+//So we have to parse it back to the JS native Json type before evaluating 
+//-------------------------------------------------------------------------
+var savedJsonVar = JSON.parse(execution.getVariable("jsonJSVar"));
+//Create Full Name
+var fullName = savedJsonVar.firstName +  " " + savedJsonVar.lastName;
+print("Full Name : " + fullName + "\n");
+
+
+
+//If we don't need JS native Json, we can use
+//--------------------------------------------- 
+print("Query Json variable without parsing to native JS Json type\n");
+print(" 01 . By calling jackson JsonNode functions\n");
+
+//Or we can use fasterxml jackson JsonNode functions to query json object without parsing
+var test = execution.getVariable("jsonJSVar");
+print("Full Name : " + test.get("firstName").asText() + " " +  test.get("lastName").asText() + "\n");
+
+print(" 02 . By using jsonPath()\n");
+
+print("Full Name : " + test.jsonPath("$.firstName") + " " +  test.jsonPath("$.lastName") + "\n");
+
+print("END of Script Execution :Executing ReadJSONVariables script task\n");</script>
+    </scriptTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="scripttask1"></sequenceFlow>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <sequenceFlow id="flow6" sourceRef="scripttask2" targetRef="endevent2"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="flow9"></exclusiveGateway>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="org.wso2.bps.samples.bpmn.datatypes.json.processJsonVariable"></serviceTask>
+    <sequenceFlow id="flow8" sourceRef="exclusivegateway1" targetRef="servicetask1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${jsonJSVar.jsonPath("$.execInfo.execJava")== true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="exclusivegateway1" targetRef="scripttask2"></sequenceFlow>
+    <endEvent id="endevent3" name="End"></endEvent>
+    <sequenceFlow id="flow10" sourceRef="servicetask1" targetRef="endevent3"></sequenceFlow>
+    <userTask id="usertask1" name="User Task" activiti:assignee="admin">
+      <extensionElements>
+        <activiti:formProperty id="var" name="Var" type="string" expression="${jsonJSVar.toString().replaceAll(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;)}"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow11" sourceRef="scripttask1" targetRef="usertask1"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="usertask1" targetRef="exclusivegateway1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_JsonDemoProcess">
+    <bpmndi:BPMNPlane bpmnElement="JsonDemoProcess" id="BPMNPlane_JsonDemoProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask1" id="BPMNShape_scripttask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="130.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="530.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="720.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="410.0" y="247.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="530.0" y="330.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent3" id="BPMNShape_endevent3">
+        <omgdc:Bounds height="35.0" width="35.0" x="720.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="280.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="75.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="130.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="635.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="430.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="430.0" y="357.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="357.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="450.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="635.0" y="357.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="357.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="235.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="385.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

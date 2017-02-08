@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:p="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://wso2.org/wso2con/2011/sample/faulthandling" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://wso2.org/wso2con/2011/sample/adder" xmlns:wsdl1="http://wso2.org/wso2con/2011/sample/division" name="FaultHandlingSample" targetNamespace="http://wso2.org/wso2con/2011/sample/faulthandling">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="AdderPLT">
+    <plnk:role name="adderRole" portType="wsdl:AdderProcess"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="DivisionPLT">
+    <plnk:role name="dividerRole" portType="wsdl1:DivisionProcess"/>
+  </plnk:partnerLinkType>
+    <import location="AdderProcessArtifacts.wsdl" namespace="http://wso2.org/wso2con/2011/sample/adder"/>
+    <import location="DivisionProcessArtifacts.wsdl" namespace="http://wso2.org/wso2con/2011/sample/division"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wso2.org/wso2con/2011/sample/faulthandling">
+
+            <element name="FaultHandlingSampleRequest">
+                <complexType>
+                    <sequence>
+                    	<element maxOccurs="1" minOccurs="1" name="a" type="int"/>
+                    	<element maxOccurs="1" minOccurs="1" name="b" type="int"/>
+                    	<element maxOccurs="1" minOccurs="1" name="c" type="int"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="FaultHandlingSampleResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="processFault">
+            	<complexType>
+            		<sequence>
+            			<element name="code" type="string"/>
+            			<element name="cause" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="FaultHandlingSampleRequestMessage">
+        <part element="tns:FaultHandlingSampleRequest" name="payload"/>
+    </message>
+    <message name="FaultHandlingSampleResponseMessage">
+        <part element="tns:FaultHandlingSampleResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the FaultHandlingSample BPEL process -->
+    <message name="processFault">
+    	<part element="tns:processFault" name="payload"/>
+    </message>
+    <portType name="FaultHandlingSample">
+        <operation name="process">
+            <input message="tns:FaultHandlingSampleRequestMessage"/>
+            <output message="tns:FaultHandlingSampleResponseMessage"/>
+            <fault message="tns:processFault" name="fault"/>
+        </operation>
+    </portType>
+  
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="FaultHandlingSample">
+        <plnk:role name="FaultHandlingSampleProvider" portType="tns:FaultHandlingSample"/>
+    </plnk:partnerLinkType>
+    
+    <binding name="FaultHandlingBinding" type="tns:FaultHandlingSample">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<operation name="process">
+    		<soap:operation soapAction="http://wso2.org/wso2con/2011/sample/faulthandling/process"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    		<fault name="fault">
+    			<soap:fault name="fault" use="literal"/>
+    		</fault>
+    	</operation>
+    </binding>
+    <service name="FaultHandlingService">
+    	<port binding="tns:FaultHandlingBinding" name="FaultHandlingPort">
+    		<soap:address location="http://www.example.org/"/>
+    	</port>
+    </service>
+</definitions>

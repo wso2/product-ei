@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:SampleEventHandler="http://bps.wso2.org/samples/SampleEventHandler">
+  <process name="SampleEventHandler:SampleEventHandler">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="SampleEventHandler:SampleEventHandler" port="SampleEventHandlerPort"/>
+    </provide>
+  </process>
+</deploy>

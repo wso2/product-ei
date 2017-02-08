@@ -1,0 +1,73 @@
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<process name="ExpandTemplate"
+         targetNamespace="http://ode/bpel/unit-test"
+         xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:tns="http://ode/bpel/unit-test"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ode="http://www.apache.org/ode/type/extension"
+         xmlns:test="http://ode/bpel/unit-test.wsdl"
+         queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+         expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+
+    <import location="ExpandTemplate.wsdl"
+            namespace="http://ode/bpel/unit-test.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+    <partnerLinks>
+        <partnerLink name="ExpandTemplatePartnerLink"
+                     partnerLinkType="test:ExpandTemplatePartnerLinkType"
+                     myRole="me"/>
+    </partnerLinks>
+
+    <variables>
+        <variable name="myVar" messageType="test:ExpandTemplateMessage"/>
+    </variables>
+
+
+    <sequence>
+        <receive name="start1" partnerLink="ExpandTemplatePartnerLink" portType="test:ExpandTemplatePortType"
+                 operation="expandTemplate" variable="myVar" createInstance="yes"/>
+
+        <!-- the expanded template would be sent back in the template part -->
+
+        <if>
+            <condition>count($myVar.pairs/tag) = 0</condition>
+            <assign>
+                <copy>
+                    <from>ode:expandTemplate($myVar.template, $myVar.name, $myVar.value)</from>
+                    <to variable="myVar" part="template"/>
+                </copy>
+            </assign>
+            <else>
+                <assign>
+                    <copy>
+                        <from>ode:expandTemplate($myVar.template, $myVar.pairs)</from>
+                        <to variable="myVar" part="template"/>
+                    </copy>
+                </assign>
+            </else>
+        </if>
+
+        <reply name="end1" partnerLink="ExpandTemplatePartnerLink" portType="test:ExpandTemplatePortType"
+               operation="expandTemplate" variable="myVar"/>
+    </sequence>
+</process>

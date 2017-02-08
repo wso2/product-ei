@@ -1,0 +1,1 @@
+This sample demonstrates how to assign values to xml attributes of a request/response in a bpel process.

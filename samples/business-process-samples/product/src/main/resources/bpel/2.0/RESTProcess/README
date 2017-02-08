@@ -1,0 +1,74 @@
+=== REST Invocation BPEL Process ===
+
+Related To: STRATOS-1965 issue
+
+== Description ==
+
+This BPEL process tests Sample REST process invocation.
+
+Sample Request below:
+<p:testRest xmlns:p="http://ws.apache.org/axis2">
+   <!--0 to 1 occurrence-->
+   <issue>CARBON-9659</issue>
+</p:testRest>
+
+Sample Response should be:
+<testRestResponse xmlns="http://ws.apache.org/axis2">
+   <return>
+      <rss xmlns="" version="0.92">
+         <channel>
+            <title>WSO2 JIRA</title>
+            <link>https://wso2.org/jira</link>
+            <description>This file is an XML representation of an issue</description>
+            <language>en-us</language>
+            <build-info>
+               <version>4.1.1</version>
+               <build-number>522</build-number>
+               <build-date>19-04-2010</build-date>
+               <edition>enterprise</edition>
+            </build-info>
+            <item>
+               <title>[CARBON-9659] Error when invoking the process which has two receive and reply activities in a sequential order</title>
+               <link>https://wso2.org/jira/browse/CARBON-9659</link>
+               <project id="10101" key="CARBON">WSO2 Carbon</project>
+               <description>To reproduce:  &lt;br/&gt; Copy the attached echo.aar into BPS_HOME/repositorydeployment/server/axis2services &lt;br/&gt; Deploy the attached process  &lt;br/&gt; Invoke the init operation and then process operation with the same input. &lt;br/&gt;  &lt;br/&gt; Following exception is thrown &lt;br/&gt; ERROR - Method &amp;quot;run&amp;quot; in class &amp;quot;org.apache.ode.bpel.rtrep.v2.REPLY&amp;quot; threw an unexpected exception. &lt;br/&gt; java.lang.NullPointerException &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at org.apache.ode.bpel.engine.BpelRuntimeContextImpl.reply(BpelRuntimeContextImpl.java:427) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at org.apache.ode.bpel.rtrep.v2.RuntimeInstanceImpl.reply(RuntimeInstanceImpl.java:449) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at org.apache.ode.bpel.rtrep.v2.REPLY.run(REPLY.java:60) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at sun.reflect.GeneratedMethodAccessor57.invoke(Unknown Source) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at java.lang.reflect.Method.invoke(Method.java:597) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at org.apache.ode.jacob.vpu.JacobVPU$JacobThreadImpl.run(JacobVPU.java:451) &lt;br/&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at org.apache.ode.jacob.vpu.JacobVPU.execute(JacobVPU.java:139)</description>
+               <environment>Carbon - 2.0.3 BPS 1.1.1</environment>
+               <key id="28369">CARBON-9659</key>
+               <summary>Error when invoking the process which has two receive and reply activities in a sequential order</summary>
+               <type iconUrl="https://wso2.org/jira/images/icons/bug.gif" id="1">Bug</type>
+               <priority iconUrl="https://wso2.org/jira/images/icons/priority_major.gif" id="3">Normal</priority>
+               <status iconUrl="https://wso2.org/jira/images/icons/status_resolved.gif" id="5">Resolved</status>
+               <resolution id="1">Fixed</resolution>
+               <assignee username="waruna">Waruna Ranasinghe</assignee>
+               <reporter username="waruna">Waruna Ranasinghe</reporter>
+               <created>Wed, 4 May 2011 18:51:59 +0000</created>
+               <updated>Wed, 4 May 2011 19:00:52 +0000</updated>
+               <resolved>Wed, 4 May 2011 19:00:52 +0000</resolved>
+               <fixVersion>3.2.0</fixVersion>
+               <component>BPEL</component>
+               <due/>
+               <votes>0</votes>
+               <attachments>
+                  <attachment author="waruna" created="Wed, 4 May 2011 18:52:38 +0000" id="15889" name="echo.aar" size="3729"/>
+                  <attachment author="waruna" created="Wed, 4 May 2011 18:52:38 +0000" id="15890" name="MyRoleMexTestProcess.zip" size="5256"/>
+               </attachments>
+               <subtasks/>
+               <customfields>
+                  <customfield id="customfield_10040" key="com.atlassian.jira.plugin.system.customfieldtypes:select">
+                     <customfieldname>Estimated Complexity</customfieldname>
+                     <customfieldvalues>
+                        <customfieldvalue>Moderate</customfieldvalue>
+                     </customfieldvalues>
+                  </customfield>
+                  <customfield id="customfield_10075" key="com.atlassian.jira.plugin.system.customfieldtypes:select">
+                     <customfieldname>Severity</customfieldname>
+                     <customfieldvalues>
+                        <customfieldvalue>Major</customfieldvalue>
+                     </customfieldvalues>
+                  </customfield>
+               </customfields>
+            </item>
+         </channel>
+      </rss>
+   </return>
+</testRestResponse>

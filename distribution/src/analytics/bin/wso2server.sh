@@ -309,6 +309,9 @@ if [ "$PROFILE_SELECTED" = false ] ; then
    NODE_PARAMS="$NODE_PARAMS -Dprofile=analytics-default"
 fi
 
+#adding ei specific class path to wso2/components
+CARBON_CLASSPATH="$CARBON_CLASSPATH":"$CARBON_HOME/../components/plugins/"
+
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
 

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+  xmlns:tns="http://www.stark.com/PickService"
+  targetNamespace="http://www.stark.com/PickService">
+
+<wsdl:types>
+  <xsd:schema targetNamespace="http://www.stark.com/PickService" elementFormDefault="qualified">
+    <xsd:complexType name="DeckType">
+      <xsd:sequence>
+        <xsd:element name="Deck" type="xsd:token"/>
+      </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="dealDeck" type="tns:DeckType"/>
+    <xsd:element name="dealDeckResponse" type="tns:DeckType"/>
+
+    <xsd:element name="pickSpade" type="tns:DeckType"/>
+    <xsd:element name="pickSpadeResponse" type="tns:DeckType"/>
+
+    <xsd:element name="pickClub" type="tns:DeckType"/>
+    <xsd:element name="pickClubResponse" type="tns:DeckType"/>
+
+    <xsd:element name="pickHeart" type="tns:DeckType"/>
+    <xsd:element name="pickHeartResponse" type="tns:DeckType"/>
+
+    <xsd:element name="pickDiamond" type="tns:DeckType"/>
+    <xsd:element name="pickDiamondResponse" type="tns:DeckType"/>
+  </xsd:schema>
+</wsdl:types>
+
+<wsdl:message name="dealDeckRequest">
+  <wsdl:part element="tns:dealDeck" name="parameters"/>
+</wsdl:message>
+<wsdl:message name="dealDeckResponse">
+  <wsdl:part element="tns:dealDeckResponse" name="parameters"/>
+</wsdl:message>
+
+<wsdl:message name="pickSpadeRequest">
+  <wsdl:part element="tns:pickSpade" name="parameters"/>
+</wsdl:message>
+<wsdl:message name="pickSpadeResponse">
+  <wsdl:part element="tns:pickSpadeResponse" name="parameters"/>
+</wsdl:message>
+
+<wsdl:message name="pickClubRequest">
+  <wsdl:part element="tns:pickClub" name="parameters"/>
+</wsdl:message>
+<wsdl:message name="pickClubResponse">
+  <wsdl:part element="tns:pickClubResponse" name="parameters"/>
+</wsdl:message>
+
+<wsdl:message name="pickHeartRequest">
+  <wsdl:part element="tns:pickHeart" name="parameters"/>
+</wsdl:message>
+<wsdl:message name="pickHeartResponse">
+  <wsdl:part element="tns:pickHeartResponse" name="parameters"/>
+</wsdl:message>
+
+<wsdl:message name="pickDiamondRequest">
+  <wsdl:part element="tns:pickDiamond" name="parameters"/>
+</wsdl:message>
+<!--
+<wsdl:message name="pickDiamondResponse">
+  <wsdl:part element="tns:pickDiamondResponse" name="parameters"/>
+</wsdl:message>
+-->
+
+<wsdl:portType name="PickService">
+  <wsdl:operation name="dealDeck">
+    <wsdl:input message="tns:dealDeckRequest"/>
+    <wsdl:output message="tns:dealDeckResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="pickSpade">
+    <wsdl:input message="tns:pickSpadeRequest"/>
+    <wsdl:output message="tns:pickSpadeResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="pickClub">
+    <wsdl:input message="tns:pickClubRequest"/>
+    <wsdl:output message="tns:pickClubResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="pickHeart">
+    <wsdl:input message="tns:pickHeartRequest"/>
+    <wsdl:output message="tns:pickHeartResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="pickDiamond">
+    <wsdl:input message="tns:pickDiamondRequest"/>
+    <!--
+    <wsdl:output message="tns:pickDiamondResponse"/>
+    -->
+  </wsdl:operation>
+</wsdl:portType>
+
+<wsdl:binding name="PickServiceSoapBinding" type="tns:PickService">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="dealDeck">
+    <soap:operation soapAction="http://www.stark.com/PickService/dealDeck"/>
+    <wsdl:input> <soap:body parts="parameters" use="literal"/> </wsdl:input>
+    <wsdl:output> <soap:body parts="parameters" use="literal"/> </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="pickSpade">
+    <soap:operation soapAction="http://www.stark.com/PickService/pickSpade"/>
+    <wsdl:input> <soap:body parts="parameters" use="literal"/> </wsdl:input>
+    <wsdl:output> <soap:body parts="parameters" use="literal"/> </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="pickClub">
+    <soap:operation soapAction="http://www.stark.com/PickService/pickClub"/>
+    <wsdl:input> <soap:body parts="parameters" use="literal"/> </wsdl:input>
+    <wsdl:output> <soap:body parts="parameters" use="literal"/> </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="pickHeart">
+    <soap:operation soapAction="http://www.stark.com/PickService/pickHeart"/>
+    <wsdl:input> <soap:body parts="parameters" use="literal"/> </wsdl:input>
+    <wsdl:output> <soap:body parts="parameters" use="literal"/> </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="pickDiamond">
+    <soap:operation soapAction="http://www.stark.com/PickService/pickDiamond"/>
+    <wsdl:input> <soap:body parts="parameters" use="literal"/> </wsdl:input>
+    <!--
+    <wsdl:output> <soap:body parts="parameters" use="literal"/> </wsdl:output>
+    -->
+  </wsdl:operation>
+</wsdl:binding>
+
+<wsdl:service name="PickService">
+  <wsdl:port name="PickServiceSoapPort" binding="tns:PickServiceSoapBinding">
+    <soap:address location="http://localhost:9763/services/PickService"/>
+  </wsdl:port>
+</wsdl:service>
+
+<plnk:partnerLinkType name="PickServicePLT">
+  <plnk:role name="PickServiceProvider" portType="tns:PickService"/>
+</plnk:partnerLinkType>
+
+<vprop:property name="deck" type="xsd:token"/>
+<vprop:propertyAlias messageType="tns:dealDeckRequest" part="parameters" propertyName="tns:deck">
+  <vprop:query>tns:Deck</vprop:query>
+</vprop:propertyAlias>
+<vprop:propertyAlias messageType="tns:pickSpadeRequest" part="parameters" propertyName="tns:deck">
+  <vprop:query>tns:Deck</vprop:query>
+</vprop:propertyAlias>
+<vprop:propertyAlias messageType="tns:pickClubRequest" part="parameters" propertyName="tns:deck">
+  <vprop:query>tns:Deck</vprop:query>
+</vprop:propertyAlias>
+<vprop:propertyAlias messageType="tns:pickHeartRequest" part="parameters" propertyName="tns:deck">
+  <vprop:query>tns:Deck</vprop:query>
+</vprop:propertyAlias>
+<vprop:propertyAlias messageType="tns:pickDiamondRequest" part="parameters" propertyName="tns:deck">
+  <vprop:query>tns:Deck</vprop:query>
+</vprop:propertyAlias>
+
+</wsdl:definitions>

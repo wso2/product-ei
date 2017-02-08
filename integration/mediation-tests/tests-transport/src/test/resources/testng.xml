@@ -16,9 +16,23 @@
     </test>
 
     <test name="passthru-Transport-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.passthru.transport.test"/>
-        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ContentTypeCharsetTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA1897HttpHeadMethodTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA1994SOAPFormatSwitchingTestcase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3022SendingSoapRequestAfterRestRequestTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3051HTTPPatchMethodSupportTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4326OverridingHostHeaderTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4402MessageWithoutPayloadTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4468ContentTypeCharsetInResponseTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4891ConsumeAndDiscardTest"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.HeadMethodResponseTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.PartialInputStreamReadError"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.PassthroughTransportHttpProxyTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.RetrieveBackendWsdlTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.SetHostHttpHeaderTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.PttMaximumOpenConnections"/>
+        </classes>
     </test>
 
     <test name="http-patch-method-support-test" preserve-order="true" verbose="2">

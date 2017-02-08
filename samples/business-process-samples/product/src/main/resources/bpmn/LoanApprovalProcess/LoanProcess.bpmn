@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1468995494424" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="LoanProcess" isClosed="false" isExecutable="true" name="Loan Process" processType="None">
+    <startEvent activiti:initiator="clerk" id="startevent1" name="Start">
+      <extensionElements>
+        <activiti:formProperty id="income" name="Income" type="long" variable="income" required="true"/>
+        <activiti:formProperty id="loanAmount" name="Loan Amount" type="long" variable="loanAmount" required="true"/>
+      </extensionElements>
+    </startEvent>
+    <exclusiveGateway default="flow3" gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
+    <userTask activiti:assignee="manager" activiti:exclusive="true" id="usertask2" name="Review Application">
+      <extensionElements>
+        <activiti:formProperty id="loanAmount" name="Loan Amount" type="long" variable="loanAmount" writable="false"/>
+        <activiti:formProperty id="comments" name="Additional Comments" type="string" variable="comments"/>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="usertask2"/>
+    <userTask activiti:assignee="clerk" activiti:exclusive="true" id="usertask3" name="Revise Amount">
+      <extensionElements>
+        <activiti:formProperty id="loanAmount" name="Previous Requested Amount" type="long" variable="loanAmount" writable="false"/>
+        <activiti:formProperty id="revisedAmount" name="Revised Amount" type="long" variable="revisedAmount"/>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="usertask3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${loanAmount>50000}]]></conditionExpression>
+    </sequenceFlow>
+    <endEvent id="endevent2" name="End"/>
+    <sequenceFlow id="flow6" sourceRef="usertask2" targetRef="endevent2"/>
+    <userTask activiti:assignee="manager" activiti:exclusive="true" id="usertask4" name="Submit For Approval">
+      <extensionElements>
+        <activiti:formProperty id="NewLoanAmount" name="Revised Loan Amount" type="long" variable="revisedAmount"/>
+        <activiti:formProperty id="userIncome" name="Income" type="long" variable="income"/>
+        <activiti:formProperty id="approveRequest" name="Confirmation" type="enum" variable="confirmation">
+          <activiti:value id="true" name="approve"/>
+          <activiti:value id="false" name="reject"/>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow7" sourceRef="usertask3" targetRef="usertask4"/>
+    <endEvent id="endevent3" name="End"/>
+    <sequenceFlow id="flow8" sourceRef="usertask4" targetRef="endevent3"/>
+    <sequenceFlow id="flow9" sourceRef="startevent1" targetRef="exclusivegateway1"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="LoanProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="50.0" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Shape-exclusivegateway1" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="280.0" y="138.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask2" id="Shape-usertask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="340.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask3" id="Shape-usertask3">
+        <omgdc:Bounds height="55.0" width="105.0" x="330.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="Shape-endevent2">
+        <omgdc:Bounds height="32.0" width="32.0" x="490.0" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask4" id="Shape-usertask4">
+        <omgdc:Bounds height="55.0" width="105.0" x="480.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent3" id="Shape-endevent3">
+        <omgdc:Bounds height="32.0" width="32.0" x="630.0" y="60.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="exclusivegateway1" targetElement="usertask2">
+        <omgdi:waypoint x="299.0" y="167.0"/>
+        <omgdi:waypoint x="299.0" y="216.0"/>
+        <omgdi:waypoint x="340.0" y="216.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="exclusivegateway1" targetElement="usertask3">
+        <omgdi:waypoint x="299.0" y="141.0"/>
+        <omgdi:waypoint x="299.0" y="111.0"/>
+        <omgdi:waypoint x="299.0" y="76.0"/>
+        <omgdi:waypoint x="330.0" y="77.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6" sourceElement="usertask2" targetElement="endevent2">
+        <omgdi:waypoint x="445.0" y="217.5"/>
+        <omgdi:waypoint x="490.0" y="216.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7" sourceElement="usertask3" targetElement="usertask4">
+        <omgdi:waypoint x="435.0" y="77.5"/>
+        <omgdi:waypoint x="480.0" y="77.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8" sourceElement="usertask4" targetElement="endevent3">
+        <omgdi:waypoint x="585.0" y="77.5"/>
+        <omgdi:waypoint x="630.0" y="76.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9" sourceElement="startevent1" targetElement="exclusivegateway1">
+        <omgdi:waypoint x="82.0" y="156.0"/>
+        <omgdi:waypoint x="280.0" y="154.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<process name="DynPartnerMain"
+         targetNamespace="http://ode/bpel/unit-test"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:sref="http://docs.oasis-open.org/wsbpel/2.0/serviceref"
+         xmlns:tns="http://ode/bpel/unit-test"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+         xmlns:test="http://ode/bpel/unit-test.wsdl"
+         xmlns:resp="http://ode/bpel/responder.wsdl"
+         queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+         expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+  <import location="Main.wsdl" namespace="http://ode/bpel/unit-test.wsdl"
+     importType="http://schemas.xmlsoap.org/wsdl/" />
+
+  <partnerLinks>
+    <partnerLink name="initiatorPartnerLink" partnerLinkType="test:InitiatorPartnerLinkType"
+                 myRole="me"/>
+    <partnerLink name="responderPartnerLink" partnerLinkType="resp:ResponderPartnerLinkType"
+                 partnerRole="responder" initializePartnerRole="yes"/>
+  </partnerLinks>
+
+  <variables>
+    <variable name="dummy" messageType="resp:DummyMessage"/>
+    <variable name="dummy2" messageType="resp:Dummy2Message"/>
+    <variable name="partnerEndpoint" messageType="resp:EndpointMessage"/>
+    <variable name="partnerAck" messageType="resp:AcknowledgementMessage"/>
+    <variable name="result" messageType="test:ResultMessage"/>
+<variable name="respurl"  type="xsd:string"/>
+    <!-- <variable name="wsaVar" messageType="resp:WSAEndpointMessage"/> -->
+  </variables>
+
+  <correlationSets>
+    <correlationSet name="dummyCorr" properties="test:dummyProp" />
+  </correlationSets>
+
+  <sequence>
+    <receive name="start" partnerLink="initiatorPartnerLink"
+             portType="test:DynMainPortType" operation="execute" createInstance="yes" variable="dummy"/>
+
+    <invoke name="get-endpoint" partnerLink="responderPartnerLink" portType="resp:DynResponderPortType"
+            operation="getDynamicEndpoint" inputVariable="dummy" outputVariable="partnerEndpoint">
+      <correlations>
+        <correlation set="dummyCorr" initiate="yes" pattern="request"/>
+      </correlations>
+    </invoke>
+
+    <assign>
+      <copy>
+        <!-- Partner link assignment using the value returned by previous invoke -->
+        <from>$partnerEndpoint.payload/text()</from>
+      <!--  <to variable="respurl"/>
+      </copy>
+	   <copy>
+        < Partner link assignment using the value returned by previous invoke >
+        <from>$respurl</from>-->
+        <to partnerLink="responderPartnerLink"/>
+      </copy>
+      <copy>
+        <!-- Just needed for correlation -->
+        <from>$dummy.payload</from>
+        <to variable="dummy2" part="payload"/>
+      </copy>
+    </assign>
+
+    <!-- Invoking the partner link service endpoint that has just been assigned -->
+    <invoke name="dynamic-invoke" partnerLink="responderPartnerLink" portType="resp:DynResponderPortType"
+            operation="acknowledge" inputVariable="dummy2" outputVariable="partnerAck">
+      <correlations>
+        <correlation set="dummyCorr" initiate="no" pattern="request"/>
+      </correlations>
+    </invoke>
+
+    <!-- Playing around with epr conversion (url to wsa) -->
+    <assign>
+      <copy>
+        <from>
+          <literal>http://localhost:9763/services/DynResponderService</literal>
+        </from>
+        <to partnerLink="responderPartnerLink"/>
+      </copy>
+      <copy>
+        <from>
+          <literal>
+            <sref:service-ref>
+              <soap:address location="http://localhost:9763/services/DynResponderService"/>
+            </sref:service-ref>
+          </literal>
+        </from>
+        <to partnerLink="responderPartnerLink"/>
+      </copy>
+<!--
+      <copy>
+        <from partnerLink="responderPartnerLink" endpointReference="partnerRole"/>
+        <to variable="wsaVar" part="payload"/>
+      </copy>
+      <copy>
+        <from variable="wsaVar" part="payload"/>
+        <to partnerLink="responderPartnerLink"/>
+      </copy>
+-->
+    </assign>
+
+    <!-- Invoking the partner link service endpoint that has just been explicitly assigned -->
+    <invoke name="dynamic-invoke" partnerLink="responderPartnerLink" portType="resp:DynResponderPortType"
+            operation="acknowledge" inputVariable="dummy2" outputVariable="partnerAck">
+      <correlations>
+        <correlation set="dummyCorr" initiate="no" pattern="request"/>
+      </correlations>
+    </invoke>
+
+    <assign>
+      <copy>
+        <from variable="partnerAck" part="payload"/>
+        <to variable="result" part="ack"/>
+      </copy>
+    </assign>
+
+    <reply name="end" partnerLink="initiatorPartnerLink"
+           portType="test:DynMainPortType" operation="execute" variable="result">
+    </reply>
+
+  </sequence>
+</process>

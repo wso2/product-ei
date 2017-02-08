@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:sample="http://wso2.org/bps/sample" xmlns:userservice="http://ode/bpel/test/userservice">
+  <process name="sample:UserRestProcess">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="sample:UserRestProcess" port="UserRestProcessPort"/>
+    </provide>
+    <invoke partnerLink="RestProcessPutPL">
+      <service name="userservice:UserServicePut" port="UserServicePutHTTP"/>
+    </invoke>
+    <invoke partnerLink="RestProcessPostPL">
+      <service name="userservice:UserServicePost" port="UserServicePostHTTP"/>
+    </invoke>
+    <invoke partnerLink="RestProcessGetPL">
+      <service name="userservice:UserServiceGet" port="UserServiceGetHTTP"/>
+    </invoke>
+    <invoke partnerLink="RestProcessDeletePL">
+      <service name="userservice:UserServiceDelete" port="UserServiceDeleteHTTP"/>
+    </invoke>
+  </process>
+</deploy>
