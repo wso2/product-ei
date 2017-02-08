@@ -72,7 +72,7 @@ public class JsonStreamFormatter implements MessageFormatter {
             if (Utils.isDataService(messageContext)) {
                 return (byte[]) axis2GsonFormatterGetBytesMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat);
             } else {
-                return (byte[]) synapseFormatterGetBytesMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat);
+                return (byte[]) synapseFormatterGetBytesMethod.invoke(synapseFormatter, messageContext, omOutputFormat);
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
