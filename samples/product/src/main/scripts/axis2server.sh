@@ -81,16 +81,11 @@ fi
 
 # update classpath
 AXIS2_CLASSPATH="$AXIS2_HOME/../../lib"
-for f in "$AXIS2_HOME"/../../wso2/components/plugins/*.jar
+for f in "$AXIS2_HOME"/../../wso2/components/plugins/org.wso2.ei*.jar
 do
-  syn_mod=`ls $f | grep org.apache.synapse.module`
-  wss4j_mod=`ls $f | grep wss4j`  
-  if [ ! -e "$syn_mod" ]; then
-    if [ ! -e "$wss4j_mod" ]; then
-        AXIS2_CLASSPATH="$AXIS2_CLASSPATH":$f
-    fi
-  fi
+  AXIS2_CLASSPATH="$AXIS2_CLASSPATH":$f
 done
+
 for f in "$AXIS2_HOME"/../../wso2/lib/*.jar
 do
   AXIS2_CLASSPATH="$AXIS2_CLASSPATH":$f
@@ -185,6 +180,5 @@ fi
 
 cd "$AXIS2_HOME"
 $JAVACMD -Dcarbon.home="$AXIS2_HOME/../../" $PROGRAM_PARAMS -Djava.io.tmpdir="$AXIS2_HOME/../../wso2/tmp/" \
- -Djava.endorsed.dirs="$AXIS2_ENDORSED" -Dhttp.socket.reuseaddr="true" -classpath "$AXIS2_CLASSPATH" samples.util.SampleAxis2Server \
+ -Djava.endorsed.dirs="$AXIS2_ENDORSED" -Dcarbon.components.dir.path="$AXIS2_HOME/../../wso2/components/plugins/" -Dhttp.socket.reuseaddr="true" -classpath "$AXIS2_CLASSPATH" samples.util.SampleAxis2Server \
  -repo "$AXIS2_HOME/repository" -conf "$AXIS2_HOME/repository/conf/axis2.xml"
-

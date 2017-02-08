@@ -50,6 +50,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -222,8 +223,13 @@ public class Utils {
     }
 
     public static boolean isDataService(org.apache.axis2.context.MessageContext messageContext) {
-        String filePath = messageContext.getAxisService().getFileName().getPath();
-        return filePath.contains("dataservices");
+        URL file = messageContext.getAxisService().getFileName();
+        if (file != null) {
+            String filePath = file.getPath();
+            return filePath.contains("dataservices");
+        } else {
+            return false;
+        }
     }
 
     /**
