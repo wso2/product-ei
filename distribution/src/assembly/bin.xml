@@ -808,6 +808,13 @@
             </includes>
         </fileSet>
         <fileSet>
+            <directory>./src/resources</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lib/</outputDirectory>
+            <includes>
+                <include>esapi-2.0.1.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>./src/resources/reports</directory>
             <outputDirectory>wso2ei-${pom.version}/repository/resources/reports</outputDirectory>
             <includes>
