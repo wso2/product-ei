@@ -22,10 +22,14 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.automation.engine.FrameworkConstants;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.exceptions.AutomationFrameworkException;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.extensions.ExtensionConstants;
+import org.wso2.carbon.integration.common.utils.FileManager;
 
 import javax.xml.xpath.XPathExpressionException;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,7 +84,16 @@ public class TestServerManager {
     public String getRuntimePath() { return runtimePath; }
 
     public void configureServer() throws AutomationFrameworkException {
-
+        log.info("Updating catalina-server.xml for product EI");
+        String catalinaResourcePath = Paths.get(FrameworkPathUtil.getSystemResourceLocation(), "tomcat",
+                                                "catalina-server.xml").toString();
+        String eiConfDir = Paths.get(carbonHome, "conf").toString();
+        try {
+            FileManager.copyFile(Paths.get(catalinaResourcePath).toFile(), Paths.get(eiConfDir, "tomcat",
+                                                                                     "catalina-server.xml").toString());
+        } catch (IOException e) {
+            throw new AutomationFrameworkException(e.getMessage(), e);
+        }
     }
 
 
