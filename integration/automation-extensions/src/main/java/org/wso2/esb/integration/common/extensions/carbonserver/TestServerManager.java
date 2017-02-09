@@ -92,7 +92,7 @@ public class TestServerManager {
             FileManager.copyFile(Paths.get(catalinaResourcePath).toFile(), Paths.get(eiConfDir, "tomcat",
                                                                                      "catalina-server.xml").toString());
         } catch (IOException e) {
-            throw new AutomationFrameworkException(e.getMessage(), e);
+            log.warn("IOException while copying catalina-server.xml. Proceeding without copying catalina-server.xml");
         }
     }
 
