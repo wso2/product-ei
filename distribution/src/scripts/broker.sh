@@ -1,5 +1,5 @@
 #!/bin/sh
-#start-all.sh
+# broker.sh
 # ----------------------------------------------------------------------------
 #  Copyright 2016 WSO2, Inc. http://www.wso2.org
 #
@@ -55,32 +55,18 @@ PRGDIR=`dirname "$PRG"`
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
 ###########################################################################
-NAME=start-all
+NAME=start-broker
 # Daemon name, where is the actual executable
-EI_INIT_SCRIPT="$CARBON_HOME/bin/integrator.sh"
-ANALYTICS_INIT_SCRIPT="$CARBON_HOME/wso2/analytics/bin/wso2server.sh"
-BPS_INIT_SCRIPT="$CARBON_HOME/wso2/business-process/bin/wso2server.sh"
 BROKER_INIT_SCRIPT="$CARBON_HOME/wso2/broker/bin/wso2server.sh"
 
 # If the daemon is not there, then exit.
 
-if [ ! -z "$*" ]; then
-    exit;
-else
-    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" INT TERM
-fi
-sh $EI_INIT_SCRIPT $* &
-sleep 10
-sh $ANALYTICS_INIT_SCRIPT -Dprofile="analytics-default" $* &
-sleep 10
-sh $BPS_INIT_SCRIPT -Dprofile="business-process-default" $* &
-sleep 10
-sh $BROKER_INIT_SCRIPT -Dprofile="broker-default" $* &
+sh $BROKER_INIT_SCRIPT $* &
 
 if [ ! -z "$*" ]; then
     exit;
 else
-    trap "sh $CARBON_HOME/bin/stop-all.sh; exit;" INT TERM
+    trap "sh $BROKER_INIT_SCRIPT stop; exit;" INT TERM
     while :
     do
             sleep 60
