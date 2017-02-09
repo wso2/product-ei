@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <localEntry key="transform-xslt-key" src="file:repository/samples/resources/smooks/transform.xslt"/>
+
+    <localEntry key="smooks-key" src="file:repository/samples/resources/smooks/smooks-config.xml"/>
+
+    <proxy name="StockQuoteProxy" transports="vfs">
+        <parameter name="transport.vfs.ContentType">text/plain</parameter>
+        <!--CHANGE-->
+        <parameter name="transport.vfs.FileURI">file:///home/supun/dev/test/smooks/in</parameter>
+        <parameter name="transport.vfs.ContentType">text/plain</parameter>
+        <parameter name="transport.vfs.FileNamePattern">.*\.txt</parameter>
+        <parameter name="transport.PollInterval">5</parameter>
+        <!--CHANGE-->
+        <parameter name="transport.vfs.MoveAfterProcess">file:///home/supun/dev/test/smooks/original</parameter>
+        <!--CHANGE-->
+        <parameter name="transport.vfs.MoveAfterFailure">file:///home/supun/dev/test/smooks/original</parameter>
+        <parameter name="transport.vfs.ActionAfterProcess">MOVE</parameter>
+        <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
+        <parameter name="Operation">urn:placeOrder</parameter>
+        <target>
+            <inSequence>
+                <smooks config-key="smooks-key">
+                    <input type="text"/>
+                    <output type="xml"/>
+                </smooks>
+                <xslt key="transform-xslt-key"/>
+                <log level="full"/>
+                <!--<property name="ContentType" value="text/xml" scope="axis2-client"/>-->
+                <!--<property name="messageType" value="text/xml" scope="axis2"/>-->
+                <iterate expression="//m0:placeOrder/m0:order" preservePayload="true" attachPath="//m0:placeOrder" xmlns:m0="http://services.samples">
+                    <target>
+                        <sequence>
+                            <header name="Action" value="urn:placeOrder"/>
+                            <property action="set" name="OUT_ONLY" value="true"/>
+                            <send>
+                                <endpoint>
+                                    <address format="soap11"
+                                             uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+            </inSequence>
+            <outSequence/>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/smooks/PlaceStockOrder.wsdl"/>
+    </proxy>
+
+</definitions>

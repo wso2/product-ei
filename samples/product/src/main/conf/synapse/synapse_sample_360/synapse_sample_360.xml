@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Introduction to dblookp mediator -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="myFaultHandler">
+        <makefault response="true">
+            <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+            <reason expression="get-property('ERROR_MESSAGE')"/>
+        </makefault>
+        <send/>
+        <drop/>
+    </sequence>
+
+    <sequence name="main" onError="myFaultHandler">
+        <in>
+            <log level="custom">
+                <property name="text" value="** Looking up from the Database **"/>
+            </log>
+            <dblookup>
+                <connection>
+                    <pool>
+                        <driver>org.apache.derby.jdbc.ClientDriver</driver>
+                        <url>jdbc:derby://localhost:1527/esbdb;create=false</url>
+                        <user>esb</user>
+                        <password>esb</password>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql>select * from company where name =?</sql>
+                    <parameter xmlns:m0="http://services.samples" expression="//m0:getQuote/m0:request/m0:symbol"
+                               type="VARCHAR"/>
+                    <result name="company_id" column="id"/>
+                </statement>
+            </dblookup>
+
+            <switch source="get-property('company_id')">
+                <case regex="c1">
+                    <log level="custom">
+                        <property name="text" expression="fn:concat('Company ID - ',get-property('company_id'))"/>
+                    </log>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="c2">
+                    <log level="custom">
+                        <property name="text" expression="fn:concat('Company ID - ',get-property('company_id'))"/>
+                    </log>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="c3">
+                    <log level="custom">
+                        <property name="text" expression="fn:concat('Company ID - ',get-property('company_id'))"/>
+                    </log>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <default>
+                    <log level="custom">
+                        <property name="text" value="** Unrecognized Company ID **"/>
+                    </log>
+                    <makefault response="true">
+                        <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                        <reason value="** Unrecognized Company ID **"/>
+                    </makefault>
+                    <send/>
+                    <drop/>
+                </default>
+            </switch>
+            <drop/>
+        </in>
+
+        <out>
+            <send/>
+        </out>
+
+    </sequence>
+
+</definitions>

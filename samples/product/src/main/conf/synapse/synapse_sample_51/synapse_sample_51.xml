@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- MTOM and SwA optimizations and request/response correlation -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="main">
+        <in>
+            <filter source="get-property('Action')" regex="urn:uploadFileUsingMTOM">
+                <property name="example" value="mtom"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/MTOMSwASampleService" optimize="mtom"/>
+                    </endpoint>
+                </send>
+            </filter>
+            <filter source="get-property('Action')" regex="urn:uploadFileUsingSwA">
+                <property name="example" value="swa"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/MTOMSwASampleService" optimize="swa"/>
+                    </endpoint>
+                </send>
+            </filter>
+        </in>
+        <out>
+            <filter source="get-property('example')" regex="mtom">
+                <property name="enableMTOM" value="true" scope="axis2"/>
+            </filter>
+            <filter source="get-property('example')" regex="swa">
+                <property name="enableSwA" value="true" scope="axis2"/>
+            </filter>
+            <send/>
+        </out>
+    </sequence>
+
+</definitions>
