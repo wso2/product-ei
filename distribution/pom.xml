@@ -261,172 +261,99 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <echo message="######## Creating BPEL / HumanTask Archives. #########"/>
-                                <property name="tempdir" value="target/samples"/>
-                                <property name="bpelSampleDir" value="target/samples/bpel"/>
-                                <property name="humantaskSampleDir"
-                                          value="target/samples/humantask"/>
-                                <property name="bpmnSampleDir" value="target/samples/bpmn"/>
-                                <property name="bpmnSampleJars" value="target/samples/bpmn-sample-jars"/>
-                                <mkdir dir="${tempdir}"/>
-                                <mkdir dir="${bpelSampleDir}"/>
-                                <mkdir dir="${humantaskSampleDir}"/>
-                                <mkdir dir="${bpmnSampleJars}"/>
-                                <mkdir dir="${bpmnSampleDir}"/>
-                                <zip destfile="target/samples/bpel/CustomerInfo.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CustomerInfo"/>
-                                <zip destfile="target/samples/bpel/LoanProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/LoanProcess"/>
-                                <zip destfile="target/samples/bpel/LoanService.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/LoanService"/>
-                                <zip destfile="target/samples/bpel/AttachmentHandlingProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess"/>
-                                <zip destfile="target/samples/bpel/CreditRating.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CreditRating"/>
-                                <zip destfile="target/samples/bpel/CleanUpSample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CleanUpSample"/>
-                                <zip destfile="target/samples/bpel/FlexibleAssign.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/FlexibleAssign"/>
-                                <zip destfile="target/samples/bpel/helloHeaderSample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/helloHeaderSample"/>
-                                <zip destfile="target/samples/bpel/HelloWorld2.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/HelloWorld2"/>
-                                <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/MyRoleMexTestProcess"/>
-                                <zip destfile="target/samples/bpel/RPCClientProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RPCClientProcess"/>
-                                <zip destfile="target/samples/bpel/RPCServiceProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RPCServiceProcess"/>
-                                <zip destfile="target/samples/bpel/FlightReservationProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleCompensationHandlers/FlightReservationProcess/"/>
-                                <zip destfile="target/samples/bpel/SampleEventHandler.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleEventHandlers"/>
-                                <zip destfile="target/samples/bpel/AdderProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/AdderProcess/"/>
-                                <zip destfile="target/samples/bpel/DivisionProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/DivisionProcess/"/>
-                                <zip destfile="target/samples/bpel/FaultHandlingSample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/FaultHandlingSample/"/>
-                                <zip destfile="target/samples/bpel/Async-Client.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client/"/>
-                                <zip destfile="target/samples/bpel/Async-Server.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server/"/>
-                                <zip destfile="target/samples/bpel/SecurePartnerBPEL.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SecurePartnerBPEL"/>
-                                <zip destfile="target/samples/bpel/Alarm.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/Alarm"/>
-                                <zip destfile="target/samples/bpel/AssignActivity.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AssignActivity"/>
-                                <zip destfile="target/samples/bpel/AssignDate.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AssignDate"/>
-                                <zip destfile="target/samples/bpel/CombineUrl.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CombineUrl"/>
-                                <zip destfile="target/samples/bpel/ComposeUrl.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ComposeUrl"/>
-                                <zip destfile="target/samples/bpel/CorrelationUnique.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CorrelationUnique"/>
-                                <zip destfile="target/samples/bpel/CorrelationWithAttribute.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CorrelationWithAttribute"/>
-                                <zip destfile="target/samples/bpel/E4XDirect.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/E4XDirect"/>
-                                <zip destfile="target/samples/bpel/ExpandTemplate.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ExpandTemplate"/>
-                                <zip destfile="target/samples/bpel/FlowLinks.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/FlowLinks"/>
-                                <zip destfile="target/samples/bpel/ForEach.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ForEach"/>
-                                <zip destfile="target/samples/bpel/IfCondition.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/IfCondition"/>
-                                <zip destfile="target/samples/bpel/IgnoreMissingFromData.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/IgnoreMissingFromData"/>
-                                <zip destfile="target/samples/bpel/PickOneWay.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/PickOneWay"/>
-                                <zip destfile="target/samples/bpel/ProcessProperties.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ProcessProperties"/>
-                                <zip destfile="target/samples/bpel/PubSubInProc.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/PubSubInProc"/>
-                                <zip destfile="target/samples/bpel/RepeatUntil.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RepeatUntil"/>
-                                <zip destfile="target/samples/bpel/RESTProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RESTProcess"/>
-                                <zip destfile="target/samples/bpel/Split.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/Split"/>
-                                <zip destfile="target/samples/bpel/ThrowCatchFaultHandling.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ThrowCatchFaultHandling"/>
-                                <zip destfile="target/samples/bpel/While.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/While"/>
-                                <zip destfile="target/samples/bpel/XslTransform.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/XslTransform"/>
-                                <zip destfile="target/samples/bpel/ClaimsApprovalProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ClaimsApprovalProcess"/>
-                                <zip destfile="target/samples/bpel/DynPartner.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/DynPartner"/>
-                                <zip destfile="target/samples/bpel/XMLAttributeProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/XMLAttributeProcess"/>
-                                <zip destfile="target/samples/bpel/Async-Server.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server"/>
-                                <zip destfile="target/samples/bpel/Async-Client.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client"/>
-                                <zip destfile="target/samples/bpel/SecuredWithServiceDescriptorProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SecuredWithServiceDescriptorProcess"/>
-                                <zip destfile="target/samples/bpel/KPISample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/KPISample"/>
-                                <zip destfile="target/samples/bpel/AdminServiceInvokeSample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AdminServiceInvokeSample"/>
-                                <zip destfile="target/samples/bpel/AbstractHeaderSample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AbstractHeaderSample"/>
-                                <zip destfile="target/samples/bpel/SoapHeaderBasedCorrelationSample.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SoapHeaderBasedCorrelation"/>
-                                <zip destfile="target/samples/bpel/UserRestProcess.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/UserRestProcess"/>
+                                <echo message="######## Creating BPEL / HumanTask Archives. #########" />
+                                <property name="tempdir" value="target/samples" />
+                                <property name="bpelSampleDir" value="target/samples/bpel" />
+                                <property name="humantaskSampleDir" value="target/samples/humantask" />
+                                <property name="bpmnSampleDir" value="target/samples/bpmn" />
+                                <property name="bpmnSampleJars" value="target/samples/bpmn-sample-jars" />
+                                <mkdir dir="${tempdir}" />
+                                <mkdir dir="${bpelSampleDir}" />
+                                <mkdir dir="${humantaskSampleDir}" />
+                                <mkdir dir="${bpmnSampleJars}" />
+                                <mkdir dir="${bpmnSampleDir}" />
+                                <zip destfile="target/samples/bpel/CustomerInfo.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CustomerInfo" />
+                                <zip destfile="target/samples/bpel/LoanProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/LoanProcess" />
+                                <zip destfile="target/samples/bpel/LoanService.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/LoanService" />
+                                <zip destfile="target/samples/bpel/AttachmentHandlingProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess" />
+                                <zip destfile="target/samples/bpel/CreditRating.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CreditRating" />
+                                <zip destfile="target/samples/bpel/CleanUpSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CleanUpSample" />
+                                <zip destfile="target/samples/bpel/FlexibleAssign.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/FlexibleAssign" />
+                                <zip destfile="target/samples/bpel/helloHeaderSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/helloHeaderSample" />
+                                <zip destfile="target/samples/bpel/HelloWorld2.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/HelloWorld2" />
+                                <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/MyRoleMexTestProcess" />
+                                <zip destfile="target/samples/bpel/RPCClientProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RPCClientProcess" />
+                                <zip destfile="target/samples/bpel/RPCServiceProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RPCServiceProcess" />
+                                <zip destfile="target/samples/bpel/FlightReservationProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleCompensationHandlers/FlightReservationProcess/" />
+                                <zip destfile="target/samples/bpel/SampleEventHandler.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleEventHandlers" />
+                                <zip destfile="target/samples/bpel/AdderProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/AdderProcess/" />
+                                <zip destfile="target/samples/bpel/DivisionProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/DivisionProcess/" />
+                                <zip destfile="target/samples/bpel/FaultHandlingSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/FaultHandlingSample/" />
+                                <zip destfile="target/samples/bpel/Async-Client.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client/" />
+                                <zip destfile="target/samples/bpel/Async-Server.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server/" />
+                                <zip destfile="target/samples/bpel/SecurePartnerBPEL.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SecurePartnerBPEL" />
+                                <zip destfile="target/samples/bpel/Alarm.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/Alarm" />
+                                <zip destfile="target/samples/bpel/AssignActivity.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AssignActivity" />
+                                <zip destfile="target/samples/bpel/AssignDate.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AssignDate" />
+                                <zip destfile="target/samples/bpel/CombineUrl.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CombineUrl" />
+                                <zip destfile="target/samples/bpel/ComposeUrl.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ComposeUrl" />
+                                <zip destfile="target/samples/bpel/CorrelationUnique.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CorrelationUnique" />
+                                <zip destfile="target/samples/bpel/CorrelationWithAttribute.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CorrelationWithAttribute" />
+                                <zip destfile="target/samples/bpel/E4XDirect.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/E4XDirect" />
+                                <zip destfile="target/samples/bpel/ExpandTemplate.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ExpandTemplate" />
+                                <zip destfile="target/samples/bpel/FlowLinks.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/FlowLinks" />
+                                <zip destfile="target/samples/bpel/ForEach.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ForEach" />
+                                <zip destfile="target/samples/bpel/IfCondition.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/IfCondition" />
+                                <zip destfile="target/samples/bpel/IgnoreMissingFromData.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/IgnoreMissingFromData" />
+                                <zip destfile="target/samples/bpel/PickOneWay.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/PickOneWay" />
+                                <zip destfile="target/samples/bpel/ProcessProperties.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ProcessProperties" />
+                                <zip destfile="target/samples/bpel/PubSubInProc.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/PubSubInProc" />
+                                <zip destfile="target/samples/bpel/RepeatUntil.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RepeatUntil" />
+                                <zip destfile="target/samples/bpel/RESTProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RESTProcess" />
+                                <zip destfile="target/samples/bpel/Split.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/Split" />
+                                <zip destfile="target/samples/bpel/ThrowCatchFaultHandling.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ThrowCatchFaultHandling" />
+                                <zip destfile="target/samples/bpel/While.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/While" />
+                                <zip destfile="target/samples/bpel/XslTransform.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/XslTransform" />
+                                <zip destfile="target/samples/bpel/ClaimsApprovalProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ClaimsApprovalProcess" />
+                                <zip destfile="target/samples/bpel/DynPartner.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/DynPartner" />
+                                <zip destfile="target/samples/bpel/XMLAttributeProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/XMLAttributeProcess" />
+                                <zip destfile="target/samples/bpel/Async-Server.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server" />
+                                <zip destfile="target/samples/bpel/Async-Client.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client" />
+                                <zip destfile="target/samples/bpel/SecuredWithServiceDescriptorProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SecuredWithServiceDescriptorProcess" />
+                                <zip destfile="target/samples/bpel/KPISample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/KPISample" />
+                                <zip destfile="target/samples/bpel/AdminServiceInvokeSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AdminServiceInvokeSample" />
+                                <zip destfile="target/samples/bpel/AbstractHeaderSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AbstractHeaderSample" />
+                                <zip destfile="target/samples/bpel/SoapHeaderBasedCorrelationSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SoapHeaderBasedCorrelation" />
+                                <zip destfile="target/samples/bpel/UserRestProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/UserRestProcess" />
                                 <!--  Copying Human Tasks Sample -->
 
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTask.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTask"/>
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithHTRenderings.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithHTRenderings"/>
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithMultipleDomains.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithMultipleDomains"/>
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithDeadline.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithDeadline"/>
-                                <zip destfile="target/samples/humantask/HTWithServiceDescriptorANDUnifiedEndpoint.zip"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint"/>
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTask.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTask" />
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithHTRenderings.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithHTRenderings" />
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithMultipleDomains.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithMultipleDomains" />
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithDeadline.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithDeadline" />
+                                <zip destfile="target/samples/humantask/HTWithServiceDescriptorANDUnifiedEndpoint.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint" />
                                 <!--  Copying BPMN sample -->
                                 <!-- copy compiled jars of Service tasks target-->
                                 <copy todir="target/samples/bpmn-jar/">
                                     <fileset dir="${basedir}/../samples/business-process-samples/product/bpmn-sample-jars/target">
-                                        <include name="**/*.jar"/>
+                                        <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
 
-                                <zip destfile="target/samples/bpmn/SimpleCalculator.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/SimpleCalculator"/>
-                                <zip destfile="target/samples/bpmn/HelloWorld.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/HelloWorld"/>
-                                <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderDeliveryProcess"/>
-                                <zip destfile="target/samples/bpmn/LoanApprovalProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/LoanApprovalProcess"/>
-                                <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderApprovalProcess"/>
-                                <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/TrainTicketValidationProcess"/>
-                                <zip destfile="target/samples/bpmn/VacationRequestProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/VacationRequestProcess"/>
-                                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/CreditApprovalProcess"/>
-                                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/PizzaOrderProcess"/>
-                                <zip destfile="target/samples/bpmn/BuyProduct.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/BuyProduct"/>
-                                <zip destfile="target/samples/bpmn/UserTaskCreatorProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/UserTaskCreatorProcess"/>
-                                <zip destfile="target/samples/bpmn/XMLVariableTypeUsageProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/XMLVariableTypeUsageProcess"/>
-                                <zip destfile="target/samples/bpmn/JSONVariableTypeUsageProcess.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/JSONVariableTypeUsageProcess"/>
-                                <zip destfile="target/samples/bpmn/RestClient.bar"
-                                     basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/RestClient"/>
+                                <zip destfile="target/samples/bpmn/SimpleCalculator.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/SimpleCalculator" />
+                                <zip destfile="target/samples/bpmn/HelloWorld.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/HelloWorld" />
+                                <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderDeliveryProcess" />
+                                <zip destfile="target/samples/bpmn/LoanApprovalProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/LoanApprovalProcess" />
+                                <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderApprovalProcess" />
+                                <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/TrainTicketValidationProcess" />
+                                <zip destfile="target/samples/bpmn/VacationRequestProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/VacationRequestProcess" />
+                                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/CreditApprovalProcess" />
+                                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/PizzaOrderProcess" />
+                                <zip destfile="target/samples/bpmn/BuyProduct.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/BuyProduct" />
+                                <zip destfile="target/samples/bpmn/UserTaskCreatorProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/UserTaskCreatorProcess" />
+                                <zip destfile="target/samples/bpmn/XMLVariableTypeUsageProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/XMLVariableTypeUsageProcess" />
+                                <zip destfile="target/samples/bpmn/JSONVariableTypeUsageProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/JSONVariableTypeUsageProcess" />
+                                <zip destfile="target/samples/bpmn/RestClient.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/RestClient" />
                             </tasks>
                         </configuration>
                     </execution>
