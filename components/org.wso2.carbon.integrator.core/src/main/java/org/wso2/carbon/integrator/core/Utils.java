@@ -22,7 +22,6 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axis2.context.ConfigurationContext;
-import org.apache.axis2.description.Parameter;
 import org.apache.axis2.util.XMLUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseConstants;
@@ -47,7 +46,6 @@ import org.wso2.carbon.webapp.mgt.utils.WebAppUtils;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -262,6 +260,7 @@ public class Utils {
                 port = tmp[2].substring(0, tmp[2].indexOf("/"));
             }
             String oldEndpoint = protocol + "://" + host + ":" + port;
+            // In this block we check whether this endpoint is already known endpoint.
             if (EndpointHolder.getInstance().containsEndpoint(oldEndpoint)) {
                 location = location.replace(port, newPort);
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");

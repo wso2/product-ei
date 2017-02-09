@@ -54,6 +54,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
             Object isApi = messageContext.getProperty("SYNAPSE_REST_API");
             Object isProxy = messageContext.getProperty("proxy.name");
+            // In this if block we are skipping proxy services, inbound related message contexts & api.
             if (axis2MessageContext.getProperty("TransportInURL") != null && isApi == null && isProxy == null) {
                 String uri = axis2MessageContext.getProperty("TransportInURL").toString();
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
@@ -61,15 +62,18 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
                     host = "localhost";
+                    //In this if block we whitelist carbon related requests (Management Console)
                     if (validateWhiteListsWithUri(uri)) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
                         return dispatchMessage(endpoint, uri, messageContext);
+                        //In this if block we check stateful axis2 Services
                     } else if (axis2MessageContext.getProperty("raplacedAxisService") != null) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
                         return dispatchMessage(endpoint, uri, messageContext);
                     } else {
+                        //In this if block we are check webapps for tenants and super tenants
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
                         if (tenantDomain != null) {
                             WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
@@ -96,7 +100,14 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         } finally {
             if (isPreserveHeadersContained) {
                 if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
-                    passThroughSenderManager.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                    try {
+                        passThroughSenderManager.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                        // This catch is added when there is no preserve headers in the PassthoughHttpSender.
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("ArrayIndexOutOfBoundsException exception occurred, when removing preserve headers.");
+                        }
+                    }
                 }
             }
         }
@@ -109,6 +120,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleResponseInFlow(MessageContext messageContext) {
+        // In here, We are rewriting the location header which comes from the particular registered endpoints.
         Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
         if (headers instanceof TreeMap) {
             String locationHeader = (String) ((TreeMap) headers).get("Location");
@@ -141,9 +153,25 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         }
     }
 
+    /**
+     * In this method we are dispatching the message to tomcat transport.
+     *
+     * @param endpoint       Endpoint
+     * @param uri            uri
+     * @param messageContext message context
+     * @return boolean
+     */
     private boolean dispatchMessage(String endpoint, String uri, MessageContext messageContext) {
+        // Adding preserver Headers
         if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
-            passThroughSenderManager.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+            try {
+                passThroughSenderManager.getSharedPassThroughHttpSender().addPreserveHttpHeader(HTTP.USER_AGENT);
+                // This catch is added when there is no preserve headers in the PassthoughHttpSender.
+            } catch (ArrayIndexOutOfBoundsException e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("ArrayIndexOutOfBoundsException exception occurred, when adding preserve headers.");
+                }
+            }
         }
         if (log.isDebugEnabled()) {
             log.debug("Dispatching message to " + uri);
