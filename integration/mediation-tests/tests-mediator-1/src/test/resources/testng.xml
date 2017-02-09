@@ -72,11 +72,41 @@
 
 
     <test name="Call-mediator-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mediator.test.call"/>
-        </packages>
         <classes>
-           <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
+            <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorAPIWithNamedSeqCase"/>-->
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingDirectEndpointTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingFilterTestCase"/>
+            <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingInboundOutboundPolicySecurityTestCase"/>-->
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingIndirectEndpointTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingInTemplateTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingProxyWithNamedSeqCase"/>
+            <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingSecurityTestCase"/>-->
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingSwitchTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingTransportHeaderTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingWSDLEndpointTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFaultHandlingTests"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFaultTriggerTestCase"/>
+            <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInAPITestCase"/>-->
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInBothProxyInAndOutSequencesTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInCloneTargetSequencesTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInCloneTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInFaultSeqTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInFilterTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInIterateTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInMainScenario2TestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInMainTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInNestedFilterSwitchScenario2TestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInNestedFilterSwitchTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInNestedFilterTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInSwitchTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInTemplateTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorLoadBalanceFailoverTest"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorOutOnlyTestCase"/>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorProxyWithNamedSeqCase"/>
+           <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA4469CallMediatorWithOutOnlyTestCase"/>
+
+<!--            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
                 <methods>
                     <exclude name=".*" />
                 </methods>
@@ -100,7 +130,7 @@
                 <methods>
                     <exclude name=".*" />
                 </methods>
-            </class>
+            </class>&ndash;&gt;-->
         </classes>
     </test>
 
@@ -123,12 +153,14 @@
     </test>
 
     <test name="Message-Store-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.message.store.test"/>
-            <!-- The following test package is commented, since it needs
-                org.wso2.carbon.automation.test.utils - 4.3.2-SNAPSHOT
-            <package name="org.wso2.carbon.esb.message.store.jdbc.test"/>-->
-        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.message.store.test.JMSEndpointSuspensionViaVFSTest"/>
+            <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageCleaningTestCase"/>
+            <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageConcurrencyTestCase"/>
+            <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageDeleteTestCase"/>
+            <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageStoringTestCase"/>
+            <class name="org.wso2.carbon.esb.message.store.test.MessageStorePersistenceTestCase"/>
+        </classes>
     </test>
 
     <test name="Enrich-mediator-Test" preserve-order="true" verbose="2">
