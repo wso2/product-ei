@@ -81,18 +81,25 @@ public class TestServerManager {
         return portOffset;
     }
 
-    public String getRuntimePath() { return runtimePath; }
+    public String getRuntimePath() {
+        return runtimePath;
+    }
 
     public void configureServer() throws AutomationFrameworkException {
-        log.info("Updating catalina-server.xml for product EI");
-        String catalinaResourcePath = Paths.get(FrameworkPathUtil.getSystemResourceLocation(), "tomcat",
-                                                "catalina-server.xml").toString();
-        String eiConfDir = Paths.get(carbonHome, "conf").toString();
+        // To run test suite we have to do some changes to the server
+        //Copying catalina-server.xml
+        copyFileToServer(Paths.get("tomcat", "catalina-server.xml").toString(), Paths.get("conf", "tomcat", "catalina-server.xml").toString());
+        //Copying integrator
+        copyFileToServer(Paths.get("bin", "integrator.sh").toString(), Paths.get("bin", "integrator.sh").toString());
+    }
+
+    private void copyFileToServer(String sourcePath, String destinationPath) {
+        log.info("Updating " + destinationPath + " for product EI");
+        String catalinaResourcePath = Paths.get(FrameworkPathUtil.getSystemResourceLocation(), sourcePath).toString();
         try {
-            FileManager.copyFile(Paths.get(catalinaResourcePath).toFile(), Paths.get(eiConfDir, "tomcat",
-                                                                                     "catalina-server.xml").toString());
+            FileManager.copyFile(Paths.get(catalinaResourcePath).toFile(), Paths.get(carbonHome, destinationPath).toString());
         } catch (IOException e) {
-            log.warn("IOException while copying catalina-server.xml. Proceeding without copying catalina-server.xml");
+            log.warn("IOException while replacing " + destinationPath);
         }
     }
 
@@ -109,11 +116,11 @@ public class TestServerManager {
      *
      * @return The CARBON_HOME
      * @throws IOException If an error occurs while copying the deployment artifacts into the
-     *                             Carbon server
+     *                     Carbon server
      */
     public String startServer()
             throws AutomationFrameworkException, IOException, XPathExpressionException {
-        if(carbonHome == null) {
+        if (carbonHome == null) {
             if (carbonZip == null) {
                 carbonZip = System.getProperty(FrameworkConstants.SYSTEM_PROPERTY_CARBON_ZIP_LOCATION);
             }
@@ -130,7 +137,7 @@ public class TestServerManager {
             this.portOffset = 0;
         }
 
-        if(commandMap.get("runtimePath") != null){
+        if (commandMap.get("runtimePath") != null) {
             this.runtimePath = commandMap.get("runtimePath");
         }
         carbonServer.startServerUsingCarbonHome(carbonHome, commandMap);
@@ -139,12 +146,13 @@ public class TestServerManager {
 
     /**
      * Restarting server already started by the method startServer
+     *
      * @throws AutomationFrameworkException
      */
     public void restartGracefully() throws AutomationFrameworkException {
-        if(carbonHome == null) {
+        if (carbonHome == null) {
             throw new AutomationFrameworkException("No Running Server found to restart. " +
-                                                   "Please make sure whether server is started");
+                    "Please make sure whether server is started");
         }
         carbonServer.restartGracefully();
     }
@@ -159,8 +167,6 @@ public class TestServerManager {
     public void stopServer() throws AutomationFrameworkException {
         carbonServer.serverShutdown(portOffset);
     }
-
-
 
 
 }
