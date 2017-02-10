@@ -72,6 +72,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -167,8 +168,7 @@ public class ESBTestCaseUtils {
 	 */
 	public OMElement loadESBSampleConfiguration(int number)
 			throws Exception {
-		String filePath = TestConfigurationProvider.getResourceLocation("ESB") +
-		                  File.separator + "samples" + File.separator + "synapse_sample_" + number + ".xml";
+		String filePath = Paths.get(TestConfigurationProvider.getResourceLocation("ESB"), "samples", "synapse_sample_" + number, "synapse_sample_" + number + ".xml").toString();
 		File configFile = new File(filePath);
 		FileInputStream inputStream = null;
 		XMLStreamReader parser = null;
