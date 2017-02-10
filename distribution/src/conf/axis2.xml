@@ -28,9 +28,6 @@
     <!-- Change this to true if you want to enable hot update of services -->
     <parameter name="hotupdate" locked="false">true</parameter>
 
-    <!--If turned on with use the Accept header of the request to determine the contentType of the response-->
-    <parameter name="httpContentNegotiation">true</parameter>
-
     <!-- Change this to true if you want to enable MTOM -->
     <parameter name="enableMTOM" locked="false">false</parameter>
     <!-- Change this to true if you want to enable SwA -->
