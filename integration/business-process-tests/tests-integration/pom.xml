@@ -21,13 +21,13 @@
 
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>integrations</artifactId>
+        <artifactId>wso2bps-integration</artifactId>
         <version>6.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wso2bps-integration</artifactId>
+    <artifactId>wso2bps-integration-tests</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 BPS - Integration Parent</name>
     <description>WSO2 Business Process Server (BPS) Integration Parent</description>
@@ -40,8 +40,9 @@
     </licenses>
 
     <modules>
-        <module>tests-common</module>
-        <module>tests-integration</module>
-        <module>tests-patches</module>
+        <module>bpel</module>
+        <module>humantasks</module>
+        <module>bpmn</module>
+        <module>taskcoordination</module>
     </modules>
 </project>
