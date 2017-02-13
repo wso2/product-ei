@@ -319,6 +319,8 @@ do
     -Dorg.terracotta.quartz.skipUpdateCheck=true \
     -Djava.security.egd=file:/dev/./urandom \
     -Dfile.encoding=UTF8 \
+    -Dskip.logging=true  \
+    -Dskip.logging.pattern=/carbon \
     -Djava.net.preferIPv4Stack=true \
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
