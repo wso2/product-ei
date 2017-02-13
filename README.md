@@ -1,10 +1,28 @@
 # WSO2 Enterprise Integrator 6.0
-Product EI is an unified distribution of WSO2 Enterprise Integrator, Application Server, Data Services Server alongside Analytics, Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of each runtime.
+WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus, Application Server and Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
-## Startup
-Starting up Enterprise Integrator can be done by invoking bin/integrator.sh or bin/integrator.bat and respective wso2server.sh or wso2server.bat files within the < EI-HOME >/wso2/analytics/bin, < EI-HOME >/wso2/business-process/bin, < EI-HOME >/wso2/broker/bin. 
+WSO2 EI simplifies integration by allowing administrators to easily configure message routing, inter-mediation,transformation, logging, task scheduling, load balancing, failover routing, event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI. These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
 
-Executing bin/start-all.sh or bin/start-all.bat performs startup of all the runtimes with respective offsets. 
+## Installation & Running
+## Running the Integrator
+1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
+2. Run integrator.sh or integrator.bat.
+3. Point your favourite browser to  https://localhost:8243/carbon
+4. Use the following username and password to login
+   username : admin
+   password : admin
+   
+## Running other runtimes individually (Analytics, Broker, Business-Process)
+1. Extract wso2ei-6.0.0.zip and go to the extracted directory.
+2. Go to wso2ei-6.0.0/wso2 directory.
+3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
+4. Execute wso2server.sh or wso2server.bat.
+3. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)
+
+## Running all runtimes (Integrator, Analytics, Broker, Business-Process)
+1. Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.
+2. Run start-all.sh or start-all.bat.
+3. Access appropriate url for the related runtime. (For example, use  https://localhost:8243/carbon for the Integrator runtime)
 
 ## Known Issues
 All the open issues pertaining to WSO2 Enterprise Integrator are reported at the following location:
