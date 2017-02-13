@@ -1579,7 +1579,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/client-lib</outputDirectory>
             <includes>
                 <include>org.wso2.andes.wso2:andes-client:jar</include>
-                <include>org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:jar</include>
+                <include>org.apache.geronimo.specs.wso2:geronimo-jms_1.1_spec:jar</include>
                 <include>org.wso2.carbon:org.wso2.carbon.event.client.stub:jar</include>
                 <include>org.wso2.carbon:org.wso2.carbon.event.client:jar</include>
                 <include>slf4j.wso2:slf4j:jar</include>
