@@ -23,6 +23,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.nio.file.Paths;
+
 import static org.testng.Assert.assertTrue;
 
 public class Sample400TestCase extends ESBIntegrationTest {
@@ -34,7 +36,8 @@ public class Sample400TestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests with continue parent=true")
     public void testContinueParentTrue() throws Exception, InterruptedException {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/samples/synapse_sample_400.xml");
+        loadESBConfigurationFromClasspath(Paths.get("artifacts", "ESB", "samples", "synapse_sample_400",
+                "synapse_sample_400.xml").toString());
         OMElement response =
                 axis2Client.sendMultipleQuoteRequest(getProxyServiceURLHttp("SplitAggregateProxy"), null, "WSO2", 4);
 
