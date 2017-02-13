@@ -948,6 +948,11 @@
                 <artifactId>jline</artifactId>
                 <version>${jline.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs.wso2</groupId>
+                <artifactId>geronimo-jms_1.1_spec</artifactId>
+                <version>${orbit.version.geronimo-jms_1.1_spec}</version>
+            </dependency>
             <!-- business-process-test-specific-->
             <dependency>
                 <groupId>org.apache.axis2.wso2</groupId>
@@ -1178,6 +1183,7 @@
         <jline.version>1.0</jline.version>
         <andes.version>3.1.13</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
+        <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
         <!-- Axis2 -->
         <axis2.wso2.version>1.6.1.wso2v20</axis2.wso2.version>
