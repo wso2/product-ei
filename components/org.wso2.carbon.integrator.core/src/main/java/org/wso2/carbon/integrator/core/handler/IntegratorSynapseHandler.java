@@ -76,7 +76,14 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                         //In this if block we are check webapps for tenants and super tenants
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
                         if (tenantDomain != null) {
-                            WebApplication webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
+                            WebApplication webApplication = null;
+                            try {
+                                webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
+                            } catch (Exception e) {
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Exception occured while loading the tenant." + e.getMessage());
+                                }
+                            }
                             if (webApplication != null) {
                                 isPreserveHeadersContained = true;
                                 String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
