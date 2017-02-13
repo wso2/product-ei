@@ -44,5 +44,6 @@
         <module>humantasks</module>
         <module>bpmn</module>
         <module>taskcoordination</module>
+        <module>reports</module>
     </modules>
 </project>
