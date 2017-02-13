@@ -31,6 +31,7 @@ import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClien
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 import static org.testng.Assert.assertTrue;
 
@@ -77,8 +78,8 @@ public class Sample254TestCase extends ESBIntegrationTest {
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
         oldSynapseConfig = synapseConfigAdminClient.getConfiguration();
 
-        File newSynapseFile = new File(getESBResourceLocation() + File.separator +
-                                       "samples" + File.separator + "synapse_sample_254.xml");
+        File newSynapseFile = Paths.get(getESBResourceLocation(),
+                "samples", "synapse_sample_254", "synapse_sample_254.xml").toFile();
 
         String synapseConfig = FileUtils.readFileToString(newSynapseFile);
 
