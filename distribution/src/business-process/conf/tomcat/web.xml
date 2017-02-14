@@ -493,6 +493,18 @@
         <mime-type>audio/x-mpeg</mime-type>
     </mime-mapping>
     <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/x-font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/x-font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/x-font-ttf</mime-type>
+    </mime-mapping>
+    <mime-mapping>
         <extension>ai</extension>
         <mime-type>application/postscript</mime-type>
     </mime-mapping>
