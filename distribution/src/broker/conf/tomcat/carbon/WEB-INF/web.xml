@@ -97,6 +97,11 @@
         </init-param>
     </filter>
 
+    <filter>
+        <filter-name>URLBasedCachePreventionFilter</filter-name>
+        <filter-class>org.wso2.carbon.ui.filters.cache.URLBasedCachePreventionFilter</filter-class>
+    </filter>
+
     <filter-mapping>
         <filter-name>HttpHeaderSecurityFilter</filter-name>
         <url-pattern>*</url-pattern>
@@ -122,6 +127,11 @@
     <filter-mapping>
         <filter-name>CSRFGuard</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>URLBasedCachePreventionFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
 
     <!-- OWASP CSRFGuard context listener used to read CSRF configuration -->
