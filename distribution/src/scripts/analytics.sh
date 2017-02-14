@@ -63,12 +63,8 @@ ANALYTICS_INIT_SCRIPT="$CARBON_HOME/wso2/analytics/bin/wso2server.sh"
 
 sh $ANALYTICS_INIT_SCRIPT $* &
 
-if [ ! -z "$*" ]; then
-    exit;
-else
-    trap "sh $ANALYTICS_INIT_SCRIPT stop; exit;" INT TERM
-    while :
-    do
-            sleep 60
-    done
-fi
+trap "sh $ANALYTICS_INIT_SCRIPT stop; exit;" INT TERM
+while :
+do
+        sleep 60
+done
