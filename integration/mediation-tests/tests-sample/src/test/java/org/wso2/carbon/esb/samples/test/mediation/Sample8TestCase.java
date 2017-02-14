@@ -27,6 +27,7 @@ import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import javax.xml.namespace.QName;
 import java.io.File;
+import java.nio.file.Paths;
 
 import static org.testng.Assert.*;
 
@@ -39,8 +40,8 @@ public class Sample8TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        File sourceFile = new File(getESBResourceLocation() + File.separator +
-                                   "samples" + File.separator + "synapse_sample_8.xml");
+        File sourceFile = Paths.get(getESBResourceLocation(),
+                "samples", "synapse_sample_8", "synapse_sample_8.xml").toFile();
 
         SynapseConfigAdminClient synapseConfigAdminClient =
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());

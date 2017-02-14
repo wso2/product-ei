@@ -28,6 +28,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 /**
  * Sample 10: Introduction to Dynamic Endpoints with the Registry
@@ -47,8 +48,8 @@ public class Sample10TestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
 
-        File sourceFile = new File(getESBResourceLocation() + File.separator +
-                                   "samples" + File.separator + "synapse_sample_10.xml");
+        File sourceFile = Paths.get(getESBResourceLocation(),
+                "samples", "synapse_sample_10", "synapse_sample_10.xml").toFile();
 
         SynapseConfigAdminClient synapseConfigAdminClient =
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
