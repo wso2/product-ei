@@ -46,7 +46,8 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
 
     @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
-        if (isStatefulService(axisService) && messageContext.getProperty("transport.http.servletRequest") == null) {
+        String uri = (String) messageContext.getProperty("TransportInURL");
+        if ((isStatefulService(axisService) || (uri != null && uri.contains("generateClient"))) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
                 messageContext.setAxisService(synapseDispatcher.findService(messageContext));
                 if (log.isDebugEnabled()) {
