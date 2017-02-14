@@ -61,7 +61,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 String host;
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
-                    host = "localhost";
+                    host =  Utils.getHostname((String) ((TreeMap) headers).get("Host"));
                     //In this if block we whitelist carbon related requests (Management Console)
                     if (validateWhiteListsWithUri(uri)) {
                         isPreserveHeadersContained = true;
