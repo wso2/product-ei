@@ -410,6 +410,9 @@
             <outputDirectory>
                 wso2ei-${pom.version}/wso2/business-process/repository/deployment/server/jaggeryapps/bpmn-explorer
             </outputDirectory>
+            <excludes>
+                <exclude>jaggery.conf</exclude>
+            </excludes>
         </fileSet>
 
         <fileSet>
@@ -417,6 +420,9 @@
             <outputDirectory>
                 wso2ei-${pom.version}/wso2/business-process/repository/deployment/server/jaggeryapps/humantask-explorer
             </outputDirectory>
+            <excludes>
+                <exclude>jaggery.conf</exclude>
+            </excludes>
         </fileSet>
 
         <fileSet>
