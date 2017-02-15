@@ -290,7 +290,7 @@
 
                                 <!--5 product bps -->
                                 <featureArtifactDef>
-                                    org.wso2.bps:org.wso2.bps.styles.feature:${bps.version}
+                                    org.wso2.ei:org.wso2.ei.business-process.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.bps:org.wso2.bps.multitenancy.dashboard.ui.feature:${bps.version}
@@ -372,8 +372,8 @@
 
                                 <!--5 Product BPS -->
                                 <feature>
-                                    <id>org.wso2.bps.styles.feature.group</id>
-                                    <version>${bps.version}</version>
+                                    <id>org.wso2.ei.business-process.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.bps.multitenancy.dashboard.ui.feature.group</id>
@@ -687,8 +687,8 @@
 
                                 <!--5 Product BPS -->
                                 <feature>
-                                    <id>org.wso2.bps.styles.feature.group</id>
-                                    <version>${bps.version}</version>
+                                    <id>org.wso2.ei.business-process.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.bps.multitenancy.dashboard.ui.feature.group</id>

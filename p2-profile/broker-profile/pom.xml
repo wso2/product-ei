@@ -155,7 +155,7 @@
                                 </featureArtifactDef>
                                 <!-- mb styles -->
                                 <featureArtifactDef>
-                                    org.wso2.mb:org.wso2.mb.styles.feature:${product.mb.version}
+                                    org.wso2.ei:org.wso2.ei.broker.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.mb:org.wso2.stratos.mb.dashboard.ui.feature:${product.mb.version}
@@ -317,8 +317,8 @@
                                 </feature>
                                 <!-- mb style -->
                                 <feature>
-                                    <id>org.wso2.mb.styles.feature.group</id>
-                                    <version>${product.mb.version}</version>
+                                    <id>org.wso2.ei.broker.styles.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                                 <!--cipher tool-->
                                 <feature>
