@@ -52,17 +52,14 @@ public class Sample650TestCase extends ESBIntegrationTest {
         super.init();
         serverManager = new ServerConfigurationManager(context);
 
-        File existingDir = new File(FrameworkPathUtil.getCarbonHome() + File.separator +
-                "repository" + File.separator
-                + "samples" + File.separator + "synapse_sample_650.xml");
+        File existingDir = new File(FrameworkPathUtil.getCarbonHome() + File.separator + "samples" + File.separator +
+                                    "synapse_sample_650.xml");
 
-        File newDir = new File( FrameworkPathUtil.getCarbonHome() + File.separator +
-                "repository" + File.separator
-                + "samples" + File.separator + "default" );
+        File newDir = new File( FrameworkPathUtil.getCarbonHome() + File.separator + "samples" + File.separator +
+                                "default" );
 
-        File targetDir = new File(FrameworkPathUtil.getCarbonHome() + File.separator +
-                "repository" + File.separator
-                + "samples" + File.separator + "synapse_sample_650.xml" + File.separator + "default");
+        File targetDir = new File(FrameworkPathUtil.getCarbonHome() + File.separator + "samples" + File.separator +
+                                  "synapse_sample_650.xml" + File.separator + "default");
 
         FileUtils.moveDirectory(existingDir, newDir);
 
