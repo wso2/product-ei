@@ -532,13 +532,13 @@
         <!-- BPEL Samples -->
         <fileSet>
             <directory>target/samples/bpel</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/repository/samples/bpel</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/business-process/bpel</outputDirectory>
         </fileSet>
 
         <!-- Human Task Samples-->
         <fileSet>
             <directory>target/samples/humantask</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/repository/samples/humantask</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/business-process/humantask</outputDirectory>
         </fileSet>
         <!-- BPMN Samples-->
         <fileSet>
@@ -553,7 +553,7 @@
 
         <fileSet>
             <directory>target/samples/bpmn</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/repository/samples/bpmn</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/business-process/bpmn</outputDirectory>
         </fileSet>
 
         <!--BPS scripts: End -->
@@ -898,7 +898,7 @@
         </fileSet>
         <fileSet>
             <directory>../samples/product/src/main/conf/synapse</directory>
-            <outputDirectory>wso2ei-${pom.version}/repository/samples</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/samples/service-bus</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
 

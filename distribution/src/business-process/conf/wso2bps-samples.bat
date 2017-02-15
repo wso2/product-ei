@@ -51,8 +51,8 @@ shift
 set cn=%1
 if "%1"=="" goto invalid_sample_name
 echo %BPS_HOME%\repository\samples\bpel\%cn%
-IF EXIST %BPS_HOME%\repository\samples\bpel\%cn% goto copy_bpel_samples
-IF EXIST %BPS_HOME%\repository\samples\humantask\%cn% goto copy_ht_samples
+IF EXIST %BPS_HOME%\..\..\..\samples\business-process\bpel\%cn% goto copy_bpel_samples
+IF EXIST %BPS_HOME%\..\..\..\samples\business-process\humantask\%cn% goto copy_ht_samples
 goto missing_sample
 
 :copy_ht_samples
