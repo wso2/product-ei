@@ -38,27 +38,45 @@
             </p>
 
             <p>
-                Product EI is an unified distribution of WSO2 Enterprise Integrator, Application Server, Data Services Server alongside Analytics,
-                Business Process and Message Broker runtimes. With the capability of shared components directory with profile based management of
-                each runtime.
+                WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus, Application Server and
+                Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for
+                WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared
+                component directory, with profile-based management capabilities for each runtime.
+            </p>
+            <p>
+                WSO2 EI simplifies integration by allowing users to easily configure message routing,
+                inter-mediation,transformation, logging, task scheduling, load balancing, failover routing,
+                event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI.
+                These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
             </p>
 
 
-            <h2>How to Run </h2>
+            <h2>Installation and Running </h2>
+            <h3>Running the Integrator</h3>
             <ol>
-                <li>Extract the downloaded zip</li>
+                <li>Extract the downloaded wso2ei-6.0.0.zip</li>
                 <li>Go to the bin directory in the extracted folder</li>
                 <li>Run the integrator.sh or integrator.bat as appropriate</li>
-                <li>Point your browser to the URL https://localhost:9443/carbon</li>
+                <li>Point your browser to the URL https://localhost:8243/carbon</li>
                 <li>Use "admin", "admin" as the username and password to login as an admin</li>
                 <li>If you need to start the OSGi console with the server use the property
                     -DosgiConsole when starting the server.</li>
             </ol>
+            <h3>Running other runtimes individually (Analytics, Broker, Business-Process)</h3>
+            <ol>
+                <li>Extract wso2ei-6.0.0.zip and go to the extracted directory.</li>
+                <li>Go to wso2ei-6.0.0/wso2 directory.</li>
+                <li>Go to appropriate runtime directory (analytics/broker/business-process) /bin.</li>
+                <li> Execute wso2server.sh or wso2server.bat.</li>
+                <li>Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)</li>
+            </ol>
 
-            <h2>Enhancements in WSO2 EI 6.0.0</h2>
-			<ul>
-
-            </ul>
+            <h3>Running all runtimes (Integrator, Analytics, Broker, Business-Process)</h3>
+            <ol>
+                <li>Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.</li>
+                <li>Run start-all.sh or start-all.bat.</li>
+                <li>Access appropriate url for the related runtime. (For example, use  https://localhost:8243/carbon for the Integrator runtime)</li>
+            </ol>
 
             <h2>Key Features of WSO2 EI</h2>
             <ul>
@@ -98,16 +116,14 @@
                 <li>Integrated monitoring support with statistics, configurable logging and tracing</li>
                 <li>JMX monitoring support and JMX management capabilities like,
                     Graceful/Forceful shutdown/restart</li>
+                <li>Deploying Business Processes written in compliance with WS-BPEL 2.0 Standard and BPEL4WS 1.1 standard.</li>
+                <li>Deploying Business Processes written in compliance with a frequently used subset of BPMN 2.0 standard.</li>
+                <li>Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.</li>
+                <li>Comprehensive and customizable web applications for managing human tasks. bpmn processes and
+                    instances</li>
+
             </ul>
 
-            <h2>Bugs Fixed in This Release</h2>
-            <p>
-
-            </p>
-            <ul>
-				<li><a href="https://wso2.org/jira/issues/?filter=12393">
-                    Fixed EI specific issues</a></li>
-            </ul>
 
             <h2>Known Issues</h2>
             <p>
@@ -115,7 +131,7 @@
                 locations:
             </p>
             <ul>
-                <li><a href="https://wso2.org/jira/issues/?filter=12394">
+                <li><a href="https://github.com/wso2/product-ei/issues">
                     WSO2 EI 6.0.0 component issues</a></li>
             </ul>
 
@@ -138,9 +154,7 @@
             </h3>
             <p>
                 We encourage you to report issues, documentation faults and feature requests regarding
-                WSO2 EI through the public <a href="http://www.wso2.org/jira/browse/EIJAVA">EI JIRA</a>. You
-                can use the <a href="http://www.wso2.org/jira/browse/CARBON">Carbon JIRA</a> to report any
-                issues related to the Carbon base framework or associated Carbon components.
+                WSO2 EI through the public <a href="https://github.com/wso2/product-ei/issues">Github EI issues</a>.
             </p>
 
             <h3>
