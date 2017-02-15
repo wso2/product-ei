@@ -49,8 +49,8 @@ PRGDIR=`dirname "$PRG"`
 # ----- Process the input command ----------------------------------------------
 BPEL_DEP_DIR=$PRGDIR/../repository/deployment/server/bpel
 HT_DEP_DIR=$PRGDIR/../repository/deployment/server/humantasks
-BPEL_SAM_DIR=$PRGDIR/../repository/samples/bpel
-HT_SAM_DIR=$PRGDIR/../repository/samples/humantask
+BPEL_SAM_DIR=$PRGDIR/../../../samples/business-process/bpel
+HT_SAM_DIR=$PRGDIR/../../../samples/business-process/humantask
 SAMPLE=""
 
 if [ ! -e $BPEL_DEP_DIR ] ;then
