@@ -5,7 +5,7 @@ Welcome to the WSO2 EI 6.0.0 release
 
 WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus, Application Server and Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
-WSO2 EI simplifies integration by allowing administrators to easily configure message routing, inter-mediation,transformation, logging, task scheduling, load balancing, failover routing, event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI. These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
+WSO2 EI simplifies integration by allowing users to easily configure message routing, inter-mediation,transformation, logging, task scheduling, load balancing, failover routing, event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI. These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
 
 Key features of WSO2 EI 6.0.0
 ==================================
