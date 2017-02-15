@@ -49,8 +49,8 @@ public class ESBJAVA4931PreserveContentTypeHeaderCharSetTestCase extends ESBInte
         wireMonitorServer.start();
         File sourceFile = new File(getESBResourceLocation() + File.separator + "passthru" + File.separator +
                 "transport" + File.separator + "ESBJAVA4931" + File.separator + "sample_proxy_3.wsdl");
-        File targetFile = new File(System.getProperty(ServerConstants.CARBON_HOME) + File.separator + "repository"
-                + File.separator + "samples" + File.separator + "resources" + File.separator + "proxy" +
+        File targetFile = new File(System.getProperty(ServerConstants.CARBON_HOME) + File.separator + "samples" +
+                                   File.separator + "resources" + File.separator + "proxy" +
                 File.separator + "sample_proxy_3.wsdl");
         FileUtils.copyFile(sourceFile, targetFile);
         loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4931/PreserveContentTypeHeaderCharSetTest.xml");

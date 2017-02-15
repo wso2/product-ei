@@ -44,8 +44,7 @@ public class Sample9TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        File sourceFile = Paths.get(getESBResourceLocation(),
-                "samples", "synapse_sample_9", "synapse_sample_9.xml").toFile();
+        File sourceFile = Paths.get(getESBResourceLocation(), "samples", "synapse_sample_9.xml").toFile();
 
         SynapseConfigAdminClient synapseConfigAdminClient =
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -121,9 +120,8 @@ public class Sample9TestCase extends ESBIntegrationTest {
             "dynamic_seq_1.xml"
         );
         File targetFile = new File(
-            ServerConfigurationManager.getCarbonHome() + File.separator + "repository" +
-            File.separator + "samples" + File.separator + "resources" + File.separator +
-            "sequence" + File.separator + "dynamic_seq_1.xml"
+            ServerConfigurationManager.getCarbonHome() + File.separator + "samples" + File.separator + "resources" +
+            File.separator + "sequence" + File.separator + "dynamic_seq_1.xml"
         );
 
         serverConfigurationManager.applyConfiguration(sourceFile, targetFile, true, false);
