@@ -32,6 +32,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 /**
  * Sample 11: Using a Full Registry-Based Configuration and Sharing a Configuration Between
@@ -44,8 +45,8 @@ public class Sample11TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        File sourceFile = new File(getESBResourceLocation() + File.separator +
-                                   "samples" + File.separator + "synapse_sample_11.xml");
+        File sourceFile = Paths.get(getESBResourceLocation(),
+                "samples", "synapse_sample_11", "synapse_sample_11.xml").toFile();
 
         SynapseConfigAdminClient synapseConfigAdminClient =
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());

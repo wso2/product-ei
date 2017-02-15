@@ -36,6 +36,7 @@
         <module>automation-extensions</module>
         <module>mediation-tests</module>
         <module>business-process-tests</module>
+        <module>reports</module>
     </modules>
 
 </project>
