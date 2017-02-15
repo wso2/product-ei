@@ -18,9 +18,12 @@
 
 package org.wso2.carbon.integrator.core;
 
+/**
+ * Contants for Integrator Class
+ */
 public class Constants {
 
-    public static String INTEGRATOR_HEADER = "Integrator_header";
+    public static final String INTEGRATOR_HEADER = "Integrator_header";
     public static final String DATASERVICE_JSON_BUILDER = "dsJsonBuilder";
     public static final String DATASERVICE_JSON_FORMATTER = "dsJsonFormatter";
     public static final String PASSTHRU_JSON_BUILDER = "passthruJsonBuilder";

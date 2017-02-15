@@ -18,11 +18,11 @@
 
 package org.wso2.carbon.integrator.core;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * This class is written to wrap HTTP Servlet Request. because we had to remove the integration header.
@@ -37,7 +37,6 @@ public class HeaderMapRequestWrapper extends HttpServletRequestWrapper {
     public HeaderMapRequestWrapper(HttpServletRequest request) {
         super(request);
     }
-
 
     @Override
     public String getHeader(String name) {
