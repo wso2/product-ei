@@ -168,7 +168,7 @@ public class ESBTestCaseUtils {
 	 */
 	public OMElement loadESBSampleConfiguration(int number)
 			throws Exception {
-		String filePath = Paths.get(TestConfigurationProvider.getResourceLocation("ESB"), "samples", "synapse_sample_" + number, "synapse_sample_" + number + ".xml").toString();
+		String filePath = Paths.get(TestConfigurationProvider.getResourceLocation("ESB"), "samples", "synapse_sample_" + number + ".xml").toString();
 		File configFile = new File(filePath);
 		FileInputStream inputStream = null;
 		XMLStreamReader parser = null;

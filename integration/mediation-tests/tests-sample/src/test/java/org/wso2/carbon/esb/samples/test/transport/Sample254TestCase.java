@@ -78,8 +78,7 @@ public class Sample254TestCase extends ESBIntegrationTest {
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
         oldSynapseConfig = synapseConfigAdminClient.getConfiguration();
 
-        File newSynapseFile = Paths.get(getESBResourceLocation(),
-                "samples", "synapse_sample_254", "synapse_sample_254.xml").toFile();
+        File newSynapseFile = Paths.get(getESBResourceLocation(), "samples", "synapse_sample_254.xml").toFile();
 
         String synapseConfig = FileUtils.readFileToString(newSynapseFile);
 

@@ -60,8 +60,7 @@ do
     NODIGITS="$(echo $c | sed 's/[[:digit:]]//g')"
     if [ -z $NODIGITS ]; then
       SAMPLE=""
-      synapse_sample="/synapse_sample_"
-      CMD="$CMD -Desb.sample=$c$synapse_sample$c -Dcarbon.registry.root=/esb-samples/s$c"
+      CMD="$CMD -Dei.sample=$c -Dcarbon.registry.root=/esb-samples/s$c"
     else
       echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"
       echo "Example, to run sample 0: wso2esb-samples.sh -sn 0"

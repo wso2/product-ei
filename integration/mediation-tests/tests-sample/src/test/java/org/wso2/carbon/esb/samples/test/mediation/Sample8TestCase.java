@@ -40,8 +40,7 @@ public class Sample8TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        File sourceFile = Paths.get(getESBResourceLocation(),
-                "samples", "synapse_sample_8", "synapse_sample_8.xml").toFile();
+        File sourceFile = Paths.get(getESBResourceLocation(), "samples", "synapse_sample_8.xml").toFile();
 
         SynapseConfigAdminClient synapseConfigAdminClient =
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());

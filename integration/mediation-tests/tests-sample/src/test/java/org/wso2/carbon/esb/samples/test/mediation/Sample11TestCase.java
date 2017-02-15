@@ -45,8 +45,7 @@ public class Sample11TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        File sourceFile = Paths.get(getESBResourceLocation(),
-                "samples", "synapse_sample_11", "synapse_sample_11.xml").toFile();
+        File sourceFile = Paths.get(getESBResourceLocation(), "samples", "synapse_sample_11.xml").toFile();
 
         SynapseConfigAdminClient synapseConfigAdminClient =
             new SynapseConfigAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());

@@ -36,8 +36,8 @@ public class Sample400TestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests with continue parent=true")
     public void testContinueParentTrue() throws Exception, InterruptedException {
-        loadESBConfigurationFromClasspath(Paths.get("artifacts", "ESB", "samples", "synapse_sample_400",
-                "synapse_sample_400.xml").toString());
+        loadESBConfigurationFromClasspath(Paths.get("artifacts", "ESB", "samples", "synapse_sample_400.xml").toString
+                ());
         OMElement response =
                 axis2Client.sendMultipleQuoteRequest(getProxyServiceURLHttp("SplitAggregateProxy"), null, "WSO2", 4);
 
