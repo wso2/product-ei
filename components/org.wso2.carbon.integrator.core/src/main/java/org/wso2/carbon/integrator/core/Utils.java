@@ -43,15 +43,25 @@ import org.wso2.carbon.webapp.mgt.WebApplication;
 import org.wso2.carbon.webapp.mgt.WebApplicationsHolder;
 import org.wso2.carbon.webapp.mgt.utils.WebAppUtils;
 
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
 
+/**
+ * Utility class for integrator core modules
+ */
 public class Utils {
 
     private static OMFactory fac = OMAbstractFactory.getOMFactory();
@@ -63,7 +73,9 @@ public class Utils {
 
     public static int getProtocolPort(String protocol) {
         CarbonTomcatService webAppAdminService;
-        webAppAdminService = (CarbonTomcatService) PrivilegedCarbonContext.getThreadLocalCarbonContext().getOSGiService(CarbonTomcatService.class, null);
+        webAppAdminService = (CarbonTomcatService) PrivilegedCarbonContext.getThreadLocalCarbonContext()
+                                                                          .getOSGiService(CarbonTomcatService.class,
+                                                                                          null);
         if (webAppAdminService == null) {
             throw new RuntimeException("CarbonTomcatService service is not available.");
         }
@@ -77,7 +89,8 @@ public class Utils {
      * @return meta data for webapp
      */
     public static WebApplication getStartedWebapp(String path) {
-        Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(CarbonConfigurationContextFactory.getConfigurationContext());
+        Map<String, WebApplicationsHolder> webApplicationsHolderMap =
+                WebAppUtils.getAllWebappHolders(CarbonConfigurationContextFactory.getConfigurationContext());
         WebApplication matchedWebApplication;
         for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
             for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
@@ -104,7 +117,8 @@ public class Utils {
             // Getting server's configContext instance
             configContext = contextService.getServerConfigContext();
             tenantContext = TenantAxisUtils.getTenantConfigurationContext(tenantDomain, configContext);
-            Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(tenantContext);
+            Map<String, WebApplicationsHolder> webApplicationsHolderMap =
+                    WebAppUtils.getAllWebappHolders(tenantContext);
             WebApplication matchedWebApplication;
             for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
                 for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
@@ -125,7 +139,7 @@ public class Utils {
     public static String getContext(String uri) {
         String[] temp = uri.split("/");
         if (temp.length >= 2) {
-            return "/".concat(temp[1]).toLowerCase();
+            return "/".concat(temp[1]).toLowerCase(Locale.getDefault());
         } else {
             return null;
         }
@@ -133,7 +147,7 @@ public class Utils {
 
     public static String getUniqueRequestID(String uri) {
         String input = uri + System.getProperty(CarbonConstants.START_TIME);
-        return UUID.nameUUIDFromBytes(input.getBytes()).toString();
+        return UUID.nameUUIDFromBytes(input.getBytes(Charset.defaultCharset())).toString();
     }
 
     public static String getDSSJsonBuilder() throws IOException, XMLStreamException {
@@ -186,18 +200,20 @@ public class Utils {
     }
 
     private static String getPassThruHttpPort() {
-        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("http").
-                getParameter("port").getValue().toString();
+        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("http")
+                                                .
+                                                        getParameter("port").getValue().toString();
     }
 
     private static String getPassThruHttpsPort() {
-        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("https").
-                getParameter("port").getValue().toString();
+        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration()
+                                                .getTransportIn("https").
+                                                        getParameter("port").getValue().toString();
     }
 
     static boolean validateHeader(String key, String uri) {
         String input = uri + System.getProperty(CarbonConstants.START_TIME);
-        return (UUID.nameUUIDFromBytes(input.getBytes()).toString().equals(key));
+        return (UUID.nameUUIDFromBytes(input.getBytes(Charset.defaultCharset())).toString().equals(key));
     }
 
     public static void setIntegratorHeader(MessageContext synCtx, String uri) {
@@ -228,7 +244,8 @@ public class Utils {
 
     /**
      * In this method we rewrite the location header which comes from the tomcat transport.
-     * @param location location url
+     *
+     * @param location       location url
      * @param messageContext message context.
      */
     public static void rewriteLocationHeader(String location, MessageContext messageContext) {
@@ -252,14 +269,13 @@ public class Utils {
             } else {
                 newPort = getPassThruHttpsPort();
             }
-            if (tmp.length > 2) {
-                port = tmp[2].substring(0, tmp[2].indexOf("/"));
-            }
+            port = tmp[2].substring(0, tmp[2].indexOf("/"));
             String oldEndpoint = protocol + "://" + host + ":" + port;
             // In this block we check whether this endpoint is already known endpoint.
             if (EndpointHolder.getInstance().containsEndpoint(oldEndpoint)) {
                 location = location.replace(port, newPort);
-                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
+                                                                       .getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
                     ((TreeMap) headers).put("Location", location);
                 }
@@ -268,12 +284,13 @@ public class Utils {
     }
 
     private static String getPropertyFromAxisConf(String parameter) throws IOException, XMLStreamException {
-        try (InputStream file = new FileInputStream(Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "axis2", "axis2.xml").toString())) {
-           if(axis2Config == null) {
-               OMElement element = (OMElement) XMLUtils.toOM(file);
-               element.build();
-               axis2Config = element;
-           }
+        try (InputStream file = new FileInputStream(
+                Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "axis2", "axis2.xml").toString())) {
+            if (axis2Config == null) {
+                OMElement element = (OMElement) XMLUtils.toOM(file);
+                element.build();
+                axis2Config = element;
+            }
             Iterator parameters = axis2Config.getChildrenWithName(new QName("parameter"));
             while (parameters.hasNext()) {
                 OMElement parameterElement = (OMElement) parameters.next();
@@ -282,7 +299,7 @@ public class Utils {
                 }
             }
             return null;
-        } catch (Exception e) {
+        } catch (IOException | XMLStreamException e) {
             throw e;
         }
     }

@@ -26,11 +26,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.integrator.core.Utils;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import javax.xml.stream.XMLStreamException;
 
+/**
+ * JsonStream builder class for Enterprise integrator
+ */
 public class JsonStreamBuilder implements Builder {
 
     private Method synapseBuilderProcessDocumentMethod;
@@ -41,25 +45,31 @@ public class JsonStreamBuilder implements Builder {
     private static final Log logger = LogFactory.getLog(JsonStreamBuilder.class.getName());
 
     public JsonStreamBuilder()
-            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, IOException, XMLStreamException {
-        Class<?> synapseBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getPassThroughJsonBuilder());
+            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException,
+                   IOException, XMLStreamException {
+        Class<?> synapseBuilderClass =
+                JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getPassThroughJsonBuilder());
         this.synapseBuilder = synapseBuilderClass.newInstance();
-        this.synapseBuilderProcessDocumentMethod = synapseBuilderClass.getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
+        this.synapseBuilderProcessDocumentMethod =
+                synapseBuilderClass.getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
         Class<?> axis2GsonBuilderClass = JsonStreamBuilder.class.getClassLoader().loadClass(Utils.getDSSJsonBuilder());
         this.axis2GsonBuilder = axis2GsonBuilderClass.newInstance();
-        this.axis2GsonBuilderProcessDocumentMethod = axis2GsonBuilderClass.getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
+        this.axis2GsonBuilderProcessDocumentMethod = axis2GsonBuilderClass
+                .getMethod("processDocument", InputStream.class, String.class, MessageContext.class);
     }
 
     public OMElement processDocument(InputStream inputStream, String s, MessageContext messageContext)
             throws AxisFault {
         try {
             if (Utils.isDataService(messageContext)) {
-                return (OMElement) axis2GsonBuilderProcessDocumentMethod.invoke(axis2GsonBuilder, inputStream, s, messageContext);
+                return (OMElement) axis2GsonBuilderProcessDocumentMethod
+                        .invoke(axis2GsonBuilder, inputStream, s, messageContext);
             } else {
-                return (OMElement) synapseBuilderProcessDocumentMethod.invoke(synapseBuilder, inputStream, s, messageContext);
+                return (OMElement) synapseBuilderProcessDocumentMethod
+                        .invoke(synapseBuilder, inputStream, s, messageContext);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            logger.error("Error occurred while processing document for application/json", e);
             throw new AxisFault(e.getMessage());
         }
     }

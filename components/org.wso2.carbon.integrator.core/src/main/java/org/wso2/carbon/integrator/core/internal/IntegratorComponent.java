@@ -37,7 +37,8 @@ import java.util.Properties;
 
 /**
  * @scr.component name="org.wso2.carbon.integrator.core.internal.IntegratorComponent" immediate="true"
- * @scr.reference name="configuration.context.service" interface="org.wso2.carbon.utils.ConfigurationContextService" cardinality="1..1"
+ * @scr.reference name="configuration.context.service" interface="org.wso2.carbon.utils.ConfigurationContextService"
+ * cardinality="1..1"
  * policy="dynamic" bind="setConfigurationContextService" unbind="unsetConfigurationContextService"
  */
 public class IntegratorComponent {
@@ -57,10 +58,18 @@ public class IntegratorComponent {
     }
 
     protected void setConfigurationContextService(ConfigurationContextService contextService) {
+        setContextService(contextService);
+    }
+
+    protected static void setContextService(ConfigurationContextService contextService) {
         IntegratorComponent.contextService = contextService;
     }
 
     protected void unsetConfigurationContextService(ConfigurationContextService contextService) {
+        unsetConfigurationService();
+    }
+
+    protected static void unsetConfigurationService() {
         IntegratorComponent.contextService = null;
     }
 
@@ -73,7 +82,9 @@ public class IntegratorComponent {
     }
 
     private void readProperties() {
-        try (InputStream file = new FileInputStream(Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "security", "integrator-whitelist.properties").toString())) {
+        try (InputStream file = new FileInputStream(
+                Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "security", "integrator-whitelist.properties")
+                     .toString())) {
             Properties properties = new Properties();
             properties.load(file);
             Enumeration<?> e = properties.propertyNames();

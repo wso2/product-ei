@@ -30,10 +30,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.core.axis2.SynapseDispatcher;
 
-import java.lang.reflect.Method;
-
 /**
- * This Axis2 handler is written to dispatch messages to synapse environment, when the message is received for a stateful service.
+ * This Axis2 handler is written to dispatch messages to synapse environment, when the message is received for a
+ * stateful service.
  */
 public class IntegratorStatefulHandler extends AbstractDispatcher {
     private static final String NAME = "IntegratorStatefulHandler";
@@ -47,17 +46,19 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
-        if ((isStatefulService(axisService) || (uri != null && uri.contains("generateClient"))) && messageContext.getProperty("transport.http.servletRequest") == null) {
+        if ((isStatefulService(axisService) || (uri != null && uri.contains("generateClient"))) &&
+            messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
                 messageContext.setAxisService(synapseDispatcher.findService(messageContext));
                 if (log.isDebugEnabled()) {
-                    log.debug("AxisService is changing from " + axisService.getName() + " to " + messageContext.getAxisService().getName());
+                    log.debug("AxisService is changing from " + axisService.getName() + " to " +
+                              messageContext.getAxisService().getName());
                 }
                 messageContext.setProperty("raplacedAxisService", "true");
                 return synapseDispatcher.findOperation(messageContext.getAxisService(), messageContext);
-            } catch (Exception e) {
+            } catch (AxisFault e) {
                 log.error("Error occurred while invoking stateful service.");
-                return null;
+                throw e;
             }
         } else {
             return null;
@@ -82,7 +83,8 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
      */
     private boolean isStatefulService(AxisService axisService) {
         Parameter parameter = axisService.getParameter("adminService");
-        return parameter != null && ("transportsession".equals(axisService.getScope()) || "true".equals(axisService.getParameter("adminService").getValue()));
+        return parameter != null && ("transportsession".equals(axisService.getScope()) ||
+                                     "true".equals(axisService.getParameter("adminService").getValue()));
     }
 
 }

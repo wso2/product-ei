@@ -63,12 +63,8 @@ BROKER_INIT_SCRIPT="$CARBON_HOME/wso2/broker/bin/wso2server.sh"
 
 sh $BROKER_INIT_SCRIPT $* &
 
-if [ ! -z "$*" ]; then
-    exit;
-else
-    trap "sh $BROKER_INIT_SCRIPT stop; exit;" INT TERM
-    while :
-    do
-            sleep 60
-    done
-fi
+trap "sh $BROKER_INIT_SCRIPT stop; exit;" INT TERM
+while :
+do
+        sleep 60
+done

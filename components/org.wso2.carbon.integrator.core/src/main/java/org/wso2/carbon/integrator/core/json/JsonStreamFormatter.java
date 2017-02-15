@@ -26,12 +26,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.integrator.core.Utils;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import javax.xml.stream.XMLStreamException;
 
+/**
+ * JsonStream Formatter class for Enterprise integrator
+ */
 public class JsonStreamFormatter implements MessageFormatter {
 
     private Method synapseFormatterGetBytesMethod;
@@ -50,34 +54,47 @@ public class JsonStreamFormatter implements MessageFormatter {
     private static final Log logger = LogFactory.getLog(JsonStreamFormatter.class.getName());
 
     public JsonStreamFormatter()
-            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, IOException, XMLStreamException {
-        Class<?> synapseFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getPassThroughJsonFormatter());
+            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException,
+                   IOException, XMLStreamException {
+        Class<?> synapseFormatterClass =
+                JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getPassThroughJsonFormatter());
         this.synapseFormatter = synapseFormatterClass.newInstance();
-        this.synapseFormatterGetBytesMethod = synapseFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
-        this.synapseFormatterWriteToMethod = synapseFormatterClass.getMethod("writeTo", MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class);
-        this.synapseFormatterGetContentTypeMethod = synapseFormatterClass.getMethod("getContentType", MessageContext.class, OMOutputFormat.class, String.class);
-        this.synapseFormatterGetTargetAddressMethod = synapseFormatterClass.getMethod("getTargetAddress", MessageContext.class, OMOutputFormat.class, URL.class);
-        this.synapseFormatterFormatSOAPActionMethod = synapseFormatterClass.getMethod("formatSOAPAction", MessageContext.class, OMOutputFormat.class, String.class);
+        this.synapseFormatterGetBytesMethod =
+                synapseFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
+        this.synapseFormatterWriteToMethod = synapseFormatterClass
+                .getMethod("writeTo", MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class);
+        this.synapseFormatterGetContentTypeMethod = synapseFormatterClass
+                .getMethod("getContentType", MessageContext.class, OMOutputFormat.class, String.class);
+        this.synapseFormatterGetTargetAddressMethod = synapseFormatterClass
+                .getMethod("getTargetAddress", MessageContext.class, OMOutputFormat.class, URL.class);
+        this.synapseFormatterFormatSOAPActionMethod = synapseFormatterClass
+                .getMethod("formatSOAPAction", MessageContext.class, OMOutputFormat.class, String.class);
 
-
-        Class<?> axis2GsonFormatterClass = JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getDSSJsonFormatter());
+        Class<?> axis2GsonFormatterClass =
+                JsonStreamFormatter.class.getClassLoader().loadClass(Utils.getDSSJsonFormatter());
         this.axis2GsonFormatter = axis2GsonFormatterClass.newInstance();
-        this.axis2GsonFormatterGetBytesMethod = axis2GsonFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
-        this.axis2GsonFormatterWriteToMethod = axis2GsonFormatterClass.getMethod("writeTo", MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class);
-        this.axis2GsonFormatterGetContentTypeMethod = axis2GsonFormatterClass.getMethod("getContentType", MessageContext.class, OMOutputFormat.class, String.class);
-        this.axis2GsonFormatterGetTargetAddressMethod = axis2GsonFormatterClass.getMethod("getTargetAddress", MessageContext.class, OMOutputFormat.class, URL.class);
-        this.axis2GsonFormatterFormatSOAPActionMethod = axis2GsonFormatterClass.getMethod("formatSOAPAction", MessageContext.class, OMOutputFormat.class, String.class);
+        this.axis2GsonFormatterGetBytesMethod =
+                axis2GsonFormatterClass.getMethod("getBytes", MessageContext.class, OMOutputFormat.class);
+        this.axis2GsonFormatterWriteToMethod = axis2GsonFormatterClass
+                .getMethod("writeTo", MessageContext.class, OMOutputFormat.class, OutputStream.class, boolean.class);
+        this.axis2GsonFormatterGetContentTypeMethod = axis2GsonFormatterClass
+                .getMethod("getContentType", MessageContext.class, OMOutputFormat.class, String.class);
+        this.axis2GsonFormatterGetTargetAddressMethod = axis2GsonFormatterClass
+                .getMethod("getTargetAddress", MessageContext.class, OMOutputFormat.class, URL.class);
+        this.axis2GsonFormatterFormatSOAPActionMethod = axis2GsonFormatterClass
+                .getMethod("formatSOAPAction", MessageContext.class, OMOutputFormat.class, String.class);
     }
 
     public byte[] getBytes(MessageContext messageContext, OMOutputFormat omOutputFormat) throws AxisFault {
         try {
             if (Utils.isDataService(messageContext)) {
-                return (byte[]) axis2GsonFormatterGetBytesMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat);
+                return (byte[]) axis2GsonFormatterGetBytesMethod
+                        .invoke(axis2GsonFormatter, messageContext, omOutputFormat);
             } else {
                 return (byte[]) synapseFormatterGetBytesMethod.invoke(synapseFormatter, messageContext, omOutputFormat);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            logger.error("Error occurred while generating bytes for application/json", e);
             throw new AxisFault(e.getMessage());
         }
     }
@@ -86,12 +103,13 @@ public class JsonStreamFormatter implements MessageFormatter {
                         boolean b) throws AxisFault {
         try {
             if (Utils.isDataService(messageContext)) {
-                axis2GsonFormatterWriteToMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat, outputStream, b);
+                axis2GsonFormatterWriteToMethod
+                        .invoke(axis2GsonFormatter, messageContext, omOutputFormat, outputStream, b);
             } else {
                 synapseFormatterWriteToMethod.invoke(synapseFormatter, messageContext, omOutputFormat, outputStream, b);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            logger.error("Error occurred while writing to application/json", e);
             throw new AxisFault(e.getMessage());
         }
     }
@@ -99,11 +117,13 @@ public class JsonStreamFormatter implements MessageFormatter {
     public String getContentType(MessageContext messageContext, OMOutputFormat omOutputFormat, String s) {
         try {
             if (Utils.isDataService(messageContext)) {
-                return (String) axis2GsonFormatterGetContentTypeMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat, s);
+                return (String) axis2GsonFormatterGetContentTypeMethod
+                        .invoke(axis2GsonFormatter, messageContext, omOutputFormat, s);
             } else {
-                return (String) synapseFormatterGetContentTypeMethod.invoke(synapseFormatter, messageContext, omOutputFormat, s);
+                return (String) synapseFormatterGetContentTypeMethod
+                        .invoke(synapseFormatter, messageContext, omOutputFormat, s);
             }
-        } catch (Exception e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             logger.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
@@ -113,12 +133,14 @@ public class JsonStreamFormatter implements MessageFormatter {
             throws AxisFault {
         try {
             if (Utils.isDataService(messageContext)) {
-                return (URL) axis2GsonFormatterGetTargetAddressMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat, url);
+                return (URL) axis2GsonFormatterGetTargetAddressMethod
+                        .invoke(axis2GsonFormatter, messageContext, omOutputFormat, url);
             } else {
-                return (URL) synapseFormatterGetTargetAddressMethod.invoke(synapseFormatter, messageContext, omOutputFormat, url);
+                return (URL) synapseFormatterGetTargetAddressMethod
+                        .invoke(synapseFormatter, messageContext, omOutputFormat, url);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            logger.error("Error occurred while retrieving target address for application/json", e);
             throw new AxisFault(e.getMessage());
         }
     }
@@ -126,11 +148,13 @@ public class JsonStreamFormatter implements MessageFormatter {
     public String formatSOAPAction(MessageContext messageContext, OMOutputFormat omOutputFormat, String s) {
         try {
             if (Utils.isDataService(messageContext)) {
-                return (String) axis2GsonFormatterFormatSOAPActionMethod.invoke(axis2GsonFormatter, messageContext, omOutputFormat, s);
+                return (String) axis2GsonFormatterFormatSOAPActionMethod
+                        .invoke(axis2GsonFormatter, messageContext, omOutputFormat, s);
             } else {
-                return (String) synapseFormatterFormatSOAPActionMethod.invoke(synapseFormatter, messageContext, omOutputFormat, s);
+                return (String) synapseFormatterFormatSOAPActionMethod
+                        .invoke(synapseFormatter, messageContext, omOutputFormat, s);
             }
-        } catch (Exception e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             logger.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }

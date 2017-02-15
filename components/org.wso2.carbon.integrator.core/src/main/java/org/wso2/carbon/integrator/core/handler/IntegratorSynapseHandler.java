@@ -47,11 +47,11 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     private SendMediator sendMediator;
     private PassThroughSenderManager passThroughSenderManager = PassThroughSenderManager.getInstance();
 
-    @Override
-    public boolean handleRequestInFlow(MessageContext messageContext) {
+    @Override public boolean handleRequestInFlow(MessageContext messageContext) {
         boolean isPreserveHeadersContained = false;
         try {
-            org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
+            org.apache.axis2.context.MessageContext axis2MessageContext =
+                    ((Axis2MessageContext) messageContext).getAxis2MessageContext();
             Object isApi = messageContext.getProperty("SYNAPSE_REST_API");
             Object isProxy = messageContext.getProperty("proxy.name");
             // In this if block we are skipping proxy services, inbound related message contexts & api.
@@ -59,10 +59,12 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 String uri = axis2MessageContext.getProperty("TransportInURL").toString();
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
-                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
+                                                                       .getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
                     host =  Utils.getHostname((String) ((TreeMap) headers).get("Host"));
                     //In this if block we whitelist carbon related requests (Management Console)
+
                     if (validateWhiteListsWithUri(uri)) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
@@ -70,11 +72,13 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                         //In this if block we check stateful axis2 Services
                     } else if (axis2MessageContext.getProperty("raplacedAxisService") != null) {
                         isPreserveHeadersContained = true;
-                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
+                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) +
+                                          messageContext.getTo().getAddress();
                         return dispatchMessage(endpoint, uri, messageContext);
                     } else {
                         //In this if block we are check webapps for tenants and super tenants
-                        Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("tenantDomain");
+                        Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
+                                                                                    .getProperty("tenantDomain");
                         if (tenantDomain != null) {
                             WebApplication webApplication = null;
                             try {
@@ -106,13 +110,17 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
             return true;
         } finally {
             if (isPreserveHeadersContained) {
-                if (passThroughSenderManager != null && passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
+                if (passThroughSenderManager != null &&
+                    passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
                     try {
-                        passThroughSenderManager.getSharedPassThroughHttpSender().removePreserveHttpHeader(HTTP.USER_AGENT);
+                        passThroughSenderManager.getSharedPassThroughHttpSender()
+                                                .removePreserveHttpHeader(HTTP.USER_AGENT);
                         // This catch is added when there is no preserve headers in the PassthoughHttpSender.
                     } catch (ArrayIndexOutOfBoundsException e) {
                         if (log.isDebugEnabled()) {
-                            log.debug("ArrayIndexOutOfBoundsException exception occurred, when removing preserve headers.");
+                            log.debug(
+                                    "ArrayIndexOutOfBoundsException exception occurred, when removing preserve " +
+                                    "headers.");
                         }
                     }
                 }
@@ -120,15 +128,14 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         }
     }
 
-    @Override
-    public boolean handleRequestOutFlow(MessageContext messageContext) {
+    @Override public boolean handleRequestOutFlow(MessageContext messageContext) {
         return true;
     }
 
-    @Override
-    public boolean handleResponseInFlow(MessageContext messageContext) {
+    @Override public boolean handleResponseInFlow(MessageContext messageContext) {
         // In here, We are rewriting the location header which comes from the particular registered endpoints.
-        Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+        Object headers =
+                ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
         if (headers instanceof TreeMap) {
             String locationHeader = (String) ((TreeMap) headers).get("Location");
             if (locationHeader != null) {
@@ -138,8 +145,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         return true;
     }
 
-    @Override
-    public boolean handleResponseOutFlow(MessageContext messageContext) {
+    @Override public boolean handleResponseOutFlow(MessageContext messageContext) {
         return true;
     }
 
@@ -154,7 +160,8 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     private void setREST_URL_POSTFIX(org.apache.axis2.context.MessageContext messageContext, String to) {
         if (messageContext.getProperty("REST_URL_POSTFIX") != null) {
             if (log.isDebugEnabled()) {
-                log.debug("message's REST_URL_POSTFIX is changing from " + messageContext.getProperty("REST_URL_POSTFIX") + " to " + to);
+                log.debug("message's REST_URL_POSTFIX is changing from " +
+                          messageContext.getProperty("REST_URL_POSTFIX") + " to " + to);
             }
             messageContext.setProperty("REST_URL_POSTFIX", to);
         }

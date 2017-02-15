@@ -63,12 +63,8 @@ BPS_INIT_SCRIPT="$CARBON_HOME/wso2/business-process/bin/wso2server.sh"
 
 sh $BPS_INIT_SCRIPT $* &
 
-if [ ! -z "$*" ]; then
-    exit;
-else
-    trap "sh $BPS_INIT_SCRIPT stop; exit;" INT TERM
-    while :
-    do
-            sleep 60
-    done
-fi
+trap "sh $BPS_INIT_SCRIPT stop; exit;" INT TERM
+while :
+do
+        sleep 60
+done

@@ -28,26 +28,26 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Endpoint Holder class to endpoint caching
+ */
 public class EndpointHolder implements Runnable {
     private static final Log log = LogFactory.getLog(EndpointHolder.class);
-    private static long expirationTime;
     private static EndpointHolder endpointHolder = new EndpointHolder();
     private static ConcurrentHashMap<String, EndpointRef> endpointHashMap = new ConcurrentHashMap<>(2);
 
     private EndpointHolder() {
         //retry interval 2 hour
         long interval = 2;
-        //expiration time in milliseconds - default set to 30 mins.
-        expirationTime = 1000 * 60 * 30;
         ScheduledExecutorService globalExecutorService = Executors.newSingleThreadScheduledExecutor();
         globalExecutorService.scheduleAtFixedRate(this, interval, interval, TimeUnit.HOURS);
     }
 
-    private class EndpointRef {
+    private static class EndpointRef {
         private Endpoint endpoint;
         private long lastAccessTime;
 
-        public EndpointRef(Endpoint endpoint) {
+        EndpointRef(Endpoint endpoint) {
             this.endpoint = endpoint;
         }
 
@@ -70,6 +70,7 @@ public class EndpointHolder implements Runnable {
         for (String key : new ArrayList<>(endpointHashMap.keySet())) {
             EndpointRef endpoint = endpointHashMap.get(key);
             if (endpoint != null) {
+                long expirationTime = 1000 * 60 * 30;
                 if ((currentTime - endpoint.lastAccessTime) > expirationTime) {
                     endpointHashMap.remove(key);
                 }
@@ -93,7 +94,6 @@ public class EndpointHolder implements Runnable {
     public boolean containsEndpoint(String endpoint) {
         return endpointHashMap.containsKey(endpoint);
     }
-
 
     @Override
     public void run() {
