@@ -1,0 +1,84 @@
+JAX-RS Basic Demo 
+=================
+
+The demo shows a basic REST based Web Services using JAX-RS (JSR-311). The REST server provides the following services: 
+
+A RESTful customer service is provided on URL http://localhost:9763/jaxrs_basic/services/customers/customerservice (say serviceURL).
+Users access this URI to operate on customer.
+
+A HTTP GET request to URL ${serviceURL}/customers/123
+returns a customer instance whose id is 123. The XML document returned:
+
+<Customer>
+  <id>123</id>
+  <name>John</name>
+</Customer>
+
+A HTTP GET request to URL ${serviceURL}/orders/223/products/323
+returns product 323 that belongs to order 223. The XML document returned:
+
+<Product>
+  <description>product 323</description> 
+  <id>323</id> 
+</Product>
+
+A HTTP POST request to URL ${serviceURL}/customers
+with the data:
+
+<Customer>
+  <name>Jack</name>
+</Customer>
+
+adds a customer whose name is Jack 
+
+
+A HTTP PUT request to URL ${serviceURL}/customers
+with the data:
+
+<Customer>
+  <id>123</id>
+  <name>John</name>
+</Customer>
+
+updates the customer instance whose id is 123
+
+
+The client code demonstrates how to send HTTP GET/POST/PUT/DELETE request. The 
+server code demonstrates how to build a RESTful endpoint through 
+JAX-RS (JSR-311) APIs.
+
+
+Please review the README in the samples directory before
+continuing.
+
+
+
+Building and running the demo using maven
+---------------------------------------
+
+From the base directory of this sample (i.e., where this README file is
+located), the maven pom.xml file can be used to build and run the demo. 
+
+
+Using either UNIX or Windows:
+
+  * mvn clean install (builds the demo and creates a WAR file)
+  * Start the server (run bin/wso2server.sh/.bat)
+  * mvn -Pdeploy (deploys the generated WAR file on WSO2 AS with related logs on the console)
+  * mvn -Pclient (runs the client)
+
+To remove the target dir, run mvn clean".
+
+
+Building and running the demo using ant
+---------------------------------------
+
+1. Run "ant" on AS_HOME/samples/Jaxws-Jaxrs/jaxrs_basic directory. This will deploy the jaxrs_basic
+   service in WSO2 AS.
+2. Start the server and access the Management Console at https://localhost:9443/carbon. Go to
+   the service listing page. You will see the deployed jaxrs_basic service.
+3. Execute "sh run-client.sh" or "run-client.bat" to run the client.
+4. Try the sample with different QoS options. Run "sh run-client.sh -help" for different options.
+
+Please download the Documentation Distribution and refer to the jaxrs_basic sample document
+for detailed instructions on how to run the jaxrs_basic sample.

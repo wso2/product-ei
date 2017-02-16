@@ -90,6 +90,7 @@ var charts = [{
         range: true
     },
     types: [
+        { name: TYPE_LANDING, type: 2 },
         { name: TYPE_PROXY, type: 8 },
         { name: TYPE_API, type: 13 },
         { name: TYPE_MEDIATOR, type: 18 },
