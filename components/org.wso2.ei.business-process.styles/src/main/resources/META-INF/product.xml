@@ -18,7 +18,7 @@
 <product xmlns="http://products.wso2.org/carbon">
     <properties>
        <property name="userforum">http://stackoverflow.com/questions/tagged/wso2/</property>
-       <property name="userguide">https://docs.wso2.com/display/BPS351/WSO2+Business+Process+Server+Documentation</property>
+       <property name="userguide">https://docs.wso2.com/display/EI600/WSO2+Enterprise+Integrator+Documentation</property>
        <property name="mailinglist">http://wso2.org/mail</property>
        <property name="issuetracker">http://wso2.org/jira/browse/BPS</property>
        <property name="webAdminConsoleTitle">WSO2 Business Process Server (WSO2 BPS)</property>
