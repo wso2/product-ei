@@ -18,7 +18,7 @@
 
     <property name="carbon.home" value="${basedir}"/>
 
-    <property name="lib" value="${carbon.home}/repository/lib"/>
+    <property name="lib" value="${carbon.home}/wso2/lib"/>
     <property name="tempdir" value="${carbon.home}/wso2/tmp/setup"/>
     <property name="output.dir" value="${carbon.home}/wso2/tmp/wso2"/>
 
@@ -176,56 +176,56 @@
     <!--create language bundles in dropins folder-->
     <taskdef uri="antlib:net.sf.antcontrib"
 		resource="net/sf/antcontrib/antlib.xml"
-		classpath="${carbon.home}/lib/ant-contrib-1.0b3.jar"/>	
-						
+		classpath="${carbon.home}/lib/ant-contrib-1.0b3.jar"/>
+
 	<property name="resources.directory" value="${carbon.home}/resources"/>
 	<property name="dropins.directory"  value="${carbon.home}/dropins"/>
 	<property name="temp.dir"  value="../temp"/>
 	<property name="last.dir" value="i18n"/>
 
 	<target name="localize" description="creating fragment bundles">
-	
+
 		<ac:if>
 			<available file="${resources.directory}" type="dir" />
 			<ac:then>
 				<echo message="Directory exists" />
-			
-		
-				<ac:for param="file"> 
-					<path> 
-						<dirset dir="${resources.directory}" includes="*"/> 
-					</path> 
-					<sequential> 
-						<ac:var name="basename" unset="true"/> 
-						<basename file="@{file}" property="basename"/> 
+
+
+				<ac:for param="file">
+					<path>
+						<dirset dir="${resources.directory}" includes="*"/>
+					</path>
+					<sequential>
+						<ac:var name="basename" unset="true"/>
+						<basename file="@{file}" property="basename"/>
 						<echo message="step1 = ${basename}"/>
-						 
-						 
+
+
 						<ac:var name="fragmentHost.name" unset="true" />
 						<ac:var name="fragmentHost.version" unset="true" />
-						
+
 						<ac:propertyregex property="fragmentHost.name" input="${basename}" regexp="(.*)_(.*)" select="\1" />
 						<ac:propertyregex property="fragmentHost.version" input="${basename}" regexp="(.*)_(.*)" select="\2" />
-						
-						
+
+
 						<ac:var name="ExportPackage" unset="true" />
 						<ac:var name="FragmentHost" unset="true" />
 						<ac:var name="FragmentHostVersion" unset="true" />
 						<ac:var name="BundleSymbolicName" unset="true" />
 						<ac:var name="src.dir" unset="true" />
-						
+
 						<property name="ExportPackage" value="${fragmentHost.name}"/>
 						<property name="FragmentHost" value="${fragmentHost.name}"/>
 						<property name="FragmentHostVersion" value="${fragmentHost.version}"/>
 						<property name="BundleSymbolicName" value="${fragmentHost.name}.languageBundle_${fragmentHost.version}"/>
 						<property name="src.dir" value="${resources.directory}/${basename}"/>
-						
-						
+
+
 						<mkdir dir="${dropins.directory}"/>
 						<mkdir dir="${temp.dir}"/>
 						<ac:propertyregex property="propB" input="${ExportPackage}" regexp="\." replace="/" global="true" override="true" />
 						<echo message="step2 = ${propB}"/>
-						
+
 						<ac:var name="dest.dir" unset="true" />
 						<property name="dest.dir" value="${temp.dir}\${ExportPackage}\${propB}\${last.dir}"/>
 						<mkdir dir="${dest.dir}"/>
@@ -234,8 +234,8 @@
 							<fileset dir="${src.dir}"/>
 						</copy>
 						<echo message="step4"/>
-						
-						<jar destfile="${dropins.directory}/${BundleSymbolicName}.jar" basedir="${temp.dir}\${ExportPackage}">				
+
+						<jar destfile="${dropins.directory}/${BundleSymbolicName}.jar" basedir="${temp.dir}\${ExportPackage}">
 						<manifest>
 								<attribute name="Manifest-Version" value="1.0"/>
 								<attribute name="Build-Jdk" value="1.6.0_22"/>
@@ -247,19 +247,19 @@
 								<attribute name="Carbon-Component" value="UIBundle"/>
 								<attribute name="Export-Package" value="${ExportPackage}"/>
 								<attribute name="Fragment-Host" value="${FragmentHost}"/>
-							</manifest>            
+							</manifest>
 						</jar>
-						
+
 						<echo message="step5"/>
-						 
-					</sequential> 
-				</ac:for> 
+
+					</sequential>
+				</ac:for>
 				<delete dir="${temp.dir}"/>
-				
+
 			</ac:then>
 			<ac:else>
 				<fail message="Resource directory does not Exists at CARBON_HOME.Please refer the section 8 of the README.txt file for more details."/>
-				
+
 			</ac:else>
 		</ac:if>
 	</target>
