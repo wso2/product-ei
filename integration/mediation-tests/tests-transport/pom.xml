@@ -190,7 +190,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/samples/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/samples/service-bus/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
@@ -232,7 +232,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/samples/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/samples/service-bus/
                                     </directory>
                                     <includes>
                                         <include>**/*.xml</include>
