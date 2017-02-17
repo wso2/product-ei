@@ -49,9 +49,9 @@ the sample server, deploy a service, and run the client. </p>
 <ul>
   <li><a href="#Pre-requis">Prerequisites</a> </li>
   <li><a href="#Understand">Understanding the Samples</a> </li>
-  <li><a href="#Using">Using the Sample Clients</a> 
+  <li><a href="#Using">Using the Sample Clients</a>
     <ul>
-      <li><a href="#L51">1. Stock Quote Client</a> 
+      <li><a href="#L51">1. Stock Quote Client</a>
         <ul>
           <li><a href="#Smart">Smart Client Mode:</a> </li>
           <li><a href="#Gateway">Gateway / Dumb Client Mode:</a> </li>
@@ -63,7 +63,7 @@ the sample server, deploy a service, and run the client. </p>
       <li><a href="#L133">3. MTOM / SwA Client</a> </li>
     </ul>
   </li>
-  <li><a href="#Starting">Starting the Sample Services</a> 
+  <li><a href="#Starting">Starting the Sample Services</a>
     <ul>
       <li><a href="#L161">1. SimpleStockQuoteService</a> </li>
       <li><a href="#L165">2. SecureStockQuoteService</a> </li>
@@ -186,7 +186,7 @@ payloads listed below as SOAP messages: </p>
   &lt;/m:request&gt;
 &lt;/m:getFullQuote&gt;</pre>
   </li>
-  <li>placeorder - places an order for stocks using a one way request 
+  <li>placeorder - places an order for stocks using a one way request
     <pre xml:space="preserve">&lt;m:placeOrder xmlns:m="http://services.samples/xsd"&gt;
   &lt;m:order&gt;
     &lt;m:price&gt;3.141593E0&lt;/m:price&gt;
@@ -265,7 +265,7 @@ placement request. </p>
 <pre xml:space="preserve">ant jmsclient -Djms_type=text -Djms_dest=dynamicQueues/JMSTextProxy -Djms_payload="24.34 100 IBM"
 ant jmsclient -Djms_type=pox -Djms_dest=dynamicQueues/JMSPoxProxy -Djms_payload=MSFT
 ant jmsclient -Djms_type=binary -Djms_dest=dynamicQueues/JMSFileUploadProxy
-                     -Djms_payload=./../../repository/samples/resources/mtom/asf-logo.gif</pre>
+                     -Djms_payload=./../../samples/service-bus/resources/mtom/asf-logo.gif</pre>
 
 <p>Note: The JMS client assumes the existence of a default ActiveMQ (5.2.0) installation on the
     local machine. </p>
@@ -721,7 +721,7 @@ with the WSO2 EI distribution. </p>
     <p>
       You can download and install the JRuby engine manually. Download
       the file named "jruby-complete-1.3.0.wso2v1.jar" from the WSO2 P2 repository and copy
-      it into repository/components/dropins directory.      
+      it into repository/components/dropins directory.
     </p>
     <p/>
     <h2 id="derby">

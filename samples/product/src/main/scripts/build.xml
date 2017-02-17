@@ -35,7 +35,7 @@
             [-Dprxurl=http://localhost:8280]
             [-Drest=true]
             [-Dwsrm=true]
-            [-Dpolicy=../../repository/samples/resources/policy/policy_1.xml]
+            [-Dpolicy=../../samples/service-bus/resources/policy/policy_1.xml]
 
         Mode :
             quote          - send a quote request for a single stock
@@ -51,7 +51,7 @@
         ant jmsclient [-Djms_type=text] [-Djms_dest=dynamicQueues/JMSTextProxy][-Djms_payload="24.34 100 IBM"]
         ant jmsclient [-Djms_type=pox] [-Djms_dest=dynamicQueues/JMSPoxProxy] [-Djms_payload=MSFT]
         ant jmsclient [-Djms_type=binary] [-Djms_dest=dynamicQueues/JMSFileUploadProxy]
-            [-Djms_payload=./../../repository/samples/resources/mtom/asf-logo.gif]
+            [-Djms_payload=./../../samples/service-bus/resources/mtom/asf-logo.gif]
 
     ant optimizeclient
         A client that could send binary content using MTOM and SwA optimizations
@@ -59,7 +59,7 @@
         examples:
         ant optimizeclient [-Dopt_mode=mtom | swa]
             [-Dopt_url=http://localhost:8280/soap/MTOMSwASampleService]
-            [-Dopt_file=./../../repository/samples/resources/mtom/asf-logo.gif]
+            [-Dopt_file=./../../samples/service-bus/resources/mtom/asf-logo.gif]
 
     ant fixclient
         A client which could post a FIX message (of type Order-Single) embedded into a SOAP message.
@@ -69,7 +69,7 @@
 
     ant amqpconsumer
         A JMS based amqp consumer that accept orders and generates executions.
-        [-Dpropfile=$ESB_HOME/repository/samples/resources/fix/direct.properties]
+        [-Dpropfile=$ESB_HOME/samples/service-bus/resources/fix/direct.properties]
 
 	example:
         ant amqpconsumer
@@ -300,21 +300,21 @@
                  <include name="*.jar"/>
              </fileset>
         </path>
-		
+
     <target name="init">
         <mkdir dir="${class.dir}"/>
         <mkdir dir="./../../work/temp/sampleClient"/>
 		<manifestclasspath property="tem.classpath" jarfile="pathing.jar">
 			<classpath refid="jar.classpath"/>
-		</manifestclasspath>        
+		</manifestclasspath>
 		<jar destfile="pathing.jar" basedir="target\classes">
-			<manifest>              
+			<manifest>
                 <attribute name="Class-Path" value="${tem.classpath}"/>
 			</manifest>
 		</jar>
         <path id="javac.classpath">
             <pathelement path="${class.dir}"/>
-            <pathelement path="pathing.jar"/>            
+            <pathelement path="pathing.jar"/>
         </path>
     </target>
 

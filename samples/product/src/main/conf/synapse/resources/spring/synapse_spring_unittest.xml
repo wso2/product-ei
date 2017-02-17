@@ -24,9 +24,9 @@
         <parameter name="cachableDuration">15000</parameter>
     </registry>
 
-    <localEntry key="springconfig2" src="file:./../../repository/samples/resources/spring/springsample.xml"/>
+    <localEntry key="springconfig2" src="file:./../../samples/service-bus/resources/spring/springsample.xml"/>
 
     <spring bean="springtest" key="samples/resources/spring/springsample.xml"/>
     <spring bean="springtest" key="springconfig2"/>
 
-</definitions> 
+</definitions>

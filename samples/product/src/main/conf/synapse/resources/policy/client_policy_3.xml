@@ -79,7 +79,7 @@
                     <ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
                         <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
                         <ramp:property name="org.apache.ws.security.crypto.merlin.file">
-                            ../../repository/samples/resources/security/store.jks
+                            ../../samples/service-bus/resources/security/store.jks
                         </ramp:property>
                         <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password">password
                         </ramp:property>
@@ -89,7 +89,7 @@
                     <ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
                         <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
                         <ramp:property name="org.apache.ws.security.crypto.merlin.file">
-                            ../../repository/samples/resources/security/store.jks
+                            ../../samples/service-bus/resources/security/store.jks
                         </ramp:property>
                         <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password">password
                         </ramp:property>

@@ -36,10 +36,10 @@
             </outSequence>
         </target>
 
-        <parameter name="transport.fix.AcceptorConfigURL">file:repository/samples/resources/fix/fix-synapse.cfg
+        <parameter name="transport.fix.AcceptorConfigURL">file:samples/service-bus/resources/fix/fix-synapse.cfg
         </parameter>
         <parameter name="transport.fix.AcceptorMessageStore">file</parameter>
-        <parameter name="transport.fix.InitiatorConfigURL">file:repository/samples/resources/fix/synapse-sender.cfg
+        <parameter name="transport.fix.InitiatorConfigURL">file:samples/service-bus/resources/fix/synapse-sender.cfg
         </parameter>
         <parameter name="transport.fix.InitiatorMessageStore">file</parameter>
     </proxy>

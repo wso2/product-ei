@@ -127,12 +127,12 @@ format as the original request. </p>
 <p>When the client executes successfully, it will upload a file containing
 the ASF logo and receive its response back again and save it into a temporary
 file. </p>
-<pre xml:space="preserve">[java] Sending file : ./../../repository/samples/resources/mtom/asf-logo.gif as MTOM</pre>
+<pre xml:space="preserve">[java] Sending file : ./../../samples/service-bus/resources/mtom/asf-logo.gif as MTOM</pre>
 <pre xml:space="preserve">[java] Saved response to file : ./../../work/temp/sampleClient/mtom-49258.gif</pre>
 
 <p>Next try SwA as: </p>
 <pre xml:space="preserve">ant optimizeclient -Dopt_mode=swa</pre>
-<pre xml:space="preserve">[java] Sending file : ./../../repository/samples/resources/mtom/asf-logo.gif as SwA
+<pre xml:space="preserve">[java] Sending file : ./../../samples/service-bus/resources/mtom/asf-logo.gif as SwA
 [java] Saved response to file : ./../../work/temp/sampleClient/swa-47549.gif</pre>
 
 <p>By using TCPMon and sending the message through it, one can inspect that
