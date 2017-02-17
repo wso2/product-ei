@@ -85,7 +85,7 @@ public class VFSHidePasswordLogESBJAVA3419 extends ESBIntegrationTest {
 						+ "                  format=\"soap12\"/>\n"
 						+ "      </endpoint>\n"
 						+ "   </target>\n"
-						+ "   <publishWSDL uri=\"file:repository/samples/resources/proxy/sample_proxy_1.wsdl\"/>\n"
+						+ "   <publishWSDL uri=\"file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl\"/>\n"
 						+ "   <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
 						+ "   <parameter name=\"transport.PollInterval\">1</parameter>\n"
 						+ "   <parameter name=\"transport.vfs.MoveAfterProcess\">vfs:smb://username:ClearPassword@host/test/original</parameter>\n"
@@ -156,18 +156,18 @@ public class VFSHidePasswordLogESBJAVA3419 extends ESBIntegrationTest {
 				" The password is getting printed in the log VFSTransportSender.");
 	}
 
-	
+
 	/**
-	 * The wso2carbon.log is used here, coz the LogViewerClient stack 
+	 * The wso2carbon.log is used here, coz the LogViewerClient stack
 	 * is not logs this exception.
 	 * @return true if the password printed in the log, else false.
 	 */
 	private boolean isClearPassword() {
-		
+
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(
-					CarbonUtils.getCarbonHome() 
+					CarbonUtils.getCarbonHome()
 							+ File.separator + "repository"
 							+ File.separator + "logs" + File.separator
 							+ "wso2carbon.log"));
@@ -187,7 +187,7 @@ public class VFSHidePasswordLogESBJAVA3419 extends ESBIntegrationTest {
 			} catch (IOException ex) {
 			}
 		}
-		
+
 		return false;
 	}
 }

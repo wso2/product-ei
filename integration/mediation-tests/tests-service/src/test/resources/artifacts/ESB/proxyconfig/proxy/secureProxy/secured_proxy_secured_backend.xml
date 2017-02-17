@@ -38,7 +38,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/>
     <sequence name="fault">

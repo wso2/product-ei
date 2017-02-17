@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <localEntry key="response_transform.xslt" src="file:repository/samples/resources/transform/transform_back.xslt"/>
-    <localEntry key="request_transform.xslt" src="file:repository/samples/resources/transform/transform.xslt"/>
+    <localEntry key="response_transform.xslt" src="file:samples/service-bus/resources/transform/transform_back.xslt"/>
+    <localEntry key="request_transform.xslt" src="file:samples/service-bus/resources/transform/transform.xslt"/>
     <endpoint name="StockQuoteService">
         <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
     </endpoint>

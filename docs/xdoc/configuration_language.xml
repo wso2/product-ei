@@ -379,7 +379,7 @@ put it in the synapse-config/synapse.xml file.</p>
    &lt;<a href="#api">api</a> name="string" ...&gt;...&lt;/api&gt;?
    &lt;<a href="#task">task</a> name="string" ...&gt;...&lt;/task&gt;?
    &lt;<a href="#task">eventSource</a> name="string" ...&gt;...&lt;/eventSource&gt;?
-   &lt;<a href="#task">priorityExecutor</a> name="string" ...&gt;...&lt;/priorityExecutor&gt;? 
+   &lt;<a href="#task">priorityExecutor</a> name="string" ...&gt;...&lt;/priorityExecutor&gt;?
    <a href="#mediator">mediator</a>*
  &lt;/definitions&gt;</pre>
 
@@ -415,7 +415,7 @@ dynamically change over time. </p>
 "FileSystemRegistry" and this can be configured as follows: </p>
 <pre xml:space="preserve">e.g.
 &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
-  &lt;parameter name="root"&gt;file:./repository/samples/resources/&lt;/parameter&gt;
+  &lt;parameter name="root"&gt;file:./samples/service-bus/resources/&lt;/parameter&gt;
   &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
 &lt;/registry&gt;</pre>
 
@@ -457,7 +457,7 @@ local entry shadows any entry with the same name from a remote Registry. </p>
          ...
         &lt;/xs:schema&gt;
     &lt;/localEntry&gt;
-&lt;localEntry key="xslt-key-req" src="file:repository/samples/resources/transform/transform.xslt"/&gt;</pre>
+&lt;localEntry key="xslt-key-req" src="file:samples/service-bus/resources/transform/transform.xslt"/&gt;</pre>
 
 <p>Local entries can be defined in the top level synapse.xml file or in the
 synapse-config/local-entries directory.</p>
@@ -745,7 +745,7 @@ active endpoint among the listed endpoints. </p>
 <p>Indirect Endpoint refers an actual endpoint by a key. This endpoint fetches
     the actual endpoint at runtime. Then it delegates the message sending to
     the actual endpoint. When Endpoints are stored in the registry and referred,
-    this endpoint can be used. The key is a static value for this endpoint.</p>    
+    this endpoint can be used. The key is a static value for this endpoint.</p>
 <pre xml:space="preserve">&lt;endpoint key="" name="" /&gt;</pre>
 
 <h3 id="resolving-endpoint">Resolving Endpoint</h3>
@@ -1252,7 +1252,7 @@ by the property mediator's type attribute:</p>
 specified property value will be converted to the specified type before setting
 it into the message context. The type OM can be used to convert the property value
 into an AXIOM OMElement. Please note that all type names mentioned above are case
-sensitive.</p>    
+sensitive.</p>
 
 <p>There are some well-defined properties that you can get/set on the Synapse
 message context scope: </p>
@@ -1756,11 +1756,11 @@ parallel. They can also be set to process sequentially by setting
 the value of the optional 'sequential' attribute to 'true'.
 The original message cloned can be continued or dropped depending on
 the boolean value of the optional 'continueParent' attribute. Optionally a
-custom 'To' address and/or a 'Action' may be specified for cloned messages 
-The optional 'id' attribute can be used to identify the clone mediator which 
-created a particular splitted message when nested clone mediators are used. 
-This is particularly useful when aggregating responses of messages that are 
-created using nested clone mediators. 
+custom 'To' address and/or a 'Action' may be specified for cloned messages
+The optional 'id' attribute can be used to identify the clone mediator which
+created a particular splitted message when nested clone mediators are used.
+This is particularly useful when aggregating responses of messages that are
+created using nested clone mediators.
 </p>
 
 <h4><a name="iterate">Iterate</a></h4>
@@ -1779,15 +1779,15 @@ created using nested clone mediators.
 number of different messages derived from the parent message by finding
 matching elements for the XPath expression specified. New messages will be
 created for each and every matching element and processed in parallel(default
-behavior) using either the specified sequence or endpoint. 
-Created messages can also be set to process sequentially by setting the optional 'sequential' 
+behavior) using either the specified sequence or endpoint.
+Created messages can also be set to process sequentially by setting the optional 'sequential'
 attribute to 'true'. Parent message can be continued or
 dropped in the same way as in the clone mediator. The 'preservePayload'
 attribute specifies if the original message should be used as a template when
 creating the splitted messages, and defaults to 'false', in which case the
-splitted messages would contain the split elements as the SOAP body. The optional 'id' attribute 
-can be used to identify the iterator which created a particular splitted message when nested iterate 
-mediators are used. This is particularly useful when aggregating responses of messages that are 
+splitted messages would contain the split elements as the SOAP body. The optional 'id' attribute
+can be used to identify the iterator which created a particular splitted message when nested iterate
+mediators are used. This is particularly useful when aggregating responses of messages that are
 created using nested iterate mediators. </p>
 
 <h4><a name="aggregate">Aggregate</a></h4>
@@ -1848,25 +1848,25 @@ later. Additionally, the transaction mediator supports three other actions,
 i.e. use-existing-or-new, fault-if-no-tx, rollback. </p>
 
 <h4><a name="ejb">Ejb</a><a name="Ejb"></a></h4>
-<div><pre>&lt;ejb beanstalk=&quot;string&quot; class=&quot;string&quot; [sessionId=&quot;string&quot;] [remove=&quot;true | false&quot;] 
-  [method=&quot;string&quot;] [target=&quot;string | {xpath}&quot;] [jndiName=&quot;string&quot;] /&gt; 
-    &lt;args&gt; 
-      &lt;arg (value=&quot;string | {xpath}&quot;)/&gt;* 
-    &lt;/args&gt; 
+<div><pre>&lt;ejb beanstalk=&quot;string&quot; class=&quot;string&quot; [sessionId=&quot;string&quot;] [remove=&quot;true | false&quot;]
+  [method=&quot;string&quot;] [target=&quot;string | {xpath}&quot;] [jndiName=&quot;string&quot;] /&gt;
+    &lt;args&gt;
+      &lt;arg (value=&quot;string | {xpath}&quot;)/&gt;*
+    &lt;/args&gt;
 &lt;/ejb&gt;</pre></div>
 
-<p>EJB Mediator - EJB mediator calls an external Enterprise JavaBean(EJB) and stores 
-the result in the message payload or in a message context property. Currently, 
-this mediator supports EJB3 Stateless Session Beans and Stateful Session Beans. 
+<p>EJB Mediator - EJB mediator calls an external Enterprise JavaBean(EJB) and stores
+the result in the message payload or in a message context property. Currently,
+this mediator supports EJB3 Stateless Session Beans and Stateful Session Beans.
 </p>
 
 <h4><a name="bean">Bean</a><a name="Bean"></a></h4>
-<div><pre>&lt;bean action=&quot;CREATE | REMOVE | SET_PROPERTY | GET_PROPERTY&quot; var=&quot;string&quot; 
-  [class=&quot;string&quot;] [property=&quot;string&quot;] 
+<div><pre>&lt;bean action=&quot;CREATE | REMOVE | SET_PROPERTY | GET_PROPERTY&quot; var=&quot;string&quot;
+  [class=&quot;string&quot;] [property=&quot;string&quot;]
   [value=&quot;string | {xpath}&quot;] /&gt; </pre></div>
 
 <p>Bean mediator can manipulate a JavaBean that is bound to the Synapse message context as a property.
-This mediator can be used to create a new bean (CREATE action), remove an existing bean (REMOVE action), 
+This mediator can be used to create a new bean (CREATE action), remove an existing bean (REMOVE action),
 set a property of an existing JavaBean (SET_PROPERTY action) or to retrieve a property of an existing JavaBean
  (GET_PROPERTY action). Classes of objects manipulated by this mediator must follow the JavaBeans specification.
 </p>

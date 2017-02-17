@@ -11,7 +11,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxy15" transports="https http" startOnLoad="true" trace="disable">
         <target>
@@ -33,7 +33,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxy12" transports="https http" startOnLoad="true" trace="disable">
         <target endpoint="conf:/proxy/registry_endpoint.xml">
@@ -41,7 +41,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxy11" transports="https http" startOnLoad="true" trace="disable">
         <target>
@@ -52,7 +52,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxy14" transports="https http" startOnLoad="true" trace="disable">
         <target>
@@ -63,7 +63,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxy13" transports="https http" startOnLoad="true" trace="disable">
         <target>

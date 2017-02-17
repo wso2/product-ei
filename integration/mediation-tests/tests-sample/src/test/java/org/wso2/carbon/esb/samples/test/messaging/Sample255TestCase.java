@@ -154,7 +154,7 @@ public class Sample255TestCase extends ESBIntegrationTest {
 //                "                </send>\n" +
 //                "            </outSequence>\n" +
 //                "        </target>\n" +
-//                "        <publishWSDL uri=\"file:repository/samples/resources/proxy/sample_proxy_1.wsdl\"/>" +
+//                "        <publishWSDL uri=\"file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl\"/>" +
 //                "        </proxy>"));
 //    }
 //

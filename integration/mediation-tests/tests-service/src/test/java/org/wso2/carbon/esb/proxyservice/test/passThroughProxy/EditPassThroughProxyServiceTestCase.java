@@ -46,13 +46,13 @@ public class EditPassThroughProxyServiceTestCase extends ESBIntegrationTest {
     public void editProxyService() throws Exception {
         ProxyServiceAdminClient proxyServiceAdminClient = new ProxyServiceAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         ProxyData prxy = proxyServiceAdminClient.getProxyDetails(proxyName);
-        prxy.setWsdlURI("file:repository/samples/resources/proxy/sample_proxy_1.wsdl");
+        prxy.setWsdlURI("file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl");
         proxyServiceAdminClient.updateProxy(prxy);
         Thread.sleep(1000);
         isProxyDeployed(proxyName);
         prxy = proxyServiceAdminClient.getProxyDetails(proxyName);
         Assert.assertNotNull(prxy);
-        Assert.assertEquals(prxy.getWsdlURI(), "file:repository/samples/resources/proxy/sample_proxy_1.wsdl", "WSDl Url invalid");
+        Assert.assertEquals(prxy.getWsdlURI(), "file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl", "WSDl Url invalid");
     }
 
     @Test(groups = "wso2.esb", description = "Invoking Pass through proxy http", dependsOnMethods = {"editProxyService"})

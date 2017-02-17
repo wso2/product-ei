@@ -30,8 +30,8 @@
     </registry>
 
     <!-- define the request processing XSLT resource as a static URL source -->
-    <localEntry key="xslt-key-req" src="file:repository/samples/resources/transform/transform.xslt"/>
-    <localEntry key="transform-back" src="file:repository/samples/resources/transform/transform_back.xslt"/>
+    <localEntry key="xslt-key-req" src="file:samples/service-bus/resources/transform/transform.xslt"/>
+    <localEntry key="transform-back" src="file:samples/service-bus/resources/transform/transform_back.xslt"/>
     <sequence name="main">
         <in>
             <!-- transform the custom quote request into a standard quote requst expected by the service -->
