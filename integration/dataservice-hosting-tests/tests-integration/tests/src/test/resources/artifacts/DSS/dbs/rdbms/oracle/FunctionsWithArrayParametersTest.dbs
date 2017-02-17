@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="FunctionsWithArrayParametersTest" transports="http https local">
+   <config enableOData="false" id="default">
+      <property name="driverClassName">oracle.jdbc.driver.OracleDriver</property>
+      <property name="url">jdbc:oracle:thin:@//localhost:1521/XE</property>
+      <property name="username">wso2carbon</property>
+      <property name="password">wso2carbon</property>
+   </config>
+   <query id="getStudentsGradesQuery" useConfig="default">
+      <sql>{CALL ?:=getStudentGrades(?,names_table(?),?)}</sql>
+      <result element="studentGrades" rowName="studetGrade">
+         <element column="total_score" name="total_score" xsdType="xs:string"/>
+         <element name="grades">
+            <element arrayName="student_gradeArray" column="student_grade" name="grade" optional="true" xsdType="string"/>
+         </element>
+      </result>
+      <param name="total_score" sqlType="INTEGER" type="OUT"/>
+      <param name="class_name" sqlType="STRING"/>
+      <param name="student_names" paramType="ARRAY" sqlType="STRING"/>
+      <param name="student_grade" paramType="ARRAY" sqlType="ARRAY" structType="GRADES_TABLE" type="OUT"/>
+   </query>
+   <operation name="getStudentGrades">
+      <call-query href="getStudentsGradesQuery">
+         <with-param name="class_name" query-param="class_name"/>
+         <with-param name="student_names" query-param="student_names"/>
+      </call-query>
+   </operation>
+</data>

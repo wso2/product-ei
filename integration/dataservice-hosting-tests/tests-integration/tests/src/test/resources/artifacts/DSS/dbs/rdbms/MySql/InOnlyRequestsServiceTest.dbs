@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="InOnlyRequestsServiceTest" serviceGroup="InOnlyRequests" baseURI="http://ws.wso2.org/dataservice/samples/in_only_request_sample">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">com.mysql.jdbc.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:mysql://192.168.4.27:3306/testDatabase_wso2automation_com</property>
+      <property name="org.wso2.ws.dataservice.user">testAt1_52lTBOdp</property>
+      <property name="org.wso2.ws.dataservice.password">test123</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.autocommit">false</property>
+      <property name="org.wso2.ws.dataservice.validation_query">SELECT 1</property>
+   </config>
+   <query id="addStudentQuery" useConfig="default">
+      <sql>insert into Students (studentNumber, name, phone, state, country) values(?, ?, ?, 'NY', 'USA')</sql>
+      <param name="studentNumber" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="1" />
+      <param name="name" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2"/>
+      <param name="phone" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="3"/>
+   </query>
+   <query id="studentCountQuery" useConfig="default">
+      <sql>select count(*) as c from Students</sql>
+      <result element="Students" rowName="Students">
+         <element name="exists" column="c"/>
+      </result>
+   </query>
+   <operation name="addStudent">
+      <call-query href="addStudentQuery">
+         <with-param name="studentNumber" query-param="studentNumber" />
+         <with-param name="name" query-param="name" />
+         <with-param name="phone" query-param="phone" />
+      </call-query>
+   </operation>
+   <operation name="getStudentCount">
+      <call-query href="studentCountQuery"/>
+   </operation>
+</data>
