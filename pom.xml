@@ -1201,7 +1201,7 @@
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.1.13</andes.version>
+        <andes.version>3.1.14</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1337,7 +1337,7 @@
         <mysql.connector.version>5.1.6</mysql.connector.version>
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-        <org.wso2.andes.client.version>0.13.wso2v3</org.wso2.andes.client.version>
+        <org.wso2.andes.client.version>3.1.14</org.wso2.andes.client.version>
 
         <commons-codec.version>1.6</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>
