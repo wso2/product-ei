@@ -50,7 +50,7 @@ public class ODataBatchRequestTestCase extends DSSIntegrationTest {
 		deployService(serviceName, createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
 		                                          "odata" + File.separator + "ODataBatchRequestSampleService.dbs",
 		                                          sqlFileLis));
-		webappURL = dssContext.getContextUrls().getWebAppURL();
+		webappURL = "http://localhost:8480";
 	}
 
 	@AfterClass(alwaysRun = true)
