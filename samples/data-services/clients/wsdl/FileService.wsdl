@@ -1,0 +1,492 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns5="http://ws.wso2.org/dataservice/samples/file_service/file_exists" xmlns:ns6="http://ws.wso2.org/dataservice" xmlns:ns2="http://ws.wso2.org/dataservice/samples/file_service/file_records" xmlns:ns1="http://ws.wso2.org/dataservice/samples/file_service/file_type" xmlns:ns4="http://ws.wso2.org/dataservice/samples/file_service" xmlns:ns3="http://ws.wso2.org/dataservice/samples/file_service/file_names" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/file_service/file_size" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_size">
+            <xs:element name="_getgetfilesize">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Files" type="ns0:Files" />
+            <xs:complexType name="Files">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="File" type="ns0:File" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="File">
+                <xs:sequence>
+                    <xs:element name="fileSize" nillable="true" type="xs:integer" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_type">
+            <xs:element name="_getgetfiletype">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Files" type="ns1:Files" />
+            <xs:complexType name="Files">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="File" type="ns1:File" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="File">
+                <xs:sequence>
+                    <xs:element name="type" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_records">
+            <xs:element name="_getgetfilerecords">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Files" type="ns2:Files" />
+            <xs:complexType name="Files">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="File" type="ns2:File" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="File">
+                <xs:sequence>
+                    <xs:element name="record" nillable="true" type="xs:base64Binary" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_names">
+            <xs:element name="_getgetfilenames">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Files" type="ns3:Files" />
+            <xs:complexType name="Files">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="File" type="ns3:File" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="File">
+                <xs:sequence>
+                    <xs:element name="fileName" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service">
+            <xs:element name="_getcreatenewfile">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                        <xs:element name="fileType" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="_getdeletefile">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="_postappenddatatofile">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                        <xs:element name="data" nillable="true" type="xs:base64Binary" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_exists">
+            <xs:element name="_getcheckfileexists">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fileName" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Files" type="ns5:Files" />
+            <xs:complexType name="Files">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="File" type="ns5:File" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="File">
+                <xs:sequence>
+                    <xs:element name="fileExists" nillable="true" type="xs:integer" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="_getgetfiletypeRequest">
+        <wsdl:part name="parameters" element="ns1:_getgetfiletype" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfiletypeResponse">
+        <wsdl:part name="parameters" element="ns1:Files" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns6:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:message name="_getdeletefileRequest">
+        <wsdl:part name="parameters" element="ns4:_getdeletefile" />
+    </wsdl:message>
+    <wsdl:message name="_getcheckfileexistsRequest">
+        <wsdl:part name="parameters" element="ns5:_getcheckfileexists" />
+    </wsdl:message>
+    <wsdl:message name="_getcheckfileexistsResponse">
+        <wsdl:part name="parameters" element="ns5:Files" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfilenamesRequest">
+        <wsdl:part name="parameters" element="ns3:_getgetfilenames" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfilenamesResponse">
+        <wsdl:part name="parameters" element="ns3:Files" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfilerecordsRequest">
+        <wsdl:part name="parameters" element="ns2:_getgetfilerecords" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfilerecordsResponse">
+        <wsdl:part name="parameters" element="ns2:Files" />
+    </wsdl:message>
+    <wsdl:message name="_postappenddatatofileRequest">
+        <wsdl:part name="parameters" element="ns4:_postappenddatatofile" />
+    </wsdl:message>
+    <wsdl:message name="_getcreatenewfileRequest">
+        <wsdl:part name="parameters" element="ns4:_getcreatenewfile" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfilesizeRequest">
+        <wsdl:part name="parameters" element="ns0:_getgetfilesize" />
+    </wsdl:message>
+    <wsdl:message name="_getgetfilesizeResponse">
+        <wsdl:part name="parameters" element="ns0:Files" />
+    </wsdl:message>
+    <wsdl:portType name="FileServicePortType">
+        <wsdl:operation name="_getgetfiletype">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getgetfiletypeRequest" wsaw:Action="urn:_getgetfiletype" />
+            <wsdl:output message="ns4:_getgetfiletypeResponse" wsaw:Action="urn:_getgetfiletypeResponse" />
+            <wsdl:fault message="ns4:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getgetfiletypeDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="_getdeletefile">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getdeletefileRequest" wsaw:Action="urn:_getdeletefile" />
+        </wsdl:operation>
+        <wsdl:operation name="_getcheckfileexists">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getcheckfileexistsRequest" wsaw:Action="urn:_getcheckfileexists" />
+            <wsdl:output message="ns4:_getcheckfileexistsResponse" wsaw:Action="urn:_getcheckfileexistsResponse" />
+            <wsdl:fault message="ns4:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getcheckfileexistsDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilenames">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getgetfilenamesRequest" wsaw:Action="urn:_getgetfilenames" />
+            <wsdl:output message="ns4:_getgetfilenamesResponse" wsaw:Action="urn:_getgetfilenamesResponse" />
+            <wsdl:fault message="ns4:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getgetfilenamesDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilerecords">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getgetfilerecordsRequest" wsaw:Action="urn:_getgetfilerecords" />
+            <wsdl:output message="ns4:_getgetfilerecordsResponse" wsaw:Action="urn:_getgetfilerecordsResponse" />
+            <wsdl:fault message="ns4:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getgetfilerecordsDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="_postappenddatatofile">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_postappenddatatofileRequest" wsaw:Action="urn:_postappenddatatofile" />
+        </wsdl:operation>
+        <wsdl:operation name="_getcreatenewfile">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getcreatenewfileRequest" wsaw:Action="urn:_getcreatenewfile" />
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilesize">
+            <wsdl:documentation />
+            <wsdl:input message="ns4:_getgetfilesizeRequest" wsaw:Action="urn:_getgetfilesize" />
+            <wsdl:output message="ns4:_getgetfilesizeResponse" wsaw:Action="urn:_getgetfilesizeResponse" />
+            <wsdl:fault message="ns4:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getgetfilesizeDataServiceFault" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="FileServiceSOAP11Binding" type="ns4:FileServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="_getgetfiletype">
+            <soap:operation soapAction="urn:_getgetfiletype" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getdeletefile">
+            <soap:operation soapAction="urn:_getdeletefile" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getcheckfileexists">
+            <soap:operation soapAction="urn:_getcheckfileexists" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilenames">
+            <soap:operation soapAction="urn:_getgetfilenames" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilerecords">
+            <soap:operation soapAction="urn:_getgetfilerecords" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_postappenddatatofile">
+            <soap:operation soapAction="urn:_postappenddatatofile" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getcreatenewfile">
+            <soap:operation soapAction="urn:_getcreatenewfile" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilesize">
+            <soap:operation soapAction="urn:_getgetfilesize" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FileServiceSOAP12Binding" type="ns4:FileServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="_getgetfiletype">
+            <soap12:operation soapAction="urn:_getgetfiletype" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getdeletefile">
+            <soap12:operation soapAction="urn:_getdeletefile" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getcheckfileexists">
+            <soap12:operation soapAction="urn:_getcheckfileexists" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilenames">
+            <soap12:operation soapAction="urn:_getgetfilenames" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilerecords">
+            <soap12:operation soapAction="urn:_getgetfilerecords" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_postappenddatatofile">
+            <soap12:operation soapAction="urn:_postappenddatatofile" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getcreatenewfile">
+            <soap12:operation soapAction="urn:_getcreatenewfile" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilesize">
+            <soap12:operation soapAction="urn:_getgetfilesize" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FileServiceHttpBinding" type="ns4:FileServicePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="_getgetfiletype">
+            <http:operation location="getFileType" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="_getdeletefile">
+            <http:operation location="deleteFile" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getcheckfileexists">
+            <http:operation location="checkFileExists" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilenames">
+            <http:operation location="getFileNames" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilerecords">
+            <http:operation location="getFileRecords" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="_postappenddatatofile">
+            <http:operation location="appendDataToFile" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getcreatenewfile">
+            <http:operation location="createNewFile" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="_getgetfilesize">
+            <http:operation location="getFileSize" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="FileService">
+        <wsdl:port name="SOAP11Endpoint" binding="ns4:FileServiceSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/FileService.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns4:FileServiceSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/FileService.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns4:FileServiceSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/FileService.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns4:FileServiceSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/FileService.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns4:FileServiceHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/FileService.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns4:FileServiceHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/FileService.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

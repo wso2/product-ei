@@ -1,0 +1,86 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="MongoDBSample">
+   <config id="mongo_ds">
+      <property name="mongoDB_servers">localhost</property>
+      <property name="mongoDB_database">mydb</property>
+   </config>
+   <query id="mongo_find" useConfig="mongo_ds">
+      <expression>things.find()</expression>
+      <result element="Documents" rowName="Document">
+         <element column="document" name="Data" xsdType="string"/>
+      </result>
+   </query>
+   <query id="mongo_count" useConfig="mongo_ds">
+      <expression>things.count()</expression>
+      <result element="Documents" rowName="Document">
+         <element column="document" name="Data" xsdType="string"/>
+      </result>
+   </query>
+   <query id="mongo_insert" useConfig="mongo_ds">
+      <expression>things.insert("{id:#, name:#}")</expression>
+      <param name="id" sqlType="INTEGER"/>
+      <param name="name" sqlType="STRING"/>
+   </query>
+   <query id="mongo_insert_doc" useConfig="mongo_ds">
+      <expression>things.insert("#")</expression>
+      <param name="doc" sqlType="STRING"/>
+   </query>
+   <query id="mongo_remove" useConfig="mongo_ds">
+      <expression>things.remove("{id:#}")</expression>
+      <param name="id" sqlType="INTEGER"/>
+   </query>
+   <query id="mongo_update" useConfig="mongo_ds">
+      <expression>things.update({name:'Bob'}, {name:'Zack', id: #}, true)</expression>
+      <param name="id" sqlType="STRING"/>
+   </query>
+   <query id="mongo_drop" useConfig="mongo_ds">
+      <expression>things.drop()</expression>
+   </query>
+   <operation name="mongo_find">
+      <call-query href="mongo_find"> </call-query>
+   </operation>
+   <operation name="mongo_count">
+      <call-query href="mongo_count"> </call-query>
+   </operation>
+   <operation name="mongo_insert">
+      <call-query href="mongo_insert">
+         <with-param name="name" query-param="name"/>
+         <with-param name="id" query-param="id"/>
+      </call-query>
+   </operation>
+   <operation name="mongo_insert_doc">
+      <call-query href="mongo_insert_doc">
+         <with-param name="doc" query-param="doc"/>
+      </call-query>
+   </operation>
+   <operation name="mongo_remove">
+      <call-query href="mongo_remove">
+         <with-param name="id" query-param="id"/>
+      </call-query>
+   </operation>
+   <operation name="mongo_update">
+      <call-query href="mongo_update">
+         <with-param name="id" query-param="id"/>
+      </call-query>
+   </operation>
+   <operation name="mongo_drop">
+      <call-query href="mongo_drop"> </call-query>
+   </operation>
+</data>

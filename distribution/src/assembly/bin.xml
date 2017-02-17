@@ -1227,6 +1227,18 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/capps</outputDirectory>
         </fileSet>
 
+        <!--  copying dss samples -->
+        <fileSet>
+            <directory>../samples/data-services</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/data-services</outputDirectory>
+            <excludes>
+                <exclude>**/**.sh</exclude>
+                <exclude>**/pom.xml</exclude>
+                <exclude>**/pom.xml.releaseBackup</exclude>
+                <exclude>**/target/**</exclude>
+            </excludes>
+        </fileSet>
+
         <fileSet>
             <directory>src/analytics/samples/udfs/country-code-ip/target</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/samples/udfs
@@ -1726,6 +1738,12 @@
             </outputDirectory>
             <destName>axis2_client.xml</destName>
             <fileMode>644</fileMode>
+        </file>
+
+        <!-- Including custom-datasources.xml file -->
+        <file>
+            <source>src/conf/custom-datasources.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/datasources</outputDirectory>
         </file>
 
         <file>

@@ -1,0 +1,168 @@
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://ws.apache.org/axis2" xmlns:ns1="http://ws.wso2.org/dataservice/samples/ContractFirstSample" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.apache.org/axis2">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema xmlns:ax211="http://ws.wso2.org/dataservice/samples/ContractFirstSample" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/ContractFirstSample">
+            <xs:complexType name="top-customers">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="customer-info" nillable="true" type="ax211:customer-info" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="top-customers" type="ax211:top-customers" />
+            <xs:complexType name="customer-info">
+                <xs:sequence>
+                    <xs:element name="customer-number" nillable="true" type="xs:string" />
+                    <xs:element name="last-name" nillable="true" type="xs:string" />
+                    <xs:element name="first-name" nillable="true" type="xs:string" />
+                    <xs:element name="telephone" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="top-employees">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="employee" nillable="true" type="ax211:employee" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="top-employees" type="ax211:top-employees" />
+            <xs:complexType name="employee">
+                <xs:sequence>
+                    <xs:element name="emp-no" nillable="true" type="xs:string" />
+
+                    <xs:element name="last-name" nillable="true" type="xs:string" />
+                    <xs:element name="first-name" nillable="true" type="xs:string" />
+                    <xs:element name="job-title" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="topEmployeesInMARequest" />
+    <wsdl:message name="topEmployeesInMAResponse">
+
+        <wsdl:part name="parameters" element="ns1:top-employees" />
+    </wsdl:message>
+    <wsdl:message name="topCustomersInCaliforniaRequest" />
+    <wsdl:message name="topCustomersInCaliforniaResponse">
+        <wsdl:part name="parameters" element="ns1:top-customers" />
+    </wsdl:message>
+    <wsdl:portType name="ContractFirstSamplePortType">
+        <wsdl:operation name="topEmployeesInMA">
+            <wsdl:input message="axis2:topEmployeesInMARequest" wsaw:Action="urn:topEmployeesInMA" />
+
+            <wsdl:output message="axis2:topEmployeesInMAResponse" wsaw:Action="urn:topEmployeesInMAResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="topCustomersInCalifornia">
+            <wsdl:input message="axis2:topCustomersInCaliforniaRequest" wsaw:Action="urn:topCustomersInCalifornia" />
+            <wsdl:output message="axis2:topCustomersInCaliforniaResponse" wsaw:Action="urn:topCustomersInCaliforniaResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ContractFirstSampleSOAP11Binding" type="axis2:ContractFirstSamplePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+
+        <wsdl:operation name="topEmployeesInMA">
+            <soap:operation soapAction="urn:topEmployeesInMA" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="topCustomersInCalifornia">
+            <soap:operation soapAction="urn:topCustomersInCalifornia" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+
+    </wsdl:binding>
+    <wsdl:binding name="ContractFirstSampleSOAP12Binding" type="axis2:ContractFirstSamplePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="topEmployeesInMA">
+            <soap12:operation soapAction="urn:topEmployeesInMA" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="topCustomersInCalifornia">
+            <soap12:operation soapAction="urn:topCustomersInCalifornia" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ContractFirstSampleHttpBinding" type="axis2:ContractFirstSamplePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="topEmployeesInMA">
+            <http:operation location="topEmployeesInMA" />
+            <wsdl:input>
+
+                <mime:content type="text/xml" part="topEmployeesInMA" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="topEmployeesInMA" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="topCustomersInCalifornia">
+            <http:operation location="topCustomersInCalifornia" />
+            <wsdl:input>
+
+                <mime:content type="text/xml" part="topCustomersInCalifornia" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="topCustomersInCalifornia" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ContractFirstSample">
+        <wsdl:port name="SOAP11Endpoint" binding="axis2:ContractFirstSampleSOAP11Binding">
+
+            <soap:address location="http://10.215.100.172:9763/services/ContractFirstSample.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="axis2:ContractFirstSampleSOAP11Binding">
+            <soap:address location="https://10.215.100.172:9443/services/ContractFirstSample.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="axis2:ContractFirstSampleSOAP12Binding">
+            <soap12:address location="https://10.215.100.172:9443/services/ContractFirstSample.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="axis2:ContractFirstSampleSOAP12Binding">
+
+            <soap12:address location="http://10.215.100.172:9763/services/ContractFirstSample.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="axis2:ContractFirstSampleHttpBinding">
+            <http:address location="http://10.215.100.172:9763/services/ContractFirstSample.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="axis2:ContractFirstSampleHttpBinding">
+            <http:address location="https://10.215.100.172:9443/services/ContractFirstSample.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

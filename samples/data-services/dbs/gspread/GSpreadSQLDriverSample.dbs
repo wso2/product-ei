@@ -1,0 +1,93 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="GSpreadSQLDriverSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/gspread_sql_driver_sample_service">
+   <config id="gspreadConfig">
+         <property name="driverClassName">org.wso2.carbon.dataservices.sql.driver.TDriver</property>
+         <property name="url">jdbc:wso2:gspread:filePath=https://spreadsheets.google.com/ccc?key=0Av5bU8aVtFjPdElrUVN3VmZlRkoyM1ZzVlE1MzdtbXc;sheetName=customers;visibility=private;clientId=681432298341-7tdaln7alekn24o18q1kltqc6n12t7sv.apps.googleusercontent.com;clientSecret=H2I8fN5h2SWhZjaX-jrHocdz;refreshToken=1%2FPAzmqKjxhxwbsrEbsUuSRX_6rUTdzERAQhFMsSTxvutIgOrJDtdun6zK6XiATCKT</property>
+      </config>
+      <query id="getCustomersSQL" useConfig="gspreadConfig">
+         <sql>SELECT customerNumber,customerName,phone,state,country FROM Sheet1</sql>
+         <result element="Customers" rowName="Customer">
+            <element column="customerNumber" name="customerNumber" xsdType="string"/>
+            <element column="customerName" name="customerName" xsdType="string"/>
+            <element column="phone" name="phone" xsdType="string"/>
+            <element column="state" name="state" xsdType="string"/>
+            <element column="country" name="country" xsdType="string"/>
+         </result>
+      </query>
+      <query id="addCustomerSQL" useConfig="gspreadConfig">
+         <sql>INSERT INTO customers(customerNumber,customerName,contactLastName,contactFirstName,phone,addressLine1,addressLine2,city,state,postalCode,country,salesRepEmployeeNumber,creditLimit) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)</sql>
+         <param name="customerNumber" sqlType="STRING"/>
+         <param name="customerName" sqlType="STRING"/>
+         <param name="contactLastName" sqlType="STRING"/>
+         <param name="contactFirstName" sqlType="STRING"/>
+         <param name="phone" sqlType="STRING"/>
+         <param name="addressLine1" sqlType="STRING"/>
+         <param name="addressLine2" sqlType="STRING"/>
+         <param name="city" sqlType="STRING"/>
+         <param name="state" sqlType="STRING"/>
+         <param name="postalCode" sqlType="STRING"/>
+         <param name="country" sqlType="STRING"/>
+         <param name="salesRepEmployeeNumber" sqlType="STRING"/>
+         <param name="creditLimit" sqlType="STRING"/>
+      </query>
+      <query id="deleteCustomerSQL" useConfig="gspreadConfig">
+         <sql>DELETE FROM customers WHERE customerNumber=?</sql>
+         <param name="customerNumber" sqlType="STRING"/>
+      </query>
+      <query id="updateCustomerSQL" useConfig="gspreadConfig">
+         <sql>UPDATE customers SET contactFirstName=?, contactLastName=? WHERE customerNumber=?</sql>
+         <param name="contactFirstName" sqlType="STRING"/>
+         <param name="contactLastName" sqlType="STRING"/>
+         <param name="customerNumber" sqlType="STRING"/>
+      </query>
+      <operation name="addCustomerSQL">
+         <call-query href="addCustomerSQL">
+            <with-param name="customerNumber" query-param="customerNumber"/>
+            <with-param name="customerName" query-param="customerName"/>
+            <with-param name="contactLastName" query-param="contactLastName"/>
+            <with-param name="contactFirstName" query-param="contactFirstName"/>
+            <with-param name="phone" query-param="phone"/>
+            <with-param name="addressLine1" query-param="addressLine1"/>
+            <with-param name="addressLine2" query-param="addressLine2"/>
+            <with-param name="city" query-param="city"/>
+            <with-param name="state" query-param="state"/>
+            <with-param name="postalCode" query-param="postalCode"/>
+            <with-param name="country" query-param="country"/>
+            <with-param name="salesRepEmployeeNumber" query-param="salesRepEmployeeNumber"/>
+            <with-param name="creditLimit" query-param="creditLimit"/>
+         </call-query>
+      </operation>
+      <operation name="deleteCustomerSQL">
+         <call-query href="deleteCustomerSQL">
+            <with-param name="customerNumber" query-param="customerNumber"/>
+         </call-query>
+      </operation>
+      <operation name="updateCustomerSQL">
+         <call-query href="updateCustomerSQL">
+            <with-param name="contactFirstName" query-param="contactFirstName"/>
+            <with-param name="contactLastName" query-param="contactLastName"/>
+            <with-param name="customerNumber" query-param="customerNumber"/>
+         </call-query>
+      </operation>
+      <operation name="getCustomersSQL">
+         <call-query href="getCustomersSQL"/>
+      </operation>
+</data>
+

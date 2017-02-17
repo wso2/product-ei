@@ -1,0 +1,241 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project default="jar">
+
+    <property name="wso2ds.home" value="../.." />
+    <property name="carbon.home" value="${wso2ds.home}" />
+    <property name="host.ip" value="localhost" />
+    <property name="host.http.port" value="9763" />
+    <property name="host.https.port" value="9443" />
+    <property name="client_jks_path" value="${wso2ds.home}/repository/resources/security/wso2carbon.jks" />
+    <property name="security.policy.path" value="${wso2ds.home}/samples/security/secure_sample_policy.xml" />
+    <property name="wso2ds.home.absolute.path" location="${wso2ds.home}"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes" value="${build.dir}/classes"/>
+    <property name="log4j.linux.url" value="file://${wso2ds.home.absolute.path}/samples/data-services/clients/log4j.properties"/>
+    <property name="log4j.windows.url" value="file:/${wso2ds.home.absolute.path}/samples/data-services/clients/log4j.properties"/>
+    <condition property="isWindows" value="true">
+        <os family="windows" />
+    </condition>
+
+    <ant antfile="${wso2ds.home}/bin/build.xml" />
+
+    <path id="axis2.class.path">
+        <fileset dir="${wso2ds.home}">
+            <include name="repository/lib/*.jar" />
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="set-log4j-url-linux" unless="isWindows">
+        <property name="log4j.url" value="${log4j.linux.url}" />
+    </target>
+
+    <target name="set-log4j-url-windows" if="isWindows">
+        <property name="log4j.url" value="${log4j.windows.url}" />
+    </target>
+
+    <target name="init" depends="clean,set-log4j-url-linux,set-log4j-url-windows">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes}"/>
+        <mkdir dir="${build.dir}/generated"/>
+    </target>
+
+    <target name="generate-stubs" depends="init">
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/RDBMSSample.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.rdbms_sample
+                                      -ns2p http://ws.wso2.org/dataservice/rdbms_sample1=org.wso2.carbon.dataservices.samples.types.rdbms_sample"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/DTPSampleService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.dtp_sample
+                                      -ns2p http://ws.wso2.org/dataservice/dtp_sample=org.wso2.carbon.dataservices.samples.types.dtp_sample"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/NestedQuerySample.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.nested_query_sample
+                                      -ns2p http://ws.wso2.org/dataservice/nested_query_sample=org.wso2.carbon.dataservices.samples.types.nested_query_sample"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/FileService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.file_service
+                                      -ns2p http://ws.wso2.org/dataservice/file_service=org.wso2.carbon.dataservices.samples.types.file_service"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/EventingSample.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.eventing_sample
+                                      -ns2p http://ws.wso2.org/dataservice/eventing_sample=org.wso2.carbon.dataservices.samples.types.eventing_sample"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/BatchRequestSample.wsdl -u
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.batch_request_sample
+                                      -ns2p http://ws.wso2.org/dataservice/batch_request_sample=org.wso2.carbon.dataservices.samples.types.batch_request_sample"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/CSVSampleService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.csv_sample_service
+                                      -ns2p http://ws.wso2.org/dataservice/csv_sample_service=org.wso2.carbon.dataservices.samples.types.csv_sample_service"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/ExcelSampleService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.excel_sample_service
+                                      -ns2p http://ws.wso2.org/dataservice/excel_sample_service=org.wso2.carbon.dataservices.samples.types.excel_sample_service"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/GSpreadSample.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.gspread_sample_service
+                                      -ns2p http://ws.wso2.org/dataservice/gspread_sample_service2=org.wso2.carbon.dataservices.samples.types.gspread_sample_service"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/SecureDataService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.secure_dataservice
+                                      -ns2p http://ws.wso2.org/dataservice/secure_dataservice=org.wso2.carbon.dataservices.samples.types.secure_dataservice"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/FaultDBService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.fault_dataservice
+                                      -ns2p http://ws.wso2.org/dataservice/fault_dataservice=org.wso2.carbon.dataservices.samples.types.fault_dataservice"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <arg line="-uri wsdl/RDFSampleService.wsdl -u -uw
+                                      -o ${build.dir}/generated -p org.wso2.carbon.dataservices.samples.rdf_dataservice
+                                      -ns2p http://ws.wso2.org/dataservice/rdf_dataservice=org.wso2.carbon.dataservices.samples.types.rdf_dataservice"/>
+            <classpath refid="axis2.class.path"/>
+        </java>
+    </target>
+
+    <target name="compile" depends="generate-stubs">
+        <javac srcdir="${build.dir}/generated/src" destdir="${classes}">
+            <classpath refid="axis2.class.path" />
+        </javac>
+        <javac srcdir="src" destdir="${classes}">
+            <classpath refid="axis2.class.path" />
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${build.dir}/dataservice-client-samples.jar" basedir="${classes}"/>
+    </target>
+
+    <target name="rdbms" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.RDBMSSample" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.http.port" value="${host.http.port}" />
+        </java>
+    </target>
+
+    <target name="csv" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.CSVSample" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.http.port" value="${host.http.port}" />
+        </java>
+    </target>
+
+    <target name="excel" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.ExcelSample" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.http.port" value="${host.http.port}" />
+        </java>
+    </target>
+
+    <target name="gspread" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.GSpreadSample" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.http.port" value="${host.http.port}" />
+        </java>
+    </target>
+
+    <target name="batch_request" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.BatchRequestSample" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.http.port" value="${host.http.port}" />
+        </java>
+    </target>
+
+    <target name="secure_sample" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.SecureSample" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.https.port" value="${host.https.port}" />
+            <sysproperty key="client_jks_path" value="${client_jks_path}" />
+            <sysproperty key="security.policy.path" value="${security.policy.path}" />
+        </java>
+    </target>
+
+    <target name="file_service_app" depends="set-log4j-url-linux,set-log4j-url-windows">
+        <java classname="org.wso2.carbon.dataservices.samples.FileServiceApp" fork="true">
+            <sysproperty key="log4j.configuration" value="${log4j.url}"/>
+            <classpath refid="axis2.class.path" />
+            <classpath location="${classes}" />
+            <sysproperty key="host.ip" value="${host.ip}" />
+            <sysproperty key="host.http.port" value="${host.http.port}" />
+        </java>
+    </target>
+
+    <target name="all">
+        <antcall target="rdbms" />
+        <antcall target="csv" />
+        <antcall target="excel" />
+        <antcall target="gspread" />
+        <antcall target="batch_request" />
+    </target>
+
+</project>

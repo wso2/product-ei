@@ -1,0 +1,54 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="ExcelSampleService" serviceNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service">
+   <config id="default">
+      <property name="excel_datasource">./samples/data-services/resources/Products.xls</property>
+   </config>
+   <query id="sheet1Query" useConfig="default">
+      <excel>
+         <workbookname>Sheet1</workbookname>
+         <hasheader>true</hasheader>
+         <startingrow>2</startingrow>
+         <maxrowcount>-1</maxrowcount>
+         <headerrow>1</headerrow>
+      </excel>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service/getProducts" element="Products" rowName="Product">
+         <element column="ID" name="ID"/>
+         <element column="Model" name="Name"/>
+      </result>
+   </query>
+   <query id="sheet1Query2" useConfig="default">
+      <excel>
+         <workbookname>Sheet1</workbookname>
+         <hasheader>true</hasheader>
+         <startingrow>2</startingrow>
+         <maxrowcount>-1</maxrowcount>
+      </excel>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service" element="Products" rowName="Product" xsltPath="./samples/data-services/xslt/transform.xslt">
+         <element column="Model" name="Name" xsdType="string"/>
+         <element column="Classification" name="Classification" xsdType="string"/>
+      </result>
+   </query>
+   <operation name="getProducts">
+      <call-query href="sheet1Query"/>
+   </operation>
+   <operation name="getProductClassifications">
+      <call-query href="sheet1Query2"/>
+   </operation>
+</data>

@@ -1,0 +1,49 @@
+Prerequisites
+=============
+
+To run the samples, you must have ant installed "http://ant.apache.org/".
+
+Building the samples
+===================
+
+# ant
+
+Running the samples
+===================
+
+RDBMS:-
+
+# ant rdbms
+
+CSV:-
+
+# ant csv
+
+Excel:-
+
+# ant excel
+
+Google Spreadsheet:-
+
+# ant gspread
+
+Running all tests:-
+
+# ant all
+
+The default server location is "localhost" and the default HTTP port is "9763". To override these settings,
+the following java system properties must be set.
+
+host.ip
+host.http.port
+
+e.g. # ant -Dhost.ip="192.168.1.10" -Dhost.http.port="9674"
+
+----------------
+
+File Service Application (running the file service GUI java application - demonstrates binary data handling and streaming) :-
+
+# ant file_service_app
+
+----------------
+

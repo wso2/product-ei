@@ -1,0 +1,39 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="CSVSampleService" serviceNamespace="http://ws.wso2.org/dataservice/samples/csv_sample_service">
+   <config id="default">
+      <property name="csv_datasource">./samples/data-services/resources/Products.csv</property>
+      <property name="csv_columnseperator">,</property>
+      <property name="csv_startingrow">2</property>
+      <property name="csv_maxrowcount">-1</property>
+      <property name="csv_hasheader">true</property>
+      <property name="csv_headerrow">1</property>
+   </config>
+   <query id="productsQuery" useConfig="default">
+      <result element="Products" rowName="Product">
+         <element column="ID" name="ID" xsdType="string"/>
+         <element column="Classification" name="Category" xsdType="string"/>
+         <element column="Price" name="Price" xsdType="double"/>
+         <element column="Name" name="Name" xsdType="string"/>
+      </result>
+   </query>
+   <operation name="getProducts">
+      <call-query href="productsQuery"/>
+   </operation>
+</data>

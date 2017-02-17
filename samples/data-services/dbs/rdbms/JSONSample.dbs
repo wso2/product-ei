@@ -1,0 +1,97 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="JSONSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/json_sample">
+   <config id="default">
+      <property name="driverClassName">org.h2.Driver</property>
+      <property name="url">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+      <property name="username">wso2ds</property>
+      <property name="password">wso2ds</property>
+   </config>
+   <query id="employeesInOfficeSQL" useConfig="default">
+      <sql>select employeeNumber, firstName, lastName, email, jobTitle from Employees where officeCode = :officeCode</sql>
+      <result outputType="json">            {               "Employees":{                  "Employee":[                     {                        "employeeNumber":"$employeeNumber(type:integer)",                        "firstName":"$firstName",                        "email":"$email"                     }                  ]               }            }              </result>
+      <param name="officeCode" sqlType="STRING"/>
+   </query>
+   <query id="listOfficesSQL" useConfig="default">
+      <sql>select officeCode, addressLine1, addressLine2, city, state, country, phone from Offices</sql>
+      <result outputType="json">            {               "Offices":{                  "Office":[                     {                        "officeCode":"$officeCode(type:integer)",                        "city":"$city",                        "country":"$country",                        "phone":"$phone",                        "@employeesInOfficeSQL":"$officeCode-&gt;officeCode"                     }                  ]               }            }      </result>
+   </query>
+   <query id="employeesByNumberSQL" useConfig="default">
+      <sql>select * from Employees where employeeNumber = ?</sql>
+      <result outputType="json">                    {               "employees":{                  "employee":[                     {                        "lastName":"$lastName",                        "firstName":"$firstName",                        "salary":"$salary(type:double)"                     }                  ]               }            }      </result>
+      <param name="employeeNumber" ordinal="1" sqlType="INTEGER"/>
+   </query>
+   <query id="customersInBostonSQL" useConfig="default">
+      <sql>select  * from Customers where city = 'Boston' and country = 'USA'</sql>
+      <result outputType="json">             {               "customers":{                  "customer":[                     {                        "phone":"$phone",                        "city":"$city",                        "contact":{                           "customer-name":"$customerName",                           "contact-last-name":"$contactLastName",                           "contact-first-name":"$contactFirstName"                        }                     }                  ]               }            }      </result>
+   </query>
+   <query id="addEmployeeQuery" useConfig="default">
+      <sql>insert into Employees (employeeNumber, lastName, firstName, email, salary) values(:employeeNumber,:lastName,:firstName,:email,:salary)</sql>
+      <param name="employeeNumber" sqlType="INTEGER"/>
+      <param name="lastName" sqlType="STRING">
+         <validateLength maximum="20" minimum="3"/>
+      </param>
+      <param name="firstName" sqlType="STRING"/>
+      <param name="email" sqlType="STRING">
+         <validatePattern pattern="(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|&quot;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"/>
+      </param>
+      <param defaultValue="1500" name="salary" sqlType="DOUBLE"/>
+   </query>
+   <query id="updateEmployeeQuery" useConfig="default">
+      <sql>update Employees set lastName=:lastName, firstName=:firstName, email=:email, salary=:salary where employeeNumber=:employeeNumber</sql>
+      <param name="employeeNumber" sqlType="INTEGER"/>
+      <param name="lastName" sqlType="STRING">
+         <validateLength maximum="20" minimum="3"/>
+      </param>
+      <param name="firstName" sqlType="STRING"/>
+      <param name="email" sqlType="STRING">
+         <validatePattern pattern="(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|&quot;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"/>
+      </param>
+      <param defaultValue="1500" name="salary" sqlType="DOUBLE"/>
+   </query>
+   <resource method="GET" path="offices">
+      <call-query href="listOfficesSQL"/>
+   </resource>
+   <resource method="GET" path="boston_customers">
+      <call-query href="customersInBostonSQL"/>
+   </resource>
+   <resource method="GET" path="employee/{employeeNumber}">
+      <call-query href="employeesByNumberSQL">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+      </call-query>
+   </resource>
+   <resource method="POST" path="employee">
+      <call-query href="addEmployeeQuery">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+         <with-param name="lastName" query-param="lastName"/>
+         <with-param name="firstName" query-param="firstName"/>
+         <with-param name="email" query-param="email"/>
+         <with-param name="salary" query-param="salary"/>
+      </call-query>
+   </resource>
+   <resource method="PUT" path="employee">
+      <call-query href="updateEmployeeQuery">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+         <with-param name="lastName" query-param="lastName"/>
+         <with-param name="firstName" query-param="firstName"/>
+         <with-param name="email" query-param="email"/>
+         <with-param name="salary" query-param="salary"/>
+      </call-query>
+   </resource>
+</data>
