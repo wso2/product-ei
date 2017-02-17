@@ -554,6 +554,15 @@
         </fileSet>
 
         <fileSet>
+            <directory>target/samples/samples-jar</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/axis2Client/lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+        <fileSet>
             <directory>target/samples/bpmn</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/business-process/bpmn</outputDirectory>
         </fileSet>
@@ -1493,6 +1502,23 @@
         </fileSet>
         <!-- END UES related dashboard artifacts -->
 
+        <fileSet>
+            <directory>
+                src/business-process/sampleConfig/resources
+            </directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/samples/axis2Client/resources
+            </outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>
+                src/business-process/sampleConfig/services
+            </directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/samples/axis2Server/repository/services
+            </outputDirectory>
+        </fileSet>
 
         <!--creating an empty event sink directory-->
         <fileSet>
