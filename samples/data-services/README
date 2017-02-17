@@ -1,0 +1,17 @@
+Deploying data service samples on WSO2 Data Services Server
+=====================================================================
+
+Follow the below steps for deploying the data services samples.
+
+1. Stop the currently running Data Services Server - This is recommended, to clean the current sample database and redeploy the services.
+
+2. Remove the current sample database and remove existing sample data services.
+   # cd CARBON_HOME/samples/
+   # ant clean
+
+3. Deploy all the samples.
+   # ant
+
+4. Start the Data Services Server
+   # cd CARBON_HOME/bin
+   # wso2server.bat|sh

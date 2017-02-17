@@ -1,0 +1,207 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://ws.wso2.org/dataservice" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/eventing_sample" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/eventing_sample">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/eventing_sample">
+            <xs:element name="updateProductQuantity">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="productCode" nillable="true" type="xs:string" />
+                        <xs:element name="quantityInStock" nillable="true" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addProduct">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="productCode" nillable="true" type="xs:string" />
+                        <xs:element name="productLine" nillable="true" type="xs:string" />
+                        <xs:element name="productName" nillable="true" type="xs:string" />
+                        <xs:element name="quantityInStock" nillable="true" type="xs:int" />
+                        <xs:element name="buyPrice" nillable="true" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getProductByCode">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="productCode" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Products" type="ns0:Products" />
+            <xs:complexType name="Products">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Product" type="ns0:Product" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Product">
+                <xs:sequence>
+                    <xs:element name="productCode" nillable="true" type="xs:string" />
+                    <xs:element name="productLine" nillable="true" type="xs:string" />
+                    <xs:element name="productName" nillable="true" type="xs:string" />
+                    <xs:element name="quantityInStock" nillable="true" type="xs:integer" />
+                    <xs:element minOccurs="0" name="buyPrice" nillable="true" type="xs:double" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getProductByCodeRequest">
+        <wsdl:part name="parameters" element="ns0:getProductByCode" />
+    </wsdl:message>
+    <wsdl:message name="getProductByCodeResponse">
+        <wsdl:part name="parameters" element="ns0:Products" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns1:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:message name="addProductRequest">
+        <wsdl:part name="parameters" element="ns0:addProduct" />
+    </wsdl:message>
+    <wsdl:message name="updateProductQuantityRequest">
+        <wsdl:part name="parameters" element="ns0:updateProductQuantity" />
+    </wsdl:message>
+    <wsdl:portType name="EventingSamplePortType">
+        <wsdl:operation name="getProductByCode">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:getProductByCodeRequest" wsaw:Action="urn:getProductByCode" />
+            <wsdl:output message="ns0:getProductByCodeResponse" wsaw:Action="urn:getProductByCodeResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getProductByCodeDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="addProduct">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:addProductRequest" wsaw:Action="urn:addProduct" />
+        </wsdl:operation>
+        <wsdl:operation name="updateProductQuantity">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:updateProductQuantityRequest" wsaw:Action="urn:updateProductQuantity" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="EventingSampleSOAP11Binding" type="ns0:EventingSamplePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="getProductByCode">
+            <soap:operation soapAction="urn:getProductByCode" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addProduct">
+            <soap:operation soapAction="urn:addProduct" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="updateProductQuantity">
+            <soap:operation soapAction="urn:updateProductQuantity" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="EventingSampleSOAP12Binding" type="ns0:EventingSamplePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="getProductByCode">
+            <soap12:operation soapAction="urn:getProductByCode" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addProduct">
+            <soap12:operation soapAction="urn:addProduct" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="updateProductQuantity">
+            <soap12:operation soapAction="urn:updateProductQuantity" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="EventingSampleHttpBinding" type="ns0:EventingSamplePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="getProductByCode">
+            <http:operation location="getProductByCode" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addProduct">
+            <http:operation location="addProduct" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="updateProductQuantity">
+            <http:operation location="updateProductQuantity" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="EventingSample">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:EventingSampleSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/EventingSample.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:EventingSampleSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/EventingSample.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:EventingSampleSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/EventingSample.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:EventingSampleSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/EventingSample.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:EventingSampleHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/EventingSample.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:EventingSampleHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/EventingSample.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

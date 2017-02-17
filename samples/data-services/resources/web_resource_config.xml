@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+ <var-def name='AppInfo'>
+  <xslt>
+   <xml>
+    <html-to-xml>
+     <http method='get' url='https://play.google.com/store/apps'/>
+    </html-to-xml>
+   </xml>
+   <stylesheet>
+   <![CDATA[ <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		<xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+		<xsl:template match="/">
+                 <AppInfo>
+                    <xsl:for-each select="//*[@class='details']">
+                    <App>
+                     <Title><xsl:value-of select="a[@class='title']"/></Title>
+                     <Description><xsl:value-of select="div[@class='description']"/></Description>
+                    </App>
+                  </xsl:for-each>
+                 </AppInfo>
+                </xsl:template>
+	     </xsl:stylesheet>
+   ]]>
+   </stylesheet>
+  </xslt>
+ </var-def>
+</config>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<project name="dataservice" default="deploy">
+    <property environment="env"/>
+    <property name="dshome" value="../../"/>
+    <property name="src" value="src"/>
+    <property name="classes" value="classes"/>
+    <property name="db.dir" value="database"/>
+    <property name="ds.repository" value="${dshome}/repository/deployment/server/dataservices"/>
+
+    <property name="carbon.home" value="${dshome}"/>
+    <property name="dshome.lib" value="${dshome}/lib"/>
+    <property name="dshome.components.lib" value="${dshome}/lib"/>
+    <property name="ds.product.version" value="2.5.0"/>
+
+    <property name="userid" value="wso2ds"/>
+    <property name="password" value="wso2ds"/>
+
+    <property name="dbURL"
+		   value="jdbc:h2:file:${basedir}/${db.dir}/DATA_SERV_SAMP"/>
+    <property name="dbURL2"
+		   value="jdbc:h2:file:${basedir}/${db.dir}/DATA_SERV_SAMP2"/>
+
+    <ant antfile="${dshome}/bin/build.xml"/>
+
+    <path id="all.jar.classpath">
+		<fileset dir="${dshome}/wso2/components/plugins">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="client.class.path">
+		<fileset dir="${dshome}/wso2/components/plugins">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${classes}" />
+	</path>
+	
+	<target name="clean" description="clean generated artifacts">
+		<delete dir="${db.dir}"/>
+		<delete dir="${classes}"/>
+		<delete file="${ds.repository}/samples/RDBMSSample.dbs"/>
+		<delete file="${ds.repository}/samples/RDBMSSample_services.xml"/>
+		<delete file="${ds.repository}/samples/DTPSampleService.dbs"/>
+		<delete file="${ds.repository}/samples/NestedQuerySample.dbs"/>
+		<delete file="${ds.repository}/samples/CSVSampleService.dbs"/>
+		<delete file="${ds.repository}/samples/ExcelSampleService.dbs"/>
+		<delete file="${ds.repository}/samples/GSpreadSample.dbs"/>
+		<delete file="${ds.repository}/samples/FileService.dbs"/>
+		<delete file="${ds.repository}/samples/BatchRequestSample.dbs"/>
+		<delete file="${ds.repository}/samples/SecureDataService.dbs"/>
+		<delete file="${ds.repository}/samples/EventingSample.dbs"/>
+		<delete file="${ds.repository}/samples/ResourcesSample.dbs"/>
+		<delete file="${ds.repository}/samples/WebResourceSample.dbs"/>
+		<delete file="${ds.repository}/samples/InMemoryDSSample.dbs"/>
+		<delete file="${ds.repository}/samples/JSONSample.dbs"/>
+		<delete file="${ds.repository}/samples/CassandraSample.dbs"/>
+        <delete file="${ds.repository}/samples/MongoDBSampleService.dbs"/>
+		<delete file="${ds.repository}/samples/ODataSampleService.dbs"/>
+		<delete file="${ds.repository}/samples/ReturnUpdatedRowCountSample.dbs"/>
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${db.dir}"/>
+		<mkdir dir="${classes}"/>
+	</target>
+
+	<target name="create-database" depends="init">
+		<sql driver="org.h2.Driver" url="${dbURL}" userid="${userid}" password="${password}" autocommit="true" onerror="continue">
+			<classpath>
+				<path refid="all.jar.classpath" />
+			</classpath>
+			<fileset file="sql/h2/CreateTables.sql" />
+			<fileset file="sql/h2/Customers.sql" />
+			<fileset file="sql/h2/Employees.sql" />
+			<fileset file="sql/h2/Offices.sql" />
+			<fileset file="sql/h2/OrderDetails.sql" />
+			<fileset file="sql/h2/Orders.sql" />
+			<fileset file="sql/h2/Payments.sql" />
+			<fileset file="sql/h2/ProductLines.sql" />
+			<fileset file="sql/h2/Products.sql" />
+		</sql>
+	</target>
+
+	<target name="create-database2" depends="init">
+		<sql driver="org.h2.Driver" url="${dbURL2}" userid="${userid}" password="${password}" autocommit="true" onerror="continue">
+			<classpath>
+				<path refid="all.jar.classpath" />
+			</classpath>
+			<fileset file="sql/h2/CreateTables2.sql" />
+		</sql>
+	</target>
+
+	<target name="deploy" depends="create-database,create-database2" description="deploy data services">
+		<mkdir dir="${ds.repository}" />
+		<copy file="./dbs/rdbms/RDBMSSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/RDBMSSample_services.xml" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/DTPSampleService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/ReturnUpdatedRowCountSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/NestedQuerySample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/excel/ExcelSampleService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/csv/CSVSampleService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/gspread/GSpreadSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/FileService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/BatchRequestSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/SecureDataService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/EventingSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/ResourcesSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/rdbms/JSONSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/cassandra/CassandraSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/mongoDB/MongoDBSampleService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/odata/ODataSampleService.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/web/WebResourceSample.dbs" toDir="${ds.repository}/samples" />
+		<copy file="./dbs/inmemory/InMemoryDSSample.dbs" toDir="${ds.repository}/samples" />
+	</target>
+
+	<target name="compile-all" depends="init">
+		<javac debug="on" destdir="${classes}">
+			<src path="${src}"/>
+			<classpath refid="all.jar.classpath"/>
+		</javac>
+	</target>
+	
+</project>

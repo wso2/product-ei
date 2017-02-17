@@ -1,0 +1,138 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="InMemoryDSSample">
+   <config id="vehicles_ds">
+      <property name="carbon_datasource_name">IN_MEMORY_SAMPLE_DS</property>
+   </config>
+   <config id="users_ds">
+      <property name="custom_tabular_datasource_class">org.wso2.carbon.dataservices.core.custom.datasource.InMemoryDataSource</property>
+      <property name="custom_datasource_props">
+         <property name="inmemory_datasource_schema">{Users:[ID,Name]}</property>
+         <property name="inmemory_datasource_records">{Users:[["1","Will Smith"],["2","Denzel Washington"]]}</property>
+      </property>
+   </config>
+   <config id="echo_ds1">
+      <property name="custom_query_datasource_class">org.wso2.carbon.dataservices.core.custom.datasource.EchoDataSource</property>
+      <property name="custom_datasource_props">
+         <property name="prop1">prop_value1</property>
+         <property name="prop2">prop_value2</property>
+      </property>
+   </config>
+   <config id="echo_ds2">
+      <property name="carbon_datasource_name">ECHO_SAMPLE_DS</property>
+   </config>
+   <query id="echo1" useConfig="echo_ds1">
+      <expression>column1,column2;R1C1 :param1,R1C2 :param2;R2C1 :param3,R2C2 :param4</expression>
+      <param name="param1" sqlType="STRING"/>
+      <param name="param2" sqlType="STRING"/>
+      <param name="param3" sqlType="STRING"/>
+      <param name="param4" sqlType="STRING"/>
+      <result element="Rows" rowName="Row">
+         <element column="column1" name="C1" xsdType="xs:string"/>
+         <element column="column2" name="C2" xsdType="xs:string"/>
+      </result>
+   </query>
+   <query id="echo2" useConfig="echo_ds1">
+      <expression>column1,column2;R1C1 :param1,R1C2 :param2;R2C1 :param1,R2C2 :param2</expression>
+      <param name="param1" sqlType="STRING"/>
+      <param name="param2" sqlType="STRING"/>
+      <result element="Rows" rowName="Row">
+         <element column="column1" name="C1" xsdType="xs:string"/>
+         <element column="column2" name="C2" xsdType="xs:string"/>
+      </result>
+   </query>
+   <query id="getAllUsers" useConfig="users_ds">
+      <sql>SELECT ID,Name FROM Users</sql>
+      <result element="Vehicles" rowName="Vehicle">
+         <element column="ID" name="ID" xsdType="xs:string"/>
+         <element column="Name" name="Name" xsdType="xs:string"/>
+      </result>
+   </query>
+   <query id="getAllVehicles" useConfig="vehicles_ds">
+      <sql>SELECT ID,Model,Classification,Year FROM Vehicles</sql>
+      <result element="Vehicles" rowName="Vehicle">
+         <element column="ID" name="ID" xsdType="xs:string"/>
+         <element column="Model" name="Model" xsdType="xs:string"/>
+         <element column="Classification" name="Classification" xsdType="xs:string"/>
+         <element column="Year" name="Year" xsdType="xs:integer"/>
+      </result>
+   </query>
+   <query id="getOldVehicles" useConfig="vehicles_ds">
+      <sql>SELECT ID,Model,Classification,Year FROM Vehicles WHERE Year &lt; 1970</sql>
+      <result element="Entries" rowName="Entry">
+         <element column="ID" name="ID" xsdType="xs:string"/>
+         <element column="Model" name="Model" xsdType="xs:string"/>
+         <element column="Classification" name="Classification" xsdType="xs:string"/>
+         <element column="Year" name="Year" xsdType="xs:integer"/>
+      </result>
+   </query>
+   <query id="getVehicleById" useConfig="vehicles_ds">
+      <sql>SELECT ID,Model,Classification,Year FROM Vehicles WHERE ID=?</sql>
+      <result element="Vehicles" rowName="Vehicle">
+         <element column="ID" name="ID" xsdType="xs:string"/>
+         <element column="Model" name="Model" xsdType="xs:string"/>
+         <element column="Classification" name="Classification" xsdType="xs:string"/>
+         <element column="Year" name="Year" xsdType="xs:integer"/>
+      </result>
+      <param name="id" sqlType="STRING"/>
+   </query>
+   <query id="addVehicle" useConfig="vehicles_ds">
+      <sql>INSERT INTO Vehicles (ID,Model,Classification,Year) VALUES(:ID,:Model,:Classification,:Year)</sql>
+      <param name="ID" sqlType="STRING"/>
+      <param name="Model" sqlType="STRING"/>
+      <param name="Classification" sqlType="STRING"/>
+      <param name="Year" sqlType="INTEGER"/>
+   </query>
+   <operation name="getAllUsers">
+      <call-query href="getAllUsers"/>
+   </operation>
+   <operation name="getAllVehicles">
+      <call-query href="getAllVehicles"/>
+   </operation>
+   <operation name="getOldVehicles">
+      <call-query href="getOldVehicles"/>
+   </operation>
+   <operation name="getVehicleById">
+      <call-query href="getVehicleById">
+         <with-param name="id" query-param="id"/>
+      </call-query>
+   </operation>
+   <operation name="addVehicle">
+      <call-query href="addVehicle">
+         <with-param name="ID" query-param="ID"/>
+         <with-param name="Model" query-param="Model"/>
+         <with-param name="Classification" query-param="Classification"/>
+         <with-param name="Year" query-param="Year"/>
+      </call-query>
+   </operation>
+   <operation name="echo1">
+      <call-query href="echo1">
+         <with-param name="param1" query-param="param1"/>
+         <with-param name="param2" query-param="param2"/>
+         <with-param name="param3" query-param="param3"/>
+         <with-param name="param4" query-param="param4"/>
+      </call-query>
+   </operation>
+   <operation name="echo2">
+      <call-query href="echo2">
+         <with-param name="param1" query-param="param1"/>
+         <with-param name="param2" query-param="param2"/>
+      </call-query>
+   </operation>
+</data>

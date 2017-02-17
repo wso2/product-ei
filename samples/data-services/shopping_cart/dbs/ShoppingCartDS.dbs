@@ -1,0 +1,626 @@
+<data name="ShoppingCartDS" enableBatchRequests="false" enableBoxcarring="true" serviceStatus="active" baseURI="com.acme.shoppingcart">      
+   <config id="default">            
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>            
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/database/SHOPPING_CART_SAMPLE_DB</property>            
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>            
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>            
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>            
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>            
+      <property name="org.wso2.ws.dataservice.validation_query"></property>      
+   </config>      
+   <query id="addNewCategoryQuery" useConfig="default">            
+      <sql>INSERT INTO Category (categoryName,description,image) VALUES (:categoryName, :description, :image)</sql>            
+      <param name="categoryName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />            
+      <param name="description" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2" />            
+      <param name="image" paramType="SCALAR" sqlType="BINARY" type="IN" ordinal="3" />      
+   </query>      
+   <query id="deleteCategoryQuery" useConfig="default">            
+      <sql>DELETE FROM Category WHERE categoryName=:categoryName</sql>            
+      <param name="categoryName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getAllCategoriesQuery" useConfig="default">            
+      <sql>SELECT categoryName,description,image FROM Category</sql>            
+      <result outputType="xml" element="Categories" rowName="Category"
+              defaultNamespace="http://shoppingcart.acme.com/product">
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="description" column="description" xsdType="xs:string" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+   <query id="getCategoryByNameQuery" useConfig="default">            
+      <sql>SELECT categoryName,description,image FROM Category WHERE categoryName=?</sql>            
+      <result outputType="xml" element="Categories" rowName="Category"
+              defaultNamespace="http://shoppingcart.acme.com/product">
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="description" column="description" xsdType="xs:string" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>            
+      <param name="categoryName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="addNewProductQuery" useConfig="default">            
+      <sql>INSERT INTO Product (productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image) VALUES (:productCode,:productName,:categoryName,:productVendor,:productDescription,:quantityInStock,:price,:reorderLevel,:reorderQuantity,:image)</sql>            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />            
+      <param name="productName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2" />            
+      <param name="categoryName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="3" />            
+      <param name="productVendor" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="4" />            
+      <param name="productDescription" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="5" />            
+      <param name="quantityInStock" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="6" />            
+      <param name="price" paramType="SCALAR" sqlType="DOUBLE" type="IN" ordinal="7" />            
+      <param name="reorderLevel" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="8" />            
+      <param name="reorderQuantity" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="9" />            
+      <param name="image" paramType="SCALAR" sqlType="BINARY" type="IN" ordinal="10" />      
+   </query>   
+
+   <query id="updateProductQuery" useConfig="default">            
+      <sql>UPDATE Product SET productName=:productName,categoryName=:categoryName,productVendor=:productVendor,productDescription=:productDescription,
+quantityInStock=:quantityInStock,price=:price,reorderLevel=:reorderLevel,reorderQuantity=:reorderQuantity,image=:image WHERE productCode=:productCode</sql>            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />            
+      <param name="productName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2" />            
+      <param name="categoryName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="3" />            
+      <param name="productVendor" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="4" />            
+      <param name="productDescription" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="5" />            
+      <param name="quantityInStock" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="6" />            
+      <param name="price" paramType="SCALAR" sqlType="DOUBLE" type="IN" ordinal="7" />            
+      <param name="reorderLevel" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="8" />            
+      <param name="reorderQuantity" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="9" />            
+      <param name="image" paramType="SCALAR" sqlType="BINARY" type="IN" ordinal="10" />      
+   </query>   
+
+   
+   <query id="updateProductStockQuery" useConfig="default">            
+      <sql>UPDATE Product SET quantityInStock=quantityInStock+:increment WHERE productCode=:productCode</sql>            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />            
+      <param name="increment" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="2" />      
+   </query>      
+   <query id="deleteProductQuery" useConfig="default">            
+      <sql>DELETE FROM Product WHERE productCode=:productCode</sql>            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getAllProductsQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product</sql>            
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getProductSalesQuery" useConfig="default">            
+      <sql>SELECT p.productCode, p.productName, SUM(oi.quantityOrdered) AS productQuantity FROM Product p, OrderItem oi WHERE oi.productCode=p.productCode GROUP BY p.productCode</sql>            
+      <result outputType="xml" element="Sales" rowName="SalesItem"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />
+         <element name="productName" column="productName" xsdType="xs:string" />                                    
+         <element name="productQuantity" column="productQuantity" xsdType="xs:integer" />                  
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByProductVendorAscQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY productVendor ASC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByProductVendorDescQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY productVendor DESC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByQuantityAscQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY quantityInStock ASC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByQuantityDescQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY quantityInStock DESC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByPriceAscQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY price ASC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByPriceDescQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY price DESC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByNameAscQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY productName ASC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>      
+
+   <query id="getAllProductsSortByNameDescQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product ORDER BY productName DESC</sql>
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>      
+   </query>
+
+   <query id="getProductsOfCategoryQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product WHERE categoryName=:categoryName</sql>            
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>            
+      <param name="categoryName" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getProductsAtReorderLevelQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product WHERE quantityInStock&lt;=reorderLevel</sql>            
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/reorder">
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />            
+      </result>      
+   </query>      
+   <query id="getProductByCodeQuery" useConfig="default">            
+      <sql>SELECT productCode,productName,categoryName,productVendor,productDescription,quantityInStock,price,reorderLevel,reorderQuantity,image FROM Product WHERE productCode=:productCode</sql>            
+      <result outputType="xml" element="Products" rowName="Product"
+              defaultNamespace="http://shoppingcart.acme.com/product">
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="productName" column="productName" xsdType="xs:string" />                  
+         <element name="categoryName" column="categoryName" xsdType="xs:string" />                  
+         <element name="productVendor" column="productVendor" xsdType="xs:string" />                  
+         <element name="productDescription" column="productDescription" xsdType="xs:string" />                  
+         <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />                  
+         <element name="price" column="price" xsdType="xs:double" />                  
+         <element name="reorderLevel" column="reorderLevel" xsdType="xs:integer" />                  
+         <element name="reorderQuantity" column="reorderQuantity" xsdType="xs:integer" />                  
+         <element name="image" column="image" xsdType="xs:base64Binary" />            
+      </result>            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="addNewCustomerQuery" useConfig="default" returnGeneratedKeys="true">            
+      <sql>INSERT INTO Customer (customerEmail,customerName, phone,addressLine1,addressLine2,city,state,postalCode,country) VALUES (:customerEmail,:customerName,:phone,:addressLine1,:addressLine2,:city,:state,:postalCode,:country)</sql>            
+      <param name="customerEmail" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="customerName" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="phone" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="addressLine1" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="addressLine2" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="city" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="state" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="postalCode" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="country" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <result outputType="xml" element="Customers" rowName="Customer"
+              defaultNamespace="http://shoppingcart.acme.com/customer/new">
+         <element name="customerEmail" column="customerEmail" xsdType="xs:string" />      
+      </result>   
+   </query>   
+   <query id="addNewOrderQuery" useConfig="default" returnGeneratedKeys="true">            
+      <sql>INSERT INTO OrderEntry (orderDate,requiredDate,shippedDate,status,comments,customerEmail) VALUES (:orderDate,:requiredDate,:shippedDate,:status,:comments,:customerEmail)</sql>            
+      <param name="orderDate" paramType="SCALAR" sqlType="DATE" type="IN"/>            
+      <param name="requiredDate" paramType="SCALAR" sqlType="DATE" type="IN"/>            
+      <param name="shippedDate" paramType="SCALAR" sqlType="DATE" type="IN"/>            
+      <param name="status" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="comments" paramType="SCALAR" sqlType="STRING" type="IN"/>            
+      <param name="customerEmail" paramType="SCALAR" sqlType="STRING" type="IN"/>         
+      <result outputType="xml" element="Orders" rowName="Order" useColumnNumbers="true"
+              defaultNamespace="http://shoppingcart.acme.com/order">
+         <element name="OrderNumber" column="1" xsdType="xs:integer" />      
+      </result>   
+   </query>      
+   <query id="deleteCustomerQuery" useConfig="default">            
+      <sql>DELETE FROM Customer WHERE customerEmail=:customerEmail</sql>            
+      <param name="customerEmail" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getAllCustomersQuery" useConfig="default">            
+      <sql>SELECT customerEmail,customerName,phone,addressLine1,addressLine2,city,state,postalCode,country FROM Customer</sql>            
+      <result outputType="xml" element="Customers" rowName="Customer"
+              defaultNamespace="http://shoppingcart.acme.com/customer">
+         <element name="customerEmail" column="customerEmail" xsdType="xs:integer" />                  
+         <element name="customerName" column="customerName" xsdType="xs:string" />                  
+         <element name="phone" column="phone" xsdType="xs:string" />                  
+         <element name="addressLine1" column="addressLine1" xsdType="xs:string" />                  
+         <element name="addressLine2" column="addressLine2" xsdType="xs:string" />                  
+         <element name="city" column="city" xsdType="xs:string" />                  
+         <element name="state" column="state" xsdType="xs:string" />                  
+         <element name="postalCode" column="postalCode" xsdType="xs:string" />                  
+         <element name="country" column="country" xsdType="xs:string" />            
+      </result>      
+   </query>      
+   <query id="getOrdersByCustomerEmailQuery" useConfig="default">            
+      <sql>SELECT orderNumber,orderDate,requiredDate,shippedDate,status,comments,customerEmail FROM OrderEntry WHERE customerEmail=:customerEmail</sql>            
+      <result outputType="xml" element="Orders" rowName="Order"
+              defaultNamespace="http://shoppingcart.acme.com/customer/order">                  
+         <element name="orderNumber" column="orderNumber" xsdType="xs:integer" />                  
+         <element name="orderDate" column="orderDate" xsdType="xs:date" />                  
+         <element name="requiredDate" column="requiredDate" xsdType="xs:date" />                  
+         <element name="shippedDate" column="shippedDate" xsdType="xs:date" />                  
+         <element name="status" column="status" xsdType="xs:string" />                  
+         <element name="comments" column="comments" xsdType="xs:string" />                  
+         <element name="customerEmail" column="customerEmail" xsdType="xs:string" />            
+      </result>            
+      <param name="customerEmail" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getOrdersByStatusQuery" useConfig="default">            
+      <sql>SELECT orderNumber,orderDate,requiredDate,shippedDate,status,comments,customerEmail FROM OrderEntry WHERE status=:status</sql>            
+      <result outputType="xml" element="Orders" rowName="Order"
+              defaultNamespace="http://shoppingcart.acme.com/customer/order">
+         <element name="orderNumber" column="orderNumber" xsdType="xs:integer" />                  
+         <element name="orderDate" column="orderDate" xsdType="xs:date" />                  
+         <element name="requiredDate" column="requiredDate" xsdType="xs:date" />                  
+         <element name="shippedDate" column="shippedDate" xsdType="xs:date" />                  
+         <element name="status" column="status" xsdType="xs:string" />                  
+         <element name="comments" column="comments" xsdType="xs:string" />                  
+         <element name="customerEmail" column="customerEmail" xsdType="xs:string" />            
+      </result>            
+      <param name="status" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getCustomerByEmailQuery" useConfig="default">            
+      <sql>SELECT customerEmail,customerName,phone,addressLine1,addressLine2,city,state,postalCode,country FROM Customer WHERE customerEmail=:customerEmail</sql>            
+      <result outputType="xml" element="Customers" rowName="Customer"
+              defaultNamespace="http://shoppingcart.acme.com/customer">
+         <element name="customerEmail" column="customerEmail" xsdType="xs:string" />                  
+         <element name="customerName" column="customerName" xsdType="xs:string" />                  
+         <element name="phone" column="phone" xsdType="xs:string" />                  
+         <element name="addressLine1" column="addressLine1" xsdType="xs:string" />                  
+         <element name="addressLine2" column="addressLine2" xsdType="xs:string" />                  
+         <element name="city" column="city" xsdType="xs:string" />                  
+         <element name="state" column="state" xsdType="xs:string" />                  
+         <element name="postalCode" column="postalCode" xsdType="xs:string" />                  
+         <element name="country" column="country" xsdType="xs:string" />            
+      </result>      
+      
+      <param name="customerEmail" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />      
+   </query>      
+   <query id="addNewOrderItemQuery" useConfig="default" returnGeneratedKeys="true">            
+      <sql>INSERT INTO OrderItem (orderNumber,productCode,quantityOrdered) VALUES (:orderNumber, :productCode, :quantityOrdered)</sql>            
+      <param name="orderNumber" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="1" />            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2" />            
+      <param name="quantityOrdered" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="3" />      
+      <result outputType="xml" element="OrderItems" rowName="OrderItem"
+              defaultNamespace="http://shoppingcart.acme.com/order/new">
+         <element name="orderNumber" query-param="orderNumber" xsdType="xs:integer" />
+         <element name="productCode" query-param="productCode" xsdType="xs:string" />            
+      </result>   
+   </query>      
+   <query id="getOrderItemsQuery" useConfig="default">            
+      <sql>SELECT orderNumber,productCode,quantityOrdered FROM OrderItem WHERE orderNumber=:orderNumber</sql>            
+      <result outputType="xml" element="OrderItems" rowName="OrderItem"
+              defaultNamespace="http://shoppingcart.acme.com/order">
+         <element name="orderNumber" column="orderNumber" xsdType="xs:integer" />                  
+         <element name="productCode" column="productCode" xsdType="xs:string" />                  
+         <element name="quantityOrdered" column="quantityOrdered" xsdType="xs:integer" />            
+      </result>            
+      <param name="orderNumber" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="1" />      
+   </query>      
+   <query id="addPaymentQuery" useConfig="default">            
+      <sql>INSERT INTO Payment (orderNumber,checkNumber,paymentDate,amount) VALUES (:orderNumber,:checkNumber,:paymentDate,:amount)</sql>            
+      <param name="orderNumber" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="1" />            
+      <param name="checkNumber" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2" />            
+      <param name="paymentDate" paramType="SCALAR" sqlType="DATE" type="IN" ordinal="3" />            
+      <param name="amount" paramType="SCALAR" sqlType="DOUBLE" type="IN" ordinal="4" />      
+   </query>      
+   <query id="getPaymentsOfOrderQuery" useConfig="default">            
+      <sql>SELECT orderNumber,checkNumber,paymentDate,amount FROM Payment WHERE orderNumber=:orderNumber</sql>            
+      <result outputType="xml" element="Payments" rowName="Payment"
+              defaultNamespace="http://shoppingcart.acme.com/payment">
+         <element name="orderNumber" column="orderNumber" xsdType="xs:integer" />                  
+         <element name="checkNumber" column="checkNumber" xsdType="xs:string" />                  
+         <element name="paymentDate" column="paymentDate" xsdType="xs:date" />                  
+         <element name="amount" column="amount" xsdType="xs:double" />            
+      </result>            
+      <param name="orderNumber" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="1" />      
+   </query>      
+   <query id="getTotalOrderAmountQuery" useConfig="default">            
+      <sql>SELECT SUM(price*oi.quantityOrdered) AS total FROM Product p, OrderItem oi WHERE oi.productCode=p.productCode and oi.orderNumber=:orderNumber</sql>            
+      <result outputType="xml" element="Orders" rowName="Order"
+              defaultNamespace="http://shoppingcart.acme.com/order">                  
+         <element name="total" column="total" xsdType="xs:double" />            
+      </result>            
+      <param name="orderNumber" paramType="SCALAR" sqlType="INTEGER" type="IN" />      
+   </query>
+   
+   <query id="decrementProductStockQuery" useConfig="default">            
+      <sql>UPDATE Product SET quantityInStock=quantityInStock-:increment WHERE productCode=:productCode</sql>            
+      <param name="productCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />            
+      <param name="increment" paramType="SCALAR" sqlType="INTEGER" type="IN" ordinal="2" />      
+   </query>      
+
+   <operation name="decrementProductStock">            
+      <call-query href="decrementProductStockQuery">                  
+         <with-param name="productCode" query-param="productCode" />                  
+         <with-param name="increment" query-param="increment" />            
+      </call-query>      
+   </operation> 
+   
+   <operation name="addNewCustomer">            
+      <call-query href="addNewCustomerQuery">                  
+         <with-param name="customerEmail" query-param="customerEmail" />                  
+         <with-param name="customerName" query-param="customerName" />                  
+         <with-param name="phone" query-param="phone" />                  
+         <with-param name="addressLine1" query-param="addressLine1" />                  
+         <with-param name="addressLine2" query-param="addressLine2" />                  
+         <with-param name="city" query-param="city" />                  
+         <with-param name="state" query-param="state" />                  
+         <with-param name="postalCode" query-param="postalCode" />                  
+         <with-param name="country" query-param="country" />            
+      </call-query>      
+   </operation>      
+   <operation name="deleteCustomer">            
+      <call-query href="deleteCustomerQuery">                  
+         <with-param name="customerEmail" query-param="customerEmail" />            
+      </call-query>      
+   </operation>      
+   <operation name="getOrdersByCustomerEmail">            
+      <call-query href="getOrdersByCustomerEmailQuery">                  
+         <with-param name="customerEmail" query-param="customerEmail" />            
+      </call-query>      
+   </operation>      
+   <operation name="getOrdersByStatus">            
+      <call-query href="getOrdersByStatusQuery">                  
+         <with-param name="status" query-param="status" />            
+      </call-query>      
+   </operation>      
+   <operation name="getAllCustomers">            
+      <call-query href="getAllCustomersQuery" />      
+   </operation>      
+   <operation name="getCustomerByEmail">            
+      <call-query href="getCustomerByEmailQuery">                  
+         <with-param name="customerEmail" query-param="customerEmail" />            
+      </call-query>      
+   </operation>      
+   <operation name="addNewCategory">            
+      <call-query href="addNewCategoryQuery">                  
+         <with-param name="categoryName" query-param="categoryName" />                  
+         <with-param name="description" query-param="description" />                  
+         <with-param name="image" query-param="image" />            
+      </call-query>      
+   </operation>      
+   <operation name="deleteCategory">            
+      <call-query href="deleteCategoryQuery">                  
+         <with-param name="categoryName" query-param="categoryName" />            
+      </call-query>      
+   </operation>      
+   <operation name="getAllCategories">            
+      <call-query href="getAllCategoriesQuery" />      
+   </operation>      
+   <operation name="getCategoryByName">            
+      <call-query href="getCategoryByNameQuery">                  
+         <with-param name="categoryName" query-param="categoryName" />            
+      </call-query>      
+   </operation>      
+   <operation name="deleteProduct">            
+      <call-query href="deleteProductQuery">                  
+         <with-param name="productCode" query-param="productCode" />            
+      </call-query>      
+   </operation>      
+
+   <operation name="getAllProducts">            
+      <call-query href="getAllProductsQuery" />      
+   </operation>      
+
+   <operation name="getProductSales">            
+      <call-query href="getProductSalesQuery" />      
+   </operation>      
+
+   <operation name="getAllProductsSortByProductVendorAsc">            
+      <call-query href="getAllProductsSortByProductVendorAscQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByProductVendorDesc">            
+      <call-query href="getAllProductsSortByProductVendorDescQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByQuantityAsc">            
+      <call-query href="getAllProductsSortByQuantityAscQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByQuantityDesc">            
+      <call-query href="getAllProductsSortByQuantityDescQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByPriceAsc">            
+      <call-query href="getAllProductsSortByPriceAscQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByPriceDesc">            
+      <call-query href="getAllProductsSortByPriceDescQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByNameAsc">            
+      <call-query href="getAllProductsSortByNameAscQuery" />      
+   </operation>      
+   <operation name="getAllProductsSortByNameDesc">            
+      <call-query href="getAllProductsSortByNameDescQuery" />      
+   </operation>      
+
+
+   <operation name="getProductsAtReorderLevel">            
+      <call-query href="getProductsAtReorderLevelQuery" />      
+   </operation>      
+   <operation name="getProductByCode">            
+      <call-query href="getProductByCodeQuery">                  
+         <with-param name="productCode" query-param="productCode" />            
+      </call-query>      
+   </operation>      
+   <operation name="getProductsOfCategory">            
+      <call-query href="getProductsOfCategoryQuery">                  
+         <with-param name="categoryName" query-param="categoryName" />            
+      </call-query>      
+   </operation>      
+   <operation name="addNewProduct">            
+      <call-query href="addNewProductQuery">                  
+         <with-param name="productCode" query-param="productCode" />                  
+         <with-param name="productName" query-param="productName" />                  
+         <with-param name="categoryName" query-param="categoryName" />                  
+         <with-param name="productVendor" query-param="productVendor" />                  
+         <with-param name="productDescription" query-param="productDescription" />                  
+         <with-param name="quantityInStock" query-param="quantityInStock" />                  
+         <with-param name="price" query-param="price" />                  
+         <with-param name="reorderLevel" query-param="reorderLevel" />                  
+         <with-param name="reorderQuantity" query-param="reorderQuantity" />                  
+         <with-param name="image" query-param="image" />            
+      </call-query>      
+   </operation>      
+
+   <operation name="updateProduct">            
+      <call-query href="updateProductQuery">                  
+         <with-param name="productCode" query-param="productCode" />                  
+         <with-param name="productName" query-param="productName" />                  
+         <with-param name="categoryName" query-param="categoryName" />                  
+         <with-param name="productVendor" query-param="productVendor" />                  
+         <with-param name="productDescription" query-param="productDescription" />                  
+         <with-param name="quantityInStock" query-param="quantityInStock" />                  
+         <with-param name="price" query-param="price" />                  
+         <with-param name="reorderLevel" query-param="reorderLevel" />                  
+         <with-param name="reorderQuantity" query-param="reorderQuantity" />                  
+         <with-param name="image" query-param="image" />            
+      </call-query>      
+   </operation>      
+
+
+   <operation name="updateProductStock">            
+      <call-query href="updateProductStockQuery">                  
+         <with-param name="productCode" query-param="productCode" />                  
+         <with-param name="increment" query-param="increment" />            
+      </call-query>      
+   </operation>      
+   <operation name="addNewOrder">            
+      <call-query href="addNewOrderQuery">                  
+         <with-param name="orderDate" query-param="orderDate" />                  
+         <with-param name="requiredDate" query-param="requiredDate" />                  
+         <with-param name="shippedDate" query-param="shippedDate" />                  
+         <with-param name="status" query-param="status" />                  
+         <with-param name="comments" query-param="comments" />                  
+         <with-param name="customerEmail" query-param="customerEmail" />            
+      </call-query>      
+   </operation>      
+   <operation name="addNewOrderItem">            
+      <call-query href="addNewOrderItemQuery">                  
+         <with-param name="orderNumber" query-param="orderNumber" />                  
+         <with-param name="productCode" query-param="productCode" />                  
+         <with-param name="quantityOrdered" query-param="quantityOrdered" />            
+      </call-query>      
+   </operation>      
+   <operation name="getOrderItems">            
+      <call-query href="getOrderItemsQuery">                  
+         <with-param name="orderNumber" query-param="orderNumber" />            
+      </call-query>      
+   </operation>      
+   <operation name="addPayment">            
+      <call-query href="addPaymentQuery">                  
+         <with-param name="orderNumber" query-param="orderNumber" />                  
+         <with-param name="checkNumber" query-param="checkNumber" />                  
+         <with-param name="paymentDate" query-param="paymentDate" />                  
+         <with-param name="amount" query-param="amount" />            
+      </call-query>      
+   </operation>      
+   <operation name="getPaymentsOfOrder">            
+      <call-query href="getPaymentsOfOrderQuery">                  
+         <with-param name="orderNumber" query-param="orderNumber" />            
+      </call-query>      
+   </operation>      
+   <operation name="getTotalOrderAmount">            
+      <call-query href="getTotalOrderAmountQuery">                  
+         <with-param name="orderNumber" query-param="orderNumber" />            
+      </call-query>      
+   </operation>
+</data>

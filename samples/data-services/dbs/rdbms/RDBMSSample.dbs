@@ -1,0 +1,177 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data enableBoxcarring="true" name="RDBMSSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/rdbms_sample">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.autocommit">false</property>
+      <property name="org.wso2.ws.dataservice.validation_query"/>
+   </config>
+   <query id="customersInBostonSQL" useConfig="default">
+      <sql>select  * from Customers where city = 'Boston' and country = 'USA'</sql>
+      <result element="customers" rowName="customer">
+         <element column="customerName" name="customer-name" xsdType="string"/>
+         <element column="contactLastName" name="contact-last-name" xsdType="string"/>
+         <element column="contactFirstName" name="contact-first-name" xsdType="string"/>
+         <element column="phone" name="phone" xsdType="string"/>
+         <element column="city" name="city" xsdType="string"/>
+         <element column="country" name="country" xsdType="string"/>
+      </result>
+   </query>
+   <query id="thousandFiveQuery" useConfig="default">
+      <sql>select 1500 as value</sql>
+      <result element="Numbers" rowName="Number">
+         <element column="value" export="increment" name="value" xsdType="integer"/>
+      </result>
+   </query>
+   <query id="employeesByNumberSQL" useConfig="default">
+      <sql>select * from Employees where employeeNumber = ?</sql>
+      <result element="employees" rowName="employee">
+         <element column="lastName" name="last-name" xsdType="string"/>
+         <element column="firstName" name="first-name" xsdType="string"/>
+         <element column="email" name="email" xsdType="string"/>
+         <element column="salary" name="salary" xsdType="double"/>
+      </result>
+      <param name="employeeNumber" ordinal="1" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+   </query>
+   <query id="customerAddressSQL" useConfig="default">
+      <sql>select * from Customers where contactLastName = ? and contactFirstName = ?</sql>
+      <result element="customer-addresses" rowName="customer-address">
+         <element column="customerNumber" name="customer-number" xsdType="integer"/>
+         <element column="contactLastName" name="contact-last-name" xsdType="string"/>
+         <element column="contactFirstName" name="contact-first-name" xsdType="string"/>
+         <element column="addressLine1" name="address-line1" xsdType="string"/>
+         <element column="addressLine2" name="address-line2" xsdType="string"/>
+         <element column="city" name="city" xsdType="string"/>
+         <element column="state" name="state" xsdType="string"/>
+         <element column="postalCode" name="postal-code" xsdType="string"/>
+         <element column="country" name="country" xsdType="string"/>
+      </result>
+      <param name="lastName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="firstName" ordinal="2" paramType="SCALAR" sqlType="STRING" type="IN"/>
+   </query>
+   <query id="productsSQL" useConfig="default">
+      <sql>select * from Products</sql>
+      <properties>
+         <property name="org.wso2.ws.dataservice.query_timeout">100</property>
+         <property name="org.wso2.ws.dataservice.fetch_direction">forward</property>
+         <property name="org.wso2.ws.dataservice.fetch_size">5</property>
+         <property name="org.wso2.ws.dataservice.max_field_size">500000</property>
+         <property name="org.wso2.ws.dataservice.max_rows">5000</property>
+         <property name="org.wso2.ws.dataservice.autocommit">true</property>
+      </properties>
+      <result element="Products" rowName="Product">
+         <element column="productCode" name="productCode" xsdType="string"/>
+         <element column="productName" name="productName" xsdType="string"/>
+         <element column="productLine" name="productLine" xsdType="string"/>
+         <element column="productScale" name="productScale" xsdType="string"/>
+         <element column="productVendor" name="productVendor" xsdType="string"/>
+         <element column="productDescription" name="productDescription" xsdType="string"/>
+         <element column="quantityInStock" name="quantityInStock" xsdType="integer"/>
+         <element column="buyPrice" name="buyPrice" xsdType="xs:double"/>
+         <element column="MSRP" name="MSRP" xsdType="xs:double"/>
+      </result>
+   </query>
+   <query id="setEmployeeSalaryQuery" useConfig="default">
+      <sql>update Employees set salary=:salary where employeeNumber=:employeeNumber</sql>
+      <param name="salary" ordinal="1" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
+      <param name="employeeNumber" ordinal="2" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+   </query>
+   <query id="incrementEmployeeSalaryQuery" useConfig="default">
+      <sql>update Employees set salary=salary+:increment where employeeNumber=:employeeNumber</sql>
+      <param name="increment" ordinal="1" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
+      <param name="employeeNumber" ordinal="2" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+      <properties>
+         <property name="org.wso2.ws.dataservice.autocommit">true</property>
+      </properties>
+   </query>
+   <query id="addEmployeeQuery" useConfig="default">
+      <sql>insert into Employees (employeeNumber, lastName, firstName, email, salary) values(:employeeNumber,:lastName,:firstName,:email,:salary)</sql>
+      <param name="employeeNumber" ordinal="1" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+      <param name="lastName" ordinal="2" paramType="SCALAR" sqlType="STRING" type="IN">
+         <validateLength maximum="20" minimum="3"/>
+      </param>
+      <param name="firstName" ordinal="3" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="email" ordinal="4" paramType="SCALAR" sqlType="STRING" type="IN">
+         <validatePattern pattern="(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|&quot;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"/>
+      </param>
+      <param defaultValue="1500" name="salary" ordinal="5" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
+   </query>
+   <query id="setSalaryForEmployeesQuery" useConfig="default">
+      <sql>update Employees set salary=:salary where employeeNumber in (:employeeNumbers)</sql>
+      <param name="salary" ordinal="1" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
+      <param name="employeeNumbers" ordinal="2" paramType="ARRAY" sqlType="INTEGER" type="IN"/>
+   </query>
+   <operation name="customersInBoston">
+      <call-query href="customersInBostonSQL"/>
+   </operation>
+   <operation name="employeesByNumber">
+      <call-query href="employeesByNumberSQL">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+      </call-query>
+   </operation>
+   <operation name="customerAddress">
+      <call-query href="customerAddressSQL">
+         <with-param name="lastName" query-param="lastName"/>
+         <with-param name="firstName" query-param="firstName"/>
+      </call-query>
+   </operation>
+   <operation name="productsInfo">
+      <call-query href="productsSQL"/>
+   </operation>
+   <operation name="setEmployeeSalary">
+      <call-query href="setEmployeeSalaryQuery">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+         <with-param name="salary" query-param="salary"/>
+      </call-query>
+   </operation>
+   <operation name="setSalaryForEmployees">
+      <call-query href="setSalaryForEmployeesQuery">
+         <with-param name="salary" query-param="salary"/>
+         <with-param name="employeeNumbers" query-param="employeeNumbers"/>
+      </call-query>
+   </operation>
+   <operation name="incrementEmployeeSalary">
+      <call-query href="incrementEmployeeSalaryQuery">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+         <with-param name="increment" query-param="increment"/>
+      </call-query>
+   </operation>
+   <operation name="thousandFive">
+      <call-query href="thousandFiveQuery"/>
+   </operation>
+   <operation name="incrementEmployeeSalaryEx">
+      <call-query href="incrementEmployeeSalaryQuery">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+      </call-query>
+   </operation>
+   <operation name="addEmployee" returnRequestStatus="true">
+      <call-query href="addEmployeeQuery">
+         <with-param name="employeeNumber" query-param="employeeNumber"/>
+         <with-param name="lastName" query-param="lastName"/>
+         <with-param name="firstName" query-param="firstName"/>
+         <with-param name="email" query-param="email"/>
+         <with-param name="salary" query-param="salary"/>
+      </call-query>
+   </operation>
+</data>

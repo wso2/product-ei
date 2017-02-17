@@ -1,0 +1,49 @@
+<datasources-configuration xmlns:svns="http://org.wso2.securevault/configuration">
+  
+    <providers>
+        <provider>org.wso2.carbon.dataservices.core.custom.datasource.CustomTabularDataSourceReader</provider>
+        <provider>org.wso2.carbon.dataservices.core.custom.datasource.CustomQueryDataSourceReader</provider>
+    </providers>
+  
+    <datasources>
+      
+        <datasource>
+            <name>IN_MEMORY_SAMPLE_DS</name>
+            <description>A sample in-memory datasource</description>
+            <definition type="DS_CUSTOM_TABULAR">
+                <configuration>
+                    <customDataSourceClass>org.wso2.carbon.dataservices.core.custom.datasource.InMemoryDataSource</customDataSourceClass>
+                    <customDataSourceProps>
+                        <property name="inmemory_datasource_schema">{Vehicles:[ID,Model,Classification,Year]}</property>
+                        <property name="inmemory_datasource_records">
+                          {Vehicles:[["S10_1678","Harley Davidson Ultimate Chopper","Motorcycles","1969"],
+                                     ["S10_1949","Alpine Renault 1300","Classic Cars","1952"],
+                                     ["S10_2016","Moto Guzzi 1100i","Motorcycles","1996"],
+                                     ["S10_4698","Harley-Davidson Eagle Drag Bike","Motorcycles","2003"],
+                                     ["S10_4757","Alfa Romeo GTA","Classic Cars","1972"],
+                                     ["S10_4962","LanciaA Delta 16V","Classic Cars","1962"],
+                                     ["S12_1099","Ford Mustang","Classic Cars","1968"],
+                                     ["S12_1108","Ferrari Enzo","Classic Cars","2001"]]}
+                        </property>
+                    </customDataSourceProps>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <datasource>
+            <name>ECHO_SAMPLE_DS</name>
+            <description>A sample in-memory datasource</description>
+            <definition type="DS_CUSTOM_QUERY">
+                <configuration>
+                    <customDataSourceClass>org.wso2.carbon.dataservices.core.custom.datasource.EchoDataSource</customDataSourceClass>
+                    <customDataSourceProps>
+                        <property name="p1">val1</property>
+                        <property name="p2">val2</property>
+                    </customDataSourceProps>
+                </configuration>
+            </definition>
+        </datasource>
+
+    </datasources>
+
+</datasources-configuration>

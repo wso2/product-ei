@@ -1,0 +1,529 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice">
+    <wsdl:documentation/>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:all>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:all>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="select_op_given_fields">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Customers" type="ns0:Customers"/>
+            <xs:complexType name="Customers">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Customer" type="ns0:Customer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element name="customerNumber" nillable="true" type="xs:integer"/>
+                    <xs:element name="customerName" nillable="true" type="xs:string"/>
+                    <xs:element name="contactLastName" nillable="true" type="xs:string"/>
+                    <xs:element name="phone" nillable="true" type="xs:string"/>
+                    <xs:element name="city" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="select_attributes_op">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Payments" type="ns0:Payments"/>
+            <xs:complexType name="Payments">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Payment" type="ns0:Payment"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Payment">
+                <xs:sequence>
+                    <xs:element name="checkNumber" nillable="true" type="xs:string"/>
+                </xs:sequence>
+                <xs:attribute name="customerNumber" type="xs:integer" use="optional"/>
+                <xs:attribute name="paymentDate" type="xs:date" use="optional"/>
+                <xs:attribute name="amount" type="xs:double" use="optional"/>
+            </xs:complexType>
+            <xs:element name="basic_array_type_op">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="country" nillable="true" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" name="state" nillable="true" type="xs:string"/>
+                        <xs:element name="creditLimit" nillable="true" type="xs:int"/>
+                        <xs:element maxOccurs="unbounded" name="city" nillable="true" type="xs:string"/>
+                        <xs:element name="contactFirstName" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="select_op_all_fields">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Products" type="ns0:Products"/>
+            <xs:complexType name="Products">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Product" type="ns0:Product"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Product">
+                <xs:sequence>
+                    <xs:element name="productCode" nillable="true" type="xs:string"/>
+                    <xs:element name="productName" nillable="true" type="xs:string"/>
+                    <xs:element name="quantityInStock" nillable="true" type="xs:integer"/>
+                    <xs:element name="buyPrice" nillable="true" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="select_op_count">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Orders" type="ns0:Orders"/>
+            <xs:complexType name="Orders">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="OrderDetails" type="ns0:OrderDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="OrderDetails">
+                <xs:sequence>
+                    <xs:element name="orderDetailsCount" nillable="true" type="xs:integer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="basic_merge_op">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="_postcustomers2">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="_getcustomers1">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="select_attributes_opRequest">
+        <wsdl:part name="parameters" element="ns0:select_attributes_op"/>
+    </wsdl:message>
+    <wsdl:message name="select_attributes_opResponse">
+        <wsdl:part name="parameters" element="ns0:Payments"/>
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns0:DataServiceFault"/>
+    </wsdl:message>
+    <wsdl:message name="select_op_countRequest">
+        <wsdl:part name="parameters" element="ns0:select_op_count"/>
+    </wsdl:message>
+    <wsdl:message name="select_op_countResponse">
+        <wsdl:part name="parameters" element="ns0:Orders"/>
+    </wsdl:message>
+    <wsdl:message name="_postcustomers2Request">
+        <wsdl:part name="parameters" element="ns0:_postcustomers2"/>
+    </wsdl:message>
+    <wsdl:message name="_postcustomers2Response">
+        <wsdl:part name="parameters" element="ns0:Customers"/>
+    </wsdl:message>
+    <wsdl:message name="basic_merge_opRequest">
+        <wsdl:part name="parameters" element="ns0:basic_merge_op"/>
+    </wsdl:message>
+    <wsdl:message name="basic_merge_opResponse">
+        <wsdl:part name="parameters" element="ns0:Customers"/>
+    </wsdl:message>
+    <wsdl:message name="basic_array_type_opRequest">
+        <wsdl:part name="parameters" element="ns0:basic_array_type_op"/>
+    </wsdl:message>
+    <wsdl:message name="basic_array_type_opResponse">
+        <wsdl:part name="parameters" element="ns0:Customers"/>
+    </wsdl:message>
+    <wsdl:message name="_getcustomers1Request">
+        <wsdl:part name="parameters" element="ns0:_getcustomers1"/>
+    </wsdl:message>
+    <wsdl:message name="_getcustomers1Response">
+        <wsdl:part name="parameters" element="ns0:Customers"/>
+    </wsdl:message>
+    <wsdl:message name="select_op_given_fieldsRequest">
+        <wsdl:part name="parameters" element="ns0:select_op_given_fields"/>
+    </wsdl:message>
+    <wsdl:message name="select_op_given_fieldsResponse">
+        <wsdl:part name="parameters" element="ns0:Customers"/>
+    </wsdl:message>
+    <wsdl:message name="select_op_all_fieldsRequest">
+        <wsdl:part name="parameters" element="ns0:select_op_all_fields"/>
+    </wsdl:message>
+    <wsdl:message name="select_op_all_fieldsResponse">
+        <wsdl:part name="parameters" element="ns0:Products"/>
+    </wsdl:message>
+    <wsdl:portType name="FaultDBServicePortType">
+        <wsdl:operation name="select_attributes_op">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:select_attributes_opRequest" wsaw:Action="urn:select_attributes_op"/>
+            <wsdl:output message="ns0:select_attributes_opResponse" wsaw:Action="urn:select_attributes_opResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:select_attributes_opDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_count">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:select_op_countRequest" wsaw:Action="urn:select_op_count"/>
+            <wsdl:output message="ns0:select_op_countResponse" wsaw:Action="urn:select_op_countResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:select_op_countDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="_postcustomers2">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:_postcustomers2Request" wsaw:Action="urn:_postcustomers2"/>
+            <wsdl:output message="ns0:_postcustomers2Response" wsaw:Action="urn:_postcustomers2Response"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_postcustomers2DataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="basic_merge_op">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:basic_merge_opRequest" wsaw:Action="urn:basic_merge_op"/>
+            <wsdl:output message="ns0:basic_merge_opResponse" wsaw:Action="urn:basic_merge_opResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:basic_merge_opDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="basic_array_type_op">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:basic_array_type_opRequest" wsaw:Action="urn:basic_array_type_op"/>
+            <wsdl:output message="ns0:basic_array_type_opResponse" wsaw:Action="urn:basic_array_type_opResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:basic_array_type_opDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="_getcustomers1">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:_getcustomers1Request" wsaw:Action="urn:_getcustomers1"/>
+            <wsdl:output message="ns0:_getcustomers1Response" wsaw:Action="urn:_getcustomers1Response"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:_getcustomers1DataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_given_fields">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:select_op_given_fieldsRequest" wsaw:Action="urn:select_op_given_fields"/>
+            <wsdl:output message="ns0:select_op_given_fieldsResponse" wsaw:Action="urn:select_op_given_fieldsResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:select_op_given_fieldsDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_all_fields">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:select_op_all_fieldsRequest" wsaw:Action="urn:select_op_all_fields"/>
+            <wsdl:output message="ns0:select_op_all_fieldsResponse" wsaw:Action="urn:select_op_all_fieldsResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:select_op_all_fieldsDataServiceFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="FaultDBServiceSOAP11Binding" type="ns0:FaultDBServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="select_attributes_op">
+            <soap:operation soapAction="urn:select_attributes_op" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_count">
+            <soap:operation soapAction="urn:select_op_count" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_postcustomers2">
+            <soap:operation soapAction="urn:_postcustomers2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="basic_merge_op">
+            <soap:operation soapAction="urn:basic_merge_op" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="basic_array_type_op">
+            <soap:operation soapAction="urn:basic_array_type_op" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getcustomers1">
+            <soap:operation soapAction="urn:_getcustomers1" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_given_fields">
+            <soap:operation soapAction="urn:select_op_given_fields" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_all_fields">
+            <soap:operation soapAction="urn:select_op_all_fields" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FaultDBServiceSOAP12Binding" type="ns0:FaultDBServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="select_attributes_op">
+            <soap12:operation soapAction="urn:select_attributes_op" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_count">
+            <soap12:operation soapAction="urn:select_op_count" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_postcustomers2">
+            <soap12:operation soapAction="urn:_postcustomers2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="basic_merge_op">
+            <soap12:operation soapAction="urn:basic_merge_op" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="basic_array_type_op">
+            <soap12:operation soapAction="urn:basic_array_type_op" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="_getcustomers1">
+            <soap12:operation soapAction="urn:_getcustomers1" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_given_fields">
+            <soap12:operation soapAction="urn:select_op_given_fields" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_all_fields">
+            <soap12:operation soapAction="urn:select_op_all_fields" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FaultDBServiceHttpBinding" type="ns0:FaultDBServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="select_attributes_op">
+            <http:operation location="select_attributes_op"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_count">
+            <http:operation location="select_op_count"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="_postcustomers2">
+            <http:operation location="customers2"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="basic_merge_op">
+            <http:operation location="basic_merge_op"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="basic_array_type_op">
+            <http:operation location="basic_array_type_op"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="_getcustomers1">
+            <http:operation location="customers1"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_given_fields">
+            <http:operation location="select_op_given_fields"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="select_op_all_fields">
+            <http:operation location="select_op_all_fields"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="FaultDBService">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:FaultDBServiceSOAP11Binding">
+            <soap:address location="http://10.100.0.66:9763/services/FaultDBService.SOAP11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:FaultDBServiceSOAP11Binding">
+            <soap:address location="https://10.100.0.66:9443/services/FaultDBService.SecureSOAP11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:FaultDBServiceSOAP12Binding">
+            <soap12:address location="https://10.100.0.66:9443/services/FaultDBService.SecureSOAP12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:FaultDBServiceSOAP12Binding">
+            <soap12:address location="http://10.100.0.66:9763/services/FaultDBService.SOAP12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:FaultDBServiceHttpBinding">
+            <http:address location="http://10.100.0.66:9763/services/FaultDBService.HTTPEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:FaultDBServiceHttpBinding">
+            <http:address location="https://10.100.0.66:9443/services/FaultDBService.SecureHTTPEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

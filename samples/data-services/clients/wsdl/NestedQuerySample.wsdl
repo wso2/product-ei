@@ -1,0 +1,328 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://ws.wso2.org/dataservice" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/nested_query_sample" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/nested_query_sample">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/nested_query_sample">
+            <xs:element name="customerName">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="customerNumber" nillable="true" type="xs:int" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Customer" type="ns0:Customer" />
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="customerOrders">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Orders" type="ns0:Orders" />
+            <xs:complexType name="Orders">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Order" type="ns0:Order" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Order">
+                <xs:sequence>
+                    <xs:element name="Order-number" nillable="true" type="xs:string" />
+                    <xs:element name="Last-date" nillable="true" type="xs:string" />
+                    <xs:element name="Status" nillable="true" type="xs:string" />
+                    <xs:element ref="ns0:Customer" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="listOffices">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Offices" type="ns0:Offices" />
+            <xs:complexType name="Offices">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Office" type="ns0:Office" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Office">
+                <xs:sequence>
+                    <xs:element name="officeCode" nillable="true" type="xs:string" />
+                    <xs:element name="addressLine1" nillable="true" type="xs:string" />
+                    <xs:element name="addressLine2" nillable="true" type="xs:string" />
+                    <xs:element name="city" nillable="true" type="xs:string" />
+                    <xs:element name="state" nillable="true" type="xs:string" />
+                    <xs:element name="country" nillable="true" type="xs:string" />
+                    <xs:element name="phone" nillable="true" type="xs:string" />
+                    <xs:element ref="ns0:Employees" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Employees" type="ns0:Employees" />
+            <xs:complexType name="Employees">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Employee" type="ns0:Employee" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Employee">
+                <xs:sequence>
+                    <xs:element name="employeeNumber" nillable="true" type="xs:string" />
+                    <xs:element name="firstName" nillable="true" type="xs:string" />
+                    <xs:element name="lastName" nillable="true" type="xs:string" />
+                    <xs:element name="email" nillable="true" type="xs:string" />
+                    <xs:element name="jobTitle" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="employeesInOffice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="officeCode" nillable="true" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="employeesInOfficeRequest">
+        <wsdl:part name="parameters" element="ns0:employeesInOffice" />
+    </wsdl:message>
+    <wsdl:message name="employeesInOfficeResponse">
+        <wsdl:part name="parameters" element="ns0:Employees" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns1:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:message name="customerOrdersRequest">
+        <wsdl:part name="parameters" element="ns0:customerOrders" />
+    </wsdl:message>
+    <wsdl:message name="customerOrdersResponse">
+        <wsdl:part name="parameters" element="ns0:Orders" />
+    </wsdl:message>
+    <wsdl:message name="listOfficesRequest">
+        <wsdl:part name="parameters" element="ns0:listOffices" />
+    </wsdl:message>
+    <wsdl:message name="listOfficesResponse">
+        <wsdl:part name="parameters" element="ns0:Offices" />
+    </wsdl:message>
+    <wsdl:message name="customerNameRequest">
+        <wsdl:part name="parameters" element="ns0:customerName" />
+    </wsdl:message>
+    <wsdl:message name="customerNameResponse">
+        <wsdl:part name="parameters" element="ns0:Customer" />
+    </wsdl:message>
+    <wsdl:portType name="NestedQuerySamplePortType">
+        <wsdl:operation name="employeesInOffice">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:employeesInOfficeRequest" wsaw:Action="urn:employeesInOffice" />
+            <wsdl:output message="ns0:employeesInOfficeResponse" wsaw:Action="urn:employeesInOfficeResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:employeesInOfficeDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="customerOrders">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:customerOrdersRequest" wsaw:Action="urn:customerOrders" />
+            <wsdl:output message="ns0:customerOrdersResponse" wsaw:Action="urn:customerOrdersResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:customerOrdersDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="listOffices">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:listOfficesRequest" wsaw:Action="urn:listOffices" />
+            <wsdl:output message="ns0:listOfficesResponse" wsaw:Action="urn:listOfficesResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:listOfficesDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="customerName">
+            <wsdl:documentation />
+            <wsdl:input message="ns0:customerNameRequest" wsaw:Action="urn:customerName" />
+            <wsdl:output message="ns0:customerNameResponse" wsaw:Action="urn:customerNameResponse" />
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:customerNameDataServiceFault" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="NestedQuerySampleSOAP11Binding" type="ns0:NestedQuerySamplePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="employeesInOffice">
+            <soap:operation soapAction="urn:employeesInOffice" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="customerOrders">
+            <soap:operation soapAction="urn:customerOrders" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="listOffices">
+            <soap:operation soapAction="urn:listOffices" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="customerName">
+            <soap:operation soapAction="urn:customerName" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="NestedQuerySampleSOAP12Binding" type="ns0:NestedQuerySamplePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="employeesInOffice">
+            <soap12:operation soapAction="urn:employeesInOffice" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="customerOrders">
+            <soap12:operation soapAction="urn:customerOrders" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="listOffices">
+            <soap12:operation soapAction="urn:listOffices" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="customerName">
+            <soap12:operation soapAction="urn:customerName" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="NestedQuerySampleHttpBinding" type="ns0:NestedQuerySamplePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="employeesInOffice">
+            <http:operation location="employeesInOffice" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="customerOrders">
+            <http:operation location="customerOrders" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="listOffices">
+            <http:operation location="listOffices" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="customerName">
+            <http:operation location="customerName" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="NestedQuerySample">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:NestedQuerySampleSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/NestedQuerySample.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:NestedQuerySampleSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/NestedQuerySample.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:NestedQuerySampleSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/NestedQuerySample.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:NestedQuerySampleSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/NestedQuerySample.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:NestedQuerySampleHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/NestedQuerySample.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:NestedQuerySampleHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/NestedQuerySample.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
