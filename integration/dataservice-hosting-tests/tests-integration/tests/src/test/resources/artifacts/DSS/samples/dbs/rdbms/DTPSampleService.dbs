@@ -2,7 +2,7 @@
    <config id="H2DataSource1">
       <property name="org.wso2.ws.dataservice.xa_datasource_class">org.h2.jdbcx.JdbcDataSource</property>
       <property name="org.wso2.ws.dataservice.xa_datasource_properties">
-         <property name="URL">jdbc:h2:file:./samples/database/DATA_SERV_SAMP</property>
+         <property name="URL">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
          <property name="User">wso2ds</property>
          <property name="Password">wso2ds</property>
       </property>
@@ -10,7 +10,7 @@
    <config id="H2DataSource2">
       <property name="org.wso2.ws.dataservice.xa_datasource_class">org.h2.jdbcx.JdbcDataSource</property>
       <property name="org.wso2.ws.dataservice.xa_datasource_properties">
-         <property name="URL">jdbc:h2:file:./samples/database/DATA_SERV_SAMP2</property>
+         <property name="URL">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP2</property>
          <property name="User">wso2ds</property>
          <property name="Password">wso2ds</property>
       </property>

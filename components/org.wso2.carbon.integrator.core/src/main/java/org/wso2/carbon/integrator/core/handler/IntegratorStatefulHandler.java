@@ -49,7 +49,10 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
         boolean isDataService = Utils.isDataService(messageContext);
-        if ((Utils.isStatefulService(axisService) ||  (uri != null && uri.contains("generateClient"))
+        if (isDataService && uri.contains("SOAP")) {
+            return null;
+        }
+        if ((Utils.isStatefulService(axisService) || isDataService || (uri != null && uri.contains("generateClient"))
         ) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
                 setSynapseContext(isDataService, messageContext, axisService);
@@ -66,14 +69,17 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     @Override
     public AxisService findService(MessageContext messageContext) throws AxisFault {
         AxisService service = this.rubsd.findService(messageContext);
-        boolean isDataService = false;
+        boolean isDataService;
         if (service != null) {
             URL file = service.getFileName();
             if (file != null) {
                 String filePath = file.getPath();
                 isDataService = filePath.contains("dataservices");
                 String uri = (String) messageContext.getProperty("TransportInURL");
-                if ((Utils.isStatefulService(service) || (uri != null && uri.contains
+                if (isDataService && uri.contains("SOAP")) {
+                    return service;
+                }
+                if ((Utils.isStatefulService(service) || isDataService || (uri != null && uri.contains
                         ("generateClient"))
                 ) && messageContext.getProperty("transport.http.servletRequest") == null) {
                     setSynapseContext(isDataService, messageContext, service);
@@ -81,29 +87,6 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                 }
             }
             return service;
-        } else {
-            AxisService tenantAxisService = null;
-            try {
-                tenantAxisService = Utils.getMultitenantAxisService(messageContext);
-            } catch (RuntimeException | AxisFault e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Exception occured while loading the tenant." + e.getMessage());
-                }
-            }
-            if (tenantAxisService != null) {
-                URL file = tenantAxisService.getFileName();
-                if (file != null) {
-                    String filePath = file.getPath();
-                    isDataService = filePath.contains("dataservices");
-                }
-                String uri = (String) messageContext.getProperty("TransportInURL");
-                if ((Utils.isStatefulService(tenantAxisService) || isDataService || (uri != null && uri.contains
-                        ("generateClient"))
-                ) && messageContext.getProperty("transport.http.servletRequest") == null) {
-                    setSynapseContext(isDataService, messageContext, tenantAxisService);
-                    return messageContext.getAxisService();
-                }
-            }
         }
         return null;
     }
