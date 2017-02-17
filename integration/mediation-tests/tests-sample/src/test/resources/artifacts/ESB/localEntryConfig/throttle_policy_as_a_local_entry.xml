@@ -21,7 +21,7 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <localEntry key="throttle_policy" src="file:repository/samples/resources/policy/throttle_policy.xml"/>
+    <localEntry key="throttle_policy" src="file:samples/service-bus/resources/policy/throttle_policy.xml"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

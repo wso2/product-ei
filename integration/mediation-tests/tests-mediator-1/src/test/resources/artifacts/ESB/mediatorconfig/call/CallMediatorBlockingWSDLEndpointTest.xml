@@ -37,7 +37,7 @@
         <call blocking="true">
             <endpoint>
                 <wsdl service="SimpleStockQuoteService"
-                      port="SimpleStockQuoteServiceHttpSoap11Endpoint"  uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+                      port="SimpleStockQuoteServiceHttpSoap11Endpoint"  uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
             </endpoint>
         </call>
         <property name="RESPONSE" value="true"/>

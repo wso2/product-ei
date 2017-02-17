@@ -62,7 +62,7 @@ documents. </p>
 
 <h3>Syntax </h3>
 <ul>
-  <li>Script mediator using a script off the registry 
+  <li>Script mediator using a script off the registry
     <p></p>
     <pre>&lt;script key="string" language="string" [function="script-function-name"]/&gt;
     </pre>
@@ -77,7 +77,7 @@ documents. </p>
     return a boolean, if it does not, then true is assumed, and the script
     mediator returns this value. </p>
   </li>
-  <li>Script mediator using a In-lined script 
+  <li>Script mediator using a In-lined script
     <p></p>
     <pre>&lt;script language="string"&gt;...script source code...&lt;script/&gt;</pre>
   </li>
@@ -129,7 +129,7 @@ src="../script-mediator/docs/images/script_registry.PNG" /> </p>
     element named 'symbol' which has a value of 'IBM' would be:</p>
   </li>
   <li><pre>&lt;script language="js"
-    key="repository/samples/resources/script/test.js"
+    key="samples/service-bus/resources/script/test.js"
     function="testFunction"/&gt;
     </pre>
     <p>In the above example, script is loaded from the registry by using the

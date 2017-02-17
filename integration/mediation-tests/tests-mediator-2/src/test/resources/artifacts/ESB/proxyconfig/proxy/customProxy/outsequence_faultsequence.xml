@@ -35,7 +35,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxyOne" transports="https http" startOnLoad="true" trace="disable">
         <description/>
@@ -57,7 +57,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxyFive" transports="https http" startOnLoad="true" trace="disable">
         <description/>
@@ -73,7 +73,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxyFour" transports="https http" startOnLoad="true" trace="disable">
         <description/>
@@ -101,7 +101,7 @@
                 <send/>
             </faultSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxyTwo" transports="https http" startOnLoad="true" trace="disable">
         <description/>
@@ -110,7 +110,7 @@
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
             </endpoint>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy name="StockQuoteProxyThree" transports="https http" startOnLoad="true" trace="disable">
         <description/>
@@ -119,9 +119,9 @@
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
             </endpoint>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
-    <localEntry key="proxy_wsdl" src="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    <localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

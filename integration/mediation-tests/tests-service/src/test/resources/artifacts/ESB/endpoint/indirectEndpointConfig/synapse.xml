@@ -6,7 +6,7 @@
             </outSequence>
             <endpoint key="indirectEP"/>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
         <description/>
     </proxy>
 </definitions>
