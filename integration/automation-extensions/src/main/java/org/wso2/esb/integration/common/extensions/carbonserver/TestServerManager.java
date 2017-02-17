@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.wso2.esb.integration.common.extensions.carbonserver;
 
 import org.apache.commons.logging.Log;
@@ -27,7 +28,6 @@ import org.wso2.carbon.automation.extensions.ExtensionConstants;
 import org.wso2.carbon.integration.common.utils.FileManager;
 
 import javax.xml.xpath.XPathExpressionException;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -86,11 +86,7 @@ public class TestServerManager {
     }
 
     public void configureServer() throws AutomationFrameworkException {
-        // To run test suite we have to do some changes to the server
-        //Copying catalina-server.xml
-        copyFileToServer(Paths.get("tomcat", "catalina-server.xml").toString(), Paths.get("conf", "tomcat", "catalina-server.xml").toString());
-        //Copying integrator
-        copyFileToServer(Paths.get("bin", "integrator.sh").toString(), Paths.get("bin", "integrator.sh").toString());
+
     }
 
     private void copyFileToServer(String sourcePath, String destinationPath) {

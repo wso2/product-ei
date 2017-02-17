@@ -1,0 +1,113 @@
+<data name="FaultDBService" disableStreaming="true">
+    <config id="default">
+        <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+        <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:mem:ds-test-db</property>
+        <property name="org.wso2.ws.dataservice.user" />
+        <property name="org.wso2.ws.dataservice.password" />
+        <property name="org.wso2.ws.dataservice.minpoolsize">2</property>
+        <property name="org.wso2.ws.dataservice.maxpoolsize">100</property>
+        <property name="org.wso2.ws.dataservice.validation_query">SELECT 1</property>
+    </config>
+    <!-- Query and Operation for a plain SELECT with given fields test  -->
+    <query id="select_query_given_fields" useConfig="default">
+        <sql>SELECT customerNumber, customerName, contactLastName, phone, city FROM Wrong</sql>
+        <result element="Customers" rowName="Customer">
+            <element name="customerNumber" column="customerNumber" xsdType="xs:integer" />
+            <element name="customerName" column="customerName" xsdType="xs:string" />
+            <element name="contactLastName" column="contactLastName" xsdType="xs:string" />
+            <element name="phone" column="phone" xsdType="xs:string" />
+            <element name="city" column="city" xsdType="xs:string" />
+        </result>
+    </query>
+    <operation name="select_op_given_fields">
+        <call-query href="select_query_given_fields">      </call-query>
+    </operation>
+    <resource path="customers1" method="GET">
+        <call-query href="select_query_given_fields" />
+    </resource>
+    <!-- Query and Operation for a plain SELECT with all fields test  -->
+    <query id="select_query_all_fields" useConfig="default">
+        <sql>SELECT * FROM Wrong</sql>
+        <result element="Products" rowName="Product">
+            <element name="productCode" column="productCode" xsdType="xs:string" />
+            <element name="productName" column="productName" xsdType="xs:string" />
+            <element name="quantityInStock" column="quantityInStock" xsdType="xs:integer" />
+            <element name="buyPrice" column="buyPrice" xsdType="xs:double" />
+        </result>
+    </query>
+    <operation name="select_op_all_fields">
+        <call-query href="select_query_all_fields">      </call-query>
+    </operation>
+    <resource path="customers2" method="POST">
+        <call-query href="select_query_given_fields" />
+    </resource>
+    <!-- Query and Operation for a SELECT COUNT -->
+    <query id="select_query_count" useConfig="default">
+        <sql>SELECT COUNT(*) as orderDetailsCount FROM OrderDetails</sql>
+        <result element="Orders" rowName="OrderDetails">
+            <element name="orderDetailsCount" column="orderDetailsCount" xsdType="xs:integer" />
+        </result>
+    </query>
+    <operation name="select_op_count">
+        <call-query href="select_query_count">      </call-query>
+    </operation>
+    <!-- Query and Operation for a SELECT with attributes test  -->
+    <query id="select_attributes_query" useConfig="default">
+        <sql>SELECT customerNumber, checkNumber, paymentDate, amount FROM Payments</sql>
+        <result element="Payments" rowName="Payment">
+            <attribute name="customerNumber" column="customerNumber" xsdType="xs:integer" />
+            <attribute name="paymentDate" column="paymentDate" xsdType="xs:date" />
+            <attribute name="amount" column="amount" xsdType="xs:double" />
+            <element name="checkNumber" column="checkNumber" xsdType="xs:string" />
+        </result>
+    </query>
+    <operation name="select_attributes_op">
+        <call-query href="select_attributes_query">      </call-query>
+    </operation>
+    <query id="basic_merge_query1" useConfig="default">
+        <sql>SELECT customerNumber, customerName, contactLastName, phone, city FROM Customers LIMIT 2</sql>
+        <result element="Customers" rowName="Customer">
+            <element name="customerNumber" column="customerNumber" xsdType="xs:integer" />
+            <element name="customerName" column="customerName" xsdType="xs:string" />
+            <element name="contactLastName" column="contactLastName" xsdType="xs:string" />
+            <element name="phone" column="phone" xsdType="xs:string" />
+            <element name="city" column="city" xsdType="xs:string" />
+        </result>
+    </query>
+    <query id="basic_merge_query2" useConfig="default">
+        <sql>SELECT customerNumber, customerName, contactLastName, phone, city FROM Customers LIMIT 3 OFFSET 2</sql>
+        <result element="Customers" rowName="Customer">
+            <element name="customerNumber" column="customerNumber" xsdType="xs:integer" />
+            <element name="customerName" column="customerName" xsdType="xs:string" />
+            <element name="contactLastName" column="contactLastName" xsdType="xs:string" />
+            <element name="phone" column="phone" xsdType="xs:string" />
+            <element name="city" column="city" xsdType="xs:string" />
+        </result>
+    </query>
+
+    <!-- Array types -->
+    <query id="testArrayTypes" useConfig="default">
+        <sql>select customerNumber,customerName,contactLastName,phone,city from Customers where country = ? and state IN (?) and creditLimit > ? and city IN (?) and contactFirstName = ?</sql>
+        <param name="country" sqlType="STRING" ordinal="1" paramType="SCALAR" />
+        <param name="state" sqlType="STRING" ordinal="2" paramType="ARRAY" />
+        <param name="creditLimit" sqlType="INTEGER" ordinal="3" paramType="SCALAR" />
+        <param name="city" sqlType="STRING" ordinal="4" paramType="ARRAY" />
+        <param name="contactFirstName" sqlType="STRING" ordinal="5" paramType="SCALAR" />
+        <result element="Customers" rowName="Customer" useColumnNumbers="true">
+            <element name="customerNumber" column="1" xsdType="xs:integer" />
+            <element name="customerName" column="2" xsdType="xs:string" />
+            <element name="contactLastName" column="3" xsdType="xs:string" />
+            <element name="phone" column="4" xsdType="xs:string" />
+            <element name="city" column="5" xsdType="xs:string" />
+        </result>
+    </query>
+    <operation name="basic_array_type_op">
+        <call-query href="testArrayTypes">
+            <with-param name="country" query-param="country" />
+            <with-param name="state" query-param="state" />
+            <with-param name="creditLimit" query-param="creditLimit" />
+            <with-param name="city" query-param="city" />
+            <with-param name="contactFirstName" query-param="contactFirstName" />
+        </call-query>
+    </operation>
+</data>

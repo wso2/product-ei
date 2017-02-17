@@ -646,6 +646,8 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
    	        <handler name="CarbonContextConfigurator"
                      class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
@@ -740,6 +742,8 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">

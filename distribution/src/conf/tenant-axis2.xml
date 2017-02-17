@@ -138,6 +138,8 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="RelaySecuirtyMessageBuilderDispatchandler"
                      class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
@@ -215,6 +217,8 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">

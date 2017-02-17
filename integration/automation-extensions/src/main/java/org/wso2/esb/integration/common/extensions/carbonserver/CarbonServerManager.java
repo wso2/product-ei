@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.wso2.esb.integration.common.extensions.carbonserver;
 
 
@@ -34,10 +35,12 @@ import org.wso2.carbon.automation.extensions.servers.utils.ArchiveExtractor;
 import org.wso2.carbon.automation.extensions.servers.utils.ClientConnectionUtil;
 import org.wso2.carbon.automation.extensions.servers.utils.FileManipulator;
 import org.wso2.carbon.automation.extensions.servers.utils.ServerLogReader;
+import org.wso2.carbon.integration.common.utils.FileManager;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 
@@ -222,6 +225,13 @@ public class CarbonServerManager {
         carbonHome = new File(baseDir).getAbsolutePath() + File.separator + extractDir + File.separator +
                      extractedCarbonDir;
 
+
+        // To run test suite we have to do some changes to the server
+        //Copying catalina-server.xml
+        copyFileToServer(Paths.get("tomcat", "catalina-server.xml").toString(), Paths.get("conf", "tomcat", "catalina-server.xml").toString());
+        //Copying integrator
+        copyFileToServer(Paths.get("bin", "integrator.sh").toString(), Paths.get("bin", "integrator.sh").toString());
+
         try {
             //read coverage status from automation.xml
             isCoverageEnable = Boolean.parseBoolean(automationContext.getConfigurationValue("//coverage"));
@@ -238,6 +248,15 @@ public class CarbonServerManager {
         return carbonHome;
     }
 
+    private void copyFileToServer(String sourcePath, String destinationPath) {
+        log.info("Updating " + destinationPath + " for product EI");
+        String catalinaResourcePath = Paths.get(FrameworkPathUtil.getSystemResourceLocation(), sourcePath).toString();
+        try {
+            FileManager.copyFile(Paths.get(catalinaResourcePath).toFile(), Paths.get(carbonHome, destinationPath).toString());
+        } catch (IOException e) {
+            log.warn("IOException while replacing " + destinationPath);
+        }
+    }
 
     public synchronized void serverShutdown(int portOffset) throws AutomationFrameworkException {
         if (process != null) {
@@ -281,7 +300,7 @@ public class CarbonServerManager {
                 try {
                     log.info("Generating Jacoco code coverage...");
                     generateCoverageReport(
-                            new File(carbonHome + File.separator + "repository" +
+                            new File(carbonHome + File.separator + "wso2" +
                                      File.separator + "components" + File.separator + "plugins" + File.separator));
                 } catch (IOException e) {
                     log.error("Failed to generate code coverage ", e);
@@ -408,14 +427,13 @@ public class CarbonServerManager {
     private void insertJacocoAgentToShellScript(String scriptName)
             throws IOException {
 
+        scriptName = "integrator";
         String jacocoAgentFile = CodeCoverageUtils.getJacocoAgentJarLocation();
         coverageDumpFilePath = FrameworkPathUtil.getCoverageDumpFilePath();
-            CodeCoverageUtils.insertStringToFile(
-                    new File(carbonHome + File.separator + "bin" + File.separator + scriptName + ".sh"),
-                    new File(carbonHome + File.separator + "tmp" + File.separator + scriptName + ".sh"),
-                    "-Dwso2.server.standalone=true",
-                    "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
-                            ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
+        CodeCoverageUtils.insertStringToFile(Paths.get(carbonHome, "bin", scriptName + ".sh").toFile(), Paths.get(carbonHome, "wso2", "tmp", scriptName + ".sh").toFile(),
+                "-Dwso2.server.standalone=true",
+                "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
+                        ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
         
     }
 
@@ -431,10 +449,10 @@ public class CarbonServerManager {
 
         String jacocoAgentFile = CodeCoverageUtils.getJacocoAgentJarLocation();
         coverageDumpFilePath = FrameworkPathUtil.getCoverageDumpFilePath();
-
+        scriptName = "integrator";
         CodeCoverageUtils.insertJacocoAgentToStartupBat(
-                new File(carbonHome + File.separator + "bin" + File.separator + scriptName + ".bat"),
-                new File(carbonHome + File.separator + "tmp" + File.separator + scriptName + ".bat"),
+                Paths.get(carbonHome, "bin", scriptName + ".bat").toFile(),
+                Paths.get(carbonHome, "wso2", "tmp", scriptName + ".bat").toFile(),
                 "-Dcatalina.base",
                 "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
                 ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":"));

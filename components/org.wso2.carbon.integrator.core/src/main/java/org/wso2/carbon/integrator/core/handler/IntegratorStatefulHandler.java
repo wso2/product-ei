@@ -49,20 +49,11 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
         boolean isDataService = Utils.isDataService(messageContext);
-        if ((Utils.isStatefulService(axisService) || isDataService || (uri != null && uri.contains("generateClient"))
+        if ((Utils.isStatefulService(axisService) ||  (uri != null && uri.contains("generateClient"))
         ) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
-                messageContext.setAxisService(synapseDispatcher.findService(messageContext));
-                if (log.isDebugEnabled()) {
-                    log.debug("AxisService is changing from " + axisService.getName() + " to " + messageContext
-                            .getAxisService().getName());
-                }
-                if (isDataService) {
-                    messageContext.setProperty("isDataService", "true");
-                } else {
-                    messageContext.setProperty("raplacedAxisService", "true");
-                }
-                return synapseDispatcher.findOperation(messageContext.getAxisService(), messageContext);
+                setSynapseContext(isDataService, messageContext, axisService);
+                return messageContext.getAxisOperation();
             } catch (AxisFault e) {
                 log.error("Error occurred while invoking stateful service.");
                 return null;
@@ -77,6 +68,18 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
         AxisService service = this.rubsd.findService(messageContext);
         boolean isDataService = false;
         if (service != null) {
+            URL file = service.getFileName();
+            if (file != null) {
+                String filePath = file.getPath();
+                isDataService = filePath.contains("dataservices");
+                String uri = (String) messageContext.getProperty("TransportInURL");
+                if ((Utils.isStatefulService(service) || (uri != null && uri.contains
+                        ("generateClient"))
+                ) && messageContext.getProperty("transport.http.servletRequest") == null) {
+                    setSynapseContext(isDataService, messageContext, service);
+                    return messageContext.getAxisService();
+                }
+            }
             return service;
         } else {
             AxisService tenantAxisService = null;
@@ -97,20 +100,8 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                 if ((Utils.isStatefulService(tenantAxisService) || isDataService || (uri != null && uri.contains
                         ("generateClient"))
                 ) && messageContext.getProperty("transport.http.servletRequest") == null) {
-                    AxisService axisService = synapseDispatcher.findService(messageContext);
-                    if (log.isDebugEnabled()) {
-                        log.debug("AxisService is changing from " + tenantAxisService.getName() + " to " +
-                                axisService.getName());
-                    }
-                    if (isDataService) {
-                        messageContext.setProperty("isDataService", "true");
-                    } else {
-                        messageContext.setProperty("raplacedAxisService", "true");
-                    }
-                    messageContext.setAxisService(axisService);
-                    messageContext.setAxisOperation(synapseDispatcher.findOperation(messageContext.getAxisService(),
-                            messageContext));
-                    return axisService;
+                    setSynapseContext(isDataService, messageContext, tenantAxisService);
+                    return messageContext.getAxisService();
                 }
             }
         }
@@ -122,4 +113,20 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
         this.init(new HandlerDescription(NAME));
     }
 
+    private void setSynapseContext(boolean isDataService, MessageContext messageContext, AxisService
+            originalAxisService) throws AxisFault {
+        AxisService axisService = synapseDispatcher.findService(messageContext);
+        if (log.isDebugEnabled()) {
+            log.debug("AxisService is changing from " + originalAxisService.getName() + " to " +
+                    axisService.getName());
+        }
+        if (isDataService) {
+            messageContext.setProperty("isDataService", "true");
+        } else {
+            messageContext.setProperty("raplacedAxisService", "true");
+        }
+        messageContext.setAxisService(axisService);
+        messageContext.setAxisOperation(synapseDispatcher.findOperation(messageContext.getAxisService(),
+                messageContext));
+    }
 }

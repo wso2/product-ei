@@ -1,0 +1,90 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="StudentService">
+   <config id="StudentDataSource">
+      <property name="org.wso2.ws.dataservice.driver">com.mysql.jdbc.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:mysql://localhost:3306/STUDENT_DB</property>
+      <property name="org.wso2.ws.dataservice.user">root</property>
+      <property name="org.wso2.ws.dataservice.password">root</property>
+   </config>
+   <query id="getStudent" useConfig="StudentDataSource">
+      <sql>select * from STUDENT_T where REGISTRATIION_NUMBER_C = :registration_number</sql>
+      <result element="Students" rowName="Student">
+         <element name="RegistrationNumber" column="REGISTRATIION_NUMBER_C" xsdType="xs:string" />
+         <element name="Name" column="NAME_C" xsdType="xs:string" />
+         <element name="Email" column="EMAIL_C" xsdType="xs:string" />
+         <element name="Age" column="AGE_C" xsdType="xs:integer" />
+         <element name="Class" column="CLASS_C" xsdType="xs:string" />
+         <element name="Average" column="AVERAGE_C" xsdType="xs:double" />
+      </result>
+      <param name="registration_number" sqlType="STRING" />
+   </query>
+   <query id="addStudent" useConfig="StudentDataSource">
+      <sql>insert into STUDENT_T values (:registrationNumber, :name, :email, :age, :class, :average);</sql>
+      <param name="registrationNumber" sqlType="STRING" />
+      <param name="name" sqlType="STRING" />
+      <param name="email" sqlType="STRING" />
+      <param name="age" sqlType="INTEGER" />
+      <param name="class" sqlType="STRING" />
+      <param name="average" sqlType="DOUBLE" />
+   </query>
+   <query id="updateStudent" useConfig="StudentDataSource">
+      <sql>update STUDENT_T set NAME_C = :name, EMAIL_C = :email, AGE_C = :age, CLASS_C = :class, AVERAGE_C = :average where REGISTRATIION_NUMBER_C = :registrationNumber</sql>
+      <param name="registrationNumber" sqlType="STRING" />
+      <param name="name" sqlType="STRING" />
+      <param name="email" sqlType="STRING" />
+      <param name="age" sqlType="INTEGER" />
+      <param name="class" sqlType="STRING" />
+      <param name="average" sqlType="DOUBLE" />
+   </query>
+   <query id="deleteStudent" useConfig="StudentDataSource">
+      <sql>delete from STUDENT_T where REGISTRATIION_NUMBER_C = :registrationNumber</sql>
+      <param name="registrationNumber" sqlType="STRING" />
+   </query>
+   <operation name="GetStudent">
+      <call-query href="getStudent">
+         <with-param name="registration_number" query-param="registration_number" />
+      </call-query>
+   </operation>
+   <operation name="AddStudent">
+      <call-query href="addStudent">
+         <with-param name="registrationNumber" query-param="registrationNumber" />
+         <with-param name="name" query-param="name" />
+         <with-param name="email" query-param="email" />
+         <with-param name="age" query-param="age" />
+         <with-param name="class" query-param="class" />
+         <with-param name="average" query-param="average" />
+      </call-query>
+   </operation>
+   <operation name="UpdateStudent">
+      <call-query href="updateStudent">
+         <with-param name="registrationNumber" query-param="registrationNumber" />
+         <with-param name="name" query-param="name" />
+         <with-param name="email" query-param="email" />
+         <with-param name="age" query-param="age" />
+         <with-param name="class" query-param="class" />
+         <with-param name="average" query-param="average" />
+      </call-query>
+   </operation>
+   <operation name="DeleteStudent">
+      <call-query href="deleteStudent">
+         <with-param name="registrationNumber" query-param="registrationNumber" />
+      </call-query>
+   </operation>
+</data>
