@@ -21,7 +21,7 @@
 <!-- Using WS-Security with policy attachments for proxy services -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/>
+    <localEntry key="sec_policy" src="file:samples/service-bus/resources/policy/policy_3.xml"/>
 
     <proxy name="StockQuoteProxy">
         <target>
@@ -38,7 +38,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
         <policy key="sec_policy"/>
         <enableSec/>
     </proxy>

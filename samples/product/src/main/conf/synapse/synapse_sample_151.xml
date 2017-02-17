@@ -37,7 +37,7 @@
         <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
     </endpoint>
 
-    <localEntry key="proxy_wsdl" src="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    <localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
 
     <proxy name="StockQuoteProxy1">
         <publishWSDL key="proxy_wsdl"/>

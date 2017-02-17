@@ -519,7 +519,7 @@ resources, and using XSLT transformations</a> </h2>
     &lt;/registry&gt;
 
     &lt;!-- define the request processing XSLT resource as a static URL source --&gt;
-    &lt;localEntry key="xslt-key-req" src="file:repository/samples/resources/transform/transform.xslt"/&gt;
+    &lt;localEntry key="xslt-key-req" src="file:samples/service-bus/resources/transform/transform.xslt"/&gt;
 
     &lt;in&gt;
         &lt;!-- transform the custom quote request into a standard quote requst expected by the service --&gt;
@@ -564,7 +564,7 @@ resource is requested. </p>
 concatenated with the 'root' of the SimpleURLRegistry
 'file:repository/samples/resources/' forms the complete URL of the
 resource as
-'file:repository/samples/resources/transform/transform_back.xslt' and
+'file:samples/service-bus/resources/transform/transform_back.xslt' and
 caches its value for a period of 15000 ms. </p>
 
 <p>Execute the custom quote client as 'ant stockquote -Dmode=customquote ...'
@@ -599,7 +599,7 @@ lease extended as appropriate. </p>
 [HttpClientWorker-1] DEBUG AbstractRegistry - Renew cache lease for another 15s </pre>
 
 <p>Now edit the
-repository/samples/resources/transform/transform_back.xslt file and add a
+samples/service-bus/resources/transform/transform_back.xslt file and add a
 blank line at the end. Now when you run the client again, and if the cache is
 expired, the resource would be re-fetched from its URL by the registry and
 this can be seen by the following debug log messages </p>
