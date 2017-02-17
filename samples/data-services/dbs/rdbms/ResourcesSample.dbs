@@ -1,0 +1,100 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="ResourcesSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/resources_sample">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.validation_query"/>
+   </config>
+   <query id="getProductByCodeQuery" useConfig="default">
+      <sql>select productName, productLine, quantityInStock, buyPrice from Products where productCode=:productCode</sql>
+      <param name="productCode" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <result element="Products" rowName="Product">
+         <element column="productName" name="productName" xsdType="string"/>
+         <element column="productLine" name="productLine" xsdType="string"/>
+         <element column="quantityInStock" name="quantityInStock" xsdType="integer"/>
+         <element column="buyPrice" name="buyPrice" xsdType="double"/>
+      </result>
+   </query>
+   <query id="getProductsQuery" useConfig="default">
+      <sql>select productCode, productName, productLine, quantityInStock, buyPrice from Products</sql>
+      <result element="Products" rowName="Product">
+         <element column="productCode" name="productCode" xsdType="string"/>
+         <element column="productName" name="productName" xsdType="string"/>
+         <element column="productLine" name="productLine" xsdType="string"/>
+         <element column="quantityInStock" name="quantityInStock" xsdType="integer"/>
+         <element column="buyPrice" name="buyPrice" xsdType="double"/>
+      </result>
+   </query>
+   <query id="updateProductQuery" useConfig="default">
+      <sql>update Products set productName=:productName, productLine=:productLine,quantityInStock=:quantityInStock,buyPrice=:buyPrice WHERE productCode=:productCode</sql>
+      <param name="productCode" ordinal="5" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="productName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="productLine" ordinal="2" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="quantityInStock" ordinal="3" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+      <param name="buyPrice" ordinal="4" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
+   </query>
+   <query id="createProductQuery" useConfig="default">
+      <sql>insert into Products (productCode, productName, productLine, quantityInStock, buyPrice) values (:productCode,:productName,:productLine,:quantityInStock,:buyPrice)</sql>
+      <param name="productCode" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="productName" ordinal="2" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="productLine" ordinal="3" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="quantityInStock" ordinal="4" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
+      <param name="buyPrice" ordinal="5" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
+   </query>
+   <query id="deleteProductQuery" useConfig="default">
+      <sql>delete Products where productCode=:productCode</sql>
+      <param name="productCode" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+   </query>
+   <resource method="GET" path="product/{productCode}">
+      <call-query href="getProductByCodeQuery">
+         <with-param name="productCode" query-param="productCode"/>
+      </call-query>
+   </resource>
+   <resource method="POST" path="product">
+      <call-query href="createProductQuery">
+         <with-param name="productCode" query-param="productCode"/>
+         <with-param name="productName" query-param="productName"/>
+         <with-param name="productLine" query-param="productLine"/>
+         <with-param name="quantityInStock" query-param="quantityInStock"/>
+         <with-param name="buyPrice" query-param="buyPrice"/>
+      </call-query>
+   </resource>
+   <resource method="PUT" path="product">
+      <call-query href="updateProductQuery">
+         <with-param name="productCode" query-param="productCode"/>
+         <with-param name="productName" query-param="productName"/>
+         <with-param name="productLine" query-param="productLine"/>
+         <with-param name="quantityInStock" query-param="quantityInStock"/>
+         <with-param name="buyPrice" query-param="buyPrice"/>
+      </call-query>
+   </resource>
+   <resource method="DELETE" path="product/{productCode}">
+      <call-query href="deleteProductQuery">
+         <with-param name="productCode" query-param="productCode"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="products">
+      <call-query href="getProductsQuery"/>
+   </resource>
+</data>

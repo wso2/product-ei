@@ -1,0 +1,186 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice">
+    <wsdl:documentation/>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:all>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:all>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getMoviesByGenre">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="genre" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Movies" type="ns0:Movies"/>
+            <xs:complexType name="Movies">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Movie" type="ns0:Movie"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Movie">
+                <xs:all>
+                    <xs:element name="title" nillable="true" type="xs:string"/>
+                    <xs:element name="director" nillable="true" type="xs:string"/>
+                    <xs:element name="year" nillable="true" type="xs:string"/>
+                    <xs:element name="genre" nillable="true" type="xs:string"/>
+                    <xs:element name="actor" nillable="true" type="xs:string"/>
+                </xs:all>
+            </xs:complexType>
+            <xs:element name="getAllMovieData">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getAllMovieDataRequest">
+        <wsdl:part name="parameters" element="ns0:getAllMovieData"/>
+    </wsdl:message>
+    <wsdl:message name="getAllMovieDataResponse">
+        <wsdl:part name="parameters" element="ns0:Movies"/>
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns0:DataServiceFault"/>
+    </wsdl:message>
+    <wsdl:message name="getMoviesByGenreRequest">
+        <wsdl:part name="parameters" element="ns0:getMoviesByGenre"/>
+    </wsdl:message>
+    <wsdl:message name="getMoviesByGenreResponse">
+        <wsdl:part name="parameters" element="ns0:Movies"/>
+    </wsdl:message>
+    <wsdl:portType name="samples/RDFSampleServicePortType">
+        <wsdl:operation name="getAllMovieData">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:getAllMovieDataRequest" wsaw:Action="urn:getAllMovieData"/>
+            <wsdl:output message="ns0:getAllMovieDataResponse" wsaw:Action="urn:getAllMovieDataResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getAllMovieDataDataServiceFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="getMoviesByGenre">
+            <wsdl:documentation/>
+            <wsdl:input message="ns0:getMoviesByGenreRequest" wsaw:Action="urn:getMoviesByGenre"/>
+            <wsdl:output message="ns0:getMoviesByGenreResponse" wsaw:Action="urn:getMoviesByGenreResponse"/>
+            <wsdl:fault message="ns0:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getMoviesByGenreDataServiceFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RDFSampleServiceSOAP11Binding" type="ns0:samples/RDFSampleServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getAllMovieData">
+            <soap:operation soapAction="urn:getAllMovieData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getMoviesByGenre">
+            <soap:operation soapAction="urn:getMoviesByGenre" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="RDFSampleServiceSOAP12Binding" type="ns0:samples/RDFSampleServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getAllMovieData">
+            <soap12:operation soapAction="urn:getAllMovieData" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getMoviesByGenre">
+            <soap12:operation soapAction="urn:getMoviesByGenre" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="RDFSampleServiceHttpBinding" type="ns0:samples/RDFSampleServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="getAllMovieData">
+            <http:operation location="getAllMovieData"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getMoviesByGenre">
+            <http:operation location="getMoviesByGenre"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="samples/RDFSampleService">
+        <wsdl:port name="SOAP11Endpoint" binding="ns0:RDFSampleServiceSOAP11Binding">
+            <soap:address location="http://10.100.0.66:9763/services/samples/RDFSampleService.SOAP11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:RDFSampleServiceSOAP11Binding">
+            <soap:address location="https://10.100.0.66:9443/services/samples/RDFSampleService.SecureSOAP11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:RDFSampleServiceSOAP12Binding">
+            <soap12:address location="https://10.100.0.66:9443/services/samples/RDFSampleService.SecureSOAP12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns0:RDFSampleServiceSOAP12Binding">
+            <soap12:address location="http://10.100.0.66:9763/services/samples/RDFSampleService.SOAP12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns0:RDFSampleServiceHttpBinding">
+            <http:address location="http://10.100.0.66:9763/services/samples/RDFSampleService.HTTPEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns0:RDFSampleServiceHttpBinding">
+            <http:address location="https://10.100.0.66:9443/services/samples/RDFSampleService.SecureHTTPEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

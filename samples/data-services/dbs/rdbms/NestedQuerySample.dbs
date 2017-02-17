@@ -1,0 +1,89 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="NestedQuerySample" serviceNamespace="http://ws.wso2.org/dataservice/samples/nested_query_sample">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.validation_query"/>
+   </config>
+   <operation name="customerOrders">
+      <call-query href="customerOrdersSQL"/>
+   </operation>
+   <query id="customerOrdersSQL" useConfig="default">
+      <sql>select o.ORDERNUMBER,o.ORDERDATE, o.STATUS,o.CUSTOMERNUMBER from ORDERS o</sql>
+      <result element="Orders" rowName="Order">
+         <element column="ORDERNUMBER" name="Order-number"/>
+         <element column="ORDERDATE" name="Last-date"/>
+         <element column="STATUS" name="Status"/>
+         <call-query href="customerNameSQL">
+            <with-param name="customerNumber" query-param="customerNumber"/>
+         </call-query>
+      </result>
+   </query>
+   <operation name="customerName">
+      <call-query href="customerNameSQL">
+         <with-param name="customerNumber" query-param="customerNumber"/>
+      </call-query>
+   </operation>
+   <query id="customerNameSQL" useConfig="default">
+      <sql>select c.CUSTOMERNAME from CUSTOMERS c where c.CUSTOMERNUMBER = :customerNumber</sql>
+      <result element="Customer">
+         <element column="CUSTOMERNAME" name="Name"/>
+      </result>
+      <param name="customerNumber" sqlType="INTEGER"/>
+   </query>
+   <operation name="employeesInOffice">
+      <call-query href="employeesInOfficeSQL">
+         <with-param name="officeCode" query-param="officeCode"/>
+      </call-query>
+   </operation>
+   <query id="employeesInOfficeSQL" useConfig="default">
+      <sql>select employeeNumber, firstName, lastName, email, jobTitle from Employees where officeCode = :officeCode</sql>
+      <result element="Employees" rowName="Employee">
+         <element column="employeeNumber" name="employeeNumber"/>
+         <element column="firstName" name="firstName"/>
+         <element column="lastName" name="lastName"/>
+         <element column="email" name="email"/>
+         <element column="jobTitle" name="jobTitle"/>
+      </result>
+      <param name="officeCode" sqlType="STRING"/>
+   </query>
+   <operation name="listOffices">
+      <call-query href="listOfficesSQL"/>
+   </operation>
+   <query id="listOfficesSQL" useConfig="default">
+      <sql>select officeCode, addressLine1, addressLine2, city, state, country, phone from Offices</sql>
+      <result element="Offices" rowName="Office">
+         <element column="officeCode" name="officeCode"/>
+         <element column="addressLine1" name="addressLine1"/>
+         <element column="addressLine2" name="addressLine2"/>
+         <element column="city" name="city"/>
+         <element column="state" name="state"/>
+         <element column="country" name="country"/>
+         <element column="phone" name="phone"/>
+         <call-query href="employeesInOfficeSQL">
+            <with-param name="officeCode" query-param="officeCode"/>
+         </call-query>
+      </result>
+   </query>
+</data>

@@ -1,0 +1,197 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://ws.wso2.org/dataservice" xmlns:ns1="http://ws.wso2.org/dataservice/samples/excel_sample_service" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://ws.wso2.org/dataservice/samples/excel_sample_service/getProducts" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service">
+    <wsdl:documentation />
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service/getProducts">
+            <xs:element name="getProducts">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Products" type="ns0:Products" />
+            <xs:complexType name="Products">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Product" type="ns0:Product" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Product">
+                <xs:sequence>
+                    <xs:element name="ID" nillable="true" type="xs:string" />
+                    <xs:element name="Name" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice/samples/excel_sample_service">
+            <xs:element name="getProductClassifications">
+                <xs:complexType>
+                    <xs:sequence />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Products" type="ns1:Products" />
+            <xs:complexType name="Products">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Product" type="ns1:Product" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Product">
+                <xs:sequence>
+                    <xs:element name="Name" nillable="true" type="xs:string" />
+                    <xs:element name="Classification" nillable="true" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
+            <xs:element name="DataServiceFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="current_params" type="xs:string"/>
+                        <xs:element name="current_request_name" type="xs:string"/>
+                        <xs:element name="nested_exception" type="xs:string"/>
+                        <xs:element name="source_data_service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="location" type="xs:string"/>
+                                    <xs:element name="default_namespace" type="xs:string"/>
+                                    <xs:element name="description" type="xs:string"/>
+                                    <xs:element name="data_service_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="ds_code" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="REQUEST_STATUS" type="xs:string"/>
+            <xs:element name="DATA_SERVICE_RESPONSE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getProductsRequest">
+        <wsdl:part name="parameters" element="ns0:getProducts" />
+    </wsdl:message>
+    <wsdl:message name="getProductsResponse">
+        <wsdl:part name="parameters" element="ns0:Products" />
+    </wsdl:message>
+    <wsdl:message name="DataServiceFault">
+        <wsdl:part name="parameters" element="ns2:DataServiceFault" />
+    </wsdl:message>
+    <wsdl:message name="getProductClassificationsRequest">
+        <wsdl:part name="parameters" element="ns1:getProductClassifications" />
+    </wsdl:message>
+    <wsdl:message name="getProductClassificationsResponse">
+        <wsdl:part name="parameters" element="ns1:Products" />
+    </wsdl:message>
+    <wsdl:portType name="ExcelSampleServicePortType">
+        <wsdl:operation name="getProducts">
+            <wsdl:documentation />
+            <wsdl:input message="ns1:getProductsRequest" wsaw:Action="urn:getProducts" />
+            <wsdl:output message="ns1:getProductsResponse" wsaw:Action="urn:getProductsResponse" />
+            <wsdl:fault message="ns1:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getProductsDataServiceFault" />
+        </wsdl:operation>
+        <wsdl:operation name="getProductClassifications">
+            <wsdl:documentation />
+            <wsdl:input message="ns1:getProductClassificationsRequest" wsaw:Action="urn:getProductClassifications" />
+            <wsdl:output message="ns1:getProductClassificationsResponse" wsaw:Action="urn:getProductClassificationsResponse" />
+            <wsdl:fault message="ns1:DataServiceFault" name="DataServiceFault" wsaw:Action="urn:getProductClassificationsDataServiceFault" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ExcelSampleServiceSOAP11Binding" type="ns1:ExcelSampleServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="getProducts">
+            <soap:operation soapAction="urn:getProducts" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getProductClassifications">
+            <soap:operation soapAction="urn:getProductClassifications" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ExcelSampleServiceSOAP12Binding" type="ns1:ExcelSampleServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="getProducts">
+            <soap12:operation soapAction="urn:getProducts" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getProductClassifications">
+            <soap12:operation soapAction="urn:getProductClassifications" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="DataServiceFault">
+                <soap12:fault use="literal" name="DataServiceFault" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ExcelSampleServiceHttpBinding" type="ns1:ExcelSampleServicePortType">
+        <http:binding verb="POST" />
+        <wsdl:operation name="getProducts">
+            <http:operation location="getProducts" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProductClassifications">
+            <http:operation location="getProductClassifications" />
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ExcelSampleService">
+        <wsdl:port name="SOAP11Endpoint" binding="ns1:ExcelSampleServiceSOAP11Binding">
+            <soap:address location="http://10.150.3.52:9763/services/ExcelSampleService.SOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP11Endpoint" binding="ns1:ExcelSampleServiceSOAP11Binding">
+            <soap:address location="https://10.150.3.52:9443/services/ExcelSampleService.SecureSOAP11Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureSOAP12Endpoint" binding="ns1:ExcelSampleServiceSOAP12Binding">
+            <soap12:address location="https://10.150.3.52:9443/services/ExcelSampleService.SecureSOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SOAP12Endpoint" binding="ns1:ExcelSampleServiceSOAP12Binding">
+            <soap12:address location="http://10.150.3.52:9763/services/ExcelSampleService.SOAP12Endpoint/" />
+        </wsdl:port>
+        <wsdl:port name="HTTPEndpoint" binding="ns1:ExcelSampleServiceHttpBinding">
+            <http:address location="http://10.150.3.52:9763/services/ExcelSampleService.HTTPEndpoint/" />
+        </wsdl:port>
+        <wsdl:port name="SecureHTTPEndpoint" binding="ns1:ExcelSampleServiceHttpBinding">
+            <http:address location="https://10.150.3.52:9443/services/ExcelSampleService.SecureHTTPEndpoint/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

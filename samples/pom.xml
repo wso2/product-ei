@@ -43,5 +43,7 @@
     <modules>
         <module>product</module>
         <module>business-process-samples</module>
+        <module>webapps</module>
+        <module>data-services</module>
     </modules>
 </project>

@@ -1,0 +1,117 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="FileService" serviceNamespace="http://ws.wso2.org/dataservice/samples/file_service">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.validation_query"/>
+   </config>
+   <query id="createNewFileQuery" useConfig="default">
+      <sql>insert into Files values (:fileName,:fileType)</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="fileType" ordinal="2" paramType="SCALAR" sqlType="STRING" type="IN"/>
+   </query>
+   <query id="appendDataToFileQuery" useConfig="default">
+      <sql>insert into FileRecords (fileName, data) values (:fileName,:data)</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <param name="data" ordinal="2" paramType="SCALAR" sqlType="BINARY" type="IN"/>
+   </query>
+   <query id="deleteFileQuery" useConfig="default">
+      <sql>delete from Files where fileName=:fileName</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+   </query>
+   <query id="checkFileExistsQuery" useConfig="default">
+      <sql>select count(*) as fileExists from Files where fileName=:fileName</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_exists" element="Files" rowName="File">
+         <element column="fileExists" name="fileExists" xsdType="integer"/>
+      </result>
+   </query>
+   <query id="getFileRecordsQuery" useConfig="default">
+      <sql>select data from FileRecords where fileName=:fileName</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_records" element="Files" rowName="File">
+         <element column="data" name="record" xsdType="base64Binary"/>
+      </result>
+   </query>
+   <query id="getFileNamesQuery" useConfig="default">
+      <sql>select fileName from Files</sql>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_names" element="Files" rowName="File">
+         <element column="fileName" name="fileName" xsdType="string"/>
+      </result>
+   </query>
+   <query id="getFileTypeQuery" useConfig="default">
+      <sql>select type from Files where fileName=:fileName</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_type" element="Files" rowName="File">
+         <element column="type" name="type" xsdType="string"/>
+      </result>
+   </query>
+   <query id="getFileSizeQuery" useConfig="default">
+      <sql>select sum(length(data)) as fileSize from FileRecords where fileName=:fileName</sql>
+      <param name="fileName" ordinal="1" paramType="SCALAR" sqlType="STRING" type="IN"/>
+      <result defaultNamespace="http://ws.wso2.org/dataservice/samples/file_service/file_size" element="Files" rowName="File">
+         <element column="fileSize" name="fileSize" xsdType="integer"/>
+      </result>
+   </query>
+   <resource method="POST" path="appendDataToFile">
+      <call-query href="appendDataToFileQuery">
+         <with-param name="fileName" query-param="fileName"/>
+         <with-param name="data" query-param="data"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="createNewFile">
+      <call-query href="createNewFileQuery">
+         <with-param name="fileName" query-param="fileName"/>
+         <with-param name="fileType" query-param="fileType"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="deleteFile">
+      <call-query href="deleteFileQuery">
+         <with-param name="fileName" query-param="fileName"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="checkFileExists">
+      <call-query href="checkFileExistsQuery">
+         <with-param name="fileName" query-param="fileName"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="getFileNames">
+      <call-query href="getFileNamesQuery">      </call-query>
+   </resource>
+   <resource method="GET" path="getFileType">
+      <call-query href="getFileTypeQuery">
+         <with-param name="fileName" query-param="fileName"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="getFileSize">
+      <call-query href="getFileSizeQuery">
+         <with-param name="fileName" query-param="fileName"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="getFileRecords">
+      <call-query href="getFileRecordsQuery">
+         <with-param name="fileName" query-param="fileName"/>
+      </call-query>
+   </resource>
+</data>

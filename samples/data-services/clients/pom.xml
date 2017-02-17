@@ -1,0 +1,158 @@
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+	    <groupId>org.wso2.ei</groupId>
+        <artifactId>dataservices-samples-parent</artifactId>
+        <version>6.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>dataservice-client-samples</artifactId>
+    <packaging>jar</packaging>
+    <name>DataServices Clients</name>
+    <description>Clients in WSO2 DataServices</description>
+
+    <build>
+       <sourceDirectory>src</sourceDirectory>
+       <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+           
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>generate-code</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/RDBMSSample.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.rdbms_sample -ns2p http://ws.wso2.org/dataservice/rdbms_sample1=org.wso2.carbon.dataservices.samples.types.rdbms_sample" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/DTPSampleService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.dtp_sample -ns2p http://ws.wso2.org/dataservice/dtp_sample=org.wso2.carbon.dataservices.samples.types.dtp_sample" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/NestedQuerySample.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.nested_query_sample -ns2p http://ws.wso2.org/dataservice/nested_query_sample=org.wso2.carbon.dataservices.samples.types.nested_query_sample" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/FileService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.file_service -ns2p http://ws.wso2.org/dataservice/file_service=org.wso2.carbon.dataservices.samples.types.file_service" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/EventingSample.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.eventing_sample -ns2p http://ws.wso2.org/dataservice/eventing_sample=org.wso2.carbon.dataservices.samples.types.eventing_sample" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/BatchRequestSample.wsdl -u -o target/generated -p org.wso2.carbon.dataservices.samples.batch_request_sample -ns2p http://ws.wso2.org/dataservice/batch_request_sample=org.wso2.carbon.dataservices.samples.types.batch_request_sample" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/CSVSampleService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.csv_sample_service -ns2p http://ws.wso2.org/dataservice/csv_sample_service=org.wso2.carbon.dataservices.samples.types.csv_sample_service" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/ExcelSampleService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.excel_sample_service -ns2p http://ws.wso2.org/dataservice/excel_sample_service=org.wso2.carbon.dataservices.samples.types.excel_sample_service" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/GSpreadSample.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.gspread_sample_service -ns2p http://ws.wso2.org/dataservice/gspread_sample_service2=org.wso2.carbon.dataservices.samples.types.gspread_sample_service" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                      <arg line="-uri wsdl/SecureDataService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.secure_dataservice -ns2p http://ws.wso2.org/dataservice/secure_dataservice=org.wso2.carbon.dataservices.samples.types.secure_dataservice" />
+                                      <classpath refid="maven.dependency.classpath" />
+                                      <classpath refid="maven.compile.classpath" />
+                                      <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                    <arg line="-uri wsdl/FaultDBService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.fault_dataservice -ns2p http://ws.wso2.org/dataservice/fault_dataservice=org.wso2.carbon.dataservices.samples.types.fault_dataservice" />
+                                    <classpath refid="maven.dependency.classpath" />
+                                    <classpath refid="maven.compile.classpath" />
+                                    <classpath refid="maven.runtime.classpath" />
+                                </java>
+                                <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                    <arg line="-uri wsdl/RDFSampleService.wsdl -u -uw -o target/generated -p org.wso2.carbon.dataservices.samples.rdf_dataservice -ns2p http://ws.wso2.org/dataservice/rdf_dataservice=org.wso2.carbon.dataservices.samples.types.rdf_dataservice" />
+                                    <classpath refid="maven.dependency.classpath" />
+                                    <classpath refid="maven.compile.classpath" />
+                                    <classpath refid="maven.runtime.classpath" />
+                                </java>
+                              </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated/src</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+	    </plugin>
+
+       </plugins>
+    </build>
+
+</project>

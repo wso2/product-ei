@@ -57,6 +57,7 @@
                 <exclude>**/wso2/components/plugins/saxon_*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/conf/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/conf/registry.xml</exclude>
                 <exclude>**/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -94,6 +95,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/tomcat/catalina-server.xml</exclude>
+                <exclude>**/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -679,6 +681,10 @@
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/tomcat
             </directory>
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
+            <excludes>
+                <exclude>**/catalina-server.xml</exclude>
+                <exclude>**/webapp-classloading-environments.xml</exclude>
+            </excludes>
         </fileSet>
 
         <fileSet>
@@ -805,6 +811,7 @@
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <includes>
                 <include>**/catalina-server.xml</include>
+                <include>**/webapp-classloading-environments.xml</include>
             </includes>
         </fileSet>
         <fileSet>
@@ -900,6 +907,15 @@
             <directory>../samples/product/src/main/conf/synapse</directory>
             <outputDirectory>wso2ei-${pom.version}/samples/service-bus</outputDirectory>
             <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../samples/webapps</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/webapps</outputDirectory>
+            <fileMode>644</fileMode>
+            <excludes>
+                <exclude>**/target/**</exclude>
+                <exclude>**/pom.xml.releaseBackup</exclude>
+            </excludes>
         </fileSet>
 
         <fileSet>
@@ -1209,6 +1225,18 @@
         <fileSet>
             <directory>src/analytics/samples/capps/target</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/capps</outputDirectory>
+        </fileSet>
+
+        <!--  copying dss samples -->
+        <fileSet>
+            <directory>../samples/data-services</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/data-services</outputDirectory>
+            <excludes>
+                <exclude>**/**.sh</exclude>
+                <exclude>**/pom.xml</exclude>
+                <exclude>**/pom.xml.releaseBackup</exclude>
+                <exclude>**/target/**</exclude>
+            </excludes>
         </fileSet>
 
         <fileSet>
@@ -1710,6 +1738,12 @@
             </outputDirectory>
             <destName>axis2_client.xml</destName>
             <fileMode>644</fileMode>
+        </file>
+
+        <!-- Including custom-datasources.xml file -->
+        <file>
+            <source>src/conf/custom-datasources.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/datasources</outputDirectory>
         </file>
 
         <file>
