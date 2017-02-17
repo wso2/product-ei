@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -47,7 +47,8 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
     private SendMediator sendMediator;
     private PassThroughSenderManager passThroughSenderManager = PassThroughSenderManager.getInstance();
 
-    @Override public boolean handleRequestInFlow(MessageContext messageContext) {
+    @Override
+    public boolean handleRequestInFlow(MessageContext messageContext) {
         boolean isPreserveHeadersContained = false;
         try {
             org.apache.axis2.context.MessageContext axis2MessageContext =
@@ -64,8 +65,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 if (headers instanceof TreeMap) {
                     host =  Utils.getHostname((String) ((TreeMap) headers).get("Host"));
                     //In this if block we whitelist carbon related requests (Management Console)
-
-                    if (validateWhiteListsWithUri(uri)) {
+                    if (validateWhiteListsWithUri(uri) || axis2MessageContext.getProperty("isDataService") != null) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
                         return dispatchMessage(endpoint, uri, messageContext);
@@ -128,11 +128,13 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         }
     }
 
-    @Override public boolean handleRequestOutFlow(MessageContext messageContext) {
+    @Override
+    public boolean handleRequestOutFlow(MessageContext messageContext) {
         return true;
     }
 
-    @Override public boolean handleResponseInFlow(MessageContext messageContext) {
+    @Override
+    public boolean handleResponseInFlow(MessageContext messageContext) {
         // In here, We are rewriting the location header which comes from the particular registered endpoints.
         Object headers =
                 ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
@@ -145,7 +147,8 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         return true;
     }
 
-    @Override public boolean handleResponseOutFlow(MessageContext messageContext) {
+    @Override
+    public boolean handleResponseOutFlow(MessageContext messageContext) {
         return true;
     }
 

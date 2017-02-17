@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.base.CarbonBaseUtils;
+import org.wso2.carbon.tomcat.api.CarbonTomcatService;
 import org.wso2.carbon.utils.ConfigurationContextService;
 
 import java.io.FileInputStream;
@@ -40,6 +41,8 @@ import java.util.Properties;
  * @scr.reference name="configuration.context.service" interface="org.wso2.carbon.utils.ConfigurationContextService"
  * cardinality="1..1"
  * policy="dynamic" bind="setConfigurationContextService" unbind="unsetConfigurationContextService"
+ * @scr.reference name="1..1" interface="org.wso2.carbon.tomcat.api.CarbonTomcatService"
+ * cardinality="1..1" policy="dynamic" bind="setCarbonTomcatService"  unbind="unsetCarbonTomcatService"
  */
 public class IntegratorComponent {
     private static final Log log = LogFactory.getLog(IntegratorComponent.class);
@@ -47,6 +50,7 @@ public class IntegratorComponent {
     private static ArrayList<String> whiteListContextPaths = new ArrayList<>();
 
     private static ConfigurationContextService contextService;
+    private static CarbonTomcatService carbonTomcatService;
 
     protected void activate(ComponentContext context) {
         readProperties();
@@ -71,6 +75,26 @@ public class IntegratorComponent {
 
     protected static void unsetConfigurationService() {
         IntegratorComponent.contextService = null;
+    }
+
+    protected static void unsetTomcatService() {
+        IntegratorComponent.carbonTomcatService = null;
+    }
+
+    protected static void setTomcatService(CarbonTomcatService carbonTomcatService) {
+        IntegratorComponent.carbonTomcatService = carbonTomcatService;
+    }
+
+    protected void setCarbonTomcatService(CarbonTomcatService contextService) {
+        setTomcatService(contextService);
+    }
+
+    protected void unsetCarbonTomcatService(CarbonTomcatService contextService) {
+        unsetTomcatService();
+    }
+
+    public static CarbonTomcatService getCarbonTomcatService() {
+        return carbonTomcatService;
     }
 
     public static ConfigurationContextService getContextService() {

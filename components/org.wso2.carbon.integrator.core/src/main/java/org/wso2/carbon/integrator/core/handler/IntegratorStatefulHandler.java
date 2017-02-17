@@ -23,12 +23,14 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.description.AxisOperation;
 import org.apache.axis2.description.AxisService;
 import org.apache.axis2.description.HandlerDescription;
-import org.apache.axis2.description.Parameter;
 import org.apache.axis2.dispatchers.RequestURIBasedServiceDispatcher;
 import org.apache.axis2.engine.AbstractDispatcher;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.core.axis2.SynapseDispatcher;
+import org.wso2.carbon.integrator.core.Utils;
+
+import java.net.URL;
 
 /**
  * This Axis2 handler is written to dispatch messages to synapse environment, when the message is received for a
@@ -46,19 +48,24 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
-        if ((isStatefulService(axisService) || (uri != null && uri.contains("generateClient"))) &&
-            messageContext.getProperty("transport.http.servletRequest") == null) {
+        boolean isDataService = Utils.isDataService(messageContext);
+        if ((Utils.isStatefulService(axisService) || isDataService || (uri != null && uri.contains("generateClient"))
+        ) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
                 messageContext.setAxisService(synapseDispatcher.findService(messageContext));
                 if (log.isDebugEnabled()) {
-                    log.debug("AxisService is changing from " + axisService.getName() + " to " +
-                              messageContext.getAxisService().getName());
+                    log.debug("AxisService is changing from " + axisService.getName() + " to " + messageContext
+                            .getAxisService().getName());
                 }
-                messageContext.setProperty("raplacedAxisService", "true");
+                if (isDataService) {
+                    messageContext.setProperty("isDataService", "true");
+                } else {
+                    messageContext.setProperty("raplacedAxisService", "true");
+                }
                 return synapseDispatcher.findOperation(messageContext.getAxisService(), messageContext);
             } catch (AxisFault e) {
                 log.error("Error occurred while invoking stateful service.");
-                throw e;
+                return null;
             }
         } else {
             return null;
@@ -67,24 +74,52 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
 
     @Override
     public AxisService findService(MessageContext messageContext) throws AxisFault {
-        return this.rubsd.findService(messageContext);
+        AxisService service = this.rubsd.findService(messageContext);
+        boolean isDataService = false;
+        if (service != null) {
+            return service;
+        } else {
+            AxisService tenantAxisService = null;
+            try {
+                tenantAxisService = Utils.getMultitenantAxisService(messageContext);
+            } catch (RuntimeException | AxisFault e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Exception occured while loading the tenant." + e.getMessage());
+                }
+            }
+            if (tenantAxisService != null) {
+                URL file = tenantAxisService.getFileName();
+                if (file != null) {
+                    String filePath = file.getPath();
+                    isDataService = filePath.contains("dataservices");
+                }
+                String uri = (String) messageContext.getProperty("TransportInURL");
+                if ((Utils.isStatefulService(tenantAxisService) || isDataService || (uri != null && uri.contains
+                        ("generateClient"))
+                ) && messageContext.getProperty("transport.http.servletRequest") == null) {
+                    AxisService axisService = synapseDispatcher.findService(messageContext);
+                    if (log.isDebugEnabled()) {
+                        log.debug("AxisService is changing from " + tenantAxisService.getName() + " to " +
+                                axisService.getName());
+                    }
+                    if (isDataService) {
+                        messageContext.setProperty("isDataService", "true");
+                    } else {
+                        messageContext.setProperty("raplacedAxisService", "true");
+                    }
+                    messageContext.setAxisService(axisService);
+                    messageContext.setAxisOperation(synapseDispatcher.findOperation(messageContext.getAxisService(),
+                            messageContext));
+                    return axisService;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
     public void initDispatcher() {
         this.init(new HandlerDescription(NAME));
-    }
-
-    /**
-     * In this method check we check whether that particular service is a admin service or session enabled service.
-     *
-     * @param axisService AxisService
-     * @return isStatefulService boolean
-     */
-    private boolean isStatefulService(AxisService axisService) {
-        Parameter parameter = axisService.getParameter("adminService");
-        return parameter != null && ("transportsession".equals(axisService.getScope()) ||
-                                     "true".equals(axisService.getParameter("adminService").getValue()));
     }
 
 }
