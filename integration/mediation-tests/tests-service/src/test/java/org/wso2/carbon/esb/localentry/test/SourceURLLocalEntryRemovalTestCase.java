@@ -50,7 +50,7 @@ public class SourceURLLocalEntryRemovalTestCase extends ESBIntegrationTest {
             //Add an Entry
             addLocalEntry(AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                                                           "<localEntry xmlns=\"http://ws.apache.org/ns/synapse\" key=\"" + ENTRY_NAME +
-                                                          "\" src=\"file:repository/samples/resources/transform/transform.xslt\"/>"));
+                                                          "\" src=\"file:samples/service-bus/resources/transform/transform.xslt\"/>"));
         }
 
         int before = localEntryAdminServiceClient.getEntryDataCount();

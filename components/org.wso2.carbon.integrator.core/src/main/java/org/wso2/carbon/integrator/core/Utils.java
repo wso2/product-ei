@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -21,7 +21,11 @@ package org.wso2.carbon.integrator.core;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
+import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.description.AxisService;
+import org.apache.axis2.description.AxisServiceGroup;
+import org.apache.axis2.description.Parameter;
 import org.apache.axis2.util.XMLUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseConstants;
@@ -43,25 +47,16 @@ import org.wso2.carbon.webapp.mgt.WebApplication;
 import org.wso2.carbon.webapp.mgt.WebApplicationsHolder;
 import org.wso2.carbon.webapp.mgt.utils.WebAppUtils;
 
-import java.io.File;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.UUID;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
+import java.util.*;
 
-/**
- * Utility class for integrator core modules
- */
 public class Utils {
 
     private static OMFactory fac = OMAbstractFactory.getOMFactory();
@@ -73,9 +68,7 @@ public class Utils {
 
     public static int getProtocolPort(String protocol) {
         CarbonTomcatService webAppAdminService;
-        webAppAdminService = (CarbonTomcatService) PrivilegedCarbonContext.getThreadLocalCarbonContext()
-                                                                          .getOSGiService(CarbonTomcatService.class,
-                                                                                          null);
+        webAppAdminService = IntegratorComponent.getCarbonTomcatService();
         if (webAppAdminService == null) {
             throw new RuntimeException("CarbonTomcatService service is not available.");
         }
@@ -89,8 +82,8 @@ public class Utils {
      * @return meta data for webapp
      */
     public static WebApplication getStartedWebapp(String path) {
-        Map<String, WebApplicationsHolder> webApplicationsHolderMap =
-                WebAppUtils.getAllWebappHolders(CarbonConfigurationContextFactory.getConfigurationContext());
+        Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders
+                (CarbonConfigurationContextFactory.getConfigurationContext());
         WebApplication matchedWebApplication;
         for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
             for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
@@ -117,8 +110,7 @@ public class Utils {
             // Getting server's configContext instance
             configContext = contextService.getServerConfigContext();
             tenantContext = TenantAxisUtils.getTenantConfigurationContext(tenantDomain, configContext);
-            Map<String, WebApplicationsHolder> webApplicationsHolderMap =
-                    WebAppUtils.getAllWebappHolders(tenantContext);
+            Map<String, WebApplicationsHolder> webApplicationsHolderMap = WebAppUtils.getAllWebappHolders(tenantContext);
             WebApplication matchedWebApplication;
             for (WebApplicationsHolder webApplicationsHolder : webApplicationsHolderMap.values()) {
                 for (WebApplication webApplication : webApplicationsHolder.getStartedWebapps().values()) {
@@ -127,6 +119,38 @@ public class Utils {
                         return matchedWebApplication;
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the details of a deployed webapp for tenants
+     *
+     * @param serviceURL URI path
+     * @return meta data for webapp
+     */
+    private static AxisService getTenantAxisService(String tenant, String serviceURL) throws AxisFault {
+        ConfigurationContextService contextService = IntegratorComponent.getContextService();
+        ConfigurationContext configContext;
+        ConfigurationContext tenantContext;
+        if (null != contextService) {
+            // Getting server's configContext instance
+            configContext = contextService.getServerConfigContext();
+            String[] urlparts = serviceURL.split("/");
+            //urlpart[0] is tenant domain
+            tenantContext = TenantAxisUtils.getTenantConfigurationContext(tenant, configContext);
+            AxisService tenantAxisService = tenantContext.getAxisConfiguration().getService(urlparts[1]);
+            if (tenantAxisService == null) {
+                AxisServiceGroup axisServiceGroup = tenantContext.getAxisConfiguration().getServiceGroup(urlparts[1]);
+                if (axisServiceGroup != null) {
+                    return axisServiceGroup.getService(urlparts[2]);
+                } else {
+                    // for dss samples
+                    return tenantContext.getAxisConfiguration().getService(urlparts[2]);
+                }
+            } else {
+                return tenantAxisService;
             }
         }
         return null;
@@ -145,7 +169,7 @@ public class Utils {
         }
     }
 
-    public static String getUniqueRequestID(String uri) {
+    private static String getUniqueRequestID(String uri) {
         String input = uri + System.getProperty(CarbonConstants.START_TIME);
         return UUID.nameUUIDFromBytes(input.getBytes(Charset.defaultCharset())).toString();
     }
@@ -200,15 +224,13 @@ public class Utils {
     }
 
     private static String getPassThruHttpPort() {
-        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("http")
-                                                .
-                                                        getParameter("port").getValue().toString();
+        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn("http").
+                getParameter("port").getValue().toString();
     }
 
     private static String getPassThruHttpsPort() {
-        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration()
-                                                .getTransportIn("https").
-                                                        getParameter("port").getValue().toString();
+        return CarbonConfigurationContextFactory.getConfigurationContext().getAxisConfiguration().getTransportIn
+                ("https").getParameter("port").getValue().toString();
     }
 
     static boolean validateHeader(String key, String uri) {
@@ -242,10 +264,31 @@ public class Utils {
         }
     }
 
+
+    public static AxisService getMultitenantAxisService(org.apache.axis2.context.MessageContext messageContext) throws
+            AxisFault {
+        String url = (String) messageContext.getProperty("TransportInURL");
+        if (url != null) {
+            if (url.contains(messageContext.getConfigurationContext().getServicePath() + "/t/")) {
+                String tenantDomain = TenantAxisUtils.getTenantDomain(url);
+                try {
+                    PrivilegedCarbonContext.startTenantFlow();
+                    PrivilegedCarbonContext privilegedCarbonContext = PrivilegedCarbonContext
+                            .getThreadLocalCarbonContext();
+                    privilegedCarbonContext.setTenantDomain(tenantDomain, true);
+                    url = url.substring(url.indexOf(tenantDomain));
+                    return getTenantAxisService(tenantDomain, url);
+                } finally {
+                    PrivilegedCarbonContext.endTenantFlow();
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * In this method we rewrite the location header which comes from the tomcat transport.
-     *
-     * @param location       location url
+     * @param location location url
      * @param messageContext message context.
      */
     public static void rewriteLocationHeader(String location, MessageContext messageContext) {
@@ -269,13 +312,15 @@ public class Utils {
             } else {
                 newPort = getPassThruHttpsPort();
             }
-            port = tmp[2].substring(0, tmp[2].indexOf("/"));
+            if (tmp.length > 2) {
+                port = tmp[2].substring(0, tmp[2].indexOf("/"));
+            }
             String oldEndpoint = protocol + "://" + host + ":" + port;
             // In this block we check whether this endpoint is already known endpoint.
             if (EndpointHolder.getInstance().containsEndpoint(oldEndpoint)) {
                 location = location.replace(port, newPort);
-                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                                                                       .getProperty("TRANSPORT_HEADERS");
+                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty
+                        ("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
                     ((TreeMap) headers).put("Location", location);
                 }
@@ -283,14 +328,26 @@ public class Utils {
         }
     }
 
+    /**
+     * In this method check we check whether that particular service is a admin service or session enabled service.
+     *
+     * @param axisService AxisService
+     * @return isStatefulService boolean
+     */
+    public static boolean isStatefulService(AxisService axisService) {
+        Parameter parameter = axisService.getParameter("adminService");
+        return parameter != null && ("transportsession".equals(axisService.getScope()) || "true".equals(axisService
+                .getParameter("adminService").getValue()));
+    }
+
     private static String getPropertyFromAxisConf(String parameter) throws IOException, XMLStreamException {
-        try (InputStream file = new FileInputStream(
-                Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "axis2", "axis2.xml").toString())) {
-            if (axis2Config == null) {
-                OMElement element = (OMElement) XMLUtils.toOM(file);
-                element.build();
-                axis2Config = element;
-            }
+        try (InputStream file = new FileInputStream(Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "axis2",
+                "axis2.xml").toString())) {
+           if(axis2Config == null) {
+               OMElement element = (OMElement) XMLUtils.toOM(file);
+               element.build();
+               axis2Config = element;
+           }
             Iterator parameters = axis2Config.getChildrenWithName(new QName("parameter"));
             while (parameters.hasNext()) {
                 OMElement parameterElement = (OMElement) parameters.next();

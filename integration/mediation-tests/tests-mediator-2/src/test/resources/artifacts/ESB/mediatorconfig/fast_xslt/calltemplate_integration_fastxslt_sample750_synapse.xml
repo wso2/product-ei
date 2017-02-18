@@ -22,8 +22,8 @@
             </outSequence>
         </target>
     </proxy>
-    <localEntry key="xslt-key-back" src="file:repository/samples/resources/transform/transform_back.xslt"/>
-    <localEntry key="xslt-key-req" src="file:repository/samples/resources/transform/transform.xslt"/>
+    <localEntry key="xslt-key-back" src="file:samples/service-bus/resources/transform/transform_back.xslt"/>
+    <localEntry key="xslt-key-req" src="file:samples/service-bus/resources/transform/transform.xslt"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

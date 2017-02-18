@@ -24,7 +24,7 @@
     <!-- the SimpleURLRegistry allows access to a URL based registry (e.g. file:/// or http://) -->
     <registry provider="org.apache.synapse.registry.url.SimpleURLRegistry">
         <!-- the root property of the simple URL registry helps resolve a resource URL as root + key -->
-        <parameter name="root">file:repository/samples/resources/</parameter>
+        <parameter name="root">file:samples/service-bus/resources/</parameter>
         <!-- all resources loaded from the URL registry would be cached for this number of milli seconds -->
         <parameter name="cachableDuration">15000</parameter>
     </registry>
@@ -48,7 +48,7 @@
                 </out>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
 
 </definitions>

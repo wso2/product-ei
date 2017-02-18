@@ -53,6 +53,6 @@ the message before and after. Takes Iterate local entry key as an argument-->
         </sequence>
     </template>
 
-    <localEntry key="xslt-key-req" src="file:repository/samples/resources/transform/transform.xslt"/>
-    <localEntry key="xslt-key-back" src="file:repository/samples/resources/transform/transform_back.xslt"/>
+    <localEntry key="xslt-key-req" src="file:samples/service-bus/resources/transform/transform.xslt"/>
+    <localEntry key="xslt-key-back" src="file:samples/service-bus/resources/transform/transform_back.xslt"/>
 </definitions>

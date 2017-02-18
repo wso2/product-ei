@@ -23,12 +23,15 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.description.AxisOperation;
 import org.apache.axis2.description.AxisService;
 import org.apache.axis2.description.HandlerDescription;
-import org.apache.axis2.description.Parameter;
 import org.apache.axis2.dispatchers.RequestURIBasedServiceDispatcher;
 import org.apache.axis2.engine.AbstractDispatcher;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.core.axis2.SynapseDispatcher;
+import org.wso2.carbon.integrator.core.Utils;
+
+import java.net.URL;
+import java.util.TreeMap;
 
 /**
  * This Axis2 handler is written to dispatch messages to synapse environment, when the message is received for a
@@ -46,19 +49,18 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
-        if ((isStatefulService(axisService) || (uri != null && uri.contains("generateClient"))) &&
-            messageContext.getProperty("transport.http.servletRequest") == null) {
+        boolean isDataService = Utils.isDataService(messageContext);
+        if (isDataService && !isApplicationJsonDSSRequest(messageContext)) {
+            return null;
+        }
+        if ((Utils.isStatefulService(axisService) || isDataService || (uri != null && uri.contains("generateClient"))
+        ) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
-                messageContext.setAxisService(synapseDispatcher.findService(messageContext));
-                if (log.isDebugEnabled()) {
-                    log.debug("AxisService is changing from " + axisService.getName() + " to " +
-                              messageContext.getAxisService().getName());
-                }
-                messageContext.setProperty("raplacedAxisService", "true");
-                return synapseDispatcher.findOperation(messageContext.getAxisService(), messageContext);
+                setSynapseContext(isDataService, messageContext, axisService);
+                return messageContext.getAxisOperation();
             } catch (AxisFault e) {
                 log.error("Error occurred while invoking stateful service.");
-                throw e;
+                return null;
             }
         } else {
             return null;
@@ -67,7 +69,27 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
 
     @Override
     public AxisService findService(MessageContext messageContext) throws AxisFault {
-        return this.rubsd.findService(messageContext);
+        AxisService service = this.rubsd.findService(messageContext);
+        boolean isDataService;
+        if (service != null) {
+            URL file = service.getFileName();
+            if (file != null) {
+                String filePath = file.getPath();
+                isDataService = filePath.contains("dataservices");
+                String uri = (String) messageContext.getProperty("TransportInURL");
+                if (isDataService && !isApplicationJsonDSSRequest(messageContext)) {
+                    return service;
+                }
+                if ((Utils.isStatefulService(service) || isDataService || (uri != null && uri.contains
+                        ("generateClient"))
+                ) && messageContext.getProperty("transport.http.servletRequest") == null) {
+                    setSynapseContext(isDataService, messageContext, service);
+                    return messageContext.getAxisService();
+                }
+            }
+            return service;
+        }
+        return null;
     }
 
     @Override
@@ -75,16 +97,39 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
         this.init(new HandlerDescription(NAME));
     }
 
-    /**
-     * In this method check we check whether that particular service is a admin service or session enabled service.
-     *
-     * @param axisService AxisService
-     * @return isStatefulService boolean
-     */
-    private boolean isStatefulService(AxisService axisService) {
-        Parameter parameter = axisService.getParameter("adminService");
-        return parameter != null && ("transportsession".equals(axisService.getScope()) ||
-                                     "true".equals(axisService.getParameter("adminService").getValue()));
+    private void setSynapseContext(boolean isDataService, MessageContext messageContext, AxisService
+            originalAxisService) throws AxisFault {
+        AxisService axisService = synapseDispatcher.findService(messageContext);
+        if (log.isDebugEnabled()) {
+            log.debug("AxisService is changing from " + originalAxisService.getName() + " to " +
+                    axisService.getName());
+        }
+        if (isDataService) {
+            messageContext.setProperty("isDataService", "true");
+        } else {
+            messageContext.setProperty("raplacedAxisService", "true");
+        }
+        messageContext.setAxisService(axisService);
+        messageContext.setAxisOperation(synapseDispatcher.findOperation(messageContext.getAxisService(),
+                messageContext));
     }
 
+    private boolean isApplicationJsonDSSRequest(MessageContext messageContext) {
+        Object header = messageContext.getProperty("TRANSPORT_HEADERS");
+        if (header instanceof TreeMap) {
+            String acceptType = (String) ((TreeMap) header).get("Accept");
+            if (acceptType == null) {
+                acceptType = (String) ((TreeMap) header).get("accept");
+            }
+            String contentType = (String) ((TreeMap) header).get("Content-Type");
+            if (acceptType == null) {
+                contentType = (String) ((TreeMap) header).get("content-type");
+            }
+            if ((acceptType != null && acceptType.toLowerCase().equals("application/json")) || (contentType != null &&
+                    contentType.toLowerCase().equals("application/json"))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

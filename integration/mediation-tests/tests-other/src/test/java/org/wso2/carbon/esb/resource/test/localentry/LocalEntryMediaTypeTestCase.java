@@ -47,7 +47,7 @@ public class LocalEntryMediaTypeTestCase extends ESBIntegrationTest{
     public void testLocalEntryMediaType() throws Exception {
         OMElement localEntry = AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                                                     "<localEntry xmlns=\"http://ws.apache.org/ns/synapse\" key=\"" + ENTRY_NAME +
-                                                    "\" src=\"file:repository/samples/resources/transform/transform.xslt\"/>");
+                                                    "\" src=\"file:samples/service-bus/resources/transform/transform.xslt\"/>");
         localEntriesAdminClient.addLocalEntry(localEntry);
         //add Local Entry is a a asynchronous call, it will take some time to write to a registry
         Thread.sleep(10000);

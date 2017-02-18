@@ -72,8 +72,8 @@
             &lt;/sequence&gt;
         &lt;/template&gt;
 
-        &lt;localEntry key=&quot;xslt-key-req&quot; src=&quot;file:repository/samples/resources/transform/transform.xslt&quot;/&gt;
-        &lt;localEntry key=&quot;xslt-key-back&quot; src=&quot;file:repository/samples/resources/transform/transform_back.xslt&quot;/&gt;
+        &lt;localEntry key=&quot;xslt-key-req&quot; src=&quot;file:samples/service-bus/resources/transform/transform.xslt&quot;/&gt;
+        &lt;localEntry key=&quot;xslt-key-back&quot; src=&quot;file:samples/service-bus/resources/transform/transform_back.xslt&quot;/&gt;
     &lt;/definitions&gt;</pre>
 
     <p><strong>Objective: Introduction to EI Sequence Templates</strong> </p>
@@ -176,7 +176,7 @@
     <p>Sequence Template 'aggr_func' takes aggregate expression as argument.</p>
 
     <p>In this sample we are using special dynamic xpath expressions(in double curly braces {{expr}}) in call-template mediator so that
-    they are evaluated only when iteration and aggregation is done. Note that function scope (ie:-$func) is used to access template 
+    they are evaluated only when iteration and aggregation is done. Note that function scope (ie:-$func) is used to access template
     parameters in 'iter_func' and 'aggr_func'.
     </p>
 

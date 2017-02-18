@@ -34,6 +34,8 @@
                 <exclude>**/*.lock</exclude>
                 <exclude>**/.data</exclude>
                 <exclude>**/.settings</exclude>
+                <!-- Disabling feature management ui for Management Console -->
+                <exclude>**/org.wso2.carbon.feature.mgt.ui*</exclude>
             </excludes>
         </fileSet>
         <fileSet>
@@ -44,6 +46,7 @@
                 <exclude>**/*.lock</exclude>
                 <exclude>**/.data</exclude>
                 <exclude>**/.settings</exclude>
+                <exclude>**/org.wso2.carbon.feature.mgt.ui*</exclude>
             </excludes>
         </fileSet>
         <fileSet>
@@ -56,6 +59,7 @@
                 <exclude>**/*.lock</exclude>
                 <exclude>**/.data</exclude>
                 <exclude>**/.settings</exclude>
+                <exclude>**/org.wso2.carbon.feature.mgt.ui*</exclude>
             </excludes>
         </fileSet>
         <fileSet>
@@ -68,6 +72,7 @@
                 <exclude>**/*.lock</exclude>
                 <exclude>**/.data</exclude>
                 <exclude>**/.settings</exclude>
+                <exclude>**/org.wso2.carbon.feature.mgt.ui*</exclude>
             </excludes>
         </fileSet>
     </fileSets>

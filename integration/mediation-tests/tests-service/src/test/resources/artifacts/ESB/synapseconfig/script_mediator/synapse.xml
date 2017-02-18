@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <localEntry key="stockquoteScript" src="file:repository/samples/resources/script/stockquoteTransform.js"/>
+    <localEntry key="stockquoteScript" src="file:samples/service-bus/resources/script/stockquoteTransform.js"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

@@ -1,0 +1,24 @@
+<data name="JsonValueTypes" serviceNamespace="com.wso2.com" transports="http https local">
+   <config id="sampleConnection">
+           <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+           <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+           <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+           <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+           <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+           <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+           <property name="org.wso2.ws.dataservice.validation_query"/>
+        </config>
+   <query id="insertEmpQuery" useConfig="sampleConnection">
+      <sql>INSERT INTO RandomEmployee (e_name, e_age, e_address) values (:ename, :eage, :eaddress)</sql>
+      <param name="ename" sqlType="STRING"/>
+      <param name="eage" sqlType="INTEGER"/>
+      <param name="eaddress" sqlType="STRING"/>
+   </query>
+   <resource method="POST" path="add_emp_json">
+      <call-query href="insertEmpQuery">
+         <with-param name="ename" query-param="ename"/>
+         <with-param name="eage" query-param="eage"/>
+         <with-param name="eaddress" query-param="eaddress"/>
+      </call-query>
+   </resource>
+</data>

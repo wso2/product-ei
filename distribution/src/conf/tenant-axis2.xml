@@ -50,6 +50,10 @@
     <!--the directory in which .aar services are deployed inside axis2 repository-->
     <parameter name="ServicesDirectory">axis2services</parameter>
 
+    <!--If turned on with use the Accept header of the request to determine the contentType of the
+    response-->
+    <parameter name="httpContentNegotiation">true</parameter>
+
     <!--POJO deployer , this will alow users to drop .class file and make that into a service-->
     <deployer extension=".class" directory="pojo" class="org.apache.axis2.deployment.POJODeployer"/>
     <deployer extension=".jar" directory="transports"
@@ -100,7 +104,7 @@
                           class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
 	<!--JSON Message Formatters-->
 	<messageFormatter contentType="application/json"
-                          class="org.apache.synapse.commons.json.JsonStreamFormatter"/>
+                          class="org.wso2.carbon.integrator.core.json.JsonStreamFormatter"/>
     </messageFormatters>
 
     <!-- ================================================= -->
@@ -115,7 +119,7 @@
                         class="org.apache.axis2.builder.XFormURLEncodedBuilder"/>
 	<!--JSON Message Builders-->
 	<messageBuilder contentType="application/json"
-                        class="org.apache.synapse.commons.json.JsonStreamBuilder"/>
+                        class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder"/>
         <!--Left commented because it adds the depandancy of servlet-api to other modules.
         Please uncomment to Receive messages in multipart/form-data format-->
         <!--<messageBuilder contentType="multipart/form-data"-->
@@ -139,6 +143,8 @@
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
             </handler>
+            <handler name="JSONMessageHandler"
+                     class="org.apache.axis2.json.gson.JSONMessageHandler" />
             <handler name="RelaySecuirtyMessageBuilderDispatchandler"
                      class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
             <handler name="SOAPActionBasedDispatcher"

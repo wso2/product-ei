@@ -46,13 +46,13 @@ public class EditSecuredProxyTestCase extends ESBIntegrationTest {
         applySecurity("EditSecuredProxy", 1, new String[]{"admin"});
         Thread.sleep(5000);
         ProxyData prxy = proxyServiceAdminClient.getProxyDetails("EditSecuredProxy");
-        prxy.setWsdlURI("file:repository/samples/resources/proxy/sample_proxy_1.wsdl");
+        prxy.setWsdlURI("file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl");
         proxyServiceAdminClient.updateProxy(prxy);
         Thread.sleep(1000);
         isProxyDeployed("EditSecuredProxy");
         prxy = proxyServiceAdminClient.getProxyDetails("EditSecuredProxy");
         Assert.assertNotNull(prxy);
-        Assert.assertEquals(prxy.getWsdlURI(), "file:repository/samples/resources/proxy/sample_proxy_1.wsdl");
+        Assert.assertEquals(prxy.getWsdlURI(), "file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl");
     }
 
     @AfterClass(alwaysRun = true)

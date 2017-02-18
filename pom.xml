@@ -794,6 +794,16 @@
                 <version>${jacoco.agent.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.core</artifactId>
+                <version>${jacoco.agent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.report</artifactId>
+                <version>${jacoco.agent.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>${org.testng.version}</version>
@@ -1191,7 +1201,7 @@
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.1.13</andes.version>
+        <andes.version>3.1.14</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1204,7 +1214,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v12-SNAPSHOT</synapse.version>
+        <synapse.version>2.1.7-wso2v13</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v1</axis2.transport.version>
@@ -1213,10 +1223,10 @@
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.14-SNAPSHOT</carbon.mediation.version>
+        <carbon.mediation.version>4.6.15</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.13</carbon.kernel.version>
+        <carbon.kernel.version>4.4.14</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
@@ -1327,7 +1337,7 @@
         <mysql.connector.version>5.1.6</mysql.connector.version>
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-        <org.wso2.andes.client.version>0.13.wso2v3</org.wso2.andes.client.version>
+        <org.wso2.andes.client.version>3.1.14</org.wso2.andes.client.version>
 
         <commons-codec.version>1.6</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>

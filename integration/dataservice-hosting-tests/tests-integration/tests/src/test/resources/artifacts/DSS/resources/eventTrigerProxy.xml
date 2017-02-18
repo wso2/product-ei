@@ -1,0 +1,29 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="eventTrigerProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <payloadFactory>
+                <format>
+                    <updateProductQuantityQuery xmlns="">
+                        <quantityInStock>$1</quantityInStock>
+                        <productCode>150</productCode>
+                    </updateProductQuantityQuery>
+                </format>
+                <args>
+                    <arg value="600"/>
+                </args>
+            </payloadFactory>
+            <property name="OUT_ONLY" value="true" />
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <endpoint>
+            <address
+                    uri="http://data.stratoslivedev.private.wso2.com/services/t/wso2manualQA0006.org/EventingTest/updateProductQuantity"/>
+        </endpoint>
+    </target>
+</proxy>
+

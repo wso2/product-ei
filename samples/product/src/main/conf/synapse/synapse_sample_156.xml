@@ -21,7 +21,7 @@
 <!-- Service Integration with specifying the receiving sequence -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/>
+    <localEntry key="sec_policy" src="file:samples/service-bus/resources/policy/policy_3.xml"/>
 
     <proxy name="StockQuoteProxy">
         <target>

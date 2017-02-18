@@ -1,0 +1,91 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="RegexTest" serviceNamespace="http://ws.wso2.org/dataservice/samples/rdbms_sample">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.autocommit">false</property>
+      <property name="org.wso2.ws.dataservice.validation_query">SELECT 1</property>
+   </config>
+    <query id="regex1" useConfig="default">
+        <sql>select studentNumber, name, country from Students where name Regexp '^Madha?';</sql>
+        <result element="Entries" rowName="Entry">
+            <element column="studentNumber" name="studentNumber" xsdType="string"/>
+            <element column="name" name="name" xsdType="string"/>
+            <element column="country" name="country" xsdType="string"/>
+        </result>
+    </query>
+    <query id="regex2" useConfig="default">
+        <sql>SELECT studentNumber, name, country from Students where name REGEXP '[[:&lt;:]]Madhawa[[:&gt;:]]';</sql>
+        <result element="Entries" rowName="Entry">
+            <element column="studentNumber" name="studentNumber" xsdType="string"/>
+            <element column="name" name="name" xsdType="string"/>
+            <element column="country" name="country" xsdType="string"/>
+        </result>
+    </query>
+    <query id="regex3" useConfig="default">
+        <sql>SELECT count(*) from Students where name REGEXP '[[:alnum:]]+';</sql>
+        <result element="Entries" rowName="Entry" useColumnNumbers="true">
+            <element column="1" name="Count" xsdType="string"/>
+        </result>
+    </query>
+    <query id="regex4" useConfig="default">
+        <sql>select :name from Students where name Regexp '^Madha?';</sql>
+        <result element="Entries" rowName="Entry">
+            <element column="name" name="name" xsdType="string"/>
+        </result>
+        <param name="name" sqlType="QUERY_STRING"/>
+    </query>
+    <query id="regex5" useConfig="default">
+        <sql>SELECT :name from Students where name REGEXP '[[:&lt;:]]Rajith[[:&gt;:]]';</sql>
+        <result element="Entries" rowName="Entry">
+            <element column="name" name="name" xsdType="string"/>
+        </result>
+        <param name="name" sqlType="QUERY_STRING"/>
+    </query>
+    <query id="insert" useConfig="default">
+        <sql>insert into Students values (006, '?', '?','?','?');</sql>
+    </query>
+    <operation name="select_regex1">
+        <call-query href="regex1"/>
+    </operation>
+    <operation name="select_regex2">
+        <call-query href="regex2"/>
+    </operation>
+    <operation name="insert" returnRequestStatus="true">
+        <call-query href="insert"/>
+    </operation>
+    <operation name="select_regex3">
+        <call-query href="regex3"/>
+    </operation>
+    <operation name="select_regex4">
+        <call-query href="regex4">
+            <with-param name="name" query-param="name"/>
+        </call-query>
+    </operation>
+    <operation name="select_regex5">
+        <call-query href="regex5">
+            <with-param name="name" query-param="name"/>
+        </call-query>
+    </operation>
+</data>

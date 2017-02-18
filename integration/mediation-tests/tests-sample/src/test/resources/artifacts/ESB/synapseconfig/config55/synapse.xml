@@ -2,7 +2,7 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <localEntry key="xsltScript" src="file:repository/samples/resources/transform/transform_back.xslt"/>
+    <localEntry key="xsltScript" src="file:samples/service-bus/resources/transform/transform_back.xslt"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

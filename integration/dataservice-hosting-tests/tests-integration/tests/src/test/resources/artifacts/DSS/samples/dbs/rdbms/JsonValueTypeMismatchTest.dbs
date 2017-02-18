@@ -1,0 +1,28 @@
+<data name="JsonValueTypeMismatchTest" serviceNamespace="http://ws.wso2.org/dataservice" transports="http https local">
+   <config enableOData="false" id="MyDs">
+      <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/database/DATA_SERV_SAMP</property>
+      <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+      <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+      <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+      <property name="org.wso2.ws.dataservice.validation_query"/>
+   </config>
+   <query id="insert_Persons_query" useConfig="MyDs">
+      <sql>INSERT INTO Persons(PersonID,LastName,FirstName,Address,Image) VALUES(?,?,?,?,?)</sql>
+      <param name="PersonID" ordinal="1" sqlType="NUMERIC"/>
+      <param name="LastName" ordinal="2" sqlType="STRING"/>
+      <param name="FirstName" ordinal="3" sqlType="STRING"/>
+      <param name="Address" ordinal="4" sqlType="STRING"/>
+      <param name="Image" ordinal="5" sqlType="BLOB"/>
+   </query>
+   <resource method="POST" path="persons">
+      <call-query href="insert_Persons_query">
+         <with-param name="PersonID" query-param="PersonID"/>
+         <with-param name="LastName" query-param="LastName"/>
+         <with-param name="FirstName" query-param="FirstName"/>
+         <with-param name="Address" query-param="Address"/>
+         <with-param name="Image" query-param="Image"/>
+      </call-query>
+   </resource>
+</data>

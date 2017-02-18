@@ -34,10 +34,10 @@
                     </out>
                 </outSequence>
             </target>
-            <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+            <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
         </proxy>
         <localEntry key="xquery-key-req"
-                    src="file:repository/samples/resources/xquery/xquery_req.xq"/>
+                    src="file:samples/service-bus/resources/xquery/xquery_req.xq"/>
         <sequence name="fault">
             <log level="full">
                 <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>

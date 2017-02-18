@@ -21,7 +21,7 @@
         xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd"
         xmlns:file="http://www.milyn.org/xsd/smooks/file-routing-1.1.xsd"
         xmlns:ftl="http://www.milyn.org/xsd/smooks/freemarker-1.1.xsd">
-  	
+
 	<params>
         	<param name="stream.filter.type">SAX</param>
         	<param name="default.serialization.on">false</param>
@@ -30,9 +30,9 @@
     	<!-- Configure the EDI Parser to parse the message stream into a stream of SAX events. -->
 	<resource-config selector="org.xml.sax.driver">
 		<resource>org.milyn.smooks.edi.EDIReader</resource>
-		<param name="mapping-model">repository/samples/resources/smooks/edi-mapping.xml</param>
-    	</resource-config> 
-    
+		<param name="mapping-model">samples/service-bus/resources/smooks/edi-mapping.xml</param>
+    	</resource-config>
+
          <!-- Populate java objects to message data-->
 	<jb:bean beanId="order" class="java.util.Hashtable" createOnElement="order">
 		<jb:value property="id" decoder="Integer" data="order/id"/>

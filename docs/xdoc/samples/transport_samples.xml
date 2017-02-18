@@ -72,7 +72,7 @@ installed and started you should get a message as follows: </p>
 sample Axis2 server) to enable JMS support using the above provider. Refer to
 the Axis2 documentation on setting up JMS for more details
 (<a href="http://ws.apache.org/axis2/1_1/jms-transport.html">http://ws.apache.org/axis2/1_1/jms-transport.html</a>). You will also need to
-copy the ActiveMQ client jar files 
+copy the ActiveMQ client jar files
 activemq-core-5.2.0.jar and geronimo-j2ee-management_1.0_spec-1.0.jar into
 the repository/components/lib directory to allow EI to connect to the JMS provider. </p>
 
@@ -292,9 +292,9 @@ forwarded to the MTOMSwASampleService using the SOAP action
 'urn:oneWayUploadUsingMTOM' and optimizing binary conent using MTOM. To
 execute this sample, use the JMS client to publish a pure binary JMS message
 containing the file
-'./../../repository/samples/resources/mtom/asf-logo.gif' to the JMS
+'./../../samples/service-bus/resources/mtom/asf-logo.gif' to the JMS
 destination 'dynamicQueues/JMSFileUploadProxy' as follows: </p>
-<pre xml:space="preserve">ant jmsclient -Djms_type=binary -Djms_dest=dynamicQueues/JMSFileUploadProxy -Djms_payload=./../../repository/samples/resources/mtom/asf-logo.gif</pre>
+<pre xml:space="preserve">ant jmsclient -Djms_type=binary -Djms_dest=dynamicQueues/JMSFileUploadProxy -Djms_payload=./../../samples/service-bus/resources/mtom/asf-logo.gif</pre>
 
 <p>Examining the EI debug logs reveals that the binary content was received
 over JMS and wrapped with the specified element into a SOAP infoset as
@@ -446,7 +446,7 @@ using VFS transport listener and sender</a> </h2>
                         &lt;outSequence&gt;
                                 &lt;property name="transport.vfs.ReplyFileName"
                                           expression="fn:concat(fn:substring-after(get-property('MessageID'), 'urn:uuid:'), '.xml')" scope="transport"/&gt;
-                                &lt;property action="set" name="OUT_ONLY" value="true"/&gt; 
+                                &lt;property action="set" name="OUT_ONLY" value="true"/&gt;
                                 &lt;send&gt;
                                         &lt;endpoint&gt;
                                                 &lt;address uri="vfs:file:///home/user/test/out"/&gt; &lt;!--CHANGE--&gt;
@@ -986,7 +986,7 @@ SocketAcceptPort=19877</pre>
 <p>Synapse will forward the order requests with symbol 'MSFT' to FIX endpoint FIX-4.1 @ localhost:19877.</p>
 <p>Synapse will not forward the orders with other symbols to any endpoint. (default case has kept blank in the configuration)</p>
 
-    
+
 <h2>
 <a name="Sample263">Sample 263: Transport switching - JMS to http/s using JBoss Messaging(JBM) </a></h2>
 <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
@@ -1153,7 +1153,7 @@ to the network users to read and write into the root 'test' folder and the folde
 Open EI_HOME/repository/samples/synapse_sample_265.xml and edit the following values. Change transport.vfs.FileURI,
 transport.vfs.MoveAfterProcess, transport.vfs.MoveAfterFailure parameter values to the above in, original, original
 directories respectively. Change outSequence endpoint address uri to out directory with the prefix vfs:.
-Values you have to change are marked with &lt;!--CHANGE--&gt;.     
+Values you have to change are marked with &lt;!--CHANGE--&gt;.
 </p>
 
 <p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the directory given in transport.vfs.FileURI above.</p>

@@ -302,10 +302,12 @@ do
     -Dcarbon.components.dir.path="$CARBON_HOME/wso2/components" \
     -Dcarbon.extensions.dir.path="$CARBON_HOME/extensions" \
     -Dcarbon.dropins.dir.path="$CARBON_HOME/dropins" \
+    -Dtomcat.random.port.enable=disable \
     -Dcarbon.external.lib.dir.path="$CARBON_HOME/lib" \
     -Dcarbon.patches.dir.path="$CARBON_HOME/patches" \
     -Dcarbon.servicepacks.dir.path="$CARBON_HOME/servicepacks" \
     -Dcarbon.internal.lib.dir.path="$CARBON_HOME/wso2/lib" \
+    -Dei.extendedURIBasedDispatcher=org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/wso2/components/plugins" \
     -Dconf.location="$CARBON_HOME/conf"\
@@ -318,6 +320,8 @@ do
     -Dorg.terracotta.quartz.skipUpdateCheck=true \
     -Djava.security.egd=file:/dev/./urandom \
     -Dfile.encoding=UTF8 \
+    -Dskip.logging=true  \
+    -Dskip.logging.pattern=\/carbon* \
     -Djava.net.preferIPv4Stack=true \
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \

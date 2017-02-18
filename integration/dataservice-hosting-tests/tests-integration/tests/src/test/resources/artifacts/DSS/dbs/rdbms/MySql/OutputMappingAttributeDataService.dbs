@@ -1,0 +1,60 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<data name="OutputMappingAttributeDataService" serviceGroup="AttributeService">
+   <config id="default">
+      <property name="org.wso2.ws.dataservice.driver">com.mysql.jdbc.Driver</property>
+      <property name="org.wso2.ws.dataservice.protocol">jdbc:mysql://127.0.0.1:3306/testDb</property>
+      <property name="org.wso2.ws.dataservice.user">user</property>
+      <property name="org.wso2.ws.dataservice.password">password</property>
+   </config>
+   <query id="showAllOfficesQuery" useConfig="default">
+      <sql>SELECT * FROM Offices</sql>
+      <result element="Offices" rowName="Office">
+         <attribute name="officeCode" column="officeCode" xsdType="xs:string" />
+         <attribute name="state" column="state" xsdType="xs:string"/>
+         <element name="city" column="city" />
+         <element name="phone" column="phone" />
+         <element name="addressLine1" column="addressLine1" />
+         <element name="addressLine2" column="addressLine2" />
+         <attribute name="country" column="country" xsdType="xs:string"/>
+         <element name="postalCode" column="postalCode" />
+         <element name="territory" column="territory" />
+      </result>
+   </query>
+   <query id="insertOfficeQuery" useConfig="default">
+      <sql>INSERT INTO Offices(officeCode, city, state, territory) values(?, ?, ?, ?); </sql>
+        <param name="officeCode" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="1" />
+        <param name="city" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="2" />
+        <param name="state" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="3" />
+        <param name="territory" paramType="SCALAR" sqlType="STRING" type="IN" ordinal="4" />
+ </query>
+
+<operation name="showAllOffices">
+    <call-query href="showAllOfficesQuery" />
+</operation>
+
+<operation name="addOffice">
+    <call-query href="insertOfficeQuery">
+       <with-param name="officeCode" query-param="officeCode" />
+       <with-param name="city" query-param="city" />
+       <with-param name="state" query-param="state" />
+       <with-param name="territory" query-param="territory" />
+     </call-query>
+ </operation>
+ </data>
