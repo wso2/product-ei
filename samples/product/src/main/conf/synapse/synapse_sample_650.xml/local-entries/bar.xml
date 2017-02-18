@@ -1,0 +1,5 @@
+<localEntry key="bar" xmlns="http://ws.apache.org/ns/synapse">
+    <endpoint>
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+</localEntry>
