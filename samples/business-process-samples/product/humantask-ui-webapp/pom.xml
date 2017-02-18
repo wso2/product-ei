@@ -24,7 +24,7 @@
     </parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wso2.bps.samples.HumanTaskWebApp</groupId>
+	<groupId>org.wso2.ei.samples.HumanTaskWebApp</groupId>
 	<artifactId>BPS-HumanTaskWebApp</artifactId>
 	<packaging>war</packaging>
 	<name>WSO2 BPS - HumanTaskWebApp</name>
