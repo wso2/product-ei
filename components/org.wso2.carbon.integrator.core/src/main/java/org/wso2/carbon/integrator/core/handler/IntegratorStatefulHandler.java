@@ -31,6 +31,7 @@ import org.apache.synapse.core.axis2.SynapseDispatcher;
 import org.wso2.carbon.integrator.core.Utils;
 
 import java.net.URL;
+import java.util.TreeMap;
 
 /**
  * This Axis2 handler is written to dispatch messages to synapse environment, when the message is received for a
@@ -49,7 +50,7 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
         boolean isDataService = Utils.isDataService(messageContext);
-        if (isDataService && uri.contains("SOAP")) {
+        if (isDataService && !isApplicationJsonDSSRequest(messageContext)) {
             return null;
         }
         if ((Utils.isStatefulService(axisService) || isDataService || (uri != null && uri.contains("generateClient"))
@@ -76,7 +77,7 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                 String filePath = file.getPath();
                 isDataService = filePath.contains("dataservices");
                 String uri = (String) messageContext.getProperty("TransportInURL");
-                if (isDataService && uri.contains("SOAP")) {
+                if (isDataService && !isApplicationJsonDSSRequest(messageContext)) {
                     return service;
                 }
                 if ((Utils.isStatefulService(service) || isDataService || (uri != null && uri.contains
@@ -111,5 +112,24 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
         messageContext.setAxisService(axisService);
         messageContext.setAxisOperation(synapseDispatcher.findOperation(messageContext.getAxisService(),
                 messageContext));
+    }
+
+    private boolean isApplicationJsonDSSRequest(MessageContext messageContext) {
+        Object header = messageContext.getProperty("TRANSPORT_HEADERS");
+        if (header instanceof TreeMap) {
+            String acceptType = (String) ((TreeMap) header).get("Accept");
+            if (acceptType == null) {
+                acceptType = (String) ((TreeMap) header).get("accept");
+            }
+            String contentType = (String) ((TreeMap) header).get("Content-Type");
+            if (acceptType == null) {
+                contentType = (String) ((TreeMap) header).get("content-type");
+            }
+            if ((acceptType != null && acceptType.toLowerCase().equals("application/json")) || (contentType != null &&
+                    contentType.toLowerCase().equals("application/json"))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
