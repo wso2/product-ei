@@ -78,7 +78,7 @@ rem ----- Execute The Requested Command ---------------------------------------
 set _RUNJAVA="%JAVA_HOME%\bin\java"
 
 set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%
-set CARBON_CLASSPATH_CUSTOM=%CARBON_HOME%\repository\components\plugins\*;%CARBON_HOME%\repository\components\lib\*
+set CARBON_CLASSPATH_CUSTOM=%CARBON_HOME%\..\components\plugins\*;%CARBON_HOME%\..\..\lib\*
 set JAVA_ENDORSED=".\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
 set _RUNJAVA="%JAVA_HOME%\bin\java"

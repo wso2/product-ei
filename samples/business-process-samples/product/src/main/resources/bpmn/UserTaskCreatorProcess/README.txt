@@ -9,7 +9,7 @@ Create a user with the following username and password: (kermit/kermit) in order
 
 1.Login to the management console as the admin, using admin/admin credentials.
 2.Create two users ("user1" and "user2") and assign both to a role with admin permissions.
-3.Navigate to Processes > Add > BPMN and upload the UserTaskCreatorProcess.bar file found in the <BPS_HOME>/repository/samples/bpmn/ directory.
+3.Navigate to Processes > Add > BPMN and upload the UserTaskCreatorProcess.bar file found in the <E_HOME>/samples/business-process/bpmn/ directory.
 4. Login as admin on the BPMN explorer using admin/admin credentials.
 5. Select the Processes tab and start a few process instances of the ‘UserCreationProcess’ by giving ‘user1’ as the assignee.
 6. Logout as admin and login as "user1" on the BPMN explorer using the relevant credentials.

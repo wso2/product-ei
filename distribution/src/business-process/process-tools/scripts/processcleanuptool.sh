@@ -81,11 +81,11 @@ fi
 
 # update classpath
 CARBON_CLASSPATH=""
-for f in "$CARBON_HOME"/wso2/components/lib/*.jar
+for f in "$CARBON_HOME"/../../lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
-for f in "$CARBON_HOME"/wso2/components/plugins/*.jar
+for f in "$CARBON_HOME"/../components/plugins/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
@@ -103,6 +103,6 @@ fi
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
--Djava.endorsed.dirs="$CARBON_HOME/wso2/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Djava.endorsed.dirs="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
 -Dcarbon.home="$CARBON_HOME" \
 org.wso2.bps.samples.processcleanup.CleanupExecutor $*

@@ -563,6 +563,32 @@
         </fileSet>
 
         <fileSet>
+            <directory>target/samples/process-tools-jar</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>./src/resources</directory>
+            <outputDirectory>wso2ei-${pom.version}/lib</outputDirectory>
+            <includes>
+                <include>esapi-2.0.1.jar</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/samples/sample-utils-jar</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+        <fileSet>
             <directory>target/samples/bpmn</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/business-process/bpmn</outputDirectory>
         </fileSet>

@@ -52,7 +52,7 @@ public class CleanupExecutor {
 	private static String getProperty(String property) throws Exception {
 		Properties prop = new Properties();
 		String configPath =
-				bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+				bpsHome  + File.separator + CleanupConstants.CONF +
 				File.separator + CleanupConstants.CLEANUP_PROPERTIES;
 		prop.load(new FileInputStream(configPath));
 		return prop.getProperty(property);
@@ -83,7 +83,7 @@ public class CleanupExecutor {
         System.out.println("Processcleanuptool startup - BPS HOME DIRECTORY : " + bpsHome);
 
 		String configPath =
-				bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+				bpsHome + File.separator + CleanupConstants.CONF +
 				File.separator + CleanupConstants.DATASOURCES +
 				File.separator + CleanupConstants.BPS_DATASOURCES;
 		File elementXmlFile = new File(configPath);

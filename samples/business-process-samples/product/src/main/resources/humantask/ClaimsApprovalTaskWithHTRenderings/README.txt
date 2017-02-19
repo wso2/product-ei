@@ -6,9 +6,9 @@ Setting up the sample
 
 Deploy the sample
 =================
-1.The ClaimsApprovalProcess.zip BPEL package has to be deployed as mentioned in the ClaimApprovalTask readme. This BPEL package can be found in the<EI_HOME>/wso2/business-process/repository/samples/bpel directory.
+1.The ClaimsApprovalProcess.zip BPEL package has to be deployed as mentioned in the ClaimApprovalTask readme. This BPEL package can be found in the<EI_HOME>/samples/business-process/bpel directory.
 2. If you have already installed the ClaimsApprovalTask.zip human task sample, un-deploy it.
-3. Deploy the ClaimsApprovalTaskWithHTRenderings.zip sample. This HumanTask package can be found in the <EI_HOME>/wso2/business-process/repository/samples/humantask directory.
+3. Deploy the ClaimsApprovalTaskWithHTRenderings.zip sample. This HumanTask package can be found in the <EI_HOME>/samples/business-process/humantask directory.
 
 Running the sample
 =================

@@ -40,8 +40,8 @@ The following configuration snippet has been added to the ApproveClaim task.
 
 Deploy the sample
 =================
-1.The ClaimsApprovalProcess.zip BPEL package has to be deployed as mentioned in the ClaimApprovalTask sample readme. This BPEL package can be found in the <EI_HOME>/wso2/business-process/repository/samples/bpel directory.
-2. The ClaimsApprovalTaskWithDeadline.zip HumanTask package has to be deployed as mentioned in the ClaimApprovalTask sample readme. This HumanTask package can be found in the <EI_HOME>/wso2/business-process/repository/samples/humantask directory.
+1.The ClaimsApprovalProcess.zip BPEL package has to be deployed as mentioned in the ClaimApprovalTask sample readme. This BPEL package can be found in the <EI_HOME>/samples/business-process/bpel directory.
+2. The ClaimsApprovalTaskWithDeadline.zip HumanTask package has to be deployed as mentioned in the ClaimApprovalTask sample readme. This HumanTask package can be found in the <EI_HOME>/samples/business-process/humantask directory.
 
 Running the sample
 ==================

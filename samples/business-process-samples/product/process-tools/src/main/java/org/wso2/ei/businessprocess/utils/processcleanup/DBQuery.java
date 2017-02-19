@@ -52,7 +52,7 @@ public class DBQuery {
 		Properties prop = new Properties();
 
 		try {
-			String configPath = bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+			String configPath = bpsHome + File.separator + CleanupConstants.CONF +
 								File.separator + CleanupConstants.CLEANUP_PROPERTIES;
 			prop.load(new FileInputStream(configPath));
 		} catch (IOException e) {

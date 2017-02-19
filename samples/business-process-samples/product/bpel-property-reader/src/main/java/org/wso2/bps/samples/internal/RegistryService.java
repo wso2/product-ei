@@ -38,7 +38,7 @@ public class RegistryService {
         ResourceAdminServiceStub resourceAdminServiceStub;
         Properties properties = null;
         try {
-            prop.load(new FileInputStream(System.getProperty("user.dir") + File.separator + "repository" + File.separator + "conf" + File.separator + "PropertyReaderExt.properties"));
+            prop.load(new FileInputStream(System.getProperty("user.dir")  + File.separator + "conf" + File.separator + "PropertyReaderExt.properties"));
             String clientTrustStorePath = prop.getProperty("clientTrustStorePath");
             String trustStorePassword = prop.getProperty("clientTrustStorePassword");
             String trustStoreType = prop.getProperty("clientTrustStoreType");

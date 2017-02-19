@@ -42,10 +42,10 @@ public class SamplesInvoker {
     private static AuthenticationAdminStub authenticationAdminStub = null;
 
     final static String USER_MANAGEMENT_SERVICE_URL = "https://" + "localhost" +
-                                                      ":" + "9443" +
+                                                      ":" + "9445" +
                                                       "/services/UserAdmin";
     final static String AUTHENTICATION_SERVICE_URL = "https://" + "localhost" +
-                                                          ":" + "9443" +
+                                                          ":" + "9445" +
                                                           "/services/AuthenticationAdmin";
 
 

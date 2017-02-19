@@ -6,7 +6,7 @@ Configuration file is $PropertyReaderExt.properties
 
 A sample config:
 
-clientTrustStorePath=/home/wso2bps-3.1.0/repository/resources/security/wso2carbon.jks
+clientTrustStorePath=/home/wso2ei-6.0.0/wso2/business-process/repository/resources/security/wso2carbon.jks
 clientTrustStorePassword=wso2carbon
 clientTrustStoreType=JKS
 bps.mgt.hostname=localhost
@@ -17,8 +17,8 @@ wso2.bps.password=admin
 How to run
 ===========
 1. 'mvn clean install' from bpel-property-reader directory location.
-2. Copy the <bpel-property-reader>/target/bpel-property-reader-4.2.0.jar to <BPS_HOME>/repository/components/lib/
-3. Copy PropertyReaderExt.properties file into <BPS_HOME>/repository/conf/
+2. Copy the <bpel-property-reader>/target/bpel-property-reader-4.2.0.jar to <EI-HOME/wso2/lib/
+3. Copy PropertyReaderExt.properties file into <EI-HOME>wso2/business-process/conf/
 4. Start the server.
 
 BPEL Configurations
