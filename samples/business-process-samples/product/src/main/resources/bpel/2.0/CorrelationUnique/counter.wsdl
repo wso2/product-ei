@@ -71,7 +71,7 @@
   </wsdl:binding>
   <wsdl:service name="counterService2">
     <wsdl:port name="port" binding="t:binding">
-      <soap:address location="http://localhost:9763/services/counterService2"/>
+      <soap:address location="http://localhost:9765/services/counterService2"/>
     </wsdl:port>
   </wsdl:service>
   

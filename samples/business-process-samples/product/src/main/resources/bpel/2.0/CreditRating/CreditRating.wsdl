@@ -51,7 +51,7 @@
     </binding>
     <service name="CreditRatingService">
         <port name="CreditRatingPort" binding="tns:CreditRatingBinding">
-            <soap:address location="http://localhost:9763/CreditRatingService"/>
+            <soap:address location="http://localhost:9765/CreditRatingService"/>
         </port>
     </service>
     <plnk:partnerLinkType name="CreditRating">        

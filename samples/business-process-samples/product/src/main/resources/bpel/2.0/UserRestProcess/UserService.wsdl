@@ -100,7 +100,7 @@
 		<http:binding verb="GET" />
 		<wsdl:operation name="getUserName">
 			<http:operation
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/{uid}" />
 			<wsdl:input>
 				<http:urlReplacement />
 			</wsdl:input>
@@ -115,7 +115,7 @@
 		<http:binding verb="PUT" />
 		<wsdl:operation name="putUserName">
 			<http:operation
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}/{uname}" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/{uid}/{uname}" />
 			<wsdl:input>
 				<http:urlReplacement />
 			</wsdl:input>
@@ -130,7 +130,7 @@
 		<http:binding verb="POST" />
 		<wsdl:operation name="postUserName">
 			<http:operation
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}/{uname}" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/{uid}/{uname}" />
 			<wsdl:input>
 				<http:urlReplacement />
 			</wsdl:input>
@@ -145,7 +145,7 @@
 		<http:binding verb="DELETE" />
 		<wsdl:operation name="deleteUserName">
 			<http:operation
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/{uid}" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/{uid}" />
 			<wsdl:input>
 				<http:urlReplacement />
 			</wsdl:input>
@@ -159,7 +159,7 @@
 	<wsdl:service name="UserServiceGet">
 		<wsdl:port binding="tns:UserServiceGetHTTP" name="UserServiceGetHTTP">
 			<http:address
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/1" />
 		</wsdl:port>
 	</wsdl:service>
 	
@@ -167,7 +167,7 @@
 	<wsdl:service name="UserServicePut">
 		<wsdl:port binding="tns:UserServicePutHTTP" name="UserServicePutHTTP">
 			<http:address
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/1" />
 		</wsdl:port>
 	</wsdl:service>
 	
@@ -175,7 +175,7 @@
 	<wsdl:service name="UserServicePost">
 		<wsdl:port binding="tns:UserServicePostHTTP" name="UserServicePostHTTP">
 			<http:address
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/1" />
 		</wsdl:port>
 	</wsdl:service>
 	
@@ -183,7 +183,7 @@
 	<wsdl:service name="UserServiceDelete">
 		<wsdl:port binding="tns:UserServiceDeleteHTTP" name="UserServiceDeleteHTTP">
 			<http:address
-				location="http://localhost:9764/UserService_1.0.0/services/user_service/userservice/users/name/1" />
+				location="http://localhost:9765/UserService_1.0.0/services/user_service/userservice/users/name/1" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

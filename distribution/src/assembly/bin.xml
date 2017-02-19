@@ -1868,16 +1868,6 @@
         </file>
         <file>
             <source>
-                src/business-process/conf/datasources/metrics-datasources.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/wso2/business-process/conf/datasources
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>
                 src/business-process/conf/datasources/master-datasources.xml
             </source>
             <outputDirectory>

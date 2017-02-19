@@ -72,7 +72,7 @@
     </wsdl:binding>
     <wsdl:service name="ExpandTemplateService">
 		<wsdl:port name="ExpandTemplatePort" binding="tns:ExpandTemplateSoapBinding">
-     		<soap:address location="http://localhost:9763/services/ExpandTemplateService"/>
+     		<soap:address location="http://localhost:9765/services/ExpandTemplateService"/>
 		</wsdl:port>
     </wsdl:service>
     

@@ -57,7 +57,7 @@
     </wsdl:binding>
     <wsdl:service name="RPCServiceProcessService">
 		<wsdl:port name="HelloPort" binding="tns:HelloSoapBinding">
-     		<soap:address location="http://localhost:9763/services/RPCServiceProcessService"/>
+     		<soap:address location="http://localhost:9765/services/RPCServiceProcessService"/>
 		</wsdl:port>
 		<!--port name="LoanServicePort" binding="tns:LoanServiceBinding">
             <soap:address location="https://localhost:9443/services/LoanService"/>
