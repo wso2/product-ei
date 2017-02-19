@@ -94,7 +94,6 @@ if $cygwin; then
   JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
 fi
 
-echo $CARBON_HOME
 CARBON_CLASSPATH=$CARBON_CLASSPATH:$CARBON_HOME/../lib/runtimes/cxf/commons-logging-1.1.1.jar
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
