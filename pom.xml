@@ -1185,7 +1185,7 @@
 
         <!--Business-Process-->
         <carbon.business-process.version>4.4.12</carbon.business-process.version>
-        <bps.version>3.6.0</bps.version>
+        <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1.wso2v19</orbit.version.axis2>
         <orbit.version.ode>1.3.5-wso2v16</orbit.version.ode>
