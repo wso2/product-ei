@@ -68,13 +68,13 @@
     </wsdl:binding>
     <wsdl:service name="RestTestService">
         <wsdl:port name="RestTestServiceHttpSoap11Endpoint" binding="ns:RestTestServiceSoap11Binding">
-            <soap:address location="http://10.100.0.23:9763/services/RestTestService.RestTestServicehttpRestTestServiceSoap11BindingEndpoint/"/>
+            <soap:address location="http://10.100.0.23:9765/services/RestTestService.RestTestServicehttpRestTestServiceSoap11BindingEndpoint/"/>
         </wsdl:port>
         <wsdl:port name="RestTestServiceHttpSoap12Endpoint" binding="ns:RestTestServiceSoap12Binding">
-            <soap12:address location="http://10.100.0.23:9763/services/RestTestService.RestTestServiceHttpSoap12Endpoint/"/>
+            <soap12:address location="http://10.100.0.23:9765/services/RestTestService.RestTestServiceHttpSoap12Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="RestTestServiceHttpEndpoint" binding="ns:RestTestServiceHttpBinding">
-            <http:address location="http://10.100.0.23:9763/services/RestTestService.RestTestServiceHttpEndpoint/"/>
+            <http:address location="http://10.100.0.23:9765/services/RestTestService.RestTestServiceHttpEndpoint/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

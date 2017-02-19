@@ -56,7 +56,7 @@
     </wsdl:binding>
     <wsdl:service name="IfCondition">
 		<wsdl:port name="HelloPort" binding="tns:HelloSoapBinding">
-     		<soap:address location="http://localhost:9763/services/IfCondition"/>
+     		<soap:address location="http://localhost:9765/services/IfCondition"/>
 		</wsdl:port>
     </wsdl:service>
     

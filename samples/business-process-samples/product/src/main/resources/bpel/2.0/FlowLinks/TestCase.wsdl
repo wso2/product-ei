@@ -57,7 +57,7 @@
   </wsdl:binding> 
   <wsdl:service name="FlowLinkTest">
 	<wsdl:port name="Workflow" binding="saw:WorkflowSOAP">
-		<soap:address location="http://localhost:9763/services/FlowLinkTest"/>
+		<soap:address location="http://localhost:9765/services/FlowLinkTest"/>
 	</wsdl:port>
   </wsdl:service>
   <plnk:partnerLinkType name="TestCase">

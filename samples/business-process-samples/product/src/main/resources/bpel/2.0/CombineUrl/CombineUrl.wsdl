@@ -58,7 +58,7 @@
     </wsdl:binding>
     <wsdl:service name="CombineUrlService">
 		<wsdl:port name="CombineUrlPort" binding="tns:CombineUrlSoapBinding">
-     		<soap:address location="http://localhost:9763/services/CombineUrlService"/>
+     		<soap:address location="http://localhost:9765/services/CombineUrlService"/>
 		</wsdl:port>
     </wsdl:service>
     

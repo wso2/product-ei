@@ -51,7 +51,7 @@
     </binding>
     <service name="CustomerInfoService">
         <port name="CustomerInfoPort" binding="tns:CustomerInfoBinding">
-            <soap:address location="http://localhost:9763/services/CustomerInfoService"/>
+            <soap:address location="http://localhost:9765/services/CustomerInfoService"/>
         </port>
     </service>
     <plnk:partnerLinkType name="CustomerInfo">

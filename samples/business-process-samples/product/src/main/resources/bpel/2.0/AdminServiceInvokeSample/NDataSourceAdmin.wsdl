@@ -598,13 +598,13 @@
     </wsdl:binding>
     <wsdl:service name="NDataSourceAdmin">
         <wsdl:port name="NDataSourceAdminHttpsSoap11Endpoint" binding="tns:NDataSourceAdminSoap11Binding">
-            <soap:address location="https://localhost:9443/services/NDataSourceAdmin.NDataSourceAdminHttpsSoap11Endpoint/"/>
+            <soap:address location="https://localhost:9445/services/NDataSourceAdmin.NDataSourceAdminHttpsSoap11Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="NDataSourceAdminHttpsSoap12Endpoint" binding="tns:NDataSourceAdminSoap12Binding">
-            <soap12:address location="https://localhost:9443/services/NDataSourceAdmin.NDataSourceAdminHttpsSoap12Endpoint/"/>
+            <soap12:address location="https://localhost:9445/services/NDataSourceAdmin.NDataSourceAdminHttpsSoap12Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="NDataSourceAdminHttpsEndpoint" binding="tns:NDataSourceAdminHttpBinding">
-            <http:address location="https://localhost:9443/services/NDataSourceAdmin.NDataSourceAdminHttpsEndpoint/"/>
+            <http:address location="https://localhost:9445/services/NDataSourceAdmin.NDataSourceAdminHttpsEndpoint/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

@@ -79,7 +79,7 @@
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <service name="CorrelationWithAttribute">
     	<port binding="tns:CorrelationWithAttributeBinding" name="CorrelationWithAttributePort">
-    		<soap:address location="http://localhost:9763/services/CorrelationWithAttribute"/>
+    		<soap:address location="http://localhost:9765/services/CorrelationWithAttribute"/>
     	</port>
     </service>
 </definitions>

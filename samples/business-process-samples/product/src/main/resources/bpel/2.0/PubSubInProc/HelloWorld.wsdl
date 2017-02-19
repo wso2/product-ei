@@ -56,7 +56,7 @@
     </wsdl:binding>
     <wsdl:service name="HelloServiceToPubSub">
 		<wsdl:port name="HelloPort" binding="tns:HelloSoapBinding">
-     		<soap:address location="http://localhost:9763/services/HelloServiceToPubSub"/>			
+     		<soap:address location="http://localhost:9765/services/HelloServiceToPubSub"/>
 		</wsdl:port>
     </wsdl:service>
     

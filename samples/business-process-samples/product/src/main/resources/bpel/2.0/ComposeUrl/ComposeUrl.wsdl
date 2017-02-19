@@ -72,7 +72,7 @@
     </wsdl:binding>
     <wsdl:service name="ComposeUrlService">
 		<wsdl:port name="ComposeUrlPort" binding="tns:ComposeUrlSoapBinding">
-     		<soap:address location="http://localhost:9763/services/ComposeUrlService"/>
+     		<soap:address location="http://localhost:9765/services/ComposeUrlService"/>
 		</wsdl:port>
     </wsdl:service>
     

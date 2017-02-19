@@ -57,7 +57,7 @@
     </wsdl:binding>
     <wsdl:service name="HelloService">
 		<wsdl:port name="HelloPort" binding="tns:HelloSoapBinding">
-     		<soap:address location="http://localhost:9763/services/helloWorld"/>
+     		<soap:address location="http://localhost:9765/services/helloWorld"/>
 		</wsdl:port>
 		<!--port name="LoanServicePort" binding="tns:LoanServiceBinding">
             <soap:address location="https://localhost:9443/services/LoanService"/>

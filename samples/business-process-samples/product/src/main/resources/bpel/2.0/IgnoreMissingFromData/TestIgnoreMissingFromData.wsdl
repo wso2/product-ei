@@ -58,7 +58,7 @@
     
     <service name="TestIgnoreMissingFromDataService">
         <port name="TestIgnoreMissingFromDataPort" binding="tns:ServiceBinding">
-        	<soap:address location="http://localhost:9763/services/TestIgnoreMissingFromDataService" />
+        	<soap:address location="http://localhost:9765/services/TestIgnoreMissingFromDataService" />
         </port>
     </service>
 </definitions>
