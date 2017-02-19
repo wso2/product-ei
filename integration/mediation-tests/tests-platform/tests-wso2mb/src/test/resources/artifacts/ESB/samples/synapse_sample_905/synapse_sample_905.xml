@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
+                 name="Sample1"
+                 sequence="main"
+                 onError="fault"
+                 protocol="hl7"
+                 suspend="false">
+   <parameters>
+      <parameter name="inbound.hl7.AutoAck">true</parameter>
+      <parameter name="inbound.hl7.Port">20000</parameter>
+      <parameter name="inbound.hl7.TimeOut">3000</parameter>
+      <parameter name="inbound.hl7.CharSet">UTF-8</parameter>
+      <parameter name="inbound.hl7.ValidateMessage">false</parameter>
+      <parameter name="transport.hl7.BuildInvalidMessages">false</parameter>
+   </parameters>
+</inboundEndpoint>
+ 
+<sequence name="main">
+   <in>
+       <log level="full"/>
+       <drop/>
+   </in>
+   <out>
+       <send/>
+   </out>
+   <description>The main sequence for the message mediation</description>
+</sequence>
+ 
+<sequence name="fault">
+    <!-- Generate a NACK containing an error -->
+    <property name="HL7_RESULT_MODE" value="NACK"/>
+    <property name="HL7_NACK_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+    <respond/>
+</sequence>
+</definitions>

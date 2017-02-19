@@ -11,7 +11,7 @@
 
 
     <name>WSO2 BPS - Integration UI Pages</name>
-    <artifactId>org.wso2.bps.integration.ui.pages</artifactId>
+    <artifactId>org.wso2.ei.businessprocess.integration.ui.pages</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 

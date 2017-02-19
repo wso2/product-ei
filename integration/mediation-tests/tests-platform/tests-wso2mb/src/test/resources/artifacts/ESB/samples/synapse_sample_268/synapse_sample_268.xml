@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- An empty flat synapse configuration shipped with the Apache Synapse -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="LocalTransportProxy"
+           transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <endpoint name="ep1">
+                <address uri="local://services/SecondProxy"/>
+            </endpoint>
+            <inSequence>
+                <log level="full"/>
+                <log level="custom">
+                    <property name="LocalTransportProxy" value="In sequence of LocalTransportProxy invoked!"/>
+                </log>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="LocalTransportProxy" value="Out sequence of LocalTransportProxy invoked!"/>
+                </log>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="SecondProxy"
+           transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <endpoint name="ep2">
+                <address uri="local://services/StockQuoteProxy"/>
+            </endpoint>
+            <inSequence>
+                <log level="full"/>
+                <log level="custom">
+                    <property name="SecondProxy" value="In sequence of Second proxy invoked!"/>
+                </log>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="SecondProxy" value="Out sequence of Second proxy invoked!"/>
+                </log>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteProxy"
+           startOnLoad="true">
+        <target>
+            <endpoint name="ep3">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+            <outSequence>
+                <log level="custom">
+                    <property name="StockQuoteProxy"
+                              value="Out sequence of StockQuote proxy invoked!"/>
+                </log>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+</definitions>

@@ -57,7 +57,7 @@
 
                     <ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
                         <ramp:user>alice</ramp:user>
-                        <ramp:passwordCallbackClass>org.wso2.bps.samples.util.PWCBHandler
+                        <ramp:passwordCallbackClass>PWCBHandler
                         </ramp:passwordCallbackClass>
                     </ramp:RampartConfig>
                 </wsp:All>

@@ -24,7 +24,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.bps.integration.tests.bpmn</artifactId>
+    <artifactId>org.wso2.ei.businessprocess.integration.tests.bpmn</artifactId>
     <name>WSO2 Business Process Server Integration Tests - BPMN</name>
     <packaging>jar</packaging>
     <build>
@@ -252,7 +252,7 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
-            <artifactId>org.wso2.bps.integration.common.utils</artifactId>
+            <artifactId>org.wso2.ei.businessprocess.integration.common.utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.automation</groupId>
@@ -260,7 +260,7 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
-            <artifactId>org.wso2.bps.integration.common.clients</artifactId>
+            <artifactId>org.wso2.ei.businessprocess.integration.common.clients</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.httpcomponents</groupId>

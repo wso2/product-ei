@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Message splitting and aggregating the responses -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="SplitAggregateProxy">
+        <target>
+            <inSequence>
+		<!--use iterate sequence template to split incoming request and send-->
+                <call-template target="iter_func">
+                        <with-param xmlns:m0="http://services.samples" name="iter_expr" value="{{//m0:getQuote/m0:request}}"/>
+ 			<with-param xmlns:m0="http://services.samples" name="attach_path" value="{{//m0:getQuote}}"/>
+                </call-template>               
+            </inSequence>
+            <outSequence>
+		<!--use aggregate sequence template to combine the responses and send back-->
+                <call-template target="aggr_func">
+                        <with-param xmlns:m0="http://services.samples" name="aggr_expr" value="{{//m0:getQuoteResponse}}"/>                        
+                </call-template>
+            </outSequence>
+        </target>
+    </proxy>
+	
+    <!--this sequence template will aggregate the responses , mergeback and send back to the client. Takes aggregate 
+	expression as an argument-->	
+    <template xmlns="http://ws.apache.org/ns/synapse" name="aggr_func">
+        <parameter name="aggr_expr"/>
+        <sequence>
+            <log level="full"/>
+            <aggregate>
+                <completeCondition>
+                    <messageCount min="-1" max="-1"/>
+                </completeCondition>
+                <onComplete expression="$func:aggr_expr">
+                    <log level="full" />
+                    <send/>
+                </onComplete>
+            </aggregate>
+        </sequence>
+    </template>
+    
+    <!--this sequence template will iterate through stock quote symbols ,split and send them to endpoints. Takes Iterate 
+	expression and soap attaach path as arguments -->
+    <template xmlns="http://ws.apache.org/ns/synapse" name="iter_func">
+        <parameter name="iter_expr"/>
+        <parameter name="attach_path"/>
+        <sequence>
+            
+            <iterate  xmlns:m0="http://services.samples" preservePayload="true" attachPath="$func:attach_path" expression="$func:iter_expr">
+                <target>
+                    <sequence>
+                        <send>
+                            <endpoint>
+                                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </sequence>
+    </template>
+</definitions>

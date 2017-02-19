@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="LBProxy" transports="https http" startOnLoad="true">
+        <target faultSequence="errorHandler">
+            <inSequence>
+                <send>
+                    <endpoint>
+                        <session type="simpleClientSession"/>
+                        <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                            <endpoint name="templ_ep1" template="endpoint_template" uri="http://localhost:9001/services/LBService1">
+				<parameter name="suspend_duration" value="5"/>
+                            </endpoint>
+			    <endpoint name="templ_ep2" template="endpoint_template" uri="http://localhost:9002/services/LBService1">
+				<parameter name="suspend_duration" value="20"/>
+                            </endpoint>
+			    <endpoint name="templ_ep3" template="endpoint_template" uri="http://localhost:9003/services/LBService1">
+				<parameter name="suspend_duration" value="200"/>
+                            </endpoint>
+                        </loadbalance>
+                    </endpoint>
+                </send>
+                <drop/>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_2.wsdl"/>
+    </proxy>
+
+    <sequence name="errorHandler">
+        <makefault>
+            <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+            <reason value="COULDN'T SEND THE MESSAGE TO THE SERVER."/>
+        </makefault>
+        <send/>
+    </sequence>
+
+
+	
+    <template name="endpoint_template">
+	    <parameter name="suspend_duration"/>
+	    <endpoint name="annonymous">
+		<address uri="$uri">
+		    <enableAddressing/>
+                    <suspendDurationOnFailure>$suspend_duration</suspendDurationOnFailure>
+		</address>
+	    </endpoint>
+    </template>
+
+</definitions>
