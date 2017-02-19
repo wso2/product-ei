@@ -18,7 +18,7 @@
   -->
 
 <axisconfig name="AxisJava2.0">
-    
+
     <!-- ================================================= -->
     <!--                  Parameters                       -->
     <!-- ================================================= -->
@@ -64,7 +64,7 @@
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
     <parameter name="sendStacktraceDetailsWithFaults" locked="false">false</parameter>
-    
+
     <!-- If there aren't any information available to find out the fault reason, we set the -->
     <!-- message of the exception as the faultreason/Reason. But when a fault is thrown from -->
     <!-- a service or some where, it will be wrapped by different levels. Due to this the -->
@@ -79,7 +79,7 @@
     <parameter name="ConfigContextTimeoutInterval" locked="false">30000</parameter>
 
     <!-- Synapse Configuration file location relative to CARBON_HOME -->
-    <parameter name="SynapseConfig.ConfigurationFile" locked="false">repository/samples/synapse_sample_650.xml</parameter>
+    <parameter name="SynapseConfig.ConfigurationFile" locked="false">samples/service-bus/synapse_sample_650.xml</parameter>
     <!-- Synapse Home parameter -->
     <parameter name="SynapseConfig.HomeDirectory" locked="false">.</parameter>
     <!-- Resolve root used to resolve synapse references like schemas inside a WSDL -->
@@ -370,7 +370,7 @@
     <!--Uncomment this for FIX transport support
     <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
     -->
-    
+
     <!--transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"/-->
 
     <!-- SAP Transport Listeners -->
@@ -435,7 +435,7 @@
     <!--Uncomment this for FIX transport support
     <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>
     -->
-    
+
     <!--transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"/-->
 
     <!-- SAP Transport Senders -->
@@ -581,7 +581,7 @@
     <!-- ================================================= -->
 
     <!--
-        Uncomment and configure the following section to enable transactions support 
+        Uncomment and configure the following section to enable transactions support
     -->
     <!--<transaction timeout="30000">
         <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
