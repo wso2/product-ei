@@ -120,10 +120,10 @@ rem Assign sample-utils*.jar folders to SAMPLE_SERVERPATH variable. Since it is 
 
 FOR %%C in ("%CARBON_HOME%\repository\components\plugins\sample-utils*.jar") DO set SAMPLE_SERVERPATH=!SAMPLE_SERVERPATH, %CARBON_HOME%\repository\components\plugins\%%~nC%%~xC
 
-rem We use <code> org.wso2.bps.samples.util.Bootstrap </code> to avoid long classpath windows OS issue to start the server. We pass the the jar files location as 
+rem We use <code> Bootstrap </code> to avoid long classpath windows OS issue to start the server. We pass the the jar files location as
 rem -Djar.class.paths=%CARBON_CLASSPATH% as a system property.(It is a MUST) Additionally we pass -Dsystem.home="."  property which is set to current directory.
 
-"%JAVA_HOME%\bin\java"  -Xms256m -Xmx512m -XX:MaxPermSize=256m  -classpath "%SAMPLE_SERVERPATH%" -Djava.io.tmpdir="%AXIS2_HOME%..\..\tmp\sampleServer" %_SERVERNAME% %_HTTPPORT% %_HTTPSPORT% %_XDEBUG% -Djava.endorsed.dirs="%AXIS2_ENDORSED%"  -Djar.class.paths=%CARBON_CLASSPATH% -Dsystem.home="."  org.wso2.bps.samples.util.Bootstrap  -repo "%AXIS2_HOME%\repository" -conf "%AXIS2_HOME%repository\conf\axis2.xml" 
+"%JAVA_HOME%\bin\java"  -Xms256m -Xmx512m -XX:MaxPermSize=256m  -classpath "%SAMPLE_SERVERPATH%" -Djava.io.tmpdir="%AXIS2_HOME%..\..\tmp\sampleServer" %_SERVERNAME% %_HTTPPORT% %_HTTPSPORT% %_XDEBUG% -Djava.endorsed.dirs="%AXIS2_ENDORSED%"  -Djar.class.paths=%CARBON_CLASSPATH% -Dsystem.home="."  Bootstrap  -repo "%AXIS2_HOME%\repository" -conf "%AXIS2_HOME%repository\conf\axis2.xml"
 
 :end
 set _JAVACMD=

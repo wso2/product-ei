@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<!-- Introduction to dynamic and static registry keys  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <!-- the SimpleURLRegistry allows access to a URL based registry (e.g. file:/// or http://) -->
+    <registry provider="org.wso2.carbon.mediation.registry.ESBRegistry">
+        <!-- the root property of the simple URL registry helps resolve a resource URL as root + key -->
+        <parameter name="root">file:repository/samples/resources/</parameter>
+        <!-- all resources loaded from the URL registry would be cached for this number of milli seconds -->
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+
+    <sequence name="main">
+        <in>
+            <!-- define the request processing XSLT resource as a property value -->
+            <property name="symbol" value="transform/transform.xslt"/>
+            <!-- {} denotes that this key is a dynamic one and it is not a static key -->
+            <!-- use Xpath expression "get-property()" to evaluate real key from property -->
+            <xslt key="{get-property('symbol')}"/>
+        </in>
+        <out>
+            <!-- transform the standard response back into the custom format the client expects -->
+            <!-- the key is looked up in the remote registry using a static key -->
+            <xslt key="transform/transform_back.xslt"/>
+        </out>
+        <send/>
+    </sequence>
+
+</definitions>
