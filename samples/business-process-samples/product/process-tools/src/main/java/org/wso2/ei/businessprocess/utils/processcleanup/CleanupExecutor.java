@@ -27,6 +27,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.sql.*;
 import java.util.*;
 
@@ -362,6 +365,11 @@ public class CleanupExecutor {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
+
+		if (System.getProperty("carbon.components.dir.path") != null) {
+			addJarFileUrls(new File(System.getProperty("carbon.components.dir.path")));
+		}
+
 		initializeDBConnection();
 		query = new DBQuery(databaseURL, bpsHome);
 		TimeZone.setDefault(TimeZone.getTimeZone(getProperty(CleanupConstants.TIME_ZONE)));
@@ -439,5 +447,36 @@ public class CleanupExecutor {
 				}
 				break;
 		}
+	}
+
+	/**
+	 * Add JAR files found in the given directory to the Classpath. This fix is done due to terminal's argument character limitation.
+	 *
+	 * @param root the directory to recursively search for JAR files.
+	 * @throws java.net.MalformedURLException If a provided JAR file URL is malformed
+	 */
+	private static void addJarFileUrls(File root) throws Exception {
+		File[] children = root.listFiles();
+		if (children == null) {
+			return;
+		}
+		for (File child : children) {
+			if (child.isFile() && child.canRead() &&
+					child.getName().toLowerCase().endsWith(".jar") &&
+					!child.getName().toLowerCase().startsWith("org.apache.synapse.module") &&
+					!child.getName().toLowerCase().startsWith("wss4j")) {
+				addPath(child.getPath());
+			}
+		}
+	}
+
+	private static void addPath(String s) throws Exception {
+		File f = new File(s);
+		URL u = f.toURL();
+		URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+		Class<URLClassLoader> urlClass = URLClassLoader.class;
+		Method method = urlClass.getDeclaredMethod("addURL", URL.class);
+		method.setAccessible(true);
+		method.invoke(urlClassLoader, u);
 	}
 }
