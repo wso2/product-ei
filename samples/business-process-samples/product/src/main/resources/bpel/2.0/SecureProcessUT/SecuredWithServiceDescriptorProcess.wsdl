@@ -57,7 +57,7 @@
     </wsdl:binding>
     <wsdl:service name="SWSDPService">
 		<wsdl:port name="SWSDPPort" binding="tns:SWSDPSoapBinding">
-     		<soap:address location="http://localhost:9763/services/swsdpWorld"/>
+     		<soap:address location="http://localhost:9765/services/swsdpWorld"/>
 		</wsdl:port>
 		<!--port name="LoanServicePort" binding="tns:LoanServiceBinding">
             <soap:address location="https://localhost:9443/services/LoanService"/>

@@ -57,7 +57,7 @@
     </wsdl:binding>
     <wsdl:service name="SplitService">
 		<wsdl:port name="SplitPort" binding="tns:SplitSoapBinding">
-     		<soap:address location="http://localhost:9763/services/SplitService"/>
+     		<soap:address location="http://localhost:9765/services/SplitService"/>
 		</wsdl:port>
     </wsdl:service>
     

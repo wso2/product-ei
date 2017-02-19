@@ -59,7 +59,7 @@
     </binding>
     <service name="LoanProcessService">
         <port name="LoanProcessPort" binding="tns:LoanProcessBinding">
-			<soap:address location="http://localhost:9763/services/LoanProcessService"/>
+			<soap:address location="http://localhost:9765/services/LoanProcessService"/>
         </port>
     </service>
     <plnk:partnerLinkType name="LoanProcess">

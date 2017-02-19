@@ -61,17 +61,17 @@
     </binding>
     <service name="DILoanService">
         <port name="LoanServicePort" binding="tns:LoanServiceBinding">
-            <soap:address location="http://localhost:9763/services/DILoanService"/>
+            <soap:address location="http://localhost:9765/services/DILoanService"/>
         </port>
     </service>
     <service name="XKLoanService">
         <port name="LoanServicePort" binding="tns:LoanServiceBinding">
-            <soap:address location="http://localhost:9763/services/XKLoanService"/>
+            <soap:address location="http://localhost:9765/services/XKLoanService"/>
         </port>
     </service>
     <service name="LoanServiceCallback">
         <port name="LoanServiceCallbackPort" binding="tns:LoanServiceCallbackBinding">
-            <soap:address location="http://localhost:9763/services/LoanServiceCallback"/>
+            <soap:address location="http://localhost:9765/services/LoanServiceCallback"/>
         </port>
     </service>
     <plnk:partnerLinkType name="LoanServicePT">

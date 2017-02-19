@@ -95,7 +95,7 @@
 
   <wsdl:service name="DynResponderService">
     <wsdl:port name="DynResponderPort" binding="tns:DynResponderBinding">
-      <soap:address location="http://localhost:9763/services/DynResponderService"/>
+      <soap:address location="http://localhost:9765/services/DynResponderService"/>
     </wsdl:port>
   </wsdl:service>
 

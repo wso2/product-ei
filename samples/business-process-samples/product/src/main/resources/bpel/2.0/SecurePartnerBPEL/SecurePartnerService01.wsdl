@@ -83,13 +83,13 @@
 
    <wsdl:service name="SecurePartnerService01">
       <wsdl:port name="SecurePartnerService01SOAP11port_http" binding="ns0:SecurePartnerService01SOAP11Binding">
-      <soap:address location="https://localhost:9443/services/SecurePartnerService1/ "/>
+      <soap:address location="https://localhost:9445/services/SecurePartnerService1/ "/>
       </wsdl:port>
       <wsdl:port name="SecurePartnerService01SOAP12port_http" binding="ns0:SecurePartnerService01SOAP12Binding">
-      <soap12:address location="https://localhost:9443/services/SecurePartnerService1/ "/>
+      <soap12:address location="https://localhost:9445/services/SecurePartnerService1/ "/>
       </wsdl:port>
       <wsdl:port name="SecurePartnerService01Httpport" binding="ns0:SecurePartnerService01HttpBinding">
-         <http:address location="https://localhost:9443/services/SecurePartnerService1/ "/>
+         <http:address location="https://localhost:9445/services/SecurePartnerService1/ "/>
       </wsdl:port>
    </wsdl:service>
     <plink:partnerLinkType name="SecurePartnerService01PartnerlinkType">

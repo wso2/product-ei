@@ -57,7 +57,7 @@
     </wsdl:binding>
     <wsdl:service name="CleanUpSampleService">
 		<wsdl:port name="CleanUpSamplePort" binding="tns:CleanUpSampleSoapBinding">
-     		<soap:address location="http://localhost:9763/services/CleanUpSampleService"/>
+     		<soap:address location="http://localhost:9765/services/CleanUpSampleService"/>
 		</wsdl:port>
 		<!--port name="LoanServicePort" binding="tns:LoanServiceBinding">
             <soap:address location="https://localhost:9443/services/LoanService"/>
