@@ -85,12 +85,7 @@ for f in "$CARBON_HOME"/../../lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
-for f in "$CARBON_HOME"/../components/plugins/*.jar
-do
-  CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
-done
 CARBON_CLASSPATH=$CARBON_CLASSPATH:$CLASSPATH
-
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
@@ -99,10 +94,11 @@ if $cygwin; then
   JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
 fi
 
-
+CARBON_CLASSPATH=$CARBON_CLASSPATH:$CARBON_HOME/../lib/runtimes/cxf/commons-logging-1.1.1.jar
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
 -Djava.endorsed.dirs="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Dcarbon.components.dir.path="$CARBON_HOME/../../wso2/components/plugins/" \
 -Dcarbon.home="$CARBON_HOME" \
 org.wso2.ei.businessprocess.utils.processcleanup.CleanupExecutor $*
