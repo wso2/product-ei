@@ -63,14 +63,14 @@ You will now deploy the ClaimsApprovalTask sample by adding the tasks and proces
 To add the tasks:
 
 Go to Main -> Human Tasks -> Add.
-Browse to and select ClaimsApprovalTaskWithMultipleDomains.zip, which is located in <BPS_HOME>/repository/samples/humantask, and click Upload.
+Browse to and select ClaimsApprovalTaskWithMultipleDomains.zip, which is located in <EI_HOME>/samples/business-process/humantask, and click Upload.
 Click OK in the confirmation message and then refresh the page.
 The ApproveClaim and ClaimApprovalReminder task definitions appear in the deployed task configurations list. You can click a task definition to view it.
 
 To add the process:
 
 Go to Main -> Processes -> Add.
-Browse to and select ClaimsApprovalProcess.zip, which is located in <BPS_HOME>/repository/samples/bpel, and click Upload.
+Browse to and select ClaimsApprovalProcess.zip, which is located in <EI_HOME>/samples/business-process/bpel, and click Upload.
 Click OK in the confirmation message, wait a few moments, and then refresh the page.
 
 The ClaimsApprovalProcess process is now deployed and appears in the Deployed Processes list.

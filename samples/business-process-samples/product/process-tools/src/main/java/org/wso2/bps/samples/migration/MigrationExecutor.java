@@ -117,7 +117,7 @@ public class MigrationExecutor {
         String databasePassword = null;
         String databaseDriver = null;
         boolean dbConfigFound = false;
-        String configPath = System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" +
+        String configPath = System.getProperty("carbon.home")  + File.separator + "conf" +
                     File.separator + "datasources" + File.separator + "bps-datasources.xml";
         System.out.println("Using datasource config file at :" + configPath);
         File elementXmlFile = new File(configPath);

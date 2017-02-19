@@ -8,7 +8,7 @@ Create a user with the following username and password: (kermit/kermit) in order
 - clerk
 
 1.Login to the management console as the admin, using admin/admin credentials.
-2.Navigate to Processes > Add > BPMN and upload the XMLVariableTypeUsageProcess.bar file found in the <BPS_HOME>/repository/samples/bpmn/ directory.
+2.Navigate to Processes > Add > BPMN and upload the XMLVariableTypeUsageProcess.bar file found in the <EI_HOME>/samples/business-process/bpmn/ directory.
 3.Login as admin on the BPMN explorer using admin/admin credentials.
 4.Select the Processes tab and start a two process instance of the XMLVariableType process; one with the Pending Arrivals Count field set to 0 and another one with the Pending Arrivals Count set to 1.
 5.Select Tasks>My Tasks tab and you will see that the process instance you started with a pending arrivals count of 1 will appear on the task list as a user task.

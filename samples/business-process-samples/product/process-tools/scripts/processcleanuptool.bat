@@ -71,14 +71,14 @@ setlocal EnableDelayedExpansion
 rem loop through the libs and add them to the class path
 cd "%CARBON_HOME%"
 
-FOR %%C in ("%CARBON_HOME%\repository\components\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\repository\components\lib\%%~nC%%~xC"
-FOR %%E in ("%CARBON_HOME%\repository\components\plugins\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\repository\components\plugins\%%~nE%%~xE"
+FOR %%C in ("%CARBON_HOME%\..\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\lib\%%~nC%%~xC"
+FOR %%E in ("%CARBON_HOME%\..\components\plugins\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\components\plugins\%%~nE%%~xE"
 
 rem ----- Execute The Requested Command ---------------------------------------
 set _RUNJAVA="%JAVA_HOME%\bin\java"
 
 set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%
-set CARBON_CLASSPATH_CUSTOM=%CARBON_HOME%\repository\components\plugins\*;%CARBON_HOME%\repository\components\lib\*
+set CARBON_CLASSPATH_CUSTOM=%CARBON_HOME%\..\components\plugins\*;%CARBON_HOME%\..\components\lib\*
 set JAVA_ENDORSED=".\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
 set _RUNJAVA="%JAVA_HOME%\bin\java"

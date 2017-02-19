@@ -347,6 +347,18 @@
                                     </fileset>
                                 </copy>
 
+                                <copy todir="target/samples/process-tools-jar/">
+                                    <fileset dir="${basedir}/../samples/business-process-samples/product/process-tools/target">
+                                        <include name="**/*.jar" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="target/samples/sample-utils-jar/">
+                                    <fileset dir="${basedir}/../samples/business-process-samples/product/sample-utils/target">
+                                        <include name="**/*.jar" />
+                                    </fileset>
+                                </copy>
+
                                 <zip destfile="target/samples/bpmn/SimpleCalculator.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/SimpleCalculator" />
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/HelloWorld" />
                                 <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderDeliveryProcess" />

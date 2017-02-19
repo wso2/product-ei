@@ -22,7 +22,7 @@ Deploying the Sample
 You will now deploy the ClaimsApprovalTask sample by adding the tasks and process associated with the sample.
 To add the tasks:
 1. Go to Human Tasks>Add in the Main menu.
-2. Browse to and select ClaimsApprovalTask.zip, which is located in <EI_HOME>/wso2/business-process/repository/samples/humantask, and click Upload.
+2. Browse to and select ClaimsApprovalTask.zip, which is located in <EI_HOME>/samples/business-process/humantask, and click Upload.
 3. Click OK in the confirmation message and then refresh the page.
 4. The ApproveClaim and ClaimApprovalReminder task definitions appear in the deployed task configurations list.
 
@@ -30,7 +30,7 @@ You can click a task definition to view it. The ApproveClaim task definition loo
 
 To add the process:
 1. Go to Processes>Add>BPEL under the Main menu.
-2. Browse to and select ClaimsApprovalProcess.zip, which is located in <EI_HOME>/wso2/business-process/repository/samples/bpel, and click Upload.
+2. Browse to and select ClaimsApprovalProcess.zip, which is located in <EI_HOME>/samples/business-process/bpel, and click Upload.
 3. Click OK in the confirmation message, wait a few moments, and then refresh the page.
 4. The ClaimsApprovalProcess process is now deployed and appears in the Deployed Processes list.
 

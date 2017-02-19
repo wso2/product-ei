@@ -57,12 +57,10 @@ public class RegistryCleaner {
 
 			if (System.getProperty(CleanupConstants.OS_NAME).startsWith(CleanupConstants.WINDOWS)) {
 				prop.load(new FileInputStream(
-						System.getProperty(CleanupConstants.CARBON_HOME) + File.separator +
-						CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+						System.getProperty(CleanupConstants.CARBON_HOME) + File.separator + CleanupConstants.CONF +
 						File.separator + CleanupConstants.CLEANUP_PROPERTIES));
 			} else {
 				prop.load(new FileInputStream(System.getProperty(CleanupConstants.CARBON_HOME) +
-				                              File.separator + CleanupConstants.REPOSITORY +
 				                              File.separator +
 				                              CleanupConstants.CONF + File.separator +
 				                              CleanupConstants.CLEANUP_PROPERTIES));

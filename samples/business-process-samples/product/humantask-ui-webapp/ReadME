@@ -14,7 +14,7 @@ Configuration
 Before build the app please change the back end server url ,client trust store path,password and type in config.properties file.
 
 wso2.bps.backend.url=https://localhost:9443
-clientTrustStorePath=/home/waruna/wso2bps-3.5.0-SNAPSHOT/repository/resources/security/wso2carbon.jks
+clientTrustStorePath=/home/waruna/wso2ei-6.0.0-SNAPSHOT/wso2/business-process/repository/resources/security/wso2carbon.jks
 clientTrustStorePassword=wso2carbon
 clientTrustStoreType=JKS
 
