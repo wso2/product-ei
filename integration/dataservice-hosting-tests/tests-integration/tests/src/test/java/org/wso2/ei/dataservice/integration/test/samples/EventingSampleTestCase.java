@@ -284,8 +284,7 @@ public abstract class EventingSampleTestCase extends DSSIntegrationTest {
     }
 
     private void updateAxis2_ClientXML() throws Exception {
-        String axis2_client_path = CarbonUtils.getCarbonHome() + File.separator + "repository" + File.separator +
-                                   "conf" + File.separator + "axis2" + File.separator + "axis2_client.xml";
+        String axis2_client_path = CarbonUtils.getCarbonHome() + File.separator + "conf" + File.separator + "axis2" + File.separator + "axis2_client.xml";
 
         String mail_transport_config = getResourceLocation()+ File.separator + "resources" + File.separator + "mailTransport.xml";
 

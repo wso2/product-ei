@@ -300,6 +300,10 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
+            <artifactId>integration-test-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
             <artifactId>dataservice-client-samples</artifactId>
         </dependency>
         <dependency>

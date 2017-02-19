@@ -47,13 +47,24 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     }
 
     @Override
+    public InvocationResponse invoke(MessageContext msgctx) throws AxisFault {
+        AxisService axisService = msgctx.getAxisService();
+        if (axisService != null) {
+            boolean isDataService = Utils.isDataService(msgctx);
+            boolean isStatefulService = Utils.isStatefulService(axisService);
+            if ((isDataService || isStatefulService) && msgctx.getProperty("transport.http.servletRequest") == null) {
+                setSynapseContext(isDataService, msgctx, axisService);
+            }
+        }
+        return super.invoke(msgctx);
+    }
+
+    @Override
     public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
         String uri = (String) messageContext.getProperty("TransportInURL");
         boolean isDataService = Utils.isDataService(messageContext);
-        if (isDataService && !isApplicationJsonDSSRequest(messageContext)) {
-            return null;
-        }
-        if ((Utils.isStatefulService(axisService) || isDataService || (uri != null && uri.contains("generateClient"))
+        boolean isStatefulService = Utils.isStatefulService(axisService);
+        if ((isStatefulService || isDataService || (uri != null && uri.contains("generateClient"))
         ) && messageContext.getProperty("transport.http.servletRequest") == null) {
             try {
                 setSynapseContext(isDataService, messageContext, axisService);
@@ -62,27 +73,25 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                 log.error("Error occurred while invoking stateful service.");
                 return null;
             }
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
     public AxisService findService(MessageContext messageContext) throws AxisFault {
         AxisService service = this.rubsd.findService(messageContext);
         boolean isDataService;
-        if (service != null) {
+        if (service != null && messageContext.getProperty("transport.http.servletRequest") == null) {
             URL file = service.getFileName();
             if (file != null) {
                 String filePath = file.getPath();
                 isDataService = filePath.contains("dataservices");
                 String uri = (String) messageContext.getProperty("TransportInURL");
-                if (isDataService && !isApplicationJsonDSSRequest(messageContext)) {
+                boolean isStatefulService = Utils.isStatefulService(service);
+                if (isDataService && !isApplicationJsonDSSRequest(messageContext) && !isStatefulService) {
                     return service;
                 }
-                if ((Utils.isStatefulService(service) || isDataService || (uri != null && uri.contains
-                        ("generateClient"))
-                ) && messageContext.getProperty("transport.http.servletRequest") == null) {
+                if (isStatefulService || isDataService || (uri != null && uri.contains("generateClient"))) {
                     setSynapseContext(isDataService, messageContext, service);
                     return messageContext.getAxisService();
                 }
@@ -121,12 +130,7 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
             if (acceptType == null) {
                 acceptType = (String) ((TreeMap) header).get("accept");
             }
-            String contentType = (String) ((TreeMap) header).get("Content-Type");
-            if (acceptType == null) {
-                contentType = (String) ((TreeMap) header).get("content-type");
-            }
-            if ((acceptType != null && acceptType.toLowerCase().equals("application/json")) || (contentType != null &&
-                    contentType.toLowerCase().equals("application/json"))) {
+            if ((acceptType != null && acceptType.toLowerCase().equals("application/json"))) {
                 return true;
             }
         }

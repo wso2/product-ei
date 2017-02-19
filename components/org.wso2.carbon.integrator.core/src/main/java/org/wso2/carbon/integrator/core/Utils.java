@@ -255,13 +255,15 @@ public class Utils {
     }
 
     public static boolean isDataService(org.apache.axis2.context.MessageContext messageContext) {
-        URL file = messageContext.getAxisService().getFileName();
-        if (file != null) {
-            String filePath = file.getPath();
-            return filePath.contains("dataservices");
-        } else {
-            return false;
+        AxisService axisService = messageContext.getAxisService();
+        if (axisService != null) {
+            URL file = axisService.getFileName();
+            if (file != null) {
+                String filePath = file.getPath();
+                return filePath.contains("dataservices");
+            }
         }
+        return false;
     }
 
 
@@ -336,8 +338,8 @@ public class Utils {
      */
     public static boolean isStatefulService(AxisService axisService) {
         Parameter parameter = axisService.getParameter("adminService");
-        return parameter != null && ("transportsession".equals(axisService.getScope()) || "true".equals(axisService
-                .getParameter("adminService").getValue()));
+        return (parameter != null && "true".equals(axisService
+                .getParameter("adminService").getValue())) || ("transportsession".equals(axisService.getScope()));
     }
 
     private static String getPropertyFromAxisConf(String parameter) throws IOException, XMLStreamException {
