@@ -124,17 +124,17 @@
 
 	<wsdl:service name="ClaimService">
 		<wsdl:port name="ClaimPort" binding="tns:ClaimSoapBinding">
-			<soap:address location="http://localhost:9763/services/ClaimService" />
+			<soap:address location="http://localhost:9765/services/ClaimService" />
 		</wsdl:port>
 	</wsdl:service>
 	<wsdl:service name="ClaimReminderService">
 		<wsdl:port name="ClaimReminderPort" binding="tns:ClaimSoapBindingReminder">
-			<soap:address location="http://localhost:9763/services/ClaimReminderService" />
+			<soap:address location="http://localhost:9765/services/ClaimReminderService" />
 		</wsdl:port>
 	</wsdl:service>
 	<wsdl:service name="ClaimServiceCB">
 		<wsdl:port name="ClaimPortCB" binding="tns:ClaimSoapBindingCB">
-			<soap:address location="http://localhost:9763/services/ClaimServiceCB" />
+			<soap:address location="http://localhost:9765/services/ClaimServiceCB" />
 		</wsdl:port>
 
     </wsdl:service>
