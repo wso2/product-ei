@@ -44,7 +44,7 @@ to http/s</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
         &lt;parameter name="transport.jms.ContentType"&gt;
             &lt;rules&gt;
                 &lt;jmsProperty&gt;contentType&lt;/jmsProperty&gt;
@@ -129,7 +129,7 @@ sample.</p>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 
 &lt;/definitions&gt;</pre>
@@ -371,7 +371,7 @@ replying with a 202 Accepted response</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 
     &lt;proxy name="OneWayProxy" transports="http"&gt;
@@ -386,7 +386,7 @@ replying with a 202 Accepted response</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 
 &lt;/definitions&gt;</pre>
@@ -454,7 +454,7 @@ using VFS transport listener and sender</a> </h2>
                                 &lt;/send&gt;
                         &lt;/outSequence&gt;
                 &lt;/target&gt;
-                &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+                &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
         &lt;/proxy&gt;
 &lt;/definitions&gt; </pre>
 
@@ -466,7 +466,7 @@ already done </p>
 
 <p>Create three new directories in a test directory. e.g. in, out, original
 in /home/user/test. Open
-EI_HOME/repository/samples/synapse_sample_254.xml and edit the following
+EI_HOME/samples/service-bus/synapse_sample_254.xml and edit the following
 values. Change transport.vfs.FileURI, transport.vfs.MoveAfterProcess,
 transport.vfs.MoveAfterFailure parameter values to the above in, original,
 original directories respectively. Change outSequence endpoint address uri to
@@ -478,7 +478,7 @@ marked with &lt;!--CHANGE--&gt;. </p>
 <p>Start the Synapse configuration numbered 254: i.e. wso2EI-samples -sn 254
 </p>
 
-<p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the
+<p>Copy EI_HOME/samples/service-bus/resources/vfs/test.xml to the
 directory given in transport.vfs.FileURI above. </p>
 
 <p>test.xml file content is as follows </p>
@@ -524,7 +524,7 @@ mail transport sender</a> </h2>
                                 &lt;/send&gt;
                         &lt;/outSequence&gt;
                 &lt;/target&gt;
-                &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+                &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
         &lt;/proxy&gt;
 &lt;/definitions&gt; </pre>
 
@@ -543,7 +543,7 @@ href="../samples_setup_guide.html#mailsender">Setting up mail transport sender</
 </p>
 
 <p>Create a new test directory in the FTP server. Open
-EI_HOME/repository/samples/synapse_sample_255.xml and edit the following
+EI_HOME/samples/service-bus/synapse_sample_255.xml and edit the following
 values. Change transport.vfs.FileURI parameter value point to the test
 directory at the FTP server. Change outSequence endpoint address uri email
 address to a working email address. Values you have to change are marked with
@@ -552,7 +552,7 @@ address to a working email address. Values you have to change are marked with
 <p>Start the Synapse configuration numbered 255: i.e. wso2EI-samples -sn 255
 </p>
 
-<p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the ftp
+<p>Copy EI_HOME/samples/service-bus/resources/vfs/test.xml to the ftp
 directory given in transport.vfs.FileURI above. </p>
 
 <p>VFS transport listener will pick the file from the directory in the ftp
@@ -599,7 +599,7 @@ be deleted. The response will be sent to the given email address. </p>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt; </pre>
 
@@ -691,7 +691,7 @@ because most standard mail clients don't allow the user to explicitly set the co
       Configuring WSO2 EI for FIX Samples</a>
     </p>
     <p>
-      Open up the EI_HOME/repository/samples/synapse_sample_257.xml file
+      Open up the EI_HOME/samples/service-bus/synapse_sample_257.xml file
       and make sure that transport.fix.AcceptorConfigURL property points to the
       fix-synapse.cfg file you created. Also make sure that transport.fix.
       InitiatorConfigURL property points to the synapse-sender.cfg file you
@@ -757,7 +757,7 @@ because most standard mail clients don't allow the user to explicitly set the co
       file for this sample. Having only the synapse-sender.cfg file is sufficient.
     </p>
     <p>
-      Go to the EI_HOME/repository/samples/synapse_sample_258.xml
+      Go to the EI_HOME/samples/service-bus/synapse_sample_258.xml
       file and make sure that transport.fix.InitiatorConfigURL property
       points to the synapse-sender.cfg file you created. Once done you can
       start the Synapse configuration numbered 258: i.e. wso2EI-samples -sn 258
@@ -813,7 +813,7 @@ because most standard mail clients don't allow the user to explicitly set the co
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
 <p>Configure EI for FIX samples. See
 <a href="../samples_setup_guide.html#fixsamples">Configuring the EI for FIX Samples</a> </p>
-<p>Open up the EI_HOME/repository/samples/synapse_sample_259.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 259: i.e. wso2EI-samples -sn 259. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Open up the EI_HOME/samples/service-bus/synapse_sample_259.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 259: i.e. wso2EI-samples -sn 259. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy DELL 1000 @ 100. User has to send a 'Limit' Order because price is a mandatory field for 'placeOrder' operation. </p>
 <p>EI will forward the order request to one-way 'placeOrder' operation on the SimpleStockQuoteService. EI uses a simple XSLT mediator to transform the incoming FIX to a SOAP message. </p>
 <pre xml:space="preserve">&lt;xsl:stylesheet version=&quot;2.0&quot;
@@ -869,13 +869,13 @@ because most standard mail clients don't allow the user to explicitly set the co
 <p>Configure the AMQP transport for WSO2 EI. See
 <a href="../samples_setup_guide.html#setupamqpjms">Configure EI for AMQP Transport</a> </p>
 <p>Start the AMQP consumer, by switching to samples/axis2Client directory and running the consumer using the following command. Consumer will listen to the queue 'QpidStockQuoteService', accept the orders and reply to the queue 'replyQueue'. </p>
-<pre xml:space="preserve">ant amqpconsumer -Dpropfile=$EI_HOME/repository/samples/resources/fix/direct.properties</pre>
+<pre xml:space="preserve">ant amqpconsumer -Dpropfile=$EI_HOME/samples/service-bus/resources/fix/direct.properties</pre>
 <p>Start Banzai </p>
 <p>Enable FIX transport in the Synapse axis2.xml. See
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
 <p>Configure Synapse for FIX samples. See
 <a href="../samples_setup_guide.html#fixsamples">Configuring Synapse for FIX Samples</a> </p>
-<p>Open up the EI_HOME/repository/samples/synapse_sample_260.xml file and make sure that the transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 260: i.e. wso2EI-samples -sn 260. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Open up the EI_HOME/samples/service-bus/synapse_sample_260.xml file and make sure that the transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Once done you can start the Synapse configuration numbered 260: i.e. wso2EI-samples -sn 260. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy DELL 1000 @ MKT. </p>
 <p>Synapse will forward the order request by binding it to a JMS message payload and sending it to the AMQP consumer. AMQP consumer will send a execution back to Banzai. </p>
 
@@ -904,7 +904,7 @@ because most standard mail clients don't allow the user to explicitly set the co
 <a href="../samples_setup_guide.html#fixsamplesconfig">Configuring Sample FIX Applications.</a> </p>
 <p>Add the following lines to the Banzai configuration file (banzai.cfg). </p>
 <pre xml:space="preserve">DataDictionary=~/etc/spec/FIX40-synapse.xml</pre>
-<p>Note: FIX40-synapse.xml can be found at $EI_HOME/repository/sampless/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
+<p>Note: FIX40-synapse.xml can be found at $EI_HOME/samples/service-buss/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
 <p>Add the following lines to the Executor configuration file (executor.cfg). </p>
 <pre xml:space="preserve">[session]
 BeginString=FIX.4.1
@@ -913,7 +913,7 @@ SocketAcceptPort=19877</pre>
 <p>Enable FIX transport in the Synapse axis2.xml. See
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
 <p>Configure Synapse for FIX samples. We will be using two custom configuration files for Synapse in this sample. These two custom configuration files can be found at EI_HOME/repository/conf/sample/resources/fix directory. The two files are called fix-synapse-m40.cfg and synapse-sender-m.cfg. You can point your Synapse configuration to these two files (this is already done in the supplied synapse_sample_261.xml file) or you may create copies of them and point the Synapse configuration to the copies. In either case make sure that the properties like FileStorePath and FileLogPath in the two files point to valid locations in your local file system. </p>
-<p>Open up the $EI_HOME/repository/samples/synapse_sample_261.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse-m40.cfg file described above and transport.fix.InitiatorConfigURL points to the synapse-sender-m.cfg file described above. Once done you can start the Synapse configuration numbered 261: i.e. wso2EI-samples -sn 261. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Open up the $EI_HOME/samples/service-bus/synapse_sample_261.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse-m40.cfg file described above and transport.fix.InitiatorConfigURL points to the synapse-sender-m.cfg file described above. Once done you can start the Synapse configuration numbered 261: i.e. wso2EI-samples -sn 261. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy DELL 1000 @ MKT. </p>
 <p>Synapse will forward the order request from FIX4.0 to the Executor that accepts FIX4.1 messages. Executor will send an ack and an execution back to Banzai. </p>
 
@@ -970,7 +970,7 @@ SocketAcceptPort=19877</pre>
 <a href="../samples_setup_guide.html#fixsamplesconfig">Configuring Sample FIX Applications</a> </p>
 <p>Add the following lines to banzai.cfg. </p>
 <pre xml:space="preserve">DataDictionary=~/etc/spec/FIX40-synapse.xml</pre>
-<p>Note: FIX40-synapse.xml can be found at $EI_HOME/repository/samples/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
+<p>Note: FIX40-synapse.xml can be found at $EI_HOME/samples/service-bus/resources/fix. This is a custom FIX data dictionary file that has added tag 150,151 to the execution messages (35=8) of FIX4.0. Make sure the DataDictionary property of the banzai.cfg points to this data dictionary file. </p>
 <p>Add the following lines to executor.cfg </p>
 <pre xml:space="preserve">[session]
 BeginString=FIX.4.1
@@ -980,7 +980,7 @@ SocketAcceptPort=19877</pre>
 <a href="../samples_setup_guide.html#fixtransport">Setting up FIX transport </a> </p>
 <p>Configure Synapse for FIX samples. See
 <a href="../samples_setup_guide.html#fixsamples">Configuring Synapse for FIX Samples</a> </p>
-<p>Open up the EI_HOME/repository/samples/synapse_sample_262.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created and transport.fix.InitiatorConfigURL points to the synapse-sender.cfg file you created. Once done you can start the Synapse configuration numbered 262: i.e. wso2EI-samples -sn 262. Note that Synapse creates a new FIX session with Banzai at this point. </p>
+<p>Open up the EI_HOME/samples/service-bus/synapse_sample_262.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created and transport.fix.InitiatorConfigURL points to the synapse-sender.cfg file you created. Once done you can start the Synapse configuration numbered 262: i.e. wso2EI-samples -sn 262. Note that Synapse creates a new FIX session with Banzai at this point. </p>
 <p>Send an order request from Banzai to Synapse. e.g. Buy GOOG 1000 @ MKT, Buy MSFT 3000 @ MKT, Buy SUNW 500 @ 100.20 </p>
 <p>Synapse will forward the order requests with symbol 'GOOG' to FIX endpoint FIX-4.0 @ localhost:19876.</p>
 <p>Synapse will forward the order requests with symbol 'MSFT' to FIX endpoint FIX-4.1 @ localhost:19877.</p>
@@ -1137,7 +1137,7 @@ it will first try to read the content type from the 'contentType' message proper
                 &lt;/send&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;
 </pre>
@@ -1150,13 +1150,13 @@ You will need access a windows shared folder. Just create a folder(called 'test'
 and create three sub folders in, out and original inside that folder.Then assign the permission
 to the network users to read and write into the root 'test' folder and the folders inside that directory.</p>
 <p>
-Open EI_HOME/repository/samples/synapse_sample_265.xml and edit the following values. Change transport.vfs.FileURI,
+Open EI_HOME/samples/service-bus/synapse_sample_265.xml and edit the following values. Change transport.vfs.FileURI,
 transport.vfs.MoveAfterProcess, transport.vfs.MoveAfterFailure parameter values to the above in, original, original
 directories respectively. Change outSequence endpoint address uri to out directory with the prefix vfs:.
 Values you have to change are marked with &lt;!--CHANGE--&gt;.
 </p>
 
-<p>Copy EI_HOME/repository/samples/resources/vfs/test.xml to the directory given in transport.vfs.FileURI above.</p>
+<p>Copy EI_HOME/samples/service-bus/resources/vfs/test.xml to the directory given in transport.vfs.FileURI above.</p>
 
 <p>Start the Axis2 server and deploy the SimpleStockQuoteService if not
 already done </p>
@@ -1284,7 +1284,7 @@ Invoke the stockquote client using the following command. Note the UDP URL in th
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
     &lt;proxy xmlns="http://ws.apache.org/ns/synapse" name="SecondProxy"
            transports="https http" startOnLoad="true" trace="disable"&gt;
@@ -1305,7 +1305,7 @@ Invoke the stockquote client using the following command. Note the UDP URL in th
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
     &lt;proxy xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteProxy"
            startOnLoad="true"&gt;
@@ -1321,7 +1321,7 @@ Invoke the stockquote client using the following command. Note the UDP URL in th
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;
 </pre>

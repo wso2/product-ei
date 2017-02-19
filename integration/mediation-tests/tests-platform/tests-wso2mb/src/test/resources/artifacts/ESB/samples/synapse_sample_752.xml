@@ -44,7 +44,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_2.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_2.wsdl"/>
     </proxy>
 
     <sequence name="errorHandler">
@@ -56,7 +56,7 @@
     </sequence>
 
 
-	
+
     <template name="endpoint_template">
 	    <parameter name="suspend_duration"/>
 	    <endpoint name="annonymous">

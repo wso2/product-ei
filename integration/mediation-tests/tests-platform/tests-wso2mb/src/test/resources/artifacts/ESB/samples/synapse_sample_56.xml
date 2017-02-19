@@ -26,7 +26,7 @@
             <send>
                 <!-- get epr from the given wsdl -->
                 <endpoint>
-                    <wsdl uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"
+                    <wsdl uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"
                           service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint"/>
                 </endpoint>
             </send>

@@ -258,7 +258,7 @@
         <!--parameter name="bind-address" locked="false">hostname or IP address</parameter-->
         <!--parameter name="WSDLEPRPrefix" locked="false">https://apachehost:port/somepath</parameter-->
         <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
-        <parameter name="priorityConfigFile" locked="false">repository/samples/resources/priority/priority-configuration.xml</parameter>
+        <parameter name="priorityConfigFile" locked="false">samples/service-bus/resources/priority/priority-configuration.xml</parameter>
     </transportReceiver>
 
     <transportReceiver name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener">

@@ -21,7 +21,7 @@
 <!-- Introduction to the script mediator using js scripts -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <localEntry key="stockquoteScript" src="file:repository/samples/resources/script/stockquoteTransform.js"/>
+    <localEntry key="stockquoteScript" src="file:samples/service-bus/resources/script/stockquoteTransform.js"/>
 
     <sequence name="main">
         <in>

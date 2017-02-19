@@ -21,7 +21,7 @@
 <!-- Using Ruby scripts for mediation -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <localEntry key="stockquoteScript" src="file:repository/samples/resources/script/stockquoteTransform.rb"/>
+    <localEntry key="stockquoteScript" src="file:samples/service-bus/resources/script/stockquoteTransform.rb"/>
 
     <sequence name="main">
         <in>

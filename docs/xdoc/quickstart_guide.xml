@@ -16,7 +16,7 @@
   ~  specific language governing permissions and limitations
   ~  under the License.
   -->
-        
+
 <!DOCTYPE html
    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" >
@@ -39,7 +39,7 @@
       This guide demonstrates two sample applications covering the basic and the
       most common usage scenarios of WSO2 EI, namely Message Mediation
       and Service Mediation (using Proxy Services). You will be guided through a
-      series of steps to create, execute, and analyze these mediation 
+      series of steps to create, execute, and analyze these mediation
       configurations using the EI Management Console.
     </p>
     <h2>Contents</h2>
@@ -201,7 +201,7 @@ Windows: wso2server.bat</pre>
       sufficient for our first scenario. Later on, we will change this
       configuration using the management console to build different mediations.
       Now examine the default configuration using the EI console. Open a Web
-      browser and point it to 
+      browser and point it to
       <a href="https://localhost:9443/carbon" target="_blank">
       https://localhost:9443/carbon</a>. You will be
       directed to the login screen of the Management Console shown below.
@@ -213,7 +213,7 @@ Windows: wso2server.bat</pre>
     <p/>
     <p>
       The Management Console ships with a default username and password
-      combination: "admin", "admin". 
+      combination: "admin", "admin".
       Type "admin" in both the username and password fields and click
       Sign In. You will be directed to the main page of the EI Management
       Console, which displays information about the EI as well as brief
@@ -221,7 +221,7 @@ Windows: wso2server.bat</pre>
       Monitor > System Logs</strong> in the left-hand side navigation pane
       to display log messages of the system. You will see the same
       set of log messages displayed in the command line, when starting the EI.
-      Now click <strong>Monitor > System Statistics</strong> 
+      Now click <strong>Monitor > System Statistics</strong>
       to view runtime statistics of the
       system. You will notice that currently there are no runtime statistics as
       no message mediation has happened.
@@ -229,7 +229,7 @@ Windows: wso2server.bat</pre>
     <p/>
     <p>
       Now it is time to examine the mediation configuration visually. Click on
-      the <strong>Sequences</strong> link on the left panel. In the 
+      the <strong>Sequences</strong> link on the left panel. In the
       <strong>Defined Sequences</strong> tab you will see that two sequences
       named "fault" and "main" are currently available. These two sequences are
       generated automatically by the EI at start up. We can add any number of
@@ -246,7 +246,7 @@ Windows: wso2server.bat</pre>
     <p/>
     <p/>
     <p>
-      You will see there are two mediators named "In" and "Out" at the top 
+      You will see there are two mediators named "In" and "Out" at the top
       level. These two mediators handle request messages
       and response messages respectively. Inside the In Mediator, two mediators
       named Log Mediator and Filter Mediator are listed as children. Therefore,
@@ -273,7 +273,7 @@ Windows: wso2server.bat</pre>
     </p>
     <p>
       Now click on the first two icons under the Actions heading of the "main"
-      sequence, namely <strong>Enable Statistics</strong> and 
+      sequence, namely <strong>Enable Statistics</strong> and
       <strong>Enable Tracing</strong>.
     </p>
     <p>
@@ -423,7 +423,7 @@ Transfer-Encoding: chunked
       <img alt="System logs" src="images/logs.png"/>
     </p>
     <p>
-      Now click on <strong>Monitor > Mediation Tracer</strong> to view the 
+      Now click on <strong>Monitor > Mediation Tracer</strong> to view the
       trace messages emitted by the EI.
       You will see trace messages as shown in the following image.
     </p>
@@ -433,9 +433,9 @@ Transfer-Encoding: chunked
     </p>
     <p/>
     <p>
-      Now let's move on to viewing mediation statistics. Click 
-      <strong>Monitor > Mediation Statistics</strong> to view the overall 
-      runtime statistics graphically. You will see the updated statistics 
+      Now let's move on to viewing mediation statistics. Click
+      <strong>Monitor > Mediation Statistics</strong> to view the overall
+      runtime statistics graphically. You will see the updated statistics
       reflecting the message mediation we have just performed.
     </p>
     <p/>
@@ -443,13 +443,13 @@ Transfer-Encoding: chunked
       <img alt="Overall statistics" src="images/statistics.png"/>
     </p>
     <p>
-      Top left box displays the mediated messages per server. Bottom right box 
+      Top left box displays the mediated messages per server. Bottom right box
       displays the mediated messages per sequence.
     </p>
     <p/>
     <p>
       Now let's go deeper into the statistics console and get more information
-      about the runtime statistics. First click on the 
+      about the runtime statistics. First click on the
       <strong>Server Statistics</strong>
       in the top left box. You will be presented with a summary of the
       server statistics containing total messages, average response time, etc.
@@ -457,7 +457,7 @@ Transfer-Encoding: chunked
       sequences by clicking on <strong>Sequence Statistics</strong> in the
       bottom right box.
     </p>
-    <p>  
+    <p>
       You have successfully completed the first part of this
       guide. Now let's look at the next scenario, Proxy Services.
     </p>
@@ -507,8 +507,8 @@ Transfer-Encoding: chunked
     <p/>
     <p>
       Start the EI as the previous section and log in to the Management
-      Console. Click <strong>Web Services > List</strong> on the left panel. 
-      You will see that currently no proxy services have been defined. 
+      Console. Click <strong>Web Services > List</strong> on the left panel.
+      You will see that currently no proxy services have been defined.
       Let's add a new proxy
       service by clicking <strong>Web Services > Add > Proxy Service</strong>
       on left panel. You will be shown a list of
@@ -539,7 +539,7 @@ Transfer-Encoding: chunked
       displayed using the ?wsdl operation with an actual service. Select
       'Specify Source URL' in the 'Publishing WSDL' drop down list under 'General Settings'.
       You will be prompted with a text box to enter the URL of the WSDL. Type
-      file:repository/samples/resources/proxy/sample_proxy_1.wsdl as the WSDL
+      file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl as the WSDL
       URL and click on 'Test URI' button to instantly validate the path.
     </p>
     <p>
@@ -580,11 +580,11 @@ Transfer-Encoding: chunked
     <p>
       The next step is to add an out sequence to the proxy service. We just want
       to send the response messages back to the client in this out sequence.
-      Select 'Define Inline' under 'Define Out Sequence' and click 
+      Select 'Define Inline' under 'Define Out Sequence' and click
       <strong>Create</strong>. You will be presented with a
       sequence editor. Click on the 'Add Child' icon and select 'Core' and then
       'Send', from the sub menu. A send mediator with default configuration will
-      be added. Click <strong>Save</strong> to save the out sequence 
+      be added. Click <strong>Save</strong> to save the out sequence
       configuration. Finally on the wizard click <strong>Finish</strong> to save
       and quit the wizard.
     </p>
@@ -635,7 +635,7 @@ Transfer-Encoding: chunked
     </strong>
   </p>
   <p/>
-  
+
     <p>
       Go to the &lt;EI-home&gt;/samples/axis2Clients directory and type the
       following command:
@@ -663,13 +663,13 @@ Transfer-Encoding: chunked
       As with the previous message mediation sample, you will be able to monitor
       log messages, trace messages, and statistics for the proxy services based
       mediation. We will look only at the statistics section, which is going to
-      be different from the previous sample. Click 
+      be different from the previous sample. Click
       <strong>Monitor > Mediation Statistics</strong>. You will be
       directed to the overall statistics page.
     </p>
     <p>
-      To get more information about proxy service statistics, click on 
-      <strong>Proxy Service Statistics</strong> in the top right box. You will 
+      To get more information about proxy service statistics, click on
+      <strong>Proxy Service Statistics</strong> in the top right box. You will
       see the summarized
       statistics for the StockQuoteProxy service, we have created in this
       example.

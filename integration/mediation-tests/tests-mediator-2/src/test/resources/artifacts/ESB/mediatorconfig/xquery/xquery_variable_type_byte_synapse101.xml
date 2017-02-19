@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
     <registry provider="org.apache.synapse.registry.url.SimpleURLRegistry">
-        <parameter name="root">file:repository/samples/resources/</parameter>
+        <parameter name="root">file:samples/service-bus/resources/</parameter>
         <parameter name="cachableDuration">15000</parameter>
     </registry>
     <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">

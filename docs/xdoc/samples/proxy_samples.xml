@@ -40,7 +40,7 @@
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
 
@@ -84,7 +84,7 @@ services</a> </h2>
     &lt;endpoint name="proxy_2_endpoint"&gt;
         &lt;address uri="http://localhost:9000/services/SimpleStockQuoteService"/&gt;
     &lt;/endpoint&gt;
-    &lt;localEntry key="proxy_wsdl" src="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+    &lt;localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
 
     &lt;proxy name="StockQuoteProxy1"&gt;
         &lt;publishWSDL key="proxy_wsdl"/&gt;
@@ -129,7 +129,7 @@ from SOAP to REST/POX</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
 
@@ -213,7 +213,7 @@ service without processing the security headers</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
 
@@ -241,7 +241,7 @@ without reading the Security headers (just routing the messages from client
 to service, both of which are secure). To execute the client, send a stock
 quote request to the proxy service, and sign and encrypt the request by
 specifying the client side security policy as follows: </p>
-<pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280/services/StockQuoteProxy -Dpolicy=./../../repository/samples/resources/policy/client_policy_3.xml</pre>
+<pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280/services/StockQuoteProxy -Dpolicy=./../../samples/service-bus/resources/policy/client_policy_3.xml</pre>
 
 <p>By following through the debug logs or TCPMon output, you could see that
 the request received by the proxy service was signed and encrypted. Also,
@@ -294,7 +294,7 @@ forwarded to a secure service to be useful. </p>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_2.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_2.wsdl"/&gt;
     &lt;/proxy&gt;
     &lt;sequence name="errorHandler"&gt;
 
@@ -344,7 +344,7 @@ done </p>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
     <p>

@@ -17,7 +17,7 @@
  ~ under the License.
  -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-   <localEntry key="smooks-key" src="file:repository/samples/resources/smooks/smooks-config-661.xml" />
+   <localEntry key="smooks-key" src="file:samples/service-bus/resources/smooks/smooks-config-661.xml" />
    <proxy name="SmooksSample" transports="vfs" startOnLoad="true" trace="disable">
 	<!--CHANGE-->
         <parameter name="transport.vfs.FileURI">file:///home/user/smooks/in</parameter>

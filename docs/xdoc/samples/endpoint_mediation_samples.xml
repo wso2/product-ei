@@ -636,7 +636,7 @@ shutdown after the request 534. </p>
             &lt;send&gt;
                 &lt;!-- get epr from the given wsdl --&gt;
                 &lt;endpoint&gt;
-                    &lt;wsdl uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceSOAP11port_http"/&gt;
+                    &lt;wsdl uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl" service="SimpleStockQuoteService" port="SimpleStockQuoteServiceSOAP11port_http"/&gt;
                 &lt;/endpoint&gt;
             &lt;/send&gt;
         &lt;/in&gt;
