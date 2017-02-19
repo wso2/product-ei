@@ -511,6 +511,15 @@
         </fileSet>
 
         <fileSet>
+            <directory>src/business-process/process-tools/resources</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/lib
+            </outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>src/business-process/process-tools/scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/bin
             </outputDirectory>
