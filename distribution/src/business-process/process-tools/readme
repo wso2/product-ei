@@ -2,7 +2,7 @@
 ### Configuration Guide Process Tool ###
 ========================================
 
-Update following configuration settings in process-cleanup.properties which is located at BPS_HOME/repository/conf directory
+Update following configuration settings in process-cleanup.properties which is located at EI_HOME/wso2/business-process/conf directory
 
 ##BPS database connection information as defined in datasources.properties file
 database.url=jdbc:mysql://localhost/bps
@@ -11,12 +11,12 @@ database.password=root
 database.driver=com.mysql.jdbc.Driver
 
 user.timezone=GMT
-clientTrustStorePath=/home/wso2bps-3.1.0/repository/resources/security/wso2carbon.jks
+clientTrustStorePath=/home/wso2ei-6.0.0/wso2/business-process/repository/resources/security/wso2carbon.jks
 clientTrustStorePassword=wso2carbon
 clientTrustStoreType=JKS
 
 #tenat context eg: tenant mode tenant.context=https://localhost:9443/t/abc.com
-tenant.context=https://localhost:9443
+tenant.context=https://localhost:9445
 
 #BPS super admin's login credentials
 wso2.bps.username=admin
@@ -28,8 +28,8 @@ process.filterStates=COMPLETED,TERMINATED,FAILED
 
 How to run
 ===========
-Start the BPS server (Server should be in running state) 
-Execute processcleanuptool.sh(bat) script which is located at BPS_HOME/bin directory
+Start the Business-Process server (Server should be in running state)
+Execute processcleanuptool.sh(bat) script which is located at EI_HOME/wso2/business-process/bin directory
 
 NOTE: Currently it supports oracle, mysql and sqlserver db types
 You need to restart the server after running the cleanup task
@@ -43,4 +43,4 @@ Step 01:Manually copy Human task packages to tenant repositories in the server.
 Step 02:Run appropriate database scripts 
 		Migrate from 3.0.0 to 3.2.0 - 300_320 directory
 		Migrate from 3.1.0 to 3.2.0 - 310_320 directory
-Step 03:Execute taskmigrationtool.sh(bat) script which is located at BPS_HOME/bin directory
+Step 03:Execute taskmigrationtool.sh(bat) script which is located at EI_HOME/wso2/business-process/bin directory
