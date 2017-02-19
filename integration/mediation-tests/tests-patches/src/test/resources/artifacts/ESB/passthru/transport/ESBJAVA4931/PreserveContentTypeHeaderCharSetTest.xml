@@ -30,7 +30,7 @@
                     <endpoint>
                         <wsdl service="SimpleStockQuoteService"
                               port="SimpleStockQuoteServiceHttpSoap11Endpoint"
-                              uri="file:repository/samples/resources/proxy/sample_proxy_3.wsdl"/>
+                              uri="file:samples/service-bus/resources/proxy/sample_proxy_3.wsdl"/>
                     </endpoint>
                 </send>
             </inSequence>
