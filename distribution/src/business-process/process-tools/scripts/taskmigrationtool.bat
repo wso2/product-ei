@@ -83,6 +83,6 @@ set JAVA_ENDORSED=".\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\l
 
 set _RUNJAVA="%JAVA_HOME%\bin\java"
 
-%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH_CUSTOM%" -Dcarbon.home="%CARBON_HOME%" -Duser.timezone="GMT" org.wso2.bps.samples.migration.MigrationExecutor %*
+%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH_CUSTOM%" -Dcarbon.home="%CARBON_HOME%" -Duser.timezone="GMT" MigrationExecutor %*
 endlocal
 :end

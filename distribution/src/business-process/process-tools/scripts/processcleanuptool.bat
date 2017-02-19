@@ -83,7 +83,7 @@ set JAVA_ENDORSED=".\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\l
 
 set _RUNJAVA="%JAVA_HOME%\bin\java"
 
-%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH_CUSTOM%" org.wso2.bps.samples.processcleanup.CleanupExecutor %*
+%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH_CUSTOM%" CleanupExecutor %*
 cd bin
 endlocal
 :end

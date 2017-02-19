@@ -71,7 +71,7 @@ print("JS script Execution END -------------------------------------------------
     <sequenceFlow id="flow6" sourceRef="startevent1" targetRef="scripttask3"/>
     <sequenceFlow id="flow7" sourceRef="scripttask3" targetRef="exclusivegateway1"/>
     <endEvent id="endevent2" name="End"/>
-    <serviceTask activiti:class="org.wso2.bps.samples.bpmn.datatypes.xml.XMLDemo" activiti:exclusive="true" id="servicetask1" name="Service Task"/>
+    <serviceTask activiti:class="org.wso2.ei.businessprocess.samples.bpmn.datatypes.xml.XMLDemo" activiti:exclusive="true" id="servicetask1" name="Service Task"/>
     <sequenceFlow id="flow9" sourceRef="servicetask1" targetRef="endevent2"/>
     <scriptTask activiti:autoStoreVariables="false" activiti:exclusive="true" id="scripttask4" name="Script Task 3 : XML element Append" scriptFormat="javascript">
       <script><![CDATA[print("JS script 3 Execution START ------------------------------------------------------------------------------------------------\n");

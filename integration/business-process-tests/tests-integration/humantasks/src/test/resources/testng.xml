@@ -31,24 +31,24 @@
     <!-- HumanTask TestCases -->
     <test name="HumanTask Basic Test Cases" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskCreationTestCase" />
+            <class name="org.wso2.ei.businessprocess.integration.tests.humantasks.HumanTaskCreationTestCase" />
 
         </classes>
     </test>
 
     <test name="HumanTask People Assignment Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskPeopleAssignment"/>
+            <class name="org.wso2.ei.businessprocess.integration.tests.humantasks.HumanTaskPeopleAssignment"/>
         </classes>
     </test>
     <test name="HumanTask XPATH Tests" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskXpathExtensionsTest" />
+            <class name="org.wso2.ei.businessprocess.integration.tests.humantasks.HumanTaskXpathExtensionsTest" />
         </classes>
     </test>
     <test name="HumanTask Notifications Tests" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskNotificationsTestCase" />
+            <class name="org.wso2.ei.businessprocess.integration.tests.humantasks.HumanTaskNotificationsTestCase" />
         </classes>
     </test>
 </suite>

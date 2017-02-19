@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2005-2011, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+        <target>
+            <inSequence>
+                <conditionalRouter continueAfter="false">
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                            <match xmlns="" type="header" source="foo" regex="bar.*"/>
+                        </condition>
+                        <target sequence="cnd1_seq"/>
+                    </conditionalRoute>
+
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                            <and xmlns="">
+                                <match type="header" source="my_custom_header1" regex="foo.*"/>
+                                <match type="url" regex="/services/StockQuoteProxy.*"/>
+                            </and>
+                        </condition>
+                        <target sequence="cnd2_seq"/>
+                    </conditionalRoute>
+
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                            <and xmlns="">
+                                <match type="header" source="my_custom_header2" regex="bar.*"/>
+                                <equal type="param" source="qparam1" value="qpv_foo"/>
+                                <or>
+                                    <match type="url" regex="/services/StockQuoteProxy.*"/>
+                                    <match type="header" source="my_custom_header3" regex="foo.*"/>
+                                </or>
+                                <not>
+                                    <equal type="param" source="qparam2" value="qpv_bar"/>
+                                </not>
+                            </and>
+                        </condition>
+                        <target sequence="cnd3_seq"/>
+                    </conditionalRoute>
+                </conditionalRouter>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <sequence name="cnd1_seq">
+        <log level="custom">
+            <property name="MSG_FLOW" value="Condition (I) Satisfied"/>
+        </log>
+        <sequence key="send_seq"/>
+    </sequence>
+    <sequence name="cnd2_seq">
+        <log level="custom">
+            <property name="MSG_FLOW" value="Condition (II) Satisfied"/>
+        </log>
+        <sequence key="send_seq"/>
+    </sequence>
+    <sequence name="cnd3_seq">
+        <log level="custom">
+            <property name="MSG_FLOW" value="Condition (III) Satisfied"/>
+        </log>
+        <sequence key="send_seq"/>
+    </sequence>
+
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="send_seq">
+        <log level="custom">
+            <property name="DEBUG" value="Condition Satisfied"/>
+        </log>
+        <send>
+            <endpoint name="simple">
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence name="main">
+        <log/>
+        <drop/>
+    </sequence>
+</definitions>

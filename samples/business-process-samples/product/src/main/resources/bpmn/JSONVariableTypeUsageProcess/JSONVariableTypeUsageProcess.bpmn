@@ -59,7 +59,7 @@ print("END of Script Execution :Executing ReadJSONVariables script task\n");</sc
     <endEvent id="endevent2" name="End"></endEvent>
     <sequenceFlow id="flow6" sourceRef="scripttask2" targetRef="endevent2"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="flow9"></exclusiveGateway>
-    <serviceTask id="servicetask1" name="Service Task" activiti:class="org.wso2.bps.samples.bpmn.datatypes.json.processJsonVariable"></serviceTask>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="org.wso2.ei.businessprocess.samples.bpmn.datatypes.json.processJsonVariable"></serviceTask>
     <sequenceFlow id="flow8" sourceRef="exclusivegateway1" targetRef="servicetask1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${jsonJSVar.jsonPath("$.execInfo.execJava")== true}]]></conditionExpression>
     </sequenceFlow>

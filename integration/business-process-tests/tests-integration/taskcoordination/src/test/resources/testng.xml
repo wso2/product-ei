@@ -17,7 +17,7 @@
     <!-- HumanTask TestCases -->
     <test name="HumanTask Basic Test Cases" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.coordination.HumanTaskCoordinationTest" />
+            <class name="org.wso2.ei.businessprocess.integration.tests.coordination.HumanTaskCoordinationTest" />
         </classes>
     </test>
 
