@@ -71,7 +71,7 @@ setlocal EnableDelayedExpansion
 rem loop through the libs and add them to the class path
 cd "%CARBON_HOME%"
 
-FOR %%C in ("%CARBON_HOME%\..\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\lib\%%~nC%%~xC"
+FOR %%C in ("%CARBON_HOME%\..\..\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\lib\%%~nC%%~xC"
 FOR %%E in ("%CARBON_HOME%\..\components\plugins\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\components\plugins\%%~nE%%~xE"
 
 rem ----- Execute The Requested Command ---------------------------------------

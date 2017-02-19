@@ -81,7 +81,7 @@ fi
 
 # update classpath
 CARBON_CLASSPATH=""
-for f in "$CARBON_HOME"/../lib/*.jar
+for f in "$CARBON_HOME"/../../lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
@@ -103,7 +103,7 @@ fi
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
--Djava.endorsed.dirs="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Djava.endorsed.dirs="$CARBON_HOME/.../../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
 -Duser.timezone="GMT" \
 -Dcarbon.home="$CARBON_HOME" \
 org.wso2.bps.samples.migration.MigrationExecutor $*

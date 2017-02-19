@@ -564,7 +564,7 @@
 
         <fileSet>
             <directory>target/samples/process-tools-jar</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/lib</outputDirectory>
             <includes>
                 <include>**/*.jar</include>
             </includes>
@@ -572,8 +572,16 @@
         </fileSet>
 
         <fileSet>
+            <directory>./src/resources</directory>
+            <outputDirectory>wso2ei-${pom.version}/lib</outputDirectory>
+            <includes>
+                <include>esapi-2.0.1.jar</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
             <directory>target/samples/sample-utils-jar</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/lib</outputDirectory>
             <includes>
                 <include>**/*.jar</include>
             </includes>
