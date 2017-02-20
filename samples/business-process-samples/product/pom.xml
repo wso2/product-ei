@@ -32,14 +32,13 @@
 
     <modules>
         <module>sample-utils</module>
-        <module>sample-client</module>
-        <module>bpel-eventlistener</module>
-        <module>humantask-eventlistener</module>
-        <module>bpel-logger-extension</module>
+        <!--<module>sample-client</module>-->
+        <!--<module>bpel-eventlistener</module>-->
+        <!--<module>humantask-eventlistener</module>-->
+        <!--<module>bpel-logger-extension</module>-->
         <module>process-tools</module>
-        <module>bpel-property-reader</module>
-        <module>humantask-ui-webapp</module>
+        <!--<module>bpel-property-reader</module>-->
+        <!--<module>humantask-ui-webapp</module>-->
         <module>bpmn-sample-jars</module>
     </modules>
-
 </project>

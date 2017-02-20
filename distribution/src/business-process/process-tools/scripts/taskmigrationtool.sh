@@ -85,7 +85,7 @@ for f in "$CARBON_HOME"/../../lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
-for f in "$CARBON_HOME"/../components/plugins/*.jar
+for f in "$CARBON_HOME"/../lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
@@ -99,11 +99,14 @@ if $cygwin; then
   JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
 fi
 
+CARBON_CLASSPATH=$CARBON_CLASSPATH:$CARBON_HOME/../lib/runtimes/cxf/commons-logging-1.1.1.jar
+
 
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
 -Djava.endorsed.dirs="$CARBON_HOME/../../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Dcarbon.components.dir.path="$CARBON_HOME/../../wso2/components/plugins/" \
 -Duser.timezone="GMT" \
 -Dcarbon.home="$CARBON_HOME" \
  org.wso2.ei.businessprocess.utils.migration.MigrationExecutor $*
