@@ -1230,7 +1230,7 @@
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.5.7</carbon.commons.version>
+        <carbon.commons.version>4.5.8</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.7.3</carbon.deployment.version>
