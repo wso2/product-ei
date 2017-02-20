@@ -91,7 +91,12 @@
             <class name="org.wso2.ei.dataservice.integration.test.services.BatchRequestTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.CarbonDataSourceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.DataServiceSqlDriverTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.services.DistributedTransactionTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.services.DistributedTransactionTestCase">
+                <methods>
+                    <!--This is added due to BoxCarring is not supported in EI, We will recommend Request Box option for BoxCarring-->
+                    <exclude name="distributedTransactionFailTest"/>
+                </methods>
+                    </class>
             <class name="org.wso2.ei.dataservice.integration.test.services.FileServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.InOnlyRequestsServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.InputParametersValidationTestCase"/>
@@ -182,7 +187,7 @@
     <test name="DSS-jira-issues-tests" parallel="false" verbose="2">
         <classes>
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS954UseExcelFromRegistryTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15928JMXDisablingTest"/>
+            <!--<class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15928JMXDisablingTest"/>-->
         </classes>
     </test>
 
@@ -199,10 +204,14 @@
    </test>-->
 
    <test name="DSS-jira-issues-boxcarring-parallel-access" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1083BoxcarringParallelInsertTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS937BoxcarringTestCase"/>
-        </classes>
+       <classes>
+           <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1083BoxcarringParallelInsertTestCase">
+               <methods>
+                   <exclude name="boxcarringParallelInsertsTest"/>
+               </methods>
+           </class>
+           <!--<class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS937BoxcarringTestCase"/>-->
+       </classes>
     </test>
 
     <test name="DSS-jira-issues-dataservice-duplicate" parallel="false" verbose="2">
@@ -228,7 +237,7 @@
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.ResourcesServiceTestWithSameContextNameTestCase"/>
         </classes>
     </test>
-    
+
     <!-- todo test and uncomment below test once DSS is upgraded to kernel 4.4.x or 4.5.0 -->
     <test name="DSS-jira-issues-XML-Entity-Attack-Test" parallel="false" verbose="2">
         <classes>

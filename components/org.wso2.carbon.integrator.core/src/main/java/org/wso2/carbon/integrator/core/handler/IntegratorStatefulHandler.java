@@ -53,6 +53,13 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
             boolean isDataService = Utils.isDataService(msgctx);
             boolean isStatefulService = Utils.isStatefulService(axisService);
             if ((isDataService || isStatefulService) && msgctx.getProperty("transport.http.servletRequest") == null) {
+                AxisOperation operation = msgctx.getAxisOperation();
+                if (operation != null) {
+                    String opernationName = operation.getName().toString();
+                    if (opernationName.startsWith("_post") || opernationName.startsWith("_get") || opernationName.startsWith("_put") || opernationName.startsWith("_delete")) {
+                        msgctx.setProperty("isDSSRest", true);
+                    }
+                }
                 setSynapseContext(isDataService, msgctx, axisService);
             }
         }

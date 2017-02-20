@@ -73,6 +73,16 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                             isSpecialDSSRequest = true;
                         }
                     }
+                    boolean dssRestCall = false;
+                    if (axis2MessageContext.getProperty("isDSSRest") != null) {
+                        dssRestCall = true;
+                    }
+                    //dss tenant flow issue, it comes in local port
+                    String to = messageContext.getTo().getAddress();
+                    boolean isLocalCall = false;
+                    if (to != null && to.startsWith("local://")) {
+                        isLocalCall = true;
+                    }
                     if (validateWhiteListsWithUri(uri) || (axis2MessageContext.getProperty("isDataService") != null &&
                             isSpecialDSSRequest)) {
                         isPreserveHeadersContained = true;
@@ -81,10 +91,19 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                         //In this if block we check stateful axis2 Services
                     } else if (axis2MessageContext.getProperty("raplacedAxisService") != null ||
                             axis2MessageContext.getProperty("isDataService") != null) {
-                        isPreserveHeadersContained = true;
-                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) +
-                                messageContext.getTo().getAddress();
-                        return dispatchMessage(endpoint, uri, messageContext);
+                        if (!isLocalCall) {
+                            isPreserveHeadersContained = true;
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
+                            return dispatchMessage(endpoint, uri, messageContext);
+                        } else if (!dssRestCall) {
+                            isPreserveHeadersContained = true;
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri;
+                            return dispatchMessage(endpoint, uri, messageContext);
+                        } else {
+                            isPreserveHeadersContained = true;
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                            return dispatchMessage(endpoint, uri, messageContext);
+                        }
                     } else {
                         //In this if block we are check webapps for tenants and super tenants
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
