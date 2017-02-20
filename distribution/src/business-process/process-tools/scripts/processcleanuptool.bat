@@ -70,6 +70,8 @@ rem set the classes
 setlocal EnableDelayedExpansion
 rem loop through the libs and add them to the class path
 cd "%CARBON_HOME%"
+echo %CARBON_HOME%
+
 
 FOR %%C in ("%CARBON_HOME%\..\..\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\..\lib\%%~nC%%~xC"
 FOR %%E in ("%CARBON_HOME%\..\components\plugins\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\components\plugins\%%~nE%%~xE"
@@ -77,13 +79,13 @@ FOR %%E in ("%CARBON_HOME%\..\components\plugins\*.jar") DO set CARBON_CLASSPATH
 rem ----- Execute The Requested Command ---------------------------------------
 set _RUNJAVA="%JAVA_HOME%\bin\java"
 
-set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%
-set CARBON_CLASSPATH_CUSTOM=%CARBON_HOME%\..\components\plugins\*;%CARBON_HOME%\..\..\lib\*
+rem set CARBON_CLASSPATH=.\..\..\lib;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH_CUSTOM=%CARBON_HOME%\..\components\plugins\*;%CARBON_HOME%\..\..\lib\*;%CARBON_HOME%\..\lib\*
 set JAVA_ENDORSED=".\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
 set _RUNJAVA="%JAVA_HOME%\bin\java"
 
-%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH_CUSTOM%" CleanupExecutor %*
+%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH_CUSTOM%" -Dcarbon.home="%CARBON_HOME%" org.wso2.ei.businessprocess.utils.processcleanup.CleanupExecutor %*
 cd bin
 endlocal
 :end
