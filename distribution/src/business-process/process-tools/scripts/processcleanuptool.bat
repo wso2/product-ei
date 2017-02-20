@@ -70,7 +70,6 @@ rem set the classes
 setlocal EnableDelayedExpansion
 rem loop through the libs and add them to the class path
 cd "%CARBON_HOME%"
-echo %CARBON_HOME%
 
 
 FOR %%C in ("%CARBON_HOME%\..\..\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\..\lib\%%~nC%%~xC"
