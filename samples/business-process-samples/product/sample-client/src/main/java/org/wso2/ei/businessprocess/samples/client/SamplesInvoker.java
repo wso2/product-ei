@@ -1,4 +1,4 @@
-package org.wso2.bps.samples.client;
+package org.wso2.ei.businessprocess.samples.client;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;

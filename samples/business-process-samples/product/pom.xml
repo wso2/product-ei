@@ -32,7 +32,7 @@
 
     <modules>
         <module>sample-utils</module>
-        <!--<module>sample-client</module>-->
+        <module>sample-client</module>
         <!--<module>bpel-eventlistener</module>-->
         <!--<module>humantask-eventlistener</module>-->
         <!--<module>bpel-logger-extension</module>-->
