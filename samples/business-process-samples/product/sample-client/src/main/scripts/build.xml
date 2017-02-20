@@ -51,7 +51,7 @@
     </target>
 
     <target name="sendReq" depends="init">
-        <java classname="org.wso2.bps.samples.client.SamplesInvoker"
+        <java classname="org.wso2.ei.businessprocess.samples.client.SamplesInvoker"
               classpathref="javac.classpath" fork="true">
             <sysproperty key="sample" value="${sample}"/>
             <sysproperty key="createUsers" value="${createUsers}"/>
