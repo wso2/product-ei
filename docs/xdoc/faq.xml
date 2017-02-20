@@ -420,7 +420,7 @@
                     every message.
                 </p>
             </li>
-                                                                
+
             <li>
                 <h3 id="core-EI-clustering">
                         Does WSO2 EI support clustering?
@@ -455,7 +455,7 @@
                     You can deploy any third party jar into the repository/components/lib directory. You also need to
                     restart the server for the newly deployed jars to be picked up by the server runtime. WSO2 EI will
                     convert any jar files copied into the above location into OSGi bundles. These OSGi bundles are
-                    placed in the repository/components/dropins directory.                                                
+                    placed in the repository/components/dropins directory.
                 </p>
             </li>
 
@@ -510,7 +510,7 @@
 
             <li>
                 <h3 id="core-multiple-languages">
-                    Can I add support for other language for the management console ? 
+                    Can I add support for other language for the management console ?
                 </h3>
                 <p>
                     Yes, WSO2 EI comes with a UI framework which supports i18n (internationalization) which lets you
@@ -695,7 +695,7 @@
 
             <li>
                 <h3 id="mediation-change-ep-dynamic">
-                    How can I change the endpoint dynamically? 
+                    How can I change the endpoint dynamically?
                 </h3>
                 <p>
                     If you want to change the endpoint dynamically per each message, you can use a header mediator to
@@ -733,7 +733,7 @@
                 <p>
                     You have two options. One option is to use dbreport and dblookup mediators to
                     persist the message into a database and lookup it later from the database. The other option is
-                    to use JMS transport in which you can use a JMS broker to persist the message.  
+                    to use JMS transport in which you can use a JMS broker to persist the message.
                 </p>
             </li>
 
@@ -953,8 +953,8 @@
                     What are the minimum artifacts required to deploy WSO2?
                 </h3>
                 <p>
-                    When deploying you can remove, $EI_HOME/samples and $EI_HOME/repository/samples from the
-                    standard distribution. 
+                    When deploying you can remove, $EI_HOME/samples and $EI_HOME/samples/service-bus from the
+                    standard distribution.
                 </p>
             </li>
 
@@ -1048,7 +1048,7 @@
                 </p>
             </li>
 
-            
+
         </ol>
 
 

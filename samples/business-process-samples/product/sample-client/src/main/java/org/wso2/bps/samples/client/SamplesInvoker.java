@@ -118,7 +118,7 @@ public class SamplesInvoker {
      */
 
     private static String getPropertyFile(String sampleName, String sampleDir) {
-        // Check whether the specified sample exists in the repository/samples/bpel directory
+        // Check whether the specified sample exists in the samples/service-bus/bpel directory
         String samplePath = sampleDir + File.separator + "resources" + File.separator + "bpel" +
                             File.separator + sampleName + ".properties";
         File sample = new File(samplePath);

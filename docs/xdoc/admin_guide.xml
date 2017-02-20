@@ -276,7 +276,7 @@ These launcher scripts take a mandatory argument -sn. Use this argument to speci
 eg: ./wso2EI-sample.sh -sn 250 (This will launch the EI using the Sample 250 configuration)
 </p>
 <p>
-The sample configuration files can be found in the EI_HOME/repository/samples directory.
+The sample configuration files can be found in the EI_HOME/samples/service-bus directory.
 </p>
 <p>
 When launching the EI using the wso2EI-sample.sh/wso2EI-sample.bat scripts a new registry context root
@@ -482,7 +482,7 @@ settings for the LDAP based user store looks as follows.
 </pre>
 <p>
 For more information on using external user stores please refer <a href="user.core/admin_guide.html">User Core Admin
-Guide</a>.    
+Guide</a>.
 </p>
 
 <h2 id="SettingLogging">Setting Up Logging</h2>
@@ -648,7 +648,7 @@ EI_HOME/webapps/ROOT/WEB-INF/classes directory and comment out the following lin
 <p>
 You also need to restart the EI for the change to take effect. Commenting out the above entry will disengage
 the dependency tracker and hence the EI will stop computing and keeping track of dependencies among
-different configuration items in the mediation configuration.    
+different configuration items in the mediation configuration.
 </p>
 
 <h3 id="HotDeployment">Hot Deployment of Mediation Artifacts</h3>
@@ -780,7 +780,7 @@ that might lead to database corruption or data loss.
 The embedded registry instance is configured by the registry.xml file which can be found in the EI_HOME/repository/conf directory.
 In this configuration you could point the embedded registry to a database other than the default embedded H2 database.
 To change the database used by the registry or change the location of the database files edit the following section of the
-registry.xml.    
+registry.xml.
 </p>
 <pre>
 &lt;dbconfig name="wso2registry"&gt;
@@ -792,13 +792,13 @@ registry.xml.
 	&lt;maxWait&gt;60000&lt;/maxWait&gt;
 	&lt;minIdle&gt;5&lt;/minIdle&gt;
 &lt;/dbconfig&gt;
-</pre>    
+</pre>
 <p>
 WSO2 Governance Registry can be run in two operational modes, namely the ReadWrite mode and the ReadOnly mode. By default
 it operates in the ReadWrite mode. This mode is set by the following element in the registry.xml file.
 </p>
 <pre>
-&lt;readOnly&gt;false&lt;/readOnly&gt;    
+&lt;readOnly&gt;false&lt;/readOnly&gt;
 </pre>
 <p>
 When the registry ReadOnly mode is set to true the EI will not be able to store resources or write values
@@ -820,11 +820,11 @@ configuration defines the following parameters.
 	&lt;versioningComments&gt;true&lt;/versioningComments&gt;
 	&lt;versioningTags&gt;true&lt;/versioningTags&gt;
 	&lt;versioningRatings&gt;true&lt;/versioningRatings&gt;
-&lt;/staticConfiguration&gt;    
+&lt;/staticConfiguration&gt;
 </pre>
 <p>
 Please refer WSO2 G-Reg documentation for further information on setting up media type handlers and other
-global parameters.    
+global parameters.
 </p>
 
 <h3 id="RemoteReg">Using the Remote Registry</h3>

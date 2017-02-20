@@ -24,7 +24,7 @@
              xsi:schemaLocation="http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd">
 
     <localEntry key="local-enrty-ep-key"
-                src="file:repository/samples/resources/endpoint/dynamic_endpt_1.xml"/>
+                src="file:samples/service-bus/resources/endpoint/dynamic_endpt_1.xml"/>
 
     <localEntry key="local-enrty-sequence-key">
         <sequence name="dynamic_sequence">

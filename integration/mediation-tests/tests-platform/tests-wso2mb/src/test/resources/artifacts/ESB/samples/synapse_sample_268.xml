@@ -39,7 +39,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy xmlns="http://ws.apache.org/ns/synapse" name="SecondProxy"
            transports="https http" startOnLoad="true" trace="disable">
@@ -60,7 +60,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteProxy"
            startOnLoad="true">
@@ -77,6 +77,6 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
 </definitions>

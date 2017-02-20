@@ -51,13 +51,13 @@
     <proxy name="FIXProxy" transports="fix">
         <target inSequence="CBR_SEQ"/>
         <parameter name="transport.fix.AcceptorConfigURL">
-            file:repository/samples/resources/fix/fix-synapse.cfg
+            file:samples/service-bus/resources/fix/fix-synapse.cfg
         </parameter>
         <parameter name="transport.fix.AcceptorMessageStore">
             file
         </parameter>
         <parameter name="transport.fix.InitiatorConfigURL">
-            file:repository/samples/resources/fix/synapse-sender.cfg
+            file:samples/service-bus/resources/fix/synapse-sender.cfg
         </parameter>
         <parameter name="transport.fix.InitiatorMessageStore">
             file

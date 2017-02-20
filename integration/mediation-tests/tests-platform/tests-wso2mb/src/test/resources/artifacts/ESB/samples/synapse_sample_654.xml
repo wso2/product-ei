@@ -18,9 +18,9 @@
  -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <localEntry key="transform-xslt-key" src="file:repository/samples/resources/smooks/transform.xslt"/>
+    <localEntry key="transform-xslt-key" src="file:samples/service-bus/resources/smooks/transform.xslt"/>
 
-    <localEntry key="smooks-key" src="file:repository/samples/resources/smooks/smooks-config.xml"/>
+    <localEntry key="smooks-key" src="file:samples/service-bus/resources/smooks/smooks-config.xml"/>
 
     <proxy name="StockQuoteProxy" transports="vfs">
         <parameter name="transport.vfs.ContentType">text/plain</parameter>
@@ -63,7 +63,7 @@
             </inSequence>
             <outSequence/>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/smooks/PlaceStockOrder.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/smooks/PlaceStockOrder.wsdl"/>
     </proxy>
 
 </definitions>

@@ -513,7 +513,7 @@ resources, and using XSLT transformations</a> </h2>
     &lt;!-- the SimpleURLRegistry allows access to a URL based registry (e.g. file:/// or http://) --&gt;
     &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
-        &lt;parameter name="root"&gt;file:./repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:./samples/service-bus/resources/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;
@@ -562,7 +562,7 @@ resource is requested. </p>
 
 <p>Hence the second XSLT resource key 'transform/transform_back.xslt'
 concatenated with the 'root' of the SimpleURLRegistry
-'file:repository/samples/resources/' forms the complete URL of the
+'file:samples/service-bus/resources/' forms the complete URL of the
 resource as
 'file:samples/service-bus/resources/transform/transform_back.xslt' and
 caches its value for a period of 15000 ms. </p>
@@ -614,7 +614,7 @@ instance. </p>
 Registry</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
     &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
-        &lt;parameter name="root"&gt;file:./repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:./samples/service-bus/resources/&lt;/parameter&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;
 
@@ -650,7 +650,7 @@ registry and executes its rules as follows: </p>
 <p>Now if you execute the client immediately (i.e. within 15 seconds of the
 last execution) you will notice that the sequence was not reloaded. If you
 edit the sequence definition in
-repository/samples/resources/sequence/dynamic_seq_1.xml (i.e. edit the
+samples/service-bus/resources/sequence/dynamic_seq_1.xml (i.e. edit the
 log message to read as "*** Test Message 2 ***") and execute the client
 again, you will notice that the new message is not yet visible (i.e. if you
 execute this within 15 seconds of loading the resource for the first time)
@@ -669,7 +669,7 @@ Registry</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
     &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
-        &lt;parameter name="root"&gt;file:repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:samples/service-bus/resources/&lt;/parameter&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;
 
@@ -702,7 +702,7 @@ Repeat the above example immediately again, and notice that the endpoint is
 cached and reused by EI - similarly to example # 8. </p>
 <pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280/</pre>
 
-<p>Now edit the repository/samples/resources/endpoint/dynamic_endpt_1.xml
+<p>Now edit the samples/service-bus/resources/endpoint/dynamic_endpt_1.xml
 definition and update the address to
 "http://localhost:9001/services/SimpleStockQuoteService". After the cached
 expires, the Registry loads the new definition of the endpoint, and then the
@@ -713,7 +713,7 @@ port 9001. </p>
 sharing a configuration between multiple instances</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
     &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
-        &lt;parameter name="root"&gt;file:./repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:./samples/service-bus/resources/&lt;/parameter&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;
 &lt;/definitions&gt; </pre>
@@ -940,7 +940,7 @@ the specified file at runtime and be cached in the system</p>
     &lt;!-- the SimpleURLRegistry allows access to a URL based registry (e.g. file:/// or http://) --&gt;
     &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
-        &lt;parameter name="root"&gt;file:repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:samples/service-bus/resources/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;

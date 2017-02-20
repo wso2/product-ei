@@ -62,7 +62,7 @@
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_2.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_2.wsdl"/>
     </proxy>
 
     <sequence name="errorHandler">
