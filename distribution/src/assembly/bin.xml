@@ -2088,16 +2088,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
-        <file>
-            <source>src/business-process/conf/wso2bps-samples.bat</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/bin/</outputDirectory>
-            <fileMode>755</fileMode>
-        </file>
-        <file>
-            <source>src/business-process/conf/wso2bps-samples.sh</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/bin/</outputDirectory>
-            <fileMode>755</fileMode>
-        </file>
+
 
         <!--BPS files:End -->
 
