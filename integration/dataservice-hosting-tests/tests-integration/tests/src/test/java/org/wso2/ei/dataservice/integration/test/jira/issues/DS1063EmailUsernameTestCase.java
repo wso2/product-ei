@@ -84,7 +84,7 @@ public class DS1063EmailUsernameTestCase extends DSSIntegrationTest {
         File sourceFile = new File(getResourceLocation()
                 + File.separator + "serverConfigs" + File.separator
                 + "axis2.xml");
-        File destinationFile = new File(carbonHome + File.separator + "repository" + File.separator + "conf" + File.separator + "axis2"+ File.separator + "axis2.xml");
+        File destinationFile = new File(carbonHome + File.separator + "conf" + File.separator + "axis2"+ File.separator + "axis2.xml");
 
         serverConfigurationManager.applyConfiguration(sourceFile, destinationFile);//this will restart the server as well
         LoginLogoutClient loginLogoutClient = new LoginLogoutClient(dssContext);

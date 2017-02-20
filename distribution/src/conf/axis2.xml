@@ -77,7 +77,7 @@
     <parameter name="DrillDownToRootCauseForFaultReason" locked="false">false</parameter>
 
     <!-- Set the flag to true if you want to enable transport level session management -->
-    <parameter name="manageTransportSession" locked="false">true</parameter>
+    <parameter name="manageTransportSession">true</parameter>
 
     <!-- This will give out the timout of the configuration contexts, in milliseconds -->
     <parameter name="ConfigContextTimeoutInterval" locked="false">30000</parameter>
@@ -118,7 +118,7 @@
     <!-- ================================================= -->
 
     <!-- Deployer for the dataservice. -->
-    <deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>
+    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>-->
 
     <!-- Axis1 deployer for Axis2 -->
     <!--<deployer extension="wsdd" class="org.wso2.carbon.axis1services.Axis1Deployer" directory="axis1services"/>-->

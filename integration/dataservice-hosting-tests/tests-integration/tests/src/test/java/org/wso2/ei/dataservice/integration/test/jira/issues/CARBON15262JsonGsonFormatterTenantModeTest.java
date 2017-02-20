@@ -99,12 +99,12 @@ public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTe
 		String response = getHttpResponse(serviceEndPoint + "deleteOffice/" +Integer.toString(2), "DELETE", null);
 		Assert.assertTrue(response.contains("SUCCESSFUL"), "DELETE method failed");
 	}
-/*
+
 	@Test(groups = "wso2.dss", description = "Invoking Request with GET method")
 	public void performJsonGetMethodTest() {
 		String response = getHttpResponse(serviceEndPoint + "getCountries", "GET", null);
 		Assert.assertTrue(response.contains("country"), "GET method failed");
-	}*/
+	}
 
 	private String getHttpResponse(String endpoint, String requestMethod, String payload) {
 		StringBuilder jsonString = new StringBuilder();

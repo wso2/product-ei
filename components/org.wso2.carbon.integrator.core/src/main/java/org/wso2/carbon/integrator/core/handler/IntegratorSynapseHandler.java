@@ -61,24 +61,53 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                 String host;
                 Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                                                                       .getProperty("TRANSPORT_HEADERS");
+                        .getProperty("TRANSPORT_HEADERS");
                 if (headers instanceof TreeMap) {
-                    host =  Utils.getHostname((String) ((TreeMap) headers).get("Host"));
+                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
                     //In this if block we whitelist carbon related requests (Management Console)
-                    if (validateWhiteListsWithUri(uri) || axis2MessageContext.getProperty("isDataService") != null) {
+                    // There was an issue with dataservice content type requests therefore add this below fix;
+                    boolean isSpecialDSSRequest = false;
+                    if (axis2MessageContext.getProperty("isDataService") != null) {
+                        String contentType = (String) ((TreeMap) headers).get("Content-Type");
+                        if (contentType == null) {
+                            isSpecialDSSRequest = true;
+                        }
+                    }
+                    boolean dssRestCall = false;
+                    if (axis2MessageContext.getProperty("isDSSRest") != null) {
+                        dssRestCall = true;
+                    }
+                    //dss tenant flow issue, it comes in local port
+                    String to = messageContext.getTo().getAddress();
+                    boolean isLocalCall = false;
+                    if (to != null && to.startsWith("local://")) {
+                        isLocalCall = true;
+                    }
+                    if (validateWhiteListsWithUri(uri) || (axis2MessageContext.getProperty("isDataService") != null &&
+                            isSpecialDSSRequest)) {
                         isPreserveHeadersContained = true;
                         String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
                         return dispatchMessage(endpoint, uri, messageContext);
                         //In this if block we check stateful axis2 Services
-                    } else if (axis2MessageContext.getProperty("raplacedAxisService") != null) {
-                        isPreserveHeadersContained = true;
-                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) +
-                                          messageContext.getTo().getAddress();
-                        return dispatchMessage(endpoint, uri, messageContext);
+                    } else if (axis2MessageContext.getProperty("raplacedAxisService") != null ||
+                            axis2MessageContext.getProperty("isDataService") != null) {
+                        if (!isLocalCall) {
+                            isPreserveHeadersContained = true;
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
+                            return dispatchMessage(endpoint, uri, messageContext);
+                        } else if (!dssRestCall) {
+                            isPreserveHeadersContained = true;
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri;
+                            return dispatchMessage(endpoint, uri, messageContext);
+                        } else {
+                            isPreserveHeadersContained = true;
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                            return dispatchMessage(endpoint, uri, messageContext);
+                        }
                     } else {
                         //In this if block we are check webapps for tenants and super tenants
                         Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                                                                                    .getProperty("tenantDomain");
+                                .getProperty("tenantDomain");
                         if (tenantDomain != null) {
                             WebApplication webApplication = null;
                             try {
@@ -111,16 +140,16 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         } finally {
             if (isPreserveHeadersContained) {
                 if (passThroughSenderManager != null &&
-                    passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
+                        passThroughSenderManager.getSharedPassThroughHttpSender() != null) {
                     try {
                         passThroughSenderManager.getSharedPassThroughHttpSender()
-                                                .removePreserveHttpHeader(HTTP.USER_AGENT);
+                                .removePreserveHttpHeader(HTTP.USER_AGENT);
                         // This catch is added when there is no preserve headers in the PassthoughHttpSender.
                     } catch (ArrayIndexOutOfBoundsException e) {
                         if (log.isDebugEnabled()) {
                             log.debug(
                                     "ArrayIndexOutOfBoundsException exception occurred, when removing preserve " +
-                                    "headers.");
+                                            "headers.");
                         }
                     }
                 }
@@ -164,7 +193,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         if (messageContext.getProperty("REST_URL_POSTFIX") != null) {
             if (log.isDebugEnabled()) {
                 log.debug("message's REST_URL_POSTFIX is changing from " +
-                          messageContext.getProperty("REST_URL_POSTFIX") + " to " + to);
+                        messageContext.getProperty("REST_URL_POSTFIX") + " to " + to);
             }
             messageContext.setProperty("REST_URL_POSTFIX", to);
         }
