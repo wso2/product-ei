@@ -69,7 +69,7 @@
         Start EI with the sample configuration 650 (i.e. wso2EI-samples.sh -sn 650).
       </p>
       <p>
-         Go to the repository/samples directory and locate the subdirectory named synapse_sample_650.xml
+         Go to the samples/service-bus directory and locate the subdirectory named synapse_sample_650.xml
          within it. When EI is started with the sample configuration 650, EI will load the configuration from
          this directory. You will find a number of subdirectories and a set of XML files in each of those directories.
          Synapse will parse all the XML files in this file hierarchy and construct the full Synapse configuration at startup.
@@ -150,7 +150,7 @@
          super();
          log.info("Simple logging observer initialized...Capturing Synapse events...");
      }
- }</pre>      
+ }</pre>
     </div>
 
  <h2>
@@ -182,7 +182,7 @@
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri=&quot;file:repository/samples/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
+        &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
     &lt;/proxy&gt;
     &lt;sequence name=&quot;priority_sequence&quot;&gt;
         &lt;log level=&quot;full&quot;/&gt;
@@ -213,7 +213,7 @@
          </p>
            <p>
                Here are two sample XML files that can be used to invoke the service using a tool like JMeter, or Ab. For SOAP UI,
-               user can use the WSDL repository/samples/resources/proxy/sample_proxy_1.wsdl to create the request. The only
+               user can use the WSDL samples/service-bus/resources/proxy/sample_proxy_1.wsdl to create the request. The only
                difference between the two demonstrated requests here is the symbol. One has the symbol as IBM and other has MSFT. For one type of
                request set the priority header to 1 and for the next set the priority header to 10. Then load EI with high
                volume of traffic from both types of requests using the load testing tool. In the back end server it prints the
@@ -296,7 +296,7 @@
          </p>
          <p>
              Open axis2.xml in repository/conf directory and uncomment the following parameter to the configuration.
-             <strong>priorityConfigFile</strong>. Set the value to repository/samples/resources/priority/priority-configuration.xml
+             <strong>priorityConfigFile</strong>. Set the value to samples/service-bus/resources/priority/priority-configuration.xml
          </p>
          <p>
           We'll use the sample number 150. Start EI with the sample configuration 150 (i.e. wso2EI-samples.sh -sn 150).
@@ -358,8 +358,8 @@
     </p>
    <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
     &lt;localEntry key=&quot;transform-xslt-key&quot;
-                src=&quot;file:repository/samples/resources/smooks/transform.xslt&quot;/&gt;
-    &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:repository/samples/resources/smooks/smooks-config.xml&quot;/&gt;
+                src=&quot;file:samples/service-bus/resources/smooks/transform.xslt&quot;/&gt;
+    &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:samples/service-bus/resources/smooks/smooks-config.xml&quot;/&gt;
     &lt;proxy name=&quot;StockQuoteProxy&quot; transports=&quot;vfs&quot;&gt;
         &lt;parameter name=&quot;transport.vfs.ContentType&quot;&gt;text/plain&lt;/parameter&gt;
         &lt;!--CHANGE--&gt;
@@ -396,7 +396,7 @@
             &lt;/inSequence&gt;
             &lt;outSequence/&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri=&quot;file:repository/samples/resources/smooks/PlaceStockOrder.wsdl&quot;/&gt;
+        &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/smooks/PlaceStockOrder.wsdl&quot;/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
        <div>
@@ -411,7 +411,7 @@
          </p>
            <pre xml:space="preserve">&lt;messageBuilder contentType=&quot;text/plain&quot; class=&quot;org.apache.axis2.format.PlainTextBuilder&quot;/&gt;</pre>
          <p>Enable the vfs transport in axis2.xml by uncomenting the vfs transport sender and receiver configurations in the axis2.xml.</p>
-         <p>User has to edit the synapse_sample_654.xml found in the repository/samples directory. These are the configuration parameters that needs to be edited.</p>
+         <p>User has to edit the synapse_sample_654.xml found in the samples/service-bus directory. These are the configuration parameters that needs to be edited.</p>
            <ul>
                <li>transport.vfs.FileURI</li>
                <li>transport.vfs.MoveAfterProcess</li>
@@ -420,7 +420,7 @@
          <p>
            Start EI with the sample configuration 654 (i.e. wso2EI-samples.sh -sn 654).
          </p>
-         <p>Drop the edi.txt file found in the repository/samples/resources/smooks directory to the transport.vfs.FileURI parameter specified directory.</p>
+         <p>Drop the edi.txt file found in the samples/service-bus/resources/smooks directory to the transport.vfs.FileURI parameter specified directory.</p>
        </div>
 
    <h2>
@@ -449,7 +449,7 @@
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri=&quot;file:repository/samples/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
+        &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
     &lt;/proxy&gt;
     &lt;sequence name=&quot;fault&quot;&gt;
         &lt;log level=&quot;full&quot;&gt;
@@ -513,7 +513,7 @@
         &lt;send/&gt;
       &lt;/outSequence&gt;
     &lt;/target&gt;
-    &lt;publishWSDL uri=&quot;file:repository/samples/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
+    &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
   &lt;/proxy&gt;
   &lt;sequence name=&quot;fault&quot;&gt;
     &lt;log level=&quot;full&quot;&gt;
@@ -537,7 +537,7 @@
 
          <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:8280/services/StockQuoteProxy</pre>
          <p>You can see the actual messages going through the proxy by looking at the console because we have
-             two log mediators in this sample. Becuase we have the builder mediator in place, unlike in sample 655 we have the actual message printed.</p> 
+             two log mediators in this sample. Becuase we have the builder mediator in place, unlike in sample 655 we have the actual message printed.</p>
        </div>
 
 <h2>
@@ -640,7 +640,7 @@
         </p>
           <p>Invoke the client as follows.</p>
          <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/ -Dsymbol=SUN/</pre>
-	
+
 	<h2>
          <a name="Sample658">Sample 658: Huge XML Message Processing with Smooks Mediator</a>
        </h2>
@@ -652,7 +652,7 @@
     </p>
    <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
 
-    &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:repository/samples/resources/smooks/smooks-config-658.xml&quot;/&gt;
+    &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:samples/service-bus/resources/smooks/smooks-config-658.xml&quot;/&gt;
     &lt;proxy name=&quot;SmooksSample&quot; transports=&quot;vfs&quot;&gt;
          &lt;!--CHANGE--&gt;
         &lt;parameter name=&quot;transport.vfs.FileURI&quot;&gt;file:///home/user/smooks/in&lt;/parameter&gt;
@@ -681,21 +681,21 @@
          </p>
          <p>
            <strong>Prerequisites:</strong></p>
-          
+
          <p>Enable the vfs transport in axis2.xml by uncomenting the vfs transport sender and receiver configurations in the axis2.xml.</p>
-         <p>Edit the following configuration parameters of synapse_sample_658.xml found in the repository/samples directory</p>
+         <p>Edit the following configuration parameters of synapse_sample_658.xml found in the samples/service-bus directory</p>
            <ul>
                <li>transport.vfs.FileURI</li>
                <li>transport.vfs.MoveAfterProcess</li>
                <li>transport.vfs.ActionAfterFailure</li>
            </ul>
-	 <p>Edit the following configuraion of smooks-config-658.xml found in the repository/samples/resources/smooks directory</p>
+	 <p>Edit the following configuraion of smooks-config-658.xml found in the samples/service-bus/resources/smooks directory</p>
 	 <pre xml:space="preserve">&lt;file:destinationDirectoryPattern&gt;/home/lakmali/dev/test/smooks/orders&lt;/file:destinationDirectoryPattern&gt;</pre>
          <p>
            Start EI with the sample configuration 658 (i.e. wso2EI-samples.sh -sn 658).
          </p>
-         <p>Drop the huge input XML message in to the transport.vfs.FileURI parameter specified directory. The XML message should be 
-	in the format of input-message-658.xml file found in the repository/samples/resources/smooks directory.</p>
+         <p>Drop the huge input XML message in to the transport.vfs.FileURI parameter specified directory. The XML message should be
+	in the format of input-message-658.xml file found in the samples/service-bus/resources/smooks directory.</p>
 	 <p>
            The output can be observed on the &lt;file:destinationDirectoryPattern&gt; location.
          </p>
@@ -711,7 +711,7 @@
         Here is the sample with smooks mediator.
     </p>
    <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
-	&lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:repository/samples/resources/smooks/smooks-config-659.xml&quot; /&gt;
+	&lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:samples/service-bus/resources/smooks/smooks-config-659.xml&quot; /&gt;
 	&lt;proxy name=&quot;SmooksSample&quot; transports=&quot;vfs&quot; startOnLoad=&quot;true&quot; trace=&quot;disable&quot;&gt;
 		&lt;!--CHANGE--&gt;
 		&lt;parameter name=&quot;transport.vfs.FileURI&quot;&gt;file:///home/user/smooks/in&lt;/parameter&gt;
@@ -741,25 +741,25 @@
          </p>
          <p>
            <strong>Prerequisites:</strong></p>
-          
+
          <p>Enable the vfs transport in axis2.xml by uncomenting the vfs transport sender and receiver configurations in the axis2.xml.</p>
-	
-	 <p>Add the plain text builder to the messageBuilders section of the axis2.xml found in the repository/conf directory. 
+
+	 <p>Add the plain text builder to the messageBuilders section of the axis2.xml found in the repository/conf directory.
 	Here is the sample configuration. </p>
 	 <pre xml:space="preserve">&lt;messageBuilder contentType=&quot;text/plain&quot; class=&quot;org.apache.axis2.format.PlainTextBuilder&quot;/&gt;</pre>
-         <p>Edit the following configuration parameters of synapse_sample_659.xml found in the repository/samples directory</p>
+         <p>Edit the following configuration parameters of synapse_sample_659.xml found in the samples/service-bus directory</p>
            <ul>
                <li>transport.vfs.FileURI</li>
                <li>transport.vfs.MoveAfterProcess</li>
                <li>transport.vfs.ActionAfterFailure</li>
            </ul>
-	 <p>Edit the following configuraion of smooks-config-659.xml found in the repository/samples/resources/smooks directory</p>
+	 <p>Edit the following configuraion of smooks-config-659.xml found in the samples/service-bus/resources/smooks directory</p>
 	 <pre xml:space="preserve">&lt;file:destinationDirectoryPattern&gt;/home/lakmali/dev/test/smooks/orders&lt;/file:destinationDirectoryPattern&gt;</pre>
          <p>
            Start EI with the sample configuration 659 (i.e. wso2EI-samples.sh -sn 659).
          </p>
          <p>Drop the huge input EDI message in to the transport.vfs.FileURI parameter specified directory. The XML message should be
-	 in the format of input-message-659.txt file found in the repository/samples/resources/smooks directory.</p>
+	 in the format of input-message-659.txt file found in the samples/service-bus/resources/smooks directory.</p>
 	 <p>
            The output can be observed on the &lt;file:destinationDirectoryPattern&gt; location.
          </p>
@@ -775,7 +775,7 @@
     </p>
    <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
 
-    &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:repository/samples/resources/smooks/smooks-config-660.xml&quot;/&gt;
+    &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:samples/service-bus/resources/smooks/smooks-config-660.xml&quot;/&gt;
 
     &lt;proxy name=&quot;SmooksSample&quot; transports=&quot;vfs&quot;&gt;
         &lt;!--CHANGE--&gt;
@@ -808,9 +808,9 @@
          </p>
          <p>
            <strong>Prerequisites:</strong></p>
-          
+
          <p>Enable the vfs transport in axis2.xml by uncomenting the vfs transport sender and receiver configurations in the axis2.xml.</p>
-         <p>Edit the following configuration parameters of synapse_sample_660.xml found in the repository/samples directory</p>
+         <p>Edit the following configuration parameters of synapse_sample_660.xml found in the samples/service-bus directory</p>
            <ul>
                <li>transport.vfs.FileURI</li>
                <li>transport.vfs.MoveAfterProcess</li>
@@ -819,10 +819,10 @@
 	 <p>
            Start EI with the sample configuration 660 (i.e. wso2EI-samples.sh -sn 660).
          </p>
-         <p>Drop the input-message-660.xml file found in the repository/samples/resources/smooks directory to the transport.vfs.FileURI 
+         <p>Drop the input-message-660.xml file found in the samples/service-bus/resources/smooks directory to the transport.vfs.FileURI
 	parameter specified directory.</p>
 	 <p>
-           Transformed message will be logged in the console to view the result. 
+           Transformed message will be logged in the console to view the result.
          </p>
        </div>
     <h2>
@@ -835,7 +835,7 @@
         Here is the sample with smooks mediator.
     </p>
    <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
-   &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:repository/samples/resources/smooks/smooks-config-661.xml&quot; /&gt;
+   &lt;localEntry key=&quot;smooks-key&quot; src=&quot;file:samples/service-bus/resources/smooks/smooks-config-661.xml&quot; /&gt;
    &lt;proxy name=&quot;SmooksSample&quot; transports=&quot;vfs&quot; startOnLoad=&quot;true&quot; trace=&quot;disable&quot;&gt;
 	&lt;!--CHANGE--&gt;
         &lt;parameter name=&quot;transport.vfs.FileURI&quot;&gt;file:///home/user/smooks/in&lt;/parameter&gt;
@@ -865,23 +865,23 @@
          </p>
          <p>
            <strong>Prerequisites:</strong></p>
-          
+
          <p>Enable the vfs transport in axis2.xml by uncomenting the vfs transport sender and receiver configurations in the axis2.xml.</p>
-         <p>Edit the following configuration parameters of synapse_sample_661.xml found in the repository/samples directory</p>
+         <p>Edit the following configuration parameters of synapse_sample_661.xml found in the samples/service-bus directory</p>
            <ul>
                <li>transport.vfs.FileURI</li>
                <li>transport.vfs.MoveAfterProcess</li>
                <li>transport.vfs.ActionAfterFailure</li>
            </ul>
-	 <p>Run the CreateOrdersDB.sql script found in repository/samples/resources/smooks</p>
+	 <p>Run the CreateOrdersDB.sql script found in samples/service-bus/resources/smooks</p>
 
 	 <p>mysql&gt; source CreateOrdersDB.sql</p>
-	 
+
 	 <p>Add the mysql-connector-java-5.x.x.jar to the EI_HOME/repository/components/lib directory</p>
 	 <p>
            Start EI with the sample configuration 661 (i.e. wso2EI-samples.sh -sn 661).
          </p>
-         <p>Drop the input-message-661.xml file found in the repository/samples/resources/smooks directory 
+         <p>Drop the input-message-661.xml file found in the samples/service-bus/resources/smooks directory
 		to the transport.vfs.FileURI parameter specified directory.</p>
 	 <p>
            The order and order-item records will be added to the ORDERS and ORDERITEMS tables.

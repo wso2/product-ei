@@ -32,7 +32,7 @@
 <h2><a name="Sample100">Sample 100: Using WS-Security for outgoing messages</a>
 </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
-    &lt;localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/&gt;
+    &lt;localEntry key="sec_policy" src="file:samples/service-bus/resources/policy/policy_3.xml"/&gt;
 
     &lt;in&gt;
         &lt;send&gt;

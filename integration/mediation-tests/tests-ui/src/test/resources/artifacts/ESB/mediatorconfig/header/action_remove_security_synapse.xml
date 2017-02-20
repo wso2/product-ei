@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/>
+    <localEntry key="sec_policy" src="file:samples/service-bus/resources/policy/policy_3.xml"/>
 
     <proxy name="TestHeaderMediator" transports="https http" startOnLoad="true" trace="disable">
         <description/>

@@ -25,7 +25,7 @@
         <target>
             <endpoint>
                 <address
-                        uri="jms:/QpidStockQuoteService?transport.jms.ConnectionFactoryJNDIName=qpidConnectionfactory&amp;java.naming.factory.initial=org.apache.qpid.jndi.PropertiesFileInitialContextFactory&amp;java.naming.provider.url=repository/samples/resources/fix/conn.properties&amp;transport.jms.ReplyDestination=replyQueue"/>
+                        uri="jms:/QpidStockQuoteService?transport.jms.ConnectionFactoryJNDIName=qpidConnectionfactory&amp;java.naming.factory.initial=org.apache.qpid.jndi.PropertiesFileInitialContextFactory&amp;java.naming.provider.url=samples/service-bus/resources/fix/conn.properties&amp;transport.jms.ReplyDestination=replyQueue"/>
             </endpoint>
             <inSequence>
                 <log level="full"/>
@@ -37,7 +37,7 @@
             </outSequence>
         </target>
         <parameter name="transport.fix.AcceptorConfigURL">
-            file:repository/samples/resources/fix/fix-synapse.cfg
+            file:samples/service-bus/resources/fix/fix-synapse.cfg
         </parameter>
         <parameter name="transport.fix.AcceptorMessageStore">
             file

@@ -31,7 +31,7 @@
  <h2><a name="Sample200">Sample 200: Using WS-Security with policy attachments
 for proxy services</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
-    &lt;localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/&gt;
+    &lt;localEntry key="sec_policy" src="file:samples/service-bus/resources/policy/policy_3.xml"/&gt;
     &lt;proxy name="StockQuoteProxy"&gt;
         &lt;target&gt;
             &lt;inSequence&gt;
@@ -47,7 +47,7 @@ for proxy services</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
         &lt;policy key="sec_policy"/&gt;
         &lt;enableSec/&gt;
     &lt;/proxy&gt;
@@ -78,7 +78,7 @@ EI to remove the wsse:Security header from the outgoing message. To execute
 the client, send a stock quote request to the proxy service, and sign and
 encrypt the request by specifying the client side security policy as follows:
 </p>
-<pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280/services/StockQuoteProxy -Dpolicy=./../../repository/samples/resources/policy/client_policy_3.xml</pre>
+<pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280/services/StockQuoteProxy -Dpolicy=./../../samples/service-bus/resources/policy/client_policy_3.xml</pre>
 
 <p>By following through the debug logs or TCPMon output, you could see that
 the request received by the proxy service was signed and encrypted. Also,
@@ -110,7 +110,7 @@ client and proxy services using WS-ReliableMessaging</a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
         &lt;enableRM/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
@@ -161,7 +161,7 @@ client and proxy services using WS-ReliableMessaging 1.1</a> </h2>
 				&lt;send/&gt;
 			&lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri=&quot;file:repository/samples/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
+        &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
         &lt;enableRM/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;

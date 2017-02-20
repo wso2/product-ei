@@ -133,7 +133,7 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
                                              "            </inSequence>\n" +
                                              "            <outSequence/>\n" +
                                              "        </target>\n" +
-                                             "        <publishWSDL uri=\"file:repository/samples/resources/smooks/PlaceStockOrder.wsdl\"/>\n" +
+                                             "        <publishWSDL uri=\"file:samples/service-bus/resources/smooks/PlaceStockOrder.wsdl\"/>\n" +
                                              "    </proxy>\n"));
         isProxyDeployed = true;
     }

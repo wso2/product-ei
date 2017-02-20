@@ -154,7 +154,7 @@ receive and display the last sale price for a stock symbol. </p>
   [-Dmode=quote | customquote | fullquote | placeorder | marketactivity]
   [-Daddurl=http://localhost:9000/services/SimpleStockQuoteService]
   [-Dtrpurl=http://localhost:8280/] [-Dprxurl=http://localhost:8280/]
-  [-Dpolicy=../../repository/samples/resources/policy/policy_1.xml]</pre>
+  [-Dpolicy=../../samples/service-bus/resources/policy/policy_1.xml]</pre>
 
 <p>The client is able to operate in the following modes, and send the
 payloads listed below as SOAP messages: </p>
@@ -342,7 +342,7 @@ oneWayUploadUsingMTOM saves the request message to the disk. </p>
 <p>To start the WSO2 EI with the sample default configuration, execute the
 wso2server.bat or wso2server.sh script found in the /bin directory. This starts
 up an instance of the EI using the Synapse and Axis2 configuration files
-located in the conf directory. The repository/samples directory contains
+located in the conf directory. The samples/service-bus directory contains
 the sample configurations available as synapse_sample_&lt;n&gt;.xml files. To
 start a specific sample configuration of the EI, use the wso2EI-samples.sh or
 wso2EI-samples.bat as follows: </p>
@@ -599,7 +599,7 @@ correct parameters for a valid mail account at service level.</p>
     <p/>
     <p>
         Locate and edit the AMQP connection settings file for the message consumer, this fle is usually named direct.properties
-        and can be found in the repository/samples/resources/fix directory.
+        and can be found in the samples/service-bus/resources/fix directory.
     </p>
         <pre>
             java.naming.factory.initial = org.apache.qpid.jndi.PropertiesFileInitialContextFactory
@@ -612,7 +612,7 @@ correct parameters for a valid mail account at service level.</p>
             destination.replyQueue = direct://amq.direct//replyQueue?routingkey='replyQueue'</pre>
     <p>
         Locate and edit the AMQP connection settings file for WSO2 EI, this fle is usually named con.properties
-        and can be found in the repository/samples/resources/fix directory.
+        and can be found in the samples/service-bus/resources/fix directory.
     </p>
         <pre>
             #initial context factory

@@ -208,7 +208,7 @@
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri=&quot;file:repository/samples/resources/proxy/sample_proxy_2.wsdl&quot;/&gt;
+        &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_2.wsdl&quot;/&gt;
     &lt;/proxy&gt;
 
     &lt;sequence name=&quot;errorHandler&quot;&gt;

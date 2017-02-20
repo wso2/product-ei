@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <localEntry key="transform-xslt-key" src="file:repository/samples/resources/smooks/transform.xslt"/>
-    <localEntry key="smooks-key" src="file:repository/samples/resources/smooks/smooks-config.xml"/>
+    <localEntry key="transform-xslt-key" src="file:samples/service-bus/resources/smooks/transform.xslt"/>
+    <localEntry key="smooks-key" src="file:samples/service-bus/resources/smooks/smooks-config.xml"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

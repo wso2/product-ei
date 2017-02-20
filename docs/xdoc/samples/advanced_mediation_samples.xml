@@ -42,7 +42,7 @@ href="../samples_setup_guide.html#script">Samples Setup guide</a>. </p>
 <h2><a name="Sample350">Sample 350: Introduction to the script mediator using
 js scripts</a></h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
-    &lt;localEntry key="stockquoteScript" src="file:repository/samples/resources/script/stockquoteTransform.js"/&gt;
+    &lt;localEntry key="stockquoteScript" src="file:samples/service-bus/resources/script/stockquoteTransform.js"/&gt;
 
     &lt;in&gt;
         &lt;!-- transform the custom quote request into a standard quote request expected by the service --&gt;
@@ -191,7 +191,7 @@ stockquote:
 <h2><a name="Sample353">Sample 353: Using Ruby scripts for mediation</a> </h2>
 <pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
 
-    &lt;localEntry key="stockquoteScript" src="file:repository/samples/resources/script/stockquoteTransform.rb"/&gt;
+    &lt;localEntry key="stockquoteScript" src="file:samples/service-bus/resources/script/stockquoteTransform.rb"/&gt;
     &lt;in&gt;
         &lt;!-- transform the custom quote request into a standard quote request expected by the service --&gt;
         &lt;script language="rb" key="stockquoteScript" function="transformRequest"/&gt;
@@ -1112,7 +1112,7 @@ request rate based throttling </a> </h2>
         &lt;target&gt;
              &lt;inSequence&gt;
                 &lt;throttle onReject="onRejectSequence" onAccept="onAcceptSequence" id="A"&gt;
-                    &lt;policy key="repository/samples/resources/policy/throttle_policy.xml"/&gt;
+                    &lt;policy key="samples/service-bus/resources/policy/throttle_policy.xml"/&gt;
                 &lt;/throttle&gt;
             &lt;/inSequence&gt;
             &lt;outSequence&gt;
@@ -1120,7 +1120,7 @@ request rate based throttling </a> </h2>
                 &lt;send/&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
 
@@ -1371,7 +1371,7 @@ Discounted price: 138.77458254967408</pre>
 <p><strong>Prerequisites:</strong> </p>
 
 <p>
-Configure JMS transport using ActiveMQ (refer <a href="../samples_setup_guide.html#Setting">Sample Configuration Guide</a>) 
+Configure JMS transport using ActiveMQ (refer <a href="../samples_setup_guide.html#Setting">Sample Configuration Guide</a>)
 </p>
 
 <p>Start EI with the sample configuration 381 (i.e. wso2EI-samples -sn 381)
@@ -1415,13 +1415,13 @@ Configure JMS transport using ActiveMQ (refer <a href="../samples_setup_guide.ht
     &lt;!-- the SimpleURLRegistry allows access to a URL based registry (e.g. file:/// or http://) --&gt;
     &lt;registry provider="org.wso2.EI.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
-        &lt;parameter name="root"&gt;file:repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:samples/service-bus/resources/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;
 
     &lt;localEntry key="xquery-key-req"
-                src="file:repository/samples/resources/xquery/xquery_req.xq"/&gt;
+                src="file:samples/service-bus/resources/xquery/xquery_req.xq"/&gt;
     &lt;proxy name="StockQuoteProxy"&gt;
         &lt;target&gt;
             &lt;inSequence&gt;
@@ -1449,7 +1449,7 @@ Configure JMS transport using ActiveMQ (refer <a href="../samples_setup_guide.ht
                 &lt;/out&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt; </pre>
 
@@ -1468,7 +1468,7 @@ document with in XQuery </a> </h2>
     &lt;!-- the SimpleURLRegistry allows access to  URL based registry (e.g. file:/// or http://) --&gt;
     &lt;registry provider="org.wso2.carbon.mediation.registry.EIRegistry"&gt;
         &lt;!-- the root property of the simple URL registry helps resolve a resource URL as root + key --&gt;
-        &lt;parameter name="root"&gt;file:repository/samples/resources/&lt;/parameter&gt;
+        &lt;parameter name="root"&gt;file:samples/service-bus/resources/&lt;/parameter&gt;
         &lt;!-- all resources loaded from the URL registry would be cached for this number of milli seconds --&gt;
         &lt;parameter name="cachableDuration"&gt;15000&lt;/parameter&gt;
     &lt;/registry&gt;
@@ -1492,7 +1492,7 @@ document with in XQuery </a> </h2>
                 &lt;/out&gt;
             &lt;/outSequence&gt;
         &lt;/target&gt;
-        &lt;publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/&gt;
+        &lt;publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/&gt;
     &lt;/proxy&gt;
 &lt;/definitions&gt;</pre>
 

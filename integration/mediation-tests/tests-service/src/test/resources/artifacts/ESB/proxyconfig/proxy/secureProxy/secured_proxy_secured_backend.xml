@@ -40,7 +40,7 @@
         </target>
         <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
-    <localEntry key="sec_policy" src="file:repository/samples/resources/policy/policy_3.xml"/>
+    <localEntry key="sec_policy" src="file:samples/service-bus/resources/policy/policy_3.xml"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
