@@ -463,8 +463,7 @@ public class CleanupExecutor {
 		for (File child : children) {
 			if (child.isFile() && child.canRead() &&
 					child.getName().toLowerCase().endsWith(".jar") &&
-					!child.getName().toLowerCase().startsWith("org.apache.synapse.module") &&
-					!child.getName().toLowerCase().startsWith("wss4j")) {
+					!child.getName().toLowerCase().startsWith("org.apache.synapse.module")) {
 				addPath(child.getPath());
 			}
 		}
