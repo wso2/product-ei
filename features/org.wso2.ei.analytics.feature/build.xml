@@ -24,7 +24,7 @@
         <copy file="${jaggery-api-dir}/eianalytics-utils.jag" todir="${res-dir}"/>
     </target>
 
-    <target name="zip" depends="clean,pre-configure">
+    <target name="zip" depends="pre-configure">
         <zip destfile="${res-dir}/${ANALYTICS_ESB_capp_realtime}.car">
           <zipfileset dir="${capp_common}"/>
           <zipfileset dir="${capp_dashboard}"/>
