@@ -255,6 +255,7 @@
     <test name="Payload Factory" preserve-order="true" verbose="2" parallel="false">
         <classes>
             <class name="org.wso2.carbon.esb.mediators.payloadFactory.ESBJAVA3573PayloadFormatWithBeginHtmlTagArgument"/>
+            <!--<class name="org.wso2.carbon.esb.mediators.payloadFactory.ESBJAVA5030PayloadFormatArgumentWithTrailingSpaceTestCase"/>--> <!-- TODO uncomment once dependencies changes to SNAPSHOT-->
         </classes>
     </test>
     <test name="Preserver Content-Type Header Test" preserve-order="true" verbose="2" parallel="false">
