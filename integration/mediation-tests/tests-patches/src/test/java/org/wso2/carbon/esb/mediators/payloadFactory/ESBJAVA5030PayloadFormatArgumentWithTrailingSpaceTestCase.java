@@ -25,6 +25,7 @@ import org.wso2.carbon.automation.engine.exceptions.AutomationFrameworkException
 import org.wso2.carbon.automation.test.utils.http.client.HttpURLConnectionClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.io.File;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -45,8 +46,9 @@ public class ESBJAVA5030PayloadFormatArgumentWithTrailingSpaceTestCase extends E
     public void setEnvironment() throws Exception {
         super.init();
         // applying changes to esb - source view
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/payloadmediatype/" +
-                                          "expressionForTrailingSpace.xml");
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
+                                          + File.separator + "synapseconfig" + File.separator + "payloadmediatype"
+                                          + File.separator + "expressionForTrailingSpace.xml");
     }
 
     @AfterClass(alwaysRun = true)

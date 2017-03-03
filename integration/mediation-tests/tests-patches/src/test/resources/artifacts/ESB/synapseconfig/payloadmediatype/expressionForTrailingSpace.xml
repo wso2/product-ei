@@ -52,7 +52,7 @@
                           scope="default"
                           type="STRING"/>
                 <log level="custom">
-                    <property name="###############################inputValue"
+                    <property name="incoming inputValue"
                               expression="get-property('inputValue')"/>
                 </log>
                 <payloadFactory media-type="json">
