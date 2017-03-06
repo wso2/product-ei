@@ -67,7 +67,7 @@ public class ESBJAVA3573PayloadFormatWithBeginHtmlTagArgument extends ESBIntegra
 
         // json request payload.
         String payload = "{\n" +
-                         "  \"input\": { \"value\": \"<êta>&$@%*\\\"\\\" '>\" }\n" +
+                         "  \"input\": { \"value\": \"<ta>&$@%*\\\"\\\" '>\" }\n" +
                          "}";
 
         Reader data = new StringReader(payload);
@@ -81,6 +81,6 @@ public class ESBJAVA3573PayloadFormatWithBeginHtmlTagArgument extends ESBIntegra
 
         assertNotNull(response, "Response is null");
         //should return the response without throwing any errors.
-        assertTrue(response.contains("\"output\": \"<êta>&$@%*\\\"\\\" '>\""));
+        assertTrue(response.contains("\"output\": \"<ta>&$@%*\\\"\\\" '>\""));
     }
 }
