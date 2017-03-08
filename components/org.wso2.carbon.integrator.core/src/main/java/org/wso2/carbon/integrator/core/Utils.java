@@ -260,7 +260,7 @@ public class Utils {
             URL file = axisService.getFileName();
             if (file != null) {
                 String filePath = file.getPath();
-                return filePath.contains("dataservices") || filePath.endsWith(".dbs");
+                return filePath.endsWith(".dbs");
             }
         }
         return false;
