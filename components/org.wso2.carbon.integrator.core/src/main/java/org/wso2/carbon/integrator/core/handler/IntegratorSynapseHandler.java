@@ -25,12 +25,14 @@ import org.apache.synapse.AbstractSynapseHandler;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseException;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
+import org.apache.synapse.core.axis2.Axis2Sender;
 import org.apache.synapse.mediators.builtin.SendMediator;
 import org.apache.synapse.transport.passthru.core.PassThroughSenderManager;
 import org.wso2.carbon.integrator.core.Utils;
 import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -39,6 +41,10 @@ import java.util.TreeMap;
 public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
+
+    private static final String MESSAGE_DISPATCHED = "MessageDispatched";
+
+    private static final String RESPONSE_WRITTEN = "RESPONSE_WRITTEN";
 
     public IntegratorSynapseHandler() {
         this.sendMediator = new SendMediator();
@@ -173,6 +179,18 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 Utils.rewriteLocationHeader(locationHeader, messageContext);
             }
         }
+        if (messageContext.getProperty(MESSAGE_DISPATCHED).equals("true")) {
+            //remove the "MessageDispatched" property
+            Set keySet = messageContext.getPropertyKeySet();
+            keySet.remove(MESSAGE_DISPATCHED);
+            messageContext.setTo(null);
+            messageContext.setResponse(true);
+            Axis2MessageContext axis2smc = (Axis2MessageContext) messageContext;
+            org.apache.axis2.context.MessageContext axis2MessageCtx = axis2smc.getAxis2MessageContext();
+            axis2MessageCtx.getOperationContext().setProperty(RESPONSE_WRITTEN, "SKIP");
+            Axis2Sender.sendBack(messageContext);
+            return false;
+        }
         return true;
     }
 
@@ -222,6 +240,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         if (log.isDebugEnabled()) {
             log.debug("Dispatching message to " + uri);
         }
+        messageContext.setProperty(MESSAGE_DISPATCHED, "true");
         Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
