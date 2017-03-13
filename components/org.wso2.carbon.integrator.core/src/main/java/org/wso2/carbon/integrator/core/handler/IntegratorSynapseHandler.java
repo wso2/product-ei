@@ -179,7 +179,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 Utils.rewriteLocationHeader(locationHeader, messageContext);
             }
         }
-        if (messageContext.getProperty(MESSAGE_DISPATCHED).equals("true")) {
+        if (("true").equals(messageContext.getProperty(MESSAGE_DISPATCHED))) {
             //remove the "MessageDispatched" property
             Set keySet = messageContext.getPropertyKeySet();
             keySet.remove(MESSAGE_DISPATCHED);
