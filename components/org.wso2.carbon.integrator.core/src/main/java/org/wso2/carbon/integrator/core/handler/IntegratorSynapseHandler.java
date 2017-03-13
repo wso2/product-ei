@@ -170,19 +170,21 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleResponseInFlow(MessageContext messageContext) {
-        // In here, We are rewriting the location header which comes from the particular registered endpoints.
-        Object headers =
-                ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
-        if (headers instanceof TreeMap) {
-            String locationHeader = (String) ((TreeMap) headers).get("Location");
-            if (locationHeader != null) {
-                Utils.rewriteLocationHeader(locationHeader, messageContext);
-            }
-        }
         if (("true").equals(messageContext.getProperty(MESSAGE_DISPATCHED))) {
             //remove the "MessageDispatched" property
             Set keySet = messageContext.getPropertyKeySet();
             keySet.remove(MESSAGE_DISPATCHED);
+
+            // In here, We are rewriting the location header which comes from the particular registered endpoints.
+            Object headers =
+                    ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+            if (headers instanceof TreeMap) {
+                String locationHeader = (String) ((TreeMap) headers).get("Location");
+                if (locationHeader != null) {
+                    Utils.rewriteLocationHeader(locationHeader, messageContext);
+                }
+            }
+
             messageContext.setTo(null);
             messageContext.setResponse(true);
             Axis2MessageContext axis2smc = (Axis2MessageContext) messageContext;
