@@ -25,14 +25,12 @@ import org.apache.synapse.AbstractSynapseHandler;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseException;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.apache.synapse.core.axis2.Axis2Sender;
 import org.apache.synapse.mediators.builtin.SendMediator;
 import org.apache.synapse.transport.passthru.core.PassThroughSenderManager;
 import org.wso2.carbon.integrator.core.Utils;
 import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -41,10 +39,6 @@ import java.util.TreeMap;
 public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
-
-    private static final String MESSAGE_DISPATCHED = "MessageDispatched";
-
-    private static final String RESPONSE_WRITTEN = "RESPONSE_WRITTEN";
 
     public IntegratorSynapseHandler() {
         this.sendMediator = new SendMediator();
@@ -72,42 +66,20 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                     host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
                     //In this if block we whitelist carbon related requests (Management Console)
                     // There was an issue with dataservice content type requests therefore add this below fix;
-                    boolean isSpecialDSSRequest = false;
-                    if (axis2MessageContext.getProperty("isDataService") != null) {
-                        String contentType = (String) ((TreeMap) headers).get("Content-Type");
-                        if (contentType == null) {
-                            isSpecialDSSRequest = true;
-                        }
-                    }
-                    boolean dssRestCall = false;
-                    if (axis2MessageContext.getProperty("isDSSRest") != null) {
-                        dssRestCall = true;
-                    }
                     //dss tenant flow issue, it comes in local port
                     String to = messageContext.getTo().getAddress();
                     boolean isLocalCall = false;
                     if (to != null && to.startsWith("local://")) {
                         isLocalCall = true;
                     }
-                    if (validateWhiteListsWithUri(uri) || (axis2MessageContext.getProperty("isDataService") != null &&
-                            isSpecialDSSRequest)) {
-                        isPreserveHeadersContained = true;
-                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
-                        return dispatchMessage(endpoint, uri, messageContext);
-                        //In this if block we check stateful axis2 Services
-                    } else if (axis2MessageContext.getProperty("raplacedAxisService") != null ||
-                            axis2MessageContext.getProperty("isDataService") != null) {
+                    if (axis2MessageContext.getProperty("raplacedAxisService") != null) {
                         if (!isLocalCall) {
                             isPreserveHeadersContained = true;
                             String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
                             return dispatchMessage(endpoint, uri, messageContext);
-                        } else if (!dssRestCall) {
-                            isPreserveHeadersContained = true;
-                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri;
-                            return dispatchMessage(endpoint, uri, messageContext);
                         } else {
                             isPreserveHeadersContained = true;
-                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri;
                             return dispatchMessage(endpoint, uri, messageContext);
                         }
                     } else {
@@ -170,28 +142,14 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleResponseInFlow(MessageContext messageContext) {
-        if (("true").equals(messageContext.getProperty(MESSAGE_DISPATCHED))) {
-            //remove the "MessageDispatched" property
-            Set keySet = messageContext.getPropertyKeySet();
-            keySet.remove(MESSAGE_DISPATCHED);
-
-            // In here, We are rewriting the location header which comes from the particular registered endpoints.
-            Object headers =
-                    ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
-            if (headers instanceof TreeMap) {
-                String locationHeader = (String) ((TreeMap) headers).get("Location");
-                if (locationHeader != null) {
-                    Utils.rewriteLocationHeader(locationHeader, messageContext);
-                }
+        // In here, We are rewriting the location header which comes from the particular registered endpoints.
+        Object headers =
+                ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+        if (headers instanceof TreeMap) {
+            String locationHeader = (String) ((TreeMap) headers).get("Location");
+            if (locationHeader != null) {
+                Utils.rewriteLocationHeader(locationHeader, messageContext);
             }
-
-            messageContext.setTo(null);
-            messageContext.setResponse(true);
-            Axis2MessageContext axis2smc = (Axis2MessageContext) messageContext;
-            org.apache.axis2.context.MessageContext axis2MessageCtx = axis2smc.getAxis2MessageContext();
-            axis2MessageCtx.getOperationContext().setProperty(RESPONSE_WRITTEN, "SKIP");
-            Axis2Sender.sendBack(messageContext);
-            return false;
         }
         return true;
     }
@@ -242,22 +200,9 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         if (log.isDebugEnabled()) {
             log.debug("Dispatching message to " + uri);
         }
-        messageContext.setProperty(MESSAGE_DISPATCHED, "true");
         Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
         return sendMediator.mediate(messageContext);
-    }
-
-    private boolean validateWhiteListsWithUri(String uri) {
-        for (String contextPath : IntegratorComponent.getWhiteListContextPaths()) {
-            if (uri.contains(contextPath)) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Whitelisting the URI " + uri + " for " + contextPath + " context.");
-                }
-                return true;
-            }
-        }
-        return false;
     }
 }
