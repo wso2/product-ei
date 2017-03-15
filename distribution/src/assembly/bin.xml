@@ -800,6 +800,8 @@
             <fileMode>755</fileMode>
         </fileSet>
 
+
+
         <fileSet>
             <directory>src/scripts</directory>
             <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
@@ -2556,6 +2558,7 @@
             <outputDirectory>wso2ei-${pom.version}</outputDirectory>
             <destName>release-notes.html</destName>
             <fileMode>644</fileMode>
+	    <filtered>true</filtered>
         </file>
         <file>
             <source>target/wso2carbon-core-${carbon.kernel.version}/bin/README.txt</source>
@@ -2632,6 +2635,12 @@
         </file>
         <file>
             <source>src/conf/wso2carbon-version.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/scripts/profile-creator.sh</source>
             <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>

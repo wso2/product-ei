@@ -23,17 +23,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-        <title>WSO2 EI v6.0.0 Released - February 2017</title>
+        <title>WSO2 EI v@product.version@ Released - March 2017</title>
     </head>
     <body>
         <div id="header">
         </div>
 
         <div id="main-content">
-            <h1>The WSO2 Enterprise Integrator (EI) 6.0.0 Released!</h1>
+            <h1>The WSO2 Enterprise Integrator (EI) @product.version@ Released!</h1>
 
             <p>
-                WSO2 EI team is pleased to announce the release of version 6.0.0 of
+                WSO2 EI team is pleased to announce the release of version @product.version@ of
                 the Open Source Enterprise Integrator (EI).
             </p>
 
@@ -54,7 +54,7 @@
             <h2>Installation and Running </h2>
             <h3>Running the Integrator</h3>
             <ol>
-                <li>Extract the downloaded wso2ei-6.0.0.zip</li>
+                <li>Extract the downloaded wso2ei-@product.version@.zip</li>
                 <li>Go to the bin directory in the extracted folder</li>
                 <li>Run the integrator.sh or integrator.bat as appropriate</li>
                 <li>Point your browser to the URL https://localhost:8243/carbon</li>
@@ -64,8 +64,8 @@
             </ol>
             <h3>Running other runtimes individually (Analytics, Broker, Business-Process)</h3>
             <ol>
-                <li>Extract wso2ei-6.0.0.zip and go to the extracted directory.</li>
-                <li>Go to wso2ei-6.0.0/wso2 directory.</li>
+                <li>Extract wso2ei-@product.version@.zip and go to the extracted directory.</li>
+                <li>Go to wso2ei-@product.version@/wso2 directory.</li>
                 <li>Go to appropriate runtime directory (analytics/broker/business-process) /bin.</li>
                 <li> Execute wso2server.sh or wso2server.bat.</li>
                 <li>Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)</li>
@@ -73,7 +73,7 @@
 
             <h3>Running all runtimes (Integrator, Analytics, Broker, Business-Process)</h3>
             <ol>
-                <li>Extract  wso2ei-6.0.0.zip and go to the extracted directory/bin.</li>
+                <li>Extract  wso2ei-@product.version@.zip and go to the extracted directory/bin.</li>
                 <li>Run start-all.sh or start-all.bat.</li>
                 <li>Access appropriate url for the related runtime. (For example, use  https://localhost:8243/carbon for the Integrator runtime)</li>
             </ol>
@@ -127,12 +127,12 @@
 
             <h2>Known Issues</h2>
             <p>
-                All the open issues pertaining to WSO2 EI 6.0.0 are reported at following
+                All the open issues pertaining to WSO2 EI @product.version@ are reported at following
                 locations:
             </p>
             <ul>
                 <li><a href="https://github.com/wso2/product-ei/issues">
-                    WSO2 EI 6.0.0 component issues</a></li>
+                    WSO2 EI @product.version@ component issues</a></li>
             </ul>
 
             <h2>How You Can Contribute</h2>

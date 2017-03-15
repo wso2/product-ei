@@ -22,7 +22,7 @@
 
 
 DIR="$(dirname "${BASH_SOURCE[0]}")"
-DISTRIBUTION="wso2ei-6.0.0"
+DISTRIBUTION="wso2ei-@product.version@"
 #get the desired profile
 echo "This tool will erase all the files which are not required for the selected profile "
 echo "and also creates a distribution of this profile in the same folder <EI_HOME> resides."
