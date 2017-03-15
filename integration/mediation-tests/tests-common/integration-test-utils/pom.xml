@@ -77,7 +77,7 @@
              <scope>compile</scope>
          </dependency>
          <dependency>
-             <groupId>com.rabbitmq.wso2</groupId>
+             <groupId>org.wso2.orbit.com.rabbitmq</groupId>
              <artifactId>amqp-client</artifactId>
          </dependency>
          <dependency>

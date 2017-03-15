@@ -866,7 +866,7 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>com.rabbitmq.wso2</groupId>
+                <groupId>org.wso2.orbit.com.rabbitmq</groupId>
                 <artifactId>amqp-client</artifactId>
                 <version>${rabbitmq.orbit.version}</version>
             </dependency>
@@ -1360,7 +1360,7 @@
         <slf4j.version>1.7.5</slf4j.version>
         <activemq.version>5.9.1</activemq.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
-        <rabbitmq.orbit.version>3.4.4.wso2v1</rabbitmq.orbit.version>
+        <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
     </properties>
 
     <pluginRepositories>
