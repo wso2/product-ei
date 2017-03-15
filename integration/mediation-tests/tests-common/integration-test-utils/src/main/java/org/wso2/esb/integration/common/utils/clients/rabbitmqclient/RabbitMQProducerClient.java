@@ -23,6 +23,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 public class RabbitMQProducerClient {
     private ConnectionFactory factory = null;
@@ -40,8 +41,12 @@ public class RabbitMQProducerClient {
     }
 
     public void declareAndConnect(String exchangeName, String routeKey) throws IOException {
-        connection = factory.newConnection();
-        channel = connection.createChannel();
+        try {
+            connection = factory.newConnection();
+            channel = connection.createChannel();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
 
         this.exchangeName = exchangeName;
         this.routeKey = routeKey;
@@ -76,6 +81,8 @@ public class RabbitMQProducerClient {
         try {
             channel.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
             e.printStackTrace();
         }
         try {
