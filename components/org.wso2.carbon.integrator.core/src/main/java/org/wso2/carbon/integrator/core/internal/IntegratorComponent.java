@@ -47,13 +47,10 @@ import java.util.Properties;
 public class IntegratorComponent {
     private static final Log log = LogFactory.getLog(IntegratorComponent.class);
 
-    private static ArrayList<String> whiteListContextPaths = new ArrayList<>();
-
     private static ConfigurationContextService contextService;
     private static CarbonTomcatService carbonTomcatService;
 
     protected void activate(ComponentContext context) {
-        readProperties();
         log.info("Activating Integrator component");
     }
 
@@ -99,27 +96,6 @@ public class IntegratorComponent {
 
     public static ConfigurationContextService getContextService() {
         return contextService;
-    }
-
-    public static ArrayList<String> getWhiteListContextPaths() {
-        return whiteListContextPaths;
-    }
-
-    private void readProperties() {
-        try (InputStream file = new FileInputStream(
-                Paths.get(CarbonBaseUtils.getCarbonConfigDirPath(), "security", "integrator-whitelist.properties")
-                     .toString())) {
-            Properties properties = new Properties();
-            properties.load(file);
-            Enumeration<?> e = properties.propertyNames();
-            while (e.hasMoreElements()) {
-                String key = (String) e.nextElement();
-                String value = properties.getProperty(key);
-                whiteListContextPaths.add(value);
-            }
-        } catch (IOException e) {
-            log.error("Error occurred while reading integrator-whitelist.properties file");
-        }
     }
 }
 
