@@ -245,6 +245,31 @@
             </excludes>
         </fileSet>
 
+        <!-- MSF4J product -->
+        <fileSet>
+            <directory>
+                ../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}
+            </directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/*.bat</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- MSF4J scripts -->
+        <fileSet>
+            <directory>
+                ../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin
+            </directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
+            <includes>
+                <include>**.sh</include>
+                <include>**.bat</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+
         <!-- BPS scripts :start-->
 
         <fileSet>
