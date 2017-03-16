@@ -85,7 +85,8 @@ then
 	echo "Removing Integrator profile"
 	rm -rf ${DIR}/../conf
 	rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
-	rm -rf ${DIR}/../samples/service-bus/data-services
+	rm -rf ${DIR}/../samples/service-bus
+	rm -rf ${DIR}/../samples/data-services
 	rm -rf ${DIR}/integrator.bat
 	rm -rf ${DIR}/integrator.sh
 	rm -rf ${DIR}/wso2ei-samples.bat
@@ -104,11 +105,12 @@ then
 	rm -rf ${DIR}/../wso2/components/broker-default ${DIR}/../wso2/components/broker-worker
 	rm -rf ${DIR}/broker.bat
 	rm -rf ${DIR}/broker.sh
-        #remove intergrator
+        #remove integrator
 	echo "Removing Integrator profile"
 	rm -rf ${DIR}/../conf
 	rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
-	rm -rf ${DIR}/../samples/service-bus/data-services
+	rm -rf ${DIR}/../samples/service-bus
+	rm -rf ${DIR}/../samples/data-services
 	rm -rf ${DIR}/integrator.bat
 	rm -rf ${DIR}/integrator.sh
 	rm -rf ${DIR}/wso2ei-samples.bat
@@ -133,13 +135,14 @@ then
 	rm -rf ${DIR}/../wso2/components/analytics-default ${DIR}/../wso2/components/analytics-worker
 	rm -rf ${DIR}/analytics.bat
 	rm -rf ${DIR}/analytics.sh
-	#remove intergrator
+	#remove integrator
 	echo "Removing Integrator profile"
-        rm -rf ${DIR}/../conf
-        rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
-        rm -rf ${DIR}/../samples/service-bus/data-services
-        rm -rf ${DIR}/integrator.bat
-        rm -rf ${DIR}/integrator.sh
+    rm -rf ${DIR}/../conf
+    rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
+    rm -rf ${DIR}/../samples/service-bus
+    rm -rf ${DIR}/../samples/data-services
+    rm -rf ${DIR}/integrator.bat
+    rm -rf ${DIR}/integrator.sh
 	rm -rf ${DIR}/wso2ei-samples.bat
 	rm -rf ${DIR}/wso2ei-samples.sh
 	#remove business-process profile
