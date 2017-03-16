@@ -20,7 +20,6 @@ REM ---------------------------------------------------------------------------
 
 set DIR=%~dp0
 set DISTRIBUTION=wso2ei-@product.version@
-s
 REM get the desired profile
 echo This tool will erase all the files which are not required for the selected profile.
 echo WARNING:This may cause loss of any changes to the other profiles.
