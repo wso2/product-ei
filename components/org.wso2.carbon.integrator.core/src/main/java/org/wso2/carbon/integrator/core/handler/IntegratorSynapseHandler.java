@@ -25,12 +25,14 @@ import org.apache.synapse.AbstractSynapseHandler;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseException;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
+import org.apache.synapse.core.axis2.Axis2Sender;
 import org.apache.synapse.mediators.builtin.SendMediator;
 import org.apache.synapse.transport.passthru.core.PassThroughSenderManager;
 import org.wso2.carbon.integrator.core.Utils;
 import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -46,6 +48,10 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     private SendMediator sendMediator;
     private PassThroughSenderManager passThroughSenderManager = PassThroughSenderManager.getInstance();
+
+    private static final String MESSAGE_DISPATCHED = "MessageDispatched";
+
+    private static final String RESPONSE_WRITTEN = "RESPONSE_WRITTEN";
 
     @Override
     public boolean handleRequestInFlow(MessageContext messageContext) {
@@ -142,14 +148,29 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
 
     @Override
     public boolean handleResponseInFlow(MessageContext messageContext) {
-        // In here, We are rewriting the location header which comes from the particular registered endpoints.
-        Object headers =
-                ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
-        if (headers instanceof TreeMap) {
-            String locationHeader = (String) ((TreeMap) headers).get("Location");
-            if (locationHeader != null) {
-                Utils.rewriteLocationHeader(locationHeader, messageContext);
+
+        if ("true".equals(messageContext.getProperty(MESSAGE_DISPATCHED))) {
+            //remove the "MessageDispatched" property
+            Set keySet = messageContext.getPropertyKeySet();
+            keySet.remove(MESSAGE_DISPATCHED);
+
+            // In here, We are rewriting the location header which comes from the particular registered endpoints.
+            Object headers =
+                    ((Axis2MessageContext) messageContext).getAxis2MessageContext().getProperty("TRANSPORT_HEADERS");
+            if (headers instanceof TreeMap) {
+                String locationHeader = (String) ((TreeMap) headers).get("Location");
+                if (locationHeader != null) {
+                    Utils.rewriteLocationHeader(locationHeader, messageContext);
+                }
             }
+
+            messageContext.setTo(null);
+            messageContext.setResponse(true);
+            Axis2MessageContext axis2smc = (Axis2MessageContext) messageContext;
+            org.apache.axis2.context.MessageContext axis2MessageCtx = axis2smc.getAxis2MessageContext();
+            axis2MessageCtx.getOperationContext().setProperty(RESPONSE_WRITTEN, "SKIP");
+            Axis2Sender.sendBack(messageContext);
+            return false;
         }
         return true;
     }
@@ -200,6 +221,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         if (log.isDebugEnabled()) {
             log.debug("Dispatching message to " + uri);
         }
+        messageContext.setProperty(MESSAGE_DISPATCHED, "true");
         Utils.setIntegratorHeader(messageContext, uri);
         setREST_URL_POSTFIX(((Axis2MessageContext) messageContext).getAxis2MessageContext(), uri);
         sendMediator.setEndpoint(Utils.createEndpoint(endpoint, messageContext.getEnvironment()));
