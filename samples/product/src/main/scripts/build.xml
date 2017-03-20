@@ -293,7 +293,7 @@
             <fileset dir="../../extensions">
                 <include name="*.jar"/>
             </fileset>
-            <fileset dir="../../repository/components/lib">
+            <fileset dir="../../wso2/lib">
                 <include name="*.jar"/>
             </fileset>
              <fileset dir="../../repository/axis2/client/lib">
