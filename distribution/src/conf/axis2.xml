@@ -492,9 +492,9 @@
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
                 enable="false">
 
-        <!-- Parameter to differentiate clustering mode, Default value will be "WorkerManager" in which
-         case the manager nodes of the cluster won't run schedule tasks-->
-        <parameter name="clusteringPattern">WorkerManager</parameter>
+        <!-- Parameter to differentiate clustering mode, Default value will be "nonWorkerManager" in which
+         case the all nodes of the cluster run schedule tasks-->
+        <parameter name="clusteringPattern">nonWorkerManager</parameter>
 
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
