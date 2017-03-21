@@ -2670,6 +2670,12 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>src/scripts/profile-creator.bat</source>
+            <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
         <!-- For analytic data publishing service -->
         <file>
             <source>
