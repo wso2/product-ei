@@ -54,27 +54,25 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     }
 
     @Override
+    public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
+        return null;
+    }
+
+    @Override
     public InvocationResponse invoke(MessageContext msgctx) throws AxisFault {
 
         String uri = (String) msgctx.getProperty("TransportInURL");
 
-        if (msgctx.getProperty("transport.http.servletRequest") == null && uri != null) {
-            if (msgctx.getAxisService() != null && Utils.isStatefulService(msgctx.getAxisService())) {
-                msgctx.setProperty("raplacedAxisService", "true");
-                setSynapseContext(msgctx, msgctx.getAxisService());
-            }
+        if (msgctx.getProperty("transport.http.servletRequest") == null && uri != null && uri.contains("/odata/")) {
             //since all the tenant related requests are handling from the odata web app,
             // tenant request needs to be routed to the web app
-            if (uri.contains("/odata/t/")) {
-                WebApplication webApplication = null;
-                webApplication = Utils.getStartedWebapp(msgctx.getProperty("TransportInURL").toString());
-                if (webApplication != null) {
-                    setSynapseContext(msgctx, msgctx.getAxisService());
-                }
+            WebApplication webApplication;
+            webApplication = Utils.getStartedWebapp(msgctx.getProperty("TransportInURL").toString());
+            if (webApplication != null) {
+                msgctx.setProperty("IsODataService", true);
+                setSynapseContext(msgctx, msgctx.getAxisService());
             }
-        }
-
-        if (Utils.isDataService(msgctx)) {
+        } else if (Utils.isDataService(msgctx)) {
             try {
                 // To serve data services requests, message should be built always.
                 RelayUtils.buildMessage(msgctx);
@@ -96,14 +94,14 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                             if (index > 0) {
                                 acceptHeader = acceptHeader.substring(0, index);
                             }
-                            String[] strings = acceptHeader.split(",");
-                            for (String string : strings) {
-                                String accept = string.trim();
+                            String[] headers = acceptHeader.split(",");
+                            for (String header : headers) {
+                                String accept = header.trim();
                                 // We dont want dynamic content negotoatin to work on text.xml as its
                                 // ambiguos as to whether the user requests SOAP 1.1 or POX response
                                 if (!HTTPConstants.MEDIA_TYPE_TEXT_XML.equals(accept) &&
                                         configuration.getMessageFormatter(accept) != null) {
-                                    type = string;
+                                    type = header;
                                     break;
                                 }
                             }
@@ -117,28 +115,7 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                 throw new AxisFault("Exception occured while building the data service request as an XML", e);
             }
         }
-        return super.invoke(msgctx);
-    }
-
-    @Override
-    public AxisOperation findOperation(AxisService axisService, MessageContext messageContext) throws AxisFault {
-
-        if (Utils.isStatefulService(axisService) && messageContext.getProperty("transport.http.servletRequest") == null) {
-            try {
-                messageContext.setAxisService(synapseDispatcher.findService(messageContext));
-                if (log.isDebugEnabled()) {
-                    log.debug("AxisService is changing from " + axisService.getName() + " to "
-                            + messageContext.getAxisService().getName());
-                }
-                messageContext.setProperty("raplacedAxisService", "true");
-                return synapseDispatcher.findOperation(messageContext.getAxisService(), messageContext);
-            } catch (Exception e) {
-                log.error("Error occurred while invoking stateful service.");
-                return null;
-            }
-        } else {
-            return null;
-        }
+        return InvocationResponse.CONTINUE;
     }
 
     private void setSynapseContext(MessageContext messageContext, AxisService originalAxisService) throws AxisFault {
