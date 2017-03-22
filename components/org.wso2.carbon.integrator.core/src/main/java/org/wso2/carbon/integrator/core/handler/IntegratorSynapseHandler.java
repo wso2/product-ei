@@ -59,61 +59,22 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         try {
             org.apache.axis2.context.MessageContext axis2MessageContext =
                     ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            Object isApi = messageContext.getProperty("SYNAPSE_REST_API");
-            Object isProxy = messageContext.getProperty("proxy.name");
+            Object isODataService = messageContext.getProperty("IsODataService");
             // In this if block we are skipping proxy services, inbound related message contexts & api.
-            if (axis2MessageContext.getProperty("TransportInURL") != null && isApi == null && isProxy == null) {
+            if (axis2MessageContext.getProperty("TransportInURL") != null && isODataService != null ) {
                 String uri = axis2MessageContext.getProperty("TransportInURL").toString();
-                String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
-                String host;
-                Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                        .getProperty("TRANSPORT_HEADERS");
-                if (headers instanceof TreeMap) {
-                    host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
-                    //In this if block we whitelist carbon related requests (Management Console)
-                    // There was an issue with dataservice content type requests therefore add this below fix;
-                    //dss tenant flow issue, it comes in local port
-                    String to = messageContext.getTo().getAddress();
-                    boolean isLocalCall = false;
-                    if (to != null && to.startsWith("local://")) {
-                        isLocalCall = true;
-                    }
-                    if (axis2MessageContext.getProperty("raplacedAxisService") != null) {
-                        if (!isLocalCall) {
-                            isPreserveHeadersContained = true;
-                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + messageContext.getTo().getAddress();
-                            return dispatchMessage(endpoint, uri, messageContext);
-                        } else {
-                            isPreserveHeadersContained = true;
-                            String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol) + uri;
-                            return dispatchMessage(endpoint, uri, messageContext);
-                        }
-                    } else {
-                        //In this if block we are check webapps for tenants and super tenants
-                        Object tenantDomain = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                                .getProperty("tenantDomain");
-                        if (tenantDomain != null) {
-                            WebApplication webApplication = null;
-                            try {
-                                webApplication = Utils.getStartedTenantWebapp(tenantDomain.toString(), uri);
-                            } catch (Exception e) {
-                                if (log.isDebugEnabled()) {
-                                    log.debug("Exception occured while loading the tenant." + e.getMessage());
-                                }
-                            }
-                            if (webApplication != null) {
-                                isPreserveHeadersContained = true;
-                                String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
-                                return dispatchMessage(endpoint, uri, messageContext);
-                            }
-                        } else {
-                            WebApplication webApplication = Utils.getStartedWebapp(uri);
-                            if (webApplication != null) {
-                                isPreserveHeadersContained = true;
-                                String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
-                                return dispatchMessage(endpoint, uri, messageContext);
-                            }
-                        }
+                //OData web apps related logic
+                WebApplication webApplication = Utils.getStartedWebapp(uri);
+                if (webApplication != null) {
+                    String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
+                    String host;
+                    Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
+                            .getProperty("TRANSPORT_HEADERS");
+                    if (headers instanceof TreeMap) {
+                        host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
+                        isPreserveHeadersContained = true;
+                        String endpoint = protocol + "://" + host + ":" + Utils.getProtocolPort(protocol);
+                        return dispatchMessage(endpoint, uri, messageContext);
                     }
                 }
             }
