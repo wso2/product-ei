@@ -80,7 +80,7 @@ fi
 
 # update classpath
 H2_CLASSPATH=""
-for f in "$CARBON_HOME"/bin/*.jar
+for f in "$CARBON_HOME"/wso2/components/plugins/h2*.jar
 do
   H2_CLASSPATH=$H2_CLASSPATH:$f
 done

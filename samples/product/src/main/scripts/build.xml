@@ -290,10 +290,10 @@
             <fileset dir="../../wso2/lib/endorsed">
                 <include name="*.jar"/>
             </fileset>
+             <fileset dir="../../wso2/lib">
+                 <include name="*.jar"/>
+             </fileset>
             <fileset dir="../../extensions">
-                <include name="*.jar"/>
-            </fileset>
-            <fileset dir="../../repository/components/lib">
                 <include name="*.jar"/>
             </fileset>
              <fileset dir="../../repository/axis2/client/lib">
