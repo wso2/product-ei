@@ -157,7 +157,7 @@
 
     <!--remove the Frontend related jars from the plugins directory-->
     <target name="deleteUI" if="isApproved">
-        <echo>Removing UI related jars located in : ${carbon.home}/repository/components/plugins</echo>
+        <echo>Removing UI related jars located in : ${carbon.home}/wso2/components/plugins</echo>
         <delete includeEmptyDirs="true">
             <fileset dir="${carbon.home}/wso2/components/plugins/">
                 <include name="org.wso2.carbon.*ui_*" />

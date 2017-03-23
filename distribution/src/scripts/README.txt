@@ -15,7 +15,7 @@ this directory.
 	# chpasswd.bat/sh --db-url jdbc:h2:/$CARBON_HOME/repository/database/WSO2CARBON_DB
 
 	If the administrator wants to use other databases, he should configure the datasource in the "master-datasources.xml", which is in 
-	"$CARBON_HOME/repository/conf/datasources" directory. This datasource is looked up in "registry.xml" and "user-mgt.xml" as a JNDI resource.
+	"$CARBON_HOME/conf/datasources" directory. This datasource is looked up in "registry.xml" and "user-mgt.xml" as a JNDI resource.
   	He also needs to keep the drivers of the database inside the "$CARBON_HOME/lib" directory.
 
 	For eg,
@@ -110,7 +110,7 @@ this directory.
                 -DosgiDebugOptions
                                 Start Carbon with OSGi debugging enabled.
                                 Debug options are loaded from the file
-                                repository/conf/etc/osgi-debug.options
+                                conf/etc/osgi-debug.options
 
                 -Dsetup         Clean the Registry and other configuration,
                                 recreate DB, re-populate the configuration,
@@ -136,7 +136,8 @@ this directory.
 6. java2wsdl.sh & java2wsdl.bat - Tool for generating WSDL from Java code
 
 7. build.xml - Build configuration for the ant command.
-      Default task - Running the ant command in this directory, will copy the libraries that are require to run remote registry clients in to the repository/lib directory.
+      Default task - Running the ant command in this directory, will copy the libraries that are require to run
+      remote registry clients in to the $CARBON_HOME/lib directory.
       createWorker task - removes the front end components from the server runtime.
       localize task - Generates language bundles in the $CARBON_HOME/dropins to be picked at a locale change.
 
