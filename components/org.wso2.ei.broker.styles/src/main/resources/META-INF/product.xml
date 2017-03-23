@@ -17,9 +17,10 @@
  -->
 <product xmlns="http://products.wso2.org/carbon">
     <properties>
-       <property name="userforum">http://stackoverflow.com/questions/tagged/wso2/</property>
-       <property name="userguide">https://docs.wso2.com/display/EI600/WSO2+Enterprise+Integrator+Documentation</property>
+        <property name="userforum">http://stackoverflow.com/questions/tagged/wso2/</property>
+       <property name="userguide">https://docs.wso2.com/display/EI610/WSO2+Enterprise+Integrator
+           +Documentation</property>
        <property name="mailinglist">http://wso2.org/mail</property>
-       <property name="issuetracker">https://wso2.org/jira/browse/CARBON</property>
+       <property name="issuetracker">https://github.com/wso2/product-ei/issues</property>
     </properties>
 </product>
