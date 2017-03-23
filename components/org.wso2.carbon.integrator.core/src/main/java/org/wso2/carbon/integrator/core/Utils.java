@@ -338,8 +338,7 @@ public class Utils {
      */
     public static boolean isStatefulService(AxisService axisService) {
         Parameter parameter = axisService.getParameter("adminService");
-        return (parameter != null && "true".equals(axisService
-                .getParameter("adminService").getValue())) || ("transportsession".equals(axisService.getScope()));
+        return (parameter != null && "true".equals(parameter.getValue())) || ("transportsession".equals(axisService.getScope()));
     }
 
     private static String getPropertyFromAxisConf(String parameter) throws IOException, XMLStreamException {

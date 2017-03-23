@@ -128,6 +128,9 @@
                                 <bundleDef>
                                     org.wso2.analytics.esb:org.wso2.analytics.esb:${esb.analytics.version}
                                 </bundleDef>
+                                <bundleDef>
+                                    org.wso2.ei:org.wso2.ei.bps.analytics.core:${product.ei.version}
+                                </bundleDef>
                             </bundles>
                         </configuration>
                     </execution>

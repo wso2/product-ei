@@ -32,6 +32,7 @@ echo "	1.Integrator profile"
 echo "	2.Analytics Profile"
 echo "	3.Business Process profile"
 echo "	4.Broker profile"
+echo "	5.Msf4j profile"
 echo "Please enter the desired profile number to create the profile specific distribution."
 read profileNumber
 #Integrator profile
@@ -59,7 +60,9 @@ then
 	rm -rf ${DIR}/../wso2/components/analytics-default ${DIR}/../wso2/components/analytics-worker
 	rm -rf ${DIR}/analytics.bat
 	rm -rf ${DIR}/analytics.sh
-		
+	#remove msf4j
+	rm -rf ${DIR}/../wso2/msf4j
+
 	PROFILE="_integrator"
 
 #Analytics profile
@@ -91,6 +94,8 @@ then
 	rm -rf ${DIR}/integrator.sh
 	rm -rf ${DIR}/wso2ei-samples.bat
 	rm -rf ${DIR}/wso2ei-samples.sh
+	#remove msf4j
+	rm -rf ${DIR}/../wso2/msf4j
 
 	PROFILE="_analytics"
 
@@ -121,6 +126,8 @@ then
 	rm -rf ${DIR}/../wso2/components/analytics-default ${DIR}/../wso2/components/analytics-worker
 	rm -rf ${DIR}/analytics.bat
 	rm -rf ${DIR}/analytics.sh
+	#remove msf4j
+	rm -rf ${DIR}/../wso2/msf4j
 
 	PROFILE="_businessprocess"
 
@@ -152,8 +159,40 @@ then
 	rm -rf ${DIR}/../samples/business-process
 	rm -rf ${DIR}/business-process.bat
 	rm -rf ${DIR}/business-process.sh
+	#remove msf4j
+	rm -rf ${DIR}/../wso2/msf4j
 
 	PROFILE="_broker"
+
+elif [ ${profileNumber} -eq 5 ]
+then
+    echo "Preparing the Msf4j profile distribution"
+    rm -rf ${DIR}/../conf
+    rm -rf ${DIR}/../lib
+    rm -rf ${DIR}/../dropins
+    rm -rf ${DIR}/../dbscripts
+    rm -rf ${DIR}/../patches
+    rm -rf ${DIR}/../repository
+    rm -rf ${DIR}/../resources
+    rm -rf ${DIR}/../samples
+    rm -rf ${DIR}/../servicepacks
+    rm -rf ${DIR}/../webapp-mode
+    rm -rf ${DIR}/../wso2/analytics
+    rm -rf ${DIR}/../wso2/broker
+    rm -rf ${DIR}/../wso2/business-process
+    rm -rf ${DIR}/../wso2/components
+    rm -rf ${DIR}/../wso2/lib
+    rm -rf ${DIR}/../wso2/tmp
+    rm -rf ${DIR}/business-process.bat
+	rm -rf ${DIR}/business-process.sh
+	rm -rf ${DIR}/wso2ei-samples.bat
+	rm -rf ${DIR}/wso2ei-samples.sh
+	rm -rf ${DIR}/analytics.bat
+	rm -rf ${DIR}/analytics.sh
+	rm -rf ${DIR}/broker.bat
+	rm -rf ${DIR}/broker.sh
+
+    PROFILE="_msf4j"
 
 else
 	echo "Invalid profile number. Terminating."
@@ -164,24 +203,28 @@ fi
 rm -rf ${DIR}/start-all.sh
 rm -rf ${DIR}/start-all.bat
 
-#remove unnecessary jar files
-mkdir -p ${DIR}/../wso2/components/tmp_plugins
 
-echo "Removing unnecessary jars from plugins folder."
-for BUNDLE in $DEFAULT_BUNDLES; do
-	IFS=',' read -a bundleArray <<< "$BUNDLE"
-	JAR=${bundleArray[0]}_${bundleArray[1]}.jar
-	cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
-    done
+if [ ${profileNumber} != 5 ]
+then
+    #remove unnecessary jar files
+    echo "Removing unnecessary jars from plugins folder."
+    mkdir -p ${DIR}/../wso2/components/tmp_plugins
 
-for BUNDLE in $WORKER_BUNDLES; do
-	IFS=',' read -a bundleArray <<< "$BUNDLE"
-	JAR=${bundleArray[0]}_${bundleArray[1]}.jar
-	cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
-    done
+    for BUNDLE in $DEFAULT_BUNDLES; do
+        IFS=',' read -a bundleArray <<< "$BUNDLE"
+        JAR=${bundleArray[0]}_${bundleArray[1]}.jar
+        cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
+        done
 
-rm -r ${DIR}/../wso2/components/plugins
-mv ${DIR}/../wso2/components/tmp_plugins ${DIR}/../wso2/components/plugins
+    for BUNDLE in $WORKER_BUNDLES; do
+        IFS=',' read -a bundleArray <<< "$BUNDLE"
+        JAR=${bundleArray[0]}_${bundleArray[1]}.jar
+        cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
+        done
+
+    rm -r ${DIR}/../wso2/components/plugins
+    mv ${DIR}/../wso2/components/tmp_plugins ${DIR}/../wso2/components/plugins
+fi
 
 echo "Preparing a profile distribution archive."
 cd ${DIR}/../../

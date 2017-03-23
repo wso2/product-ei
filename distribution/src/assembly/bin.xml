@@ -254,6 +254,7 @@
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/*.bat</exclude>
+                <exclude>**/conf/transports/netty-transports.yml</exclude>
             </excludes>
         </fileSet>
 
@@ -268,6 +269,14 @@
                 <include>**.bat</include>
             </includes>
             <fileMode>755</fileMode>
+        </fileSet>
+
+        <!-- MSF4J updating netty-transports.yml-->
+        <fileSet>
+            <directory>
+                src/conf/msf4j-transport/
+            </directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/conf/transports/</outputDirectory>
         </fileSet>
 
         <!-- BPS scripts :start-->
@@ -3439,6 +3448,16 @@
             </outputDirectory>
             <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
             <!--filtered>true</filtered-->
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                src/analytics/conf/bps-analytics.xml
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/analytics/conf/
+            </outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
