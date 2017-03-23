@@ -1,0 +1,20 @@
+{
+  "id": "avg_execution_time_vs_task_id",
+  "title": "Average Task Completion Times By User",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "store://gadget/avg_execution_time_vs_task_id/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "store://gadget/avg_execution_time_vs_task_id/index.xml"
+  },
+  "description": "BPS analytics graphs",
+  "listen": {
+    "channel5": {
+      "type": "user_id",
+      "description": "Listening to user id"
+    }
+  }
+}

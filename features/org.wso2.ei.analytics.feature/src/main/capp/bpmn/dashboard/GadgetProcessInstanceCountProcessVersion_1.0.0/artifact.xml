@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="GadgetProcessInstanceCountProcessVersion" version="1.0.0" type="dashboards/gadget" serverRole="DataAnalyticsServer">
+    <file>process_instance_count_vs_process_version</file>
+</artifact>
+

@@ -1,0 +1,20 @@
+{
+  "id": "total_involved_time_vs_user_id",
+  "title": "Time Worked by Users",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "gadget/total_involved_time_vs_user_id/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/total_involved_time_vs_user_id/index.xml"
+  },
+  "description": "PC analytics graphs",
+  "listen": {
+    "channel5": {
+      "type": "dateRange",
+      "description": "Listening to date range"
+    }
+  }
+}

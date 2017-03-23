@@ -1131,6 +1131,27 @@
 
         <!-- Adding Analytics related files to distribution -->
 
+        <fileSet>
+            <directory>../features/org.wso2.ei.analytics.feature/src/main/capp/bpmn/libs</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/jaggeryapps/portal/libs
+            </outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>../features/org.wso2.ei.analytics.feature/src/main/resources</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/profiles/business-process</outputDirectory>
+            <includes>
+                <include>**/org.wso2.bpmn.analytics-1.0.0.car</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>../features/org.wso2.ei.analytics.feature/src/main/jaggeryapi/bpmn-api</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/analytics/repository/deployment/server/jaggeryapps/portal/controllers/apis/bpmn-api
+            </outputDirectory>
+        </fileSet>
 
         <!-- copying runtimes -->
         <fileSet>
@@ -1316,6 +1337,14 @@
             </outputDirectory>
             <includes>
                 <include>**/org.wso2.das.samples.geoip-${pom.version}.jar</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>../components/org.wso2.ei.bps.analytics.udf/target</directory>
+            <outputDirectory> ${pom.artifactId}-${pom.version}/lib</outputDirectory>
+            <includes>
+                <include>**/BPMNAnalyticsUDF.jar</include>
             </includes>
         </fileSet>
 
@@ -2116,7 +2145,14 @@
             <fileMode>644</fileMode>
         </file>
 
-
+        <file>
+            <source>
+                src/analytics/conf/spark-udf-config.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/conf/analytics/spark/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
         <!--BPS files:End -->
 
         <!-- Broker files: Start-->

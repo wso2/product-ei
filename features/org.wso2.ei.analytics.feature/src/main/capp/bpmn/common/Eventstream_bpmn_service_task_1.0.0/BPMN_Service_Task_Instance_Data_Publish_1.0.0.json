@@ -1,0 +1,44 @@
+{
+  "name": "BPMN_Service_Task_Instance_Data_Publish",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "BPMN service tasks data",
+  "payloadData": [
+    {
+      "name": "taskDefinitionKey",
+      "type": "STRING"
+    },
+    {
+      "name": "taskInstanceId",
+      "type": "STRING"
+    },
+    {
+      "name": "processDefinitionId",
+      "type": "STRING"
+    },
+    {
+      "name": "processInstanceId",
+      "type": "STRING"
+    },
+    {
+      "name": "createTime",
+      "type": "STRING"
+    },
+    {
+      "name": "startTime",
+      "type": "STRING"
+    },
+    {
+      "name": "endTime",
+      "type": "STRING"
+    },
+    {
+      "name": "duration",
+      "type": "LONG"
+    },
+    {
+      "name": "assignee",
+      "type": "STRING"
+    }
+  ]
+}

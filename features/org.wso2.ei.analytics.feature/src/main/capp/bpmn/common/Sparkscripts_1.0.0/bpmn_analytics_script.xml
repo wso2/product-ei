@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Analytics>
+    <Name>bpmn_analytics_script</Name>
+    <Script>
+
+        CREATE TEMPORARY TABLE BPMNProcessInstances USING CarbonAnalytics OPTIONS (tableName "bpmn_process_instance_data_publish");
+
+        CREATE TEMPORARY TABLE PROCESS_USAGE_SUMMARY USING CarbonAnalytics OPTIONS (tableName "PROCESS_USAGE_SUMMARY_DATA",
+        schema "processDefinitionId string -i,
+        processDefKey facet -i,
+        processKeyName string -i,
+        processKey facet -i,
+        processVersion string -i,
+        processVer facet -i,
+        processInstanceId string -i,
+        startedTime long -i,
+        startTime facet -i,
+        finishedTime long -i,
+        finishTime facet -i,
+        month facet -i,
+        duration long -i",
+        primaryKeys "processInstanceId,processDefinitionId"
+        );
+
+        INSERT OVERWRITE TABLE PROCESS_USAGE_SUMMARY
+        SELECT DISTINCT processDefinitionId, processDefinitionId, getProcessKey(processDefinitionId) AS processKeyName,
+        getProcessKey(processDefinitionId) AS processKey, getProcessVersion(processDefinitionId) AS processVersion,
+        getProcessVersion(processDefinitionId) AS processVer, processInstanceId, getActTime(startTime) AS startedTime,
+        getActTime(startTime) AS startTime, getActTime(endTime) AS finishedTime, getActTime(endTime) AS finishTime, getActMonth(endTime) AS month, duration
+        FROM BPMNProcessInstances;
+
+        CREATE temporary TABLE BPMNTaskInstances USING CarbonAnalytics OPTIONS (tableName "bpmn_task_instance_data_publish");
+
+        CREATE TEMPORARY TABLE TASK_USAGE_SUMMARY USING CarbonAnalytics OPTIONS (tableName "TASK_USAGE_SUMMARY_DATA",
+        schema "taskDefinitionKey string -i,
+        taskDefId facet -i,
+        taskInstanceId string -i,
+        processDefinitionId string -i,
+        processInstanceId string -i,
+        startedTime long -i,
+        startTime facet -i,
+        finishedTime long -i,
+        finishTime facet -i,
+        duration long -i,
+        assignee string -i,
+        assignUser facet -i",
+        primaryKeys "taskInstanceId,taskDefinitionKey,processInstanceId"
+        );
+
+        INSERT OVERWRITE TABLE TASK_USAGE_SUMMARY
+        SELECT DISTINCT taskDefinitionKey, taskDefinitionKey, taskInstanceId, processDefinitionId, processInstanceId, getActTime(startTime) AS startedTime,
+        getActTime(startTime) AS startTime, getActTime(endTime) AS finishedTime, getActTime(endTime) AS finishTime, duration, assignee, assignee
+        FROM BPMNTaskInstances;
+
+        CREATE temporary TABLE BPMNServiceTaskInstances USING CarbonAnalytics OPTIONS (tableName "bpmn_service_task_instance_data_publish");
+
+        CREATE TEMPORARY TABLE SERVICE_TASK_USAGE_SUMMARY USING CarbonAnalytics OPTIONS (tableName "SERVICE_TASK_USAGE_SUMMARY_DATA",
+        schema "taskDefinitionKey string -i,
+        taskDefId facet -i,
+        taskInstanceId string -i,
+        processInstanceId string -i,
+        startedTime long -i,
+        startTime facet -i,
+        finishedTime long -i,
+        finishTime facet -i,
+        duration long -i,
+        assignee string -i,
+        assignUser facet -i",
+        primaryKeys "taskInstanceId,taskDefinitionKey,processInstanceId"
+        );
+
+        INSERT OVERWRITE TABLE SERVICE_TASK_USAGE_SUMMARY
+        SELECT DISTINCT taskDefinitionKey, taskDefinitionKey, taskInstanceId, processInstanceId, getActTime(startTime) AS startedTime,
+        getActTime(startTime) AS startTime, getActTime(endTime) AS finishedTime, getActTime(endTime) AS finishTime, duration, assignee, assignee
+        FROM BPMNServiceTaskInstances;
+
+        CREATE TEMPORARY TABLE USER_INVOLVE_SUMMARY USING CarbonAnalytics OPTIONS (tableName "USER_INVOLVE_SUMMARY_DATA",
+        schema "processDefinitionId string -i,
+        processDefKey facet -i,
+        taskDefinitionKey string -i,
+        taskDefId facet -i,
+        taskInstanceId string -i,
+        processInstanceId string -i,
+        startedTime long -i,
+        startTime facet -i,
+        finishedTime long -i,
+        finishTime facet -i,
+        duration long -i,
+        assignee string -i,
+        assignUser facet -i"
+        );
+
+        INSERT OVERWRITE TABLE USER_INVOLVE_SUMMARY
+        SELECT c.processDefinitionId, c.processDefinitionId, c.taskDefinitionKey, c.taskDefinitionKey, c.taskInstanceId,
+        c.processInstanceId, getActTime(c.startTime) AS startedTime, getActTime(c.startTime) AS startTime, getActTime(c.endTime) AS finishedTime, getActTime(c.endTime) AS finishTime,
+        c.duration, c.assignee, c.assignee FROM BPMNTaskInstances c;
+
+    </Script>
+    <CronExpression>0 0/5 * 1/1 * ? *</CronExpression>
+</Analytics>

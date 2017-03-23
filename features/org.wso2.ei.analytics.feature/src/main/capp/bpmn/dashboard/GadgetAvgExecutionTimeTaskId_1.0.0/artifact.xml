@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="GadgetAvgExecutionTimeTaskId" version="1.0.0" type="dashboards/gadget" serverRole="DataAnalyticsServer">
+    <file>avg_execution_time_vs_task_id</file>
+</artifact>
+

@@ -46,5 +46,6 @@
         <module>org.wso2.ei.analytics.styles</module>
         <module>org.wso2.ei.business-process.styles</module>
         <module>org.wso2.ei.broker.styles</module>
+        <module>org.wso2.ei.bps.analytics.udf</module>
     </modules>
 </project>

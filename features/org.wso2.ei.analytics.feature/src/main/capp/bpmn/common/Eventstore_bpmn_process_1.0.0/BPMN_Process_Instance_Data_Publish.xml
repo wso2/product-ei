@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EventStoreConfiguration>
+<Source>
+       <StreamId>BPMN_Process_Instance_Data_Publish:1.0.0</StreamId>
+   </Source>
+   <TableSchema>
+
+<ColumnDefinition>
+	<Name>processDefinitionId</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>true</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>processInstanceId</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>true</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>startActivityId</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>false</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>startUserId</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>false</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>startTime</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>false</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>endTime</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>false</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>duration</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>false</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>LONG</Type>
+</ColumnDefinition>
+<ColumnDefinition>
+	<Name>tenantId</Name>
+	<EnableIndexing>false</EnableIndexing>
+	<IsPrimaryKey>false</IsPrimaryKey>
+	<EnableScoreParam>false</EnableScoreParam>
+	<Type>STRING</Type>
+</ColumnDefinition>
+
+   </TableSchema>
+   </EventStoreConfiguration>

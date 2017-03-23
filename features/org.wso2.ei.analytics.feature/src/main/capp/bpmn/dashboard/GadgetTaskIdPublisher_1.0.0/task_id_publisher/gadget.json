@@ -1,0 +1,20 @@
+{
+  "id": "task_id_publisher",
+  "title": "Task ID picker",
+  "type": "gadget",
+  "category": "Publishers",
+  "thumbnail": "gadget/task_id_publisher/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/task_id_publisher/index.xml"
+  },
+  "description": "This shows pc analytics charts",
+  "notify": {
+    "task_id": {
+      "type": "taskID",
+      "description": "This notifies selected task id"
+    }
+  }
+}

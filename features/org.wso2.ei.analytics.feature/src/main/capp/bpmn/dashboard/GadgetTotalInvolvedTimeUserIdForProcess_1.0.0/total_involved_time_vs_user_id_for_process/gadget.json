@@ -1,0 +1,20 @@
+{
+  "id": "total_time_worked_vs_user_id_for_process",
+  "title": "Time Worked by Users in the Process",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "gadget/total_involved_time_vs_user_id_for_process/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/total_involved_time_vs_user_id_for_process/index.xml"
+  },
+  "description": "PC analytics graphs",
+  "listen": {
+    "channel2": {
+      "type": "dateRange",
+      "description": "Listening to date range"
+    }
+  }
+}

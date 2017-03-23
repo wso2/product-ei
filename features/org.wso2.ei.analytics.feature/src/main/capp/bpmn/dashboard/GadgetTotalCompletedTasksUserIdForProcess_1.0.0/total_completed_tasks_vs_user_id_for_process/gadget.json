@@ -1,0 +1,20 @@
+{
+  "id": "total_completed_tasks_vs_user_id_for_process",
+  "title": "Task Completions of the Process by Users",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "gadget/total_completed_tasks_vs_user_id_for_process/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/total_completed_tasks_vs_user_id_for_process/index.xml"
+  },
+  "description": "PC analytics graphs",
+  "listen": {
+    "channel2": {
+      "type": "dateRange",
+      "description": "Listening to date range"
+    }
+  }
+}

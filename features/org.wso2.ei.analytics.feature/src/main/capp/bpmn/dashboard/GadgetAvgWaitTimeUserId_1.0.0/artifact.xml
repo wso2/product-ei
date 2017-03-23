@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="GadgetAvgWaitTimeUserId" version="1.0.0" type="dashboards/gadget" serverRole="DataAnalyticsServer">
+    <file>avg_wait_time_vs_user_id</file>
+</artifact>
+

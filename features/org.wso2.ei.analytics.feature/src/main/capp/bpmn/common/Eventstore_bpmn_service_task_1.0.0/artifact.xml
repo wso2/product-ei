@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="Eventstore_bpmn_service_task" version="1.0.0" type="analytics/eventstore" serverRole="DataAnalyticsServer">
+    <file>BPMN_Service_Task_Instance_Data_Publish.xml</file>
+</artifact> 

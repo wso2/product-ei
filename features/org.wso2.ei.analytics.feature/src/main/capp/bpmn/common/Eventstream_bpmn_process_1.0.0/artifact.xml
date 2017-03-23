@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="Eventstream_bpmn_process" version="1.0.0" type="event/stream" serverRole="DataAnalyticsServer">
+	<file>BPMN_Process_Instance_Data_Publish_1.0.0.json</file>	
+</artifact>
+

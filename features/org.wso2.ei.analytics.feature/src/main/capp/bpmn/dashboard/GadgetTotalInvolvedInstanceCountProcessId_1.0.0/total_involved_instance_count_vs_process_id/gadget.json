@@ -1,0 +1,20 @@
+{
+  "id": "total_involved_instance_count_vs_process_id",
+  "title": "User's Involvement in Processes (Instances)",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "gadget/total_involved_instance_count_vs_process_id/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/total_involved_instance_count_vs_process_id/index.xml"
+  },
+  "description": "PC analytics graphs",
+  "listen": {
+    "channel3": {
+      "type": "user_id",
+      "description": "Listening to user id"
+    }
+  }
+}
