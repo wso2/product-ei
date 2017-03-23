@@ -3406,6 +3406,16 @@
             <fileMode>644</fileMode>
         </file>
 
+        <file>
+            <source>
+                src/analytics/conf/bps-analytics.xml
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/analytics/conf/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
         <!--END Analytics file copying -->
 
 
