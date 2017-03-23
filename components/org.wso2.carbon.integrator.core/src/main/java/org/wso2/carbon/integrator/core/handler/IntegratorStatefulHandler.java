@@ -21,10 +21,10 @@ package org.wso2.carbon.integrator.core.handler;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.Constants;
 import org.apache.axis2.context.MessageContext;
-import org.apache.axis2.description.AxisOperation;
-import org.apache.axis2.description.AxisService;
-import org.apache.axis2.description.HandlerDescription;
+import org.apache.axis2.description.*;
+import org.apache.axis2.dispatchers.HTTPLocationBasedDispatcher;
 import org.apache.axis2.dispatchers.RequestURIBasedServiceDispatcher;
+import org.apache.axis2.dispatchers.RequestURIOperationDispatcher;
 import org.apache.axis2.engine.AbstractDispatcher;
 import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.axis2.transport.http.HTTPConstants;
@@ -47,8 +47,11 @@ import java.util.Map;
 public class IntegratorStatefulHandler extends AbstractDispatcher {
     private static final String NAME = "IntegratorStatefulHandler";
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
-    private SynapseDispatcher synapseDispatcher = new SynapseDispatcher();
-    private RequestURIBasedServiceDispatcher rubsd = new RequestURIBasedServiceDispatcher();
+    private static SynapseDispatcher synapseDispatcher = new SynapseDispatcher();
+    private static RequestURIBasedServiceDispatcher rubsd = new RequestURIBasedServiceDispatcher();
+    private static HTTPLocationBasedDispatcher httpLocationBasedDispatcher = new HTTPLocationBasedDispatcher();
+    private static RequestURIOperationDispatcher axisOperation = new RequestURIOperationDispatcher();
+
 
     public IntegratorStatefulHandler() {
     }
@@ -72,8 +75,11 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
                 msgctx.setProperty("IsODataService", true);
                 setSynapseContext(msgctx, msgctx.getAxisService());
             }
-        } else if (Utils.isDataService(msgctx)) {
+        }
+
+        if (Utils.isDataService(msgctx)) {
             try {
+                dispatchAndVerify(msgctx);
                 // To serve data services requests, message should be built always.
                 RelayUtils.buildMessage(msgctx);
                 String type = null;
@@ -137,6 +143,26 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     @Override
     public void initDispatcher() {
         this.init(new HandlerDescription(NAME));
+    }
+
+    private static void dispatchAndVerify(MessageContext msgContext) throws AxisFault {
+        rubsd.invoke(msgContext);
+        AxisService axisService = msgContext.getAxisService();
+        if(axisService != null) {
+            httpLocationBasedDispatcher.invoke(msgContext);
+            if(msgContext.getAxisOperation() == null) {
+                axisOperation.invoke(msgContext);
+            }
+            AxisOperation axisOperation1;
+            if((axisOperation1 = msgContext.getAxisOperation()) != null) {
+                AxisEndpoint axisEndpoint = (AxisEndpoint)msgContext.getProperty("endpoint");
+                if(axisEndpoint != null) {
+                    AxisBindingOperation axisBindingOperation = (AxisBindingOperation)axisEndpoint.getBinding().getChild(axisOperation1.getName());
+                    msgContext.setProperty("AxisBindingOperation", axisBindingOperation);
+                }
+                msgContext.setAxisOperation(axisOperation1);
+            }
+        }
     }
 
 }
