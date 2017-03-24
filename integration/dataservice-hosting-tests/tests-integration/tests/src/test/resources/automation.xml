@@ -204,8 +204,8 @@
                     <host type="default">localhost</host>
                 </hosts>
                 <ports>
-                    <port type="https">8444</port>
-                    <port type="http">8481</port>
+                    <port type="https">9644</port>
+                    <port type="http">9964</port>
                 </ports>
                 <properties>
                 </properties>
@@ -216,8 +216,8 @@
                     <host type="default">localhost</host>
                 </hosts>
                 <ports>
-                    <port type="https">8443</port>
-                    <port type="http">8480</port>
+                    <port type="https">9643</port>
+                    <port type="http">9963</port>
                 </ports>
                 <properties>
 
@@ -228,8 +228,8 @@
                     <host type="default">localhost</host>
                 </hosts>
                 <ports>
-                    <port type="https">8445</port>
-                    <port type="http">8482</port>
+                    <port type="https">9645</port>
+                    <port type="http">9965</port>
                 </ports>
                 <properties>
                 </properties>
