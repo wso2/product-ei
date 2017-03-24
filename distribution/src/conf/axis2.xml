@@ -676,6 +676,7 @@
         </phase>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
+            <handler name="JSONMessageHandler" class="org.apache.axis2.json.gson.JSONMessageHandler" />
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
