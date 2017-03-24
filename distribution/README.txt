@@ -34,16 +34,6 @@ Running other runtimes individually (Analytics, Broker, Business-Process)
 4. Execute wso2server.sh or wso2server.bat.
 3. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)
 
-Running all runtimes (Integrator, Analytics, Broker, Business-Process)
-==================================================================
-
-1. Extract  wso2ei-@product.version@.zip and go to the extracted directory/bin.
-2. Run start-all.sh or start-all.bat.
-3. Access appropriate url for the related runtime. (For example, use  https://localhost:9443/carbon for the Integrator
-runtime)
-
-
-
 WSO2 EI distribution directory
 =============================================
 

@@ -19,11 +19,6 @@ WSO2 EI simplifies integration by allowing users to easily configure message rou
 4. Execute wso2server.sh or wso2server.bat.
 3. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)
 
-## Running all runtimes (Integrator, Analytics, Broker, Business-Process)
-1. Extract  wso2ei-6.1.0.zip and go to the extracted directory/bin.
-2. Run start-all.sh or start-all.bat.
-3. Access appropriate url for the related runtime. (For example, use  https://localhost:9443/carbon for the Integrator runtime)
-
 ## Known Issues
 All the open issues pertaining to WSO2 Enterprise Integrator are reported at the following location:
 [known issues](https://github.com/wso2/product-ei/issues)
