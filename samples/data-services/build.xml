@@ -71,8 +71,6 @@
         <delete file="${ds.repository}/samples/WebResourceSample.dbs"/>
         <delete file="${ds.repository}/samples/InMemoryDSSample.dbs"/>
         <delete file="${ds.repository}/samples/JSONSample.dbs"/>
-        <delete file="${ds.repository}/samples/CassandraSample.dbs"/>
-        <delete file="${ds.repository}/samples/MongoDBSampleService.dbs"/>
         <delete file="${ds.repository}/samples/ODataSampleService.dbs"/>
         <delete file="${ds.repository}/samples/ReturnUpdatedRowCountSample.dbs"/>
         <delete file="${ds.repository}/samples/DOCTORS_DataService.dbs"/>
