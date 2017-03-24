@@ -15,7 +15,7 @@
  ~ limitations under the License.
 */
 
-importPackage(org.wso2.ei.bps.analytics.core.bpmn);
+importPackage(org.wso2.ei.bpmn.analytics.core);
 
 var log = new Log();
 if(log.isDebugEnabled()){

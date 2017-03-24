@@ -80,11 +80,11 @@ function drawGraph() {
                 barChart.draw("#chartA", [{type: "click"}]);
             }
             else {
-                jsonObj[0].data = [];
+                /*jsonObj[0].data = [];
                 config.width = $('#chartA').width();
                 config.height = $('#chartA').height();
                 var barChart = new vizg(jsonObj, config);
-                barChart.draw("#chartA", [{type: "click"}]);
+                barChart.draw("#chartA", [{type: "click"}]);*/
             }
         },
         error: function (xhr, status, error) {

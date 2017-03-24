@@ -1151,7 +1151,7 @@
             <directory>../features/org.wso2.ei.analytics.feature/src/main/resources</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/profiles/business-process</outputDirectory>
             <includes>
-                <include>**/org.wso2.bpmn.analytics-1.0.0.car</include>
+                <include>**/org.wso2.ei.bpmn.analytics-1.0.0.car</include>
             </includes>
         </fileSet>
 
@@ -1350,7 +1350,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../components/org.wso2.ei.bps.analytics.udf/target</directory>
+            <directory>../components/org.wso2.ei.bpmn.analytics.udf/target</directory>
             <outputDirectory> ${pom.artifactId}-${pom.version}/lib</outputDirectory>
             <includes>
                 <include>**/BPMNAnalyticsUDF.jar</include>

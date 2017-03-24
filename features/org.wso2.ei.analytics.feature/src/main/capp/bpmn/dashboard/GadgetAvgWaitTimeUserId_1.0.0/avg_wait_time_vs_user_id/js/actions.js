@@ -69,26 +69,27 @@ function drawAvgExecuteTimeVsUserIdResult() {
             data: {'filters': JSON.stringify(body)},
             success: function (data) {
                 var responseJsonArr = [];
-                if (!$.isEmptyObject(data))
+                if (!$.isEmptyObject(data)) {
                     responseJsonArr = JSON.parse(data);
 
-                var responseStr = '';
-                var scale = getTimeScale(responseJsonArr[0].avgWaitingTime);
-                for (var i = 0; i < responseJsonArr.length; i++) {
-                    responseJsonArr[i].avgWaitingTime = convertTime(scale, responseJsonArr[i].avgWaitingTime);
-                    var temp = '["' + responseJsonArr[i].assignUser + '",' + responseJsonArr[i].avgWaitingTime + '],';
-                    responseStr += temp;
-                }
-                jsonObj[0].metadata.names[1] = "Time(" + scale + ")";
-                config.charts[0].y = "Time(" + scale + ")";
-                responseStr = responseStr.slice(0, -1);
-                var jsonArrObj = JSON.parse('[' + responseStr + ']');
-                jsonObj[0].data = jsonArrObj;
+                    var responseStr = '';
+                    var scale = getTimeScale(responseJsonArr[0].avgWaitingTime);
+                    for (var i = 0; i < responseJsonArr.length; i++) {
+                        responseJsonArr[i].avgWaitingTime = convertTime(scale, responseJsonArr[i].avgWaitingTime);
+                        var temp = '["' + responseJsonArr[i].assignUser + '",' + responseJsonArr[i].avgWaitingTime + '],';
+                        responseStr += temp;
+                    }
+                    jsonObj[0].metadata.names[1] = "Time(" + scale + ")";
+                    config.charts[0].y = "Time(" + scale + ")";
+                    responseStr = responseStr.slice(0, -1);
+                    var jsonArrObj = JSON.parse('[' + responseStr + ']');
+                    jsonObj[0].data = jsonArrObj;
 
-                config.width = $('#chartA').width();
-                config.height = $('#chartA').height();
-                var barChart = new vizg(jsonObj, config);
-                barChart.draw("#chartA", [{type: "click", callback: callbackmethod}]);
+                    config.width = $('#chartA').width();
+                    config.height = $('#chartA').height();
+                    var barChart = new vizg(jsonObj, config);
+                    barChart.draw("#chartA", [{type: "click", callback: callbackmethod}]);
+                }
             },
             error: function (xhr, status, error) {
                 var errorJson = eval("(" + xhr.responseText + ")");

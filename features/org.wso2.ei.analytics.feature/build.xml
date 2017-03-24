@@ -16,7 +16,7 @@
 
     <property name="ANALYTICS_ESB_capp_realtime" value="org.wso2.ei.analytics.realtime-1.0.0"/>
     <property name="ANALYTICS_ESB_capp_offline" value="org.wso2.ei.analytics.offline-1.0.0"/>
-    <property name="ANALYTICS_BPMN_capp" value="org.wso2.bpmn.analytics-1.0.0"/>
+    <property name="ANALYTICS_BPMN_capp" value="org.wso2.ei.bpmn.analytics-1.0.0"/>
 
     <target name="clean">
         <delete dir="${target-dir}"/>
