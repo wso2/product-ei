@@ -1,0 +1,21 @@
+{
+  "id": "date-range",
+  "title": "Date Range Picker",
+  "type": "gadget",
+  "category": "Publishers",
+  "thumbnail": "gadget/date-range/dateRange.png",
+  "data": {
+    "url": "gadget/date-range/index.xml"
+  },
+  "styles": {
+    "borders": true,
+    "title": true
+  },
+  "notify": {
+    "date_range": {
+      "type": "dateRange",
+      "description": "This notifies selected date range"
+    }
+  }
+}
+

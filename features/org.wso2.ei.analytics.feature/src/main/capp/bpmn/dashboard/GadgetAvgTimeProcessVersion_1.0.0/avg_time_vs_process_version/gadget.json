@@ -1,0 +1,20 @@
+{
+  "id": "avg_time_vs_process_version",
+  "title": "Average Execution Times of Process Versions",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "store://gadget/avg_time_vs_process_version/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "store://gadget/avg_time_vs_process_version/index.xml"
+  },
+  "description": "This shows pc analytics charts",
+  "listen": {
+    "Daterange": {
+      "type": "dateRange",
+      "description": "Listening to date range"
+    }
+  }
+}

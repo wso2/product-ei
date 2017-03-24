@@ -1,0 +1,23 @@
+.fw-add:before {
+    content: '\e615';
+}
+
+.panel-body a {
+    color: rgb(52, 59, 89);
+    text-decoration: none;
+}
+
+.fw-filter:before {
+    content: '\e634';
+}
+
+/*a:hover{*/
+    /*text-decoration: none;*/
+/*}*/
+
+@media (min-width: 400px) {
+    .form-inline .form-control {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;  }
+}

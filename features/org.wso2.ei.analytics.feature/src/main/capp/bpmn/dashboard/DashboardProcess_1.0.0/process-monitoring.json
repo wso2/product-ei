@@ -1,0 +1,515 @@
+{
+  "id": "process-monitoring",
+  "title": "Business-process Profile:process-analytics",
+  "description": "",
+  "permissions": {
+    "viewers": [
+      "Internal/process-monitoring-viewer"
+    ],
+    "editors": [
+      "Internal/process-monitoring-editor"
+    ],
+    "owners": [
+      "Internal/process-monitoring-owner"
+    ]
+  },
+  "pages": [
+    {
+      "id": "landing",
+      "title": "Process Monitoring",
+      "layout": {
+        "content": {
+          "loggedIn": {
+            "blocks": [
+              {
+                "id": "e9c3f7c156e45c77608d3b1685142d70",
+                "x": 6,
+                "y": 13,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "f0a4e03aeb2068fb41ea3a122b99bd56",
+                "x": 0,
+                "y": 13,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "a2074d01747013cc5d6b3dc61b896da6",
+                "x": 6,
+                "y": 8,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "b356525b0b5c4c291b38ca1efe6c1d1d",
+                "x": 0,
+                "y": 8,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "c3b618debfe7d6c625d6621b08aa75b8",
+                "x": 6,
+                "y": 3,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "6319b92f7a4624f63dc5a6fd11ac12dc",
+                "x": 0,
+                "y": 3,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "b85060d1eb3164b51d40441a39e58cd0",
+                "x": 0,
+                "y": 0,
+                "width": 12,
+                "height": 3,
+                "banner": false
+              }
+            ]
+          }
+        },
+        "fluidLayout": false
+      },
+      "isanon": false,
+      "content": {
+        "default": {
+          "6319b92f7a4624f63dc5a6fd11ac12dc": [
+            {
+              "id": "exec_time_vs_process_instance_id-0",
+              "content": {
+                "id": "exec_time_vs_process_instance_id",
+                "title": "Process Instance Execution Times",
+                "type": "gadget",
+                "category": "Subscribers",
+                "thumbnail": "store://gadget/exec_time_vs_process_instance_id/index.png",
+                "settings": {
+                  "personalize": true,
+                  "priority": "5"
+                },
+                "data": {
+                  "url": "store://gadget/exec_time_vs_process_instance_id/index.xml"
+                },
+                "description": "This shows bps analytics charts",
+                "listen": {
+                  "Daterange": {
+                    "type": "dateRange",
+                    "description": "Listening to date range",
+                    "on": [
+                      {
+                        "from": "date-range-0",
+                        "event": "date_range"
+                      }
+                    ]
+                  }
+                },
+                "styles": {
+                  "no_heading": false,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "Process Instance Execution Times"
+                },
+                "options": {},
+                "locale_titles": {
+                  "en-US": "Process Instance Execution Times"
+                }
+              }
+            }
+          ],
+          "c3b618debfe7d6c625d6621b08aa75b8": [
+            {
+              "id": "task_instance_count_vs_task_id-0",
+              "content": {
+                "id": "task_instance_count_vs_task_id",
+                "title": "Task Instance Counts",
+                "type": "gadget",
+                "thumbnail": "store://gadget/task_instance_count_vs_task_id/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/task_instance_count_vs_task_id/index.xml"
+                },
+                "description": "BPS analytics graphs",
+                "styles": {
+                  "title": "Task Instance Counts",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "b356525b0b5c4c291b38ca1efe6c1d1d": [
+            {
+              "id": "avg_time_vs_task_id-0",
+              "content": {
+                "id": "avg_time_vs_task_id",
+                "title": "Average Execution Times of Tasks",
+                "type": "gadget",
+                "category": "gadget",
+                "thumbnail": "store://gadget/avg_time_vs_task_id/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/avg_time_vs_task_id/index.xml"
+                },
+                "description": "This shows bps analytics charts",
+                "styles": {
+                  "title": "Average Execution Times of Tasks",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "a2074d01747013cc5d6b3dc61b896da6": [
+            {
+              "id": "total_involved_time_vs_user_id-0",
+              "content": {
+                "id": "total_involved_time_vs_user_id",
+                "title": "User Involvement in the Process (Time)",
+                "type": "gadget",
+                "category": "Subscribers",
+                "thumbnail": "store://gadget/total_involved_time_vs_user_id/index.png",
+                "settings": {
+                  "personalize": true,
+                  "priority": "5"
+                },
+                "data": {
+                  "url": "store://gadget/total_involved_time_vs_user_id/index.xml"
+                },
+                "description": "bps analytics graphs",
+                "listen": {
+                  "channel5": {
+                    "type": "dateRange",
+                    "description": "Listening to date range",
+                    "on": [
+                      {
+                        "from": "date-range-0",
+                        "event": "date_range"
+                      }
+                    ]
+                  }
+                },
+                "styles": {
+                  "no_heading": false,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "User Involvement in the Process (Time)"
+                },
+                "options": {},
+                "locale_titles": {
+                  "en-US": "User Involvement in the Process (Time)"
+                }
+              }
+            }
+          ],
+          "f0a4e03aeb2068fb41ea3a122b99bd56": [
+            {
+              "id": "avg_time_vs_process_version-0",
+              "content": {
+                "id": "avg_time_vs_process_version",
+                "title": "Average Execution Times of Process Versions",
+                "type": "gadget",
+                "category": "Subscribers",
+                "thumbnail": "store://gadget/avg_time_vs_process_version/index.png",
+                "settings": {
+                  "personalize": true,
+                  "priority": "5"
+                },
+                "data": {
+                  "url": "store://gadget/avg_time_vs_process_version/index.xml"
+                },
+                "description": "This shows bps analytics charts",
+                "listen": {
+                  "Daterange": {
+                    "type": "dateRange",
+                    "description": "Listening to date range",
+                    "on": [
+                      {
+                        "from": "date-range-0",
+                        "event": "date_range"
+                      }
+                    ]
+                  }
+                },
+                "styles": {
+                  "no_heading": false,
+                  "hide_gadget": false,
+                  "titlePosition": "left",
+                  "title": "Average Execution Times of Process Versions"
+                },
+                "options": {},
+                "locale_titles": {
+                  "en-US": "Average Execution Times of Process Versions"
+                }
+              }
+            }
+          ],
+          "e9c3f7c156e45c77608d3b1685142d70": [
+            {
+              "id": "process_instance_count_vs_process_version-0",
+              "content": {
+                "id": "process_instance_count_vs_process_version",
+                "title": "Instance Counts of Process Versions",
+                "type": "gadget",
+                "category": "gadget",
+                "thumbnail": "store://gadget/process_instance_count_vs_process_version/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/process_instance_count_vs_process_version/index.xml"
+                },
+                "description": "This shows bps analytics charts",
+                "styles": {
+                  "title": "Instance Counts of Process Versions",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "b85060d1eb3164b51d40441a39e58cd0": [
+            {
+              "id": "date-range-0",
+              "content": {
+                "id": "date-range",
+                "title": "Date Range Picker",
+                "type": "gadget",
+                "category": "Publishers",
+                "thumbnail": "store://gadget/date-range/dateRange.png",
+                "data": {
+                  "url": "store://gadget/date-range/index.xml"
+                },
+                "styles": {
+                  "borders": true,
+                  "title": "Date Range Picker"
+                },
+                "notify": {
+                  "date_range": {
+                    "type": "dateRange",
+                    "description": "This notifies selected date range"
+                  }
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ]
+        },
+        "anon": {}
+      }
+    },
+    {
+      "id": "page0",
+      "title": "Task Monitoring",
+      "layout": {
+        "content": {
+          "loggedIn": {
+            "blocks": [
+              {
+                "id": "5be13a68cdf6b3560dfadb35b3108d51",
+                "x": 6,
+                "y": 0,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "eb20465afaebe329a514e832f1aa12be",
+                "x": 0,
+                "y": 5,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "2462c5492359eedb8fe197079e5908b4",
+                "x": 6,
+                "y": 5,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              },
+              {
+                "id": "2cfee9db56a6ca2b502664ad7730ac49",
+                "x": 0,
+                "y": 0,
+                "width": 6,
+                "height": 5,
+                "banner": false
+              }
+            ]
+          }
+        },
+        "fluidLayout": false
+      },
+      "isanon": false,
+      "content": {
+        "default": {
+          "2cfee9db56a6ca2b502664ad7730ac49": [
+            {
+              "id": "task_instance_count_vs_user_id-0",
+              "content": {
+                "id": "task_instance_count_vs_user_id",
+                "title": "Task Instances Completed by Users",
+                "type": "gadget",
+                "thumbnail": "store://gadget/task_instance_count_vs_user_id/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/task_instance_count_vs_user_id/index.xml"
+                },
+                "description": "bps analytics graphs",
+                "styles": {
+                  "title": "Task Instances Completed by Users",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "5be13a68cdf6b3560dfadb35b3108d51": [
+            {
+              "id": "avg_wait_time_vs_user_id-0",
+              "content": {
+                "id": "avg_wait_time_vs_user_id",
+                "title": "Average Task Execution Time for Each User",
+                "type": "gadget",
+                "category": "gadget",
+                "thumbnail": "store://gadget/avg_wait_time_vs_user_id/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/avg_wait_time_vs_user_id/index.xml"
+                },
+                "description": "This shows bps analytics charts",
+                "styles": {
+                  "title": "Average Task Execution Time for Each User",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "eb20465afaebe329a514e832f1aa12be": [
+            {
+              "id": "task_instance_count_vs_date-0",
+              "content": {
+                "id": "task_instance_count_vs_date",
+                "title": "Task Completions Over Time",
+                "type": "gadget",
+                "category": "Subscribers",
+                "thumbnail": "store://gadget/task_instance_count_vs_date/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/task_instance_count_vs_date/index.xml"
+                },
+                "description": "bps analytics graphs",
+                "listen": {
+                  "channel1": {
+                    "type": "dateRange",
+                    "description": "Listening to date range"
+                  }
+                },
+                "styles": {
+                  "title": "Task Completions Over Time",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ],
+          "2462c5492359eedb8fe197079e5908b4": [
+            {
+              "id": "exec_time_vs_task_instance_id-0",
+              "content": {
+                "id": "exec_time_vs_task_instance_id",
+                "title": "Task Instance Execution Times",
+                "type": "gadget",
+                "category": "Subscribers",
+                "thumbnail": "store://gadget/exec_time_vs_task_instance_id/index.png",
+                "settings": {
+                  "personalize": true
+                },
+                "data": {
+                  "url": "store://gadget/exec_time_vs_task_instance_id/index.xml"
+                },
+                "description": "This shows bps analytics charts",
+                "listen": {
+                  "Daterange": {
+                    "type": "dateRange",
+                    "description": "Listening to date range"
+                  }
+                },
+                "styles": {
+                  "title": "Task Instance Execution Times",
+                  "borders": true
+                },
+                "options": {},
+                "locale_titles": {}
+              }
+            }
+          ]
+        },
+        "anon": {}
+      }
+    }
+  ],
+  "menu": [
+    {
+      "id": "landing",
+      "isanon": false,
+      "ishidden": false,
+      "title": "Process Monitoring",
+      "subordinates": []
+    },
+    {
+      "id": "page0",
+      "isanon": false,
+      "ishidden": false,
+      "title": "Task Monitoring",
+      "subordinates": []
+    }
+  ],
+  "hideAllMenuItems": false,
+  "identityServerUrl": "",
+  "accessTokenUrl": "",
+  "apiKey": "",
+  "apiSecret": "",
+  "theme": "Default Theme",
+  "shareDashboard": false,
+  "isUserCustom": false,
+  "isEditorEnable": true,
+  "banner": {
+    "globalBannerExists": false,
+    "customBannerExists": false
+  },
+  "landing": "landing",
+  "isanon": false,
+  "defaultPriority": "5",
+  "enableOauth": true
+}
