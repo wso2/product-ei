@@ -71,8 +71,6 @@
         <delete file="${ds.repository}/samples/WebResourceSample.dbs"/>
         <delete file="${ds.repository}/samples/InMemoryDSSample.dbs"/>
         <delete file="${ds.repository}/samples/JSONSample.dbs"/>
-        <delete file="${ds.repository}/samples/CassandraSample.dbs"/>
-        <delete file="${ds.repository}/samples/MongoDBSampleService.dbs"/>
         <delete file="${ds.repository}/samples/ODataSampleService.dbs"/>
         <delete file="${ds.repository}/samples/ReturnUpdatedRowCountSample.dbs"/>
         <delete file="${ds.repository}/samples/DOCTORS_DataService.dbs"/>
@@ -139,8 +137,6 @@
         <copy file="./dbs/rdbms/ResourcesSample.dbs" toDir="${ds.repository}/samples"/>
         <copy file="./dbs/rdbms/JSONSample.dbs" toDir="${ds.repository}/samples"/>
         <copy file="./dbs/rdbms/DOCTORS_DataService.dbs" toDir="${ds.repository}/samples"/>
-        <copy file="./dbs/cassandra/CassandraSample.dbs" toDir="${ds.repository}/samples"/>
-        <copy file="./dbs/mongoDB/MongoDBSampleService.dbs" toDir="${ds.repository}/samples"/>
         <copy file="./dbs/odata/ODataSampleService.dbs" toDir="${ds.repository}/samples"/>
         <copy file="./dbs/web/WebResourceSample.dbs" toDir="${ds.repository}/samples"/>
         <copy file="./dbs/inmemory/InMemoryDSSample.dbs" toDir="${ds.repository}/samples"/>
