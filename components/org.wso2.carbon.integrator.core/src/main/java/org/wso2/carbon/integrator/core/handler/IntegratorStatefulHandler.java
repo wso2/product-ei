@@ -21,10 +21,16 @@ package org.wso2.carbon.integrator.core.handler;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.Constants;
 import org.apache.axis2.context.MessageContext;
+import org.apache.axis2.description.AxisBindingOperation;
+import org.apache.axis2.description.AxisEndpoint;
 import org.apache.axis2.description.AxisOperation;
 import org.apache.axis2.description.AxisService;
 import org.apache.axis2.description.HandlerDescription;
+import org.apache.axis2.description.WSDL2Constants;
+import org.apache.axis2.dispatchers.HTTPLocationBasedDispatcher;
+import org.apache.axis2.dispatchers.RequestURIBasedDispatcher;
 import org.apache.axis2.dispatchers.RequestURIBasedServiceDispatcher;
+import org.apache.axis2.dispatchers.RequestURIOperationDispatcher;
 import org.apache.axis2.engine.AbstractDispatcher;
 import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.axis2.transport.http.HTTPConstants;
@@ -49,6 +55,9 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
     private SynapseDispatcher synapseDispatcher = new SynapseDispatcher();
     private RequestURIBasedServiceDispatcher rubsd = new RequestURIBasedServiceDispatcher();
+    private static RequestURIOperationDispatcher requestURIOperationDispatcher = new RequestURIOperationDispatcher();
+    private static HTTPLocationBasedDispatcher httpLocationBasedDispatcher = new HTTPLocationBasedDispatcher();
+    private static RequestURIBasedDispatcher requestDispatcher = new RequestURIBasedDispatcher();
 
     public IntegratorStatefulHandler() {
     }
@@ -63,6 +72,10 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
 
         String uri = (String) msgctx.getProperty("TransportInURL");
 
+        if (msgctx.getAxisService() == null) {
+            msgctx.setAxisService(rubsd.findService(msgctx));
+        }
+
         if (msgctx.getProperty("transport.http.servletRequest") == null && uri != null && uri.contains("/odata/")) {
             //since all the tenant related requests are handling from the odata web app,
             // tenant request needs to be routed to the web app
@@ -74,7 +87,8 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
             }
         } else if (Utils.isDataService(msgctx)) {
             try {
-                // To serve data services requests, message should be built always.
+                // dispatchAndVerify need to call to find out the service and the operation.
+                dispatchAndVerify(msgctx);
                 RelayUtils.buildMessage(msgctx);
                 String type = null;
                 // message type.
@@ -137,6 +151,35 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
     @Override
     public void initDispatcher() {
         this.init(new HandlerDescription(NAME));
+    }
+
+    /**
+     * Finds axis Service and the Operation for DSS requests
+     *
+     * @param msgContext request message context
+     * @throws AxisFault if any exception occurs while finding axis service or operation
+     */
+    private static void dispatchAndVerify(MessageContext msgContext) throws AxisFault {
+        requestDispatcher.invoke(msgContext);
+        AxisService axisService = msgContext.getAxisService();
+        if (axisService != null) {
+            httpLocationBasedDispatcher.invoke(msgContext);
+            if (msgContext.getAxisOperation() == null) {
+                requestURIOperationDispatcher.invoke(msgContext);
+            }
+
+            AxisOperation axisOperation;
+            if ((axisOperation = msgContext.getAxisOperation()) != null) {
+                AxisEndpoint axisEndpoint =
+                        (AxisEndpoint) msgContext.getProperty(WSDL2Constants.ENDPOINT_LOCAL_NAME);
+                if (axisEndpoint != null) {
+                    AxisBindingOperation axisBindingOperation = (AxisBindingOperation) axisEndpoint
+                            .getBinding().getChild(axisOperation.getName());
+                    msgContext.setProperty(Constants.AXIS_BINDING_OPERATION, axisBindingOperation);
+                }
+                msgContext.setAxisOperation(axisOperation);
+            }
+        }
     }
 
 }
