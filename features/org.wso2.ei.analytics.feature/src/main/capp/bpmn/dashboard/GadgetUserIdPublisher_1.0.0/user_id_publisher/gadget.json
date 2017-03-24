@@ -1,0 +1,21 @@
+{
+  "id": "user_id_publisher",
+  "title": "Date Range and User ID Picker",
+  "type": "gadget",
+  "category": "Publishers",
+  "thumbnail": "gadget/user_id_publisher/dateRange.png",
+  "data": {
+    "url": "gadget/user_id_publisher/index.xml"
+  },
+  "styles": {
+    "borders": true,
+    "title": true
+  },
+  "notify": {
+    "user_id": {
+      "type": "user_id",
+      "description": "This notifies selected user id"
+    }
+  }
+}
+

@@ -1,0 +1,24 @@
+{
+  "id": "exec_time_vs_task_instance_id",
+  "title": "Task Instance Execution Times",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "gadget/exec_time_vs_task_instance_id/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/exec_time_vs_task_instance_id/index.xml"
+  },
+  "description": "This shows pc analytics charts",
+  "listen": {
+    "Daterange": {
+      "type": "dateRange",
+      "description": "Listening to date range"
+    },
+    "channel2": {
+      "type": "taskID",
+      "description": "Listening to task id"
+    }
+  }
+}

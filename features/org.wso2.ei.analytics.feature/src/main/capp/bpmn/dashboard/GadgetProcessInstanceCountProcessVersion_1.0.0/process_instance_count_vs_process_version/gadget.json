@@ -1,0 +1,14 @@
+{
+  "id": "process_instance_count_vs_process_version",
+  "title": "Instance Counts of Process Versions",
+  "type": "gadget",
+  "category": "gadget",
+  "thumbnail": "gadget/process_instance_count_vs_process_version/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/process_instance_count_vs_process_version/index.xml"
+  },
+  "description": "This shows pc analytics charts"
+}

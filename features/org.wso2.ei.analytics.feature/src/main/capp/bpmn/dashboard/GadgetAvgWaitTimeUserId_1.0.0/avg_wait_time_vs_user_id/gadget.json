@@ -1,0 +1,20 @@
+{
+  "id": "avg_wait_time_vs_user_id",
+  "title": "Average Task Execution Time for Each User",
+  "type": "gadget",
+  "category": "gadget",
+  "thumbnail": "gadget/avg_wait_time_vs_user_id/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/avg_wait_time_vs_user_id/index.xml"
+  },
+  "description": "This shows pc analytics charts",
+  "listen": {
+    "channel2": {
+      "type": "taskID",
+      "description": "Listening to task id"
+    }
+  }
+}

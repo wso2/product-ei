@@ -1,0 +1,20 @@
+{
+  "id": "process_instance_count_vs_date",
+  "title": "Process Completions Over Time",
+  "type": "gadget",
+  "category": "Subscribers",
+  "thumbnail": "gadget/process_instance_count_vs_date/index.png",
+  "settings": {
+    "personalize": true
+  },
+  "data": {
+    "url": "gadget/process_instance_count_vs_date/index.xml"
+  },
+  "description": "This shows pc analytics charts",
+  "listen": {
+    "Daterange": {
+      "type": "dateRange",
+      "description": "Listening to date range"
+    }
+  }
+}

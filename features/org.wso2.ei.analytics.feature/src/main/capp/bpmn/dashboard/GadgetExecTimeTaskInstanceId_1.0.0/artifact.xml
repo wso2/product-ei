@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="GadgetExecTimeTaskInstanceId" version="1.0.0" type="dashboards/gadget" serverRole="DataAnalyticsServer">
+    <file>exec_time_vs_task_instance_id</file>
+</artifact>
+

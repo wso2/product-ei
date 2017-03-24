@@ -91,6 +91,7 @@
                                     <includes>
                                         <include>org.wso2.ei.analytics.realtime-1.0.0.car</include>
                                         <include>org.wso2.ei.analytics.offline-1.0.0.car</include>
+                                        <include>org.wso2.ei.bpmn.analytics-1.0.0.car</include>
                                         <include>p2.inf</include>
                                         <include>build.properties</include>
                                     </includes>
@@ -128,7 +129,7 @@
                                     org.wso2.analytics.esb:org.wso2.analytics.esb:${esb.analytics.version}
                                 </bundleDef>
                                 <bundleDef>
-                                    org.wso2.ei:org.wso2.ei.bps.analytics.core:${product.ei.version}
+                                    org.wso2.ei:org.wso2.ei.bpmn.analytics.core:${product.ei.version}
                                 </bundleDef>
                             </bundles>
                         </configuration>
