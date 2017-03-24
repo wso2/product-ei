@@ -1,0 +1,49 @@
+<data name="DOCTORS_DataService" serviceNamespace="http://ws.wso2.org/dataservice">
+   <config id="default">
+         <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
+         <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP</property>
+         <property name="org.wso2.ws.dataservice.user">wso2ds</property>
+         <property name="org.wso2.ws.dataservice.password">wso2ds</property>
+         <property name="org.wso2.ws.dataservice.minpoolsize">1</property>
+         <property name="org.wso2.ws.dataservice.maxpoolsize">10</property>
+         <property name="org.wso2.ws.dataservice.autocommit">false</property>
+         <property name="org.wso2.ws.dataservice.validation_query"/>
+   </config>
+   <query id="select_all_DOCTORS_query" useConfig="default">
+      <sql>SELECT NAME, HOSPITAL, SPECIALITY, AVAILABILITY, CHARGE FROM PUBLIC.DOCTORS</sql>
+      <result element="DOCTORSCollection" rowName="DOCTOR">
+         <element column="NAME" name="NAME" xsdType="xs:string"/>
+         <element column="HOSPITAL" name="HOSPITAL" xsdType="xs:string"/>
+         <element column="SPECIALITY" name="SPECIALITY" xsdType="xs:string"/>
+         <element column="AVAILABILITY" name="AVAILABILITY" xsdType="xs:string"/>
+         <element column="CHARGE" name="CHARGE" xsdType="xs:integer"/>
+      </result>
+   </query>
+   <query id="select_DOCTORS_from_SPECIALITY_query" useConfig="default">
+      <sql>SELECT NAME, HOSPITAL, SPECIALITY, AVAILABILITY, CHARGE FROM PUBLIC.DOCTORS WHERE SPECIALITY=?</sql>
+      <result element="DOCTORSLIST" rowName="DOCTOR">
+         <element column="NAME" name="NAME" xsdType="string"/>
+         <element column="HOSPITAL" name="HOSPITAL" xsdType="string"/>
+         <element column="SPECIALITY" name="SPECIALITY" xsdType="string"/>
+         <element column="AVAILABILITY" name="AVAILABILITY" xsdType="string"/>
+         <element column="CHARGE" name="CHARGE" xsdType="string"/>
+      </result>
+      <param name="SPECIALITY" sqlType="STRING"/>
+   </query>
+   <operation name="select_all_DOCTORS_operation">
+      <call-query href="select_all_DOCTORS_query"/>
+   </operation>
+   <operation name="select_DOCTOR_from_SPECIALITY_operation">
+      <call-query href="select_DOCTORS_from_SPECIALITY_query">
+         <with-param name="SPECIALITY" query-param="SPECIALITY"/>
+      </call-query>
+   </operation>
+   <resource method="GET" path="/getAllDoctors">
+      <call-query href="select_all_DOCTORS_query"/>
+   </resource>
+   <resource method="GET" path="/getDoctors">
+      <call-query href="select_DOCTORS_from_SPECIALITY_query">
+         <with-param name="SPECIALITY" query-param="SPECIALITY"/>
+      </call-query>
+   </resource>
+</data>
