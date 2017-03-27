@@ -71,13 +71,6 @@
                 <li>Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)</li>
             </ol>
 
-            <h3>Running all runtimes (Integrator, Analytics, Broker, Business-Process)</h3>
-            <ol>
-                <li>Extract  wso2ei-@product.version@.zip and go to the extracted directory/bin.</li>
-                <li>Run start-all.sh or start-all.bat.</li>
-                <li>Access appropriate url for the related runtime. (For example, use  https://localhost:8243/carbon for the Integrator runtime)</li>
-            </ol>
-
             <h2>Key Features of WSO2 EI</h2>
             <ul>
                 <li>Proxy services - facilitating synchronous/asynchronous transport, interface
