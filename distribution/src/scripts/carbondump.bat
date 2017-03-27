@@ -181,7 +181,7 @@ copy  %CARBON_HOME%\repository\database\ %REPO_DIR%\database
 echo carbondump.bat##Compressing the carbondump...
 cd %OUTPUT_ROOT_DIR%
 if exist %CARBON_DUMP_HOME%\carbondump_%DATE_TIME%.zip del %CARBON_DUMP_HOME%\carbondump_%DATE_TIME%.zip
-jar cvf %CARBON_DUMP_HOME%\carbondump_%DATE_TIME%.jar carbondump_%DATE_TIME%
+jar cvf %CARBON_DUMP_HOME%\carbondump_%DATE_TIME%.jar carbondump-%DATE_TIME%
 cd %CARBON_DUMP_HOME%
 rename carbondump_%DATE_TIME%.jar carbondump_%DATE_TIME%.zip
 
