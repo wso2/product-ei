@@ -148,6 +148,10 @@ echo "  e.g. carbondump.sh -carbonHome /home/user/wso2carbon-3.0.0/ -pid 5151"
 exit 1
 fi
 
+#retrieve java version
+SYS_JAVA_VERSION=$("$JAVA_HOME/bin/java" -version 2>&1 | head -n 1 | cut -d'"' -f2 | cut -d'.' -f2 )
+echo "Java Version : $SYS_JAVA_VERSION"
+
 #time stamp that we are going to use for this execution.
 DATE_TIME=`date +%F`_`date +%H-%M-%S`
 
@@ -178,7 +182,15 @@ jmap -dump:format=b,file=$MEMORY_DUMP_DIR/java_heap_memory_dump.jmap $PID
 jmap -histo $PID > $MEMORY_DUMP_DIR/java_heap_histogram.txt 
 jmap -finalizerinfo $PID > $MEMORY_DUMP_DIR/objects_awaiting_finalization.txt 
 jmap -heap $PID > $MEMORY_DUMP_DIR/java_heap_summary.txt 
-jmap -permstat $PID > $MEMORY_DUMP_DIR/java_permgen_statistics.txt 
+
+
+if [ $SYS_JAVA_VERSION -ge "8" ]; then
+    echo Java 8 or higher version
+    jmap -clstats $PID > $MEMORY_DUMP_DIR/java_clstats_statistics.txt 
+else
+    echo Java 7 or early version
+    jmap -permstat $PID > $MEMORY_DUMP_DIR/java_permgen_statistics.txt
+fi
 
 echo "\ncarbondump.sh##Generating the thread dump..."
 jstack $PID > $OUTPUT_DIR/thread_dump.txt
@@ -204,7 +216,7 @@ echo "\ncarbondump.sh##Capturing OS Environment Variables..."
 env > $OS_INFO/os_env_variables.txt
 
 echo "\ncarbondump.sh##Generating the checksums of all the files in the CARBON_HOME directory..."
-find $CARBON_HOME -iname "*" -type f | grep -v ./samples | grep -v ./docs | sort | xargs md5sum > $OUTPUT_DIR/checksum_values.txt
+find $CARBON_HOME -iname "*" -type f | grep -v ./samples | grep -v ./docs | sort | sed -e 's/\ /\\\ /g' | xargs md5sum > $OUTPUT_DIR/checksum_values.txt
 
 ##TODO out all the carbon info to a single file, java, vesion, os version, carbon version
 echo "Product"'\t\t\t'": "`cat $CARBON_HOME/bin/version.txt` > $OUTPUT_DIR/carbon_server_info.txt
