@@ -940,28 +940,28 @@
         </fileSet>
         <fileSet>
             <directory>./src/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/bin/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <includes>
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>./src/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf</outputDirectory>
             <includes>
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>./src/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf</outputDirectory>
             <includes>
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>./src/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/business-process/bin/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf</outputDirectory>
             <includes>
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
