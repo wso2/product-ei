@@ -17,7 +17,7 @@
   -->
 
 <assembly>
-    <id></id>
+    <id>wso2ei-dist</id>
     <formats>
         <format>zip</format>
     </formats>

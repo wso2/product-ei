@@ -436,8 +436,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2-beta-5
-                </version> <!-- TODO: Update to latest after fixing config properly-->
                 <executions>
                     <execution>
                         <id>pre_dist</id>
@@ -446,11 +444,12 @@
                             <goal>attached</goal>
                         </goals>
                         <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
                             <filters>
                                 <filter>${basedir}/src/assembly/filter.properties</filter>
                             </filters>
                             <descriptors>
-                                <descriptor>src/assembly/dist.xml</descriptor>
+                                <descriptor>${basedir}/src/assembly/dist.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>
@@ -461,11 +460,12 @@
                             <goal>attached</goal>
                         </goals>
                         <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
                             <filters>
                                 <filter>${basedir}/src/assembly/filter.properties</filter>
                             </filters>
                             <descriptors>
-                                <descriptor>src/assembly/bin.xml</descriptor>
+                                <descriptor>${basedir}/src/assembly/bin.xml</descriptor>
                                 <!--<descriptor>src/main/assembly/src.xml</descriptor>-->
                                 <!--<descriptor>src/main/assembly/docs.xml</descriptor>-->
                             </descriptors>
