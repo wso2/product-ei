@@ -111,8 +111,6 @@ goto Exit
     IF EXIST %DIR%\..\wso2\components @RD /S /Q %DIR%\..\wso2\components
     IF EXIST %DIR%\..\wso2\lib @RD /S /Q %DIR%\..\wso2\lib
     IF EXIST %DIR%\..\wso2\tmp @RD /S /Q %DIR%\..\wso2\tmp
-    IF EXIST %DIR%\start-all.bat del %DIR%\start-all.bat
-    IF EXIST %DIR%\start-all.sh del %DIR%\start-all.sh
     echo Msf4j profile created successfully.
     goto Exit
 
@@ -157,8 +155,6 @@ goto Exit
     goto :eof
 
 :Remove_JARS
-    IF EXIST %DIR%\start-all.bat del %DIR%\start-all.bat
-    IF EXIST %DIR%\start-all.sh del %DIR%\start-all.sh
     echo Removing unnecessary jars
     mkdir %DIR%\..\wso2\components\tmp_plugins
 

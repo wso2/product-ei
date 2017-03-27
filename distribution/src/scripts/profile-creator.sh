@@ -199,10 +199,6 @@ else
 	exit 3
 fi
 
-#remove start all scripts
-rm -rf ${DIR}/start-all.sh
-rm -rf ${DIR}/start-all.bat
-
 
 if [ ${profileNumber} != 5 ]
 then
