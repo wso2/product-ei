@@ -1055,18 +1055,18 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.businessprocess.integration.common.clients</artifactId>
-                <version>6.1.0-SNAPSHOT</version>
+                <version>${product.ei.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.businessprocess.integration.common.utils</artifactId>
-                <version>6.1.0-SNAPSHOT</version>
+                <version>${product.ei.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.businessprocess.integration.ui.pages</artifactId>
-                <version>6.1.0-SNAPSHOT</version>
+                <version>${product.ei.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
@@ -1229,7 +1229,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v14-SNAPSHOT</synapse.version>
+        <synapse.version>2.1.7-wso2v14</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v2</axis2.transport.version>
@@ -1238,7 +1238,7 @@
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.17-SNAPSHOT</carbon.mediation.version>
+        <carbon.mediation.version>4.6.17</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.15</carbon.kernel.version>
