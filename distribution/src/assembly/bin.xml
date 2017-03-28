@@ -3158,6 +3158,44 @@
             <fileMode>644</fileMode>
         </file>
 
+        <!-- copying analytics scripts for DAS-->
+        <file>
+            <source>
+                src/analytics/bin/analytics-backup.sh
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/bin/
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>
+                src/analytics/bin/analytics-migrate.sh
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/bin/
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>
+                src/analytics/bin/analytics-backup.bat
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/bin/
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                src/analytics/bin/analytics-migrate.bat
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/bin/
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
         <file>
             <source>src/analytics/conf/wrapper.conf</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/yajsw</outputDirectory>
