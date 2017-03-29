@@ -84,11 +84,11 @@ ant -buildfile "$CARBON_HOME/bin/build.xml" -q
 
 # update classpath
 CARBON_CLASSPATH=""
-for f in "$CARBON_HOME"/repository/lib/*.jar
+for f in "$CARBON_HOME"/bin/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
-for f in "$CARBON_HOME"/lib/*.jar
+for f in "$CARBON_HOME"/wso2/lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
@@ -109,5 +109,7 @@ CARBON_CLASSPATH="$CARBON_HOME/lib/patches":"$CARBON_HOME/conf":$CARBON_CLASSPAT
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
+-Dcarbon.config.dir.path="$CARBON_HOME/conf" \
+-Dcarbon.home="$CARBON_HOME" \
 -Djava.endorsed.dirs="$CARBON_HOME/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
 org.apache.ws.java2wsdl.Java2WSDL $*
