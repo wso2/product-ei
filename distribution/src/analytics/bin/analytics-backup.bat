@@ -110,7 +110,7 @@ rem ---------- Add jars to classpath ----------------
 
 set JAVA_ENDORSED=".\..\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
-set CMD_LINE_ARGS=-Xbootclasspath/a:%CARBON_XBOOTCLASSPATH% -Xms256m -Xmx1024m -XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="%CARBON_HOME%\repository\logs\heap-dump.hprof" %JAVA_OPTS% -classpath %CARBON_CLASSPATH% -Dcarbon.home="%CARBON_HOME%"  -Djava.io.tmpdir="%CARBON_HOME%\tmp" -Dfile.encoding=UTF8 -Dwso2_custom_conf_dir="%CARBON_HOME%\conf"
+set CMD_LINE_ARGS=-Xbootclasspath/a:%CARBON_XBOOTCLASSPATH% -Xms256m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="%CARBON_HOME%\repository\logs\heap-dump.hprof" %JAVA_OPTS% -classpath %CARBON_CLASSPATH% -Dcarbon.home="%CARBON_HOME%"  -Djava.io.tmpdir="%CARBON_HOME%\tmp" -Dfile.encoding=UTF8 -Dwso2_custom_conf_dir="%CARBON_HOME%\conf"
 
 
 :runJava
