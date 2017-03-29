@@ -49,7 +49,7 @@ public class DynamicTimeoutEndpointTestCase extends ESBIntegrationTest {
     public void testDynamicDelayedTimeoutEndpoint() throws Exception {
         String request = "{}";
         String response = sendRequest(getProxyServiceURLHttp("MockDelayedTimeoutProxy"), request);
-        Assert.assertEquals(response, "{\"error_code\" : 101504, \"error_msg\" : Send timeout}");
+        Assert.assertEquals(response, "{\"error_code\" : 101504, \"error_msg\" : \"Send timeout\"}");
     }
 
     @Test(groups = { "wso2.esb" }, description = "Test template endpoint with dynamic timeout")
@@ -63,7 +63,7 @@ public class DynamicTimeoutEndpointTestCase extends ESBIntegrationTest {
     public void testDynamicDelayedTimeoutTemplateEndpoint() throws Exception {
         String request = "{}";
         String response = sendRequest(getProxyServiceURLHttp("MockDelayedTimeoutTemplateProxy"), request);
-        Assert.assertEquals(response, "{\"error_code\" : 101504, \"error_msg\" : Send timeout}");
+        Assert.assertEquals(response, "{\"error_code\" : 101504, \"error_msg\" : \"Send timeout\"}");
     }
 
     @AfterClass(alwaysRun = true)
