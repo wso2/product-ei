@@ -271,6 +271,7 @@
                 <exclude>**/*.sh</exclude>
                 <exclude>**/*.bat</exclude>
                 <exclude>**/conf/transports/netty-transports.yml</exclude>
+                <exclude>**/bin/kernel-version.txt</exclude>
             </excludes>
             <filtered>true</filtered>
         </fileSet>
