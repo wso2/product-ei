@@ -272,6 +272,7 @@
                 <exclude>**/*.bat</exclude>
                 <exclude>**/conf/transports/netty-transports.yml</exclude>
             </excludes>
+            <filtered>true</filtered>
         </fileSet>
 
         <!-- MSF4J scripts -->
@@ -1911,6 +1912,20 @@
             <fileMode>644</fileMode>
         </file>
 
+        <file>
+            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/version.txt</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/business-process/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
         <!-- Including custom-datasources.xml file -->
         <file>
             <source>src/conf/custom-datasources.xml</source>
@@ -2455,6 +2470,20 @@
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/bin
             </outputDirectory>
+        </file>
+
+        <file>
+            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/version.txt</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
         </file>
 
         <!-- Broker files: End -->
