@@ -676,10 +676,6 @@
                 <include>**/carbondump.sh</include>
                 <include>**/chpasswd.bat</include>
                 <include>**/chpasswd.sh</include>
-                <include>**/java2wsdl.bat</include>
-                <include>**/java2wsdl.sh</include>
-                <include>**/tcpmon.bat</include>
-                <include>**/tcpmon.sh</include>
             </includes>
         </fileSet>
 
