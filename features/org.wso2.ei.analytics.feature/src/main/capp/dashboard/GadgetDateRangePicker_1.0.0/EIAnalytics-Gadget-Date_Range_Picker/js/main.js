@@ -14,23 +14,11 @@ $(function() {
     var timeTo = moment();
     var message = {};
 
-    var qs = gadgetUtil.getQueryString();
-    if (qs.timeFrom != null) {
-        timeFrom = parseInt(qs.timeFrom);
-    }
-    if (qs.timeTo != null) {
-        timeTo = parseInt(qs.timeTo);
-    }
     var count = 0;
 
     //make the selected time range highlighted
-    var timeUnit = qs.timeUnit;
-
-    if (timeUnit != null) {
-        $("#date-select [role=date-update][data-value=" + timeUnit + "]").addClass("active");
-    } else {
-        $("#date-select [role=date-update][data-value=LastMonth]").addClass("active");
-    }
+    $("#date-select [role=date-update][data-value=LastMonth]").addClass("active");
+    lastMonthUpdate();
 
     cb(moment(timeFrom), moment(timeTo));
 
@@ -104,14 +92,7 @@ $(function() {
                 gadgetUtil.updateURLParam("timeTo", message.timeTo.toString());
                 break;
             case 'LastMonth':
-                dateLabel.html(moment().subtract(29, 'days').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
-                message = {
-                    timeFrom: new Date(moment().subtract(29, 'days')).getTime(),
-                    timeTo: new Date(moment()).getTime(),
-                    timeUnit: "Month"
-                };
-                gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
-                gadgetUtil.updateURLParam("timeTo", message.timeTo.toString());
+                lastMonthUpdate();
                 break;
             case 'LastYear':
                 dateLabel.html(moment().subtract(1, 'year').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
@@ -132,6 +113,17 @@ $(function() {
         $(gadgetWrapper).removeClass('btn-dropdown-menu-open');
         $('#btnDropdown').attr('aria-expanded', 'false');
     });
+
+    function lastMonthUpdate() {
+        dateLabel.html(moment().subtract(29, 'days').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
+        message = {
+            timeFrom: new Date(moment().subtract(29, 'days')).getTime(),
+            timeTo: new Date(moment()).getTime(),
+            timeUnit: "Month"
+        };
+        gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
+        gadgetUtil.updateURLParam("timeTo", message.timeTo.toString());
+    }
     
     $('.date-shortcuts').on('show.bs.dropdown', function(e){
         wso2.gadgets.controls.resizeGadget({
