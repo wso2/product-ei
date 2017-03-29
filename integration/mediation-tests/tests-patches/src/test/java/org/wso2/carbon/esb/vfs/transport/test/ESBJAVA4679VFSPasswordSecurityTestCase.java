@@ -157,7 +157,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
         copyFile(sourceMessage, destinationMessage);
 
         //Below is encrypted value of "user1:pass" using local wso2carbon.jks TODO if security settings change, will need to change below value as well. Otherwise this test will fail
-        String encryptedPass = "dRF/uh3jmT1UnTIvrqZ9jDHZjRoMQxK2lkvMoFWAb9J1FnWePw2xgLiZYJ+BHXVxy9gyj6/3SVrB+56StL5bYyRp15VanM+Noj7g8DlAHhOA+s5YtIqzbto5zGDLyXs2pi0oY8o6/z3OCJuegVLszksdAZdA0OEHzMpRL/voexE=";
+        String encryptedPass = "cnBsi3uKrBqV4/jhhY0l51FGy8SlbU5gZm3vRzO+cVhB8wVUmNpgAKm2W7VrwmboJDwKqu7MeQ7En9HHezOtxzDa8MhKEd4u3S2TCZD25uN07wY5eRluvOSNbDQrLR0zN4P0ShmrQrgDbcKdFX/gLQJVshbpfdr5wr95IbfqFTqEV8ygHdg9U3GOGBVzOvLSQBeC2EITgDu96XlvDQT6IRRC1nmptPam+VflRPunreXJkzMIBUhoYt8XOl7gSGtnhdvElj/P4cANt9Cb3pQj5CFW3lEEFXR5nBvTBybmT7KOJjMGRfibf5GOilQSGDFa6fEiXLah8kS/XLnq5pT8ng\\=\\=";
         String fileUri = "vfs:ftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + inputFolderName;
         String moveAfterProcess = "vfs:ftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + outputFolderName;
 
