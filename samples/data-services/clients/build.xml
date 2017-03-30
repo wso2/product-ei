@@ -16,13 +16,13 @@
 
 <project default="jar">
 
-    <property name="wso2ds.home" value="../.." />
+    <property name="wso2ds.home" value="../../.." />
     <property name="carbon.home" value="${wso2ds.home}" />
     <property name="host.ip" value="localhost" />
-    <property name="host.http.port" value="9763" />
-    <property name="host.https.port" value="9443" />
+    <property name="host.http.port" value="8280" />
+    <property name="host.https.port" value="8243" />
     <property name="client_jks_path" value="${wso2ds.home}/repository/resources/security/wso2carbon.jks" />
-    <property name="security.policy.path" value="${wso2ds.home}/samples/security/secure_sample_policy.xml" />
+    <property name="security.policy.path" value="${wso2ds.home}/samples/data-services/security/secure_sample_policy.xml" />
     <property name="wso2ds.home.absolute.path" location="${wso2ds.home}"/>
     <property name="build.dir" value="build"/>
     <property name="classes" value="${build.dir}/classes"/>
@@ -36,7 +36,10 @@
 
     <path id="axis2.class.path">
         <fileset dir="${wso2ds.home}">
-            <include name="repository/lib/*.jar" />
+            <include name="wso2/lib/*.jar" />
+	    <include name="wso2/components/plugins/slf4j.log4j12_*.jar" />
+	    <include name="wso2/components/plugins/slf4j.api_*.jar" />
+	    <include name="wso2/components/plugins/joda-time_*.jar" />
         </fileset>
     </path>
 

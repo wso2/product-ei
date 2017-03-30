@@ -345,10 +345,6 @@
                                     org.wso2.carbon.metrics:org.wso2.carbon.metrics.feature:${carbon.metrics.version}
                                 </featureArtifactDef>
 
-                                <!-- START - Tools -->
-                                <featureArtifactDef>
-                                    org.wso2.carbon.commons:org.wso2.carbon.tryit.feature:${carbon.commons.version}
-                                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.siddhi.tryit.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
@@ -741,10 +737,6 @@
                                 </feature>
 
                                 <!--START - Tools-->
-                                <feature>
-                                    <id>org.wso2.carbon.tryit.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.siddhi.tryit.feature.group</id>
                                     <version>${carbon.event-processing.version}</version>

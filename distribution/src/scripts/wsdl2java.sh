@@ -84,7 +84,7 @@ ant -buildfile "$CARBON_HOME/bin/build.xml" -q
 
 # update classpath
 CARBON_CLASSPATH=""
-for f in "$CARBON_HOME"/repository/lib/*.jar
+for f in "$CARBON_HOME"/bin/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
@@ -103,10 +103,11 @@ if $cygwin; then
 fi
 
 # ----- Execute The Requested Command -----------------------------------------
-
 CARBON_CLASSPATH="$CARBON_HOME/conf":$CARBON_CLASSPATH
 $JAVA_HOME/bin/java \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/wso2/tmp" \
+-Dcarbon.home="$CARBON_HOME" \
+-Dcarbon.config.dir.path="$CARBON_HOME/conf" \
 -Djava.endorsed.dirs="$CARBON_HOME/wso2/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
 org.apache.axis2.wsdl.WSDL2Java $*
