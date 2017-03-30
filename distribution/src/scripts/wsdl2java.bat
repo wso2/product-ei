@@ -58,7 +58,7 @@ rem Run the setup script
 call ant -buildfile "%CARBON_HOME%\bin\build.xml" -q
 
 FOR %%C in ("%CARBON_HOME%\wso2\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\wso2\lib\%%~nC%%~xC"
-FOR %%C in ("%CARBON_HOME%\repository\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\repository\lib\%%~nC%%~xC"
+FOR %%C in ("%CARBON_HOME%\bin\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\bin\%%~nC%%~xC"
 
 rem ----- Execute The Requested Command ---------------------------------------
 echo Using CARBON_HOME:   %CARBON_HOME%
@@ -67,7 +67,7 @@ set _RUNJAVA="%JAVA_HOME%\bin\java"
 
 set CARBON_CLASSPATH=.\lib\patches;%CARBON_CLASSPATH%
 set JAVA_ENDORSED=".\wso2\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
-%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH%" -Djava.io.tmpdir="%CARBON_HOME%\wso2\tmp" -Djava.endorsed.dirs=%JAVA_ENDORSED%  org.apache.axis2.wsdl.WSDL2Java %*
+%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH%" -Dcarbon.home="%CARBON_HOME%" -Dcarbon.config.dir.path="%CARBON_HOME%\conf" -Djava.io.tmpdir="%CARBON_HOME%\wso2\tmp" -Djava.endorsed.dirs=%JAVA_ENDORSED%  org.apache.axis2.wsdl.WSDL2Java %*
 endlocal
 :end
 
