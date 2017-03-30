@@ -284,11 +284,17 @@
             <includes>
                 <include>**.sh</include>
                 <include>**.bat</include>
-                <include>README.txt</include>
             </includes>
             <fileMode>755</fileMode>
-            <filtered>true</filtered>
         </fileSet>
+
+        <file>
+            <source>../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
+            <destName>README.txt</destName>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
 
         <!-- MSF4J updating netty-transports.yml-->
         <fileSet>
