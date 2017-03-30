@@ -288,14 +288,6 @@
             <fileMode>755</fileMode>
         </fileSet>
 
-        <file>
-            <source>../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin/README.txt</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
-            <destName>README.txt</destName>
-            <fileMode>644</fileMode>
-            <filtered>true</filtered>
-        </file>
-
         <!-- MSF4J updating netty-transports.yml-->
         <fileSet>
             <directory>
@@ -3579,6 +3571,14 @@
 
         <!--END Analytics file copying -->
 
-
+        <!-- Copying files related to msf4j -->
+        <file>
+            <source>../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
+            <destName>README.txt</destName>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <!-- END Copying files related to msf4j -->
     </files>
 </assembly>
