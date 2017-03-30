@@ -67,7 +67,7 @@ set _RUNJAVA="%JAVA_HOME%\bin\java"
 
 set CARBON_CLASSPATH=%CARBON_HOME%\conf;%CARBON_CLASSPATH%;
 set JAVA_ENDORSED=".\wso2\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
-%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH%"  -Djava.io.tmpdir="%CARBON_HOME%\wso2\tmp" -Djava.endorsed.dirs=%JAVA_ENDORSED%  org.apache.ws.java2wsdl.Java2WSDL %*
+%_RUNJAVA% %JAVA_OPTS% -cp "%CARBON_CLASSPATH%" -Dcarbon.config.dir.path="%CARBON_HOME%\conf" -Dcarbon.home="%CARBON_HOME%" -Djava.io.tmpdir="%CARBON_HOME%\wso2\tmp" -Djava.endorsed.dirs=%JAVA_ENDORSED%  org.apache.ws.java2wsdl.Java2WSDL %*
 endlocal
 :end
 
