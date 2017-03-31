@@ -2662,13 +2662,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/integrator-whitelist.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/conf/security</outputDirectory>
-            <destName>integrator-whitelist.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/jndi.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>jndi.properties</destName>
