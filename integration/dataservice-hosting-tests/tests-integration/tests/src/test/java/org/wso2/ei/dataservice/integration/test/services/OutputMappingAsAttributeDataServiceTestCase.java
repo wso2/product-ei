@@ -103,7 +103,7 @@ public class OutputMappingAsAttributeDataServiceTestCase extends DSSIntegrationT
                                           String territory) {
         OMFactory fac = OMAbstractFactory.getOMFactory();
         OMNamespace omNs = fac.createOMNamespace("http://ws.wso2.org/dataservice", "ns1");
-        OMElement payload = fac.createOMElement("showAllOffices", omNs);
+        OMElement payload = fac.createOMElement("addOffice", omNs);
 
         OMElement officeCodeOme = fac.createOMElement("officeCode", omNs);
         officeCodeOme.setText(officeCode);
