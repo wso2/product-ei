@@ -1,0 +1,110 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "SOAP-ENV:Envelope",
+  "type" : "object",
+  "properties" : {
+    "SOAP-ENV:Header" : {
+      "id" : "http://wso2jsonschema.org/SOAP-ENV:Header",
+      "type" : "null"
+    },
+    "SOAP-ENV:Body" : {
+      "id" : "http://wso2jsonschema.org/SOAP-ENV:Body",
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data",
+          "type" : "object",
+          "properties" : {
+            "test1:aaa-aaa" : {
+              "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/test1:aaa-aaa",
+              "type" : "string"
+            },
+            "test2:b" : {
+              "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/test2:b",
+              "type" : "string"
+            },
+            "item" : {
+              "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item",
+              "type" : "object",
+              "properties" : {
+                "test2:name,xsi:type=xsd2:string" : {
+                  "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/test2:name,xsi:type=xsd2:string",
+                  "type" : "object",
+                  "value" : {
+                    "type" : "string"
+                  },
+                  "properties" : { },
+                  "attributes" : {
+                    "test1:nameType" : {
+                      "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/test1:nameType",
+                      "type" : "string"
+                    },
+                    "xsi:type" : {
+                      "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/xsi:type",
+                      "type" : "string"
+                    }
+                  }
+                },
+                "new_price,xsi:type=xsd:float" : {
+                  "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/new_price,xsi:type=xsd:float",
+                  "type" : "object",
+                  "value" : {
+                    "type" : "number"
+                  },
+                  "properties" : { },
+                  "attributes" : {
+                    "xsi:type" : {
+                      "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/xsi:type",
+                      "type" : "string"
+                    }
+                  }
+                },
+                "DiscountedPrice,xsi2:type=xsd2:float" : {
+                  "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/DiscountedPrice,xsi2:type=xsd2:float",
+                  "type" : "object",
+                  "value" : {
+                    "type" : "number"
+                  },
+                  "properties" : { },
+                  "attributes" : {
+                    "xsi2:type" : {
+                      "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/xsi2:type",
+                      "type" : "string"
+                    },
+                    "test1:discountReason" : {
+                      "id" : "http://wso2jsonschema.org/SOAP-ENV:Body/data/item/test1:discountReason",
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "namespaces" : [ {
+    "prefix" : "SOAP-ENV",
+    "url" : "http://schemas.xmlsoap.org/soap/envelope/"
+  }, {
+    "prefix" : "test1",
+    "url" : "http://test.com/schema"
+  }, {
+    "prefix" : "test2",
+    "url" : "http://test.com/schema"
+  }, {
+    "prefix" : "xsi",
+    "url" : "http://www.w3.org/2001/XMLSchema-instance"
+  }, {
+    "prefix" : "xsi2",
+    "url" : "http://www.w3.org/2001/XMLSchema-instance"
+  }, {
+    "prefix" : "xsd2",
+    "url" : "http://www.w3.org/2001/XMLSchema"
+  }, {
+    "prefix" : "xsd",
+    "url" : "http://www.w3.org/2001/XMLSchema"
+  } ]
+}
