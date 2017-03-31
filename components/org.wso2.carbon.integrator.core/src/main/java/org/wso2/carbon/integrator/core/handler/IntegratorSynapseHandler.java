@@ -29,7 +29,6 @@ import org.apache.synapse.core.axis2.Axis2Sender;
 import org.apache.synapse.mediators.builtin.SendMediator;
 import org.apache.synapse.transport.passthru.core.PassThroughSenderManager;
 import org.wso2.carbon.integrator.core.Utils;
-import org.wso2.carbon.integrator.core.internal.IntegratorComponent;
 import org.wso2.carbon.webapp.mgt.WebApplication;
 
 import java.util.Set;
@@ -59,7 +58,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
         try {
             org.apache.axis2.context.MessageContext axis2MessageContext =
                     ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            Object isODataService = messageContext.getProperty("IsODataService");
+            Object isODataService = axis2MessageContext.getProperty("IsODataService");
             // In this if block we are skipping proxy services, inbound related message contexts & api.
             if (axis2MessageContext.getProperty("TransportInURL") != null && isODataService != null ) {
                 String uri = axis2MessageContext.getProperty("TransportInURL").toString();
@@ -68,8 +67,7 @@ public class IntegratorSynapseHandler extends AbstractSynapseHandler {
                 if (webApplication != null) {
                     String protocol = (String) messageContext.getProperty("TRANSPORT_IN_NAME");
                     String host;
-                    Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                            .getProperty("TRANSPORT_HEADERS");
+                    Object headers = axis2MessageContext.getProperty("TRANSPORT_HEADERS");
                     if (headers instanceof TreeMap) {
                         host = Utils.getHostname((String) ((TreeMap) headers).get("Host"));
                         isPreserveHeadersContained = true;
