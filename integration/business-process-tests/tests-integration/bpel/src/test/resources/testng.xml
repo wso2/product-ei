@@ -5,11 +5,10 @@
 
     <test name="BPELTests" preserve-order="true" parallel="false">
         <packages>
-            <package name="org.wso2.bps.integration.tests.bpel.upload"/>
-            <package name="org.wso2.bps.integration.tests.bpel.bpelactivities"/>
-            <package name="org.wso2.bps.integration.tests.bpel.bpelmanagement"/>
-            <!--<package name="org.wso2.bps.integration.tests.bpel.stucturedactivities"/>-->
-            <package name="org.wso2.bps.integration.tests.bpel.security"/>
+            <package name="org.wso2.ei.businessprocess.integration.tests.bpel.upload"/>
+            <package name="org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities"/>
+            <package name="org.wso2.ei.businessprocess.integration.tests.bpel.bpelmanagement"/>
+            <package name="org.wso2.ei.businessprocess.integration.tests.bpel.security"/>
         </packages>
     </test>
 
