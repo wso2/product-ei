@@ -74,7 +74,7 @@ rem set the classes
 setlocal EnableDelayedExpansion
 rem loop through the libs and add them to the class path
 cd "%CARBON_HOME%"
-call ant -buildfile "%CARBON_HOME%\bin\build.xml" -q
+
 set CARBON_CLASSPATH=.\conf
 FOR %%c in ("%CARBON_HOME%\..\lib\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\..\lib\%%~nc%%~xc"
 
