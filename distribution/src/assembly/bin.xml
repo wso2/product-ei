@@ -1895,9 +1895,9 @@
 
         <file>
             <source>src/business-process/conf/axis2/axis2.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf/axis2
-            </outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
 
@@ -2269,9 +2269,10 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/business-process/conf/axis2/axis2.xml</source>
+            <source>src/broker/conf/axis2/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/axis2/</outputDirectory>
             <destName>axis2.xml</destName>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
 
@@ -2506,6 +2507,7 @@
             <source>src/conf/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -2547,12 +2549,14 @@
             <source>src/conf/axis2_nhttp.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
             <destName>axis2_nhttp.xml</destName>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>
             <source>src/conf/axis2_pt.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
             <destName>axis2_pt.xml</destName>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>

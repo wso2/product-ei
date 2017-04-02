@@ -72,12 +72,8 @@
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
-    <parameter name="userAgent" locked="true">
-        WSO2 Business Process Server-3.6.0
-    </parameter>
-    <parameter name="server" locked="true">
-        WSO2 Business Process Server-3.6.0
-    </parameter>
+    <parameter name="userAgent" locked="true">WSO2 ${product.key} ${product.version} - Business Process</parameter>
+    <parameter name="server" locked="true">WSO2 ${product.key} ${product.version} - Business Process</parameter>
 
     <!-- ========================================================================-->
 
