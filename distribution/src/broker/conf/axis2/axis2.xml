@@ -72,12 +72,8 @@
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
-    <parameter name="userAgent" locked="true">
-        WSO2 Business Process Server-3.6.0
-    </parameter>
-    <parameter name="server" locked="true">
-        WSO2 Business Process Server-3.6.0
-    </parameter>
+    <parameter name="userAgent" locked="true">WSO2 ${product.key} ${product.version} - Broker</parameter>
+    <parameter name="server" locked="true">WSO2 ${product.key} ${product.version} - Broker</parameter>
 
     <!-- ========================================================================-->
 
@@ -162,13 +158,13 @@
         <!--messageFormatter contentType="application/json"
                           class="org.apache.axis2.json.JSONMessageFormatter"/-->
         <messageFormatter contentType="application/json"
-                                  class="org.apache.axis2.json.gson.JsonFormatter" />
+                          class="org.apache.axis2.json.gson.JsonFormatter" />
         <messageFormatter contentType="application/json/badgerfish"
                           class="org.apache.axis2.json.JSONBadgerfishMessageFormatter"/>
         <!--messageFormatter contentType="text/javascript"
                           class="org.apache.axis2.json.JSONMessageFormatter"/-->
         <messageFormatter contentType="text/javascript"
-                                  class="org.apache.axis2.json.gson.JsonFormatter" />
+                          class="org.apache.axis2.json.gson.JsonFormatter" />
 
         <!--messageFormatter contentType="application/x-www-form-urlencoded"
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
@@ -198,13 +194,13 @@
         <!--messageBuilder contentType="application/json"
                         class="org.apache.axis2.json.JSONOMBuilder"/-->
         <messageBuilder contentType="application/json"
-                                class="org.apache.axis2.json.gson.JsonBuilder" />
+                        class="org.apache.axis2.json.gson.JsonBuilder" />
         <messageBuilder contentType="application/json/badgerfish"
                         class="org.apache.axis2.json.JSONBadgerfishOMBuilder"/>
         <!--messageBuilder contentType="text/javascript"
                         class="org.apache.axis2.json.JSONOMBuilder"/-->
         <messageBuilder contentType="text/javascript"
-                                class="org.apache.axis2.json.gson.JsonBuilder" />
+                        class="org.apache.axis2.json.gson.JsonBuilder" />
 
         <!--messageBuilder contentType="application/xml"
      		        class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
@@ -245,13 +241,13 @@
         <!--<parameter name="proxyPort">80</parameter>-->
     </transportReceiver>
 
-    <!--Please uncomment this in Multiple Instance Scenario if you want to use NIO Transport Recievers and 
+    <!--Please uncomment this in Multiple Instance Scenario if you want to use NIO Transport Recievers and
  	Remove the current transport REceivers in axis2.xml -->
     <!--transportReceiver name="http" class="org.apache.synapse.transport.nhttp.HttpCoreNIOListener">
         <parameter name="port" locked="false">8280</parameter>
         <parameter name="non-blocking" locked="false">true</parameter>
     </transportReceiver>
-    
+
     <transportReceiver name="https" class="org.apache.synapse.transport.nhttp.HttpCoreNIOSSLListener">
         <parameter name="port" locked="false">8243</parameter>
         <parameter name="non-blocking" locked="false">true</parameter>
@@ -333,21 +329,21 @@
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
@@ -357,21 +353,21 @@
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
@@ -420,7 +416,7 @@
     </transportSender>-->
 
     <!--Please uncomment this in Multiple Instance Scenario if you want to use NIO sender -->
-    <!--  
+    <!--
     <transportSender name="http" class="org.apache.synapse.transport.nhttp.HttpCoreNIOSender">
         <parameter name="non-blocking" locked="false">true</parameter>
     </transportSender>
@@ -587,7 +583,7 @@
         <phase name="PolicyDetermination"/>
         <phase name="MessageOut"/>
         <phase name="Security"/>
-	<phase name="Transport"/>
+        <phase name="Transport"/>
         <!--
            The MsgOutObservation phase is used to observe messages just before the
            responses are sent out. In this phase, we could do some things such as SOAP message
