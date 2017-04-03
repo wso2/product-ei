@@ -162,7 +162,7 @@
     <sequence name="fault">
         <payloadFactory media-type="json">
             <format>
-                {"error_code" : $1, "error_msg" : $2}
+                {"error_code" : $1, "error_msg" : "$2"}
             </format>
             <args>
                 <arg expression="get-property('ERROR_CODE')"/>
