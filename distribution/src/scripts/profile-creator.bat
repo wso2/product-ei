@@ -138,8 +138,8 @@ goto Exit
     IF EXIST %DIR%\..\wso2\analytics @RD /S /Q %DIR%\..\wso2\analytics
     IF EXIST %DIR%\..\wso2\components\analytics-default @RD /S /Q %DIR%\..\wso2\components\analytics-default
     IF EXIST %DIR%\..\wso2\components\analytics-worker @RD /S /Q %DIR%\..\wso2\components\analytics-worker
-    IF EXIST %DIR%\broker.bat del %DIR%\analytics.bat
-    IF EXIST %DIR%\broker.sh del %DIR%\analytics.sh
+    IF EXIST %DIR%\analytics.bat del %DIR%\analytics.bat
+    IF EXIST %DIR%\analytics.sh del %DIR%\analytics.sh
     goto :eof
 
 :Remove_INTEGRATOR
@@ -167,6 +167,8 @@ goto Exit
 
 :Remove_MSF4J
     IF EXIST %DIR%\..\wso2\msf4j @RD /S /Q %DIR%\..\wso2\msf4j
+    IF EXIST %DIR%\msf4j.bat del %DIR%\msf4j.bat
+    IF EXIST %DIR%\msf4j.sh del %DIR%\msf4j.sh
     goto :eof
 
 :Exit
