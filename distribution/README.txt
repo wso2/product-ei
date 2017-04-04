@@ -32,7 +32,11 @@ Running other runtimes individually (Analytics, Broker, Business-Process)
 2. Go to wso2ei-@product.version@/wso2 directory.
 3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
 4. Execute wso2server.sh or wso2server.bat.
-3. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)
+5. Optionally, you can start the runtimes using scripts located at wso2ei-@product.version@/bin directry. Scripts
+available are analytics.sh/analytics.bat for analytics profile , broker.sh /broker.bat for broker profile and
+business-process.sh / business-process.bat for business process profile.
+6. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the
+business-process runtime.)
 
 WSO2 EI distribution directory
 =============================================
