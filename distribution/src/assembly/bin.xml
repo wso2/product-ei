@@ -2223,6 +2223,22 @@
 
         <!-- Broker files: Start-->
         <file>
+            <source>
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-processor.xml
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/output-event-adapters.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/broker/conf/tomcat/carbon/WEB-INF/web.xml</source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/carbon/WEB-INF/
