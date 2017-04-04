@@ -45,5 +45,6 @@
         <module>business-process-samples</module>
         <module>webapps</module>
         <module>data-services</module>
+        <module>msf4j</module>
     </modules>
 </project>
