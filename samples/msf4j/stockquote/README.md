@@ -40,7 +40,7 @@ Then run the following command to start the MSF4J profile.
 ./carbon.sh
 ```
 
-The copy the target/stockquote-deployable-jar-<-version->.jar to <EI_HOME>/wso2/deployment/microservices directory of MSF4J profile.
+The copy the target/msf4j-sample-StockQuoteService.jar to <EI_HOME>/wso2/deployment/microservices directory of MSF4J profile.
 Then the jar will be automatically deployed to the server runtime.
 
 ## How to test the sample
