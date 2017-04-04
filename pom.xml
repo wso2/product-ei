@@ -1265,7 +1265,7 @@
         <carbon.rule.version>4.4.1</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.8</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.9</carbon-dataservice-hosting.feature.imp.version>
 
         <!-- Analytic Commons version-->
         <carbon.analytics.common.version>5.1.3</carbon.analytics.common.version>
