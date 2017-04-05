@@ -299,6 +299,13 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/conf/transports/</outputDirectory>
         </fileSet>
 
+        <!-- MSF4J Samples -->
+        <fileSet>
+            <directory>../samples/msf4j</directory>
+            <outputDirectory>wso2ei-${pom.version}/samples/msf4j</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+
         <!-- BPS scripts :start-->
 
         <fileSet>
