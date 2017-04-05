@@ -24,9 +24,11 @@
 DIR="$(dirname "${BASH_SOURCE[0]}")"
 DISTRIBUTION="wso2ei-@product.version@"
 #get the desired profile
+echo "*************************************************************************************"
 echo "This tool will erase all the files which are not required for the selected profile "
 echo "and also creates a distribution of this profile in the same folder <EI_HOME> resides."
 echo "WARNING:This may cause loss of any changes to the other profiles."
+echo "*************************************************************************************"
 echo "WSO2 Enterprise Integrator Supports following profiles."
 echo "	1.Integrator profile"
 echo "	2.Analytics Profile"
@@ -40,24 +42,23 @@ if [ ${profileNumber} -eq 1 ]
 then
 	echo "Preparing the Integrator profile distribution"
 	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
-	WORKER_BUNDLES="$(< ${DIR}/../wso2/components/worker/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove business-process
 	echo "Removing Business Process profile"
 	rm -rf ${DIR}/../wso2/business-process
 	rm -rf ${DIR}/../samples/business-process
-	rm -rf ${DIR}/../wso2/components/business-process-default ${DIR}/../wso2/components/business-process-worker
+	rm -rf ${DIR}/../wso2/components/business-process-default
 	rm -rf ${DIR}/business-process.bat
 	rm -rf ${DIR}/business-process.sh
 	#remove broker
 	echo "Removing Broker profile"
 	rm -rf ${DIR}/../wso2/broker
-	rm -rf ${DIR}/../wso2/components/broker-default ${DIR}/../wso2/components/broker-worker
+	rm -rf ${DIR}/../wso2/components/broker-default
 	rm -rf ${DIR}/broker.bat
 	rm -rf ${DIR}/broker.sh
 	#remove analytics
 	echo "Removing Analytics profile"
 	rm -rf ${DIR}/../wso2/analytics
-	rm -rf ${DIR}/../wso2/components/analytics-default ${DIR}/../wso2/components/analytics-worker
+	rm -rf ${DIR}/../wso2/components/analytics-default
 	rm -rf ${DIR}/analytics.bat
 	rm -rf ${DIR}/analytics.sh
 	#remove msf4j
@@ -70,24 +71,23 @@ elif [ ${profileNumber} -eq 2 ]
 then
 	echo "Preparing the Analytics profile distribution"
 	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/analytics-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
-	WORKER_BUNDLES="$(< ${DIR}/../wso2/components/analytics-worker/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove business-process profile
 	echo "Removing Business Process profile"
 	rm -rf ${DIR}/../wso2/business-process
-	rm -rf ${DIR}/../wso2/components/business-process-default ${DIR}/../wso2/components/business-process-worker
+	rm -rf ${DIR}/../wso2/components/business-process-default
 	rm -rf ${DIR}/../samples/business-process
 	rm -rf ${DIR}/business-process.bat
 	rm -rf ${DIR}/business-process.sh
 	#remove broker
 	echo "Removing Broker profile"
 	rm -rf ${DIR}/../wso2/broker
-	rm -rf ${DIR}/../wso2/components/broker-default ${DIR}/../wso2/components/broker-worker
+	rm -rf ${DIR}/../wso2/components/broker-default
 	rm -rf ${DIR}/broker.bat
 	rm -rf ${DIR}/broker.sh
 	#remove intergrator
 	echo "Removing Integrator profile"
 	rm -rf ${DIR}/../conf
-	rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
+	rm -rf ${DIR}/../wso2/components/default
 	rm -rf ${DIR}/../samples/service-bus
 	rm -rf ${DIR}/../samples/data-services
 	rm -rf ${DIR}/integrator.bat
@@ -103,17 +103,16 @@ elif [ ${profileNumber} -eq 3 ]
 then
 	echo "Preparing the Business Process profile distribution"
 	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/business-process-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
-	WORKER_BUNDLES="$(< ${DIR}/../wso2/components/business-process-worker/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove broker
 	echo "Removing Broker profile"
 	rm -rf ${DIR}/../wso2/broker
-	rm -rf ${DIR}/../wso2/components/broker-default ${DIR}/../wso2/components/broker-worker
+	rm -rf ${DIR}/../wso2/components/broker-default
 	rm -rf ${DIR}/broker.bat
 	rm -rf ${DIR}/broker.sh
         #remove integrator
 	echo "Removing Integrator profile"
 	rm -rf ${DIR}/../conf
-	rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
+	rm -rf ${DIR}/../wso2/components/default
 	rm -rf ${DIR}/../samples/service-bus
 	rm -rf ${DIR}/../samples/data-services
 	rm -rf ${DIR}/integrator.bat
@@ -123,7 +122,7 @@ then
 	#remove analytics
 	echo "Removing Analytics profile"
 	rm -rf ${DIR}/../wso2/analytics
-	rm -rf ${DIR}/../wso2/components/analytics-default ${DIR}/../wso2/components/analytics-worker
+	rm -rf ${DIR}/../wso2/components/analytics-default
 	rm -rf ${DIR}/analytics.bat
 	rm -rf ${DIR}/analytics.sh
 	#remove msf4j
@@ -135,17 +134,16 @@ elif [ ${profileNumber} -eq 4 ]
 then
 	echo "Preparing the Broker profile distribution"
 	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/broker-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
-	WORKER_BUNDLES="$(< ${DIR}/../wso2/components/broker-worker/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove analytics
 	echo "Removing Analytics profile"
 	rm -rf ${DIR}/../wso2/analytics
-	rm -rf ${DIR}/../wso2/components/analytics-default ${DIR}/../wso2/components/analytics-worker
+	rm -rf ${DIR}/../wso2/components/analytics-default
 	rm -rf ${DIR}/analytics.bat
 	rm -rf ${DIR}/analytics.sh
 	#remove integrator
 	echo "Removing Integrator profile"
     rm -rf ${DIR}/../conf
-    rm -rf ${DIR}/../wso2/components/default ${DIR}/../wso2/components/worker
+    rm -rf ${DIR}/../wso2/components/default
     rm -rf ${DIR}/../samples/service-bus
     rm -rf ${DIR}/../samples/data-services
     rm -rf ${DIR}/integrator.bat
@@ -155,7 +153,7 @@ then
 	#remove business-process profile
 	echo "Removing Business Process profile"
 	rm -rf ${DIR}/../wso2/business-process
-	rm -rf ${DIR}/../wso2/components/business-process-default ${DIR}/../wso2/components/business-process-worker
+	rm -rf ${DIR}/../wso2/components/business-process-default
 	rm -rf ${DIR}/../samples/business-process
 	rm -rf ${DIR}/business-process.bat
 	rm -rf ${DIR}/business-process.sh
@@ -207,12 +205,6 @@ then
     mkdir -p ${DIR}/../wso2/components/tmp_plugins
 
     for BUNDLE in $DEFAULT_BUNDLES; do
-        IFS=',' read -a bundleArray <<< "$BUNDLE"
-        JAR=${bundleArray[0]}_${bundleArray[1]}.jar
-        cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
-        done
-
-    for BUNDLE in $WORKER_BUNDLES; do
         IFS=',' read -a bundleArray <<< "$BUNDLE"
         JAR=${bundleArray[0]}_${bundleArray[1]}.jar
         cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
