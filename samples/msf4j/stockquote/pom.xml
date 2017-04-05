@@ -28,7 +28,7 @@
 
     <properties>
         <microservice.resourceClasses>org.wso2.msf4j.sample.StockQuoteService</microservice.resourceClasses>
-        <msf4j.version>2.2.0</msf4j.version>
+        <msf4j.version>2.2.1</msf4j.version>
         <io.swagger.version>1.5.12</io.swagger.version>
     </properties>
 
