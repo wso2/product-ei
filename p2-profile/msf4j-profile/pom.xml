@@ -23,7 +23,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>msf4j-feature-installation</artifactId>
-    <version>1.0.0</version>
+    <version>6.1.0</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
