@@ -254,7 +254,7 @@ public class Utils {
 
     }
 
-    public static boolean isDataService(org.apache.axis2.context.MessageContext messageContext) {
+    public static boolean isDataService(org.apache.axis2.context.MessageContext messageContext) throws AxisFault {
         AxisService axisService = messageContext.getAxisService();
         if (axisService != null) {
             URL file = axisService.getFileName();
@@ -262,12 +262,14 @@ public class Utils {
                 String filePath = file.getPath();
                 return filePath.endsWith(".dbs");
             }
+        }else {
+            return isTenantDataService(messageContext);
         }
         return false;
     }
 
 
-    public static AxisService getMultitenantAxisService(org.apache.axis2.context.MessageContext messageContext) throws
+    public static boolean isTenantDataService(org.apache.axis2.context.MessageContext messageContext) throws
             AxisFault {
         String url = (String) messageContext.getProperty("TransportInURL");
         if (url != null) {
@@ -279,13 +281,20 @@ public class Utils {
                             .getThreadLocalCarbonContext();
                     privilegedCarbonContext.setTenantDomain(tenantDomain, true);
                     url = url.substring(url.indexOf(tenantDomain));
-                    return getTenantAxisService(tenantDomain, url);
+                    AxisService axisService = getTenantAxisService(tenantDomain, url);
+                    if (axisService != null) {
+                        URL file = axisService.getFileName();
+                        if (file != null) {
+                            String filePath = file.getPath();
+                            return filePath.endsWith(".dbs");
+                        }
+                    }
                 } finally {
                     PrivilegedCarbonContext.endTenantFlow();
                 }
             }
         }
-        return null;
+        return false;
     }
 
     /**
