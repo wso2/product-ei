@@ -33,11 +33,11 @@
     <name>WSO2 Enterprise Integrator - P2 Profile Module</name>
     <url>http://wso2.org</url>
     <modules>
+        <module>msf4j-profile</module>
         <module>ei-profile</module>
         <module>analytics-profile</module>
         <module>business-process-profile</module>
         <module>broker-profile</module>
-        <module>msf4j-profile</module>
     </modules>
 
 </project>
