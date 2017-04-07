@@ -1213,7 +1213,7 @@
 
         <!--MB-->
         <carbon.messaging.version>3.2.3</carbon.messaging.version>
-        <carbon.metrics.version>1.2.0</carbon.metrics.version>
+        <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
         <andes.version>3.2.4</andes.version>
@@ -1319,7 +1319,7 @@
         <carbon.data.version>4.3.6</carbon.data.version>
         <carbon.event-processing.version>2.1.4</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
-        <carbon.metrics.version>1.2.2</carbon.metrics.version>
+        <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <orbit.version.joda-time>2.8.2.wso2v1</orbit.version.joda-time>
 
         <!-- Misc -->
