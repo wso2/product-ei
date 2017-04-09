@@ -20,10 +20,16 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.wso2</groupId>
+        <artifactId>wso2</artifactId>
+        <version>5</version>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
-    <artifactId>msf4j-feature-installation</artifactId>
-    <version>1.0.0</version>
+    <artifactId>msf4j-profile</artifactId>
+    <version>6.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
@@ -430,18 +436,5 @@
             </releases>
         </repository>
     </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>WSO2 Nexus Release Repository</name>
-            <url>http://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>wso2.snapshots</id>
-            <name>WSO2 Snapshot Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>
