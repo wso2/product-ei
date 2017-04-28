@@ -11,7 +11,7 @@ Key features of WSO2 EI @product.version@
 ==================================
 
 See the online WSO2 EI documentation for more information on product features: https://docs.wso2
-.com/display/EI610/WSO2+Enterprise+Integrator+Documentation
+.com/display/EI611/WSO2+Enterprise+Integrator+Documentation
 
 
 Installation & Running
