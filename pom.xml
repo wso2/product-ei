@@ -1387,6 +1387,9 @@
         <!-- Maven Plugin Version -->
         <maven.build.helper.plugin.version>1.8</maven.build.helper.plugin.version>
         <maven.xmlbeans-maven-plugin.plugin.version>2.3.3</maven.xmlbeans-maven-plugin.plugin.version>
+
+        <!-- MSF4J samples requirement -->
+        <io.swagger.version>1.5.8</io.swagger.version>
     </properties>
 
     <pluginRepositories>
