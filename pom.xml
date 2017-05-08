@@ -28,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
-    <version>6.1.1-SNAPSHOT</version>
+    <version>6.1.2-SNAPSHOT</version>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
@@ -1196,7 +1196,7 @@
 
         <!--Product Version-->
 
-        <product.ei.version>6.1.1-SNAPSHOT</product.ei.version>
+        <product.ei.version>6.1.2-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
         <carbon.business-process.version>4.4.15</carbon.business-process.version>
@@ -1212,11 +1212,11 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.12</carbon.messaging.version>
+        <carbon.messaging.version>3.2.15</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.13</andes.version>
+        <andes.version>3.2.19</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1245,7 +1245,7 @@
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.5.9</carbon.commons.version>
+        <carbon.commons.version>4.5.10</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.7.3</carbon.deployment.version>
