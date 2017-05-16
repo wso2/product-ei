@@ -298,6 +298,11 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3770DropLargePayloadsPreventESBFromOOMTestCase"/>
         </classes>
     </test>
+    <test name="ESBJAVA4973BindAddressFeatureTestCase" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4973BindAddressFeatureTestCase"/>
+        </classes>
+    </test>
     <test name="Datamapper-mediator-tests" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5021MultiplePrefixesAndDashSupport"/>
