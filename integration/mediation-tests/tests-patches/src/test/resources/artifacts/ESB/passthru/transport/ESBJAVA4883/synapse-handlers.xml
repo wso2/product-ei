@@ -1,3 +1,0 @@
-<handlers>
-	 <handler name="SynapseLogHandler" class="org.wso2.carbon.mediation.SynapseLogHandler"/>
-</handlers>

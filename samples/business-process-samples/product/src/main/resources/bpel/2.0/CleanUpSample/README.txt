@@ -1,2 +1,0 @@
-This sample demonstrates how to alter a value of a variable without directly altering that variable.
-The use of a temp variable and how a value can be altered and assigned back to the original variable.

@@ -1,6 +1,0 @@
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-  <!-- test soap message -->
-  <SOAP-ENV:Body>
-      <ns1:ExecuteWorkflow xmlns:ns1="workflowns"><value>foo</value></ns1:ExecuteWorkflow>
-  </SOAP-ENV:Body>
-</SOAP-ENV:Envelope>

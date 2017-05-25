@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<endpoint xmlns="http://ws.apache.org/ns/synapse" name="CreditEpr">
-    <address uri="http://10.100.2.122:9763/services/CreditService/"/>
-</endpoint>

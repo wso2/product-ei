@@ -1,1 +1,0 @@
-This sample demonstrates xml date formats and date time functions that can be used such as xs:dateTime, xs:dayTimeDuration.

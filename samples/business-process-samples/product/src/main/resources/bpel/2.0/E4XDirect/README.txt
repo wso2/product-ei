@@ -1,1 +1,0 @@
-This sample demonstrates the use of E4X extension in bpel process to include javascript code.

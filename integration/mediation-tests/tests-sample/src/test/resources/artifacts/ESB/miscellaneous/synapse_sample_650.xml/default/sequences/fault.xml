@@ -1,3 +1,0 @@
-<sequence name="fault" xmlns="http://ws.apache.org/ns/synapse">
-    <log/>
-</sequence>

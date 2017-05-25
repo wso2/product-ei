@@ -1,4 +1,0 @@
-<sequence xmlns="http://ws.apache.org/ns/synapse" name="gov_test_sequence_build_message_gov">
-    <log level="full"/>
-    <send/>
-</sequence>

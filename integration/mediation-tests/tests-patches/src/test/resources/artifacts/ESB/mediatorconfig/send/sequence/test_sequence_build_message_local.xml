@@ -1,5 +1,0 @@
-<sequence xmlns="http://ws.apache.org/ns/synapse" name="local_test_sequence_build_message_local">
-    <log level="full"/>
-    <send/>
-
-</sequence>

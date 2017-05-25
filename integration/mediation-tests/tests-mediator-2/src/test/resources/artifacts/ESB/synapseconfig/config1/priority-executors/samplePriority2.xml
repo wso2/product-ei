@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<priorityExecutor xmlns="http://ws.apache.org/ns/synapse" name="samplePriority2">
-    <queues>
-        <queue size="10" priority="5"/>
-        <queue size="8" priority="4"/>
-    </queues>
-    <threads max="100" core="20" keep-alive="5"/>
-</priorityExecutor>

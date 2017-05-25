@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<endpoint xmlns="http://ws.apache.org/ns/synapse" name="addressEP">
-    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
-</endpoint>

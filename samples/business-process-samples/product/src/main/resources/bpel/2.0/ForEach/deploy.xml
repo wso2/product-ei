@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:sample="http://wso2.org/bps/sample">
-  <process name="sample:ForEach">
-    <process-events generate="all"/>
-    <provide partnerLink="client">
-      <service name="sample:ForEach" port="ForEachPort"/>
-    </provide>
-  </process>
-</deploy>

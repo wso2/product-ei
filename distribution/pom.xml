@@ -17,12 +17,13 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
-        <version>6.1.2-SNAPSHOT</version>
+        <version>7.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -34,366 +35,395 @@
     <description>WSO2 Enterprise Integrator Distribution</description>
 
     <dependencies>
-        <!-- These dependencies are required to construct the EI pack -->
         <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>addressing</artifactId>
-            <type>mar</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.rampart</groupId>
-            <artifactId>rampart</artifactId>
-            <type>mar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.sandesha2</groupId>
-            <artifactId>sandesha2</artifactId>
-            <type>mar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.sandesha2</groupId>
-            <artifactId>sandesha2-core</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.mediation</groupId>
-            <artifactId>org.wso2.carbon.mediator.bridge</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.business-process</groupId>
-            <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
-            <version>${carbon.business-process.version}</version>
-            <classifier>web</classifier>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.kernel.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>org.wso2.andes.wso2</groupId>
-            <artifactId>andes-client</artifactId>
-            <version>${andes.version}</version>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.runtime.feature</artifactId>
+            <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>slf4j.wso2</groupId>
-            <artifactId>slf4j</artifactId>
-            <version>${slf4j.wso2.version}</version>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.launcher</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.geronimo.specs.wso2</groupId>
-            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <groupId>org.wso2.carbon.jndi</groupId>
+            <artifactId>org.wso2.carbon.jndi.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.caching</groupId>
+            <artifactId>org.wso2.carbon.caching.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.datasources</groupId>
+            <artifactId>org.wso2.carbon.datasource.core.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.messaging</groupId>
+            <artifactId>org.wso2.carbon.messaging.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.transport</groupId>
+            <artifactId>org.wso2.carbon.transport.http.netty.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.transport</groupId>
+            <artifactId>org.wso2.carbon.connector.framework.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.metrics</groupId>
+            <artifactId>org.wso2.carbon.metrics.core.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.metrics</groupId>
+            <artifactId>org.wso2.carbon.metrics.jdbc.core.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.metrics</groupId>
+            <artifactId>org.wso2.carbon.metrics.das.core.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.deployment</groupId>
+            <artifactId>org.wso2.carbon.deployment.engine.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.msf4j</groupId>
+            <artifactId>org.wso2.msf4j.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.business.messaging</groupId>
+            <artifactId>org.wso2.carbon.business.messaging.core.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.business.messaging</groupId>
+            <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
+            <type>zip</type>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.4</version>
                 <inherited>false</inherited>
                 <executions>
                     <execution>
-                        <id>unpack-wso2carbon</id>
-                        <phase>package</phase>
+                        <id>unpack-equinox-executable</id>
+                        <phase>test</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>wso2carbon-core</artifactId>
-                                    <version>${carbon.kernel.version}</version>
+                                    <groupId>org.eclipse.equinox</groupId>
+                                    <artifactId>org.eclipse.equinox.executable</artifactId>
+                                    <version>3.5.0.v20110530-7P7NFUFFLWUl76mart</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon.business-process</groupId>
-                                    <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
-                                    <version>${carbon.business-process.version}</version>
-                                    <classifier>web</classifier>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon.business-process</groupId>
-                                    <artifactId>org.wso2.carbon.humantask.humantaskweb</artifactId>
-                                    <version>${carbon.business-process.version}</version>
-                                    <classifier>web</classifier>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-war</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon.business-process</groupId>
-                                    <artifactId>org.wso2.carbon.bpmn.rest</artifactId>
-                                    <version>${carbon.business-process.version}</version>
-                                    <type>war</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                    <destFileName>bpmn.war</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.wso2.carbon.maven</groupId>
+                <artifactId>carbon-feature-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>p2-repo-generation</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-repo</goal>
+                        </goals>
+                        <configuration>
+                            <targetRepository>file:${basedir}/target/p2-repo</targetRepository>
+                            <features>
+                                <feature>
+                                    <id>org.wso2.carbon.kernel.feature</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.runtime.feature</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.caching.feature</id>
+                                    <version>${carbon.cache.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.msf4j.feature</id>
+                                    <version>${msf4j.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.messaging.feature</id>
+                                    <version>${carbon.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.transport.http.netty.feature</id>
+                                    <version>${carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.connector.framework.feature</id>
+                                    <version>${carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.jndi.feature</id>
+                                    <version>${carbon.jndi.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.core.feature</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.jdbc.core.feature</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.das.core.feature</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.datasource.core.feature</id>
+                                    <version>${carbon.datasources.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.engine.feature</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.business.messaging.core.feature</id>
+                                    <version>${carbon.business.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.business.messaging.admin.services.feature</id>
+                                    <version>${carbon.business.messaging.version}</version>
+                                </feature>
+                            </features>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>publishing products</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>publish-product</goal>
+                        </goals>
+                        <configuration>
+                            <productConfigurationFile>${basedir}/carbon.product</productConfigurationFile>
+                            <executable>
+                                ${basedir}/target/org.eclipse.equinox.executable_3.5.0.v20110530-7P7NFUFFLWUl76mart
+                            </executable>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                        </configuration>
+                    </execution>
+                    <!--MSF4J-->
+                    <execution>
+                        <id>materialize-msf4j</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-runtime</goal>
+                        </goals>
+                        <configuration>
+                            <productConfigurationFile>${basedir}/carbon.product</productConfigurationFile>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                            <targetPath>file:${basedir}/target/WSO2Carbon/wso2</targetPath>
+                            <runtime>msf4j</runtime>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>feature-installation-msf4j</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <configuration>
+                            <runtime>msf4j</runtime>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                            <destination>${basedir}/target/WSO2Carbon/wso2</destination>
+                            <features>
+                                <feature>
+                                    <id>org.wso2.carbon.kernel.feature.group</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.caching.feature.group</id>
+                                    <version>${carbon.cache.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.msf4j.feature.group</id>
+                                    <version>${msf4j.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.messaging.feature.group</id>
+                                    <version>${carbon.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.transport.http.netty.feature.group</id>
+                                    <version>${carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.connector.framework.feature.group</id>
+                                    <version>${carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.jndi.feature.group</id>
+                                    <version>${carbon.jndi.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.core.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.jdbc.core.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.das.core.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.datasource.core.feature.group</id>
+                                    <version>${carbon.datasources.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.engine.feature.group</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
+                            </features>
+                        </configuration>
+                    </execution>
+                    <!--Broker-->
+                    <execution>
+                        <id>materialize-broker</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-runtime</goal>
+                        </goals>
+                        <configuration>
+                            <productConfigurationFile>${basedir}/carbon.product</productConfigurationFile>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                            <targetPath>file:${basedir}/target/WSO2Carbon/wso2</targetPath>
+                            <runtime>broker</runtime>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>feature-installation-broker</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <configuration>
+                            <runtime>broker</runtime>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                            <destination>${basedir}/target/WSO2Carbon/wso2</destination>
+                            <features>
+                                <feature>
+                                    <id>org.wso2.carbon.kernel.feature.group</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.runtime.feature.group</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.caching.feature.group</id>
+                                    <version>${carbon.cache.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.msf4j.feature.group</id>
+                                    <version>${msf4j.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.messaging.feature.group</id>
+                                    <version>${carbon.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.transport.http.netty.feature.group</id>
+                                    <version>${carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.connector.framework.feature.group</id>
+                                    <version>${carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.jndi.feature.group</id>
+                                    <version>${carbon.jndi.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.core.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.jdbc.core.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.das.core.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.datasource.core.feature.group</id>
+                                    <version>${carbon.datasources.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.engine.feature.group</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.engine.feature.group</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.business.messaging.core.feature.group</id>
+                                    <version>${carbon.business.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.business.messaging.admin.services.feature.group</id>
+                                    <version>${carbon.business.messaging.version}</version>
+                                </feature>
+                            </features>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.1</version>
                 <executions>
-                    <execution>
-                        <id>extract-docs-from-components</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <property name="tempdir" value="target/docs-temp" />
-                                <mkdir dir="${tempdir}" />
-                                <unzip dest="${tempdir}">
-                                    <fileset dir="target">
-                                        <include name="wso2ei-${product.ei.version}.zip" />
-                                    </fileset>
-                                </unzip>
-                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/" overwrite="false">
-                                    <fileset dir="${tempdir}/wso2ei-${product.ei.version}/wso2/components/">
-                                    </fileset>
-                                </copy>
-                                <delete file="target/wso2ei-${product.ei.version}.zip" />
-                                <delete dir="${tempdir}" />
-                                <mkdir dir="${tempdir}" />
-                                <unzip dest="${tempdir}">
-                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
-                                        <include name="*.ui*.jar" />
-                                    </fileset>
-                                </unzip>
-                                <move todir="${tempdir}/web/" includeemptydirs="false">
-                                    <fileset dir="${tempdir}/web/">
-                                        <exclude name="**/yui/**" />
-                                        <exclude name="**/ajax/**" />
-                                        <exclude name="**/editarea/**" />
-                                        <exclude name="**/codepress/**" />
-                                        <exclude name="**/WEB-INF/**" />
-                                        <include name="**/*.html" />
-                                    </fileset>
-                                    <mapper type="glob" from="*.html" to="*.xml" />
-                                </move>
-                                <mkdir dir="src/site/xdoc" />
-                                <copy todir="src/site/xdoc" overwrite="false" includeemptydirs="false">
-                                    <fileset dir="${tempdir}/web">
-                                        <exclude name="**/yui/**" />
-                                        <exclude name="**/ajax/**" />
-                                        <exclude name="**/WEB-INF/**" />
-                                        <exclude name="**/*.html" />
-                                        <exclude name="**/*.js" />
-                                        <exclude name="**/*.jsp" />
-                                        <exclude name="**/*.xsl" />
-                                        <exclude name="*.*" />
-                                    </fileset>
-                                </copy>
-                                <copy todir="src/site" overwrite="false" includeemptydirs="false">
-                                    <fileset dir="../docs">
-                                    </fileset>
-                                </copy>
-                                <copy todir="target/site/" overwrite="false" includeemptydirs="false">
-                                    <fileset dir="src/site/xdoc/">
-                                        <include name="**/images/*.*" />
-                                    </fileset>
-                                </copy>
-                                <delete dir="${tempdir}" />
-                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/user-mgt.xml" token="&lt;Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property&gt;" value="&lt;!--Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property--&gt;" />
-                                <property name="tempdir2" value="target/identity-ui" />
-                                <mkdir dir="${tempdir2}" />
-                                <!-- Move identity:user-roles menu to config_menu -->
-
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.framework.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.user.mgt.ui_${carbon.identity.framework.version}.jar" basedir="${tempdir2}" />
-                                 <!--Move identity:user-store to config_menu-->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.framework.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.identity.user.store.configuration.ui_${carbon.identity.framework.version}.jar" basedir="${tempdir2}" />
-                                <!-- Move identity:key-store menu to config_menu -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.framework.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;manage_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.security.mgt.ui_${carbon.identity.framework.version}.jar" basedir="${tempdir2}" />
-
-                                <!--Move solr registry -->
-                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_${carbon.registry.version}.jar" dest="${tempdir2}" />
-                                <replace file="${tempdir2}/core.properties" token="dataDir=../../../../solr/data" value="dataDir=../../../solr/data" />
-                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_${carbon.registry.version}.jar" basedir="${tempdir2}" />
-
-
-                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties" token="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*" value="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*${line.separator}org.owasp.csrfguard.unprotected.Sequences=%servletContext%/carbon/sequences/*${line.separator}org.owasp.csrfguard.unprotected.Configadmin=%servletContext%/carbon/configadmin/*${line.separator}org.owasp.csrfguard.unprotected.Localentries=%servletContext%/carbon/localentries/*${line.separator}org.owasp.csrfguard.unprotected.Api=%servletContext%/carbon/api/*${line.separator}org.owasp.csrfguard.unprotected.Proxyservices=%servletContext%/carbon/proxyservices/*${line.separator}org.owasp.csrfguard.unprotected.Resources=%servletContext%/carbon/resources/*${line.separator}org.owasp.csrfguard.unprotected.Task=%servletContext%/carbon/task/*${line.separator}org.owasp.csrfguard.unprotected.RegistryResource=%servletContext%/registry/resource/*${line.separator}org.owasp.csrfguard.unprotected.TenantServices=^%servletContext%/t/.*/services/.*$${line.separator}org.owasp.csrfguard.unprotected.TenantProxyServices=^%servletContext%/t/.*/carbon/proxyservices/.*$${line.separator}org.owasp.csrfguard.unprotected.Saml2SSO=%servletContext%/acs" />
-
-                                <!-- Update Owasp.CsrfGuard.properties file with ValidateWhenNoSessionExists to disable validation on requests made with no valid session -->
-                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties" token="org.owasp.csrfguard.ValidateWhenNoSessionExists = true" value="org.owasp.csrfguard.ValidateWhenNoSessionExists = false" />
-                            </tasks>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>copy-samples</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <echo message="######## Creating BPEL / HumanTask Archives. #########" />
-                                <property name="tempdir" value="target/samples" />
-                                <property name="bpelSampleDir" value="target/samples/bpel" />
-                                <property name="humantaskSampleDir" value="target/samples/humantask" />
-                                <property name="bpmnSampleDir" value="target/samples/bpmn" />
-                                <property name="bpmnSampleJars" value="target/samples/bpmn-sample-jars" />
-                                <property name="samplesClientJars" value="target/samples/samples-client-jars" />
-                                <mkdir dir="${tempdir}" />
-                                <mkdir dir="${bpelSampleDir}" />
-                                <mkdir dir="${humantaskSampleDir}" />
-                                <mkdir dir="${bpmnSampleJars}" />
-                                <mkdir dir="${bpmnSampleDir}" />
-                                <mkdir dir="${samplesClientJars}" />
-                                <zip destfile="target/samples/bpel/CustomerInfo.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CustomerInfo" />
-                                <zip destfile="target/samples/bpel/LoanProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/LoanProcess" />
-                                <zip destfile="target/samples/bpel/LoanService.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/LoanService" />
-                                <zip destfile="target/samples/bpel/AttachmentHandlingProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess" />
-                                <zip destfile="target/samples/bpel/CreditRating.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CreditRating" />
-                                <zip destfile="target/samples/bpel/CleanUpSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CleanUpSample" />
-                                <zip destfile="target/samples/bpel/FlexibleAssign.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/FlexibleAssign" />
-                                <zip destfile="target/samples/bpel/helloHeaderSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/helloHeaderSample" />
-                                <zip destfile="target/samples/bpel/HelloWorld2.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/HelloWorld2" />
-                                <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/MyRoleMexTestProcess" />
-                                <zip destfile="target/samples/bpel/RPCClientProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RPCClientProcess" />
-                                <zip destfile="target/samples/bpel/RPCServiceProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RPCServiceProcess" />
-                                <zip destfile="target/samples/bpel/FlightReservationProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleCompensationHandlers/FlightReservationProcess/" />
-                                <zip destfile="target/samples/bpel/SampleEventHandler.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleEventHandlers" />
-                                <zip destfile="target/samples/bpel/AdderProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/AdderProcess/" />
-                                <zip destfile="target/samples/bpel/DivisionProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/DivisionProcess/" />
-                                <zip destfile="target/samples/bpel/FaultHandlingSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/FaultHandlingSample/" />
-                                <zip destfile="target/samples/bpel/Async-Client.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client/" />
-                                <zip destfile="target/samples/bpel/Async-Server.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server/" />
-                                <zip destfile="target/samples/bpel/SecurePartnerBPEL.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SecurePartnerBPEL" />
-                                <zip destfile="target/samples/bpel/Alarm.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/Alarm" />
-                                <zip destfile="target/samples/bpel/AssignActivity.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AssignActivity" />
-                                <zip destfile="target/samples/bpel/AssignDate.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AssignDate" />
-                                <zip destfile="target/samples/bpel/CombineUrl.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CombineUrl" />
-                                <zip destfile="target/samples/bpel/ComposeUrl.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ComposeUrl" />
-                                <zip destfile="target/samples/bpel/CorrelationUnique.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CorrelationUnique" />
-                                <zip destfile="target/samples/bpel/CorrelationWithAttribute.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/CorrelationWithAttribute" />
-                                <zip destfile="target/samples/bpel/E4XDirect.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/E4XDirect" />
-                                <zip destfile="target/samples/bpel/ExpandTemplate.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ExpandTemplate" />
-                                <zip destfile="target/samples/bpel/FlowLinks.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/FlowLinks" />
-                                <zip destfile="target/samples/bpel/ForEach.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ForEach" />
-                                <zip destfile="target/samples/bpel/IfCondition.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/IfCondition" />
-                                <zip destfile="target/samples/bpel/IgnoreMissingFromData.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/IgnoreMissingFromData" />
-                                <zip destfile="target/samples/bpel/PickOneWay.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/PickOneWay" />
-                                <zip destfile="target/samples/bpel/ProcessProperties.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ProcessProperties" />
-                                <zip destfile="target/samples/bpel/PubSubInProc.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/PubSubInProc" />
-                                <zip destfile="target/samples/bpel/RepeatUntil.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RepeatUntil" />
-                                <zip destfile="target/samples/bpel/RESTProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/RESTProcess" />
-                                <zip destfile="target/samples/bpel/Split.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/Split" />
-                                <zip destfile="target/samples/bpel/ThrowCatchFaultHandling.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ThrowCatchFaultHandling" />
-                                <zip destfile="target/samples/bpel/While.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/While" />
-                                <zip destfile="target/samples/bpel/XslTransform.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/XslTransform" />
-                                <zip destfile="target/samples/bpel/ClaimsApprovalProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/ClaimsApprovalProcess" />
-                                <zip destfile="target/samples/bpel/DynPartner.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/DynPartner" />
-                                <zip destfile="target/samples/bpel/XMLAttributeProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/XMLAttributeProcess" />
-                                <zip destfile="target/samples/bpel/Async-Server.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server" />
-                                <zip destfile="target/samples/bpel/Async-Client.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client" />
-                                <zip destfile="target/samples/bpel/SecuredWithServiceDescriptorProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SecuredWithServiceDescriptorProcess" />
-                                <zip destfile="target/samples/bpel/KPISample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/KPISample" />
-                                <zip destfile="target/samples/bpel/AdminServiceInvokeSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AdminServiceInvokeSample" />
-                                <zip destfile="target/samples/bpel/AbstractHeaderSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/AbstractHeaderSample" />
-                                <zip destfile="target/samples/bpel/SoapHeaderBasedCorrelationSample.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/SoapHeaderBasedCorrelation" />
-                                <zip destfile="target/samples/bpel/UserRestProcess.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpel/2.0/UserRestProcess" />
-                                <!--  Copying Human Tasks Sample -->
-
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTask.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTask" />
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithHTRenderings.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithHTRenderings" />
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithMultipleDomains.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithMultipleDomains" />
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithDeadline.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithDeadline" />
-                                <zip destfile="target/samples/humantask/HTWithServiceDescriptorANDUnifiedEndpoint.zip" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint" />
-                                <!--  Copying BPMN sample -->
-                                <!-- copy compiled jars of Service tasks target-->
-                                <copy todir="target/samples/bpmn-jar/">
-                                    <fileset dir="${basedir}/../samples/business-process-samples/product/bpmn-sample-jars/target">
-                                        <include name="**/*.jar" />
-                                    </fileset>
-                                </copy>
-                                <copy todir="target/samples/samples-jar/">
-                                    <fileset dir="${basedir}/../samples/business-process-samples/product/sample-client/target">
-                                        <include name="**/*.jar" />
-                                    </fileset>
-                                </copy>
-
-                                <copy todir="target/samples/process-tools-jar/">
-                                    <fileset dir="${basedir}/../samples/business-process-samples/product/process-tools/target">
-                                        <include name="**/*.jar" />
-                                    </fileset>
-                                </copy>
-
-                                <copy todir="target/samples/sample-utils-jar/">
-                                    <fileset dir="${basedir}/../samples/business-process-samples/product/sample-utils/target">
-                                        <include name="**/*.jar" />
-                                    </fileset>
-                                </copy>
-
-                                <zip destfile="target/samples/bpmn/SimpleCalculator.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/SimpleCalculator" />
-                                <zip destfile="target/samples/bpmn/HelloWorld.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/HelloWorld" />
-                                <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderDeliveryProcess" />
-                                <zip destfile="target/samples/bpmn/LoanApprovalProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/LoanApprovalProcess" />
-                                <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/OrderApprovalProcess" />
-                                <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/TrainTicketValidationProcess" />
-                                <zip destfile="target/samples/bpmn/VacationRequestProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/VacationRequestProcess" />
-                                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/CreditApprovalProcess" />
-                                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/PizzaOrderProcess" />
-                                <zip destfile="target/samples/bpmn/BuyProduct.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/BuyProduct" />
-                                <zip destfile="target/samples/bpmn/UserTaskCreatorProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/UserTaskCreatorProcess" />
-                                <zip destfile="target/samples/bpmn/XMLVariableTypeUsageProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/XMLVariableTypeUsageProcess" />
-                                <zip destfile="target/samples/bpmn/JSONVariableTypeUsageProcess.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/JSONVariableTypeUsageProcess" />
-                                <zip destfile="target/samples/bpmn/RestClient.bar" basedir="${basedir}/../samples/business-process-samples/product/src/main/resources/bpmn/RestClient" />
-                            </tasks>
-                        </configuration>
-                    </execution>
-
                     <execution>
                         <id>clean_target</id>
                         <phase>install</phase>
                         <configuration>
                             <tasks>
-                                <delete dir="target/archive-tmp" />
-                                <delete dir="target/dependency-maven-plugin-markers" />
-                                <delete dir="target/maven-archiver" />
-                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}" />
-                                <delete dir="target/sources" />
-                                <delete dir="target/samples" />
-                                <delete dir="target/site" />
-                                <delete dir="src/site" />
-                                <delete dir="target/identity-ui" />
-                                <delete dir="target/bpmn-explorer" />
-                                <delete file="target/bpmn.war" />
-                                <delete dir="target/humantask-explorer" />
+                                <delete dir="target/archive-tmp"/>
+                                <delete dir="target/dependency-maven-plugin-markers"/>
+                                <delete dir="target/maven-archiver"/>
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}"/>
+                                <delete dir="target/sources"/>
+                                <delete dir="target/samples"/>
+                                <delete dir="target/site"/>
+                                <delete dir="src/site"/>
                             </tasks>
                         </configuration>
                         <goals>
@@ -402,57 +432,10 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <reportPlugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-project-info-reports-plugin</artifactId>
-                            <version>2.4</version>
-                            <reportSets>
-                                <reportSet>
-                                    <reports>
-                                        <report>index</report>
-                                    </reports>
-                                </reportSet>
-                            </reportSets>
-                        </plugin>
-                    </reportPlugins>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin-->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>pre_dist</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>attached</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <filters>
-                                <filter>${basedir}/src/assembly/filter.properties</filter>
-                            </filters>
-                            <descriptors>
-                                <descriptor>${basedir}/src/assembly/dist.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>dist</id>
                         <phase>package</phase>
@@ -466,8 +449,6 @@
                             </filters>
                             <descriptors>
                                 <descriptor>${basedir}/src/assembly/bin.xml</descriptor>
-                                <!--<descriptor>src/main/assembly/src.xml</descriptor>-->
-                                <!--<descriptor>src/main/assembly/docs.xml</descriptor>-->
                             </descriptors>
                             <archiverConfig>
                                 <defaultDirectoryMode>0775</defaultDirectoryMode>
@@ -479,7 +460,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -489,6 +469,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

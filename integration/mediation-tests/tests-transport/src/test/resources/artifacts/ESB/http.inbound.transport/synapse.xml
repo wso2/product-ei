@@ -1,7 +1,0 @@
-<inboundEndpoint name="HttpListenerEP"
-                 protocol="http"
-                  suspend="false" sequence="TestIn" onError="fault" >
-    <p:parameters xmlns:p="http://ws.apache.org/ns/synapse">
-        <p:parameter  name="inbound.http.port">8081</p:parameter>
-    </p:parameters>
-</inboundEndpoint>

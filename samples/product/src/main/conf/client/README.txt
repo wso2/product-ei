@@ -1,1 +1,0 @@
-This directory is the temp directory used by the sample axis2 client shipped with the ESB

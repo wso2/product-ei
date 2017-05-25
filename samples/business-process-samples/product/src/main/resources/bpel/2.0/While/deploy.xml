@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:While="http://wso2.org/bps/samples/While" xmlns:testWhile="http://wso2.org/bps/samples/testWhile">
-  <process name="While:While">
-    <process-events generate="all"/>
-    <provide partnerLink="client">
-      <service name="While:WhileService" port="WhileServicePort"/>
-    </provide>
-  </process>
-</deploy>
