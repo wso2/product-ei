@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="MtomEnabledBackEndOUT" startOnLoad="true" transports="https http">
+        <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+            <parameter name="cachableDuration">15000</parameter>
+        </registry>
+        <target>
+            <inSequence>
+                <property name="enableMTOM" scope="axis2" value="true"/>
+                <property name="messageType" scope="axis2" type="STRING" value="multipart/related"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:8480/services/MtomEnabledBackEnd"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <property name="enableMTOM" scope="axis2" value="false"/>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+    <proxy name="MtomEnabledBackEnd" startOnLoad="true" transports="http https">
+        <description/>
+        <target>
+            <inSequence>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+</definitions>
