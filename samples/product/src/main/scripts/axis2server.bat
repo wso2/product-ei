@@ -105,14 +105,14 @@ echo Using JAVA_HOME:       %JAVA_HOME%
 if "%CARBON_HOME%"=="" set CARBON_HOME=%~sdp0..\..
 set CMD=RUN %*
 
-rem Set all jar folders to CARBON_CLASSPATH variable. 
-set CARBON_CLASSPATH=..\..\wso2\lib,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\lib,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\wso2\components\plugins,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\wso2\lib\core\WEB-INF\lib,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\extensions,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\wso2\lib\endorsed,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\repository\axis2\client\lib\bcprov-jdk15on.jar,%CARBON_CLASSPATH%
+rem Set all jar folders to CARBON_CLASSPATH variable.
+set CARBON_CLASSPATH=..\..\wso2\lib\*;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\lib;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\wso2\components\plugins\*;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\wso2\lib\core\WEB-INF\lib;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\extensions;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\wso2\lib\endorsed;%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\repository\axis2\client\lib\bcprov-jdk15on.jar;%CARBON_CLASSPATH%
 
 set confpath=%AXIS2_HOME%repository\conf\axis2.xml
 set AXIS2_ENDORSED=%AXIS2_HOME%..\..\wso2\lib\endorsed
@@ -120,10 +120,10 @@ set AXIS2_ENDORSED=%AXIS2_HOME%..\..\wso2\lib\endorsed
 rem Assign synapse-samples*.jar folders to SAMPLE_SERVERPATH variable. Since it is the jar contains the SampleServer classes.
 FOR %%C in ("%CARBON_HOME%\wso2\components\plugins\synapse-samples*.jar") DO set SAMPLE_SERVERPATH=!SAMPLE_SERVERPATH, %CARBON_HOME%\wso2\components\plugins\%%~nC%%~xC
 
-rem We use <code> samples.util.Bootstrap</code> to avoid long classpath windows OS issue to start the server. We pass the the jar files location as 
+rem We use <code> samples.util.Bootstrap</code> to avoid long classpath windows OS issue to start the server. We pass the the jar files location as
 rem -Djar.class.paths=%CARBON_CLASSPATH% as a system property.(It is a MUST) Additionally we pass -Dsystem.home="."  property which is set to current directory.
 
-"%JAVA_HOME%\bin\java"  -Xms256m -Xmx512m -XX:MaxPermSize=256m  -classpath "%SAMPLE_SERVERPATH%" -Djava.io.tmpdir="%AXIS2_HOME%..\..\wso2\tmp" %_SERVERNAME% %_HTTPPORT% %_HTTPSPORT% %_XDEBUG% -Djava.endorsed.dirs="%AXIS2_ENDORSED%"  -Djar.class.paths=%CARBON_CLASSPATH% -Dsystem.home="."  samples.util.Bootstrap  -repo "%AXIS2_HOME%\repository" -conf "%AXIS2_HOME%\repository\conf\axis2.xml"
+"%JAVA_HOME%\bin\java"  -Xms256m -Xmx512m -XX:MaxPermSize=256m  -classpath "%SAMPLE_SERVERPATH%;%CARBON_CLASSPATH%" -Djava.io.tmpdir="%AXIS2_HOME%..\..\wso2\tmp" %_SERVERNAME% %_HTTPPORT% %_HTTPSPORT% %_XDEBUG% -Djava.endorsed.dirs="%AXIS2_ENDORSED%"  -Djar.class.paths=%CARBON_CLASSPATH% -Dsystem.home="."  samples.util.SampleAxis2Server  -repo "%AXIS2_HOME%\repository" -conf "%AXIS2_HOME%\repository\conf\axis2.xml"
 
 :end
 set _JAVACMD=
@@ -133,4 +133,3 @@ if "%OS%"=="Windows_NT" @endlocal
 if "%OS%"=="WINNT" @endlocal
 
 :mainEnd
-
