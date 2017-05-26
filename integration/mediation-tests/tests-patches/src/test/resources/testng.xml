@@ -304,5 +304,10 @@
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5045XsiNilElementSupport"/>
         </classes>
     </test>
+    <test name="ESBJAVA5098_WSAddressingSupportTest" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.mediators.header.ESBJAVA5098_WSAddressingSupportTest"/>
+        </classes>
+    </test>
 </suite>
 
