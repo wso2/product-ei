@@ -53,6 +53,10 @@ public class main {
 
             targetService.accept(codeGenVisitor);
 
+            System.out.println("===================================");
+            System.out.println(codeGenVisitor.getBallerinaSourceStr());
+            System.out.println("===================================");
+
             System.out.println("CodeVisit complete");
         }
     }

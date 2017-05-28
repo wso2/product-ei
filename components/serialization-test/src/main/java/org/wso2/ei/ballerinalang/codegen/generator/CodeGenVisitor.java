@@ -183,9 +183,7 @@ public class CodeGenVisitor implements NodeVisitor{
 
         //Service visit completed
         ballerinaSourceStr += Constants.STMTBLOCK_END_STR;
-        System.out.println("===================================");
-        System.out.println(ballerinaSourceStr);
-        System.out.println("===================================");
+
 
     }
 
@@ -638,5 +636,9 @@ public class CodeGenVisitor implements NodeVisitor{
     @Override
     public void visit(WorkerVarLocation workerVarLocation) {
 		logExecMethod ();
+    }
+
+    public String getBallerinaSourceStr() {
+        return ballerinaSourceStr;
     }
 }
