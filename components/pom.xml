@@ -41,5 +41,6 @@
     </licenses>
 
     <modules>
+        <module>serialization-test</module>
     </modules>
 </project>
