@@ -1,7 +1,7 @@
 #!/bin/sh
-# analytics.sh
+# ballerina.sh
 # ----------------------------------------------------------------------------
-#  Copyright 2016 WSO2, Inc. http://www.wso2.org
+#  Copyright 2017 WSO2, Inc. http://www.wso2.org
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -55,15 +55,15 @@ PRGDIR=`dirname "$PRG"`
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
 ###########################################################################
-NAME=start-analytics
+NAME=start-ballerina
 # Daemon name, where is the actual executable
-ANALYTICS_INIT_SCRIPT="$CARBON_HOME/wso2/analytics/bin/wso2server.sh"
+BALLERINA_INIT_SCRIPT="$CARBON_HOME/wso2/ballerina/bin/ballerina"
 
 # If the daemon is not there, then exit.
 
-sh $ANALYTICS_INIT_SCRIPT $* &
+sh $BALLERINA_INIT_SCRIPT $* &
 
-trap "sh $ANALYTICS_INIT_SCRIPT stop; exit;" INT TERM
+trap "sh $BALLERINA_INIT_SCRIPT stop; exit;" INT TERM
 while :
 do
         sleep 60

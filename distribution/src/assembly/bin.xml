@@ -36,9 +36,9 @@
                 <exclude>eclipse</exclude>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/native/*</exclude>
+                <exclude>**/carbon.bat</exclude>
             </excludes>
         </fileSet>
-
         <fileSet>
             <directory>target/WSO2Carbon</directory>
             <outputDirectory></outputDirectory>
@@ -46,9 +46,15 @@
                 <include>**/*.sh</include>
                 <include>**/native/*</include>
             </includes>
+            <excludes>
+                <exclude>**/carbon.sh</exclude>
+            </excludes>
             <fileMode>755</fileMode>
         </fileSet>
-
+        <fileSet>
+            <directory>target/ballerina/ballerina-${ballerina.runtime.version}</directory>
+            <outputDirectory>wso2/ballerina</outputDirectory>
+        </fileSet>
         <fileSet>
             <directory>carbon-home</directory>
             <outputDirectory></outputDirectory>
@@ -62,6 +68,24 @@
     </fileSets>
 
     <files>
+        <file>
+            <source>src/scripts/broker.sh</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/scripts/msf4j.sh</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/scripts/ballerina.sh</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
         <!--<file>
             <source>target/WSO2Carbon/conf/deployment.yaml</source>
             <outputDirectory>conf/</outputDirectory>
