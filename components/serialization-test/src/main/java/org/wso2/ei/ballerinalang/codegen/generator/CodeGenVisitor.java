@@ -81,6 +81,7 @@ import org.ballerinalang.model.expressions.ResourceInvocationExpr;
 import org.ballerinalang.model.expressions.StructInitExpr;
 import org.ballerinalang.model.expressions.SubtractExpression;
 import org.ballerinalang.model.expressions.TypeCastExpression;
+import org.ballerinalang.model.expressions.TypeConversionExpr;
 import org.ballerinalang.model.expressions.UnaryExpression;
 import org.ballerinalang.model.expressions.VariableRefExpr;
 import org.ballerinalang.model.invokers.MainInvoker;
@@ -107,52 +108,52 @@ import org.ballerinalang.model.statements.WorkerReplyStmt;
 
 import java.util.Stack;
 
-public class CodeGenVisitor implements NodeVisitor{
+public class CodeGenVisitor implements NodeVisitor {
 
     private static Log log = LogFactory.getLog(CodeGenVisitor.class);
     private String ballerinaSourceStr = "";
 
     //Stack to hold code block ends
     //private Stack<String> codeBlockStack = new Stack<>();
-    
-    private void logExecMethod () {
+
+    private void logExecMethod() {
         StackTraceElement STElements[] = Thread.currentThread().getStackTrace();
         System.out.println(STElements[3].getMethodName());
     }
 
     @Override
     public void visit(BLangProgram bLangProgram) {
-        logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BLangPackage bLangPackage) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BallerinaFile bFile) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ImportPackage importPkg) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ConstDef constant) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(GlobalVariableDef globalVar) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(Service service) {
-        logExecMethod ();
+        logExecMethod();
 
         //Visit annotationAttachment
         AnnotationAttachment[] annotationAttachments = service.getAnnotations();
@@ -161,10 +162,11 @@ public class CodeGenVisitor implements NodeVisitor{
         }
 
         /**
-            serviceDefinition : 'service' Identifier serviceBody;
-        * */
+         serviceDefinition : 'service' Identifier serviceBody;
+         * */
 
-        ballerinaSourceStr += Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
+        ballerinaSourceStr += Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
+                + Constants.NEWLINE_STR;
 
         /**
          * serviceBody: '{' variableDefinitionStatement* resourceDefinition* '}';
@@ -172,8 +174,6 @@ public class CodeGenVisitor implements NodeVisitor{
          * annotationAttachment: '@' nameReference '{' annotationAttributeList? '}'
          */
         //TODO:Visit variable definition statements
-
-
 
         //Visit Resource definitions
         Resource[] resources = service.getResources();
@@ -184,17 +184,16 @@ public class CodeGenVisitor implements NodeVisitor{
         //Service visit completed
         ballerinaSourceStr += Constants.STMTBLOCK_END_STR;
 
-
     }
 
     @Override
     public void visit(BallerinaConnectorDef connector) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(Resource resource) {
-		logExecMethod ();
+        logExecMethod();
 
         /**
          * resourceDefinition : annotationAttachment* 'resource' Identifier '(' parameterList ')' callableUnitBody;
@@ -209,7 +208,7 @@ public class CodeGenVisitor implements NodeVisitor{
         }
 
         ballerinaSourceStr += Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
-                                                                Constants.SPACE_STR + Constants.PARENTHESES_START_STR;
+                Constants.SPACE_STR + Constants.PARENTHESES_START_STR;
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
         for (ParameterDef parameterDef : parameterDefs) {
@@ -219,7 +218,7 @@ public class CodeGenVisitor implements NodeVisitor{
 
         //end of parameters
         ballerinaSourceStr += Constants.PARENTHESES_END_STR + Constants.SPACE_STR +
-                                                                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
 
         //process resource block
         /**
@@ -245,32 +244,32 @@ public class CodeGenVisitor implements NodeVisitor{
 
     @Override
     public void visit(BallerinaFunction function) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BTypeMapper typeMapper) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BallerinaAction action) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(Worker worker) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(AnnotationAttachment annotation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ParameterDef parameterDef) {
-		logExecMethod ();
+        logExecMethod();
 
         //TODO handle annotations for parameter
 
@@ -279,35 +278,35 @@ public class CodeGenVisitor implements NodeVisitor{
 
     @Override
     public void visit(VariableDef variableDef) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(StructDef structDef) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(AnnotationAttributeDef annotationAttributeDef) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(AnnotationDef annotationDef) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(VariableDefStmt varDefStmt) {
-		logExecMethod ();
+        logExecMethod();
 
         /**
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation | expression) )? ';';
          */
 
         VariableDef variableDef = varDefStmt.getVariableDef();
-        String varDefStr = variableDef.getTypeName().getName() + Constants.SPACE_STR + variableDef.getSymbolName() +
-                                                        Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR;
+        String varDefStr = variableDef.getTypeName().getName() + Constants.SPACE_STR + variableDef.getSymbolName()
+                + Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR;
 
         Expression rhsExpr = varDefStmt.getRExpr();
 
@@ -328,27 +327,27 @@ public class CodeGenVisitor implements NodeVisitor{
 
     @Override
     public void visit(AssignStmt assignStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BlockStmt blockStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(CommentStmt commentStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(IfElseStmt ifElseStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ReplyStmt replyStmt) {
-		logExecMethod ();
+        logExecMethod();
 
         /**
          * replyStatement : 'reply' expression ';';
@@ -357,7 +356,7 @@ public class CodeGenVisitor implements NodeVisitor{
 
         Expression replyExpression = replyStmt.getReplyExpr();
         if (replyExpression instanceof VariableRefExpr) {
-            ballerinaSourceStr += ((VariableRefExpr)replyExpression).getSymbolName();
+            ballerinaSourceStr += ((VariableRefExpr) replyExpression).getSymbolName();
         }
 
         ballerinaSourceStr += Constants.STMTEND_STR + Constants.NEWLINE_STR;
@@ -365,277 +364,282 @@ public class CodeGenVisitor implements NodeVisitor{
 
     @Override
     public void visit(ReturnStmt returnStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(WhileStmt whileStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BreakStmt breakStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(TryCatchStmt tryCatchStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ThrowStmt throwStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(FunctionInvocationStmt functionInvocationStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ActionInvocationStmt actionInvocationStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(WorkerInvocationStmt workerInvocationStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(WorkerReplyStmt workerReplyStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ForkJoinStmt forkJoinStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(TransformStmt transformStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(TransactionRollbackStmt transactionRollbackStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(AbortStmt abortStmt) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(AddExpression addExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(AndExpression andExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BasicLiteral basicLiteral) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(DivideExpr divideExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ModExpression modExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(EqualExpression equalExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(FunctionInvocationExpr functionInvocationExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ActionInvocationExpr actionInvocationExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(GreaterEqualExpression greaterEqualExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(GreaterThanExpression greaterThanExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(LessEqualExpression lessEqualExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(LessThanExpression lessThanExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(MultExpression multExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(InstanceCreationExpr instanceCreationExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(NotEqualExpression notEqualExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(OrExpression orExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(SubtractExpression subtractExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(UnaryExpression unaryExpression) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(TypeCastExpression typeCastExpression) {
-		logExecMethod ();
+        logExecMethod();
+    }
+
+    @Override
+    public void visit(TypeConversionExpr typeConversionExpr) {
+
     }
 
     @Override
     public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(FieldAccessExpr structAttributeAccessExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(JSONFieldAccessExpr jsonPathExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(BacktickExpr backtickExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(RefTypeInitExpr refTypeInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ConnectorInitExpr connectorInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(StructInitExpr structInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(MapInitExpr mapInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(JSONInitExpr jsonInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(JSONArrayInitExpr jsonArrayInitExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(KeyValueExpr keyValueExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(VariableRefExpr variableRefExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(NullLiteral nullLiteral) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(StackVarLocation stackVarLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ServiceVarLocation serviceVarLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(GlobalVarLocation globalVarLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ConnectorVarLocation connectorVarLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ConstantLocation constantLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(StructVarLocation structVarLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(ResourceInvocationExpr resourceIExpr) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(MainInvoker mainInvoker) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     @Override
     public void visit(WorkerVarLocation workerVarLocation) {
-		logExecMethod ();
+        logExecMethod();
     }
 
     public String getBallerinaSourceStr() {
