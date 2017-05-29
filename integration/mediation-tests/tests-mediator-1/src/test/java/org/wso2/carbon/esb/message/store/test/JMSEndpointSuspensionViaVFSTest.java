@@ -16,13 +16,13 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.extensions.servers.httpserver.RequestInterceptor;
+import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpServer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpServer;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -135,7 +135,8 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
         sendFile(outfile, afile, bfile);
 
-        Assert.assertTrue(interceptor.getPayload().contains("Endpoint Down!"));
+        Assert.assertTrue(interceptor.getPayload().contains("Endpoint Down!"),
+                "payload received: " + interceptor.getPayload() + ". payload expected: " + "Endpoint Down!");
 
         deleteProxyService("VFSJMSProxy1");
     }
