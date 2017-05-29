@@ -1,26 +1,23 @@
 /*
- * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *     Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- * WSO2 Inc. licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License.
- * You may obtain a copy of the License at
+ *     WSO2 Inc. licenses this file to you under the Apache License,
+ *     Version 2.0 (the "License"); you may not use this file except
+ *     in compliance with the License.
+ *     You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ *    Unless required by applicable law or agreed to in writing,
+ *    software distributed under the License is distributed on an
+ *    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *    KIND, either express or implied.  See the License for the
+ *    specific language governing permissions and limitations
+ *    under the License.
  */
 
-package org.wso2.ei.ballerinalang.codegen.generator;
+package org.wso2.ei.tools.converter.common.generator;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.ballerinalang.bre.ConnectorVarLocation;
 import org.ballerinalang.bre.ConstantLocation;
 import org.ballerinalang.bre.GlobalVarLocation;
@@ -105,20 +102,26 @@ import org.ballerinalang.model.statements.VariableDefStmt;
 import org.ballerinalang.model.statements.WhileStmt;
 import org.ballerinalang.model.statements.WorkerInvocationStmt;
 import org.ballerinalang.model.statements.WorkerReplyStmt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Stack;
-
+/**
+ * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
+ * and serialize to ballerina source
+ */
 public class CodeGenVisitor implements NodeVisitor {
 
-    private static Log log = LogFactory.getLog(CodeGenVisitor.class);
+    //private static Log log = LogFactory.getLog(CodeGenVisitor.class);
+    private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
     private String ballerinaSourceStr = "";
 
     //Stack to hold code block ends
     //private Stack<String> codeBlockStack = new Stack<>();
 
+    //TODO remove this method later
     private void logExecMethod() {
-        StackTraceElement STElements[] = Thread.currentThread().getStackTrace();
-        System.out.println(STElements[3].getMethodName());
+        StackTraceElement stackTraceElements[] = Thread.currentThread().getStackTrace();
+        logger.info(stackTraceElements[3].getMethodName());
     }
 
     @Override
@@ -228,7 +231,8 @@ public class CodeGenVisitor implements NodeVisitor {
          *          throwStatement| returnStatement| replyStatement| workerInteractionStatement| commentStatement|
          *          actionInvocationStatement| functionInvocationStatement| transformStatement| transactionStatement|
          *          abortStatement;
-         * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation | expression) )? ';';
+         * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
+         *                                                                                          expression) )? ';';
          */
         BlockStmt blockStmt = resource.getCallableUnitBody();
 
@@ -301,7 +305,8 @@ public class CodeGenVisitor implements NodeVisitor {
         logExecMethod();
 
         /**
-         * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation | expression) )? ';';
+         * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
+         *                                                                                      expression) )? ';';
          */
 
         VariableDef variableDef = varDefStmt.getVariableDef();

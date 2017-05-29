@@ -1,24 +1,28 @@
 /*
- * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *     Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- * WSO2 Inc. licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License.
- * You may obtain a copy of the License at
+ *     WSO2 Inc. licenses this file to you under the Apache License,
+ *     Version 2.0 (the "License"); you may not use this file except
+ *     in compliance with the License.
+ *     You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ *    Unless required by applicable law or agreed to in writing,
+ *    software distributed under the License is distributed on an
+ *    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *    KIND, either express or implied.  See the License for the
+ *    specific language governing permissions and limitations
+ *    under the License.
  */
 
-package org.wso2.ei.ballerinalang.codegen.builder;
+package org.wso2.ei.tools.converter.common.builder;
 
-import org.ballerinalang.model.*;
+import org.ballerinalang.model.BLangPackage;
+import org.ballerinalang.model.BLangProgram;
+import org.ballerinalang.model.BallerinaFile;
+import org.ballerinalang.model.GlobalScope;
+import org.ballerinalang.model.NativeScope;
 import org.ballerinalang.model.builder.BLangModelBuilder;
 import org.ballerinalang.model.types.SimpleTypeName;
 import org.ballerinalang.util.program.BLangPrograms;
@@ -27,7 +31,9 @@ import org.ballerinalang.util.repository.PackageRepository;
 import java.nio.file.Path;
 import java.util.Stack;
 
-
+/**
+ * TestBallerinaASTBuilder
+ */
 public class TestBallerinaASTBuilder {
 
     public static void main(String... args) {
@@ -40,7 +46,7 @@ public class TestBallerinaASTBuilder {
         Stack<SimpleTypeName> typeNameStack = new Stack<>();
         boolean processingReturnParams = false;
 
-        PackageRepository PackageRepository = new PackageRepository() {
+        PackageRepository packageRepository = new PackageRepository() {
             @Override
             public PackageSource loadPackage(Path path) {
                 return null;
@@ -57,19 +63,19 @@ public class TestBallerinaASTBuilder {
 
         BLangProgram programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
 
-        BLangPackage bLangPackage = new BLangPackage(".", PackageRepository, programScope);
+        BLangPackage bLangPackage = new BLangPackage(".", packageRepository, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);
 
         BLangModelBuilder modelBuilder = new BLangModelBuilder(packageBuilder, ".");
 
         String pkgPath = "ballerina.lang.messages";
-        String asPkgName = null;
-        modelBuilder.addImportPackage(null, null, pkgPath, asPkgName);
+        //String asPkgName = null;
+        modelBuilder.addImportPackage(null, null, pkgPath, null);
 
 
         String pkgPath1 = "ballerina.net.http";
-        String asPkgName1 = null;
-        modelBuilder.addImportPackage(null, null, pkgPath1, asPkgName1);
+        //String asPkgName1 = null;
+        modelBuilder.addImportPackage(null, null, pkgPath1, null);
 
 
         modelBuilder.startAnnotationAttachment(null);

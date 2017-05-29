@@ -44,6 +44,7 @@
     <modules>
         <module>components</module>
         <module>features</module>
+        <module>tools</module>
         <module>distribution</module>
     </modules>
 
@@ -154,6 +155,11 @@
                 <artifactId>ballerina</artifactId>
                 <version>${ballerina.runtime.version}</version>
                 <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.ballerinalang</groupId>
+                <artifactId>ballerina-core</artifactId>
+                <version>${ballerina.core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -275,6 +281,7 @@
     <properties>
         <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
         <ballerina.runtime.version>0.8.3</ballerina.runtime.version>
+        <ballerina.core.version>0.88-SNAPSHOT</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>2.3.1</carbon.messaging.version>
         <carbon.transport.http.netty.version>4.3.0-m2</carbon.transport.http.netty.version>
