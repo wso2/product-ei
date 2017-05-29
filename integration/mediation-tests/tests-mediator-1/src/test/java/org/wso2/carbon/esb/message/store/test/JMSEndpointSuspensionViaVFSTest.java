@@ -135,7 +135,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
         sendFile(outfile, afile, bfile);
 
-        Assert.assertTrue(interceptor.getPayload().contains("Endpoint Down!"));
+        Assert.assertTrue(interceptor.getPayload().contains("Endpoint Down!"),"payload received:" + interceptor.getPayload());
 
         deleteProxyService("VFSJMSProxy1");
     }
