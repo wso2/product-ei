@@ -42,7 +42,7 @@ import java.util.List;
  *
  */
 public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTest {
-	private final String serviceName = "H2SimpleJsonTest";
+	private final String serviceName = "H2SimpleJsonTest2";
 	private String serviceEndPoint;
 
 	private static final Log log = LogFactory.getLog(CARBON15262JsonGsonFormatterTenantModeTest.class);
@@ -55,7 +55,7 @@ public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTe
 		sqlFileLis.add(selectSqlFile("Offices.sql"));
 		deployService(serviceName, createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
 		                                          "rdbms" + File.separator + "h2" + File.separator +
-		                                          "H2SimpleJsonTest.dbs", sqlFileLis));
+		                                          "H2SimpleJsonTest2.dbs", sqlFileLis));
 		serviceEndPoint = getServiceUrlHttp(serviceName) + "/";
 
 	}
