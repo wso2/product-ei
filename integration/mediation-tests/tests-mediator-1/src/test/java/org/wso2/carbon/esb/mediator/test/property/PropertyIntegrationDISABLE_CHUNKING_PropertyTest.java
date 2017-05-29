@@ -40,7 +40,7 @@ public class PropertyIntegrationDISABLE_CHUNKING_PropertyTest extends ESBIntegra
         super.init();
         loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/DISABLE_CHUNKING.xml");
-        wireServer = new WireMonitorServer(8991);
+        wireServer = new WireMonitorServer(8993);
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})

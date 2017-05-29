@@ -44,7 +44,7 @@ public class PropertyIntegrationForceHttpContentLengthPropertyTestCase
     public void setEnvironment() throws Exception {
         super.init();
 
-        wireServer = new WireMonitorServer(8991);
+        wireServer = new WireMonitorServer(8994);
     }
 
     @AfterClass(alwaysRun = true)

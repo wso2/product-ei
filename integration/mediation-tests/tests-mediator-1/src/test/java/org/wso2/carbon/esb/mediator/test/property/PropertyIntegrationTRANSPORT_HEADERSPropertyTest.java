@@ -37,7 +37,7 @@ public class PropertyIntegrationTRANSPORT_HEADERSPropertyTest extends ESBIntegra
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();
-        wireServer = new WireMonitorServer(8991);
+        wireServer = new WireMonitorServer(8996);
         loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/TRANSPORT_HEADERS.xml");
     }

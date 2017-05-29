@@ -39,7 +39,7 @@ public class PropertyIntegrationPropertyInTransportScopeTest extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        wireServer = new WireMonitorServer(8991);
+        wireServer = new WireMonitorServer(8995);
         loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/transport_scope_property.xml");
 
