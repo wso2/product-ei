@@ -63,14 +63,7 @@ public class ESBJAVA5045XsiNilElementSupport extends DataMapperIntegrationTest {
                             + "</breakfast_menu>\n";
 
         String response = sendRequest(getApiInvocationURL("convertMenuApi"), requestMsg, "application/xml");
-
-        Assert.assertEquals(response, "<menu><item><name>Belgian Waffles</name><price>$5.95</price>"
-                                      + "<orgin>Belgian</orgin><veg>true</veg>"
-                                      + "<description>Two of our famous Belgian Waffles with plenty of real maple syrup</description>"
-                                      + "</item><item><name>Strawberry Belgian Waffles</name><price>$7.95</price>"
-                                      + "<calories>900.0</calories><orgin>Belgian</orgin><veg>true</veg>"
-                                      + "<description>Light Belgian waffles covered with strawberries and whipped cream</description>"
-                                      + "</item></menu>");
+        Assert.assertFalse(response.contains("<calories xsi:nil=\"true\"/>"),"element with xsi:nil=true has not been removed");
     }
 
 
