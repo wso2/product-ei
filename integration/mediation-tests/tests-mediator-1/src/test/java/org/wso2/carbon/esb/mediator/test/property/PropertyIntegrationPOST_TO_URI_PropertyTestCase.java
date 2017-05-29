@@ -40,7 +40,7 @@ public class PropertyIntegrationPOST_TO_URI_PropertyTestCase extends ESBIntegrat
         super.init();
         loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/POST_TO_URI.xml");
-        wireServer = new WireMonitorServer(8991);
+        wireServer = new WireMonitorServer(8992);
 
 
     }
@@ -55,7 +55,7 @@ public class PropertyIntegrationPOST_TO_URI_PropertyTestCase extends ESBIntegrat
             //ignore since wire message is captured
         }
         String response = wireServer.getCapturedMessage();
-        assertTrue(response.contains("POST http://localhost:8991"), "Faulty Response");
+        assertTrue(response.contains("POST http://localhost:8992"), "Faulty Response");
     }
 
     @AfterClass(alwaysRun = true)

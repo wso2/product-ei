@@ -34,7 +34,8 @@ import java.util.Properties;
  */
 public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
-    private TestRequestInterceptor interceptor = new TestRequestInterceptor();
+    private TestRequestInterceptor interceptorOut = new TestRequestInterceptor();
+    private TestRequestInterceptor interceptorFault = new TestRequestInterceptor();
     private JMSBrokerController jmsBrokerController;
     private ServerConfigurationManager serverConfigurationManager;
 
@@ -45,19 +46,25 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
     private final String GERONIMO_JMS = "geronimo-jms_1.1_spec-1.1.1.jar";
     private final String JAR_LOCATION = "/artifacts/ESB/jar";
     private final int PORT = 9654;
-    private SimpleHttpServer httpServer;
+    private final int PORT_FAULT = 9655;
+    private SimpleHttpServer httpServerOut;
+    private SimpleHttpServer httpServerFault;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         setUpJMSBroker();
         /* Make the port available */
         Utils.shutdownFailsafe(PORT);
-        httpServer = new SimpleHttpServer(PORT, new Properties());
-        httpServer.start();
+        httpServerOut = new SimpleHttpServer(PORT, new Properties());
+        httpServerOut.start();
+
+        Utils.shutdownFailsafe(PORT_FAULT);
+        httpServerFault = new SimpleHttpServer(PORT_FAULT, new Properties());
+        httpServerFault.start();
         Thread.sleep(5000);
 
-        interceptor = new TestRequestInterceptor();
-        httpServer.getRequestHandler().setInterceptor(interceptor);
+        interceptorOut = new TestRequestInterceptor();
+        httpServerOut.getRequestHandler().setInterceptor(interceptorOut);
 
         super.init();
 
@@ -125,18 +132,18 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
         sendFile(outfile, afile, bfile);
 
-        Assert.assertTrue(interceptor.getPayload().contains("<address>Disney Land</address>"));
+        Assert.assertTrue(interceptorOut.getPayload().contains("<address>Disney Land</address>"));
 //        String vfsOut = FileUtils.readFileToString(outfile);
 //        Assert.assertTrue(vfsOut.contains("WSO2 Company"));
 
-        interceptor = new TestRequestInterceptor();
-        httpServer.getRequestHandler().setInterceptor(interceptor);
+        interceptorFault = new TestRequestInterceptor();
+        httpServerFault.getRequestHandler().setInterceptor(interceptorFault);
         jmsBrokerController.stop();
 
         sendFile(outfile, afile, bfile);
 
-        Assert.assertTrue(interceptor.getPayload().contains("Endpoint Down!"),
-                "payload received: " + interceptor.getPayload() + ". payload expected: " + "Endpoint Down!");
+        Assert.assertTrue(interceptorFault.getPayload().contains("Endpoint Down!"),
+                "payload received: " + interceptorFault.getPayload() + ". payload expected: " + "Endpoint Down!");
 
         deleteProxyService("VFSJMSProxy1");
     }
@@ -209,9 +216,14 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
                 log.warn("Error while shutting down the JMS Broker", e);
             }
             try {
-                httpServer.stop();
+                httpServerOut.stop();
             } catch (Exception e) {
-                log.warn("Error while shutting down the HTTP server", e);
+                log.warn("Error while shutting down the HTTP serverOut", e);
+            }
+            try {
+                httpServerFault.stop();
+            } catch (Exception e) {
+                log.warn("Error while shutting down the HTTP serverFault", e);
             }
             Thread.sleep(3000);
             serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
@@ -265,7 +277,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
                                              "                     </makefault>\n" +
                                              "                     <send>\n" +
                                              "                          <endpoint>\n" +
-                                             "                               <address uri=\"http://localhost:9654/services/SimpleStockQuoteService\"/>" +
+                                             "                               <address uri=\"http://localhost:9655/services/SimpleStockQuoteService\"/>" +
                                              "                          </endpoint>" +
                                              "                     </send>\n" +
                                              "                  </faultSequence>" +

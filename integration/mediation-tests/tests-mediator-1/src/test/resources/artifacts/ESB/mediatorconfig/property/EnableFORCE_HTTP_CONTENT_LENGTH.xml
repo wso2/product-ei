@@ -20,6 +20,6 @@
     </proxy>
 
     <endpoint name="Axis2EP">
-        <address uri="http://localhost:8991/services/SimpleStockQuoteService"/>
+        <address uri="http://localhost:8994/services/SimpleStockQuoteService"/>
     </endpoint>
 </definitions>
