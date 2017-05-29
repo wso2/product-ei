@@ -39,7 +39,6 @@
                 <exclude>**/carbon.bat</exclude>
             </excludes>
         </fileSet>
-
         <fileSet>
             <directory>target/WSO2Carbon</directory>
             <outputDirectory></outputDirectory>
@@ -52,7 +51,10 @@
             </excludes>
             <fileMode>755</fileMode>
         </fileSet>
-
+        <fileSet>
+            <directory>target/ballerina/ballerina-${ballerina.runtime.version}</directory>
+            <outputDirectory>wso2/ballerina</outputDirectory>
+        </fileSet>
         <fileSet>
             <directory>carbon-home</directory>
             <outputDirectory></outputDirectory>
@@ -74,6 +76,12 @@
         </file>
         <file>
             <source>src/scripts/msf4j.sh</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/scripts/ballerina.sh</source>
             <outputDirectory>bin/</outputDirectory>
             <fileMode>755</fileMode>
             <filtered>true</filtered>

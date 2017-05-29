@@ -118,6 +118,11 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina</artifactId>
+            <type>zip</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -161,6 +166,25 @@
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-ballerina</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang</groupId>
+                                    <artifactId>ballerina</artifactId>
+                                    <version>0.8.3</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -454,6 +478,7 @@
                                 <delete dir="target/WSO2Carbon" />
                                 <delete dir="target/antrun" />
                                 <delete dir="target/director" />
+                                <delete dir="target/ballerina" />
                             </target>
                         </configuration>
                         <goals>
