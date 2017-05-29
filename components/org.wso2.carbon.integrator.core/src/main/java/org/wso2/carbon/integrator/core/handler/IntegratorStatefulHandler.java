@@ -51,6 +51,7 @@ import java.util.Map;
  * received for a stateful service.
  */
 public class IntegratorStatefulHandler extends AbstractDispatcher {
+    private static final String BUILDER_INVOKED = "message.builder.invoked";
     private static final String NAME = "IntegratorStatefulHandler";
     private static final Log log = LogFactory.getLog(IntegratorSynapseHandler.class);
     private SynapseDispatcher synapseDispatcher = new SynapseDispatcher();
@@ -89,7 +90,10 @@ public class IntegratorStatefulHandler extends AbstractDispatcher {
             try {
                 // dispatchAndVerify need to call to find out the service and the operation.
                 dispatchAndVerify(msgctx);
-                RelayUtils.buildMessage(msgctx);
+                if (!Boolean.TRUE.equals(msgctx.getProperty(BUILDER_INVOKED))) {
+                    RelayUtils.buildMessage(msgctx);
+                    msgctx.setProperty(BUILDER_INVOKED, Boolean.TRUE);
+                }
                 String type = null;
                 // message type.
                 // If thats not present,

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api xmlns="http://ws.apache.org/ns/synapse" name="payload-with-202" context="/payload-with-202" >
+        <resource methods="POST" uri-template="/backend" >
+            <inSequence>
+                <payloadFactory  media-type="json">
+                    <format>
+                        {"test": "202 Accepted"}
+                    </format>
+                </payloadFactory>
+                <property name="HTTP_SC" value="202" scope="axis2"/>
+                <property name="messageType" value="application/json" scope="axis2"/>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+        <resource methods="POST" uri-template="/frontend" >
+            <inSequence>
+                <property name="REST_URL_POSTFIX" scope="axis2" action="remove"/>
+                <send>
+                    <endpoint name="TestAPI-endpoint">
+                        <http uri-template="http://localhost:8480/payload-with-202/backend"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="full"/>
+                <send/>
+            </outSequence>
+        </resource>
+    </api>
+</definitions>

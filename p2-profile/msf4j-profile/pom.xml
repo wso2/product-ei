@@ -20,10 +20,16 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.wso2</groupId>
+        <artifactId>wso2</artifactId>
+        <version>5</version>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.msf4j</groupId>
-    <artifactId>msf4j-feature-installation</artifactId>
-    <version>1.0.0</version>
+    <groupId>org.wso2.ei</groupId>
+    <artifactId>msf4j-profile</artifactId>
+    <version>6.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
@@ -31,9 +37,9 @@
         <carbon.messaging.version>1.0.11</carbon.messaging.version>
         <carbon.transport.http.netty.version>3.0.5</carbon.transport.http.netty.version>
         <carbon.metrics.version>2.0.0</carbon.metrics.version>
-        <msf4j.version>2.2.1</msf4j.version>
+        <msf4j.version>2.2.2</msf4j.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
-        <carbon.kernel.version>5.1.1</carbon.kernel.version>
+        <carbon.kernel.version>5.1.2</carbon.kernel.version>
         <osgi.api.version>6.0.0</osgi.api.version>
         <carbon.jndi.version>1.0.0</carbon.jndi.version>
         <carbon.cache.version>1.0.0</carbon.cache.version>
@@ -347,7 +353,6 @@
                                 <delete dir="target/p2-repo" />
                                
                                 <delete file="target/tmp" />
-                                <delete dir="target/wso2msf4j-${msf4j.version}" />
                                 <delete dir="target/antrun" />
                             </target>
                         </configuration>

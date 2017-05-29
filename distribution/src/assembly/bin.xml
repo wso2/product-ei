@@ -979,14 +979,6 @@
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../samples/product/src/main/resources</directory>
-            <outputDirectory>wso2ei-${pom.version}/samples</outputDirectory>
-            <includes>
-                <include>**/*.pdf</include>
-            </includes>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
             <directory>../samples/product/src/main/java</directory>
             <outputDirectory>wso2ei-${pom.version}/samples/axis2Client/src</outputDirectory>
             <excludes>

@@ -38,8 +38,6 @@
     <property name="dbURL2"
               value="jdbc:h2:file:${basedir}/${db.dir}/DATA_SERV_SAMP2"/>
 
-    <ant antfile="${dshome}/bin/build.xml"/>
-
     <path id="all.jar.classpath">
         <fileset dir="${dshome}/wso2/components/plugins">
             <include name="**/*.jar"/>

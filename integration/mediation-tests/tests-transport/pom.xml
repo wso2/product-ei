@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>mediation-integration</artifactId>
-        <version>6.1.0-SNAPSHOT</version>
+        <version>6.1.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -284,6 +284,10 @@
         <dependency>
             <groupId>org.apache.axis2.transport</groupId>
             <artifactId>axis2-transport-tcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database.wso2</groupId>
+            <artifactId>h2-database-engine</artifactId>
         </dependency>
 
         <!-- Jacoco Dependency-->

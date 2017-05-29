@@ -123,7 +123,7 @@ public class JsonStreamFormatter implements MessageFormatter {
                 return (String) synapseFormatterGetContentTypeMethod
                         .invoke(synapseFormatter, messageContext, omOutputFormat, s);
             }
-        } catch (InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException | AxisFault e ) {
             logger.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
@@ -154,7 +154,7 @@ public class JsonStreamFormatter implements MessageFormatter {
                 return (String) synapseFormatterFormatSOAPActionMethod
                         .invoke(synapseFormatter, messageContext, omOutputFormat, s);
             }
-        } catch (InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException | AxisFault e ) {
             logger.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
