@@ -34,8 +34,8 @@ import java.util.Properties;
  */
 public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
-    private TestRequestInterceptor interceptor1 = new TestRequestInterceptor();
-    private TestRequestInterceptor interceptor2 = new TestRequestInterceptor();
+    private TestRequestInterceptor interceptorOut = new TestRequestInterceptor();
+    private TestRequestInterceptor interceptorFault = new TestRequestInterceptor();
     private JMSBrokerController jmsBrokerController;
     private ServerConfigurationManager serverConfigurationManager;
 
@@ -47,24 +47,24 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
     private final String JAR_LOCATION = "/artifacts/ESB/jar";
     private final int PORT = 9654;
     private final int PORT_FAULT = 9655;
-    private SimpleHttpServer httpServerIn;
     private SimpleHttpServer httpServerOut;
+    private SimpleHttpServer httpServerFault;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         setUpJMSBroker();
         /* Make the port available */
         Utils.shutdownFailsafe(PORT);
-        httpServerIn = new SimpleHttpServer(PORT, new Properties());
-        httpServerIn.start();
+        httpServerOut = new SimpleHttpServer(PORT, new Properties());
+        httpServerOut.start();
 
         Utils.shutdownFailsafe(PORT_FAULT);
-        httpServerOut = new SimpleHttpServer(PORT_FAULT, new Properties());
-        httpServerOut.start();
+        httpServerFault = new SimpleHttpServer(PORT_FAULT, new Properties());
+        httpServerFault.start();
         Thread.sleep(5000);
 
-        interceptor1 = new TestRequestInterceptor();
-        httpServerIn.getRequestHandler().setInterceptor(interceptor1);
+        interceptorOut = new TestRequestInterceptor();
+        httpServerOut.getRequestHandler().setInterceptor(interceptorOut);
 
         super.init();
 
@@ -132,18 +132,18 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
         sendFile(outfile, afile, bfile);
 
-        Assert.assertTrue(interceptor1.getPayload().contains("<address>Disney Land</address>"));
+        Assert.assertTrue(interceptorOut.getPayload().contains("<address>Disney Land</address>"));
 //        String vfsOut = FileUtils.readFileToString(outfile);
 //        Assert.assertTrue(vfsOut.contains("WSO2 Company"));
 
-        interceptor2 = new TestRequestInterceptor();
-        httpServerOut.getRequestHandler().setInterceptor(interceptor2);
+        interceptorFault = new TestRequestInterceptor();
+        httpServerFault.getRequestHandler().setInterceptor(interceptorFault);
         jmsBrokerController.stop();
 
         sendFile(outfile, afile, bfile);
 
-        Assert.assertTrue(interceptor2.getPayload().contains("Endpoint Down!"),
-                "payload received: " + interceptor2.getPayload() + ". payload expected: " + "Endpoint Down!");
+        Assert.assertTrue(interceptorFault.getPayload().contains("Endpoint Down!"),
+                "payload received: " + interceptorFault.getPayload() + ". payload expected: " + "Endpoint Down!");
 
         deleteProxyService("VFSJMSProxy1");
     }
@@ -216,10 +216,14 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
                 log.warn("Error while shutting down the JMS Broker", e);
             }
             try {
-                httpServerIn.stop();
                 httpServerOut.stop();
             } catch (Exception e) {
-                log.warn("Error while shutting down the HTTP server", e);
+                log.warn("Error while shutting down the HTTP serverOut", e);
+            }
+            try {
+                httpServerFault.stop();
+            } catch (Exception e) {
+                log.warn("Error while shutting down the HTTP serverFault", e);
             }
             Thread.sleep(3000);
             serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
