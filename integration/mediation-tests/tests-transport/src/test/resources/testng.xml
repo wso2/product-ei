@@ -26,6 +26,7 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4402MessageWithoutPayloadTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4468ContentTypeCharsetInResponseTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4891ConsumeAndDiscardTest"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4999ResponsePayloadWithHTTPAcceptedTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.HeadMethodResponseTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.PartialInputStreamReadError"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.PassthroughTransportHttpProxyTestCase"/>
