@@ -161,6 +161,16 @@
                 <artifactId>ballerina-core</artifactId>
                 <version>${ballerina.core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.ballerinalang</groupId>
+                <artifactId>ballerina-native</artifactId>
+                <version>${ballerina.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>common</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
