@@ -31,7 +31,7 @@
 
     <artifactId>common</artifactId>
     <!--<artifactId>org.wso2.ei.tools.converter.common</artifactId>-->
-    <!--<packaging>jar</packaging>-->
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
