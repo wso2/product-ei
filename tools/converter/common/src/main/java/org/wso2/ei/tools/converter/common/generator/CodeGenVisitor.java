@@ -115,9 +115,6 @@ public class CodeGenVisitor implements NodeVisitor {
     private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
     private String ballerinaSourceStr = "";
 
-    //Stack to hold code block ends
-    //private Stack<String> codeBlockStack = new Stack<>();
-
     //TODO remove this method later
     private void logExecMethod() {
         StackTraceElement stackTraceElements[] = Thread.currentThread().getStackTrace();
@@ -161,15 +158,18 @@ public class CodeGenVisitor implements NodeVisitor {
         //Visit annotationAttachment
         AnnotationAttachment[] annotationAttachments = service.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            //ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            appendToBalSource(annotationAttachment.toString() + Constants.NEWLINE_STR);
         }
 
         /**
          serviceDefinition : 'service' Identifier serviceBody;
          * */
 
-        ballerinaSourceStr += Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
-                + Constants.NEWLINE_STR;
+        //ballerinaSourceStr += Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
+        //        + Constants.NEWLINE_STR;
+        appendToBalSource(Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
+                + Constants.NEWLINE_STR);
 
         /**
          * serviceBody: '{' variableDefinitionStatement* resourceDefinition* '}';
@@ -185,7 +185,8 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         //Service visit completed
-        ballerinaSourceStr += Constants.STMTBLOCK_END_STR;
+        //ballerinaSourceStr += Constants.STMTBLOCK_END_STR;
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
 
     }
 
@@ -207,11 +208,14 @@ public class CodeGenVisitor implements NodeVisitor {
         //visit annotations
         AnnotationAttachment[] annotationAttachments = resource.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            //ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            appendToBalSource(annotationAttachment.toString() + Constants.NEWLINE_STR);
         }
 
-        ballerinaSourceStr += Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
-                Constants.SPACE_STR + Constants.PARENTHESES_START_STR;
+        //ballerinaSourceStr += Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
+        //        Constants.SPACE_STR + Constants.PARENTHESES_START_STR;
+        appendToBalSource(Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
+                Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
         for (ParameterDef parameterDef : parameterDefs) {
@@ -220,9 +224,10 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         //end of parameters
-        ballerinaSourceStr += Constants.PARENTHESES_END_STR + Constants.SPACE_STR +
-                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
-
+        //ballerinaSourceStr += Constants.PARENTHESES_END_STR + Constants.SPACE_STR +
+        //        Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR
+                + Constants.NEWLINE_STR);
         //process resource block
         /**
          * callableUnitBody : '{' statement* workerDeclaration* '}';
@@ -242,7 +247,8 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         //end of resource statements block
-        ballerinaSourceStr += Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR;
+        //ballerinaSourceStr += Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR;
+        appendToBalSource(Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
 
     }
 
@@ -277,7 +283,8 @@ public class CodeGenVisitor implements NodeVisitor {
 
         //TODO handle annotations for parameter
 
-        ballerinaSourceStr += parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName();
+        //ballerinaSourceStr += parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName();
+        appendToBalSource(parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName());
     }
 
     @Override
@@ -327,7 +334,8 @@ public class CodeGenVisitor implements NodeVisitor {
             }
         }
 
-        ballerinaSourceStr += varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        //ballerinaSourceStr += varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        appendToBalSource(varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -357,14 +365,17 @@ public class CodeGenVisitor implements NodeVisitor {
         /**
          * replyStatement : 'reply' expression ';';
          */
-        ballerinaSourceStr += Constants.REPLY_STR + Constants.SPACE_STR;
+        //ballerinaSourceStr += Constants.REPLY_STR + Constants.SPACE_STR;
+        appendToBalSource(Constants.REPLY_STR + Constants.SPACE_STR);
 
         Expression replyExpression = replyStmt.getReplyExpr();
         if (replyExpression instanceof VariableRefExpr) {
-            ballerinaSourceStr += ((VariableRefExpr) replyExpression).getSymbolName();
+            //ballerinaSourceStr += ((VariableRefExpr) replyExpression).getSymbolName();
+            appendToBalSource(((VariableRefExpr) replyExpression).getSymbolName().toString());
         }
 
-        ballerinaSourceStr += Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        //ballerinaSourceStr += Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -649,5 +660,9 @@ public class CodeGenVisitor implements NodeVisitor {
 
     public String getBallerinaSourceStr() {
         return ballerinaSourceStr;
+    }
+
+    private void appendToBalSource(String str) {
+        ballerinaSourceStr += str;
     }
 }
