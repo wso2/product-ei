@@ -58,12 +58,6 @@ public class Main {
 
             targetService.accept(codeGenVisitor);
 
-            /*System.out.print("===================================");
-            System.out.print(codeGenVisitor.getBallerinaSourceStr());
-            System.out.print("===================================");
-
-            System.out.print("CodeVisit complete");
-            */
             String targetFile = System.getProperty("targetFilePath");
             Utils.writeToBalFile(targetFile, codeGenVisitor.getBallerinaSourceStr());
         }
