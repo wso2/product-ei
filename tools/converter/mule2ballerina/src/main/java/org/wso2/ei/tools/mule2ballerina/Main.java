@@ -19,9 +19,7 @@
 package org.wso2.ei.tools.mule2ballerina;
 
 import org.ballerinalang.model.BallerinaFile;
-import org.ballerinalang.model.Service;
-import org.wso2.ei.tools.converter.common.generator.CodeGenVisitor;
-import org.wso2.ei.tools.converter.common.generator.Utils;
+import org.wso2.ei.tools.converter.common.generator.BallerinaSourceGenerator;
 import org.wso2.ei.tools.mule2ballerina.configreader.ConfigReader;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.visitor.TreeVisitor;
@@ -49,7 +47,10 @@ public class Main {
         treeVisitor.visit(muleRootObj);
         BallerinaFile ballerinaFile = treeVisitor.getBallerinaFile();
 
-        CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
+        BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
+        sourceGenerator.generate(ballerinaFile, args[1]);
+
+        /*CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
         Service targetService = null;
         if (ballerinaFile.getCompilationUnits().length > 0) {
             targetService = (ballerinaFile.getCompilationUnits()[0] instanceof Service) ?
@@ -62,7 +63,7 @@ public class Main {
           //  String targetFile = System.getProperty("targetFilePath");
            Utils.writeToBalFile(args[1], codeGenVisitor.getBallerinaSourceStr());
 
-        }
+        }*/
     }
 
 }
