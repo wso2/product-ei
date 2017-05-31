@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Introduction to throttle mediator -->
-<definitions xmlns="http://ws.apache.org/ns/synapse">
-
-    <sequence name="main">
-        <in>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="throttlingMaxAccessOneProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
             <throttle id="A">
                 <policy>
                     <!-- define throttle policy -->
-                    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:throttle="http://www.wso2.org/products/wso2commons/throttle" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="WSO2MediatorThrottlingPolicy">
+                    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                xmlns:throttle="http://www.wso2.org/products/wso2commons/throttle"
+                                xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                                wsu:Id="WSO2MediatorThrottlingPolicy">
                         <!--<wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"-->
                         <!--xmlns:throttle="http://www.wso2.org/products/wso2commons/throttle">-->
                         <throttle:ThrottleAssertion>
-                            <throttle:MaximumConcurrentAccess>100</throttle:MaximumConcurrentAccess>
-                            <!--This is not the maximum value its a random value just for testing purposes-->
+                            <throttle:MaximumConcurrentAccess>1</throttle:MaximumConcurrentAccess>
                         </throttle:ThrottleAssertion>
                     </wsp:Policy>
                 </policy>
@@ -39,11 +39,10 @@
                     <drop/>
                 </onReject>
             </throttle>
-        </in>
-        <out>
+        </inSequence>
+        <outSequence>
             <throttle id="A"/>
             <send/>
-        </out>
-    </sequence>
-
-</definitions>
+        </outSequence>
+    </target>
+</proxy>

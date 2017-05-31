@@ -1,0 +1,45 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="Devices" context="/devices">
+    <resource methods="GET" uri-template="/getDevices/{limit}">
+        <inSequence>
+            <property name="LIMIT"
+                      expression="get-property('uri.var.limit')"
+                      scope="default"
+                      type="DOUBLE"/>
+            <call>
+                <endpoint>
+                    <http method="get" uri-template="http://localhost:8480/alldevices/"/>
+                </endpoint>
+            </call>
+            <iterate id="iterator-id" expression="//deviceId" sequential="true">
+                <target>
+                    <sequence>
+                        <property
+                                name="uri.var.id"
+                                expression="//deviceId"
+                                scope="default"
+                                type="STRING"/>
+                        <send>
+                            <endpoint>
+                                <http method="post"
+                                      uri-template="http://localhost:8480/deviceid/{uri.var.id}"/>
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <property name="root" scope="default">
+                <root:rootelement xmlns:root="http://ws.wso2.org/dataservice"/>
+            </property>
+            <aggregate id="iterator-id">
+                <completeCondition>
+                    <messageCount min="-1" max="{get-property('LIMIT')}"/>
+                </completeCondition>
+                <onComplete expression="//jsonObject" enclosingElementProperty="root">
+                    <send/>
+                </onComplete>
+            </aggregate>
+        </outSequence>
+    </resource>
+</api>
