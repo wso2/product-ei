@@ -35,6 +35,7 @@ import org.ballerinalang.model.BallerinaAction;
 import org.ballerinalang.model.BallerinaConnectorDef;
 import org.ballerinalang.model.BallerinaFile;
 import org.ballerinalang.model.BallerinaFunction;
+import org.ballerinalang.model.CompilationUnit;
 import org.ballerinalang.model.ConstDef;
 import org.ballerinalang.model.GlobalVariableDef;
 import org.ballerinalang.model.ImportPackage;
@@ -114,6 +115,9 @@ public class CodeGenVisitor implements NodeVisitor {
     //private static Log log = LogFactory.getLog(CodeGenVisitor.class);
     private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
     private String ballerinaSourceStr = "";
+    private int indentDepth = 0;
+    private int previousIndentDepth = 0;
+    private String indentStr = "";
 
     @Override
     public void visit(BLangProgram bLangProgram) {
@@ -127,6 +131,20 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(BallerinaFile bFile) {
+        //get Import packages
+        //TODO need to decide to get import packages from BLangProgram or from BallerinaFile
+        ImportPackage[] importPackages = bFile.getImportPackages();
+        for (ImportPackage importPackage : importPackages) {
+            //no need to consider indentation due to imports happens at the beginning of the file
+            appendToBalSource(Constants.IMPORT_STR + Constants.SPACE_STR + importPackage.getSymbolName().getName()
+                    + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        }
+
+        //TODO : Assume for only one service temporarily
+        CompilationUnit[] compilationUnits = bFile.getCompilationUnits();
+        for (CompilationUnit compilationUnit : compilationUnits) {
+            compilationUnit.accept(this);
+        }
 
     }
 
@@ -151,15 +169,15 @@ public class CodeGenVisitor implements NodeVisitor {
         //Visit annotationAttachment
         AnnotationAttachment[] annotationAttachments = service.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            //ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
-            appendToBalSource(annotationAttachment.toString() + Constants.NEWLINE_STR);
+            annotationAttachment.accept(this);
         }
 
         /**
          serviceDefinition : 'service' Identifier serviceBody;
          * */
-        appendToBalSource(Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
-                + Constants.NEWLINE_STR);
+        appendToBalSource(getIndentationForCurrentLine() + Constants.SERVICE_STR + Constants.SPACE_STR +
+                service.getName() + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
 
         /**
          * serviceBody: '{' variableDefinitionStatement* resourceDefinition* '}';
@@ -176,6 +194,7 @@ public class CodeGenVisitor implements NodeVisitor {
 
         //Service visit completed
         appendToBalSource(Constants.STMTBLOCK_END_STR);
+        --indentDepth;
 
     }
 
@@ -196,12 +215,11 @@ public class CodeGenVisitor implements NodeVisitor {
         //visit annotations
         AnnotationAttachment[] annotationAttachments = resource.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            //ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
-            appendToBalSource(annotationAttachment.toString() + Constants.NEWLINE_STR);
+            annotationAttachment.accept(this);
         }
 
-        appendToBalSource(Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
-                Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
+        appendToBalSource(getIndentationForCurrentLine() + Constants.RESOURCE_STR + Constants.SPACE_STR +
+                resource.getSymbolName() + Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
         for (ParameterDef parameterDef : parameterDefs) {
@@ -223,16 +241,15 @@ public class CodeGenVisitor implements NodeVisitor {
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
          *                                                                                          expression) )? ';';
          */
+        ++indentDepth;
         BlockStmt blockStmt = resource.getCallableUnitBody();
-
         Statement[] statements = blockStmt.getStatements();
         for (Statement statement : statements) {
             statement.accept(this);
         }
-
+        --indentDepth;
         //end of resource statements block
-        appendToBalSource(Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
-
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -257,7 +274,7 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(AnnotationAttachment annotation) {
-
+        appendToBalSource(getIndentationForCurrentLine() + annotation.toString() + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -314,7 +331,7 @@ public class CodeGenVisitor implements NodeVisitor {
             }
         }
 
-        appendToBalSource(varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        appendToBalSource(getIndentationForCurrentLine() + varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -342,11 +359,10 @@ public class CodeGenVisitor implements NodeVisitor {
         /**
          * replyStatement : 'reply' expression ';';
          */
-        appendToBalSource(Constants.REPLY_STR + Constants.SPACE_STR);
+        appendToBalSource(getIndentationForCurrentLine() + Constants.REPLY_STR + Constants.SPACE_STR);
 
         Expression replyExpression = replyStmt.getReplyExpr();
         if (replyExpression instanceof VariableRefExpr) {
-            //ballerinaSourceStr += ((VariableRefExpr) replyExpression).getSymbolName();
             appendToBalSource(((VariableRefExpr) replyExpression).getSymbolName().toString());
         }
 
@@ -639,5 +655,18 @@ public class CodeGenVisitor implements NodeVisitor {
 
     private void appendToBalSource(String str) {
         ballerinaSourceStr += str;
+    }
+
+    private String getIndentationForCurrentLine() {
+
+        if (previousIndentDepth != indentDepth) {
+            String indentation = "";
+            for (int i = 0; i < indentDepth; i++) {
+                indentation = indentation.concat(Constants.TAB_STR);
+            }
+            previousIndentDepth = indentDepth;
+            indentStr = indentation;
+        }
+        return indentStr;
     }
 }
