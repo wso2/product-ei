@@ -29,7 +29,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * {@code Root} This is the root of the internal MTree
+ * {@code Root} This is the root of the intermediate object tree
  */
 public class Root extends BaseObject implements Visitable {
 

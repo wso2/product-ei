@@ -37,7 +37,8 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * {@code TreeVisitor} visits Mule tree and populate Ballerina AST
+ * {@code TreeVisitor} visits intermediate object tree and populate Ballerina AST
+ * This class will be refactored.
  */
 public class TreeVisitor implements Visitor {
 
@@ -50,7 +51,7 @@ public class TreeVisitor implements Visitor {
     private int resourceCounter = 0;
     private Map<String, Boolean> serviceTrack = new HashMap<String, Boolean>();
     private Map<String, Boolean> importTracker = new HashMap<String, Boolean>();
-    String inboundName;
+    private String inboundName;
 
     public TreeVisitor(Root mRoot) {
         ballerinaASTAPI = new BallerinaASTModelBuilder();
@@ -59,33 +60,42 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public void visit(Root root) {
-        logger.info("-SRoot");
+        logger.debug("-SRoot");
         for (Flow flow : root.getFlowList()) {
             flow.accept(this);
         }
-        logger.info("-ERoot");
+        logger.debug("-ERoot");
         ballerinaFile = ballerinaASTAPI.buildBallerinaFile();
     }
 
+    /**
+     * Navigate flow processors
+     *
+     * @param flow
+     */
     @Override
     public void visit(Flow flow) {
-        logger.info("--SFlow");
+        logger.debug("--SFlow");
         int i = 0;
         int flowSize = flow.getFlowProcessors().size();
         for (Processor processor : flow.getFlowProcessors()) {
             processor.accept(this);
             i++;
+            //If end of flow
             if (flowSize == i) {
                 ballerinaASTAPI.createNameReference(null, "response");
                 ballerinaASTAPI.createVariableRefExpr();
                 ballerinaASTAPI.createReplyStatement();
-
                 ballerinaASTAPI.endCallableBody();
-
                 String resourceName = "myResource" + ++resourceCounter;
                 ballerinaASTAPI.endOfResource(resourceName, 1);
-                logger.info("--EFlow");
 
+                logger.debug("--EFlow");
+
+                /* At the end of each flow get the flow queue associate with its config and
+                 * remove it from the queue. So that when there are no flows (resources) associate with a config
+                 * (service) we can close the service
+                 */
                 if (mRoot.getServiceMap() != null) {
                     Queue<Flow> flows = mRoot.getServiceMap().get(inboundName);
                     if (flows != null) {
@@ -106,7 +116,7 @@ public class TreeVisitor implements Visitor {
             ballerinaASTAPI.addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get("messages"), null);
             importTracker.put("messages", true);
         }
-        logger.info("----Payload");
+        logger.debug("----Payload");
         ballerinaASTAPI.createNameReference("messages", "setStringPayload");
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, "response");
@@ -122,7 +132,9 @@ public class TreeVisitor implements Visitor {
             ballerinaASTAPI.addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get("http"), null);
             importTracker.put("http", true);
         }
-        logger.info("--HttpListenerConfig");
+        logger.debug("--HttpListenerConfig");
+
+        /*If the service is not yet created, start creating service definition*/
         if (serviceTrack.get(listenerConfig.getName()) == null) {
             ballerinaASTAPI.startService();
             ballerinaASTAPI.createAnnotationAttachment("http", "basePath", "value", listenerConfig.getBasePath());
@@ -134,9 +146,13 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public void visit(HttpListener listener) {
-        logger.info("----HttpListener");
+        logger.debug("----HttpListener");
         GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(listener.getConfigName());
         globalConfiguration.accept(this);
+
+        /*Inbound connectors need to start the resource definition. Resource is not created at the start of a flow
+        , because for the creation of a resource, a service definition has to be started, which only happens once the
+        first processor's config is visited */
         ballerinaASTAPI.startResource();
         String allowedMethods = "GET";
         if (listener.getAllowedMethods() != null) {
@@ -152,7 +168,7 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public void visit(HttpRequest request) {
-        logger.info("----HttpRequest");
+        logger.debug("----HttpRequest");
         GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(request.getConfigName());
         globalConfiguration.accept(this);
 
@@ -174,7 +190,7 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public void visit(HttpRequestConfig requestConfig) {
-        logger.info("----HttpRequestConfig");
+        logger.debug("----HttpRequestConfig");
         ballerinaASTAPI.createNameReference("http", "ClientConnector");
         ballerinaASTAPI.createRefereceTypeName();
         ballerinaASTAPI.createNameReference("http", "ClientConnector");
