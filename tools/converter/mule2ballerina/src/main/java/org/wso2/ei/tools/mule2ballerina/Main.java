@@ -53,7 +53,7 @@ public class Main {
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         sourceGenerator.generate(ballerinaFile, args[1]);
-        //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/multiConfigs2.bal");
+        //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/multi.bal");
 
     }
 
