@@ -224,14 +224,6 @@ public class CarbonServerManager {
         new ArchiveExtractor().extractFile(carbonServerZipFile, baseDir + File.separator + extractDir);
         carbonHome = new File(baseDir).getAbsolutePath() + File.separator + extractDir + File.separator +
                      extractedCarbonDir;
-
-
-        // To run test suite we have to do some changes to the server
-        //Copying catalina-server.xml
-        copyFileToServer(Paths.get("tomcat", "catalina-server.xml").toString(), Paths.get("conf", "tomcat", "catalina-server.xml").toString());
-        //Copying integrator
-        copyFileToServer(Paths.get("bin", "integrator.sh").toString(), Paths.get("bin", "integrator.sh").toString());
-
         try {
             //read coverage status from automation.xml
             isCoverageEnable = Boolean.parseBoolean(automationContext.getConfigurationValue("//coverage"));
@@ -246,16 +238,6 @@ public class CarbonServerManager {
         }
 
         return carbonHome;
-    }
-
-    private void copyFileToServer(String sourcePath, String destinationPath) {
-        log.info("Updating " + destinationPath + " for product EI");
-        String catalinaResourcePath = Paths.get(FrameworkPathUtil.getSystemResourceLocation(), sourcePath).toString();
-        try {
-            FileManager.copyFile(Paths.get(catalinaResourcePath).toFile(), Paths.get(carbonHome, destinationPath).toString());
-        } catch (IOException e) {
-            log.warn("IOException while replacing " + destinationPath);
-        }
     }
 
     public synchronized void serverShutdown(int portOffset) throws AutomationFrameworkException {
