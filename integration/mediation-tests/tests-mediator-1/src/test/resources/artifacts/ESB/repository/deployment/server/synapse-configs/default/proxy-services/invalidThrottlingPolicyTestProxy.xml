@@ -1,23 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://ws.apache.org/ns/synapse">
-    <sequence name="OnAcceptSequence">
-        <log level="custom">
-            <property name="text" value="**Going through On accept sequence**"/>
-        </log>
-        <send>
-            <endpoint>
-                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-            </endpoint>
-        </send>
-    </sequence>
-    <sequence name="main">
-        <in>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="invalidThrottlingPolicyTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
             <throttle id="A">
                 <policy>
                     <!-- define throttle policy -->
                     <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
                                 xmlns:throttle="http://www.wso2.org/products/google/throttle">
-                                <!--policy has made invalid by specifying invalid namespace-->
+                        <!--policy has made invalid by specifying invalid namespace-->
                         <throttle:MediatorThrottleAssertion>
                             <wsp:Policy>
                                 <throttle:ID throttle:type="IP">other</throttle:ID>
@@ -36,7 +27,14 @@
                     </wsp:Policy>
                 </policy>
                 <onAccept>
-                    <sequence key="OnAcceptSequence"/>
+                    <log level="custom">
+                        <property name="text" value="**Going through On accept sequence**"/>
+                    </log>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
                 </onAccept>
                 <onReject>
                     <log level="custom">
@@ -53,10 +51,10 @@
                     <drop/>
                 </onReject>
             </throttle>
-        </in>
-        <out>
+        </inSequence>
+        <outSequence>
             <throttle id="A"/>
             <send/>
-        </out>
-    </sequence>
-</definitions>
+        </outSequence>
+    </target>
+</proxy>
