@@ -38,8 +38,8 @@ public class Main {
     public static void main(String... args) throws IOException {
 
         ConfigReader xmlParser = new ConfigReader();
-         //xmlParser.readXML(xmlParser.getInputStream(args[0]));
-        xmlParser.readXML(xmlParser.getInputStream("/home/rukshani/mule2bal/muleConfig/sharedConfig.xml"));
+        xmlParser.readXML(xmlParser.getInputStream(args[0]));
+       // xmlParser.readXML(xmlParser.getInputStream("/home/rukshani/mule2bal/muleConfig/multiConfigs.xml"));
         Root muleRootObj = xmlParser.getmRoot();
 
         if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
@@ -52,8 +52,8 @@ public class Main {
         BallerinaFile ballerinaFile = treeVisitor.getBallerinaFile();
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
-       // sourceGenerator.generate(ballerinaFile, args[1]);
-       sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/multiConfigs1.bal");
+        sourceGenerator.generate(ballerinaFile, args[1]);
+       //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/multiConfigs2.bal");
 
     }
 
