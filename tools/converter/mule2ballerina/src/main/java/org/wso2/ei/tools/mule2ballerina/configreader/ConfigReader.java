@@ -25,6 +25,7 @@ import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
+import org.wso2.ei.tools.mule2ballerina.model.Inbound;
 import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
@@ -36,7 +37,9 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -56,19 +59,18 @@ public class ConfigReader {
 
     private ElementMapper mapperObject;
     private AttributeMapper attributeMapper;
-    private Root mRoot;
+    private Root rootObj;
     private boolean flowStarted = false;
     private List<String> unIdentifiedElements;
 
     public ConfigReader() {
         mapperObject = new ElementMapper();
         attributeMapper = new AttributeMapper();
-        mRoot = new Root();
+        rootObj = new Root();
         unIdentifiedElements = new ArrayList<String>();
     }
 
     public void readXML(InputStream inputStream) {
-
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             XMLEventReader eventReader = xmlInputFactory.createXMLEventReader(inputStream);
@@ -78,6 +80,7 @@ public class ConfigReader {
                 switch (xmlEvent.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
                     StartElement startElement = xmlEvent.asStartElement();
+                    checkFlowStart(getElementOrAttributeName(startElement.getName()));
                     loadIntermediateMuleObjects(startElement);
                     break;
 
@@ -86,32 +89,41 @@ public class ConfigReader {
 
                 case XMLStreamConstants.END_ELEMENT:
                     EndElement endElement = xmlEvent.asEndElement();
-                    checkFlowEnd(endElement);
+                    checkFlowEnd(getElementOrAttributeName(endElement.getName()));
                     break;
 
                 default:
                     break;
                 }
             }
-
         } catch (XMLStreamException e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
         }
     }
 
+    /**
+     * Given a mule configuration file get it's inputstream
+     *
+     * @param fileName fully qualified path name of the mule configuration file
+     * @return file input stream
+     */
     public InputStream getInputStream(String fileName) {
         File file = new File(fileName);
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            logger.error("Error");
+            logger.error(e.getMessage(), e);
         }
-        //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        //InputStream inputStream = classloader.getResourceAsStream(fileName);
         return fis;
     }
 
+    /**
+     * Populate relevant intermediate object that is mapped to mule element
+     * If the mule element is not mapped to an object, put it in an unidentified element list
+     *
+     * @param mElement represents any mule element
+     */
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
@@ -123,7 +135,7 @@ public class ConfigReader {
                 populateMuleObject(mElement.getAttributes(), mClass);
 
             } catch (ClassNotFoundException e) {
-                logger.error(e.toString());
+                logger.error(e.getMessage(), e);
             }
         } else {
             if (!Constant.MULE_TAG.equals(mElementName)) {
@@ -142,6 +154,12 @@ public class ConfigReader {
         return getElementOrAttributeName(qName);
     }
 
+    /**
+     * Given a mule element or an attribute get string value of it with the prefix attached to it
+     *
+     * @param qName
+     * @return
+     */
     private String getElementOrAttributeName(QName qName) {
         String prefix = (qName != null ? qName.getPrefix() : "");
         String mainElement = (qName != null ? qName.getLocalPart() : "");
@@ -149,9 +167,14 @@ public class ConfigReader {
         return name;
     }
 
+    /**
+     * Populate intermediate object properties with mule attribute values
+     *
+     * @param attributes List of attributes associate with a mule element
+     * @param mClass     Intermediate class that is mapped to the mule element
+     */
     private void populateMuleObject(Iterator<Attribute> attributes, Class<?> mClass) {
         try {
-
             java.lang.Object object = mClass.newInstance();
 
             attributes.forEachRemaining(attribute -> {
@@ -161,63 +184,111 @@ public class ConfigReader {
                         Field field = mClass.getDeclaredField(property);
                         field.setAccessible(true);
                         field.set(object, attribute.getValue());
+
+                        /*if the element is a global configuration keep it against it's name as this will
+                        * be useful when navigating the processors to identify their global configuration
+                        */
                         if ("name".equals(property) && object instanceof GlobalConfiguration) {
-                            mRoot.addGlobalConfigurationMap(attribute.getValue(), (GlobalConfiguration) object);
+                            rootObj.addGlobalConfigurationMap(attribute.getValue(), (GlobalConfiguration) object);
                         }
                     }
                 } catch (NoSuchFieldException e) {
-                    logger.error(
-                        " Ignoring NoSuchFieldException : There can be attributes in mule xml that we don't support "
-                            + "in our objects" + e.getMessage());
+                    logger.warn(" Ignoring NoSuchFieldException : There can be attributes in mule xml that is not "
+                            + "mapped " + e);
                 } catch (IllegalAccessException e) {
-                    logger.error(e.toString());
+                    logger.error(e.getMessage(), e);
                 }
             });
 
             BaseObject muleObj = (BaseObject) object;
-
             buildMTree(muleObj);
 
         } catch (IllegalAccessException e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
         } catch (InstantiationException e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
         }
     }
 
-    public void checkFlowEnd(EndElement endElement) {
-        if (Constant.MULE_FLOW.equals(endElement.getName().toString())) {
+    public void checkFlowStart(String startElement) {
+        if (Constant.MULE_FLOW.equals(startElement)) {
+            flowStarted = true;
+        }
+    }
+
+    public void checkFlowEnd(String endElement) {
+        if (Constant.MULE_FLOW.equals(endElement)) {
             flowStarted = false;
         }
     }
 
-    public Root getmRoot() {
-        return mRoot;
+    public Root getRootObj() {
+        return rootObj;
     }
 
-    public void setMuleRoot(Root muleRoot) {
-        this.mRoot = muleRoot;
+    public void setRootObj(Root rootObj) {
+        this.rootObj = rootObj;
     }
 
     public List<String> getUnIdentifiedElements() {
         return unIdentifiedElements;
     }
 
+    /**
+     * Build intermediate object tree required for navigation
+     *
+     * @param muleObj any intermediate object
+     */
     public void buildMTree(BaseObject muleObj) {
+
+        /* if the intermediate object represents a global configuration in mule, add it to global config list
+        * Further if it's an inbound config, keep all the flows that belong to that config in a map, as it is needed
+        * to determine the end of service point in ballerina stack
+        */
         if (muleObj instanceof GlobalConfiguration) {
-            mRoot.addGlobalConfiguration((GlobalConfiguration) muleObj);
+            rootObj.addGlobalConfiguration((GlobalConfiguration) muleObj);
+            if (muleObj instanceof Inbound) {
+                Queue<Flow> flowQueue = null;
+                if (rootObj.getServiceMap() != null) {
+                    Inbound inboundObj = (Inbound) muleObj;
+                    flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
+                    if (flowQueue == null) {
+                        flowQueue = new LinkedList<Flow>();
+                        rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
+                    }
+                }
+            }
         }
 
+        /* Keep a list of flows separately for tree navigation*/
         if (muleObj instanceof Flow) {
             Flow flow = (Flow) muleObj;
-            mRoot.addMFlow(flow);
-            flowStarted = true;
+            if (flowStarted) {
+                rootObj.addMFlow(flow);
+            }
         }
 
+        /* If the intermediate object is a processor within a flow add it to the correct flow
+        *  If it's an inbound connector, add the flow which has that connector to the global config map
+        */
         if (muleObj instanceof Processor) {
             if (flowStarted) {
-                Flow lastAddedFlow = mRoot.getFlowList().peek();
+                Flow lastAddedFlow = rootObj.getFlowList().peek();
                 lastAddedFlow.addProcessor((Processor) muleObj);
+                if (muleObj instanceof Inbound) {
+                    Queue<Flow> flowQueue = null;
+                    if (rootObj.getServiceMap() != null) {
+                        Inbound inboundObj = (Inbound) muleObj;
+                        flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
+                        if (flowQueue == null) {
+                            flowQueue = new LinkedList<Flow>();
+                            flowQueue.add(lastAddedFlow);
+                            rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
+                        } else {
+                            flowQueue.add(lastAddedFlow);
+                        }
+                    }
+                }
             }
         }
     }
