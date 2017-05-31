@@ -39,27 +39,47 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
 
     public void initiate() {
         try {
-            if(getParameters().get(ExtensionConstants.SERVER_STARTUP_PORT_OFFSET_COMMAND) == null) {
+            if (getParameters().get(ExtensionConstants.SERVER_STARTUP_PORT_OFFSET_COMMAND) == null) {
                 getParameters().put(ExtensionConstants.SERVER_STARTUP_PORT_OFFSET_COMMAND, "0");
             }
             serverManager = new TestServerManager(getAutomationContext(), null, getParameters()) {
                 @Override
                 public void configureServer() {
-                    //copying the files before server start. Ex: synapse artifacts, conf, etc...
-                    File source = new File(FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
-                            +  File.separator + "ESB" + File.separator + "repository");
-                    File destination = new File(this.getCarbonHome() + File.separator + "repository");
-                    if(source.exists() && source.isDirectory()) {
-                        try {
-                            FileUtils.copyDirectory(source, destination);
-                        } catch (IOException e) {
-                            log.error("Error while copying repository", e);
+                    if ("ESB".equalsIgnoreCase(System.getProperty("server.list"))) {
+                        //copying the files before server start. Ex: synapse artifacts, conf, etc...
+                        File deploymentSource = new File(
+                                FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                                        + File.separator + "ESB" + File.separator + "repository" + File.separator
+                                        + "deployment");
+                        File confSource = new File(
+                                FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                                        + File.separator + "ESB" + File.separator + "repository" + File.separator
+                                        + "conf");
+                        File deploymentDestination = new File(
+                                this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
+                        File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
+                        if (confSource.exists() && confSource.isDirectory()) {
+                            try {
+                                log.info("Copying " + confSource.getPath() + " to " + confDestination.getPath());
+                                FileUtils.copyDirectory(confSource, confDestination, true);
+                            } catch (IOException e) {
+                                log.error("Error while copying conf directory.", e);
+                            }
+                        }
+                        if (deploymentSource.exists() && deploymentSource.isDirectory()) {
+                            try {
+                                log.info("Copying " + deploymentSource.getPath() + " to " + deploymentDestination
+                                        .getPath());
+                                FileUtils.copyDirectory(deploymentSource, deploymentDestination);
+                            } catch (IOException e) {
+                                log.error("Error while copying deployment directory.", e);
+                            }
                         }
                     }
                 }
             };
-            executionEnvironment =
-                    getAutomationContext().getConfigurationValue(ContextXpathConstants.EXECUTION_ENVIRONMENT);
+            executionEnvironment = getAutomationContext()
+                    .getConfigurationValue(ContextXpathConstants.EXECUTION_ENVIRONMENT);
         } catch (XPathExpressionException e) {
             handleException("Error while initiating test environment", e);
         }
