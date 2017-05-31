@@ -1,0 +1,20 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorRubyBasicTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <!-- transform the custom quote request into a standard quote request expected by the service -->
+            <script language="rb" key="stockQuoteRubyScript" function="transformRequest"/>
+
+            <!-- send message to real endpoint referenced by name "stockquote" and stop -->
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <!-- transform the standard response back into the custom format the client expects -->
+            <script language="rb" key="stockQuoteRubyScript" function="transformResponse"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

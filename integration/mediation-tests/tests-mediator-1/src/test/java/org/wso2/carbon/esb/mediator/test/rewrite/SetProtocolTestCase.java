@@ -32,7 +32,7 @@ public class SetProtocolTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/protocol_set_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteSetProtocolTestProxy");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -42,7 +42,7 @@ public class SetProtocolTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteSetProtocolTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

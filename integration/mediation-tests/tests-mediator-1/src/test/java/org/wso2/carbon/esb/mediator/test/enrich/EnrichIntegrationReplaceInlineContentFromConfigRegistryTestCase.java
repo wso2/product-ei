@@ -50,14 +50,14 @@ public class EnrichIntegrationReplaceInlineContentFromConfigRegistryTestCase
         uploadResourcesToConfigRegistry();
         uploadResourcesToGovernanceRegistry();
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/registry_synapse.xml");
+        verifyProxyServiceExistence("enrichReplaceInlineContentFromConfigRegistryTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "This test is to replace a part of a message from resgistry file content")
     public void replaceMessageContentFromRegistryFileContentTest()
             throws IOException, XMLStreamException, XPathExpressionException {
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp(
-                "enrichSample1"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
+                "enrichReplaceInlineContentFromConfigRegistryTestProxy"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertNotNull(response, "Response message is null");
         assertEquals(response.getLocalName(), "CheckPriceResponse", "CheckPriceResponse not match");
         assertTrue(response.toString().contains("Price"), "No price tag in response");

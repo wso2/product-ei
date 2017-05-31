@@ -1,0 +1,19 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="AllDevices" context="/alldevices">
+    <resource methods="GET" uri-template="/">
+        <inSequence>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <payloadFactory media-type="json">
+                <format>{ "devices" : [ { "deviceId": "1" }, { "deviceId": "2" }, { "deviceId": "3" }, { "deviceId":
+                    "4" }, { "deviceId": "5" } ]}
+                </format>
+                <args/>
+            </payloadFactory>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <property name="messageType"
+                      value="application/json"
+                      scope="axis2"
+                      type="STRING"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

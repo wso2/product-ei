@@ -6,7 +6,7 @@
    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager">
       <parameter name="cachableDuration">15000</parameter>
    </taskManager>
-   <proxy name="MyProxy"
+   <proxy xmlns="http://ws.apache.org/ns/synapse" name="OUT_ONLY_FalseTestProxy"
           transports="https http"
           startOnLoad="true"
           trace="disable">

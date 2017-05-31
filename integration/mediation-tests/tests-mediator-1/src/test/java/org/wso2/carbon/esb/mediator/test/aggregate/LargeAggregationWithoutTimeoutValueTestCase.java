@@ -38,12 +38,11 @@ public class LargeAggregationWithoutTimeoutValueTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/LargeAggregationWithoutTimeoutConfig/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorWithoutTimeoutTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorWithoutTimeoutTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
         aggregatedRequestClient.setNoOfIterations(no_of_requests);
-
 
     }
 

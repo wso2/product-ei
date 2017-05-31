@@ -34,7 +34,7 @@ public class AppendProtocolTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/protocol_append_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteAppendProtocolTestProxy");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -44,7 +44,7 @@ public class AppendProtocolTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteAppendProtocolTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));
@@ -56,7 +56,7 @@ public class AppendProtocolTestCase extends ESBIntegrationTest {
     public void invalidUrl() throws AxisFault {
         try {
             axis2Client.sendSimpleStockQuoteRequest(
-                    getProxyServiceURLHttp("urlRewriteProxy"),
+                    getProxyServiceURLHttp("urlRewriteAppendProtocolTestProxy"),
                     "http://localhost:9010/services/SimpleStockQuoteService",
                     "IBM");
             fail("This Query Must fail");

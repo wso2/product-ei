@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="urlRewriteProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewritePrependFullUriTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
        <target>
           <inSequence>
              <property name="url.prepend" value="http://localhost:9000/services/SimpleStockQuoteService" scope="default" />

@@ -1,0 +1,30 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteAppendPortTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="port.append" value="0" scope="default"/>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="protocol" value="http"/>
+                    </condition>
+                    <action value="0" type="append" fragment="port"/>
+                </rewriterule>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="protocol" value="https"/>
+                    </condition>
+                    <action xpath="get-property('port.append')" type="append" fragment="port"/>
+                    <action value="http" fragment="protocol" type="set"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

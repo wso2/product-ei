@@ -29,14 +29,14 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import java.io.File;
 
 /**
  * Sample 268: Proxy Services with the Local Transport
  */
-public class Sample268TestCase extends ESBIntegrationTest {
+public class Sample268TestCase extends ESBSampleIntegrationTest {
 
     private ServerConfigurationManager serverConfigurationManager;
 

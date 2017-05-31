@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyPostToUriTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="POST_TO_URI" value="true" scope="axis2"/>
+            <log>
+                <property name="server-name" expression="get-property('SERVER_IP')"/>
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:8992/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

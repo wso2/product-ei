@@ -16,7 +16,7 @@
     <proxy name="StockQuoteProxyHttp" transports="http" startOnLoad="true" trace="disable">
         <target>
             <endpoint>
-                <address uri="HTTPS_PROXY_URL"/>
+                <address uri="https://localhost:8443/services/StockQuoteProxyHttps"/>
             </endpoint>
             <outSequence>
                 <send/>

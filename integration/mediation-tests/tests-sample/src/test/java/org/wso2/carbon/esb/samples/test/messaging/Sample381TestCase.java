@@ -30,10 +30,10 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.esb.samples.test.messaging.utils.MDDProducer;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
-public class Sample381TestCase extends ESBIntegrationTest {
+public class Sample381TestCase extends ESBSampleIntegrationTest {
 
 
     @BeforeClass(alwaysRun = true)

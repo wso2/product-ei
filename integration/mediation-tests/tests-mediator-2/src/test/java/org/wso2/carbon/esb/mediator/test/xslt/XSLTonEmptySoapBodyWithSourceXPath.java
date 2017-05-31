@@ -41,9 +41,6 @@ public class XSLTonEmptySoapBodyWithSourceXPath extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
-                "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "xslt"
-                        + File.separator + "xslt_empty_soap_body.xml");
     }
 
     @Test(groups = "wso2.esb",
@@ -53,7 +50,8 @@ public class XSLTonEmptySoapBodyWithSourceXPath extends ESBIntegrationTest {
         Map<String, String> requestHeaders = new HashMap<String, String>();
         requestHeaders.put("accept", "text/xml");
 
-        HttpResponse response = httpClient.doGet(getApiInvocationURL("xsltTest"), requestHeaders);
+        HttpResponse response = httpClient.doGet(getApiInvocationURL("xsltEmptySoapBodyWithSourceXPath"),
+                                                 requestHeaders);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         response.getEntity().writeTo(outputStream);

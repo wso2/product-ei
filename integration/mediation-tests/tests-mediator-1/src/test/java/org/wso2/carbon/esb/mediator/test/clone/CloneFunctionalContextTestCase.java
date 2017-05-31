@@ -49,7 +49,7 @@ public class CloneFunctionalContextTestCase extends ESBIntegrationTest {
     public void testSequence() throws Exception {
         logViewer.clearLogs();
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "IBM");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CloneFunctionalContextTestProxy"), null, "IBM");
         Assert.assertNotNull(response);
 
         //Added to ensure that carbon log is updated with required entries

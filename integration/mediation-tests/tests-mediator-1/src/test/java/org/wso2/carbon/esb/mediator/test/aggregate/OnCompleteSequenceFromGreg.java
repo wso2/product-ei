@@ -40,9 +40,9 @@ public class OnCompleteSequenceFromGreg extends ESBIntegrationTest {
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(),getSessionCookie());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/onCompleteSequenceFromGreg/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorOnCompleteFromRegTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorOnCompleteFromRegTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
         aggregatedRequestClient.setNoOfIterations(no_of_requests);
     }

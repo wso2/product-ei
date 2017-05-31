@@ -61,7 +61,6 @@ public class InvokeAfterRemovingPropertiesTestCase extends ESBIntegrationTest {
                 (new QName("http://services.samples/xsd", "last")).getText().toString());
 
         Assert.assertEquals(editResponse, 0, "Value mismatched" );
-
     }
 
     @AfterClass(alwaysRun = true)

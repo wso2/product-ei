@@ -1,0 +1,38 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="CallOutMediatorWithMTOMProxy"
+       transports="http https"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <filter source="get-property('Action')" regex="urn:uploadFileUsingMTOM">
+                <property name="example" value="mtom"/>
+                <property name="enableMTOM" value="true" scope="axis2"/>
+                <callout serviceURL="http://localhost:9001/services/MTOMSwASampleService"
+                         action="uploadFileUsingMTOM">
+                    <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                    <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                </callout>
+                <property name="enableMTOM" value="false" scope="axis2"/>
+                <property name="Content-Type" scope="transport" action="remove"/>
+
+                <payloadFactory>
+                    <format>
+                        <m:testMTOM xmlns:m="http://services.samples/xsd">
+                            <m:test1>testMTOM</m:test1>
+                        </m:testMTOM>
+                    </format>
+                </payloadFactory>
+
+                <log level="full"/>
+                <header name="To" action="remove"/>
+                <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+                <send/>
+            </filter>
+        </inSequence>
+    </target>
+</proxy>

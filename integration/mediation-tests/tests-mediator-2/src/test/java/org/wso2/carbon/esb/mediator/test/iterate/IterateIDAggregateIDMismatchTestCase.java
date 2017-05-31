@@ -39,7 +39,6 @@ public class IterateIDAggregateIDMismatchTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception {
         super.init();
         symbol = FileUtils.readFileToString(new File(getESBResourceLocation() + "/mediatorconfig/iterate/iterate1.txt"));
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/IterateIDAggregateIDMismatch.xml");
     }
 
     /**
@@ -50,7 +49,9 @@ public class IterateIDAggregateIDMismatchTestCase extends ESBIntegrationTest {
     public void testIterateIDAggregateIDMismatch() throws Exception {
 
         try {
-            axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, symbol, 8);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("IterateIDAggregateIDMismatchTestProxy"),
+                    null, symbol, 8);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             Assert.assertEquals(message.getReason(), ESBTestConstant.READ_TIME_OUT, "Expected Reason not found");

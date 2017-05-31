@@ -1,0 +1,44 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichCopyXpathOfSingleNodeTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+
+            <enrich>
+                <source type="custom"
+                        xpath="//m:getQuote/m:symbol"
+                        xmlns:m="http://services.samples"/>
+                <target type="property" property="symbol"/>
+            </enrich>
+
+            <log level="full"/>
+            <enrich>
+                <source type="inline">
+                    <m:getQuote xmlns:m="http://services.samples">
+                        <m:request>
+                            <m:test>wso2</m:test>
+                        </m:request>
+                    </m:getQuote>
+                </source>
+                <target type="body" action="replace"/>
+            </enrich>
+
+            <enrich>
+                <source type="property" property="symbol"/>
+                <target xmlns:m="http://services.samples"
+                        action="replace" xpath="//m:getQuote/m:request/m:test"/>
+            </enrich>
+
+            <log level="full" />
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send />
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

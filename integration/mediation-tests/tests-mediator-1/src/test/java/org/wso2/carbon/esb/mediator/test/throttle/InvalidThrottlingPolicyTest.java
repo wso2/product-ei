@@ -33,7 +33,7 @@ public class InvalidThrottlingPolicyTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/invalidThrottlingPolicyTest.xml");
+        verifyProxyServiceExistence("invalidThrottlingPolicyTestProxy");
     }
 
     @Test(groups = "wso2.esb",
@@ -42,14 +42,15 @@ public class InvalidThrottlingPolicyTest extends ESBIntegrationTest {
 
         OMElement response;
 
-        try{
+        try {
             for (int i = 0; i <= THROTTLE_MAX_MSG_COUNT; i++) {
-                response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
-                assertTrue(response.toString().contains("WSO2"),"Fault: Required response not found.");
+                response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("invalidThrottlingPolicyTestProxy"), null, "WSO2");
+                assertTrue(response.toString().contains("WSO2"), "Fault: Required response not found.");
             }
 
-        }catch (Exception e){
-            assertFalse(e.getMessage().contains("**Access Denied**"),"Fault value mismatched, should be 'Access Denied'");
+        } catch (Exception e) {
+            assertFalse(e.getMessage().contains("**Access Denied**"),
+                    "Fault value mismatched, should be 'Access Denied'");
         }
 
     }

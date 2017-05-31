@@ -1,0 +1,11 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="smooksTransform">
+    <smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                          xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.1.xsd">
+
+        <!-- Configure the CSV Reader to read the message and change it into a stream of SAX events. -->
+        <csv:reader
+                fields="$ignore$5,lastname,firstname,middleinitial,$ignore$1,aaa,bbb,ccc,$ignore$7,ddd,$ignore$1,eee,$ignore$35,fff,ggg,hhh,$ignore$106,iii,kkk,lll,$ignore$+"
+                separator="|" skipLines="1"/>
+
+    </smooks-resource-list>
+</localEntry>

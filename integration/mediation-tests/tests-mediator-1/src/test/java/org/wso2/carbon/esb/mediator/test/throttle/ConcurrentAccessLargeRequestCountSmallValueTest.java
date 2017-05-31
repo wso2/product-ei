@@ -52,9 +52,7 @@ public class ConcurrentAccessLargeRequestCountSmallValueTest extends ESBIntegrat
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/concurrentAccessLargeRequestCountSmallTest.xml");
-
-
+        verifyProxyServiceExistence("throttlingConcurrentAccessLargeRequestCountTestProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyAndRequestThrottleTestClients = new ConcurrencyAndRequestThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
@@ -66,8 +64,8 @@ public class ConcurrentAccessLargeRequestCountSmallValueTest extends ESBIntegrat
     }
 
     @Test(groups = "wso2.esb",
-          description = "Concurrency throttling and request rate based throttling " +
-                        "-MaximumConcurrentAccess = 100 and MaximumCount=2 (very small value)",
+          description = "Concurrency throttling and request rate based throttling "
+                  + "-MaximumConcurrentAccess = 100 and MaximumCount=2 (very small value)",
           timeOut = 1000 * 60 * 2)
     public void testConcurrencyAndRequestBasedPolicyThrottling() throws InterruptedException {
         startClients();
@@ -88,7 +86,6 @@ public class ConcurrentAccessLargeRequestCountSmallValueTest extends ESBIntegrat
 
     }
 
-
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         concurrencyAndRequestThrottleTestClients = null;
@@ -99,17 +96,16 @@ public class ConcurrentAccessLargeRequestCountSmallValueTest extends ESBIntegrat
         super.cleanup();
     }
 
-
     private void initClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
             concurrencyAndRequestThrottleTestClients[i] = new ConcurrencyAndRequestThrottleTestClient(
-                    getMainSequenceURL(), list, clientsDone, requestThrottledClients, THROTTLE_MAX_MSG_COUNT);
+                    getProxyServiceURLHttp("throttlingConcurrentAccessLargeRequestCountTestProxy"), list, clientsDone,
+                    requestThrottledClients, THROTTLE_MAX_MSG_COUNT);
         }
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
             clients[i] = new Thread(concurrencyAndRequestThrottleTestClients[i]);
         }
     }
-
 
     private void startClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {

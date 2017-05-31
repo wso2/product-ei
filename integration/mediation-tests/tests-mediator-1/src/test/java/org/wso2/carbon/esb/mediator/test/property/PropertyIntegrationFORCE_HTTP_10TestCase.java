@@ -59,7 +59,7 @@ public class PropertyIntegrationFORCE_HTTP_10TestCase extends ESBIntegrationTest
                 ("/artifacts/ESB/mediatorconfig/property/FORCE_HTTP_1.0_DISABLED.xml");
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("Axis2ProxyService"), null, "WSO2");
+                (getProxyServiceURLHttp("FORCE_HTTP_1_0_FalseTestProxy"), null, "WSO2");
 
         assertTrue(response.toString().contains("WSO2 Company"));
 
@@ -82,7 +82,7 @@ public class PropertyIntegrationFORCE_HTTP_10TestCase extends ESBIntegrationTest
         Thread.sleep(3000);
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("Axis2ProxyService"), null, "WSO2");
+                (getProxyServiceURLHttp("FORCE_HTTP_1_0_TrueTEstProxy"), null, "WSO2");
 
         assertTrue(response.toString().contains("WSO2 Company"));
 

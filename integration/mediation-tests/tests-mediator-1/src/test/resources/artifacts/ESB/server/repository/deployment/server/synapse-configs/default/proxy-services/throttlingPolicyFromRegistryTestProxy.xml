@@ -1,0 +1,38 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="throttlingPolicyFromRegistryTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <throttle id="A">
+                <policy key="conf:/policy/throttle_policy.xml"/>
+                <onReject>
+                    <log level="custom">
+                        <property name="text" value="**Access Denied**"/>
+                    </log>
+                    <makefault version="soap11">
+                        <code xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/" value="tns:Receiver"/>
+                        <reason value="**Access Denied**"/>
+                    </makefault>
+                    <property name="RESPONSE" value="true"/>
+                    <header name="To" action="remove"/>
+                    <send/>
+                    <drop/>
+                </onReject>
+                <onAccept>
+                    <log level="custom">
+                        <property name="text" value="**Access Accept**"/>
+                    </log>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </onAccept>
+            </throttle>
+        </inSequence>
+        <outSequence>
+            <throttle id="A"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

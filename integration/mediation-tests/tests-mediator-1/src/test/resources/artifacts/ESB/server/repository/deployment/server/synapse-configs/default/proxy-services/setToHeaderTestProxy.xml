@@ -1,0 +1,18 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="setToHeaderTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <header name="To" value="http://localhost:9000/services/SimpleStockQuoteService"
+                    action="set"/>
+            <log level="full"/>
+
+            <send/>
+        </inSequence>
+        <outSequence>
+
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

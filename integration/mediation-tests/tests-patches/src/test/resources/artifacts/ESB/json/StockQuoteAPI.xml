@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-	<api xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteAPI"
-		context="/stockquote">
+	<api xmlns="http://ws.apache.org/ns/synapse" name="JsonStockQuoteAPI"
+		context="/jsonstockquote">
 		<resource methods="POST GET" uri-template="/test">
 			<inSequence>
 				<log level="full" />

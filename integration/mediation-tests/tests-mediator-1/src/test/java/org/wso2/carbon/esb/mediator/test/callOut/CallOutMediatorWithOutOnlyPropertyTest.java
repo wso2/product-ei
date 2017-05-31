@@ -30,19 +30,22 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
  * With this test case it will load a proxy configuration which send messages to an endpoint using
  * call out mediatior. In that it will set the property OUT_ONLY='true' and check whether there
  * are any errors occuring
- * */
+ */
 
-public class CallOutMediatorWithOutOnlyPropertyTest extends ESBIntegrationTest{
-     @BeforeClass(alwaysRun = true)
+public class CallOutMediatorWithOutOnlyPropertyTest extends ESBIntegrationTest {
+    @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/CallOutMediatorOutOnlyTest.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "CallOutMediatorOutOnlyTestProxy");
     }
 
-    @Test(groups = {"wso2.esb"},description = "Call")
+    @Test(groups = { "wso2.esb" },
+          description = "Call")
     public void callOutMediatorWithOutOnlyPropertyTest() throws AxisFault {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CallOutMediatorOutOnlyTestProxy"), null, "WSO2");
-        Assert.assertFalse(response.toString().contains("<ax21:ErrorCode>401000</ax21:ErrorCode>")," Error is using call out mediator with OUT ONLY='true' property");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CallOutMediatorOutOnlyTestProxy"), null, "WSO2");
+        Assert.assertFalse(response.toString().contains("<ax21:ErrorCode>401000</ax21:ErrorCode>"),
+                " Error is using call out mediator with OUT ONLY='true' property");
     }
 
     @AfterClass(alwaysRun = true)

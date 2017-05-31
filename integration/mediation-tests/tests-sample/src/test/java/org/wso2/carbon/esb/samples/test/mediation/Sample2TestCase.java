@@ -24,13 +24,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 /**
  * Sample 2: CBR with the Switch-Case Mediator Using Message Properties
  */
-public class Sample2TestCase extends ESBIntegrationTest {
+public class Sample2TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {

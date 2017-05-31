@@ -52,7 +52,7 @@ public class PropertyIntegrationPRESERVE_WS_ADDRESSINGPropertyTest extends ESBIn
         wireServer.start();
         try {
             axis2Client.sendSimpleStockQuoteRequest
-                    (getProxyServiceURLHttp("Axis2ProxyService"),
+                    (getProxyServiceURLHttp("PRESERVE_WS_ADDRESSING_TestProxy"),
                      "http://localhost:8991/services/SimpleStockQuoteService",
                      "WSO2");
         } catch (Exception e) {

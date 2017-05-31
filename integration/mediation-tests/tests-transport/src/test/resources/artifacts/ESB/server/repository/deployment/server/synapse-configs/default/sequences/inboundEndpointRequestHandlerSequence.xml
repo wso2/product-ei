@@ -1,0 +1,5 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="requestHandlerSeq">
+    <log category="INFO" level="full" separator=",">
+        <property name="test" value="requestHandlerSequence"/>
+    </log>
+</sequence>

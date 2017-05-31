@@ -1,0 +1,2 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xsltTransformResponseUrl"
+            src="https://svn.wso2.org/repos/wso2/trunk/commons/qa/qa-artifacts/esb/esb450/mediators/xslt/transform_back.xslt"/>

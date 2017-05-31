@@ -24,7 +24,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -32,7 +32,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 
-public class Sample420TestCase extends ESBIntegrationTest {
+public class Sample420TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {

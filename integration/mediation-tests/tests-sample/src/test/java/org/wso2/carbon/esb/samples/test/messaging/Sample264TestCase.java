@@ -27,10 +27,10 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
-public class Sample264TestCase extends ESBIntegrationTest {
+public class Sample264TestCase extends ESBSampleIntegrationTest {
 
     private LogViewerClient logViewerClient = null;
 

@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.TCPMonListener;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
 import java.io.File;
@@ -33,7 +33,7 @@ import java.nio.file.Paths;
 /**
  * Sample 10: Introduction to Dynamic Endpoints with the Registry
  */
-public class Sample10TestCase extends ESBIntegrationTest {
+public class Sample10TestCase extends ESBSampleIntegrationTest {
 
     private SampleAxis2Server axis2Server1;
     private SampleAxis2Server axis2Server2;

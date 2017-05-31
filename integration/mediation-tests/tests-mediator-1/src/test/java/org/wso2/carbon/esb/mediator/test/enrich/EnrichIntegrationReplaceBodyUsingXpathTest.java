@@ -48,8 +48,7 @@ public class EnrichIntegrationReplaceBodyUsingXpathTest extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception, ServletException, RemoteException {
         init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/synapseconfig/enrich_mediator/replaceBodyOfMessageSynapse.xml");
+        verifyProxyServiceExistence("enrichReplaceBodyUsingXpathTestProxy");
 
     }
 /*
@@ -60,7 +59,7 @@ public class EnrichIntegrationReplaceBodyUsingXpathTest extends ESBIntegrationTe
     public void testReplaceBodyUsingXpath() throws AxisFault, XMLStreamException {
 
         response=axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("enrichSample3"),null,createStandardRequest("IBM"));
+                (getProxyServiceURLHttp("enrichReplaceBodyUsingXpathTestProxy"),null,createStandardRequest("IBM"));
         assertNotNull(response,"Response is null");
         System.out.println(response);
         assertEquals(response.getFirstElement().getFirstChildWithName

@@ -33,13 +33,16 @@ import org.wso2.carbon.automation.engine.context.beans.ContextUrls;
 import org.wso2.carbon.automation.engine.context.beans.Tenant;
 import org.wso2.carbon.automation.engine.context.beans.User;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
+import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
 import org.wso2.carbon.inbound.stub.types.carbon.InboundEndpointDTO;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.carbon.integration.common.admin.client.SecurityAdminServiceClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.exceptions.AutomationUtilException;
+import org.wso2.carbon.localentry.stub.types.LocalEntryAdminException;
 import org.wso2.carbon.mediation.library.stub.MediationLibraryAdminServiceException;
 import org.wso2.carbon.mediation.library.stub.upload.types.carbon.LibraryFileItem;
+import org.wso2.carbon.rest.api.stub.RestApiAdminAPIException;
 import org.wso2.carbon.security.mgt.stub.config.SecurityAdminServiceSecurityConfigExceptionException;
 import org.wso2.carbon.sequences.stub.types.SequenceEditorException;
 import org.wso2.carbon.utils.ServerConstants;
@@ -210,6 +213,7 @@ public abstract class ESBIntegrationTest {
 		updateESBConfiguration(synapseConfig);
 
 	}
+
     protected void deleteLibrary(String fullQualifiedName)
             throws MediationLibraryAdminServiceException, RemoteException {
         esbUtils.deleteLibrary(contextUrls.getBackEndUrl(),sessionCookie,fullQualifiedName);
@@ -328,10 +332,21 @@ public abstract class ESBIntegrationTest {
 	}
 
 
-
 	protected void isProxyDeployed(String proxyServiceName) throws Exception {
 		Assert.assertTrue(esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie,
 		                                           proxyServiceName), "Proxy Deployment failed or time out");
+	}
+
+	protected void isEndpointDeployed(String endpointName) throws Exception {
+		Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie,
+		                                           endpointName), "Endpoint Deployment failed or time out");
+	}
+
+
+
+	protected void isLocalEntryDeployed(String localEntryName) throws Exception {
+		Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie,
+				"sec_policy_3"), "Localentry " + localEntryName + " not found");
 	}
 
 	protected void deleteProxyService(String proxyServiceName) throws Exception {
@@ -344,6 +359,23 @@ public abstract class ESBIntegrationTest {
 			proxyServicesList.remove(proxyServiceName);
 		}
 	}
+
+    /**
+     * Deletes an api with the given name.
+     *
+     * @param api name of the api to be delete
+     * @throws Exception if an exception occurs while deleting the API or checking its existence
+     */
+    protected void deleteApi(String api) throws Exception {
+        if (esbUtils.isApiExist(contextUrls.getBackEndUrl(), sessionCookie, api)) {
+            esbUtils.deleteApi(contextUrls.getBackEndUrl(), sessionCookie, api);
+            Assert.assertTrue(esbUtils.isApiUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, api),
+                    "Api: " + api + " Deletion failed or time out");
+        }
+        if (apiList != null && apiList.contains(api)) {
+            apiList.remove(api);
+        }
+    }
 
 	protected void deleteSequence(String sequenceName)
 			throws SequenceEditorException, RemoteException {
@@ -784,6 +816,32 @@ public abstract class ESBIntegrationTest {
 
 		return new ServiceDeploymentUtil().isServiceWSDlNotExist(serviceUrl, synchronizingDelay);
 
+	}
+
+	protected void verifyProxyServiceExistence(String proxyServiceName) throws RemoteException {
+		Assert.assertTrue(esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, proxyServiceName),
+				"Proxy Service not found. " + proxyServiceName);
+	}
+
+	protected void verifySequenceExistence(String sequenceName) throws RemoteException, SequenceEditorException {
+		Assert.assertTrue(esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
+				"Sequence not found. " + sequenceName);
+	}
+
+	protected void verifyAPIExistence(String apiName) throws RestApiAdminAPIException, RemoteException {
+		Assert.assertTrue(esbUtils.isApiExist(contextUrls.getBackEndUrl(), sessionCookie, apiName),
+				"API not found. " + apiName);
+	}
+
+	protected void verifyEndpointExistence(String endpointName)
+			throws EndpointAdminEndpointAdminException, RemoteException {
+		Assert.assertTrue(esbUtils.isEndpointExist(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
+				"Endpoint not found. " + endpointName);
+	}
+
+	protected void verifyLocalEntryExistence(String localEntry) throws RemoteException, LocalEntryAdminException {
+		Assert.assertTrue(esbUtils.isLocalEntryExist(contextUrls.getBackEndUrl(), sessionCookie, localEntry),
+				"Local Entry not found. " + localEntry);
 	}
 
 	private String replaceEndpoints(String config) throws XPathExpressionException {

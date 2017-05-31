@@ -42,9 +42,10 @@ public class IterateEndpointsTest extends ESBIntegrationTest {
 
 	@Test(groups = "wso2.esb", description = "Tests for http endpoint")
 	public void testHTTP() throws Exception, InterruptedException {
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/simple_iterator.xml");
-		String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
-		Assert.assertNotNull(response);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithHttpEndPointTestProxy"), "WSO2",
+                2);
+        Assert.assertNotNull(response);
 		OMElement envelope = client.toOMElement(response);
 		OMElement soapBody = envelope.getFirstElement();
 		Iterator iterator =
@@ -61,10 +62,11 @@ public class IterateEndpointsTest extends ESBIntegrationTest {
 	}
 
 	@Test(groups = "wso2.esb", description = "Tests for https endpoint")
-	public void testHTTPS() throws Exception, InterruptedException {
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_https_endpoint.xml");
-		String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
-		Assert.assertNotNull(response);
+	public void testHTTPS() throws Exception {
+		verifyProxyServiceExistence("iterateWithHttpsEndPointTestProxy");
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttps("iterateWithHttpsEndPointTestProxy"), "WSO2", 2);
+        Assert.assertNotNull(response);
 		OMElement envelope = client.toOMElement(response);
 		OMElement soapBody = envelope.getFirstElement();
 		Iterator iterator =

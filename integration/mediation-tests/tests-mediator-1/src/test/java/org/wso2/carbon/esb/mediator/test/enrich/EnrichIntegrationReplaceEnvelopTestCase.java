@@ -38,13 +38,13 @@ public class EnrichIntegrationReplaceEnvelopTestCase extends ESBIntegrationTest 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich/replace_envelop.xml");
+        verifyProxyServiceExistence("enrichReplaceEnvelopTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Tests-Replace out going message envelop")
     public void testReplaceEnvelop() throws AxisFault {
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample6"), null, "WSO2");
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichReplaceEnvelopTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getQName().getLocalPart(), "getQuote");
         assertEquals(response.getFirstElement().getLocalName().toString(),

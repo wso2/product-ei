@@ -1,0 +1,26 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="TRANSPORT_IN_NAME_TestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <payloadFactory media-type="xml">
+                <format>
+                    <transport xmlns="">$1</transport>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('TRANSPORT_IN_NAME')"/>
+                </args>
+            </payloadFactory>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -38,14 +38,14 @@ public class IterateIDTestCase extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 		super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_different_ID.xml");
 	}
 
 	@Test(groups = "wso2.esb", description = "Tests iterate ID property")
 	public void testIterateID() throws Exception {
 
         IterateClient client = new IterateClient();
-		String response = client.getGetQuotesResponse(getMainSequenceURL(), "WSO2", 2);
+		String response = client.getGetQuotesResponse(
+				getProxyServiceURLHttp("iterateDifferentIdTestProxy"), "WSO2", 2);
 		Assert.assertNotNull(response);
 		OMElement envelope = client.toOMElement(response);
 		OMElement soapBody = envelope.getFirstElement();

@@ -15,10 +15,10 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMe
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
-public class Sample250TestCase extends ESBIntegrationTest {
+public class Sample250TestCase extends ESBSampleIntegrationTest {
 
 
     @BeforeClass(alwaysRun = true)

@@ -105,6 +105,7 @@
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorOutOnlyTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorProxyWithNamedSeqCase"/>
            <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA4469CallMediatorWithOutOnlyTestCase"/>
+           <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5216CallMediatorPerAPILogTest"/>
 
 <!--            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
                 <methods>
@@ -218,8 +219,6 @@
             <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathTrpPropertyTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathExtensionTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathBodyTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.NullValueTransportHeaderTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.PropertyXPATH2FunctionsTestCase"/>
         </classes>
     </test>
     <test name="Property-mediator-Test-1" preserve-order="true" verbose="2">

@@ -33,7 +33,7 @@ public class UrlReWriteByContext extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/url_reWrite_by_context_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteByUrlContextTestProxy");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -43,7 +43,7 @@ public class UrlReWriteByContext extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteByUrlContextTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

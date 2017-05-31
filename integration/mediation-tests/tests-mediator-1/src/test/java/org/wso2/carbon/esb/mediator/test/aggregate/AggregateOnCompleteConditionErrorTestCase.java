@@ -26,7 +26,6 @@ public class AggregateOnCompleteConditionErrorTestCase extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/aggregateOnCompleteErrorConfig/synapse.xml");
     }
 
     /**
@@ -59,7 +58,7 @@ public class AggregateOnCompleteConditionErrorTestCase extends ESBIntegrationTes
                 "        </ser:getQuotes>\n" +
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>");
-        axis2Client.send(getProxyServiceURLHttp("aggregateOnCompleteErrorTestProxy"), null,
+        axis2Client.send(getProxyServiceURLHttp("aggregateMediatorOnCompleteErrorTestProxy"), null,
                 "urn:getQuote", payload);
     }
 

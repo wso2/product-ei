@@ -1,0 +1,46 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichReplacePropertyByEnrichTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+            <property xmlns:m0="http://services.samples" name="body" expression="//m0:getQuote" scope="default" />
+
+
+            <log level="full">
+                <property name="Cause" value="get-property('body')"/>
+            </log>
+
+            <log level="full">
+                <property name="Cause" expression="get-property('body')"/>
+            </log>
+
+            <enrich>
+                <source type="inline">
+                    <m:getQuote xmlns:m="http://services.samples">
+                        <m:request>
+                            <m:symbol>WSO2</m:symbol>
+                        </m:request>
+                    </m:getQuote>
+                </source>
+                <target type="property" property="body" />
+            </enrich>
+
+
+
+            <enrich>
+
+                <source clone="true" type="custom" xpath="get-property('body')" />
+                <target action="replace" type="custom" xmlns:m0="http://services.samples" xpath="//m0:getQuote"/>
+            </enrich>
+
+
+            <log level="full" />
+            <send/>
+
+        </inSequence>
+        <outSequence>
+
+            <send />
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

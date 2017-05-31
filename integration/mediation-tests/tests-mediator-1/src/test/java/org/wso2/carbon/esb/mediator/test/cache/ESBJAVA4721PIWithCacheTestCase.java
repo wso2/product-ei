@@ -46,9 +46,6 @@ public class ESBJAVA4721PIWithCacheTestCase extends ESBIntegrationTest {
                 getESBResourceLocation() + File.separator + "mediatorconfig" + File.separator + "cache" + File.separator
                         + "synapse.properties"));
         super.init();
-        loadESBConfigurationFromClasspath(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
-                        + File.separator + "cache" + File.separator + "CacheMediatorforJasonResponse.xml");
     }
 
     @Test(groups = "wso2.esb",
@@ -59,11 +56,11 @@ public class ESBJAVA4721PIWithCacheTestCase extends ESBIntegrationTest {
         requestHeader.put("Content-type", "application/json");
 
         //will not be a cache hit
-        HttpRequestUtil.doGet((getApiInvocationURL("jsonTest") + "/backend"), requestHeader);
+        HttpRequestUtil.doGet((getApiInvocationURL("cachingEnabledApi") + "/singleElementArrayBackend"), requestHeader);
 
         //will be a cache hit
         HttpResponse response = HttpRequestUtil.
-                doGet((getApiInvocationURL("jsonTest") + "/backend"), requestHeader);
+                doGet((getApiInvocationURL("cachingEnabledApi") + "/singleElementArrayBackend"), requestHeader);
 
         //check if [] are preserved in response
         Assert.assertTrue(response.getData().contains("[ \"water\" ]"),

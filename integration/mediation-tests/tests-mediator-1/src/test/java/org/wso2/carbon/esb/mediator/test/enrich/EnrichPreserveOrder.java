@@ -36,7 +36,7 @@ public class EnrichPreserveOrder extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich_mediator/order_check.xml");
+        verifyProxyServiceExistence("enrichOrderTest");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Enrichment of response message")
@@ -44,7 +44,7 @@ public class EnrichPreserveOrder extends ESBIntegrationTest {
        AxisOperationClient operationClient = new AxisOperationClient();
        OMElement response = null;
        try {
-           response = operationClient.send(getProxyServiceURLHttp("EnrichOrderTest"), null,  getRequest(), "urn:mediate");
+           response = operationClient.send(getProxyServiceURLHttp("enrichOrderTest"), null,  getRequest(), "urn:mediate");
        } finally {
            operationClient.destroy();
        }

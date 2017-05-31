@@ -1,0 +1,26 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="foreachJSONTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <foreach expression="//getQuote/request">
+                <sequence>
+                    <log level="full"/>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <checkPriceRequest>
+                                <code>$1</code>
+                            </checkPriceRequest>
+                        </format>
+                        <args>
+                            <arg evaluator="xml" expression="//request/symbol"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <log level="full">
+                <property name="STATE" value="END"/>
+            </log>
+            <drop/>
+        </inSequence>
+    </target>
+</proxy>

@@ -1,5 +1,5 @@
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="StockQuoteProxy">
+    <proxy name="CloneFunctionalContextTestProxy" transports="https http">
         <target>
             <inSequence>
                 <call-template target="test_func">

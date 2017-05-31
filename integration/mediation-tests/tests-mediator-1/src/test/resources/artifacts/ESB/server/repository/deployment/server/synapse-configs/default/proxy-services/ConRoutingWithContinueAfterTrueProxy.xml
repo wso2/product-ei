@@ -1,0 +1,32 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="ConRoutingWithContinueAfterTrueProxy"
+       transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="full">
+                <property name="STAGE" value="starting conditional  router"/>
+            </log>
+
+            <conditionalRouter continueAfter="true">
+                <conditionalRoute breakRoute="false">
+                    <condition>
+                        <match type="url" regex=".*StockQuote.*"/>
+                    </condition>
+                    <target sequence="cnd_seq4"/>
+                </conditionalRoute>
+            </conditionalRouter>
+
+            <log level="custom">
+                <property name="STAGE" value="end conditional  router"/>
+            </log>
+
+            <send/>
+
+        </inSequence>
+
+        <outSequence>
+            <send/>
+        </outSequence>
+
+    </target>
+</proxy>

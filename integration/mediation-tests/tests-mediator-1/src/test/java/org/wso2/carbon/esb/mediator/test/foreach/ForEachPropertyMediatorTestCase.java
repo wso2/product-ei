@@ -45,8 +45,7 @@ public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test multiple foreach constructs with property mediator in flow")
     public void testForEachPropertyMediator() throws Exception {
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/foreach_property_mediator.xml");
+        verifyProxyServiceExistence("foreachPropertyTestProxy");
 
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -64,7 +63,7 @@ public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
                         "    </soap:Body>\n" +
                         "</soap:Envelope>\n";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachPropertyTestProxy"), request);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
 

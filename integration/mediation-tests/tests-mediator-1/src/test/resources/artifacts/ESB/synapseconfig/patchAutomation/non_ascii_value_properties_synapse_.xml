@@ -1,5 +1,5 @@
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-   <proxy name="TestProxy"
+   <proxy name="NonAsciiCharactersForValuesOfPropertiesTestProxy"
           transports="https http"
           startOnLoad="true"
           trace="disable">
@@ -19,16 +19,4 @@
       </target>
       <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
    </proxy>
-   <sequence name="fault">
-      <log level="full">
-         <property name="MESSAGE" value="Executing default &#34;fault&#34; sequence"/>
-         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
-         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
-      </log>
-      <drop/>
-   </sequence>
-   <sequence name="main">
-      <log/>
-      <drop/>
-   </sequence>
 </definitions>

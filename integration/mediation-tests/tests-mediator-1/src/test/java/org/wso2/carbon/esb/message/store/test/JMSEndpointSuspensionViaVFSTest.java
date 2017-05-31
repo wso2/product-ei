@@ -3,6 +3,8 @@
  */
 package org.wso2.carbon.esb.message.store.test;
 
+import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.broker.TransportConnector;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -13,20 +15,21 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.automation.engine.FrameworkConstants;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.extensions.servers.httpserver.RequestInterceptor;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpServer;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -36,23 +39,15 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
     private TestRequestInterceptor interceptorOut = new TestRequestInterceptor();
     private TestRequestInterceptor interceptorFault = new TestRequestInterceptor();
-    private JMSBrokerController jmsBrokerController;
-    private ServerConfigurationManager serverConfigurationManager;
-
-    private final String HAWTBUF = "hawtbuf-1.9.jar";
-    private final String ACTIVEMQ_CLIENT = "activemq-client-5.9.1.jar";
-    private final String ACTIVEMQ_BROKER = "activemq-broker-5.9.1.jar";
-    private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
-    private final String GERONIMO_JMS = "geronimo-jms_1.1_spec-1.1.1.jar";
-    private final String JAR_LOCATION = "/artifacts/ESB/jar";
     private final int PORT = 9654;
     private final int PORT_FAULT = 9655;
     private SimpleHttpServer httpServerOut;
     private SimpleHttpServer httpServerFault;
+    private BrokerService broker;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
-        setUpJMSBroker();
+        startBroker();
         /* Make the port available */
         Utils.shutdownFailsafe(PORT);
         httpServerOut = new SimpleHttpServer(PORT, new Properties());
@@ -65,22 +60,6 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
         interceptorOut = new TestRequestInterceptor();
         httpServerOut.getRequestHandler().setInterceptor(interceptorOut);
-
-        super.init();
-
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib(new File(getClass().
-                getResource(JAR_LOCATION + File.separator + HAWTBUF).toURI()));
-        serverConfigurationManager.copyToComponentLib(new File(getClass().
-                getResource(JAR_LOCATION + File.separator + ACTIVEMQ_CLIENT).toURI()));
-        serverConfigurationManager.copyToComponentLib(new File(getClass().
-                getResource(JAR_LOCATION + File.separator + ACTIVEMQ_BROKER).toURI()));
-        serverConfigurationManager.copyToComponentLib(new File(getClass().
-                getResource(JAR_LOCATION + File.separator + GERONIMO_J2EE_MANAGEMENT).toURI()));
-        serverConfigurationManager.copyToComponentLib(new File(getClass().
-                getResource(JAR_LOCATION + File.separator + GERONIMO_JMS).toURI()));
-        serverConfigurationManager.applyConfiguration(new File(getClass().
-                getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "messageStore" + File.separator + "axis2.xml").getPath()));
 
         super.init();
 
@@ -138,7 +117,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
 
         interceptorFault = new TestRequestInterceptor();
         httpServerFault.getRequestHandler().setInterceptor(interceptorFault);
-        jmsBrokerController.stop();
+        stopBroker();
 
         sendFile(outfile, afile, bfile);
 
@@ -156,31 +135,6 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
         Assert.assertTrue(outfile.exists());
         bfile.delete();
         outfile.delete();
-    }
-
-//    @Test(groups = {"wso2.esb"})
-//    public void testSpecialCharacterMediation() throws Exception {
-////        serverConfigurationManager.restartGracefully();
-////        super.init(5);
-//        SimpleHttpClient httpClient = new SimpleHttpClient();
-//        String payload = "<test>This payload is üsed to check special character mediation</test>";
-//        try {
-//
-//            HttpResponse response = httpClient.doPost(getProxyServiceURLHttp("InOutProxy"), null, payload, "application/xml");
-//        } catch (AxisFault e) {
-//            log.error("Response not expected here, Exception can be accepted ");
-//        }
-//        Thread.sleep(10000);
-//        assertTrue(interceptor.getPayload().contains(payload));
-//    }
-
-    private void setUpJMSBroker() {
-        jmsBrokerController = new JMSBrokerController("localhost", getJMSBrokerConfiguration());
-        jmsBrokerController.start();
-    }
-
-    private JMSBrokerConfiguration getJMSBrokerConfiguration() {
-        return JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration();
     }
 
     private static class TestRequestInterceptor implements RequestInterceptor {
@@ -211,7 +165,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
             super.cleanup();
         } finally {
             try {
-                jmsBrokerController.stop();
+                stopBroker();
             } catch (Exception e) {
                 log.warn("Error while shutting down the JMS Broker", e);
             }
@@ -225,16 +179,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
             } catch (Exception e) {
                 log.warn("Error while shutting down the HTTP serverFault", e);
             }
-            Thread.sleep(3000);
-            serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
-            serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_BROKER);
-            serverConfigurationManager.removeFromComponentLib(HAWTBUF);
-            serverConfigurationManager.removeFromComponentLib(GERONIMO_J2EE_MANAGEMENT);
-            serverConfigurationManager.removeFromComponentLib(GERONIMO_JMS);
-            serverConfigurationManager.restoreToLastConfiguration();
         }
-
-        serverConfigurationManager = null;
     }
 
     private void addVFSJMSProxy1()
@@ -258,7 +203,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
                                              "                          <endpoint>\n" +
                                              "                              <recipientlist>\n" +
                                              "                                  <endpoint>\n" +
-                                             "                                      <address uri=\"jms:/Addresses?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;java.naming.provider.url=tcp://localhost:61616\"/>" +
+                                             "                                      <address uri=\"jms:/Addresses?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;java.naming.provider.url=tcp://localhost:61816\"/>" +
                                              "                                  </endpoint>" +
                                              "                                  <endpoint>\n" +
                                              "                                      <address uri=\"http://localhost:9654/services/SimpleStockQuoteService\"/>" +
@@ -283,5 +228,59 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
                                              "                  </faultSequence>" +
                                              "                </target>\n" +
                                              "        </proxy>"));
+    }
+
+
+    private List<TransportConnector> getTCPConnectors() {
+        //setting the tcp transport configurations
+        List<TransportConnector> tcpList = new ArrayList<>();
+        TransportConnector tcp = new TransportConnector();
+        tcp.setName("tcp");
+        try {
+            tcp.setUri(new URI("tcp://127.0.0.1:61816"));
+        } catch (URISyntaxException e) {
+            log.error("Error while setting tcp uri :tcp://127.0.0.1:61816", e);
+        }
+        tcpList.add(tcp);
+        return tcpList;
+    }
+
+    private boolean startBroker() {
+        try {
+            log.info("JMSServerController: Preparing to start JMS Broker: " );
+            broker = new BrokerService();
+            // configure the broker
+
+            broker.setBrokerName("myBroker1");
+            log.info(broker.getBrokerDataDirectory());
+            broker.setDataDirectory(System.getProperty(FrameworkConstants.CARBON_HOME) +
+                    File.separator + broker.getBrokerDataDirectory());
+            broker.setTransportConnectors(getTCPConnectors());
+            broker.setPersistent(true);
+
+            broker.start();
+            log.info("JMSServerController: Broker is Successfully started. continuing tests");
+            return true;
+        } catch (Exception e) {
+            log.error(
+                    "JMSServerController: There was an error starting JMS broker: ", e);
+            return false;
+        }
+    }
+
+    private boolean stopBroker() {
+        try {
+            log.info(" ************* Stopping **************");
+            if (broker.isStarted()) {
+                broker.stop();
+                for(TransportConnector transportConnector : getTCPConnectors()) {
+                    transportConnector.stop();
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            log.error("Error while shutting down the broker", e);
+            return false;
+        }
     }
 }

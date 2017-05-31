@@ -43,8 +43,6 @@ public class NullValueTransportHeaderTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/"
-                + "configsToCheckSettingNullToTransportHeader/synapse.xml");
     }
 
 
@@ -52,7 +50,7 @@ public class NullValueTransportHeaderTestCase extends ESBIntegrationTest {
     public void testRespondMediator() throws AxisFault, MalformedURLException, AutomationFrameworkException {
         Map<String, String> requestHeader = new HashMap<>();
         requestHeader.put("Content-type", "application/json");
-        HttpResponse response = HttpRequestUtil.doPost(new URL(getApiInvocationURL("testapi")),
+        HttpResponse response = HttpRequestUtil.doPost(new URL(getApiInvocationURL("nullValueTransportHeaderTestFrontEnd")),
                 "{\"test\" : \"nullHeaderVal\"}", requestHeader);
         Assert.assertTrue(response.getData().contains("{\"company\" : \"wso2\"}"), "Expected response was not"
                 + "received. Got " + response.getData());

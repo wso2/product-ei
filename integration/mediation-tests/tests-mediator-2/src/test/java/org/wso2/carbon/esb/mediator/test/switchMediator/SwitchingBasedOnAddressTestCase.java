@@ -35,7 +35,6 @@ public class SwitchingBasedOnAddressTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/switching_based_on_address_synapse.xml");
 
     }
 
@@ -43,15 +42,15 @@ public class SwitchingBasedOnAddressTestCase extends ESBIntegrationTest {
     public void testSample2() throws RemoteException, XPathExpressionException {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("switchByAddress"),
-                                                           getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                           "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("switchMediatorSwitchByAddressTestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertEquals("getQuote Response root element name mismatched", "getQuoteResponse", response.getLocalName());
         assertTrue("Symbol name mismatched", response.toString().contains("IBM"));
 
-        response = axis2Client.sendSimpleQuoteRequest(getProxyServiceURLHttp("switchByAddress"),
-                                                      getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                      "MSTF");
+        response = axis2Client.sendSimpleQuoteRequest(
+                getProxyServiceURLHttp("switchMediatorSwitchByAddressTestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "MSTF");
         assertEquals("getSimpleQuote Response root element name mismatched", "getSimpleQuoteResponse", response.getLocalName());
         assertTrue("Symbol name mismatched", response.toString().contains("MSTF"));
 

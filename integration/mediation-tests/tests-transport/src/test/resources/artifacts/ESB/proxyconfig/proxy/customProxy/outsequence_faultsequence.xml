@@ -121,7 +121,6 @@
         </target>
         <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
-    <localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     <sequence name="fault">
         <log level="full">
             <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>

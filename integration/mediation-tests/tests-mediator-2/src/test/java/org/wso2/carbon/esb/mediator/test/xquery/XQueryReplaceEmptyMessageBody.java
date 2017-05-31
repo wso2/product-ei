@@ -36,7 +36,6 @@ public class XQueryReplaceEmptyMessageBody extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/xquery_replace_body_synapse101.xml");
     }
 
     @AfterClass(alwaysRun = true)
@@ -50,7 +49,7 @@ public class XQueryReplaceEmptyMessageBody extends ESBIntegrationTest {
         OMElement response;
 
         response = sendReceive(
-                getProxyServiceURLHttp("StockQuoteProxy"));
+                getProxyServiceURLHttp("xQueryMediatorReplaceEmptyMessageBodyTestProxy"));
         assertNotNull(response, "Response message null");
         assertEquals(response.getFirstElement().getFirstChildWithName(
                 new QName("http://services.samples/xsd", "symbol", "ax21")).getText(), "WSO2", "Symbol name mismatched");

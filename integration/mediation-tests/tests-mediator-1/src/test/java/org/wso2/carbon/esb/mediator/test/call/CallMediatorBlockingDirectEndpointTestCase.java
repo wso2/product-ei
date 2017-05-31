@@ -36,14 +36,15 @@ public class CallMediatorBlockingDirectEndpointTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "call" + File.separator + "CallMediatorBlockingDirectEndpointTest.xml");
+        verifyProxyServiceExistence("callMediatorBlockingProxy");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Call the direct endpoint with blocking external calls")
+    @Test(groups = { "wso2.esb" },
+          description = "Call the direct endpoint with blocking external calls")
     public void callMediatorBlockingDirectEndpointTest() throws AxisFault {
-        OMElement response =
-                axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("TestCallProxy"), null, "WSO2");
-        boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("callMediatorBlockingProxy"), null, "WSO2");
+        boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2 Company");
         assertTrue(responseContainsWSO2);
     }
 

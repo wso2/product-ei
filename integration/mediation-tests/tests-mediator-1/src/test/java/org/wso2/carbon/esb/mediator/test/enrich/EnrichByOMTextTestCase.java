@@ -42,13 +42,13 @@ public class EnrichByOMTextTestCase extends ESBIntegrationTest {
         resourceAdminServiceStub = new ResourceAdminServiceClient(contextUrls.getBackEndUrl(),
                 getSessionCookie());
         uploadResourcesToGovernanceRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/enrich_omText.xml");
+        verifyProxyServiceExistence("enrichByOMTextTestProxy");
     }
 
     /*https://wso2.org/jira/browse/STRATOS-2248*/
     @Test(groups = {"wso2.esb"}, description = "Enrich by OMText")
     public void enrichByOMText() throws Exception {
-        OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("enrichSample1")
+        OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("enrichByOMTextTestProxy")
                 , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertNotNull(response, "Response message is null");
         assertEquals(response.getLocalName(), "CheckPriceResponse", "CheckPriceResponse not match");

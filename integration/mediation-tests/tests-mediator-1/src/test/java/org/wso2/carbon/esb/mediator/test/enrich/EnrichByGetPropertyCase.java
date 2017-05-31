@@ -44,14 +44,14 @@ public class EnrichByGetPropertyCase extends ESBIntegrationTest {
                                                                   context.getContextTenant().getContextUser().getUserName(),
                                                                   context.getContextTenant().getContextUser().getPassword());
         uploadResourcesToGovernanceRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/enrich_byGetProperty.xml");
+        verifyProxyServiceExistence("enrichByGetPropertyTestProxy");
     }
 
     /*https://wso2.org/jira/browse/STRATOS-2248*/
     @Test(groups = {"wso2.esb"}, description = "Enrich by get property")
     public void enrichGetPropertyTest() throws Exception {
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp(
-                "enrichSample1"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
+                "enrichByGetPropertyTestProxy"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertNotNull(response, "Response message is null");
         assertEquals(response.getLocalName(), "CheckPriceResponse", "CheckPriceResponse not match");
         assertTrue(response.toString().contains("Price"), "No price tag in response");

@@ -35,20 +35,21 @@ public class IterateContinueParentTest extends ESBIntegrationTest {
 	}
 
 	@Test(groups = "wso2.esb", description = "Tests with continue parent=true", enabled = false)
-	public void testContinueParentTrue() throws Exception, InterruptedException {
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_continue_parent_true.xml");
-		OMElement response =
-		                     axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, "WSO2", 2);
-		//TODO log must be checked and verify the log has printed
+    public void testContinueParentTrue() throws Exception {
+
+        axis2Client.sendMultipleQuoteRequest(
+                getProxyServiceURLHttp("iterateWithContinueParentTrueTestProxy"),
+                null, "WSO2", 2);
+        //TODO log must be checked and verify the log has printed
 
 	}
 	
 	@Test(groups = "wso2.esb", description = "Tests with continue parent=false", enabled = false)
-	public void testContinueParentFalse() throws Exception, InterruptedException {
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_continue_parent_false.xml");
-		OMElement response =
-                axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, "WSO2", 2);
-		//TODO log must be checked and verify the log has not printed
+	public void testContinueParentFalse() throws Exception {
+        axis2Client.sendMultipleQuoteRequest(
+                getProxyServiceURLHttp("iterateWithContinueParentFalseTestProxy"), null,
+                "WSO2", 2);
+        //TODO log must be checked and verify the log has not printed
 
 	}
 

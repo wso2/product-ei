@@ -35,7 +35,6 @@ public class InvokeOnErrorSequenceFromSwitchIntegrationTestCase extends ESBInteg
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/onerror_sequence_within_switch_config.xml");
     }
 
 
@@ -43,9 +42,9 @@ public class InvokeOnErrorSequenceFromSwitchIntegrationTestCase extends ESBInteg
     public void testSample2() throws AxisFault, XPathExpressionException {
         //Send mediator will be defined inside onError sequence so that a response will come only is onError sequence is executed.
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                    "IBM");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("switchMediatorOnErrorSequenceWithinSwitchTestProxy.xml"),
+                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
             Assert.fail("Expected Axis Fault");
         } catch (AxisFault expected) {
             log.info("Fault Message : " + expected.getMessage());

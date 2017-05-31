@@ -22,12 +22,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 /**
  * Sample 6: Manipulating SOAP Headers and Filtering Incoming and Outgoing Messages
  */
-public class Sample6TestCase extends ESBIntegrationTest {
+public class Sample6TestCase extends ESBSampleIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();

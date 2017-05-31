@@ -42,28 +42,19 @@ import static org.testng.Assert.assertNotNull;
 
 public class RubyScriptSupportTestCase extends ESBIntegrationTest {
 
-    private final String JRUBY_JAR = "jruby-complete-1.3.0.jar";
-    private final String JRUBY_JAR_LOCATION = "/artifacts/ESB/jar/";
-
-    private ServerConfigurationManager serverManager;
-
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
-        serverManager = new ServerConfigurationManager(context);
-        serverManager.copyToComponentDropins(new File(getClass().getResource(JRUBY_JAR_LOCATION + JRUBY_JAR).toURI()));
-        serverManager.restartGracefully();
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
-
+        super.init();
     }
 
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
-})
-    @Test(groups = {"wso2.esb", "localOnly"}, description = "Script Mediator -Run a Ruby script with the mediator")
+    @SetEnvironment(executionEnvironments = {
+            ExecutionEnvironment.STANDALONE
+    })
+    @Test(groups = { "wso2.esb", "localOnly" },
+          description = "Script Mediator -Run a Ruby script with the mediator")
     public void testJRubyScriptMediation() throws Exception {
-        loadSampleESBConfiguration(353);
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client
+                .sendCustomQuoteRequest(getProxyServiceURLHttp("scriptMediatorRubyBasicTestProxy"), null, "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -73,21 +64,22 @@ public class RubyScriptSupportTestCase extends ESBIntegrationTest {
         assertNotNull(response.getFirstElement().getQName().getLocalPart(), " Fault response null localpart");
         assertEquals(response.getFirstElement().getQName().getLocalPart(), "Code", "Fault localpart mismatched");
 
-        assertNotNull(response.getFirstChildWithName(
-                new QName("http://services.samples/xsd", "Price")), "Fault response null localpart");
+        assertNotNull(response.getFirstChildWithName(new QName("http://services.samples/xsd", "Price")),
+                "Fault response null localpart");
     }
 
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
-})
-    @Test(groups = {"wso2.esb", "localOnly"}, description = "Script Mediator -Run a Ruby script with the mediator" +
-                                                            " -Script from gov registry")
+    @SetEnvironment(executionEnvironments = {
+            ExecutionEnvironment.STANDALONE
+    })
+    @Test(groups = { "wso2.esb", "localOnly" },
+          description = "Script Mediator -Run a Ruby script with the mediator" + " -Script from gov registry")
     public void testJRubyScriptMediationScriptFromGovRegistry() throws Exception {
         enableDebugLogging();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/synapseconfig/script_mediator/retrieve_script_from_gov_reg_mediation.xml");
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client
+                .sendCustomQuoteRequest(getProxyServiceURLHttp("scriptMediatorRubyStoredInRegistryTestProxy"), null,
+                        "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -97,58 +89,47 @@ public class RubyScriptSupportTestCase extends ESBIntegrationTest {
         assertNotNull(response.getFirstElement().getQName().getLocalPart(), " Fault response null localpart");
         assertEquals(response.getFirstElement().getQName().getLocalPart(), "Code", "Fault localpart mismatched");
 
-        assertNotNull(response.getFirstChildWithName(
-                new QName("http://services.samples/xsd", "Price")), "Fault response null localpart");
+        assertNotNull(response.getFirstChildWithName(new QName("http://services.samples/xsd", "Price")),
+                "Fault response null localpart");
         clearUploadedResource();
     }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        try {
-            deleteSequence("main");
-            Thread.sleep(5000);
-            super.cleanup();
-        } finally {
-            serverManager.removeFromComponentDropins(JRUBY_JAR);
-            serverManager.restartGracefully();
-            serverManager = null;
-        }
-
+        super.cleanup();
     }
 
     private void uploadResourcesToConfigRegistry() throws Exception {
 
-        ResourceAdminServiceClient resourceAdminServiceStub =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName()
-, context.getContextTenant().getContextUser().getPassword());
+        ResourceAdminServiceClient resourceAdminServiceStub = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(),
+                context.getContextTenant().getContextUser().getPassword());
 
         resourceAdminServiceStub.deleteResource("/_system/governance/script");
-        resourceAdminServiceStub.addCollection("/_system/governance/", "script", "",
-                                               "Contains test script files");
+        resourceAdminServiceStub.addCollection("/_system/governance/", "script", "", "Contains test script files");
 
-        resourceAdminServiceStub.addResource(
-                "/_system/governance/script/stockquoteTransform.rb", "application/xml", "script files",
-                new DataHandler(new URL("file:///" + getClass().getResource(
-                        "/artifacts/ESB/mediatorconfig/script/stockquoteTransform.rb").getPath())));
+        resourceAdminServiceStub
+                .addResource("/_system/governance/script/stockquoteTransform.rb", "application/xml", "script files",
+                        new DataHandler(new URL("file:///" + getClass()
+                                .getResource("/artifacts/ESB/mediatorconfig/script/stockquoteTransform.rb")
+                                .getPath())));
 
     }
-
 
     private void enableDebugLogging() throws Exception {
         LoggingAdminClient logAdminClient = new LoggingAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logAdminClient.updateLoggerData("org.apache.synapse", "DEBUG", true, false);
     }
 
-
     private void clearUploadedResource()
-            throws InterruptedException, ResourceAdminServiceExceptionException, RemoteException, XPathExpressionException {
+            throws InterruptedException, ResourceAdminServiceExceptionException, RemoteException,
+            XPathExpressionException {
 
-        ResourceAdminServiceClient resourceAdminServiceStub =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName()
-, context.getContextTenant().getContextUser().getPassword());
+        ResourceAdminServiceClient resourceAdminServiceStub = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(),
+                context.getContextTenant().getContextUser().getPassword());
 
         resourceAdminServiceStub.deleteResource("/_system/governance/script");
     }
-
 
 }

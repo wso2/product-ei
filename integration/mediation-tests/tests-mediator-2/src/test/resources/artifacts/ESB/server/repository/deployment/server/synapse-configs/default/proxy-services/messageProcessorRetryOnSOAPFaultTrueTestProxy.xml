@@ -1,0 +1,16 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="messageProcessorRetryOnSOAPFaultTrueTestProxy"
+       transports="http,https"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+            <header name="Action" value="urn:throwAxisFault"/>
+            <property name="target.endpoint" value="SOAPFaultSample"/>
+            <property name="RETRY_ON_SOAPFAULT" value="true"/>
+            <store messageStore="storeForTestRetryOnSOAPFaultTrue"/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>

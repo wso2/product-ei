@@ -34,7 +34,6 @@ public class XQueryCustomVariableAsByte extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/xquery_variable_type_byte_synapse101.xml");
     }
 
     @AfterClass(alwaysRun = true)
@@ -47,9 +46,7 @@ public class XQueryCustomVariableAsByte extends ESBIntegrationTest {
     public void testXQueryTransformationWithByteValue() throws AxisFault {
         OMElement response;
         RequestUtil getQuoteCustomRequest = new RequestUtil();
-        response = getQuoteCustomRequest.sendReceive(
-                getProxyServiceURLHttp("StockQuoteProxy"),
-                "WSO2");
+        response = getQuoteCustomRequest.sendReceive(getProxyServiceURLHttp("xQueryCustomVariableAsByteTestProxy"), "WSO2");
         assertNotNull(response, "Response message null");
         assertEquals(response.getFirstElement().getFirstChildWithName(
                 new QName("http://services.samples/xsd", "symbol", "ax21")).getText(), "100", "Symbol name mismatched");

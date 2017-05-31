@@ -42,9 +42,9 @@ public class OnCompleteSequenceFromRegistryTestCase extends ESBIntegrationTest {
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(), getSessionCookie());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/onCompleteSequenceConfig/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorOnCompleteFromConfTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorOnCompleteFromConfTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
         aggregatedRequestClient.setNoOfIterations(no_of_requests);
 

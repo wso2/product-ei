@@ -40,13 +40,12 @@ public class SendIntegrationSequenceAtGovRegistryTestCase extends ESBIntegration
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(), getSessionCookie());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/send/synapse_gov.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Receiving sequence at governance registry build message before receive message")
     public void sequenceAtGovRegistryBuildMessageTest() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testSequenceAtGovRegistryBuildMessage"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorReceiveSeqAtGovBuildMessageTrueTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();
@@ -57,7 +56,8 @@ public class SendIntegrationSequenceAtGovRegistryTestCase extends ESBIntegration
 
     @Test(groups = {"wso2.esb"}, description = "Receiving sequence at governance registry not build message before receive message")
     public void sequenceAtGovRegistryBuildMessageNoTest() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testSequenceAtGovRegistryBuildMessageNo"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorReceiveSeqAtGovBuildMessageFalseTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();

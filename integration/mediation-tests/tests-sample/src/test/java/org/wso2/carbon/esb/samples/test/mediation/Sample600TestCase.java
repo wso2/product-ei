@@ -24,13 +24,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.namespace.QName;
 
 import static org.testng.Assert.assertEquals;
 
-public class Sample600TestCase extends ESBIntegrationTest {
+public class Sample600TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {

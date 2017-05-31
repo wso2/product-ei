@@ -25,13 +25,13 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.axis2client.ConfigurationContextProvider;
 import org.wso2.esb.integration.common.clients.mediation.EventBrokerAdminClient;
 import org.wso2.esb.integration.common.clients.mediation.TopicAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
 import org.wso2.esb.integration.common.utils.servers.WireMonitorServer;
 
 //https://wso2.org/jira/browse/ESBJAVA-3445
-//public class Sample460TestCase extends ESBIntegrationTest {
+//public class Sample460TestCase extends ESBSampleIntegrationTest {
 
 //    private TopicAdminClient topicAdminClient;
 //    private EventBrokerAdminClient eventBrokerAdminClient;

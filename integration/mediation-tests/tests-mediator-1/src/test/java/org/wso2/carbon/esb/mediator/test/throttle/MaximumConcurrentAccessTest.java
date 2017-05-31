@@ -48,9 +48,7 @@ public class MaximumConcurrentAccessTest extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/MaximumConcurrentAccess.xml");
-
+        verifyProxyServiceExistence("throttlingMaxConcurrentAccessProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyThrottleTestClients = new ConcurrencyThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
@@ -82,7 +80,6 @@ public class MaximumConcurrentAccessTest extends ESBIntegrationTest {
 
     }
 
-
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         concurrencyThrottleTestClients = null;
@@ -92,16 +89,15 @@ public class MaximumConcurrentAccessTest extends ESBIntegrationTest {
         super.cleanup();
     }
 
-
     private void initClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
-            concurrencyThrottleTestClients[i] = new ConcurrencyThrottleTestClient(getMainSequenceURL(), list, clientsDone);
+            concurrencyThrottleTestClients[i] = new ConcurrencyThrottleTestClient(
+                    getProxyServiceURLHttp("throttlingMaxConcurrentAccessProxy"), list, clientsDone);
         }
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
             clients[i] = new Thread(concurrencyThrottleTestClients[i]);
         }
     }
-
 
     private void startClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {

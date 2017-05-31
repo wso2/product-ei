@@ -30,10 +30,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 
-public class Sample700TestCase extends ESBIntegrationTest {
+public class Sample700TestCase extends ESBSampleIntegrationTest {
 
     private MessageStoreAdminClient messageStoreAdminClient;
     private final String MESSAGE_STORE_NAME = "MyStore";

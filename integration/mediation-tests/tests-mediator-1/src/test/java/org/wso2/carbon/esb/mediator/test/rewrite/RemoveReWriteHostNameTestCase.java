@@ -32,7 +32,7 @@ public class RemoveReWriteHostNameTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/remove_rewrite_host_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteRemoveHostTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Remove and rewrite host name",
@@ -41,7 +41,7 @@ public class RemoveReWriteHostNameTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteRemoveHostTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

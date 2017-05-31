@@ -31,7 +31,7 @@ public class RemoveReWriteProtocolTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/remove_rewrite_protocol_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteRemoveProtocolTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Remove and rewrite protocol",
@@ -40,7 +40,7 @@ public class RemoveReWriteProtocolTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteRemoveProtocolTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

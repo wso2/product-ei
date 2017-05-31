@@ -23,44 +23,33 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
-
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.registry.properties.stub.PropertiesAdminServiceRegistryExceptionException;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.io.IOException;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
-import java.io.File;
-import java.io.IOException;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+/**
+ * Class mediator jar : SimpleClassMediator-1.0.0.jar
+ * Class mediator name : org.wso2.integration.test.mediator.SimpleClassMediator
+ */
+
 public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTest {
-
-    private final String CLASS_JAR="org.wso2.carbon.test.mediator.simpleClassMediator.jar";
-    private final String JAR_LOCATION= "/artifacts/ESB/jar";
-
-    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-
         super.init();
-        serverConfigurationManager=new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR).toURI()));
-        serverConfigurationManager.restartGracefully();
-
-        super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_mediation_with_twenty_properties.xml");
+        loadESBConfigurationFromClasspath(
+                "/artifacts/ESB/mediatorconfig/class/class_mediation_with_twenty_properties.xml");
     }
 
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
-})
+    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = {"wso2.esb","localOnly"}, description = "Class Mediator " +
                                   " -Class mediator which has a load of properties to be passed and mediation")
     public void testMediationWithLoadOfProperties()
@@ -68,7 +57,7 @@ public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTe
                    ResourceAdminServiceExceptionException, XMLStreamException,
                    InterruptedException {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
 
         String lastPrice=response.getFirstElement()
                 .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
@@ -100,9 +89,5 @@ public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTe
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception{
         super.cleanup();
-        serverConfigurationManager.removeFromComponentLib(CLASS_JAR);
-        serverConfigurationManager.restartGracefully();
-
-        serverConfigurationManager=null;
     }
 }

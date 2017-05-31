@@ -1,0 +1,14 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="xsltMediatorTestOutSequence">
+    <log level="custom">
+        <property name="text" value="---------Response Message------------"/>
+    </log>
+    <log level="full"/>
+    <xslt xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+          xmlns:ns="http://org.apache.synapse/xsd"
+          key="{get-property('registry','gov:localEntries/response_transformation_back_DynamicKeyXsltTransformationTestCase.txt/@resourceName')}"/>
+    <log level="custom">
+        <property name="text" value="---------Transformed Response Message------------"/>
+    </log>
+    <log level="full"/>
+    <send/>
+</sequence>

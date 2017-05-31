@@ -1,0 +1,28 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="callMediatorBlockingProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <header name="Action" value="urn:getQuote"/>
+            <payloadFactory>
+                <format>
+                    <m0:getQuote xmlns:m0="http://services.samples">
+                        <m0:request>
+                            <m0:symbol>WSO2</m0:symbol>
+                        </m0:request>
+                    </m0:getQuote>
+                </format>
+                <args/>
+            </payloadFactory>
+            <call blocking="true">
+                <endpoint name="EP">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </call>
+            <property name="RESPONSE" value="true"/>
+            <header name="To" action="remove"/>
+            <send/>
+            <drop/>
+        </inSequence>
+    </target>
+</proxy>

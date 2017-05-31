@@ -33,23 +33,19 @@ public class IterateSmallMessageTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/simple_iterator.xml");
-
     }
 
     @Test(groups = "wso2.esb", description = "Tests small message in small number ~20")
     public void testSmallNumbers() throws Exception {
 
         String symbol = FixedSizeSymbolGenerator.generateMessageKB(5);
-        OMElement response = null;
+        OMElement response;
         for (int i = 0; i < 20; i++) {
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                            null, symbol);
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithHttpEndPointTestProxy"), null, symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("WSO2"));
         }
-        symbol = null;
     }
 
     @Test(groups = "wso2.esb", description = "Tests small message in small number ~100")
@@ -57,13 +53,11 @@ public class IterateSmallMessageTestCase extends ESBIntegrationTest {
         String symbol = FixedSizeSymbolGenerator.generateMessageKB(5);
         OMElement response = null;
         for (int i = 0; i < 25; i++) {
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                            null, symbol);
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithHttpEndPointTestProxy"), null, symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("WSO2"));
         }
-        symbol = null;
     }
 
     @AfterClass(alwaysRun = true)

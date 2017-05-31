@@ -1,0 +1,21 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichReplaceBodyWithInlineTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <enrich> xmlns="http://ws.apache.org/ns/synapse"
+                <source clone="false"  type="inline" key="init_req_LE"/>
+                <target action="replace" type="body" />
+
+            </enrich>
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send />
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

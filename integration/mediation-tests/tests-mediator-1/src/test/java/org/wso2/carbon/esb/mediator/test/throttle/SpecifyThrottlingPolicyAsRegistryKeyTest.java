@@ -42,7 +42,7 @@ public class SpecifyThrottlingPolicyAsRegistryKeyTest extends ESBIntegrationTest
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/specifyThrottlingPolicyAsARegistryKey.xml");
+        verifyProxyServiceExistence("throttlingPolicyFromRegistryTestProxy");
     }
 
     @Test(groups = "wso2.esb",
@@ -54,17 +54,21 @@ public class SpecifyThrottlingPolicyAsRegistryKeyTest extends ESBIntegrationTest
 
         try {
             for (int i = 0; i <= THROTTLE_MAX_MSG_COUNT; i++) {
-                response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+                response = axis2Client
+                        .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("throttlingPolicyFromRegistryTestProxy"),
+                                null, "WSO2");
                 assertTrue(response.toString().contains("WSO2"), "Fault: Required response not found.");
                 throttleCounter++;
             }
             if (throttleCounter > THROTTLE_MAX_MSG_COUNT) {
-                assertFalse(response.toString().contains("WSO2"), "Fault: Required response not found.replying service");
+                assertFalse(response.toString().contains("WSO2"),
+                        "Fault: Required response not found.replying service");
             } else {
                 fail("Fault: Throttling response count does not match");
             }
         } catch (Exception e) {
-            assertTrue(e.getMessage().contains("**Access Denied**"), "Fault: value mismatched, should be '**Access Denied**'");
+            assertTrue(e.getMessage().contains("**Access Denied**"),
+                    "Fault: value mismatched, should be '**Access Denied**'");
         }
 
     }
@@ -80,27 +84,27 @@ public class SpecifyThrottlingPolicyAsRegistryKeyTest extends ESBIntegrationTest
 
     private void uploadResourcesToConfigRegistry() throws Exception {
 
-        ResourceAdminServiceClient resourceAdminServiceStub =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(),
-                        context.getContextTenant().getContextUser().getPassword());
+        ResourceAdminServiceClient resourceAdminServiceStub = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(),
+                context.getContextTenant().getContextUser().getPassword());
 
         resourceAdminServiceStub.deleteResource("/_system/config/policy");
-        resourceAdminServiceStub.addCollection("/_system/config/", "policy", "",
-                                               "Contains throttle policy files");
+        resourceAdminServiceStub.addCollection("/_system/config/", "policy", "", "Contains throttle policy files");
 
-        resourceAdminServiceStub.addResource(
-                "/_system/config/policy/throttle_policy.xml", "application/xml", "throttle policy files",
-                new DataHandler(new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/policy/throttle_policy.xml")));
-
+        resourceAdminServiceStub
+                .addResource("/_system/config/policy/throttle_policy.xml", "application/xml", "throttle policy files",
+                        new DataHandler(new URL("file:///" + getESBResourceLocation()
+                                + "/mediatorconfig/policy/throttle_policy.xml")));
 
     }
 
     private void clearUploadedResource()
-            throws InterruptedException, ResourceAdminServiceExceptionException, RemoteException, XPathExpressionException {
+            throws InterruptedException, ResourceAdminServiceExceptionException, RemoteException,
+            XPathExpressionException {
 
-        ResourceAdminServiceClient resourceAdminServiceStub =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(),
-                        context.getContextTenant().getContextUser().getPassword());
+        ResourceAdminServiceClient resourceAdminServiceStub = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(),
+                context.getContextTenant().getContextUser().getPassword());
 
         resourceAdminServiceStub.deleteResource("/_system/config/policy");
         Thread.sleep(1000);

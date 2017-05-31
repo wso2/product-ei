@@ -39,9 +39,9 @@ public class HighTimeoutWithLessMessagesTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/highTimeoutValueConfig/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorHighTimeoutTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorHighTimeoutTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
         aggregatedRequestClient.setNoOfIterations(no_of_requests);
 

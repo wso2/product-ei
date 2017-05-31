@@ -22,9 +22,6 @@ public class WithInMemoryStoreTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath(separator + "artifacts" + separator + "ESB" + separator
-                                          + "synapseconfig" + separator + "processor" + separator +
-                                          "forwarding" + separator + "InMemoryStoreSynapse1.xml");
 
     }
 
@@ -44,7 +41,7 @@ public class WithInMemoryStoreTestCase extends ESBIntegrationTest {
         wireServer.start();
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("messageProcessorInMemoryStoreTestProxy"), null, "WSO2");
             Assert.fail("Unexpected reply received !!!");
         } catch (Exception e) {
             // Axis Fault Expected

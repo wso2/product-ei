@@ -23,10 +23,10 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 
-public class Sample652TestCase extends ESBIntegrationTest {
+public class Sample652TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-   <proxy name="Axis2ProxyService"
+   <proxy xmlns="http://ws.apache.org/ns/synapse" name="FORCE_SC_ACCEPTED_FalseTestProxy"
           transports="https http"
           startOnLoad="true"
           trace="disable">

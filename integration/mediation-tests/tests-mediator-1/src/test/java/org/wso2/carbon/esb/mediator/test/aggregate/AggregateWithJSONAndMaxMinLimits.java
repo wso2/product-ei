@@ -41,8 +41,9 @@ public class AggregateWithJSONAndMaxMinLimits extends ESBIntegrationTest {
         super.init();
 
         serviceUrl = getApiInvocationURL("devices");
-
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/aggregate/aggregate_json.xml");
+        esbUtils.isApiDeployed(contextUrls.getBackEndUrl(), sessionCookie, "Devices");
+        esbUtils.isApiDeployed(contextUrls.getBackEndUrl(), sessionCookie, "DeviceID");
+        esbUtils.isApiDeployed(contextUrls.getBackEndUrl(), sessionCookie, "AllDevices");
     }
 
     @Test

@@ -35,13 +35,14 @@ public class SequenceWhichHasJsFunctionsForBothInOutTestCase extends ESBIntegrat
     public void setEnvironment() throws Exception {
         super.init();
         enableDebugLogging();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config06/synapse.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Invoke a sequence which has inlined js functions for both 'in' and 'outMediator' flows")
     public void testInvokeSequence() throws Exception {
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorInAndOutTestProxy"), null,
+                "WSO2");
         assertNotNull(response,"Fault response message null");
 
         assertNotNull(response.getQName().getLocalPart(),"Fault response null localpart");

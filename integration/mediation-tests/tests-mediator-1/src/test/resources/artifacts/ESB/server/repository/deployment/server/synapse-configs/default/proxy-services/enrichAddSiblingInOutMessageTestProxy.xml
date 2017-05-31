@@ -1,0 +1,31 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichAddSiblingInOutMessageTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <enrich>
+                <source type="inline" clone="true">
+                    <m:symbol1 xmlns:m="http://services.samples">IBM</m:symbol1>
+                </source>
+                <target type="body"/>
+            </enrich>
+            <enrich>
+                <source type="inline" clone="true">
+                    <m:symbol2 xmlns:m="http://services.samples">WSO2</m:symbol2>
+                </source>
+                <target type="body" action="sibling"/>
+            </enrich>
+            <log level="full"/>
+            <property name="OUT_ONLY" value="true"/>
+            <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:8991/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

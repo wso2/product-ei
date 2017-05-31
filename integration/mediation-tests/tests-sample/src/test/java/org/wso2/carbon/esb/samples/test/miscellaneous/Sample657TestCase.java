@@ -32,7 +32,7 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInfo;
 import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInfo_WSDataSourceDefinition;
 import org.wso2.carbon.ndatasource.ui.stub.core.xsd.JNDIConfig;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
 
@@ -42,7 +42,7 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.sql.*;
 
-public class Sample657TestCase extends ESBIntegrationTest {
+public class Sample657TestCase extends ESBSampleIntegrationTest {
 
     private ServerConfigurationManager serverManager = null;
     private final String MYSQL_LIB = "mysql-connector-java-5.1.26.jar";

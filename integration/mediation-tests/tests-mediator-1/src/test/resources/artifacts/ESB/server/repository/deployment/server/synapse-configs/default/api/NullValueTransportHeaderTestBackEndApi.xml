@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/nullValueTransportHeaderTestBackEnd" name="NullValueTransportHeaderTestBackEndApi">
+    <resource methods="POST">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>{"company" : "wso2"}</format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

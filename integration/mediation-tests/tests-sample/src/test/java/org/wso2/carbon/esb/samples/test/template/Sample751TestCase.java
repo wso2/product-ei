@@ -26,7 +26,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisOperationClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -36,7 +36,7 @@ import java.util.Iterator;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
-public class Sample751TestCase extends ESBIntegrationTest {
+public class Sample751TestCase extends ESBSampleIntegrationTest {
 
     private String proxyServiceName = "SplitAggregateProxy";
     private int iterations = 4;

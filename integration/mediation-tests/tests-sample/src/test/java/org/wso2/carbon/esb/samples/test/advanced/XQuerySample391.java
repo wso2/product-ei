@@ -22,11 +22,11 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import static org.testng.Assert.assertTrue;
 
-public class XQuerySample391 extends ESBIntegrationTest {
+public class XQuerySample391 extends ESBSampleIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();

@@ -49,7 +49,7 @@ public class PropertyIntegrationTRANSPORT_HEADERSPropertyTest extends ESBIntegra
         wireServer.start();
         try {
             axis2Client.addHttpHeader("Test-TRANSPORT_HEADERS","test");
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("Axis2ProxyService"),null,"WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("TRANSPORT_HEADERS_TestProxy"),null,"WSO2");
         } catch (Exception e) {
 
         }

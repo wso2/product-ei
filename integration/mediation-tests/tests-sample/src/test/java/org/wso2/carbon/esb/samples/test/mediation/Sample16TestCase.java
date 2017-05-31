@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.base.CarbonBaseUtils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Sample 16: Introduction to Dynamic and Static Registry Keys
  */
-public class Sample16TestCase extends ESBIntegrationTest {
+public class Sample16TestCase extends ESBSampleIntegrationTest {
     private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)

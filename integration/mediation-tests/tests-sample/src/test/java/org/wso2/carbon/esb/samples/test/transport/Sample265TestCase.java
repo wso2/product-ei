@@ -29,14 +29,14 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import java.io.File;
 import java.io.IOException;
 
 import static org.testng.Assert.assertTrue;
 
-public class Sample265TestCase extends ESBIntegrationTest {
+public class Sample265TestCase extends ESBSampleIntegrationTest {
 
         private ServerConfigurationManager serverConfigurationManager;
         private String pathToVfsDir;

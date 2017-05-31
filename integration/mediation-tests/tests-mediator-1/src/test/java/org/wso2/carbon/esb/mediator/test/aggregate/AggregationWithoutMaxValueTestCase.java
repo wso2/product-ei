@@ -39,9 +39,9 @@ public class AggregationWithoutMaxValueTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config18/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorMaxValueTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorMaxValueTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
 
     }

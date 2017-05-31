@@ -31,13 +31,13 @@ public class CloneArtifactErrorTestCase extends ESBIntegrationTest {
     public void TesPatchAutomation1() throws AxisFault {
         OMElement response1 = null;
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("proxyFault1"), null, "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CloneProxyFault1"), null, "WSO2");
             fail("Giving response for error sequence of soap message");
         } catch (AxisFault axisFault) {
             //For the first fault request it should return an Axis Fault as response.
         }
             //Checking if the esb running after giving an AxisFault error response
-        response1 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("proxyFault2"),null, "WSO2");
+        response1 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CloneProxyFault2"),null, "WSO2");
         assertTrue(response1.toString().contains("WSO2"), "Fails to return a correct response. ESB stopped mediation");
     }
 

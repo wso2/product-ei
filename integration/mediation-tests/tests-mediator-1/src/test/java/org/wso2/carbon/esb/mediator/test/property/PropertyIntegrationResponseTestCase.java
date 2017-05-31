@@ -38,8 +38,7 @@ public class PropertyIntegrationResponseTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/RESPONSE.xml");
+        verifyProxyServiceExistence("RESPONSE_PropertyTestProxy");
 
     }
 
@@ -52,7 +51,7 @@ public class PropertyIntegrationResponseTestCase extends ESBIntegrationTest {
     public void testRESPONSETEnabledTrue() throws IOException {
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
-                                                                             ("MyProxy")
+                                                                             ("RESPONSE_PropertyTestProxy")
                 , null, "This is the first request");
 
         assertTrue(response.toString().contains("This is the first request"), "Response Mismatch");

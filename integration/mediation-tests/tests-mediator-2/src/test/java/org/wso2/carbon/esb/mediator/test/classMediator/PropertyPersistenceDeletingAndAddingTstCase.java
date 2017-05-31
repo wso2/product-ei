@@ -125,7 +125,6 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
     public void destroy() throws Exception{
         super.cleanup();
         serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FOUR_PROPERTIES);
-        serverConfigurationManager.restartGracefully();
         serverConfigurationManager=null;
     }
 }

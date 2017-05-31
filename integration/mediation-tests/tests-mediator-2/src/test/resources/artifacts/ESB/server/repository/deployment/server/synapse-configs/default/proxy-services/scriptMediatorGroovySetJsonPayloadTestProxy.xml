@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorGroovySetJsonPayloadTestProxy"
+       transports="http https"
+       startOnLoad="true"
+       trace="disable">
+    <target>
+        <inSequence>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <script language="groovy">
+                def sw = new StringWriter();sw.write("{\"mySiteID\":\"54571\",\"fileID\":\"89265\"}");
+                mc.setPayloadJSON(sw.toString());</script>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <send/>
+        </inSequence>
+    </target>
+</proxy>

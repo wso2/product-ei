@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="simpleProxy" statistics="disable" trace="disable" transports="http,https">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="httpHeaderTestProxy" statistics="disable" trace="disable" transports="http,https">
         <target>
             <inSequence>
                 <property name="HttpHeader" expression="$trp:TEST_HEADER"/>

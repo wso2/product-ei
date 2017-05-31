@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.namespace.QName;
 
@@ -38,7 +38,7 @@ import static org.testng.Assert.assertNotNull;
  * Create a proxy which invokes another proxy service and the communication should happen thorough
  * local transport
  */
-public class Sample286TestCase extends ESBIntegrationTest {
+public class Sample286TestCase extends ESBSampleIntegrationTest {
 
     /*private ServerConfigurationManager serverManager;
 

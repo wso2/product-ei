@@ -1,0 +1,11 @@
+<api xmlns="http://ws.apache.org/ns/synapse" context="/singleElementArrayBackend" name="Single_Element_Array_Backend">
+    <resource methods="GET">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>[{ "msg":"Hello", "services":[ "elec", "patrol" ], "test":"World." },{ "msg":"Hi", "services":[ "water" ], "test":"Sri Lanka." }]</format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

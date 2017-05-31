@@ -35,8 +35,7 @@ public class EnrichIntegrationMultipleNodeReplace extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception{
         super.init();
-        String filePath= "/artifacts/ESB/synapseconfig/core/synapse_replace_multiple_node.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichMultipleNodeReplaceTestProxy");
     }
 
     //test whether the return element isreplaced by multiple node.
@@ -45,7 +44,7 @@ public class EnrichIntegrationMultipleNodeReplace extends ESBIntegrationTest {
     public void testEnrichMediator() throws Exception{
         OMElement response;
 
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample"),null,
+        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichMultipleNodeReplaceTestProxy"),null,
                                                          "WSO2");
 
 

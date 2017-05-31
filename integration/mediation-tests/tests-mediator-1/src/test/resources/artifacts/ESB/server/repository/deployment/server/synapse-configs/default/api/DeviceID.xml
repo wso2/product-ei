@@ -1,0 +1,23 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="DeviceID" context="/deviceid">
+    <resource methods="POST" uri-template="/{id}">
+        <inSequence>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <property name="ID"
+                      expression="get-property('uri.var.id')"
+                      scope="default"
+                      type="INTEGER"/>
+            <payloadFactory media-type="json">
+                <format>{ "deviceId": "device"}</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('ID')"/>
+                </args>
+            </payloadFactory>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <property name="messageType"
+                      value="application/json"
+                      scope="axis2"
+                      type="STRING"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

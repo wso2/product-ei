@@ -1,0 +1,27 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithContinueParentFalseTestProxy" transports="http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate id="iterator" continueParent="true"
+                     expression="//m0:getQuote/m0:request" preservePayload="true"
+                     attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+                <target>
+                    <sequence>
+                        <send>
+                            <endpoint>
+                                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+            <log>
+                <property name="parentMessage"
+                          value="**************CONTINUE PARENT OF ITERATE #1 (TOP LEVEL)*********"/>
+            </log>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesForIterateTests"/>
+        </outSequence>
+    </target>
+</proxy>

@@ -26,7 +26,7 @@ import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.MultiMessageReceiver;
 
 import javax.activation.DataHandler;
@@ -36,7 +36,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
-public class Sample654TestCase extends ESBIntegrationTest {
+public class Sample654TestCase extends ESBSampleIntegrationTest {
 
     private ServerConfigurationManager serverConfigurationManager;
     private ResourceAdminServiceClient resourceAdminServiceStub;

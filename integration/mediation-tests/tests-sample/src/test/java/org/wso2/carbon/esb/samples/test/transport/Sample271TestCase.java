@@ -27,7 +27,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.SqlDataSourceUtil;
 
 import javax.xml.namespace.QName;
@@ -44,7 +44,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Sample 271: File Processing
  */
-public class Sample271TestCase extends ESBIntegrationTest {
+public class Sample271TestCase extends ESBSampleIntegrationTest {
 
     private SqlDataSourceUtil sqlDataSourceUtil = null;
     private ServerConfigurationManager serverConfigurationManager = null;

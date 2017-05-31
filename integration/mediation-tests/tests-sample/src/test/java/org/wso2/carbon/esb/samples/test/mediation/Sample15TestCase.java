@@ -24,12 +24,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 /**
  * Sample 15: Using the Enrich Mediator for Message Copying and Content Enrichment
  */
-public class Sample15TestCase extends ESBIntegrationTest {
+public class Sample15TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {

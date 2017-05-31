@@ -1,0 +1,30 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichReplaceEnvelopTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="full"/>
+
+            <enrich>
+                <source type="envelope"/>
+                <target type="property" property="test"/>
+            </enrich>
+            <log level="full"/>
+
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+
+            <enrich>
+                <source type="property" property="test"/>
+                <target type="envelope" action="replace" />
+            </enrich>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

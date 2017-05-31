@@ -41,7 +41,7 @@ public class EnrichIntegrationCopyXpathOfSingleNodeTest extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich_mediator/copy_xpathOf_single_node.xml");
+        verifyProxyServiceExistence("enrichCopyXpathOfSingleNodeTestProxy");
 
     }
 
@@ -52,7 +52,7 @@ public class EnrichIntegrationCopyXpathOfSingleNodeTest extends ESBIntegrationTe
                          "<m:symbol>IBM</m:symbol>" +
                          "</m:getQuote>";
         OMElement payloadOM = AXIOMUtil.stringToOM(payload);
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample3"), null, payloadOM);
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichCopyXpathOfSingleNodeTestProxy"), null, payloadOM);
         assertNotNull(response, "Response is null");
         assertEquals(response.getFirstElement().getFirstChildWithName
                 (new QName("http://services.samples/xsd", "symbol")).getText(),
