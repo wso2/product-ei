@@ -19,6 +19,10 @@
             <artifactId>ballerina-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-native</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>common</artifactId>
         </dependency>
