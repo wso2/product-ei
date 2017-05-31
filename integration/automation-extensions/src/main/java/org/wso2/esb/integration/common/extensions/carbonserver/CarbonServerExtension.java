@@ -18,13 +18,18 @@
 
 package org.wso2.esb.integration.common.extensions.carbonserver;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.context.ContextXpathConstants;
 import org.wso2.carbon.automation.engine.extensions.ExecutionListenerExtension;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.extensions.ExtensionConstants;
+import org.wso2.carbon.integration.common.utils.FileManager;
 
+import java.io.File;
+import java.io.IOException;
 import javax.xml.xpath.XPathExpressionException;
 
 public class CarbonServerExtension extends ExecutionListenerExtension {
@@ -37,7 +42,22 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
             if(getParameters().get(ExtensionConstants.SERVER_STARTUP_PORT_OFFSET_COMMAND) == null) {
                 getParameters().put(ExtensionConstants.SERVER_STARTUP_PORT_OFFSET_COMMAND, "0");
             }
-            serverManager = new TestServerManager(getAutomationContext(), null, getParameters());
+            serverManager = new TestServerManager(getAutomationContext(), null, getParameters()) {
+                @Override
+                public void configureServer() {
+                    //copying the files before server start. Ex: synapse artifacts, conf, etc...
+                    File source = new File(FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                            +  File.separator + "ESB" + File.separator + "repository");
+                    File destination = new File(this.getCarbonHome() + File.separator + "repository");
+                    if(source.exists() && source.isDirectory()) {
+                        try {
+                            FileUtils.copyDirectory(source, destination);
+                        } catch (IOException e) {
+                            log.error("Error while copying repository", e);
+                        }
+                    }
+                }
+            };
             executionEnvironment =
                     getAutomationContext().getConfigurationValue(ContextXpathConstants.EXECUTION_ENVIRONMENT);
         } catch (XPathExpressionException e) {
