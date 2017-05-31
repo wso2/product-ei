@@ -35,6 +35,7 @@ import org.ballerinalang.model.BallerinaAction;
 import org.ballerinalang.model.BallerinaConnectorDef;
 import org.ballerinalang.model.BallerinaFile;
 import org.ballerinalang.model.BallerinaFunction;
+import org.ballerinalang.model.CompilationUnit;
 import org.ballerinalang.model.ConstDef;
 import org.ballerinalang.model.GlobalVariableDef;
 import org.ballerinalang.model.ImportPackage;
@@ -114,62 +115,69 @@ public class CodeGenVisitor implements NodeVisitor {
     //private static Log log = LogFactory.getLog(CodeGenVisitor.class);
     private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
     private String ballerinaSourceStr = "";
-
-    //Stack to hold code block ends
-    //private Stack<String> codeBlockStack = new Stack<>();
-
-    //TODO remove this method later
-    private void logExecMethod() {
-        StackTraceElement stackTraceElements[] = Thread.currentThread().getStackTrace();
-        logger.info(stackTraceElements[3].getMethodName());
-    }
+    private int indentDepth = 0;
+    private int previousIndentDepth = 0;
+    private String indentStr = "";
 
     @Override
     public void visit(BLangProgram bLangProgram) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BLangPackage bLangPackage) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BallerinaFile bFile) {
-        logExecMethod();
+        //get Import packages
+        //TODO need to decide to get import packages from BLangProgram or from BallerinaFile
+        ImportPackage[] importPackages = bFile.getImportPackages();
+        for (ImportPackage importPackage : importPackages) {
+            //no need to consider indentation due to imports happens at the beginning of the file
+            appendToBalSource(Constants.IMPORT_STR + Constants.SPACE_STR + importPackage.getSymbolName().getName()
+                    + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        }
+
+        //TODO : Assume for only one service temporarily
+        CompilationUnit[] compilationUnits = bFile.getCompilationUnits();
+        for (CompilationUnit compilationUnit : compilationUnits) {
+            compilationUnit.accept(this);
+        }
+
     }
 
     @Override
     public void visit(ImportPackage importPkg) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ConstDef constant) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(GlobalVariableDef globalVar) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(Service service) {
-        logExecMethod();
 
         //Visit annotationAttachment
         AnnotationAttachment[] annotationAttachments = service.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            annotationAttachment.accept(this);
         }
 
         /**
          serviceDefinition : 'service' Identifier serviceBody;
          * */
-
-        ballerinaSourceStr += Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
-                + Constants.NEWLINE_STR;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.SERVICE_STR + Constants.SPACE_STR +
+                service.getName() + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
 
         /**
          * serviceBody: '{' variableDefinitionStatement* resourceDefinition* '}';
@@ -185,18 +193,18 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         //Service visit completed
-        ballerinaSourceStr += Constants.STMTBLOCK_END_STR;
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
+        --indentDepth;
 
     }
 
     @Override
     public void visit(BallerinaConnectorDef connector) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(Resource resource) {
-        logExecMethod();
 
         /**
          * resourceDefinition : annotationAttachment* 'resource' Identifier '(' parameterList ')' callableUnitBody;
@@ -207,11 +215,11 @@ public class CodeGenVisitor implements NodeVisitor {
         //visit annotations
         AnnotationAttachment[] annotationAttachments = resource.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            annotationAttachment.accept(this);
         }
 
-        ballerinaSourceStr += Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
-                Constants.SPACE_STR + Constants.PARENTHESES_START_STR;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.RESOURCE_STR + Constants.SPACE_STR +
+                resource.getSymbolName() + Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
         for (ParameterDef parameterDef : parameterDefs) {
@@ -220,9 +228,8 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         //end of parameters
-        ballerinaSourceStr += Constants.PARENTHESES_END_STR + Constants.SPACE_STR +
-                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
-
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR
+                + Constants.NEWLINE_STR);
         //process resource block
         /**
          * callableUnitBody : '{' statement* workerDeclaration* '}';
@@ -234,75 +241,72 @@ public class CodeGenVisitor implements NodeVisitor {
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
          *                                                                                          expression) )? ';';
          */
+        ++indentDepth;
         BlockStmt blockStmt = resource.getCallableUnitBody();
-
         Statement[] statements = blockStmt.getStatements();
         for (Statement statement : statements) {
             statement.accept(this);
         }
-
+        --indentDepth;
         //end of resource statements block
-        ballerinaSourceStr += Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR;
-
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(BallerinaFunction function) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BTypeMapper typeMapper) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BallerinaAction action) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(Worker worker) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AnnotationAttachment annotation) {
-        logExecMethod();
+        appendToBalSource(getIndentationForCurrentLine() + annotation.toString() + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(ParameterDef parameterDef) {
-        logExecMethod();
 
         //TODO handle annotations for parameter
 
-        ballerinaSourceStr += parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName();
+        appendToBalSource(parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName());
     }
 
     @Override
     public void visit(VariableDef variableDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(StructDef structDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AnnotationAttributeDef annotationAttributeDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AnnotationDef annotationDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(VariableDefStmt varDefStmt) {
-        logExecMethod();
 
         /**
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
@@ -327,204 +331,202 @@ public class CodeGenVisitor implements NodeVisitor {
             }
         }
 
-        ballerinaSourceStr += varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        appendToBalSource(getIndentationForCurrentLine() + varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(AssignStmt assignStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BlockStmt blockStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(CommentStmt commentStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(IfElseStmt ifElseStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ReplyStmt replyStmt) {
-        logExecMethod();
-
         /**
          * replyStatement : 'reply' expression ';';
          */
-        ballerinaSourceStr += Constants.REPLY_STR + Constants.SPACE_STR;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.REPLY_STR + Constants.SPACE_STR);
 
         Expression replyExpression = replyStmt.getReplyExpr();
         if (replyExpression instanceof VariableRefExpr) {
-            ballerinaSourceStr += ((VariableRefExpr) replyExpression).getSymbolName();
+            appendToBalSource(((VariableRefExpr) replyExpression).getSymbolName().toString());
         }
 
-        ballerinaSourceStr += Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(ReturnStmt returnStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(WhileStmt whileStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BreakStmt breakStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(TryCatchStmt tryCatchStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ThrowStmt throwStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(FunctionInvocationStmt functionInvocationStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ActionInvocationStmt actionInvocationStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(WorkerInvocationStmt workerInvocationStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(WorkerReplyStmt workerReplyStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ForkJoinStmt forkJoinStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(TransformStmt transformStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(TransactionRollbackStmt transactionRollbackStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AbortStmt abortStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AddExpression addExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AndExpression andExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BasicLiteral basicLiteral) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(DivideExpr divideExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ModExpression modExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(EqualExpression equalExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(FunctionInvocationExpr functionInvocationExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ActionInvocationExpr actionInvocationExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(GreaterEqualExpression greaterEqualExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(GreaterThanExpression greaterThanExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(LessEqualExpression lessEqualExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(LessThanExpression lessThanExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(MultExpression multExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(InstanceCreationExpr instanceCreationExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(NotEqualExpression notEqualExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(OrExpression orExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(SubtractExpression subtractExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(UnaryExpression unaryExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(TypeCastExpression typeCastExpression) {
-        logExecMethod();
+
     }
 
     @Override
@@ -534,120 +536,137 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(FieldAccessExpr structAttributeAccessExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(JSONFieldAccessExpr jsonPathExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BacktickExpr backtickExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(RefTypeInitExpr refTypeInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ConnectorInitExpr connectorInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(StructInitExpr structInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(MapInitExpr mapInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(JSONInitExpr jsonInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(JSONArrayInitExpr jsonArrayInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(KeyValueExpr keyValueExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(VariableRefExpr variableRefExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(NullLiteral nullLiteral) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(StackVarLocation stackVarLocation) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ServiceVarLocation serviceVarLocation) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(GlobalVarLocation globalVarLocation) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ConnectorVarLocation connectorVarLocation) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ConstantLocation constantLocation) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(StructVarLocation structVarLocation) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ResourceInvocationExpr resourceIExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(MainInvoker mainInvoker) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(WorkerVarLocation workerVarLocation) {
-        logExecMethod();
+
     }
 
     public String getBallerinaSourceStr() {
         return ballerinaSourceStr;
+    }
+
+    private void appendToBalSource(String str) {
+        ballerinaSourceStr += str;
+    }
+
+    private String getIndentationForCurrentLine() {
+
+        if (previousIndentDepth != indentDepth) {
+            String indentation = "";
+            for (int i = 0; i < indentDepth; i++) {
+                indentation = indentation.concat(Constants.TAB_STR);
+            }
+            previousIndentDepth = indentDepth;
+            indentStr = indentation;
+        }
+        return indentStr;
     }
 }

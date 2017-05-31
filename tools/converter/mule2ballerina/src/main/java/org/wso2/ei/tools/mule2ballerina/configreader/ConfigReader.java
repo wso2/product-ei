@@ -25,6 +25,7 @@ import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
+import org.wso2.ei.tools.mule2ballerina.model.Inbound;
 import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
@@ -36,7 +37,9 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -78,6 +81,7 @@ public class ConfigReader {
                 switch (xmlEvent.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
                     StartElement startElement = xmlEvent.asStartElement();
+                    checkFlowStart(getElementOrAttributeName(startElement.getName()));
                     loadIntermediateMuleObjects(startElement);
                     break;
 
@@ -86,7 +90,7 @@ public class ConfigReader {
 
                 case XMLStreamConstants.END_ELEMENT:
                     EndElement endElement = xmlEvent.asEndElement();
-                    checkFlowEnd(endElement);
+                    checkFlowEnd(getElementOrAttributeName(endElement.getName()));
                     break;
 
                 default:
@@ -166,9 +170,8 @@ public class ConfigReader {
                         }
                     }
                 } catch (NoSuchFieldException e) {
-                    logger.error(
-                        " Ignoring NoSuchFieldException : There can be attributes in mule xml that we don't support "
-                            + "in our objects" + e.getMessage());
+                    logger.error(" Ignoring NoSuchFieldException : There can be attributes in mule xml that we don't "
+                            + "support in our objects" + e.getMessage());
                 } catch (IllegalAccessException e) {
                     logger.error(e.toString());
                 }
@@ -185,8 +188,14 @@ public class ConfigReader {
         }
     }
 
-    public void checkFlowEnd(EndElement endElement) {
-        if (Constant.MULE_FLOW.equals(endElement.getName().toString())) {
+    public void checkFlowStart(String startElement) {
+        if (Constant.MULE_FLOW.equals(startElement)) {
+            flowStarted = true;
+        }
+    }
+
+    public void checkFlowEnd(String endElement) {
+        if (Constant.MULE_FLOW.equals(endElement)) {
             flowStarted = false;
         }
     }
@@ -206,18 +215,44 @@ public class ConfigReader {
     public void buildMTree(BaseObject muleObj) {
         if (muleObj instanceof GlobalConfiguration) {
             mRoot.addGlobalConfiguration((GlobalConfiguration) muleObj);
+            if (muleObj instanceof Inbound) {
+                Queue<Flow> flowQueue = null;
+                if (mRoot.getServiceMap() != null) {
+                    Inbound inboundObj = (Inbound) muleObj;
+                    flowQueue = mRoot.getServiceMap().get(inboundObj.getName());
+                    if (flowQueue == null) {
+                        flowQueue = new LinkedList<Flow>();
+                        mRoot.getServiceMap().put(inboundObj.getName(), flowQueue);
+                    }
+                }
+            }
         }
 
         if (muleObj instanceof Flow) {
             Flow flow = (Flow) muleObj;
-            mRoot.addMFlow(flow);
-            flowStarted = true;
+            if (flowStarted) {
+                mRoot.addMFlow(flow);
+            }
         }
 
         if (muleObj instanceof Processor) {
             if (flowStarted) {
                 Flow lastAddedFlow = mRoot.getFlowList().peek();
                 lastAddedFlow.addProcessor((Processor) muleObj);
+                if (muleObj instanceof Inbound) {
+                    Queue<Flow> flowQueue = null;
+                    if (mRoot.getServiceMap() != null) {
+                        Inbound inboundObj = (Inbound) muleObj;
+                        flowQueue = mRoot.getServiceMap().get(inboundObj.getName());
+                        if (flowQueue == null) {
+                            flowQueue = new LinkedList<Flow>();
+                            flowQueue.add(lastAddedFlow);
+                            mRoot.getServiceMap().put(inboundObj.getName(), flowQueue);
+                        } else {
+                            flowQueue.add(lastAddedFlow);
+                        }
+                    }
+                }
             }
         }
     }

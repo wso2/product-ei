@@ -162,6 +162,31 @@
                 <version>${ballerina.core.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-nop</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.ballerinalang</groupId>
                 <artifactId>ballerina-native</artifactId>
                 <version>${ballerina.core.version}</version>
@@ -284,6 +309,11 @@
                     <artifactId>carbon-feature-plugin</artifactId>
                     <version>${carbon.feature.plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven.shadeplugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -305,6 +335,8 @@
         <carbon.deployment.version>5.1.0</carbon.deployment.version>
         <carbon.datasources.version>1.1.0</carbon.datasources.version>
         <carbon.business.messaging.version>4.0.0-SNAPSHOT</carbon.business.messaging.version>
+        <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
+        <slf4j.version>1.7.22</slf4j.version>
     </properties>
 </project>
 

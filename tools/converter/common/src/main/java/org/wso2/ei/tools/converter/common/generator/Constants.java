@@ -22,12 +22,14 @@ package org.wso2.ei.tools.converter.common.generator;
  * This class holds common constants used within this package
  */
 public class Constants {
+    public static final String IMPORT_STR = "import";
     public static final String SERVICE_STR = "service";
     public static final String RESOURCE_STR = "resource";
     public static final String REPLY_STR = "reply";
 
 
     public static final String SPACE_STR = " ";
+    public static final String TAB_STR = "    ";
     public static final String STMTBLOCK_START_STR = "{";
     public static final String STMTBLOCK_END_STR = "}";
     public static final String PARENTHESES_START_STR = "(";

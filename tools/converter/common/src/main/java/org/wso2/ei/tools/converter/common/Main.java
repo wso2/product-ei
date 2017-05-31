@@ -22,7 +22,6 @@ import org.ballerinalang.model.BallerinaFile;
 import org.ballerinalang.model.Service;
 import org.wso2.ei.tools.converter.common.builder.TestBallerinaASTBuilder;
 import org.wso2.ei.tools.converter.common.generator.CodeGenVisitor;
-import org.wso2.ei.tools.converter.common.generator.Utils;
 
 import java.io.IOException;
 
@@ -30,7 +29,6 @@ import java.io.IOException;
  * Test Main exec class
  */
 public class Main {
-    //private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
 
     public static void main(String[] args) throws IOException {
         /*logger.info("hello");
@@ -57,15 +55,9 @@ public class Main {
             System.out.print("CodeVisit start");
 
             targetService.accept(codeGenVisitor);
-
-            /*System.out.print("===================================");
             System.out.print(codeGenVisitor.getBallerinaSourceStr());
-            System.out.print("===================================");
-
-            System.out.print("CodeVisit complete");
-            */
-            String targetFile = System.getProperty("targetFilePath");
-            Utils.writeToBalFile(targetFile, codeGenVisitor.getBallerinaSourceStr());
+            //String targetFile = System.getProperty("targetFilePath");
+            //Utils.writeToBalFile(targetFile, codeGenVisitor.getBallerinaSourceStr());
         }
     }
 }
