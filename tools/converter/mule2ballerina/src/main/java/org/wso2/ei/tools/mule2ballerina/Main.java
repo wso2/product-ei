@@ -19,6 +19,8 @@
 package org.wso2.ei.tools.mule2ballerina;
 
 import org.ballerinalang.model.BallerinaFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.generator.BallerinaSourceGenerator;
 import org.wso2.ei.tools.mule2ballerina.configreader.ConfigReader;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
@@ -31,15 +33,17 @@ import java.io.IOException;
  */
 public class Main {
 
+    private static Logger logger = LoggerFactory.getLogger(ConfigReader.class);
+
     public static void main(String... args) throws IOException {
 
         ConfigReader xmlParser = new ConfigReader();
         xmlParser.readXML(xmlParser.getInputStream(args[0]));
-
-        //xmlParser.readXML(xmlParser.getInputStream("passThrough.xml"));
+       // xmlParser.readXML(xmlParser.getInputStream("/home/rukshani/mule2bal/muleConfig/multiConfigs.xml"));
         Root muleRootObj = xmlParser.getmRoot();
-        if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
 
+        if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
+            xmlParser.getUnIdentifiedElements().forEach(element -> logger.info(element));
             System.exit(0);
         }
 
@@ -49,21 +53,8 @@ public class Main {
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         sourceGenerator.generate(ballerinaFile, args[1]);
+       //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/multiConfigs2.bal");
 
-        /*CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
-        Service targetService = null;
-        if (ballerinaFile.getCompilationUnits().length > 0) {
-            targetService = (ballerinaFile.getCompilationUnits()[0] instanceof Service) ?
-                (Service) ballerinaFile.getCompilationUnits()[0] :
-                null;
-        }
-
-        if (targetService != null) {
-            targetService.accept(codeGenVisitor);
-          //  String targetFile = System.getProperty("targetFilePath");
-           Utils.writeToBalFile(args[1], codeGenVisitor.getBallerinaSourceStr());
-
-        }*/
     }
 
 }

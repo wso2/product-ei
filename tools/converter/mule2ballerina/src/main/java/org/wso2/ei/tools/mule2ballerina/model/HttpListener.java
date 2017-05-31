@@ -23,7 +23,7 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 /**
  * {@code HttpListener} represents mule http listener element
  */
-public class HttpListener extends BaseObject implements Processor {
+public class HttpListener extends BaseObject implements Inbound, Processor {
 
     private String configRef;
     private String path;
@@ -57,5 +57,10 @@ public class HttpListener extends BaseObject implements Processor {
 
     public void setConfigRef(String configRef) {
         this.configRef = configRef;
+    }
+
+    @Override
+    public String getName() {
+        return configRef;
     }
 }
