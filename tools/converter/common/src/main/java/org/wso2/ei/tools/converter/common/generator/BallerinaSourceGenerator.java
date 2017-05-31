@@ -41,6 +41,7 @@ public class BallerinaSourceGenerator {
 
         if (targetService != null) {
             targetService.accept(codeGenVisitor);
+            System.out.print(codeGenVisitor.getBallerinaSourceStr());
             Utils.writeToBalFile(targetFilePath, codeGenVisitor.getBallerinaSourceStr());
         }
     }

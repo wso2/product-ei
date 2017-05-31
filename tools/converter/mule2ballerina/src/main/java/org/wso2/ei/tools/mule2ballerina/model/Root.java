@@ -23,10 +23,10 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * {@code Root} This is the root of the internal MTree
@@ -34,20 +34,22 @@ import java.util.Queue;
 public class Root extends BaseObject implements Visitable {
 
     private List<GlobalConfiguration> globalConfigurations;
-    private Queue<Flow> flowList;
+    private Stack<Flow> flowList;
     private Map<String, GlobalConfiguration> configMap;
+    private Map<String, Queue<Flow>> serviceMap;
 
     public Root() {
-        flowList = new LinkedList<Flow>();
+        flowList = new Stack<Flow>();
         globalConfigurations = new ArrayList<GlobalConfiguration>();
         configMap = new HashMap<String, GlobalConfiguration>();
+        serviceMap = new HashMap<String, Queue<Flow>>();
     }
 
     public List<GlobalConfiguration> getGlobalConfigurations() {
         return globalConfigurations;
     }
 
-    public Queue<Flow> getFlowList() {
+    public Stack<Flow> getFlowList() {
         return flowList;
     }
 
@@ -65,6 +67,10 @@ public class Root extends BaseObject implements Visitable {
 
     public Map<String, GlobalConfiguration> getConfigMap() {
         return configMap;
+    }
+
+    public Map<String, Queue<Flow>> getServiceMap() {
+        return serviceMap;
     }
 
     @Override
