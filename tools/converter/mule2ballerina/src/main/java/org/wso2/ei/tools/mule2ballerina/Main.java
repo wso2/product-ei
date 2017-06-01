@@ -39,7 +39,7 @@ public class Main {
 
         ConfigReader xmlParser = new ConfigReader();
         xmlParser.readXML(xmlParser.getInputStream(args[0]));
-        //xmlParser.readXML(xmlParser.getInputStream("/home/rukshani/mule2bal/muleConfig/multiConfigs.xml"));
+        //xmlParser.readXML(xmlParser.getInputStream("/home/rukshani/mule2bal/muleConfig/passThrough.xml"));
         Root muleRootObj = xmlParser.getRootObj();
 
         if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
@@ -53,7 +53,7 @@ public class Main {
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         sourceGenerator.generate(ballerinaFile, args[1]);
-        //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/multi.bal");
+        //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/pass2.bal");
 
     }
 
