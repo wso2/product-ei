@@ -43,8 +43,8 @@
 
     <modules>
         <module>components</module>
-        <module>features</module>
         <module>tools</module>
+        <module>features</module>
         <module>distribution</module>
     </modules>
 
@@ -151,7 +151,7 @@
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>org.ballerinalang</groupId>
+                <groupId>org.ballerinalang.tools</groupId>
                 <artifactId>ballerina</artifactId>
                 <version>${ballerina.runtime.version}</version>
                 <type>zip</type>
@@ -194,6 +194,17 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>common</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>mule2ballerina</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
+                <type>zip</type>
                 <version>${product.ei.version}</version>
             </dependency>
         </dependencies>
@@ -287,23 +298,6 @@
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                     </configuration>
                 </plugin>
-                <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-deploy-plugin</artifactId>-->
-                <!--</plugin>-->
-                <!--<plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.5.3</version>
-                </plugin>-->
-                <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--</plugin>-->
-                <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-                <!--<version>${maven.build.helper.plugin.version}</version>-->
-                <!--</plugin>-->
                 <plugin>
                     <groupId>org.wso2.carbon.maven</groupId>
                     <artifactId>carbon-feature-plugin</artifactId>
@@ -320,7 +314,7 @@
 
     <properties>
         <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
-        <ballerina.runtime.version>0.8.3</ballerina.runtime.version>
+        <ballerina.runtime.version>0.88-SNAPSHOT</ballerina.runtime.version>
         <ballerina.core.version>0.88-SNAPSHOT</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>2.3.1</carbon.messaging.version>
