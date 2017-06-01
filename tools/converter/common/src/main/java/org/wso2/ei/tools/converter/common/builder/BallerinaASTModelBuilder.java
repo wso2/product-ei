@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.mule2ballerina.builder;
+package org.wso2.ei.tools.converter.common.builder;
 
 import org.ballerinalang.model.BLangPackage;
 import org.ballerinalang.model.BLangProgram;
@@ -39,14 +39,6 @@ import java.util.Stack;
  */
 public class BallerinaASTModelBuilder {
 
-    private boolean processingActionInvocationStmt = false;
-    private Stack<BLangModelBuilder.NameReference> nameReferenceStack = new Stack<>();
-    private Stack<SimpleTypeName> typeNameStack = new Stack<>();
-    private BLangProgram programScope;
-    private BLangPackage bLangPackage;
-    private BLangModelBuilder modelBuilder;
-    private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
-
     private static final PackageRepository PACKAGE_REPOSITORY = new PackageRepository() {
         @Override
         public PackageSource loadPackage(Path path) {
@@ -58,6 +50,13 @@ public class BallerinaASTModelBuilder {
             return null;
         }
     };
+    private boolean processingActionInvocationStmt = false;
+    private Stack<BLangModelBuilder.NameReference> nameReferenceStack = new Stack<>();
+    private Stack<SimpleTypeName> typeNameStack = new Stack<>();
+    private BLangProgram programScope;
+    private BLangPackage bLangPackage;
+    private BLangModelBuilder modelBuilder;
+    private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
 
     public BallerinaASTModelBuilder() {
 
@@ -127,7 +126,7 @@ public class BallerinaASTModelBuilder {
     public void createRefereceTypeName() {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         SimpleTypeName typeName = new SimpleTypeName(nameReference.getName(), nameReference.getPackageName(),
-            nameReference.getPackagePath());
+                nameReference.getPackagePath());
 
         typeNameStack.push(typeName);
     }
@@ -191,7 +190,7 @@ public class BallerinaASTModelBuilder {
     public void initializeConnector(boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         SimpleTypeName connectorTypeName = new SimpleTypeName(nameReference.getName(), nameReference.getPackageName(),
-            null);
+                null);
 
         modelBuilder.createConnectorInitExpr(null, null, connectorTypeName, argsAvailable);
     }

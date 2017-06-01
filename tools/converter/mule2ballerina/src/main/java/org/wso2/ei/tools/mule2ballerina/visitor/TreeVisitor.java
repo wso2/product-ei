@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.visitor;
 import org.ballerinalang.model.BallerinaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.ei.tools.mule2ballerina.builder.BallerinaASTModelBuilder;
+import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListener;
