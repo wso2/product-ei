@@ -1,0 +1,4 @@
+instructions.configure = \
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../lib/features/org.wso2.ei.converter.tools.mule2ballerina_${feature.version}/tools/,target:${installFolder}/../../bin/tools/,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../lib/features/org.wso2.ei.converter.tools.mule2ballerina_${feature.version}/bin/,target:${installFolder}/../../bin/,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.chmod(targetDir:${installFolder}/../../bin,targetFile:mule-to-bal.sh,permissions:644);\
