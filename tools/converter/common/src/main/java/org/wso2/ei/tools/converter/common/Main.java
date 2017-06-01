@@ -18,11 +18,6 @@
 
 package org.wso2.ei.tools.converter.common;
 
-import org.ballerinalang.model.BallerinaFile;
-import org.ballerinalang.model.Service;
-import org.wso2.ei.tools.converter.common.builder.TestBallerinaASTBuilder;
-import org.wso2.ei.tools.converter.common.generator.CodeGenVisitor;
-
 import java.io.IOException;
 
 /**
@@ -31,17 +26,14 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        /*logger.info("hello");
+        /*logger.info("hello");*/
 
-        Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
+        /*Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
         Path balFile = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-tools-0.87/samples/" +
                                                                 "helloWorldService/helloWorldService.bal");
-        BLangProgramLoader bLangLoader = new BLangProgramLoader();
-        BLangProgram bProgram = bLangLoader.loadMain(balHome, balFile);
+        BLangProgram bLangProgram = new BLangProgramLoader().loadService(balHome, balFile);*/
 
-        logger.info(bProgram.getScopeName());*/
-
-        CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
+        /*CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
         BallerinaFile ballerinaFile = TestBallerinaASTBuilder.buildBallerinaAST();
 
         Service targetService = null;
@@ -58,6 +50,6 @@ public class Main {
             System.out.print(codeGenVisitor.getBallerinaSourceStr());
             //String targetFile = System.getProperty("targetFilePath");
             //Utils.writeToBalFile(targetFile, codeGenVisitor.getBallerinaSourceStr());
-        }
+        }*/
     }
 }

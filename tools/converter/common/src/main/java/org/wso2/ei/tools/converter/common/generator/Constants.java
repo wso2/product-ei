@@ -39,5 +39,8 @@ public class Constants {
     public static final String EQUAL_STR = "=";
     public static final String STMTEND_STR = ";";
     public static final String COMMA_STR = ",";
+    public static final String QUOTE_STR = "\"";
+    public static final String COLON_STR = ":";
+    public static final String PERIOD_STR = ".";
     public static final String ANNOTATION_AT_STR = "@";
 }
