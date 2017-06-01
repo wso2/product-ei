@@ -26,6 +26,7 @@ public class Constants {
     public static final String SERVICE_STR = "service";
     public static final String RESOURCE_STR = "resource";
     public static final String REPLY_STR = "reply";
+    public static final String CREATE_STR = "create";
 
 
     public static final String SPACE_STR = " ";
@@ -37,5 +38,6 @@ public class Constants {
     public static final String NEWLINE_STR = "\n";
     public static final String EQUAL_STR = "=";
     public static final String STMTEND_STR = ";";
+    public static final String COMMA_STR = ",";
     public static final String ANNOTATION_AT_STR = "@";
 }

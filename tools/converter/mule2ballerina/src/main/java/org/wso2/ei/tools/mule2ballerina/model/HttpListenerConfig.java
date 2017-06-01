@@ -28,14 +28,8 @@ public class HttpListenerConfig extends BaseObject implements Inbound, GlobalCon
     private String name;
     private String host;
 
-    /**
-     * @http:Port {value:"9090"}
-     */
     private String port;
 
-    /**
-     * @http:BasePath {value:"/hello"}
-     */
     private String basePath;
 
     @Override

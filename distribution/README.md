@@ -34,10 +34,10 @@ Used for storing temporary files, and is pointed to by the java.io.tmpdir System
  Apache License 2.0 and the relevant other licenses under which WSO2 EI is distributed.
 
 -README.txt <br> 
- Product information for WSO2 EI 6.1.1.
+ Product information for WSO2 EI 7.0.0.
 
 -release-notes.html <br>
- Release information for WSO2 EI 6.1.1.
+ Release information for WSO2 EI 7.0.0.
 
 -patches <br>
 Used to add patches related for all runtimes.
@@ -65,15 +65,6 @@ Used to add patches related for all runtimes.
 
 -wso2/analytics/repository <br>
  Where deployments of Analytics runtime are stored.
-
--wso2/business-process <br>
- Contains business-process runtime related files/folders.
-
--wso2/business-process/conf <br>
- Business-process runtime specific configuration files.
-
--wso2/busines-process/repository <br>
- Where deployments of business-process runtime is stored.
 
 -wso2/broker <br>
  Contains broker runtime related files/folders.

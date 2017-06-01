@@ -3,15 +3,15 @@
 
 Welcome to the WSO2 EI @product.version@ release
 
-WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus, Application Server and Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
+WSO2 EI is a unified distribution of Ballerina which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
-WSO2 EI simplifies integration by allowing users to easily configure message routing, inter-mediation,transformation, logging, task scheduling, load balancing, failover routing, event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI. These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
+WSO2 EI simplifies integration by allowing users to connect apps and services to handle all types of integration scenarios, such as collecting top tweets from a specific location and adding them to a Google spreadsheet, generating emails with real-time quotes pulled from a stock quote service, transforming and routing data based on advanced logic, and much more. These integration capabilities are further powered by the capabilities of the WSO2 Analytics and Message Broker runtimes.
 
 Key features of WSO2 EI @product.version@
 ==================================
 
 See the online WSO2 EI documentation for more information on product features: https://docs.wso2
-.com/display/EI611/WSO2+Enterprise+Integrator+Documentation
+.com/display/EI700/WSO2+Enterprise+Integrator+Documentation
 
 
 Installation & Running
@@ -26,17 +26,16 @@ Running the Integrator
    username : admin
    password : admin
 
-Running other runtimes individually (Analytics, Broker, Business-Process)
+Running other runtimes individually (Analytics, Broker)
 ========================================================
 1. Extract wso2ei-@product.version@.zip and go to the extracted directory.
 2. Go to wso2ei-@product.version@/wso2 directory.
-3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
+3. Go to appropriate runtime directory (analytics/broker) /bin.
 4. Execute wso2server.sh or wso2server.bat.
 5. Optionally, you can start the runtimes using scripts located at wso2ei-@product.version@/bin directry. Scripts
-available are analytics.sh/analytics.bat for analytics profile , broker.sh /broker.bat for broker profile and
-business-process.sh / business-process.bat for business process profile.
+available are analytics.sh/analytics.bat for analytics profile , broker.sh /broker.bat for broker profile
 6. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the
-business-process runtime.)
+analytics runtime.)
 
 WSO2 EI distribution directory
 =============================================
@@ -114,15 +113,6 @@ WSO2 EI distribution directory
 
     -wso2/analytics/repository
 	  Where deployments of Analytics runtime is stored.
-
-	-wso2/business-process
-      Contains business-process runtime related files/folders.
-
-   -wso2/business-process/conf
-      Business-process runtime specific configuration files.
-
-   -wso2/busines-process/repository
-      Where deployments of business-process runtime is stored.
 
    -wso2/broker
       Contains broker runtime related files/folders.

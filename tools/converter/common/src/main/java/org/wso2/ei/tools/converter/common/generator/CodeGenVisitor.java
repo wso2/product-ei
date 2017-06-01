@@ -103,6 +103,7 @@ import org.ballerinalang.model.statements.VariableDefStmt;
 import org.ballerinalang.model.statements.WhileStmt;
 import org.ballerinalang.model.statements.WorkerInvocationStmt;
 import org.ballerinalang.model.statements.WorkerReplyStmt;
+import org.ballerinalang.model.values.BValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -314,24 +315,12 @@ public class CodeGenVisitor implements NodeVisitor {
          */
 
         VariableDef variableDef = varDefStmt.getVariableDef();
-        String varDefStr = variableDef.getTypeName().getName() + Constants.SPACE_STR + variableDef.getSymbolName()
+        String varLHSDefStr = variableDef.getTypeName().toString() + Constants.SPACE_STR + variableDef.getSymbolName()
                 + Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR;
 
-        Expression rhsExpr = varDefStmt.getRExpr();
-
-        if (rhsExpr instanceof RefTypeInitExpr) {
-            RefTypeInitExpr refTypeInitExpr = (RefTypeInitExpr) rhsExpr;
-            Expression[] argExpressions = refTypeInitExpr.getArgExprs();
-
-            if (argExpressions.length > 0) {
-                //TODO handle args
-            } else {
-                //TODO : for now assume "{}"
-                varDefStr += "{}";
-            }
-        }
-
-        appendToBalSource(getIndentationForCurrentLine() + varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        appendToBalSource(getIndentationForCurrentLine() + varLHSDefStr);
+        varDefStmt.getRExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -561,12 +550,42 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(RefTypeInitExpr refTypeInitExpr) {
+        String varRHSDefStr = "";
 
+        Expression[] argExpressions = refTypeInitExpr.getArgExprs();
+        if (argExpressions.length > 0) {
+            //TODO handle args
+        } else {
+            //TODO : for now assume "{}"
+            varRHSDefStr += "{}";
+        }
+
+        appendToBalSource(varRHSDefStr);
     }
 
     @Override
     public void visit(ConnectorInitExpr connectorInitExpr) {
+        /**
+         * connectorInitExpression : 'create' nameReference '(' expressionList? ')';
+         * expressionList : expression (',' expression)*;
+         */
+        StringBuilder cnctInitStrBuilder = new StringBuilder();
+        cnctInitStrBuilder.append(Constants.CREATE_STR).append(Constants.SPACE_STR).
+                append(connectorInitExpr.getTypeName().toString()).append(Constants.SPACE_STR).
+                append(Constants.PARENTHESES_START_STR);
 
+        Expression[] expressArgs = connectorInitExpr.getArgExprs();
+        for (int i = 0; i < expressArgs.length; i++) {
+            if (i > 1) {
+                cnctInitStrBuilder.append(Constants.COMMA_STR);
+            }
+            if (expressArgs[i] instanceof BasicLiteral) {
+                BValue arg = ((BasicLiteral) expressArgs[i]).getBValue();
+                cnctInitStrBuilder.append(arg.stringValue());
+            }
+        }
+        cnctInitStrBuilder.append(Constants.PARENTHESES_END_STR);
+        appendToBalSource(cnctInitStrBuilder.toString());
     }
 
     @Override
