@@ -26,4 +26,25 @@ public class Constant {
     public static final String MULE_TAG = "mule";
     public static final String MULE_FLOW = "flow";
 
+    public static final String BLANG_HTTP = "http";
+    public static final String BLANG_BASEPATH = "basePath";
+    public static final String BLANG_VALUE = "value";
+    public static final String BLANG_METHOD_GET = "GET";
+    public static final String BLANG_TYPE_MESSAGE = "message";
+
+    public static final String BLANG_RESOURCE_NAME = "myResource";
+    public static final String BLANG_SERVICE_NAME = "myService";
+
+    public static final String BLANG_PKG_MESSAGES = "messages";
+    public static final String BLANG_PKG_MESSAGES_FUNC = "setStringPayload";
+
+    public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
+    public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
+
+    public static final String BLANG_DEFAULT_MSG_PARAM_NAME = "msg";
+    public static final String BLANG_RES_VARIABLE_NAME = "response";
+    public static final String BLANG_CONNECT_VARIABLE_NAME = "connectRef";
+
+    public static final String PROTOCOL = "http://www.";
+    public static final String DIVIDER = "/";
 }
