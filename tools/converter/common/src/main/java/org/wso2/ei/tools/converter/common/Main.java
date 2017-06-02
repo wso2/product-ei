@@ -18,23 +18,37 @@
 
 package org.wso2.ei.tools.converter.common;
 
+import org.ballerinalang.BLangProgramLoader;
+import org.ballerinalang.model.BLangProgram;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.ei.tools.converter.common.generator.CodeGenVisitor;
+
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Test Main exec class
  */
 public class Main {
 
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) throws IOException {
         /*logger.info("hello");*/
 
-        /*Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
-        Path balFile = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-tools-0.87/samples/" +
-                                                                "helloWorldService/helloWorldService.bal");
-        BLangProgram bLangProgram = new BLangProgramLoader().loadService(balHome, balFile);*/
+        //Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
+        //Path balFile = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-tools-0.87/samples/" +
+        //        "helloWorldService/helloWorldService.bal");
+        Path balHome = Paths.get(args[0]);
+        Path balFile = Paths.get(args[1]);
 
-        /*CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
-        BallerinaFile ballerinaFile = TestBallerinaASTBuilder.buildBallerinaAST();
+        BLangProgram bLangProgram = new BLangProgramLoader().loadService(balHome, balFile);
+
+        CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
+        bLangProgram.accept(codeGenVisitor);
+        logger.info(codeGenVisitor.getBallerinaSourceStr());
+        /*BallerinaFile ballerinaFile = TestBallerinaASTBuilder.buildBallerinaAST();
 
         Service targetService = null;
         if (ballerinaFile.getCompilationUnits().length > 0) {

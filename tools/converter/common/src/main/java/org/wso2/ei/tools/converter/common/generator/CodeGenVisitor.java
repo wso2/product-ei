@@ -120,10 +120,25 @@ public class CodeGenVisitor implements NodeVisitor {
     private int indentDepth = 0;
     private int previousIndentDepth = 0;
     private String indentStr = "";
+    private BLangProgram balProgram;
 
     @Override
     public void visit(BLangProgram bLangProgram) {
+        logger.debug("Visit - BLangProgram");
+        balProgram = bLangProgram;
 
+        //process each ServicePackages
+        for (BLangPackage bLangPackage : balProgram.getServicePackages()) {
+            //add import packages
+            for (ImportPackage importPackage : bLangPackage.getImportPackages()) {
+                appendToBalSource(importPackage.getSymbolName().toString() + Constants.NEWLINE_STR);
+            }
+
+            //process services
+            for (Service service : bLangPackage.getServices()) {
+                service.accept(this);
+            }
+        }
     }
 
     @Override
@@ -221,7 +236,7 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         appendToBalSource(getIndentationForCurrentLine() + Constants.RESOURCE_STR + Constants.SPACE_STR +
-                resource.getSymbolName() + Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
+                resource.getIdentifier().getName() + Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
         for (ParameterDef parameterDef : parameterDefs) {
@@ -410,7 +425,9 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(FunctionInvocationStmt functionInvocationStmt) {
+        logger.debug("Visit - FunctionInvocationStmt");
 
+        functionInvocationStmt.getFunctionInvocationExpr().accept(this);
     }
 
     @Override
@@ -482,7 +499,24 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(FunctionInvocationExpr functionInvocationExpr) {
-
+        logger.debug("Visit - FunctionInvocationExpr");
+        /**
+         * functionInvocationStatement : nameReference '(' expressionList? ')' ';';
+         * nameReference : (Identifier ':')? Identifier;
+         * expressionList : expression (',' expression)*;
+         */
+        appendToBalSource(getIndentationForCurrentLine() + functionInvocationExpr.getPackageName() +
+                Constants.COLON_STR + functionInvocationExpr.getName() + Constants.PARENTHESES_START_STR);
+        //process expression list
+        Expression[] argExpressions = functionInvocationExpr.getArgExprs();
+        for (int i = 0; i < argExpressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+            argExpressions[i].accept(this);
+        }
+        //end of expressionList
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -599,7 +633,7 @@ public class CodeGenVisitor implements NodeVisitor {
         if (argExpressions.length > 0) {
             //TODO handle args
         } else {
-            //TODO : for now assume "{}"
+            //TODO : for now assume "{}". decide this!!
             varRHSDefStr += "{}";
         }
 
