@@ -27,7 +27,7 @@ public class Constant {
     public static final String MULE_FLOW = "flow";
 
     public static final String BLANG_HTTP = "http";
-    public static final String BLANG_BASEPATH = "basePath";
+    public static final String BLANG_BASEPATH = "BasePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
     public static final String BLANG_TYPE_MESSAGE = "message";
