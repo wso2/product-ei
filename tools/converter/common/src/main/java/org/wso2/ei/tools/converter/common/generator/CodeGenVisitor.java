@@ -137,6 +137,9 @@ public class CodeGenVisitor implements NodeVisitor {
         //TODO need to decide to get import packages from BLangProgram or from BallerinaFile
         ImportPackage[] importPackages = bFile.getImportPackages();
         for (ImportPackage importPackage : importPackages) {
+            if (Constants.IMPLICIT_PACKAGE.equals(importPackage.getSymbolName().getName())) {
+                continue;
+            }
             //no need to consider indentation due to imports happens at the beginning of the file
             appendToBalSource(Constants.IMPORT_STR + Constants.SPACE_STR + importPackage.getSymbolName().getName()
                     + Constants.STMTEND_STR + Constants.NEWLINE_STR);

@@ -43,4 +43,6 @@ public class Constants {
     public static final String COLON_STR = ":";
     public static final String PERIOD_STR = ".";
     public static final String ANNOTATION_AT_STR = "@";
+
+    public static final String IMPLICIT_PACKAGE = "ballerina.lang.errors";
 }
