@@ -39,7 +39,7 @@ public class Main {
 
         //Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
         //Path balFile = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-tools-0.87/samples/" +
-        //        "helloWorldService/helloWorldService.bal");
+        //        "helloWorldService/passthroughService.bal");
         Path balHome = Paths.get(args[0]);
         Path balFile = Paths.get(args[1]);
 

@@ -104,7 +104,6 @@ import org.ballerinalang.model.statements.WhileStmt;
 import org.ballerinalang.model.statements.WorkerInvocationStmt;
 import org.ballerinalang.model.statements.WorkerReplyStmt;
 import org.ballerinalang.model.values.BString;
-import org.ballerinalang.model.values.BValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,13 +113,13 @@ import org.slf4j.LoggerFactory;
  */
 public class CodeGenVisitor implements NodeVisitor {
 
-    //private static Log log = LogFactory.getLog(CodeGenVisitor.class);
     private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
-    private String ballerinaSourceStr = "";
+
+    private StringBuilder balSourceBuilder = new StringBuilder();
     private int indentDepth = 0;
     private int previousIndentDepth = 0;
     private String indentStr = "";
-    private BLangProgram balProgram;
+    private BLangProgram balProgram = null;
 
     @Override
     public void visit(BLangProgram bLangProgram) {
@@ -160,7 +159,6 @@ public class CodeGenVisitor implements NodeVisitor {
                     + Constants.STMTEND_STR + Constants.NEWLINE_STR);
         }
 
-        //TODO : Assume for only one service temporarily
         CompilationUnit[] compilationUnits = bFile.getCompilationUnits();
         for (CompilationUnit compilationUnit : compilationUnits) {
             compilationUnit.accept(this);
@@ -533,7 +531,6 @@ public class CodeGenVisitor implements NodeVisitor {
                 Constants.PARENTHESES_START_STR);
         //process expression list
         Expression[] expressions = actionInvocationExpr.getArgExprs();
-        int exprIndex = 0;
         for (int i = 0; i < expressions.length; i++) {
             if (i > 0) {
                 appendToBalSource(Constants.COMMA_STR);
@@ -649,23 +646,21 @@ public class CodeGenVisitor implements NodeVisitor {
          * connectorInitExpression : 'create' nameReference '(' expressionList? ')';
          * expressionList : expression (',' expression)*;
          */
-        StringBuilder cnctInitStrBuilder = new StringBuilder();
-        cnctInitStrBuilder.append(Constants.CREATE_STR).append(Constants.SPACE_STR).
-                append(connectorInitExpr.getTypeName().toString()).append(Constants.SPACE_STR).
-                append(Constants.PARENTHESES_START_STR);
+        appendToBalSource(Constants.CREATE_STR).append(Constants.SPACE_STR).
+                append(connectorInitExpr.getTypeName().toString()).append(Constants.PARENTHESES_START_STR);
 
         Expression[] expressArgs = connectorInitExpr.getArgExprs();
         for (int i = 0; i < expressArgs.length; i++) {
             if (i > 1) {
-                cnctInitStrBuilder.append(Constants.COMMA_STR);
+                appendToBalSource(Constants.COMMA_STR);
             }
-            if (expressArgs[i] instanceof BasicLiteral) {
+            /*if (expressArgs[i] instanceof BasicLiteral) {
                 BValue arg = ((BasicLiteral) expressArgs[i]).getBValue();
-                cnctInitStrBuilder.append(arg.stringValue());
-            }
+                appendToBalSource(arg.stringValue());
+            }*/
+            expressArgs[i].accept(this);
         }
-        cnctInitStrBuilder.append(Constants.PARENTHESES_END_STR);
-        appendToBalSource(cnctInitStrBuilder.toString());
+        appendToBalSource(Constants.PARENTHESES_END_STR);
     }
 
     @Override
@@ -749,11 +744,11 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     public String getBallerinaSourceStr() {
-        return ballerinaSourceStr;
+        return balSourceBuilder.toString();
     }
 
-    private void appendToBalSource(String str) {
-        ballerinaSourceStr += str;
+    private StringBuilder appendToBalSource(String str) {
+        return balSourceBuilder.append(str);
     }
 
     /*private void appendToBalSourceWithNewLine(String str) {
