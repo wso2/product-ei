@@ -149,17 +149,16 @@ public class CodeGenVisitor implements NodeVisitor {
     public void visit(BallerinaFile bFile) {
         //get Import packages
         //TODO need to decide to get import packages from BLangProgram or from BallerinaFile
-        // TODO for now if balProgram does not exists, assume start visiting from BallerinaFile
-        if (balProgram == null) {
-            ImportPackage[] importPackages = bFile.getImportPackages();
-            for (ImportPackage importPackage : importPackages) {
-                //no need to consider indentation due to imports happens at the beginning of the file
-                appendToBalSource(Constants.IMPORT_STR + Constants.SPACE_STR + importPackage.getSymbolName().getName() +
-                        Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        ImportPackage[] importPackages = bFile.getImportPackages();
+        for (ImportPackage importPackage : importPackages) {
+            if (Constants.IMPLICIT_PACKAGE.equals(importPackage.getSymbolName().getName())) {
+                continue;
             }
+            //no need to consider indentation due to imports happens at the beginning of the file
+            appendToBalSource(Constants.IMPORT_STR + Constants.SPACE_STR + importPackage.getSymbolName().getName()
+                    + Constants.STMTEND_STR + Constants.NEWLINE_STR);
         }
 
-        //TODO : Assume for only one service temporarily
         CompilationUnit[] compilationUnits = bFile.getCompilationUnits();
         for (CompilationUnit compilationUnit : compilationUnits) {
             compilationUnit.accept(this);
