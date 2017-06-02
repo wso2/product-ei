@@ -203,6 +203,9 @@ public class CodeGenVisitor implements NodeVisitor {
          * annotationAttachment: '@' nameReference '{' annotationAttributeList? '}'
          */
         //TODO:Visit variable definition statements
+        for (VariableDefStmt variableDefStmt : service.getVariableDefStmts()) {
+            variableDefStmt.accept(this);
+        }
 
         //Visit Resource definitions
         Resource[] resources = service.getResources();
@@ -325,7 +328,7 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(VariableDefStmt varDefStmt) {
-
+        logger.debug("Visit - VariableDefStmt");
         /**
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
          *                                                                                      expression) )? ';';
@@ -367,6 +370,7 @@ public class CodeGenVisitor implements NodeVisitor {
         appendToBalSource(Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR);
         //handle rhs
         assignStmt.getRExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -537,7 +541,7 @@ public class CodeGenVisitor implements NodeVisitor {
             }
             expressions[i].accept(this);
         }
-        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        appendToBalSource(Constants.PARENTHESES_END_STR);
     }
 
     @Override
@@ -670,7 +674,22 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(MapInitExpr mapInitExpr) {
+        logger.debug("Visit - MapInitExpr");
 
+        /**
+         * mapStructLiteral : '{' (mapStructKeyValue (',' mapStructKeyValue)*)? '}';
+         * mapStructKeyValue : expression ':' expression
+         ;
+         */
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+        Expression[] expressions = mapInitExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
@@ -685,6 +704,10 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(KeyValueExpr keyValueExpr) {
+        logger.debug("Visit - KeyValueExpr");
+        keyValueExpr.getKeyExpr().accept(this);
+        appendToBalSource(Constants.COLON_STR);
+        keyValueExpr.getValueExpr().accept(this);
 
     }
 
