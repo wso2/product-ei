@@ -80,6 +80,13 @@ public class BallerinaASTModelBuilder {
         modelBuilder.addImportPackage(null, null, pkgPath, asPkgName);
     }
 
+    /**
+     * TODO: Need to refactor this to support multiple key value pairs of an annotation
+     * @param pkgName name of the package
+     * @param name functionality name you want to use
+     * @param key annotation attribute key
+     * @param actualvalue annotation attribute value
+     */
     public void createAnnotationAttachment(String pkgName, String name, String key, String actualvalue) {
         modelBuilder.startAnnotationAttachment(null);
 
@@ -92,8 +99,13 @@ public class BallerinaASTModelBuilder {
         }
     }
 
-    public void addAnnotationAttachment(int attribuesAvailable) {
-        modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attribuesAvailable);
+    /**
+     * Adds an annotation. For an attachment to be added first it needs to be created using
+     * 'createAnnotationAttachment' method
+     * @param attributesCount is never used in ballerina side, even though it expects a value
+     */
+    public void addAnnotationAttachment(int attributesCount) {
+        modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attributesCount);
     }
 
     public void startService() {
@@ -116,7 +128,7 @@ public class BallerinaASTModelBuilder {
     /**
      * Add built in ref types
      *
-     * @param builtInRefTypeName
+     * @param builtInRefTypeName built in type
      */
     public void addTypes(String builtInRefTypeName) {
         SimpleTypeName simpleTypeName = new SimpleTypeName(builtInRefTypeName);
@@ -131,6 +143,12 @@ public class BallerinaASTModelBuilder {
         typeNameStack.push(typeName);
     }
 
+    /**
+     * Create a function parameter
+     * @param annotationCount number of annotations - //TODO:get this clarified
+     * @param processingReturnParams return parameter or not
+     * @param paramName name of the function parameter
+     */
     public void addParameter(int annotationCount, boolean processingReturnParams, String paramName) {
         modelBuilder.addParam(null, null, typeNameStack.pop(), paramName, annotationCount, processingReturnParams);
     }
@@ -149,12 +167,22 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createMapStructLiteral(null, null);
     }
 
+    /**
+     *
+     * @param varName name of the variable
+     * @param exprAvailable expression availability
+     */
     public void createVariable(String varName, boolean exprAvailable) {
         SimpleTypeName typeName = typeNameStack.pop();
 
         modelBuilder.addVariableDefinitionStmt(null, null, typeName, varName, exprAvailable);
     }
 
+    /**
+     * Create a name reference
+     * @param pkgName package name
+     * @param name functionality name you want to use
+     */
     public void createNameReference(String pkgName, String name) {
         BLangModelBuilder.NameReference nameReference;
 

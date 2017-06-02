@@ -39,21 +39,18 @@ public class Main {
 
         ConfigReader xmlParser = new ConfigReader();
         xmlParser.readXML(xmlParser.getInputStream(args[0]));
-        //xmlParser.readXML(xmlParser.getInputStream("/home/rukshani/mule2bal/muleConfig/passThrough.xml"));
         Root muleRootObj = xmlParser.getRootObj();
-
         if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
+            logger.info("Following Elements are not supported by the converter yet!");
             xmlParser.getUnIdentifiedElements().forEach(element -> logger.info(element));
             System.exit(0);
         }
-
         TreeVisitor treeVisitor = new TreeVisitor(muleRootObj);
         treeVisitor.visit(muleRootObj);
         BallerinaFile ballerinaFile = treeVisitor.getBallerinaFile();
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         sourceGenerator.generate(ballerinaFile, args[1]);
-        //sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Generated/pass2.bal");
 
     }
 
