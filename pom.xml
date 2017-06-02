@@ -46,6 +46,7 @@
         <module>features</module>
         <module>tools</module>
         <module>distribution</module>
+        <module>integration</module>
     </modules>
 
     <dependencyManagement>
@@ -196,6 +197,11 @@
                 <artifactId>common</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -336,6 +342,7 @@
         <carbon.datasources.version>1.1.0</carbon.datasources.version>
         <carbon.business.messaging.version>4.0.0-SNAPSHOT</carbon.business.messaging.version>
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
+        <testng.version>6.9.9</testng.version>
         <slf4j.version>1.7.22</slf4j.version>
     </properties>
 </project>

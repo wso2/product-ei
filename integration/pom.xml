@@ -28,12 +28,28 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>integrations</artifactId>
+    <artifactId>integration</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Integration Tests</name>
     <url>http://wso2.org</url>
 
     <modules>
-        <module>automation-extensions</module>
+        <module>test-mb</module>
+        <!--<module>automation-extensions</module>-->
     </modules>
+
+    <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>slf4j.wso2</groupId>-->
+            <!--<artifactId>slf4j</artifactId>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.commons</groupId>-->
+            <!--<artifactId>commons-lang3</artifactId>-->
+        <!--</dependency>-->
+    </dependencies>
 </project>
