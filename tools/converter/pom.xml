@@ -35,5 +35,6 @@
     <modules>
         <module>common</module>
         <module>mule2ballerina</module>
+        <module>ds2ballerina</module>
     </modules>
 </project>
