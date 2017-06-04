@@ -31,6 +31,7 @@ public class Constant {
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
     public static final String BLANG_TYPE_MESSAGE = "message";
+    public static final String BLANG_PATH = "Path";
 
     public static final String BLANG_RESOURCE_NAME = "myResource";
     public static final String BLANG_SERVICE_NAME = "myService";

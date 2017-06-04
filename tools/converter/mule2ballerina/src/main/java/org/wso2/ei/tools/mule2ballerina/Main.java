@@ -42,8 +42,10 @@ public class Main {
         Root muleRootObj = xmlParser.getRootObj();
         if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
             logger.info("Following Elements are not supported by the converter yet!");
+            logger.info("-----------------------------------------------------------");
             xmlParser.getUnIdentifiedElements().forEach(element -> logger.info(element));
-            System.exit(0);
+            logger.info("-----------------------------------------------------------");
+            //System.exit(0);
         }
         TreeVisitor treeVisitor = new TreeVisitor(muleRootObj);
         treeVisitor.visit(muleRootObj);
