@@ -233,8 +233,7 @@ public class ESBTestCaseUtils {
 			OMElement localEntry = localEntries.next();
 			String le = localEntry.getAttributeValue(new QName(KEY));
 			if (ArrayUtils.contains(localEntryAdminServiceClient.getEntryNames(), le)) {
-				Assert.assertTrue(localEntryAdminServiceClient.deleteLocalEntry(le), le + " Local Entry deletion failed");
-				Assert.assertTrue(isLocalEntryUnDeployed(backendURL, sessionCookie, le), le + " Local Entry undeployment failed");
+				Assert.fail("Localentry already exist " + le + ". Use different name");
 			}
             Assert.assertTrue(localEntryAdminServiceClient.addLocalEntry(localEntry), " Local Entry addition failed");
             Assert.assertTrue(isLocalEntryDeployed(backendURL, sessionCookie, le), " Local Entry deployment failed");
@@ -246,8 +245,7 @@ public class ESBTestCaseUtils {
 			OMElement endpoint = endpoints.next();
 			String ep = endpoint.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(endPointAdminClient.getEndpointNames(), ep)) {
-				Assert.assertTrue(endPointAdminClient.deleteEndpoint(ep), ep + " Endpoint deletion failed");
-				Assert.assertTrue(isEndpointUnDeployed(backendURL, sessionCookie, ep), ep + " Endpoint undeployment failed");
+				Assert.fail("Endpoint already exist " + endpoint + ". Use different name");
 			}
             Assert.assertTrue(endPointAdminClient.addEndPoint(endpoint)," Endpoint addition failed");
             Assert.assertTrue(isEndpointDeployed(backendURL, sessionCookie, ep), " Endpoint deployment failed");
@@ -263,8 +261,7 @@ public class ESBTestCaseUtils {
 				sequenceAdminClient.updateSequence(sequence);
 			} else {
 				if (isSequenceExist) {
-					sequenceAdminClient.deleteSequence(sqn);
-					Assert.assertTrue(isSequenceUnDeployed(backendURL, sessionCookie, sqn), sqn + " Sequence undeployment failed");
+					Assert.fail("Sequence already exist " + sqn + ". Use different name");
 				}
 				sequenceAdminClient.addSequence(sequence);
                 Assert.assertTrue(isSequenceDeployed(backendURL, sessionCookie, sqn), " Sequence deployment failed");
@@ -277,8 +274,7 @@ public class ESBTestCaseUtils {
 			OMElement proxy = proxies.next();
 			String proxyName = proxy.getAttributeValue(new QName(NAME));
 			if (adminServiceService.isServiceExists(proxyName)) {
-				proxyAdmin.deleteProxy(proxyName);
-				Assert.assertTrue(isProxyUnDeployed(backendURL, sessionCookie, proxyName), proxyName + " Undeployment failed");
+				Assert.fail("Proxy service already exist " + proxyName + ". Use different name");
 			}
 			proxyAdmin.addProxyService(proxy);
             Assert.assertTrue(isProxyDeployed(backendURL, sessionCookie, proxyName), proxyName + " deployment failed");
@@ -290,8 +286,7 @@ public class ESBTestCaseUtils {
 			OMElement messageStore = messageStores.next();
 			String mStore = messageStore.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(messageStoreAdminClient.getMessageStores(), mStore)) {
-				messageStoreAdminClient.deleteMessageStore(mStore);
-				Assert.assertTrue(isMessageStoreUnDeployed(backendURL, sessionCookie, mStore), mStore + " Message Store undeployment failed");
+				Assert.fail("Message Store already exist " + mStore + ". Use different name");
 			}
 			messageStoreAdminClient.addMessageStore(messageStore);
             Assert.assertTrue(isMessageStoreDeployed(backendURL, sessionCookie, mStore), " Message Store deployment " +
@@ -304,9 +299,7 @@ public class ESBTestCaseUtils {
 			OMElement messageProcessor = messageProcessors.next();
 			String mProcessor = messageProcessor.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(messageProcessorClient.getMessageProcessorNames(), mProcessor)) {
-				messageProcessorClient.deleteMessageProcessor(mProcessor);
-				Assert.assertTrue(isMessageProcessorUnDeployed(backendURL, sessionCookie, mProcessor)
-						, mProcessor + " Message Processor undeployment failed");
+				Assert.fail("Message Processor already exist " + mProcessor + ". Use different name");
 			}
 			messageProcessorClient.addMessageProcessor(messageProcessor);
             Assert.assertTrue(isMessageProcessorDeployed(backendURL, sessionCookie, mProcessor), " Message Processor " +
@@ -322,9 +315,7 @@ public class ESBTestCaseUtils {
 			String templateName = template.getAttributeValue(new QName(NAME));
 			if (template.getFirstChildWithName(new QName(template.getNamespace().getNamespaceURI(), SEQUENCE)) != null) {
 				if (ArrayUtils.contains(sequenceTemplateAdminServiceClient.getSequenceTemplates(), templateName)) {
-					sequenceTemplateAdminServiceClient.deleteTemplate(templateName);
-					Assert.assertTrue(isSequenceTemplateUnDeployed(backendURL, sessionCookie, templateName)
-							, templateName + " Sequence Template undeployment failed");
+					Assert.fail("Sequence Template already exist " + templateName + ". Use different name");
 				}
 				sequenceTemplateAdminServiceClient.addSequenceTemplate(template);
                 Assert.assertTrue(isSequenceTemplateDeployed(backendURL, sessionCookie, templateName), " Sequence " +
@@ -334,9 +325,7 @@ public class ESBTestCaseUtils {
 			} else {
 
 				if (ArrayUtils.contains(endpointTemplateAdminServiceClient.getEndpointTemplates(), templateName)) {
-					endpointTemplateAdminServiceClient.deleteEndpointTemplate(templateName);
-					Assert.assertTrue(isEndpointTemplateUnDeployed(backendURL, sessionCookie, templateName)
-							, templateName + " Endpoint Template undeployment failed");
+					Assert.fail("Endpoint Template already exist " + templateName + ". Use different name");
 				}
 				endpointTemplateAdminServiceClient.addEndpointTemplate(template);
                 Assert.assertTrue(isEndpointTemplateDeployed(backendURL, sessionCookie, templateName), " Endpoint " +
@@ -352,9 +341,7 @@ public class ESBTestCaseUtils {
 			OMElement api = apiElements.next();
 			String apiName = api.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(apiAdminClient.getApiNames(), apiName)) {
-				apiAdminClient.deleteApi(apiName);
-				Assert.assertTrue(isApiUnDeployed(backendURL, sessionCookie, apiName)
-						, apiName + " Api undeployment failed");
+				Assert.fail("API already exist " + apiName + ". Use different name");
 			}
 			apiAdminClient.add(api);
             Assert.assertTrue(isApiDeployed(backendURL, sessionCookie, apiName), " Api deployment failed");
@@ -366,9 +353,7 @@ public class ESBTestCaseUtils {
 			OMElement executor = priorityExecutorList.next();
 			String executorName = executor.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(priorityMediationAdminClient.getExecutorList(), executorName)) {
-				priorityMediationAdminClient.remove(executorName);
-				Assert.assertTrue(isPriorityExecutorUnDeployed(backendURL, sessionCookie, executorName)
-						, executorName + " Priority Executor undeployment failed");
+				Assert.fail("Priority Executor already exist " + executorName + ". Use different name");
 			}
 			priorityMediationAdminClient.addPriorityMediator(executorName, executor);
             Assert.assertTrue(isPriorityExecutorDeployed(backendURL, sessionCookie, executorName), " Priority " +

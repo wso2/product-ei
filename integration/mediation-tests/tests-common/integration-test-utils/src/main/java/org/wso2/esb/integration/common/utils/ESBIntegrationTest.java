@@ -328,10 +328,21 @@ public abstract class ESBIntegrationTest {
 	}
 
 
-
 	protected void isProxyDeployed(String proxyServiceName) throws Exception {
 		Assert.assertTrue(esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie,
 		                                           proxyServiceName), "Proxy Deployment failed or time out");
+	}
+
+	protected void isEndpointDeployed(String endpointName) throws Exception {
+		Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie,
+		                                           endpointName), "Endpoint Deployment failed or time out");
+	}
+
+
+
+	protected void isLocalEntryDeployed(String localEntryName) throws Exception {
+		Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie,
+				"sec_policy_3"), "Localentry " + localEntryName + " not found");
 	}
 
 	protected void deleteProxyService(String proxyServiceName) throws Exception {
