@@ -508,7 +508,16 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(AddExpression addExpr) {
-
+        logger.debug("Visit - AddExpression");
+        /**
+         * expression
+         : ......
+         | expression ('+' | '-') expression  # binaryAddSubExpression
+         | ....
+         */
+        addExpr.getLExpr().accept(this);
+        appendToBalSource(Constants.SPACE_STR + addExpr.getOperator().toString() + Constants.SPACE_STR);
+        addExpr.getRExpr().accept(this);
     }
 
     @Override
@@ -626,7 +635,16 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(SubtractExpression subtractExpression) {
-
+        logger.debug("Visit - AddExpression");
+        /**
+         * expression
+         : ......
+         | expression ('+' | '-') expression  # binaryAddSubExpression
+         | ....
+         */
+        subtractExpression.getLExpr().accept(this);
+        appendToBalSource(Constants.SPACE_STR + subtractExpression.getOperator().toString() + Constants.SPACE_STR);
+        subtractExpression.getRExpr().accept(this);
     }
 
     @Override
@@ -645,6 +663,18 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(TypeCastExpression typeCastExpression) {
+        logger.debug("Visit - TypeCastExpression");
+        /**
+         * expression
+         : ......
+         | '(' typeName ')' expression   # typeCastingExpression
+         | ....
+         */
+        if (typeCastExpression.getTypeName() != null) {
+            appendToBalSource(Constants.PARENTHESES_START_STR + typeCastExpression.getTypeName() +
+                    Constants.PARENTHESES_END_STR + Constants.SPACE_STR);
+        }
+        typeCastExpression.getRExpr().accept(this);
 
     }
 
@@ -660,12 +690,34 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(FieldAccessExpr structAttributeAccessExpr) {
-
+        logger.debug("Visit - FieldAccessExpr");
+        /**
+         * variableReference
+            :   nameReference                               # simpleVariableIdentifier// simple identifier
+            |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+            |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+            ;
+         */
+        structAttributeAccessExpr.getVarRef().accept(this);
+        if (structAttributeAccessExpr.getFieldExpr() != null) {
+            appendToBalSource(Constants.PERIOD_STR);
+            structAttributeAccessExpr.getFieldExpr().accept(this);
+        }
     }
 
     @Override
     public void visit(JSONFieldAccessExpr jsonPathExpr) {
+        logger.debug("Visit - JSONFieldAccessExpr");
 
+        if (jsonPathExpr.getVarRef() instanceof BasicLiteral) {
+            appendToBalSource(((BasicLiteral) jsonPathExpr.getVarRef()).getBValue().stringValue());
+        } else {
+            jsonPathExpr.getVarRef().accept(this);
+        }
+        if (jsonPathExpr.getFieldExpr() != null) {
+            appendToBalSource(Constants.PERIOD_STR);
+            jsonPathExpr.getFieldExpr().accept(this);
+        }
     }
 
     @Override
