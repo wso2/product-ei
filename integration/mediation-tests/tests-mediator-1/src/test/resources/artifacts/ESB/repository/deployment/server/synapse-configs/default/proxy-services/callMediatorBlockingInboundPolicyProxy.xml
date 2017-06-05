@@ -1,0 +1,33 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="callMediatorBlockingInboundPolicyProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <header name="Action" value="urn:getQuote"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <m0:getQuote xmlns:m0="http://services.samples">
+                        <m0:request>
+                            <m0:symbol>WSO2</m0:symbol>
+                        </m0:request>
+                    </m0:getQuote>
+                </format>
+                <args/>
+            </payloadFactory>
+            <call blocking="true">
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SecureStockQuoteService">
+                        <enableSec inboundPolicy="sec_policy_3" outboundPolicy="sec_policy_3"/>
+                    </address>
+                </endpoint>
+            </call>
+            <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+            <header name="To" action="remove"/>
+            <header xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                    name="wsse:Security"
+                    action="remove"/>
+            <send/>
+            <drop/>
+        </inSequence>
+    </target>
+</proxy>
