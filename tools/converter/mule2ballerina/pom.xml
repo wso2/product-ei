@@ -12,6 +12,7 @@
 
     <artifactId>mule2ballerina</artifactId>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -27,8 +28,7 @@
             <artifactId>common</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -36,7 +36,7 @@
                 <configuration>
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>org.wso2.ei.tools.mule2ballerina.Main</mainClass>
+                            <mainClass>org.wso2.ei.tools.mule2ballerina.MuleToBalConvertExecutorToBalConvertExecutor</mainClass>
                         </transformer>
                     </transformers>
                     <filters>
@@ -60,5 +60,5 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 </project>

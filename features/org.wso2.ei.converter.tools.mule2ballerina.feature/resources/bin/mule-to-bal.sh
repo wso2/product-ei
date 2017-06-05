@@ -111,4 +111,4 @@ fi
 
 echo JAVA_HOME environment variable is set to $JAVA_HOME
 
-java -cp "../bin/tools/*:../wso2/ballerina/bre/lib/*"  org.wso2.ei.tools.mule2ballerina.Main "$1"
+java -cp "../bin/tools/*:../wso2/ballerina/bre/lib/*"  org.wso2.ei.tools.mule2ballerina.MuleToBalConvertExecutor "$1" "$2"

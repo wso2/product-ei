@@ -104,11 +104,10 @@ public class ConfigReader {
     /**
      * Given a mule configuration file get it's inputstream
      *
-     * @param fileName fully qualified path name of the mule configuration file
-     * @return file input stream
+     * @param file Mule configuration file
+     * @return input stream
      */
-    public InputStream getInputStream(String fileName) {
-        File file = new File(fileName);
+    public InputStream getInputStream(File file) {
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
