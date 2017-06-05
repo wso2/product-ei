@@ -52,8 +52,11 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                                 + File.separator + "ESB" + File.separator + "repository";
                         File deploymentSource = new File(repository + File.separator + "deployment");
                         File confSource = new File(repository + File.separator + "conf");
+                        File libDirectorySource = new File(
+                                repository + File.separator + "components" + File.separator + "lib");
                         File deploymentDestination = new File(this.getCarbonHome() + File.separator + "deployment");
                         File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
+                        File libDestination = new File(this.getCarbonHome() + File.separator + "lib");
                         if (confSource.exists() && confSource.isDirectory()) {
                             try {
                                 log.info("Copying " + confSource.getPath() + " to " + confDestination.getPath());
@@ -71,19 +74,14 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                                 log.error("Error while copying deployment directory.", e);
                             }
                         }
-                        String lib = Paths.get(this.getCarbonHome(), "lib").toString();
-                        try {
-                            File libDirectory = new File(
-                                    repository + File.separator + "components" + File.separator + "lib");
-                            File[] jarFiles = libDirectory.listFiles();
-                            for (File jar : jarFiles) {
-                                if (jar != null) {
-                                    FileManager
-                                            .copyJarFile(new File(libDirectory + File.separator + jar.getName()), lib);
-                                }
+                        if (libDirectorySource.exists() && libDirectorySource.isDirectory()) {
+                            try {
+                                log.info("Copying " + libDirectorySource.getPath() + " to " + libDestination
+                                        .getPath());
+                                FileUtils.copyDirectory(libDirectorySource, libDestination);
+                            } catch (IOException e) {
+                                log.error("Error while copying lib directory.", e);
                             }
-                        } catch (IOException e) {
-                            log.error("Error while copying jar dependencies. JMS test will fail", e);
                         }
                     }
                 }
