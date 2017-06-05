@@ -103,6 +103,7 @@ import org.ballerinalang.model.statements.VariableDefStmt;
 import org.ballerinalang.model.statements.WhileStmt;
 import org.ballerinalang.model.statements.WorkerInvocationStmt;
 import org.ballerinalang.model.statements.WorkerReplyStmt;
+import org.ballerinalang.model.values.BInteger;
 import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -484,6 +485,8 @@ public class CodeGenVisitor implements NodeVisitor {
     public void visit(BasicLiteral basicLiteral) {
         if (basicLiteral.getBValue() instanceof BString) {
             appendToBalSource(Constants.QUOTE_STR + basicLiteral.getBValue().stringValue() + Constants.QUOTE_STR);
+        } else if (basicLiteral.getBValue() instanceof BInteger) {
+            appendToBalSource(basicLiteral.getBValue().stringValue());
         }
     }
 
@@ -626,7 +629,19 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
-
+        logger.debug("Visit - ArrayInitExpr");
+        /**
+         * arrayLiteral : '[' expressionList? ']';
+         */
+        appendToBalSource(Constants.ARRAY_START_STR);
+        Expression[] expressArgs = arrayInitExpr.getArgExprs();
+        for (int i = 0; i < expressArgs.length; i++) {
+            if (i > 1) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+            expressArgs[i].accept(this);
+        }
+        appendToBalSource(Constants.ARRAY_END_STR);
     }
 
     @Override
@@ -669,7 +684,17 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(StructInitExpr structInitExpr) {
-
+        logger.debug("Visit - StructInitExpr");
+        //TODO assume StructInitExpr similar as MapInitExpr for now
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+        Expression[] expressions = structInitExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
