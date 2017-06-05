@@ -177,6 +177,10 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.addAnnotationAttachment(0);
                 resourceAnnotationCount++;
             }
+        } else {
+            ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, allowedMethods, null, null);
+            ballerinaASTAPI.addAnnotationAttachment(0);
+            resourceAnnotationCount++;
         }
 
         if (listener.getPath() != null) {
