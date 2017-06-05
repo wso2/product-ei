@@ -349,18 +349,14 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - AssignStmt");
         /**
          * assignmentStatement
-         :   variableReferenceList '=' (connectorInitExpression | actionInvocation | expression) ';'
-         ;
-
-         variableReferenceList
-         :   variableReference (',' variableReference)*
-         ;
-
-         variableReference
-         :   nameReference                               # simpleVariableIdentifier// simple identifier
-         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-         ;
+            : variableReferenceList '=' (connectorInitExpression | actionInvocation | expression) ';';
+         * variableReferenceList
+            : variableReference (',' variableReference)*;
+         * variableReference
+            :   nameReference                               # simpleVariableIdentifier// simple identifier
+            |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+            |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+            ;
          */
         //handle lhs
         appendToBalSource(getIndentationForCurrentLine());
@@ -432,8 +428,12 @@ public class CodeGenVisitor implements NodeVisitor {
     @Override
     public void visit(FunctionInvocationStmt functionInvocationStmt) {
         logger.debug("Visit - FunctionInvocationStmt");
-
+        /**
+         * functionInvocationStatement : nameReference '(' expressionList? ')' ';';
+         */
+        appendToBalSource(getIndentationForCurrentLine());
         functionInvocationStmt.getFunctionInvocationExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -509,11 +509,12 @@ public class CodeGenVisitor implements NodeVisitor {
     public void visit(FunctionInvocationExpr functionInvocationExpr) {
         logger.debug("Visit - FunctionInvocationExpr");
         /**
-         * functionInvocationStatement : nameReference '(' expressionList? ')' ';';
-         * nameReference : (Identifier ':')? Identifier;
-         * expressionList : expression (',' expression)*;
+         * expression : simpleLiteral                        # simpleLiteralExpression
+         |   arrayLiteral                                    # arrayLiteralExpression
+         |   ..................
+         |   nameReference '(' expressionList? ')'           # functionInvocationExpression
          */
-        appendToBalSource(getIndentationForCurrentLine() + functionInvocationExpr.getPackageName() +
+        appendToBalSource(functionInvocationExpr.getPackageName() +
                 Constants.COLON_STR + functionInvocationExpr.getName() + Constants.PARENTHESES_START_STR);
         //process expression list
         Expression[] argExpressions = functionInvocationExpr.getArgExprs();
@@ -524,11 +525,12 @@ public class CodeGenVisitor implements NodeVisitor {
             argExpressions[i].accept(this);
         }
         //end of expressionList
-        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        appendToBalSource(Constants.PARENTHESES_END_STR);
     }
 
     @Override
     public void visit(ActionInvocationExpr actionInvocationExpr) {
+        logger.debug("Visit - ActionInvocationExpr");
         /**
          * actionInvocation : nameReference '.' Identifier '(' expressionList? ')';
          * nameReference : (Identifier ':')? Identifier;
