@@ -27,6 +27,8 @@ public class Constants {
     public static final String RESOURCE_STR = "resource";
     public static final String REPLY_STR = "reply";
     public static final String CREATE_STR = "create";
+    public static final String TRANSACTION_STR = "transaction";
+    public static final String ABORTED_STR = "aborted";
 
 
     public static final String SPACE_STR = " ";

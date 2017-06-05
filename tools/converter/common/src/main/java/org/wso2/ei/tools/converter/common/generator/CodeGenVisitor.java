@@ -372,12 +372,18 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(BlockStmt blockStmt) {
+        logger.debug("Visit - BlockStmt");
 
+        //traverse statements
+        for (Statement statement : blockStmt.getStatements()) {
+            statement.accept(this);
+        }
     }
 
     @Override
     public void visit(CommentStmt commentStmt) {
-
+        logger.debug("Visit - CommentStmt");
+        appendToBalSource(getIndentationForCurrentLine() + commentStmt.getComment() + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -438,7 +444,16 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(ActionInvocationStmt actionInvocationStmt) {
-
+        logger.debug("Visit - ActionInvocationStmt");
+        /**
+         * actionInvocationStatement
+                        :   actionInvocation ';'
+                        |   variableReferenceList '=' actionInvocation ';'
+                        ;
+         */
+        appendToBalSource(getIndentationForCurrentLine());
+        actionInvocationStmt.getActionInvocationExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -463,6 +478,26 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(TransactionRollbackStmt transactionRollbackStmt) {
+        logger.debug("Visit - TransactionRollbackStmt");
+
+        /**
+         * transactionStatement : 'transaction' '{' statement* '}' rollbackClause;
+         * rollbackClause : 'aborted' '{' statement* '}';
+         */
+        //handle transaction block
+        appendToBalSource(getIndentationForCurrentLine() + Constants.TRANSACTION_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        transactionRollbackStmt.getTransactionBlock().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.SPACE_STR +
+                Constants.ABORTED_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        //handle rollback block
+        ++indentDepth;
+        transactionRollbackStmt.getRollbackBlock().getRollbackBlockStmt().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+
 
     }
 
@@ -596,6 +631,15 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(UnaryExpression unaryExpression) {
+        logger.debug("Visit - UnaryExpression");
+        /**
+         * expression
+                : ......
+                | ('+' | '-' | '!') expression    # unaryExpression
+                | ....
+         */
+        appendToBalSource(unaryExpression.getOperator().toString());
+        unaryExpression.getRExpr().accept(this);
 
     }
 
