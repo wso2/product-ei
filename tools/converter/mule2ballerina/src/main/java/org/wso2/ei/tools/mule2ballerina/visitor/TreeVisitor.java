@@ -170,11 +170,14 @@ public class TreeVisitor implements Visitor {
         String allowedMethods = Constant.BLANG_METHOD_GET;
         if (listener.getAllowedMethods() != null) { //TODO: allowedmethods can come comma separated. Handle that here.
             allowedMethods = listener.getAllowedMethods();
+            String[] bits = allowedMethods.split(",");
+            for (String method : bits) {
+                /*Create an annotation without attribute values*/
+                ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, method, null, null);
+                ballerinaASTAPI.addAnnotationAttachment(0);
+                resourceAnnotationCount++;
+            }
         }
-        /*Create an annotation without attribute values*/ //TODO:Handle multiple annotations
-        ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, allowedMethods, null, null);
-        ballerinaASTAPI.addAnnotationAttachment(0);
-        resourceAnnotationCount++;
 
         if (listener.getPath() != null) {
             ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_PATH, Constant.BLANG_VALUE,
@@ -222,8 +225,18 @@ public class TreeVisitor implements Visitor {
         /*Create an object out of above created ref type and initialize it with values*/
         ballerinaASTAPI.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTAPI.startExprList();
-        String strUrl = Constant.PROTOCOL + requestConfig.getHost() + ":" + requestConfig.getPort() +
-                requestConfig.getBasePath();
+
+        String protocol = (Constant.HTTPS.equalsIgnoreCase(requestConfig.getProtocol()) ?
+                Constant.HTTPS_PROTOCOL :
+                Constant.HTTP_PROTOCOL);
+        String strUrl = "";
+        if (!Constant.DEFAULT_PORT.equals(requestConfig.getPort())) {
+            strUrl = protocol + requestConfig.getHost() + ":" + requestConfig.getPort() +
+                    requestConfig.getBasePath();
+        } else {
+            strUrl = protocol + requestConfig.getHost() + requestConfig.getBasePath();
+        }
+
         ballerinaASTAPI.createStringLiteral(strUrl);
         ballerinaASTAPI.endExprList(1); // no of arguments
         ballerinaASTAPI.initializeConnector(true); //arguments available

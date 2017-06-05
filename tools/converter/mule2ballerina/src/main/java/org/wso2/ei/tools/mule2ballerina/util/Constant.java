@@ -46,6 +46,10 @@ public class Constant {
     public static final String BLANG_RES_VARIABLE_NAME = "response";
     public static final String BLANG_CONNECT_VARIABLE_NAME = "connectRef";
 
-    public static final String PROTOCOL = "http://www.";
+    public static final String HTTP_PROTOCOL = "http://";
+    public static final String HTTPS_PROTOCOL = "https://";
+    public static final String HTTPS = "https";
+
+    public static final String DEFAULT_PORT = "80";
     public static final String DIVIDER = "/";
 }
