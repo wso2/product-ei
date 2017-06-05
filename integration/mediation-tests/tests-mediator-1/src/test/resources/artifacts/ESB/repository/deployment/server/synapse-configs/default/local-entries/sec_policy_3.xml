@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry xmlns="http://ws.apache.org/ns/synapse"
+            key="sec_policy_3"
+            src="file:samples/service-bus/resources/policy/policy_3.xml">
+   <description/>
+</localEntry>

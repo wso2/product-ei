@@ -39,13 +39,13 @@ public class CallMediatorInAPITestCase extends ESBIntegrationTest {
     public void callMediatorInAPITestCase() throws IOException {
 
         OMElement response =
-                axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("/testCallApi"), null, "WSO2");
+                axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("testCallApi"), null, "WSO2");
         boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
         assertTrue(responseContainsWSO2);
 
         response =
                 axis2Client.sendSimpleStockQuoteRequest(
-                        getApiInvocationURL("/testCallApi")+ "/resource2",
+                        getApiInvocationURL("testCallApi")+ "/resource2",
                         null,
                         "WSO2");
         responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
