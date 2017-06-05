@@ -49,8 +49,6 @@ public class MuleToBalConvertExecutor {
             logger.error("Please provide source file/folder");
             System.exit(-1);
         }
-
-        ConfigReader xmlParser = new ConfigReader();
         File source = new File(args[0]);
         Path sourcePath = source.toPath().toAbsolutePath();
         logger.info("Source file(s) in location: " + sourcePath.toString());
@@ -81,7 +79,7 @@ public class MuleToBalConvertExecutor {
             List<File> filesInFolder = Files.walk(Paths.get(args[0])).filter(Files::isRegularFile).map(Path::toFile).
                     collect(Collectors.toList());
             for (File file : filesInFolder) {
-                logger.info(file.getAbsolutePath());
+                ConfigReader xmlParser = new ConfigReader();
                 try (InputStream inputStream = xmlParser.getInputStream(file)) {
                     String fileName = file.getName().substring(0, file.getName().indexOf('.')) + ".bal";
                     createBalFile(xmlParser, inputStream, destination + File.separator + fileName);
@@ -93,6 +91,7 @@ public class MuleToBalConvertExecutor {
                 destination = fileName.substring(0, fileName.indexOf('.')) + ".bal";
             }
             logger.info("Generated ballerina file saved as " + destination);
+            ConfigReader xmlParser = new ConfigReader();
             try (InputStream inputStream = xmlParser.getInputStream(source)) {
                 createBalFile(xmlParser, inputStream, destination);
             }
