@@ -104,9 +104,10 @@ public class MuleToBalConvertExecutor {
         xmlParser.readXML(inputStream);
         Root muleRootObj = xmlParser.getRootObj();
         if (xmlParser.getUnIdentifiedElements() != null && !xmlParser.getUnIdentifiedElements().isEmpty()) {
-            logger.error("Following Elements are not supported by the converter yet!");
-            xmlParser.getUnIdentifiedElements().forEach(element -> logger.info(element));
-            return;
+            logger.warn("Following Elements are not supported by the converter yet!");
+            logger.warn("-----------------------------------------------------------");
+            xmlParser.getUnIdentifiedElements().forEach(element -> logger.warn(element));
+            logger.warn("-----------------------------------------------------------");
         }
         TreeVisitor treeVisitor = new TreeVisitor(muleRootObj);
         treeVisitor.visit(muleRootObj);
