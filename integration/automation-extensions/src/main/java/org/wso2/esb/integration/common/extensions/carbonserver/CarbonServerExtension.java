@@ -54,7 +54,8 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                         File confSource = new File(repository + File.separator + "conf");
                         File libDirectorySource = new File(
                                 repository + File.separator + "components" + File.separator + "lib");
-                        File deploymentDestination = new File(this.getCarbonHome() + File.separator + "deployment");
+                        File deploymentDestination = new File(
+                                this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
                         File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
                         File libDestination = new File(this.getCarbonHome() + File.separator + "lib");
                         if (confSource.exists() && confSource.isDirectory()) {
@@ -76,8 +77,7 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                         }
                         if (libDirectorySource.exists() && libDirectorySource.isDirectory()) {
                             try {
-                                log.info("Copying " + libDirectorySource.getPath() + " to " + libDestination
-                                        .getPath());
+                                log.info("Copying " + libDirectorySource.getPath() + " to " + libDestination.getPath());
                                 FileUtils.copyDirectory(libDirectorySource, libDestination);
                             } catch (IOException e) {
                                 log.error("Error while copying lib directory.", e);
