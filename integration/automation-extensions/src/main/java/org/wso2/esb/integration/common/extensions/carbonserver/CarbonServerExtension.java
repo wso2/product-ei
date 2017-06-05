@@ -30,6 +30,7 @@ import org.wso2.carbon.integration.common.utils.FileManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javax.xml.xpath.XPathExpressionException;
 
 public class CarbonServerExtension extends ExecutionListenerExtension {
@@ -47,16 +48,11 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                 public void configureServer() {
                     if ("ESB".equalsIgnoreCase(System.getProperty("server.list"))) {
                         //copying the files before server start. Ex: synapse artifacts, conf, etc...
-                        File deploymentSource = new File(
-                                FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
-                                        + File.separator + "ESB" + File.separator + "repository" + File.separator
-                                        + "deployment");
-                        File confSource = new File(
-                                FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
-                                        + File.separator + "ESB" + File.separator + "repository" + File.separator
-                                        + "conf");
-                        File deploymentDestination = new File(
-                                this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
+                        String repository = FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                                + File.separator + "ESB" + File.separator + "repository";
+                        File deploymentSource = new File(repository + File.separator + "deployment");
+                        File confSource = new File(repository + File.separator + "conf");
+                        File deploymentDestination = new File(this.getCarbonHome() + File.separator + "deployment");
                         File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
                         if (confSource.exists() && confSource.isDirectory()) {
                             try {
@@ -74,6 +70,20 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                             } catch (IOException e) {
                                 log.error("Error while copying deployment directory.", e);
                             }
+                        }
+                        String lib = Paths.get(this.getCarbonHome(), "lib").toString();
+                        try {
+                            File libDirectory = new File(
+                                    repository + File.separator + "components" + File.separator + "lib");
+                            File[] jarFiles = libDirectory.listFiles();
+                            for (File jar : jarFiles) {
+                                if (jar != null) {
+                                    FileManager
+                                            .copyJarFile(new File(libDirectory + File.separator + jar.getName()), lib);
+                                }
+                            }
+                        } catch (IOException e) {
+                            log.error("Error while copying jar dependencies. JMS test will fail", e);
                         }
                     }
                 }
