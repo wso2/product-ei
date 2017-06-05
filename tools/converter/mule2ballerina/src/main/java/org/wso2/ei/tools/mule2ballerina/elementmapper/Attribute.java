@@ -31,7 +31,8 @@ public enum Attribute {
     PATH("path", "path"),
     ALLOWED_MOTHODS("allowedMethods", "allowedMethods"),
     VALUE("value", "value"),
-    METHOD("method", "method");;
+    METHOD("method", "method"),
+    PROTOCOL("protocol", "protocol");
 
     private String attribute;
     private String property;

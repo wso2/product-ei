@@ -57,6 +57,7 @@ public class TreeVisitor implements Visitor {
     private String connectorVarName;
     private String refVarName;
     private String funcParaName;
+    private int resourceAnnotationCount = 0;
 
     public TreeVisitor(Root mRoot) {
         ballerinaASTAPI = new BallerinaASTModelBuilder();
@@ -93,8 +94,8 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.createReplyStatement();
                 ballerinaASTAPI.endCallableBody();
                 String resourceName = Constant.BLANG_RESOURCE_NAME + ++resourceCounter;
-                ballerinaASTAPI.endOfResource(resourceName, 1);
-
+                ballerinaASTAPI.endOfResource(resourceName, resourceAnnotationCount);
+                resourceAnnotationCount = 0;
                 logger.debug("--EFlow");
 
                 /* At the end of each flow get the flow queue associate with its config and
@@ -169,10 +170,22 @@ public class TreeVisitor implements Visitor {
         String allowedMethods = Constant.BLANG_METHOD_GET;
         if (listener.getAllowedMethods() != null) { //TODO: allowedmethods can come comma separated. Handle that here.
             allowedMethods = listener.getAllowedMethods();
+            String[] bits = allowedMethods.split(",");
+            for (String method : bits) {
+                /*Create an annotation without attribute values*/
+                ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, method, null, null);
+                ballerinaASTAPI.addAnnotationAttachment(0);
+                resourceAnnotationCount++;
+            }
         }
-        /*Create an annotation without attribute values*/
-        ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, allowedMethods, null, null);
-        ballerinaASTAPI.addAnnotationAttachment(0);
+
+        if (listener.getPath() != null) {
+            ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_PATH, Constant.BLANG_VALUE,
+                    listener.getPath());
+            ballerinaASTAPI.addAnnotationAttachment(1);
+            resourceAnnotationCount++;
+        }
+
         ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
         funcParaName = Constant.BLANG_DEFAULT_MSG_PARAM_NAME + ++parameterCounter;
         ballerinaASTAPI.addParameter(0, false, funcParaName);
@@ -212,8 +225,18 @@ public class TreeVisitor implements Visitor {
         /*Create an object out of above created ref type and initialize it with values*/
         ballerinaASTAPI.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTAPI.startExprList();
-        String strUrl = Constant.PROTOCOL + requestConfig.getHost() + ":" + requestConfig.getPort() + Constant.DIVIDER +
-                requestConfig.getBasePath();
+
+        String protocol = (Constant.HTTPS.equalsIgnoreCase(requestConfig.getProtocol()) ?
+                Constant.HTTPS_PROTOCOL :
+                Constant.HTTP_PROTOCOL);
+        String strUrl = "";
+        if (!Constant.DEFAULT_PORT.equals(requestConfig.getPort())) {
+            strUrl = protocol + requestConfig.getHost() + ":" + requestConfig.getPort() +
+                    requestConfig.getBasePath();
+        } else {
+            strUrl = protocol + requestConfig.getHost() + requestConfig.getBasePath();
+        }
+
         ballerinaASTAPI.createStringLiteral(strUrl);
         ballerinaASTAPI.endExprList(1); // no of arguments
         ballerinaASTAPI.initializeConnector(true); //arguments available
