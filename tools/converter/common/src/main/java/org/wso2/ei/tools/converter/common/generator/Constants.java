@@ -33,6 +33,8 @@ public class Constants {
     public static final String TAB_STR = "    ";
     public static final String STMTBLOCK_START_STR = "{";
     public static final String STMTBLOCK_END_STR = "}";
+    public static final String ARRAY_START_STR = "[";
+    public static final String ARRAY_END_STR = "]";
     public static final String PARENTHESES_START_STR = "(";
     public static final String PARENTHESES_END_STR = ")";
     public static final String NEWLINE_STR = "\n";
