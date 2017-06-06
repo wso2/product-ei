@@ -65,6 +65,13 @@
             <fileMode>644</fileMode>
             <filtered>true</filtered>
         </fileSet>
+        <fileSet>
+            <directory>target/WSO2Carbon</directory>
+            <outputDirectory>/deployment</outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
     </fileSets>
 
     <files>
