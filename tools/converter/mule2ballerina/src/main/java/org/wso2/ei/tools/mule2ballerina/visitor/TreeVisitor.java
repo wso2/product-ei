@@ -36,6 +36,8 @@ import org.wso2.ei.tools.mule2ballerina.util.Constant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * {@code TreeVisitor} visits intermediate object tree and populate Ballerina AST
@@ -168,7 +170,7 @@ public class TreeVisitor implements Visitor {
         first processor's config is visited */
         ballerinaASTAPI.startResource();
         String allowedMethods = Constant.BLANG_METHOD_GET;
-        if (listener.getAllowedMethods() != null) { //TODO: allowedmethods can come comma separated. Handle that here.
+        if (listener.getAllowedMethods() != null) {
             allowedMethods = listener.getAllowedMethods();
             String[] bits = allowedMethods.split(",");
             for (String method : bits) {
@@ -193,6 +195,26 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
         funcParaName = Constant.BLANG_DEFAULT_MSG_PARAM_NAME + ++parameterCounter;
         ballerinaASTAPI.addParameter(0, false, funcParaName);
+
+        if (listener.getPath() != null) {
+            //check whether any path params have been used
+            String[] bits = listener.getPath().split("/");
+            for (String path : bits) {
+                Pattern p = Pattern.compile("\\{(.*)\\}");   // the pattern to search for
+                Matcher m = p.matcher(path);
+                // now try to find at least one match
+                if (m.find()) {
+                    //add it to path param
+                    ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_PATHPARAM,
+                            Constant.BLANG_VALUE, path);
+                    ballerinaASTAPI.addAnnotationAttachment(1);
+                    ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_STRING); //type of the parameter
+                    funcParaName = Constant.BLANG_CONNECT_PATHPARAM_NAME + ++parameterCounter;
+                    ballerinaASTAPI.addParameter(1, false, funcParaName);
+                }
+            }
+        }
+
         ballerinaASTAPI.startCallableBody();
         createVariableWithEmptyMap(Constant.BLANG_TYPE_MESSAGE, Constant.BLANG_RES_VARIABLE_NAME + ++variableCounter,
                 true);

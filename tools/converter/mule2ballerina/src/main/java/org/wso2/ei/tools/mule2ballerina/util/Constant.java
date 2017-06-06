@@ -30,8 +30,11 @@ public class Constant {
     public static final String BLANG_BASEPATH = "BasePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
-    public static final String BLANG_TYPE_MESSAGE = "message";
     public static final String BLANG_PATH = "Path";
+    public static final String BLANG_PATHPARAM = "PathParam";
+
+    public static final String BLANG_TYPE_MESSAGE = "message";
+    public static final String BLANG_TYPE_STRING = "string";
 
     public static final String BLANG_RESOURCE_NAME = "myResource";
     public static final String BLANG_SERVICE_NAME = "myService";
@@ -45,6 +48,7 @@ public class Constant {
     public static final String BLANG_DEFAULT_MSG_PARAM_NAME = "msg";
     public static final String BLANG_RES_VARIABLE_NAME = "response";
     public static final String BLANG_CONNECT_VARIABLE_NAME = "connectRef";
+    public static final String BLANG_CONNECT_PATHPARAM_NAME = "pathParamName";
 
     public static final String HTTP_PROTOCOL = "http://";
     public static final String HTTPS_PROTOCOL = "https://";

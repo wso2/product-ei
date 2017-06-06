@@ -145,7 +145,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create a function parameter
-     * @param annotationCount number of annotations - //TODO:get this clarified
+     * @param annotationCount number of annotations - this is required in case of PathParam or QueryParam annotations
      * @param processingReturnParams return parameter or not
      * @param paramName name of the function parameter
      */
