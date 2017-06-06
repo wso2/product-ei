@@ -564,7 +564,7 @@ public class CodeGenVisitor implements NodeVisitor {
         Expression[] argExpressions = functionInvocationExpr.getArgExprs();
         for (int i = 0; i < argExpressions.length; i++) {
             if (i > 0) {
-                appendToBalSource(Constants.COMMA_STR);
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
             }
             argExpressions[i].accept(this);
         }
@@ -586,7 +586,7 @@ public class CodeGenVisitor implements NodeVisitor {
         Expression[] expressions = actionInvocationExpr.getArgExprs();
         for (int i = 0; i < expressions.length; i++) {
             if (i > 0) {
-                appendToBalSource(Constants.COMMA_STR);
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
             }
             expressions[i].accept(this);
         }
@@ -734,8 +734,8 @@ public class CodeGenVisitor implements NodeVisitor {
         appendToBalSource(Constants.ARRAY_START_STR);
         Expression[] expressArgs = arrayInitExpr.getArgExprs();
         for (int i = 0; i < expressArgs.length; i++) {
-            if (i > 1) {
-                appendToBalSource(Constants.COMMA_STR);
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
             }
             expressArgs[i].accept(this);
         }
@@ -768,8 +768,8 @@ public class CodeGenVisitor implements NodeVisitor {
 
         Expression[] expressArgs = connectorInitExpr.getArgExprs();
         for (int i = 0; i < expressArgs.length; i++) {
-            if (i > 1) {
-                appendToBalSource(Constants.COMMA_STR);
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
             }
             /*if (expressArgs[i] instanceof BasicLiteral) {
                 BValue arg = ((BasicLiteral) expressArgs[i]).getBValue();
@@ -808,7 +808,7 @@ public class CodeGenVisitor implements NodeVisitor {
         Expression[] expressions = mapInitExpr.getArgExprs();
         for (int i = 0; i < expressions.length; i++) {
             if (i > 0) {
-                appendToBalSource(Constants.COMMA_STR);
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
             }
             expressions[i].accept(this);
         }
