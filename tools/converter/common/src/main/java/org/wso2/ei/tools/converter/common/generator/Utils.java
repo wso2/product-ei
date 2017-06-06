@@ -20,7 +20,7 @@ package org.wso2.ei.tools.converter.common.generator;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -30,10 +30,9 @@ import java.nio.file.Paths;
 public class Utils {
 
     public static void writeToBalFile(String filePath, String content) throws IOException {
-        Charset charset = Charset.forName("UTF-8");
-        BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), charset);
-        writer.write(content);
-        writer.flush();
-        writer.close();
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            writer.write(content);
+            writer.flush();
+        }
     }
 }
