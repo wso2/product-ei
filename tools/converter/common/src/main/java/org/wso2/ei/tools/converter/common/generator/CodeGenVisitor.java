@@ -189,6 +189,7 @@ public class CodeGenVisitor implements NodeVisitor {
         AnnotationAttachment[] annotationAttachments = service.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
             annotationAttachment.accept(this);
+            appendToBalSource(Constants.NEWLINE_STR);
         }
 
         /**
@@ -237,16 +238,20 @@ public class CodeGenVisitor implements NodeVisitor {
         //visit annotations
         AnnotationAttachment[] annotationAttachments = resource.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
+            appendToBalSource(getIndentationForCurrentLine());
             annotationAttachment.accept(this);
+            appendToBalSource(Constants.NEWLINE_STR);
         }
 
         appendToBalSource(getIndentationForCurrentLine() + Constants.RESOURCE_STR + Constants.SPACE_STR +
                 resource.getIdentifier().getName() + Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
-        for (ParameterDef parameterDef : parameterDefs) {
-            parameterDef.accept(this);
-            //TODO Handle multiple parameters adding commas
+        for (int i = 0; i < parameterDefs.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            parameterDefs[i].accept(this);
         }
 
         //end of parameters
@@ -296,14 +301,23 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(AnnotationAttachment annotation) {
-        appendToBalSource(getIndentationForCurrentLine() + annotation.toString() + Constants.NEWLINE_STR);
+        logger.debug("Visit - AnnotationAttachment");
+        /**
+         *  annotationAttachment : '@' nameReference '{' annotationAttributeList? '}';
+         */
+        appendToBalSource(annotation.toString());
     }
 
     @Override
     public void visit(ParameterDef parameterDef) {
 
         //TODO handle annotations for parameter
-
+        if (parameterDef.getAnnotations().length > 0) {
+            for (AnnotationAttachment annotation : parameterDef.getAnnotations()) {
+                annotation.accept(this);
+                appendToBalSource(Constants.SPACE_STR);
+            }
+        }
         appendToBalSource(parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName());
     }
 
@@ -599,8 +613,10 @@ public class CodeGenVisitor implements NodeVisitor {
          |   ..................
          |   nameReference '(' expressionList? ')'           # functionInvocationExpression
          */
-        appendToBalSource(functionInvocationExpr.getPackageName() +
-                Constants.COLON_STR + functionInvocationExpr.getName() + Constants.PARENTHESES_START_STR);
+        appendToBalSource((functionInvocationExpr.getPackageName() == null ?
+                "" :
+                functionInvocationExpr.getPackageName() + Constants.COLON_STR) +
+                functionInvocationExpr.getName() + Constants.PARENTHESES_START_STR);
         //process expression list
         Expression[] argExpressions = functionInvocationExpr.getArgExprs();
         for (int i = 0; i < argExpressions.length; i++) {
@@ -726,7 +742,17 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
-
+        logger.debug("Visit - ArrayMapAccessExpr");
+        /**
+         * variableReference
+             :   nameReference                               # simpleVariableIdentifier// simple identifier
+             |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+             |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+             ;
+         */
+        appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
+        arrayMapAccessExpr.getIndexExprs()[0].accept(this);
+        appendToBalSource(Constants.ARRAY_END_STR);
     }
 
     @Override
