@@ -388,7 +388,48 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(IfElseStmt ifElseStmt) {
+        logger.debug("Visit - IfElseStmt");
+        /**
+         * ifElseStatement : ifClause elseIfClause* elseClause?;
+         * ifClause : 'if' '(' expression ')' '{' statement* '}';
+         * elseIfClause : 'else' 'if' '(' expression ')' '{' statement* '}';
+         * elseClause : 'else' '{' statement*'}';
+         */
+        appendToBalSource(getIndentationForCurrentLine() + Constants.IF_STR + Constants.SPACE_STR +
+                Constants.PARENTHESES_START_STR);
+        //process if clause expression
+        ifElseStmt.getCondition().accept(this);
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                Constants.NEWLINE_STR);
 
+        //process then block
+        ++indentDepth;
+        ifElseStmt.getThenBody().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+
+        //process else if clauses
+        if (ifElseStmt.getElseIfBlocks().length > 0) {
+            for (IfElseStmt.ElseIfBlock elseIfBlock : ifElseStmt.getElseIfBlocks()) {
+                appendToBalSource(Constants.SPACE_STR + Constants.ELSE_STR + Constants.SPACE_STR + Constants.IF_STR +
+                        Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
+                elseIfBlock.getElseIfCondition().accept(this);
+                appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                        Constants.NEWLINE_STR);
+                ++indentDepth;
+                elseIfBlock.getElseIfBody().accept(this);
+                --indentDepth;
+                appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+            }
+        }
+
+        //process else block
+        appendToBalSource(Constants.SPACE_STR + Constants.ELSE_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        ifElseStmt.getElseBody().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -817,7 +858,16 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(JSONInitExpr jsonInitExpr) {
-
+        logger.debug("Visit - JSONInitExpr");
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+        Expression[] expressions = jsonInitExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
