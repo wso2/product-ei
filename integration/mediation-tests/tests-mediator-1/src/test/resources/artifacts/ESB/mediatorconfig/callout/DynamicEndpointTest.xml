@@ -23,7 +23,13 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
       <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <sequence name="main">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="DynamicEndpointWithCallMediatorProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+    <description/>
+    <target>
+    <inSequence>
         <callout endpointKey="conf:/SimpleStockQuoteServiceEndpoint" action="urn:getQuote">
             <source xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
                 xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
@@ -36,6 +42,8 @@
         <header name="To" action="remove"/>
         <send/>
         <drop/>
-    </sequence>
+    </inSequence>
+    </target>
+    </proxy>
 
 </definitions>
