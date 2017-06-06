@@ -18,7 +18,6 @@
 
 package org.wso2.carbon.esb.mediator.test.callOut;
 
-import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -26,57 +25,55 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
-import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 import static org.testng.Assert.assertTrue;
 
 public class CalloutJMSHeadersTestCase extends ESBIntegrationTest {
 
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
-
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
-        activeMQServer.startJMSBrokerAndConfigureESB();
         super.init();
-        OMElement synapse = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/callout/callout_jms_headers.xml");
-        updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
-
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "JMCalloutClientProxy");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "JMSCalloutBEProxy");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Callout JMS headers test case")
+    @Test(groups = { "wso2.esb" },
+          description = "Callout JMS headers test case")
     public void testCalloutJMSHeaders() throws Exception {
-
+        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        logViewerClient.clearLogs();
         AxisServiceClient client = new AxisServiceClient();
         String payload = "<payload/>";
         AXIOMUtil.stringToOM(payload);
-         client.sendRobust(AXIOMUtil.stringToOM(payload),
-                           getProxyServiceURLHttp("JMCalloutClientProxy"), "urn:mediate");
+        client.sendRobust(AXIOMUtil.stringToOM(payload), getProxyServiceURLHttp("JMCalloutClientProxy"), "urn:mediate");
 
-        Thread.sleep(60000); //wait until all message received to jms proxy
-
-        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
-                                                              getSessionCookie());
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        long startTime = System.currentTimeMillis();
         boolean logFound = false;
-        for (LogEvent item : logs) {
-            if (item.getPriority().equals("INFO")) {
-                String message = item.getMessage();
-                if (message.contains("RequestHeaderVal")) {
-                    logFound = true;
-                    break;
+        while (!logFound && (startTime + 60000 > System.currentTimeMillis())) {
+            Thread.sleep(1000);
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+            if(logs == null) {
+                continue;
+            }
+            for (LogEvent item : logs) {
+                if(item == null) {
+                    continue;
+                } else if (item.getPriority().equals("INFO")) {
+                    String message = item.getMessage();
+                    if (message.contains("RequestHeaderVal")) {
+                        logFound = true;
+                        break;
+                    }
                 }
             }
         }
-
-        assertTrue(logFound);
+        assertTrue(logFound, "Required log entry not found");
 
     }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBrokerRevertESBConfiguration();
     }
 }

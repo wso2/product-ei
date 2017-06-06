@@ -29,10 +29,11 @@ public class CalloutStatusCodeTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployService() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/CalloutStatusCodeTest.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "StatusCodeTestClientProxy");
     }
 
-    @Test(groups = "wso2.esb", description = "Test for check http status code can be retrived form HTTP_SC")
+    @Test(groups = "wso2.esb",
+          description = "Test for check http status code can be retrived form HTTP_SC")
     public void testCalloutStatusCode() throws Exception {
 
         OMElement response = axis2Client.
@@ -45,6 +46,5 @@ public class CalloutStatusCodeTestCase extends ESBIntegrationTest {
     public void unDeployService() throws Exception {
         super.cleanup();
     }
-
 
 }
