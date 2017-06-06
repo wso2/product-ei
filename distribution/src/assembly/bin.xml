@@ -88,14 +88,6 @@
 
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}/tmp</directory>
-            <outputDirectory>wso2ei-${pom.version}/deployment</outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}/tmp</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/tmp</outputDirectory>
         </fileSet>
 
