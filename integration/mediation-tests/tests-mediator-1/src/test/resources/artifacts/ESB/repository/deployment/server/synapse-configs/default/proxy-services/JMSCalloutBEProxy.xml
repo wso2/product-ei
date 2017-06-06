@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="JMSCalloutBEProxy"
+       transports="jms"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property name="JMSRequestHeader" expression="$trp:JMSRequestHeader"/>
+            </log>
+            <drop/>
+        </inSequence>
+    </target>
+</proxy>

@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="CallOutMediatorXPathProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService" action="urn:getQuote">
+                <source xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                        xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                        xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                <target xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                        xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                        xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            </callout>
+            <property name="RESPONSE" value="true"/>
+            <header name="To" action="remove"/>
+            <send/>
+            <drop/>
+        </inSequence>
+    </target>
+</proxy>

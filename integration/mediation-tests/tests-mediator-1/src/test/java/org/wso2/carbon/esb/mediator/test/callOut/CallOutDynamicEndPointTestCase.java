@@ -1,6 +1,5 @@
 package org.wso2.carbon.esb.mediator.test.callOut;
 
-
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
@@ -19,31 +18,31 @@ import static org.testng.Assert.assertTrue;
  * -Dwso2.stock.host=localhost -Dwso2.stock.port=9000
 */
 
-
-public class CallOutDynamicEndPointTestCase  extends ESBIntegrationTest {
+public class CallOutDynamicEndPointTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.PLATFORM})
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/CalloutWithDynamicEndPointsProxy.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), getSessionCookie(), "callOutDynamicEndPointProxy");
     }
 
-    @Test(groups = {"wso2.esb"})
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.PLATFORM})
+    @Test(groups = { "wso2.esb" })
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
     public void TestDynamicEndPoints() throws AxisFault, XPathExpressionException {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CalloutProxy"), "", "IBM");    // send the simplestockquote request. service url is set at the synapse
-        boolean ResponseContainsIBM = response.getFirstElement().toString().contains("IBM");      //checks whether the  response contains IBM
-         assertTrue(ResponseContainsIBM);
-
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("callOutDynamicEndPointProxy"), "",
+                        "IBM");    // send the simplestockquote request. service url is set at the synapse
+        boolean ResponseContainsIBM = response.getFirstElement().toString()
+                .contains("IBM");      //checks whether the  response contains IBM
+        assertTrue(ResponseContainsIBM);
 
     }
 
-
     @AfterClass(alwaysRun = true)
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.PLATFORM})
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
     public void destroy() throws Exception {
         super.cleanup();
     }

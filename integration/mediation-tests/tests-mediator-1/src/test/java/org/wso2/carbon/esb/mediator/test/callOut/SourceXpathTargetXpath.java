@@ -32,29 +32,25 @@ public class SourceXpathTargetXpath extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/synapse_sample_430.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "CallOutMediatorXPathProxy");
     }
 
-
-    @Test(groups = {"wso2.esb"})
+    @Test(groups = { "wso2.esb" })
 
     public void test_sourceXpathTargetXpath() throws AxisFault {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");    // send the simplestockquote request. service url is set at the synapse
-
-
-        boolean ResponseContainsIBM = response.getFirstElement().toString().contains("IBM");      //checks whether the  response contains IBM
-
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CallOutMediatorXPathProxy"), "",
+                        "IBM");    // send the simplestockquote request. service url is set at the synapse
+        boolean ResponseContainsIBM = response.getFirstElement().toString()
+                .contains("IBM");      //checks whether the  response contains IBM
         assertTrue(ResponseContainsIBM);
 
-
     }
-
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
     }
-
 
 }
