@@ -478,7 +478,43 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(TryCatchStmt tryCatchStmt) {
-
+        logger.debug("Visit - TryCatchStmt");
+        /**
+         * tryCatchStatement:   'try' '{' statement* '}' catchClauses;
+         * catchClauses: catchClause+ finallyClause?| finallyClause;
+         * catchClause:  'catch' '(' typeName Identifier ')' '{' statement* '}';
+         * finallyClause: 'finally' '{' statement* '}';
+         */
+        //process try block
+        appendToBalSource(getIndentationForCurrentLine() + Constants.TRY_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        tryCatchStmt.getTryBlock().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        //process catch blocks
+        tryCatchStmt.getCatchBlocks();
+        for (TryCatchStmt.CatchBlock catchBlock : tryCatchStmt.getCatchBlocks()) {
+            appendToBalSource(Constants.SPACE_STR + Constants.CATCH_STR + Constants.SPACE_STR +
+                    Constants.PARENTHESES_START_STR);
+            catchBlock.getParameterDef().accept(this);
+            appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                    Constants.NEWLINE_STR);
+            ++indentDepth;
+            catchBlock.getCatchBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        }
+        //process finally block
+        if (tryCatchStmt.getFinallyBlock() != null) {
+            appendToBalSource(Constants.SPACE_STR + Constants.FINALLY_STR + Constants.SPACE_STR +
+                    Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+            ++indentDepth;
+            tryCatchStmt.getFinallyBlock().getFinallyBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+        }
+        appendToBalSource(Constants.NEWLINE_STR);
     }
 
     @Override
@@ -811,17 +847,20 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(RefTypeInitExpr refTypeInitExpr) {
-        String varRHSDefStr = "";
+        logger.debug("Visit - RefTypeInitExpr");
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
 
-        Expression[] argExpressions = refTypeInitExpr.getArgExprs();
-        if (argExpressions.length > 0) {
-            //TODO handle args
-        } else {
-            //TODO : for now assume "{}". decide this!!
-            varRHSDefStr += "{}";
+        if (refTypeInitExpr.getArgExprs().length > 0) {
+            Expression[] args = refTypeInitExpr.getArgExprs();
+            for (int i = 0; i < args.length; i++) {
+                if (i > 0) {
+                    appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+                }
+                args[i].accept(this);
+            }
         }
 
-        appendToBalSource(varRHSDefStr);
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
