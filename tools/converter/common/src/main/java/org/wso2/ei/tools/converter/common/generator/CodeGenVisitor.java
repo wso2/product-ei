@@ -37,6 +37,7 @@ import org.ballerinalang.model.BallerinaFile;
 import org.ballerinalang.model.BallerinaFunction;
 import org.ballerinalang.model.CompilationUnit;
 import org.ballerinalang.model.ConstDef;
+import org.ballerinalang.model.Function;
 import org.ballerinalang.model.GlobalVariableDef;
 import org.ballerinalang.model.ImportPackage;
 import org.ballerinalang.model.NodeVisitor;
@@ -138,6 +139,11 @@ public class CodeGenVisitor implements NodeVisitor {
             for (Service service : bLangPackage.getServices()) {
                 service.accept(this);
             }
+
+            //process functions within the package
+            for (Function function : bLangPackage.getFunctions()) {
+                function.accept(this);
+            }
         }
     }
 
@@ -204,7 +210,6 @@ public class CodeGenVisitor implements NodeVisitor {
          * resourceDefinition: annotationAttachment* 'resource' Identifier '(' parameterList ')' callableUnitBody;
          * annotationAttachment: '@' nameReference '{' annotationAttributeList? '}'
          */
-        //TODO:Visit variable definition statements
         for (VariableDefStmt variableDefStmt : service.getVariableDefStmts()) {
             variableDefStmt.accept(this);
         }
@@ -281,7 +286,50 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(BallerinaFunction function) {
+        logger.debug("Visit - BallerinaFunction");
+        /**
+         * functionDefinition
+             :   'native' 'function'  callableUnitSignature ';'
+             |   'function' callableUnitSignature callableUnitBody
+             ;
+         * callableUnitSignature
+             :   Identifier '(' parameterList? ')' returnParameters?
+             ;
+         * returnParameters
+             : '(' (parameterList | returnTypeList) ')'
+             ;
+         */
 
+        appendToBalSource(Constants.FUNCTION_STR + Constants.SPACE_STR + function.getName() + Constants.SPACE_STR +
+                Constants.PARENTHESES_START_STR);
+        //process parameterList
+        ParameterDef[] parameterDefs = function.getParameterDefs();
+        for (int i = 0; i < parameterDefs.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            parameterDefs[i].accept(this);
+        }
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR);
+
+        if (function.getReturnParameters().length > 0) {
+            appendToBalSource(Constants.PARENTHESES_START_STR);
+            //process return parameters
+            ParameterDef[] returnParamDefs = function.getReturnParameters();
+            for (int i = 0; i < returnParamDefs.length; i++) {
+                if (i > 0) {
+                    appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+                }
+                returnParamDefs[i].accept(this);
+            }
+            appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR);
+        }
+
+        appendToBalSource(Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        function.getCallableUnitBody().accept(this);
+        --indentDepth;
+        appendToBalSource(Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -463,7 +511,20 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(ReturnStmt returnStmt) {
-
+        logger.debug("Visit - ReturnStmt");
+        /**
+         * returnStatement : 'return' expressionList? ';';
+         * expressionList:expression (',' expression)*;
+         */
+        appendToBalSource(getIndentationForCurrentLine() + Constants.RETURN_STR + Constants.SPACE_STR);
+        Expression[] expressions = returnStmt.getExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -478,7 +539,42 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(TryCatchStmt tryCatchStmt) {
-
+        logger.debug("Visit - TryCatchStmt");
+        /**
+         * tryCatchStatement:   'try' '{' statement* '}' catchClauses;
+         * catchClauses: catchClause+ finallyClause?| finallyClause;
+         * catchClause:  'catch' '(' typeName Identifier ')' '{' statement* '}';
+         * finallyClause: 'finally' '{' statement* '}';
+         */
+        //process try block
+        appendToBalSource(getIndentationForCurrentLine() + Constants.TRY_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        tryCatchStmt.getTryBlock().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        //process catch blocks
+        for (TryCatchStmt.CatchBlock catchBlock : tryCatchStmt.getCatchBlocks()) {
+            appendToBalSource(Constants.SPACE_STR + Constants.CATCH_STR + Constants.SPACE_STR +
+                    Constants.PARENTHESES_START_STR);
+            catchBlock.getParameterDef().accept(this);
+            appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                    Constants.NEWLINE_STR);
+            ++indentDepth;
+            catchBlock.getCatchBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        }
+        //process finally block
+        if (tryCatchStmt.getFinallyBlock() != null) {
+            appendToBalSource(Constants.SPACE_STR + Constants.FINALLY_STR + Constants.SPACE_STR +
+                    Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+            ++indentDepth;
+            tryCatchStmt.getFinallyBlock().getFinallyBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+        }
+        appendToBalSource(Constants.NEWLINE_STR);
     }
 
     @Override
@@ -789,7 +885,8 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(BacktickExpr backtickExpr) {
-
+        logger.debug("Visit - BacktickExpr");
+        appendToBalSource("`"+backtickExpr.getTemplateStr()+"`");
     }
 
     @Override
@@ -811,17 +908,20 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(RefTypeInitExpr refTypeInitExpr) {
-        String varRHSDefStr = "";
+        logger.debug("Visit - RefTypeInitExpr");
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
 
-        Expression[] argExpressions = refTypeInitExpr.getArgExprs();
-        if (argExpressions.length > 0) {
-            //TODO handle args
-        } else {
-            //TODO : for now assume "{}". decide this!!
-            varRHSDefStr += "{}";
+        if (refTypeInitExpr.getArgExprs().length > 0) {
+            Expression[] args = refTypeInitExpr.getArgExprs();
+            for (int i = 0; i < args.length; i++) {
+                if (i > 0) {
+                    appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+                }
+                args[i].accept(this);
+            }
         }
 
-        appendToBalSource(varRHSDefStr);
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override

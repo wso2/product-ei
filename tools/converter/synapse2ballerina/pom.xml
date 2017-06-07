@@ -7,7 +7,7 @@
   ~ in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~    http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing,
   ~ software distributed under the License is distributed on an
@@ -23,18 +23,28 @@
 
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>tools</artifactId>
+        <artifactId>converter</artifactId>
         <version>7.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <artifactId>synapse2ballerina</artifactId>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>converter</artifactId>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>common</module>
-        <module>mule2ballerina</module>
-        <module>ds2ballerina</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-native</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
+
+
 </project>
