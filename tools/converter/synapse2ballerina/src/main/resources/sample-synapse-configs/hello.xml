@@ -1,0 +1,12 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="hello" context="/hello">
+    <resource methods="GET POST">
+        <inSequence>
+            <call>
+                <endpointElement>
+                    <http uri-template="http://www.mocky.io/v2/59363930100000aa0af99ba2"/>
+                </endpointElement>
+            </call>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

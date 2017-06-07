@@ -824,7 +824,8 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(BacktickExpr backtickExpr) {
-
+        logger.debug("Visit - BacktickExpr");
+        appendToBalSource("`"+backtickExpr.getTemplateStr()+"`");
     }
 
     @Override
