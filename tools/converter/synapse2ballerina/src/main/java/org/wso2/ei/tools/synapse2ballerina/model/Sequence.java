@@ -24,9 +24,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
 public class Sequence {
-    String name;
-    String type;
-    List<Mediator> mediatorList = new ArrayList<>();
+    private String name;
+    private String type;
+    private List<Mediator> mediatorList = new ArrayList<>();
 
     public String getName() {
         return name;

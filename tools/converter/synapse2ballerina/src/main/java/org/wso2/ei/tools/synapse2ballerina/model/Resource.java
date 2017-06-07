@@ -27,15 +27,13 @@ import javax.xml.bind.annotation.XmlElements;
 
 public class Resource {
     //todo introduce enum later
-    List<String> methodList = new ArrayList<>();
+    private List<String> methodList = new ArrayList<>();
 
-    String methods;
+    private String uriTemplate;
 
-    String uriTemplate;
+    private String urlMapping;
 
-    String urlMapping;
-
-    List<Sequence> sequenceList = new ArrayList<>();
+    private List<Sequence> sequenceList = new ArrayList<>();
 
 
 

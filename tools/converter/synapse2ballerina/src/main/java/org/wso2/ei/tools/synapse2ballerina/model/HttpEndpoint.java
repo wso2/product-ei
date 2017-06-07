@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "http")
 public class HttpEndpoint implements Endpoint {
 
-    String uriTemplate;
+    private String uriTemplate;
 
 
     public String getUriTemplate() {

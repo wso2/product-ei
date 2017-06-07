@@ -27,9 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(namespace = "http://ws.apache.org/ns/synapse")
 public class API {
 
-    String name;
-    String context;
-    List<Resource> resourceList = new ArrayList<>();
+    private String name;
+    private String context;
+    private List<Resource> resourceList = new ArrayList<>();
+    //todo add host and port
 
     public String getName() {
         return name;

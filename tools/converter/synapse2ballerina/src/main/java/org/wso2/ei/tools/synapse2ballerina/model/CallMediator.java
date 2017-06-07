@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "call")
 public class CallMediator implements Mediator {
 
-    EndpointElement endpointElement;
+    private EndpointElement endpointElement;
 
     boolean blocking = false;
     private int variableCounter = 1;

@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlElements;
 
 public class EndpointElement  {
 
-Endpoint endpoint;
+    private Endpoint endpoint;
 
     public Endpoint getEndpoint() {
         return endpoint;

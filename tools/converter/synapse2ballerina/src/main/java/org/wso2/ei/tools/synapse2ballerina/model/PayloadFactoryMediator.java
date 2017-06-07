@@ -38,9 +38,9 @@ import static org.wso2.ei.tools.synapse2ballerina.builder.ASTBuilder.addImport;
 @XmlRootElement(name = "payloadFactory")
 public class PayloadFactoryMediator implements Mediator {
 
-    String payload;
+    private String payload;
 
-    String mediaType;
+    private String mediaType;
 
     public String getPayload() {
         return payload;
