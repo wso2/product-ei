@@ -276,6 +276,46 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.addComment(comment.getComment());
     }
 
+    /**
+     * Prints the logger message in correct log level. In mule, if the message is not set with any value it prints
+     * out the whole message property details. Since in Ballerina, this is not directly available that is not
+     * provided here.
+     *
+     * @param log
+     */
+    @Override
+    public void visit(org.wso2.ei.tools.mule2ballerina.model.Logger log) {
+        /*If ballerina system package is not already added to import packages , add it*/
+        if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_SYSTEM) == null) {
+            ballerinaASTAPI.addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_SYSTEM), null);
+            importTracker.put(Constant.BLANG_SYSTEM, true);
+        }
+        ballerinaASTAPI.createNameReference(Constant.BLANG_SYSTEM, Constant.BLANG_LOG);
+        ballerinaASTAPI.startExprList();
+        switch (log.getLevel()) {
+        case "TRACE":
+            ballerinaASTAPI.createIntegerLiteral("1");
+            break;
+        case "DEBUG":
+            ballerinaASTAPI.createIntegerLiteral("2");
+            break;
+        case "WARN":
+            ballerinaASTAPI.createIntegerLiteral("4");
+            break;
+        case "ERROR":
+            ballerinaASTAPI.createIntegerLiteral("5");
+            break;
+        case "INFO":
+        default:
+            ballerinaASTAPI.createIntegerLiteral("3");
+            break;
+        }
+
+        ballerinaASTAPI.createStringLiteral(log.getMessage());
+        ballerinaASTAPI.endExprList(2);
+        ballerinaASTAPI.addFunctionInvocationStatement(true);
+    }
+
     public BallerinaFile getBallerinaFile() {
         return ballerinaFile;
     }
