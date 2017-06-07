@@ -30,7 +30,7 @@ import javax.xml.bind.Unmarshaller;
 public class SynapseToBalConvertExecutor {
     public static void main(String[] args) throws Exception {
 
-        String synapseInConfig = "/home/senduran/projects/bsenduran/product-ei/tools/converter/synapse2ballerina/src/main/resources/sample-synapse-configs/payloadSample.xml";
+        String synapseInConfig = args[0];
 
         JAXBContext jaxbContext = JAXBContext.newInstance(API.class);
 
@@ -41,7 +41,7 @@ public class SynapseToBalConvertExecutor {
         BallerinaFile ballerinaFile = ASTBuilder.build(api);
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
-        String balOutFile = "/home/senduran/projects/bsenduran/product-ei/tools/converter/synapse2ballerina/src/main/resources/sample-synapse-configs/payloadSample.bal";
+        String balOutFile = args[1];
         sourceGenerator.generate(ballerinaFile, balOutFile);
 
     }
