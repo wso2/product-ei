@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
+import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.Inbound;
@@ -119,16 +120,16 @@ public class ConfigReader {
 
     /**
      * Populate relevant intermediate object that is mapped to mule element
-     * If the mule element is not mapped to an object, put it in an unidentified element list
+     * If the mule element is not mapped to an object, put it in an unidentified element list and make a comment in
+     * ballerina code specifying that feature should be manually handled.
      *
      * @param mElement represents any mule element
      */
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
-
+        Class<?> mClass = null;
         if (mClassName != null) {
-            Class<?> mClass = null;
             try {
                 mClass = Class.forName(mClassName);
                 populateMuleObject(mElement.getAttributes(), mClass);
@@ -139,6 +140,9 @@ public class ConfigReader {
         } else {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
+                Comment comment = new Comment();
+                comment.setComment("Functionality provided by " + mElementName + " should be handled manually here.");
+                buildMTree(comment);
             }
         }
     }

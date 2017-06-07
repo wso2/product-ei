@@ -56,4 +56,5 @@ public class Constant {
 
     public static final String DEFAULT_PORT = "80";
     public static final String DIVIDER = "/";
+
 }
