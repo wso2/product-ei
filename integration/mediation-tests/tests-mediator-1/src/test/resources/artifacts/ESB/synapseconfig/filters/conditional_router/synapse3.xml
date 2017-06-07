@@ -52,29 +52,4 @@
     </proxy>
 
 
-    <sequence name="cnd1_seq">
-        <log level="custom">
-            <property name="MSG_FLOW" value="Condition (I) Satisfied"/>
-        </log>
-    </sequence>
-
-    <sequence name="cnd2_seq">
-        <log level="custom">
-            <property name="MSG_FLOW" value="Condition (II) Satisfied"/>
-        </log>
-        <!-- Call for sending message to endpoint -->
-        <sequence key="send_seq"/>
-    </sequence>
-
-    <sequence name="send_seq">
-        <log level="custom">
-            <property name="DEBUG" value="Condition Satisfied"/>
-        </log>
-        <send>
-            <endpoint name="simple">
-                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-            </endpoint>
-        </send>
-    </sequence>
-
 </definitions>

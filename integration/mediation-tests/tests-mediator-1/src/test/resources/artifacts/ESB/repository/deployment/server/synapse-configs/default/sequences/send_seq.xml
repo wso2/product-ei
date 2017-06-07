@@ -1,0 +1,10 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="send_seq">
+    <log level="custom">
+        <property name="DEBUG" value="Condition Satisfied"/>
+    </log>
+    <send>
+        <endpoint name="simple">
+            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+        </endpoint>
+    </send>
+</sequence>

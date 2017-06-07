@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
     <!--  If condition satisfied send it to service -->
     <sequence name="cnd1_seq">
         <log>
@@ -14,33 +15,37 @@
         </log>
         <drop/>
     </sequence>
-    <sequence name="main" trace="enable">
-        <in>
-            <log level="full">
-                <property name="STAGE" value="starting conditional  router"/>
-            </log>
-            <conditionalRouter continueAfter="false">
-                <conditionalRoute breakRoute="false">
-                    <condition>
-                        <!-- url means To address -->
-                        <match type="url" regex=".*SimpleStockQuoteService.*"/>
-                    </condition>
-                    <target sequence="cnd1_seq"/>
-                </conditionalRoute>
-            </conditionalRouter>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="ConRoutingWithContinueAfterFalseProxy"
+           transports="https http" startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="full">
+                    <property name="STAGE" value="starting conditional  router"/>
+                </log>
+                <conditionalRouter continueAfter="false">
+                    <conditionalRoute breakRoute="false">
+                        <condition>
+                            <!-- url means To address -->
+                            <match type="url" regex=".*SimpleStockQuoteService.*"/>
+                        </condition>
+                        <target sequence="cnd_seq4"/>
+                    </conditionalRoute>
+                </conditionalRouter>
 
-            <!--  Rest of the In-sequence from here will not execute -->
-            <log level="custom">
-                <property name="STAGE" value="end conditional  router"/>
-            </log>
-            <send>
-                <endpoint>
-                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-                </endpoint>
-            </send>
-        </in>
-        <out>
-            <send/>
-        </out>
-    </sequence>
+                <!--  Rest of the In-sequence from here will not execute -->
+                <log level="custom">
+                    <property name="STAGE" value="end conditional  router"/>
+                </log>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
 </definitions>

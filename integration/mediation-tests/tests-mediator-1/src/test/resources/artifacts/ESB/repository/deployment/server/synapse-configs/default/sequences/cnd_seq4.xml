@@ -1,0 +1,6 @@
+<!-- sequence for conditional-route -->
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="cnd_seq4">
+    <log>
+        <property name="message" value="**********Conditional Router Test Condition Satisfied **************"/>
+    </log>
+</sequence>

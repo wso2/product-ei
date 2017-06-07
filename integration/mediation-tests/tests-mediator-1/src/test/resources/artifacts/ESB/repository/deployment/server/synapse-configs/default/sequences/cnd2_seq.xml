@@ -1,0 +1,7 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="cnd2_seq">
+    <log level="custom">
+        <property name="MSG_FLOW" value="Condition (II) Satisfied"/>
+    </log>
+    <!-- Call for sending message to endpoint -->
+    <sequence key="send_seq"/>
+</sequence>
