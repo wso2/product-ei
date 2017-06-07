@@ -18,5 +18,8 @@
 
 package org.wso2.ei.tools.ds2ballerina.beans;
 
+/**
+ * Object for complex element in result element.
+ */
 public class ComplexElement {
 }

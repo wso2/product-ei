@@ -22,9 +22,24 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for resource element.
+ */
 @XmlRootElement(name = "resource") public class Resource {
 
     @XmlElement(name = "call-query") CallQuery callQuery;
     @XmlAttribute private String path;
     @XmlAttribute private String method;
+
+    public CallQuery getCallQuery() {
+        return callQuery;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getMethod() {
+        return method;
+    }
 }

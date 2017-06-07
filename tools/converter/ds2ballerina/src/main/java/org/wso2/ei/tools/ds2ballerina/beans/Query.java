@@ -19,21 +19,58 @@
 package org.wso2.ei.tools.ds2ballerina.beans;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for query element.
+ */
 @XmlRootElement(name = "query") public class Query {
 
-    @XmlAttribute(name = "useConfig") String configId;
+    private Map<String, Param> paramMap;
 
-    @XmlAttribute boolean returnUpdatedRowCount;
+    @XmlAttribute(name = "useConfig") private String configId;
 
-    @XmlAttribute(name = "id") String queryId;
+    @XmlAttribute private boolean returnUpdatedRowCount;
 
-    @XmlElement(name = "sql") String sqlQuery;
+    @XmlAttribute(name = "id") private String queryId;
 
-    @XmlElement(name = "param") ArrayList<Param> params;
+    @XmlElement(name = "sql") private String sqlQuery;
 
-    @XmlElement(name = "result") Result result;
+    @XmlElement(name = "param") private ArrayList<Param> params;
+
+    @XmlElement(name = "result") private Result result;
+
+    public String getConfigId() {
+        return configId;
+    }
+
+    public boolean isReturnUpdatedRowCount() {
+        return returnUpdatedRowCount;
+    }
+
+    public String getQueryId() {
+        return queryId;
+    }
+
+    public String getSqlQuery() {
+        return sqlQuery;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public Map<String, Param> getParamMap() {
+        if (paramMap == null && params != null) {
+            paramMap = new HashMap<>();
+            for (Param param : this.params) {
+                paramMap.put(param.getName(), param);
+            }
+        }
+        return paramMap;
+    }
 }

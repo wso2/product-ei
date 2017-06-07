@@ -21,34 +21,27 @@ package org.wso2.ei.tools.ds2ballerina.beans;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for element element in result element.
+ */
 @XmlRootElement(name = "element") public class Element {
 
-    private String dataSourceType;
     @XmlAttribute private String name;
-    private String dataSourceValue;
     @XmlAttribute private String export;
     @XmlAttribute private String exportType;
     @XmlAttribute private String namespace;
     @XmlAttribute private String arrayName;
     @XmlAttribute private boolean optional;
     @XmlAttribute private String column;
-    @XmlAttribute(name = "query-param") private String query_param;
+    @XmlAttribute(name = "query-param") private String queryParam;
     @XmlAttribute private String xsdType;
 
     public String getXsdType() {
         return xsdType;
     }
 
-    public String getDataSourceType() {
-        return dataSourceType;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getDataSourceValue() {
-        return dataSourceValue;
     }
 
     public String getExport() {

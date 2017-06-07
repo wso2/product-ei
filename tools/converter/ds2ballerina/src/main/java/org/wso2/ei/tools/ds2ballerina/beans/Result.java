@@ -25,6 +25,9 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for result element.
+ */
 @XmlRootElement(name = "result") public class Result {
 
     @XmlElementRef(name = "element") ArrayList<Element> elementList;
@@ -35,12 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @XmlAttribute private String outputType;
     @XmlAttribute private String defaultNamespace;
     @XmlMixed private List<String> textMapping;
-
-    //    private List<CallQueryGroup> callQueryGroups = new ArrayList<CallQueryGroup>();
-
-    //    private List<ComplexElement> complexElements = new ArrayList<ComplexElement>();
-    //\
-    private List<Object> attributes = new ArrayList<Object>();
+//    private List<Object> attributes;
 
     public boolean isEscapeNonPrintableChar() {
         return escapeNonPrintableChar;
@@ -66,5 +64,8 @@ import javax.xml.bind.annotation.XmlRootElement;
         return resultWrapper;
     }
 
-    //    public void addComplexElement()
+    public ArrayList<Element> getElementList() {
+        return elementList;
+    }
+
 }

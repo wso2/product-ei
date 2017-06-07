@@ -18,11 +18,16 @@
 
 package org.wso2.ei.tools.ds2ballerina.beans;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for data service.
+ */
 @XmlRootElement(name = "data") public class DataService {
 
     @XmlAttribute private String name;
@@ -33,6 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @XmlAttribute private boolean enableBatchRequests;
     @XmlAttribute private boolean enableBoxcarring;
     @XmlAttribute private String transports;
+
+    private Map<String, Query> queryMap = null;
 
     public boolean isDisableLegacyBoxcarringMode() {
         return disableLegacyBoxcarringMode;
@@ -52,6 +59,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 
     public String getName() {
         return name;
+    }
+
+    public List<Config> getConfigs() {
+        return configs;
+    }
+
+    public Map<String, Query> getQueries() {
+        if (queryMap == null) {
+            queryMap = new HashMap<>();
+            for (Query query : this.queries) {
+                queryMap.put(query.getQueryId(), query);
+            }
+        }
+        return queryMap;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
     }
 
 }

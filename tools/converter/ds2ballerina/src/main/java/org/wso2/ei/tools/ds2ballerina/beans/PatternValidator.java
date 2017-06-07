@@ -21,6 +21,9 @@ package org.wso2.ei.tools.ds2ballerina.beans;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlAnyAttribute;
 
+/**
+ * Object for PatternValidator element.
+ */
 public class PatternValidator implements Validator {
 
     private static final String name = "PatternValidator";

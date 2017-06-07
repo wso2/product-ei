@@ -18,8 +18,15 @@
 
 package org.wso2.ei.tools.ds2ballerina.beans.helper;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
+/**
+ * Object for property element.
+ */
 @XmlAccessorType(XmlAccessType.FIELD) @XmlRootElement(name = "property") public class Property {
 
     @XmlAttribute String name;

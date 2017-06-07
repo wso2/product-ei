@@ -23,6 +23,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for Param element.
+ */
 @XmlRootElement(name = "param") public class Param {
 
     @XmlAttribute private String name;

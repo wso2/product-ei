@@ -21,6 +21,9 @@ package org.wso2.ei.tools.ds2ballerina.beans;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlAnyAttribute;
 
+/**
+ * Object for DoubleRangeValidator element.
+ */
 public class DoubleRangeValidator implements Validator {
 
     private static final String name = "DoubleRangeValidator";

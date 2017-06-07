@@ -26,15 +26,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+/**
+ * Object for config element.
+ */
 @XmlRootElement(name = "config") public class Config {
 
     @XmlAttribute private boolean enableOData;
 
     @XmlAttribute private String id;
 
-    private Map<String, String> propertiesMap;
+    @XmlJavaTypeAdapter(MapAdaptor.class) @XmlElement(name = "property") private Map<String, String> propertiesMap;
 
-    @XmlJavaTypeAdapter(MapAdaptor.class) @XmlElement(name = "property") public Map<String, String> getPropertiesMap() {
+    public Map<String, String> getPropertiesMap() {
         return propertiesMap;
     }
 

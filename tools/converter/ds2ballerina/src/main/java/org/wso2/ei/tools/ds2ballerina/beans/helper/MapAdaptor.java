@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+/**
+ * Helper class to create property map.
+ */
 public class MapAdaptor extends XmlAdapter<Property, Map<String, String>> {
 
     Map<String, String> map;

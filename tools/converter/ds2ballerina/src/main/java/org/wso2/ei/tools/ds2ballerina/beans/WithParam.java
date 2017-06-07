@@ -21,6 +21,9 @@ package org.wso2.ei.tools.ds2ballerina.beans;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for with-param element.
+ */
 @XmlRootElement(name = "with-param") public class WithParam {
 
     @XmlAttribute private String name;
@@ -31,4 +34,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
     @XmlAttribute private String column;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getParamType() {
+        paramType = queryParam == null ? "column" : "query-param";
+        return paramType;
+    }
+
+    public String getParamValue() {
+        paramValue = queryParam == null ? column : queryParam;
+        return paramValue;
+    }
 }

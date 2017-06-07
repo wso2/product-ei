@@ -23,9 +23,20 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Object for call-query element
+ */
 @XmlRootElement(name = "call-query") public class CallQuery {
 
-    @XmlAttribute(name = "href") String queryId;
+    @XmlAttribute(name = "href") private String queryId;
 
-    @XmlElement(name = "with-param") List<WithParam> paramList;
+    @XmlElement(name = "with-param") private List<WithParam> paramList;
+
+    public String getQueryId() {
+        return queryId;
+    }
+
+    public List<WithParam> getParamList() {
+        return paramList;
+    }
 }
