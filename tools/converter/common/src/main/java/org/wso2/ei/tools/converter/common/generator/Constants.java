@@ -34,6 +34,8 @@ public class Constants {
     public static final String TRY_STR = "try";
     public static final String CATCH_STR = "catch";
     public static final String FINALLY_STR = "finally";
+    public static final String FUNCTION_STR = "function";
+    public static final String RETURN_STR = "return";
 
 
     public static final String SPACE_STR = " ";
