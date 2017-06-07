@@ -27,6 +27,9 @@ import java.io.File;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * Main class to start the converter
+ */
 public class SynapseToBalConvertExecutor {
     public static void main(String[] args) throws Exception {
 

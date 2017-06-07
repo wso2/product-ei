@@ -23,6 +23,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
+/**
+ * Represents synapse sequence
+ */
 public class Sequence {
     private String name;
     private String type;
@@ -48,10 +51,13 @@ public class Sequence {
         return mediatorList;
     }
 
-
-    @XmlElements({@XmlElement(name="call", type = CallMediator.class),
-                  @XmlElement(name="respond", type = RespondMediator.class),
-                  @XmlElement(name="payloadFactory", type = PayloadFactoryMediator.class)
+    @XmlElements({
+                         @XmlElement(name = "call",
+                                     type = CallMediator.class),
+                         @XmlElement(name = "respond",
+                                     type = RespondMediator.class),
+                         @XmlElement(name = "payloadFactory",
+                                     type = PayloadFactoryMediator.class)
                  })
     public void setMediator(Mediator mediator) {
         this.mediatorList.add(mediator);

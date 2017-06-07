@@ -21,11 +21,13 @@ package org.wso2.ei.tools.synapse2ballerina.model;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Represents synapse's http endpoint
+ */
 @XmlRootElement(name = "http")
 public class HttpEndpoint implements Endpoint {
 
     private String uriTemplate;
-
 
     public String getUriTemplate() {
         return uriTemplate;

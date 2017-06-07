@@ -18,6 +18,9 @@
 
 package org.wso2.ei.tools.synapse2ballerina.builder;
 
+/**
+ * Constants for build the ballerina source file
+ */
 public class Constants {
 
     public static final String BLANG_HTTP = "http";
@@ -41,7 +44,6 @@ public class Constants {
     public static final String BLANG_DEFAULT_MSG_PARAM_NAME = "msg";
     public static final String BLANG_RES_VARIABLE_NAME = "response";
     public static final String BLANG_CONNECT_VARIABLE_NAME = "connectRef";
-
 
     public static final String RESPONSE_VAR_NAME = "RESPONSE_VAR_NAME";
     public static final String RESOURCE_PARAM_NAME = "RESOURCE_PARAM_NAME";

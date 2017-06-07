@@ -21,7 +21,10 @@ package org.wso2.ei.tools.synapse2ballerina.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
-public class EndpointElement  {
+/**
+ * Represents synapse endpoint element
+ */
+public class EndpointElement {
 
     private Endpoint endpoint;
 
@@ -29,9 +32,10 @@ public class EndpointElement  {
         return endpoint;
     }
 
-    @XmlElements(
-            {@XmlElement(name="http",type = HttpEndpoint.class)
-            })
+    @XmlElements({
+                         @XmlElement(name = "http",
+                                     type = HttpEndpoint.class)
+                 })
     public void setEndpoint(Endpoint endpoint) {
         this.endpoint = endpoint;
     }

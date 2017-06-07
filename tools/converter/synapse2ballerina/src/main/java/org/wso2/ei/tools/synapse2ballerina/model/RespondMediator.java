@@ -24,7 +24,10 @@ import org.wso2.ei.tools.synapse2ballerina.builder.Constants;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="respond")
+/**
+ * Represents synapse's respond mediator
+ */
+@XmlRootElement(name = "respond")
 public class RespondMediator implements Mediator {
 
     @Override

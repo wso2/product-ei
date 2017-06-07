@@ -18,5 +18,8 @@
 
 package org.wso2.ei.tools.synapse2ballerina.model;
 
+/**
+ * Represents synapse Endpoint
+ */
 public interface Endpoint {
 }

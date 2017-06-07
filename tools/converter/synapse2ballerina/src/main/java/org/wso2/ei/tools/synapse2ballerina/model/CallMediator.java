@@ -25,6 +25,9 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Represents synapse's call mediator
+ */
 @XmlRootElement(name = "call")
 public class CallMediator implements Mediator {
 
@@ -37,7 +40,8 @@ public class CallMediator implements Mediator {
         return endpointElement;
     }
 
-    @XmlElement(name="endpointElement", type = EndpointElement.class)
+    @XmlElement(name = "endpointElement",
+                type = EndpointElement.class)
     public void setEndpointElement(EndpointElement endpointElement) {
         this.endpointElement = endpointElement;
     }
@@ -49,7 +53,6 @@ public class CallMediator implements Mediator {
     public void setBlocking(boolean blocking) {
         this.blocking = blocking;
     }
-
 
     @Override
     public void build(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
@@ -67,7 +70,7 @@ public class CallMediator implements Mediator {
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createStringLiteral(getURL());
         ballerinaASTModelBuilder.endExprList(1); // no of arguments
-        
+
         ballerinaASTModelBuilder.initializeConnector(true); //arguments available
         String connectorVarName = Constants.BLANG_CONNECT_VARIABLE_NAME + ++variableCounter;
         ballerinaASTModelBuilder.createVariable(connectorVarName, true);
@@ -89,12 +92,12 @@ public class CallMediator implements Mediator {
     }
 
     private String getURL() {
-        if(endpointElement == null) {
+        if (endpointElement == null) {
             //log endpointElement cannot be null if we are calling this method.
             return null;
         }
         Endpoint endpoint = endpointElement.getEndpoint();
-        if(endpoint instanceof HttpEndpoint) {
+        if (endpoint instanceof HttpEndpoint) {
             HttpEndpoint httpEndpoint = (HttpEndpoint) endpoint;
             return httpEndpoint.getUriTemplate();
         }
