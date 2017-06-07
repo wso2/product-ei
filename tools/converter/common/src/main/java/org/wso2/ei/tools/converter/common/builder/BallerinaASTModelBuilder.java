@@ -214,10 +214,6 @@ public class BallerinaASTModelBuilder {
     public void createIntegerLiteral(String intLiteral) {
         modelBuilder.createIntegerLiteral(null, null, intLiteral);
     }
-    
-    public void createBackTickExpression(String content) {
-        modelBuilder.createBacktickExpr(null, null, content);
-    }
 
     public void createFunctionInvocation(boolean argsAvailable) {
         modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
