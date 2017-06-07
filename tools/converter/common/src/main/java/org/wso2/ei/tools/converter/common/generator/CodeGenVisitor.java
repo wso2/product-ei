@@ -493,7 +493,6 @@ public class CodeGenVisitor implements NodeVisitor {
         --indentDepth;
         appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
         //process catch blocks
-        tryCatchStmt.getCatchBlocks();
         for (TryCatchStmt.CatchBlock catchBlock : tryCatchStmt.getCatchBlocks()) {
             appendToBalSource(Constants.SPACE_STR + Constants.CATCH_STR + Constants.SPACE_STR +
                     Constants.PARENTHESES_START_STR);
