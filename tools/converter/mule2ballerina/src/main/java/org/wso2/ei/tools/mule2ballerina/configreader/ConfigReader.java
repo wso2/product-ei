@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
+import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.Inbound;
@@ -108,30 +109,30 @@ public class ConfigReader {
      * @return input stream
      */
     public InputStream getInputStream(File file) {
-        FileInputStream fis = null;
+        FileInputStream fileInputStream = null;
         try {
-            fis = new FileInputStream(file);
+            fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             logger.error(e.getMessage(), e);
         }
-        return fis;
+        return fileInputStream;
     }
 
     /**
      * Populate relevant intermediate object that is mapped to mule element
-     * If the mule element is not mapped to an object, put it in an unidentified element list
+     * If the mule element is not mapped to an object, put it in an unidentified element list and make a comment in
+     * ballerina code specifying that feature should be manually handled.
      *
      * @param mElement represents any mule element
      */
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
-
+        Class<?> intermediateClass = null;
         if (mClassName != null) {
-            Class<?> mClass = null;
             try {
-                mClass = Class.forName(mClassName);
-                populateMuleObject(mElement.getAttributes(), mClass);
+                intermediateClass = Class.forName(mClassName);
+                populateMuleObject(mElement.getAttributes(), intermediateClass);
 
             } catch (ClassNotFoundException e) {
                 logger.error(e.getMessage(), e);
@@ -139,6 +140,9 @@ public class ConfigReader {
         } else {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
+                Comment comment = new Comment();
+                comment.setComment(" //Functionality provided by " + mElementName + " should be handled manually here");
+                buildMuleTree(comment);
             }
         }
     }
@@ -200,7 +204,7 @@ public class ConfigReader {
             });
 
             BaseObject muleObj = (BaseObject) object;
-            buildMTree(muleObj);
+            buildMuleTree(muleObj);
 
         } catch (IllegalAccessException e) {
             logger.error(e.getMessage(), e);
@@ -238,7 +242,7 @@ public class ConfigReader {
      *
      * @param muleObj any intermediate object
      */
-    public void buildMTree(BaseObject muleObj) {
+    public void buildMuleTree(BaseObject muleObj) {
 
         /* if the intermediate object represents a global configuration in mule, add it to global config list
         * Further if it's an inbound config, keep all the flows that belong to that config in a map, as it is needed

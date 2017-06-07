@@ -82,9 +82,10 @@ public class BallerinaASTModelBuilder {
 
     /**
      * TODO: Need to refactor this to support multiple key value pairs of an annotation
-     * @param pkgName name of the package
-     * @param name functionality name you want to use
-     * @param key annotation attribute key
+     *
+     * @param pkgName     name of the package
+     * @param name        functionality name you want to use
+     * @param key         annotation attribute key
      * @param actualvalue annotation attribute value
      */
     public void createAnnotationAttachment(String pkgName, String name, String key, String actualvalue) {
@@ -102,6 +103,7 @@ public class BallerinaASTModelBuilder {
     /**
      * Adds an annotation. For an attachment to be added first it needs to be created using
      * 'createAnnotationAttachment' method
+     *
      * @param attributesCount is never used in ballerina side, even though it expects a value
      */
     public void addAnnotationAttachment(int attributesCount) {
@@ -145,9 +147,11 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create a function parameter
-     * @param annotationCount number of annotations - this is required in case of PathParam or QueryParam annotations
+     *
+     * @param annotationCount        number of annotations - this is required in case of PathParam or QueryParam
+     *                               annotations
      * @param processingReturnParams return parameter or not
-     * @param paramName name of the function parameter
+     * @param paramName              name of the function parameter
      */
     public void addParameter(int annotationCount, boolean processingReturnParams, String paramName) {
         modelBuilder.addParam(null, null, typeNameStack.pop(), paramName, annotationCount, processingReturnParams);
@@ -168,8 +172,7 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     *
-     * @param varName name of the variable
+     * @param varName       name of the variable
      * @param exprAvailable expression availability
      */
     public void createVariable(String varName, boolean exprAvailable) {
@@ -180,8 +183,9 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create a name reference
+     *
      * @param pkgName package name
-     * @param name functionality name you want to use
+     * @param name    functionality name you want to use
      */
     public void createNameReference(String pkgName, String name) {
         BLangModelBuilder.NameReference nameReference;
@@ -251,5 +255,9 @@ public class BallerinaASTModelBuilder {
 
     public Map<String, String> getBallerinaPackageMap() {
         return ballerinaPackageMap;
+    }
+
+    public void addComment(String comment) {
+        modelBuilder.addCommentStmt(null, null, comment);
     }
 }

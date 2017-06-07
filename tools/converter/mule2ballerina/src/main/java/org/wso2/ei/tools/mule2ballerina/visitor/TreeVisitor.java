@@ -22,6 +22,7 @@ import org.ballerinalang.model.BallerinaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
+import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListener;
@@ -172,8 +173,8 @@ public class TreeVisitor implements Visitor {
         String allowedMethods = Constant.BLANG_METHOD_GET;
         if (listener.getAllowedMethods() != null) {
             allowedMethods = listener.getAllowedMethods();
-            String[] bits = allowedMethods.split(",");
-            for (String method : bits) {
+            String[] methodBits = allowedMethods.split(",");
+            for (String method : methodBits) {
                 /*Create an annotation without attribute values*/
                 ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, method, null, null);
                 ballerinaASTAPI.addAnnotationAttachment(0);
@@ -198,12 +199,12 @@ public class TreeVisitor implements Visitor {
 
         if (listener.getPath() != null) {
             //check whether any path params have been used
-            String[] bits = listener.getPath().split("/");
-            for (String path : bits) {
-                Pattern p = Pattern.compile("\\{(.*)\\}");   // the pattern to search for
-                Matcher m = p.matcher(path);
+            String[] pathParams = listener.getPath().split("/");
+            for (String path : pathParams) {
+                Pattern pattern = Pattern.compile("\\{(.*)\\}");   // the pattern to search for
+                Matcher matcher = pattern.matcher(path);
                 // now try to find at least one match
-                if (m.find()) {
+                if (matcher.find()) {
                     //add it to path param
                     ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_PATHPARAM,
                             Constant.BLANG_VALUE, path);
@@ -268,6 +269,11 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.initializeConnector(true); //arguments available
         connectorVarName = Constant.BLANG_CONNECT_VARIABLE_NAME + ++variableCounter;
         ballerinaASTAPI.createVariable(connectorVarName, true);
+    }
+
+    @Override
+    public void visit(Comment comment) {
+        ballerinaASTAPI.addComment(comment.getComment());
     }
 
     public BallerinaFile getBallerinaFile() {
