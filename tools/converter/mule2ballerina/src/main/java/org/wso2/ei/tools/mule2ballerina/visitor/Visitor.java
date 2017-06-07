@@ -18,6 +18,7 @@
 
 package org.wso2.ei.tools.mule2ballerina.visitor;
 
+import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListener;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListenerConfig;
@@ -44,4 +45,6 @@ public interface Visitor {
     public void visit(HttpRequest request);
 
     public void visit(HttpRequestConfig requestConfig);
+
+    public void visit(Comment comment);
 }

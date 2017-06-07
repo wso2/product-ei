@@ -22,6 +22,7 @@ import org.ballerinalang.model.BallerinaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
+import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListener;
@@ -268,6 +269,11 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.initializeConnector(true); //arguments available
         connectorVarName = Constant.BLANG_CONNECT_VARIABLE_NAME + ++variableCounter;
         ballerinaASTAPI.createVariable(connectorVarName, true);
+    }
+
+    @Override
+    public void visit(Comment comment) {
+        ballerinaASTAPI.addComment(comment.getComment());
     }
 
     public BallerinaFile getBallerinaFile() {
