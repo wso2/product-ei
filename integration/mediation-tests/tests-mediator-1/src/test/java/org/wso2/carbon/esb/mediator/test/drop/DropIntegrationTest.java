@@ -37,27 +37,30 @@ Put a send mediator after drop mediator and test whether response is null.
 */
 public class DropIntegrationTest extends ESBIntegrationTest {
 
-
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/core_mediator/synapse.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "DropMediatorTestProxy");
 
     }
+
     /*https://wso2.org/jira/browse/STRATOS-2240*/
-    @Test(groups = "wso2.esb", description = "Tests-Null response after Drop mediator")
+    @Test(groups = "wso2.esb",
+          description = "Tests-Null response after Drop mediator")
     public void testDropMediator() throws AxisFault {
         OMElement stockQuoteResponse1 = null;
         OMElement stockQuoteResponse2 = null;
         OMElement stockQuoteResponse3 = null;
-        stockQuoteResponse1 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
+        stockQuoteResponse1 = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("DropMediatorTestProxy"), null, "IBM");
 
         assertNotNull(stockQuoteResponse1, "Response is null");
-        assertEquals(stockQuoteResponse1.getFirstElement().getFirstChildWithName
-                (new QName("http://services.samples/xsd", "symbol")).getText(),
-                     "IBM", "Symbol does not match");
+        assertEquals(stockQuoteResponse1.getFirstElement()
+                        .getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText(), "IBM",
+                "Symbol does not match");
         try {
-            stockQuoteResponse2 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "MSFT");
+            stockQuoteResponse2 = axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("DropMediatorTestProxy"), null, "MSFT");
             fail("Request Should throws a AxisFault");
 
         } catch (AxisFault axisFault) {
@@ -66,7 +69,8 @@ public class DropIntegrationTest extends ESBIntegrationTest {
         }
 
         try {
-            stockQuoteResponse3 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+            stockQuoteResponse3 = axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("DropMediatorTestProxy"), null, "WSO2");
             fail("Request Should throws a AxisFault");
 
         } catch (AxisFault axisFault) {
