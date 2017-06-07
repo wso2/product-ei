@@ -109,13 +109,13 @@ public class ConfigReader {
      * @return input stream
      */
     public InputStream getInputStream(File file) {
-        FileInputStream fis = null;
+        FileInputStream fileInputStream = null;
         try {
-            fis = new FileInputStream(file);
+            fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             logger.error(e.getMessage(), e);
         }
-        return fis;
+        return fileInputStream;
     }
 
     /**
@@ -128,11 +128,11 @@ public class ConfigReader {
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
-        Class<?> mClass = null;
+        Class<?> intermediateClass = null;
         if (mClassName != null) {
             try {
-                mClass = Class.forName(mClassName);
-                populateMuleObject(mElement.getAttributes(), mClass);
+                intermediateClass = Class.forName(mClassName);
+                populateMuleObject(mElement.getAttributes(), intermediateClass);
 
             } catch (ClassNotFoundException e) {
                 logger.error(e.getMessage(), e);
@@ -141,8 +141,8 @@ public class ConfigReader {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
                 Comment comment = new Comment();
-                comment.setComment("Functionality provided by " + mElementName + " should be handled manually here.");
-                buildMTree(comment);
+                comment.setComment(" //Functionality provided by " + mElementName + " should be handled manually here");
+                buildMuleTree(comment);
             }
         }
     }
@@ -204,7 +204,7 @@ public class ConfigReader {
             });
 
             BaseObject muleObj = (BaseObject) object;
-            buildMTree(muleObj);
+            buildMuleTree(muleObj);
 
         } catch (IllegalAccessException e) {
             logger.error(e.getMessage(), e);
@@ -242,7 +242,7 @@ public class ConfigReader {
      *
      * @param muleObj any intermediate object
      */
-    public void buildMTree(BaseObject muleObj) {
+    public void buildMuleTree(BaseObject muleObj) {
 
         /* if the intermediate object represents a global configuration in mule, add it to global config list
         * Further if it's an inbound config, keep all the flows that belong to that config in a map, as it is needed
