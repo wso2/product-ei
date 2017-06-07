@@ -53,7 +53,10 @@ public class CloneBurstTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         init();
         trigger = new Trigger();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_simple.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "CloneAndAggregateTestProxy");
+        esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, "cloningMessagesSeq");
+        esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, "aggregateMessagesSeq");
+
         axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server2 = new SampleAxis2Server("test_axis2_server_9002.xml");
 
@@ -162,7 +165,7 @@ public class CloneBurstTestCase extends ESBIntegrationTest {
                     Iterator iterator = null;
                     try {
                         response =
-                                client.getResponse(getMainSequenceURL(),
+                                client.getResponse(getProxyServiceURLHttp("CloneAndAggregateTestProxy"),
                                                    "WSO2");
                         Assert.assertNotNull(response);
                         OMElement envelope = client.toOMElement(response);

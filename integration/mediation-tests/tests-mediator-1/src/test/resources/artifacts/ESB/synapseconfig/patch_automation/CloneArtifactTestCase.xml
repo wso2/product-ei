@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse" xmlns:xs="http://www.w3.org/1999/XSL/Transform">
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="proxyFault1"
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="CloneProxyFault1"
            statistics="disable" trace="disable" transports="http,https" startOnLoad="true">
         <target>
             <inSequence>
@@ -28,7 +28,7 @@
         </target>
     </proxy>
 
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="proxyFault2"
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="CloneProxyFault2"
            statistics="disable" trace="disable" transports="http,https" startOnLoad="true">
         <target>
             <inSequence>

@@ -36,24 +36,30 @@ public class CloneIntegrationEndpointsTestCase extends ESBIntegrationTest {
         init();
     }
 
-    @Test(groups = "wso2.esb", description = "Tests http address")
+    @Test(groups = "wso2.esb",
+          description = "Tests http address")
     public void testHTTP() throws Exception {
         loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_http.xml");
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CloneIntegrationEndpointsTestProxy1"), null,
+                        "WSO2");
 
         Assert.assertTrue(response.toString().contains("WSO2"));
-
     }
 
-    @Test(groups = "wso2.esb", description = "Tests https address")
+    @Test(groups = "wso2.esb",
+          description = "Tests https address")
     public void testHTTPS() throws Exception {
-        String sqn = FileManager.readFile(getESBResourceLocation() + File.separator + "mediatorconfig" + File.separator
-                + "clone" + File.separator + "clone_https_sequence.xml");
+        String sqn = FileManager.readFile(
+                getESBResourceLocation() + File.separator + "mediatorconfig" + File.separator + "clone" + File.separator
+                        + "clone_https_sequence.xml");
         loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_https.xml");
 
-        sqn = sqn.replace("httpsEndpoint",getProxyServiceURLHttps("StockQuoteProxy"));
+        sqn = sqn.replace("httpsEndpoint", getProxyServiceURLHttps("StockQuoteProxy"));
         addSequence(AXIOMUtil.stringToOM(sqn));
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CloneIntegrationEndpointsTestProxy2"), null,
+                        "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
 
     }

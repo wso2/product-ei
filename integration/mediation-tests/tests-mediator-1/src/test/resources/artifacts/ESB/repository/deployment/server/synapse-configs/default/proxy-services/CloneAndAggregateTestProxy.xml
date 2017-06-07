@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="CloneAndAggregateTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <sequence key="cloningMessagesSeq"/>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesSeq"/>
+        </outSequence>
+    </target>
+</proxy>

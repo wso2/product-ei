@@ -61,7 +61,7 @@ public class CloneIntegrationAnonymousEndpointsTestCase extends ESBIntegrationTe
     @Test(groups = "wso2.esb", description = "Tests http address")
     public void testSequence() throws Exception {
 
-        String response = client.getResponse(getMainSequenceURL(), "WSO2");
+        String response = client.getResponse(getProxyServiceURLHttp("CloneIntegrationAnonymousEndpointsTestProxy"), "WSO2");
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();
