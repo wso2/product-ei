@@ -19,18 +19,16 @@
 package org.wso2.carbon.esb.mediator.test.callTemplate;
 
 import org.apache.axiom.om.OMElement;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 
 public class CallTemplateIntegrationParamsWithValuesTestCase extends ESBIntegrationTest {
     private LogViewerClient logViewer;
-  //  private LoggingAdminClient logAdmin;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
@@ -38,16 +36,33 @@ public class CallTemplateIntegrationParamsWithValuesTestCase extends ESBIntegrat
         loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call_template/synapse_param_with_values.xml");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Call Template Mediator Sample Parameters with" +
-                                               " values assigned test", enabled = false)
-    public void testXSLTTransformationWithTemplates() throws IOException, XMLStreamException {
-        OMElement response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
-                                                                           ("StockQuoteProxy"), null, "IBM");
-       // logAdmin = new LoggingAdminClient(contextUrls.getBackEndUrl(),getSessionCookie());
-        //TODO - Asserting the response from the log
-        /*logViewer=new LogViewerClient(esbServer.getBackEndUrl(),esbServer.getSessionCookie());
-        LogEvent[] getLogsDebug = logViewer.getLogs("PARAM", "LogMediator");*/
-        /*Assert "RESPONSE PARAM VALUE" and "REQUEST PARAM VALUE" is in logs */
+    @Test(groups = { "wso2.esb" },
+          description = "Call Template Mediator Sample Parameters with" + " values assigned test")
+    public void testTemplatesParameter() throws Exception {
+        logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "IBM");
+        boolean requestLog = false;
+        boolean responseLog = false;
+        long startTime = System.currentTimeMillis();
+        while (startTime + 30000 > System.currentTimeMillis()) {
+            LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
+            for (LogEvent log : logs) {
+                if (log.getMessage().contains("REQUEST PARAM VALUE")) {
+                    requestLog = true;
+                    continue;
+                } else if(log.getMessage().contains("RESPONSE PARAM VALUE")) {
+                    responseLog = true;
+                    continue;
+
+                }
+            }
+            if(requestLog && requestLog) {
+                break;
+            }
+        }
+        Assert.assertTrue((requestLog && responseLog), "Relevant log not found in carbon logs");
     }
 
     @AfterClass(alwaysRun = true)
