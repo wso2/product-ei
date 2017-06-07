@@ -40,7 +40,9 @@ public class CloneSmallMessageTestCase extends ESBIntegrationTest {
         init();
         client = new CloneClient();
         axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_simple.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "CloneAndAggregateTestProxy");
+        esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, "cloningMessagesSeq");
+        esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, "aggregateMessagesSeq");
         axis2Server.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE);
         axis2Server.start();
 
@@ -54,7 +56,7 @@ public class CloneSmallMessageTestCase extends ESBIntegrationTest {
         String response;
         for (int i = 0; i < 20; i++) {
             response =
-                    client.getResponse(getMainSequenceURL(), symbol);
+                    client.getResponse(getProxyServiceURLHttp("CloneAndAggregateTestProxy"), symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.contains("WSO2"));
         }
@@ -69,7 +71,7 @@ public class CloneSmallMessageTestCase extends ESBIntegrationTest {
         String response;
         for (int i = 0; i < 100; i++) {
             response =
-                    client.getResponse(getMainSequenceURL(),
+                    client.getResponse(getProxyServiceURLHttp("CloneAndAggregateTestProxy"),
                                        symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.contains("WSO2"));

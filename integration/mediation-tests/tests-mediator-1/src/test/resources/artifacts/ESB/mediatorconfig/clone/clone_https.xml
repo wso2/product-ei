@@ -2,36 +2,20 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <sequence name="aggregateMessages">
-        <aggregate>
-            <completeCondition>
-                <messageCount min="-1" max="-1"/>
-            </completeCondition>
-            <onComplete xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:m0="http://services.samples" expression="//m0:getQuoteResponse">
-                <send/>
-            </onComplete>
-        </aggregate>
-    </sequence>
 
-    <sequence name="fault">
-        <log level="full">
-            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
-            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
-            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
-        </log>
-        <drop/>
-    </sequence>
-    <sequence name="main">
-        <in>
-            <sequence key="cloningMessages"/>
-        </in>
-        <out>
-            <sequence key="aggregateMessages"/>
-        </out>
-        <description>The main sequence for the message mediation</description>
-    </sequence>
-    
-    
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="CloneIntegrationEndpointsTestProxy2" transports="https http"
+           startOnLoad="true" trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <sequence key="cloningMessages"/>
+            </inSequence>
+            <outSequenc>
+                <sequence key="aggregateMessages"/>
+            </outSequenc>
+        </target>
+    </proxy>
+
     <proxy name="StockQuoteProxy" transports="https">
         <target>
             <endpoint>

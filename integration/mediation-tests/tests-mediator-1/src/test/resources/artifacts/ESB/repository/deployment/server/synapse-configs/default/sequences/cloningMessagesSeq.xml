@@ -1,0 +1,24 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="cloningMessagesSeq">
+    <clone id="clone3" sequential="true">
+        <log level="full">
+        </log>
+        <target>
+            <sequence>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9001/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </sequence>
+        </target>
+        <target>
+            <sequence>
+                <send>
+                    <endpoint name="ep2">
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </sequence>
+        </target>
+    </clone>
+</sequence>
