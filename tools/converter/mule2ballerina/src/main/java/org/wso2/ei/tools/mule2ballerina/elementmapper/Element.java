@@ -23,13 +23,13 @@ package org.wso2.ei.tools.mule2ballerina.elementmapper;
  */
 public enum Element {
 
-    MULE_HTTP_LISTENER_CONFIG("http:listener-config",
-        "org.wso2.ei.tools.mule2ballerina.model" + ".HttpListenerConfig"),
+    MULE_HTTP_LISTENER_CONFIG("http:listener-config", "org.wso2.ei.tools.mule2ballerina.model" + ".HttpListenerConfig"),
     MULE_HTTP_LISTENER("http:listener", "org.wso2.ei.tools.mule2ballerina.model.HttpListener"),
     MULE_FLOW("flow", "org.wso2.ei.tools.mule2ballerina.model.Flow"),
     MULE_SET_PAYLOAD("set-payload", "org.wso2.ei.tools.mule2ballerina.model.Payload"),
     MULE_HTTP_REQUEST("http:request", "org.wso2.ei.tools.mule2ballerina.model.HttpRequest"),
-    MULE_HTTP_REQUEST_CONFIG("http:request-config", "org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig");
+    MULE_HTTP_REQUEST_CONFIG("http:request-config", "org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig"),
+    MULE_LOGGER("logger", "org.wso2.ei.tools.mule2ballerina.model.Logger");
 
     private String value;
     private String mClassName;

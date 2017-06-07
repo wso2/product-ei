@@ -211,6 +211,10 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createStringLiteral(null, null, stringLiteral);
     }
 
+    public void createIntegerLiteral(String intLiteral) {
+        modelBuilder.createIntegerLiteral(null, null, intLiteral);
+    }
+
     public void createFunctionInvocation(boolean argsAvailable) {
         modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
     }
@@ -259,5 +263,9 @@ public class BallerinaASTModelBuilder {
 
     public void addComment(String comment) {
         modelBuilder.addCommentStmt(null, null, comment);
+    }
+
+    public void addFunctionInvocationStatement(boolean argsAvailable) {
+        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
     }
 }

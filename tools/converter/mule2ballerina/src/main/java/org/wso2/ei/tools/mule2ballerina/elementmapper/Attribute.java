@@ -32,7 +32,9 @@ public enum Attribute {
     ALLOWED_MOTHODS("allowedMethods", "allowedMethods"),
     VALUE("value", "value"),
     METHOD("method", "method"),
-    PROTOCOL("protocol", "protocol");
+    PROTOCOL("protocol", "protocol"),
+    LEVEL("level", "level"),
+    MESSAGE("message", "message");
 
     private String attribute;
     private String property;
