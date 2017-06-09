@@ -1,0 +1,27 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="filterMediatorXpathWithORTestProxy"
+       transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log/>
+            <filter xmlns:soapenv11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenv12="http://www.w3.org/2003/05/soap-envelope" xmlns:m0="http://services.samples" xpath="//soapenv11:Envelope/soapenv11:Body/m0:getQuote/m0:request/m0:symbol|//soapenv12:Envelope/soapenv12:Body/m0:getQuote/m0:request/m0:symbol|//soapenv12:Envelope/soapenv12:Body/m0:getQuote/m0:request/m0:symbol">
+                <then>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                    <drop/>
+                </then>
+                <else>
+                    <log>
+                        <property name="message" value="****Filter condition Not Satisfied, filterMediatorXpathWithORTest failed******"/>
+                    </log>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
