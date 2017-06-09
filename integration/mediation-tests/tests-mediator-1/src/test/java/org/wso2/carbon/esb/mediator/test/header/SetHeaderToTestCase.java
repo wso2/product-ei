@@ -32,14 +32,15 @@ public class SetHeaderToTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/header/to_header_set_synapse.xml");
+        verifyProxyServiceExistence("setToHeaderTestProxy");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Sample 6: set To in headers of incoming messages")
+    @Test(groups = { "wso2.esb" },
+          description = "Sample 6: set To in headers of incoming messages")
     public void setHeaderTo() throws AxisFault {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("setToHeaderTestProxy"), null, "IBM");
         assertTrue(response.toString().contains("IBM"));
 
     }

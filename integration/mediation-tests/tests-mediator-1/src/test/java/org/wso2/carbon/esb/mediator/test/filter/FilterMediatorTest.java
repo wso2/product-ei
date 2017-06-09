@@ -70,9 +70,8 @@ public class FilterMediatorTest extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"})
     public void filterMediatorWithSourceAndRegexNSTest() throws Exception {
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "filters" + File.separator + "filter" + File.separator + "synapse1.xml");
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), toUrl, "IBM");
+        verifyProxyServiceExistence("filterMediatorWithSourceAndRegexNSTestProxy");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("filterMediatorWithSourceAndRegexNSTestProxy"), toUrl, "IBM");
         Assert.assertTrue(response.toString().contains("GetQuoteResponse"));
         Assert.assertTrue(response.toString().contains("IBM Company"));
     }
@@ -85,9 +84,8 @@ public class FilterMediatorTest extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"})
     public void filterMediatorWithXpathTest() throws Exception {
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "filters" + File.separator + "filter" + File.separator + "synapse2.xml");
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
+        verifyProxyServiceExistence("filterMediatorWithXpathTestProxy");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("filterMediatorWithXpathTestProxy"), null, "IBM");
         Assert.assertTrue(response.toString().contains("GetQuoteResponse"));
         Assert.assertTrue(response.toString().contains("IBM Company"));
     }
@@ -100,11 +98,9 @@ public class FilterMediatorTest extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"})
     public void filterMediatorXpathWithORTest() throws Exception {
-
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "filters" + File.separator + "filter" + File.separator + "synapse3.xml");
-        OMElement response11 = axis2Client.sendSimpleStockQuoteSoap11(getMainSequenceURL(), null, "IBM");
-        OMElement response12 = axis2Client.sendSimpleStockQuoteSoap12(getMainSequenceURL(), null, "IBM");
+        verifyProxyServiceExistence("filterMediatorXpathWithORTestProxy");
+        OMElement response11 = axis2Client.sendSimpleStockQuoteSoap11(getProxyServiceURLHttp("filterMediatorXpathWithORTestProxy"), null, "IBM");
+        OMElement response12 = axis2Client.sendSimpleStockQuoteSoap12(getProxyServiceURLHttp("filterMediatorXpathWithORTestProxy"), null, "IBM");
 
         Assert.assertTrue(response11.toString().contains("GetQuoteResponse"));
         Assert.assertTrue(response11.toString().contains("IBM Company"));
