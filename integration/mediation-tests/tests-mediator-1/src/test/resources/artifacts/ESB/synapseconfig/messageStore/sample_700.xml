@@ -29,5 +29,4 @@
 		</out>
 		<description>The main sequence for the message mediation</description>
 	</sequence>
-	<messageStore name="automationMessageStore" />
 </definitions>
