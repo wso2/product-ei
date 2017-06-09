@@ -37,7 +37,7 @@ public class SetHeaderActionTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/header/action_header_set_synapse.xml");
+        verifyProxyServiceExistence("setActionHeaderTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "set action in headers of incoming messages")
@@ -45,7 +45,7 @@ public class SetHeaderActionTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = sendReceive(
-                getProxyServiceURLHttp("HeaderProxy"),
+                getProxyServiceURLHttp("setActionHeaderTestProxy"),
                 "IBM");
         assertTrue(response.toString().contains("IBM"));
 
@@ -66,7 +66,7 @@ public class SetHeaderActionTestCase extends ESBIntegrationTest {
         sender = new ServiceClient();
         options = new Options();
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
-        options.setAction("urn:getPrice");
+        options.setAction("urn:getPrice123");
 
         if (trpUrl != null && !"null".equals(trpUrl)) {
             options.setProperty(Constants.Configuration.TRANSPORT_URL, trpUrl);
