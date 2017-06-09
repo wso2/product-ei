@@ -33,20 +33,19 @@ public class ReplacePropertyByEnrichTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config12/synapse.xml");
-
+        verifyProxyServiceExistence("enrichReplacePropertyByEnrichTestProxy");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "replacing a property by using an enrich mediator")
+    @Test(groups = { "wso2.esb" },
+          description = "replacing a property by using an enrich mediator")
     public void test() throws AxisFault, XPathExpressionException {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample2")
-                , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
-
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichReplacePropertyByEnrichTestProxy"),
+                        getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
 
         Assert.assertTrue(response.toString().contains("WSO2 Company"), "Symbol Name mismatched");
         Assert.assertTrue(response.toString().contains(">WSO2</"), "Symbol Name mismatched");
-
 
     }
 

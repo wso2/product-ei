@@ -1,0 +1,34 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichSourceXpathAsChildTargetXpathTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full" />
+
+            <enrich>
+
+                <source  xpath="//ns:getQuoteResponse/ns:return/ax21:symbol"
+                         xmlns:ns="http://services.samples"
+                         xmlns:ax21="http://services.samples/xsd" />
+
+                <target xmlns:ns="http://services.samples"
+                        xmlns:ax21="http://services.samples/xsd"
+                        action="child"
+                        xpath="//ns:getQuoteResponse/ns:return/ax21:name/text()"  />
+
+            </enrich>
+
+            <log level="full" />
+            <send />
+        </outSequence>
+    </target>
+
+    <description></description>
+</proxy>

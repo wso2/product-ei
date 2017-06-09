@@ -43,13 +43,13 @@ public class EnrichMediatorFollowedByEnrichIntegrationTestCase extends ESBIntegr
                                                                   context.getContextTenant().getContextUser().getUserName(),
                                                                   context.getContextTenant().getContextUser().getPassword());
         uploadResourcesToGovernanceRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/enrich_by_enrich.xml");
+        verifyProxyServiceExistence("enrichTwiceTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Enrich mediator followed by enrich mediator")
     public void enrichMediatorFollowedByEnrichMediator() throws Exception {
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp(
-                "enrichSample1"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
+                "enrichTwiceTestProxy"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertNotNull(response, "Response message is null");
         assertEquals(response.getLocalName(), "CheckPriceResponse", "CheckPriceResponse not match");
         assertTrue(response.toString().contains("Price"), "No price tag in response");

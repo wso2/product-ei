@@ -37,7 +37,7 @@ public class EnrichIntegrationAddSiblingInOutMessageTestCase extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/enrich_add_sibling_in_out_msg.xml");
+        verifyProxyServiceExistence("enrichAddSiblingInOutMessageTestProxy");
         wireMonitorServer = new WireMonitorServer(8991);
 
     }
@@ -52,7 +52,7 @@ public class EnrichIntegrationAddSiblingInOutMessageTestCase extends ESBIntegrat
                          "</m:getQuote>";
         OMElement payloadOM = AXIOMUtil.stringToOM(payload);
         try {
-            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample3")
+            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddSiblingInOutMessageTestProxy")
                     , null, payloadOM);
         } catch (Exception e) {
 
