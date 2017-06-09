@@ -43,14 +43,14 @@ public class EnrichIntegrationReplaceByPropertyTestCase extends ESBIntegrationTe
                                                                   context.getContextTenant().getContextUser().getUserName(),
                                                                   context.getContextTenant().getContextUser().getPassword());
         uploadResourcesToGovernanceRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/enrich_replace_by_property.xml");
+        verifyProxyServiceExistence("enrichReplaceByPropertyTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Enrich mediator replace a part of message define in " +
                                                "xpath by property in source config")
     public void enrichMediatorReplaceByProperty() throws Exception {
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp(
-                "enrichSample1"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
+                "enrichReplaceByPropertyTestProxy"), getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertNotNull(response, "Response message is null");
         assertEquals(response.getLocalName(), "CheckPriceResponse", "CheckPriceResponse not match");
         assertTrue(response.toString().contains("Price"), "No price tag in response");

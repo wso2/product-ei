@@ -35,7 +35,7 @@ public class EnrichIntegrationAddContentAsChildTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/enrich_add_as_child.xml");
+        verifyProxyServiceExistence("enrichAddContentAsChildTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Enrich mediator:Add as a child to message body")
@@ -45,7 +45,7 @@ public class EnrichIntegrationAddContentAsChildTestCase extends ESBIntegrationTe
                          "</m:request>" +
                          "</m:getQuote>";
         OMElement payloadOM = AXIOMUtil.stringToOM(payload);
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample3")
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddContentAsChildTestProxy")
                 , null, payloadOM);
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");

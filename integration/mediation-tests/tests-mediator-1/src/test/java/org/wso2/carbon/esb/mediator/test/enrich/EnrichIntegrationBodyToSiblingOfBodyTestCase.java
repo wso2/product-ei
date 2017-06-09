@@ -40,8 +40,7 @@ public class EnrichIntegrationBodyToSiblingOfBodyTestCase extends ESBIntegration
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse_body_to_sibling_of_body.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichBodyToSiblingOfBodyTest");
     }
 
     //get the body of request and add it as a sibling of response.
@@ -79,7 +78,7 @@ public class EnrichIntegrationBodyToSiblingOfBodyTestCase extends ESBIntegration
         AxisOperationClient operationClient = new AxisOperationClient();
         OMElement response = null;
         try {
-            response = operationClient.send(getProxyServiceURLHttp("enrichSample"), null,
+            response = operationClient.send(getProxyServiceURLHttp("enrichBodyToSiblingOfBodyTest"), null,
                                             createQuoteRequestBody("WSO2"), "urn:getQuote");
         } finally {
             operationClient.destroy();

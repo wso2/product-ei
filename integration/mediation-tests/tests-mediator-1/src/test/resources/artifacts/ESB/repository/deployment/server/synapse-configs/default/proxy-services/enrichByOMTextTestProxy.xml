@@ -1,0 +1,34 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichByOMTextTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+            <enrich>
+                <source clone="true" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest/m0:Code/text()" />
+                <target type="property" property="symbol"/>
+            </enrich>
+            <enrich>
+                <source type="inline">
+                    <m:getQuote xmlns:m="http://services.samples">
+                        <m:request>
+                            <m:symbol>WSO2</m:symbol>
+                        </m:request>
+                    </m:getQuote>
+                </source>
+                <target xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
+            </enrich>
+            <log level="full" />
+            <enrich>
+                <source type="property" property="symbol"/>
+                <target xmlns:m="http://services.samples"
+                        xpath="//m:getQuote/m:request/m:symbol/text()"/>
+            </enrich>
+            <log level="full"/>
+            <send />
+        </inSequence>
+        <outSequence>
+            <xslt key="gov:/xslt/transform_back.xslt" />
+            <send />
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

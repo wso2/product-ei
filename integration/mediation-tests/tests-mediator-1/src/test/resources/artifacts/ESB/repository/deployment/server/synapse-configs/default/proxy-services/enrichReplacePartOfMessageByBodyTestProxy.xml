@@ -1,0 +1,38 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichReplacePartOfMessageByBodyTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <property xmlns:ax21="http://www.bea.com/2003/05/xmlbean/ltgfmt" xmlns:xs="http://ws.apache.org/axis2" xmlns:p="http://ws.apache.org/axis2"
+                      name="test" expression="//p:getQuote" scope="default"/>
+            <log level="full"/>
+
+
+            <enrich>
+                <source type="body"/>
+                <target type="property" property="body"/>
+            </enrich>
+
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="custom">
+                <property xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"
+                          name="TEST" expression="//ns:getQuoteResponse/ns:return/ax21:symbol/text()"/>
+            </log>
+
+            <enrich>
+                <source type="property" property="body"/>
+                <target xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd"
+                        action="replace" xpath="//ns:getQuoteResponse/ns:return"/>
+            </enrich>
+
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

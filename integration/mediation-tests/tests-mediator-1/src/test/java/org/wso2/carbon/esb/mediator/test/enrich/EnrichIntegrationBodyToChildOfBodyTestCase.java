@@ -33,8 +33,7 @@ public class EnrichIntegrationBodyToChildOfBodyTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse_body_to_child_of_body.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichBodyToChildOfBodyTestProxy");
     }
 
     //get the body of request and add it as a child of response.
@@ -43,7 +42,7 @@ public class EnrichIntegrationBodyToChildOfBodyTestCase extends ESBIntegrationTe
     public void testEnrichMediator() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample"), null,
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichBodyToChildOfBodyTestProxy"), null,
                                                            "WSO2");
 
         assertNotNull(response, "Response message null");

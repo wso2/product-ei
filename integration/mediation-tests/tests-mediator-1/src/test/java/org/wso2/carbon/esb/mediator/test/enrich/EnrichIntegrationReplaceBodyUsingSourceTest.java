@@ -41,14 +41,13 @@ public class EnrichIntegrationReplaceBodyUsingSourceTest extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich_mediator/replace_body_using_source_type_body.xml");
-
+        verifyProxyServiceExistence("enrichReplaceBodyUsingSourceTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Tests-replace body using source type body")
     public void testReplaceBodyUsingSourceBody() throws AxisFault, XMLStreamException {
 
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample3"), null,"IBM");
+        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichReplaceBodyUsingSourceTestProxy"), null,"IBM");
         System.out.println(response);
         assertNotNull(response,"Response is null");
         assertEquals(response.getFirstElement().getFirstChildWithName

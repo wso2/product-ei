@@ -41,14 +41,13 @@ public class EnrichIntegrationReplacePartOfMessageByBodyTest extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception, ServletException, RemoteException {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich/replace_part_of_msg_by_body.xml");
-
+        verifyProxyServiceExistence("enrichReplacePartOfMessageByBodyTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Tests-Replace part of the message defined by xpath from message body")
     public void testReplacePartOfMessageByBody() throws AxisFault, XMLStreamException {
 
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample6"), null,"WSO2");
+        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichReplacePartOfMessageByBodyTestProxy"), null,"WSO2");
         assertNotNull(response,"Response is null");
         assertEquals(response.getFirstElement().getLocalName(), "getQuote",
                      "Tag does not match");

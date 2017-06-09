@@ -1,0 +1,23 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichAddContentAsChildTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+            <enrich>
+                <source type="inline" clone="true">
+                    <m:symbol xmlns:m="http://services.samples">IBM</m:symbol>
+                </source>
+                <target xmlns:m="http://services.samples" action="child" xpath="//m:getQuote/m:request" />
+            </enrich>
+            <log level="full" />
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send />
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

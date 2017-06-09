@@ -36,8 +36,7 @@ public class EnrichIntegrationAddChildXpathTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse_child_xpath.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichAddChildByXPathTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Add custom content as a child to the part of message" +
@@ -45,7 +44,7 @@ public class EnrichIntegrationAddChildXpathTestCase extends ESBIntegrationTest {
     public void testEnrichMediator() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample3"), null,
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddChildByXPathTestProxy"), null,
                                                            createQuoteRequestBody());
         assertNotNull(response, "Response message null");
         OMElement returnTag = response.getFirstElement();
