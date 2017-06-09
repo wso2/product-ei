@@ -26,6 +26,7 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 public class Payload extends BaseObject implements Processor {
 
     private String value;
+    private String mimeType;
 
     @Override
     public void accept(Visitor visitor) {
@@ -43,5 +44,13 @@ public class Payload extends BaseObject implements Processor {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 }
