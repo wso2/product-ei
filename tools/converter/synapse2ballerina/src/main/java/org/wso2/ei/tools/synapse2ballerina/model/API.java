@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Represents synapse API
+ */
 @XmlRootElement(namespace = "http://ws.apache.org/ns/synapse")
 public class API {
 
@@ -54,7 +57,8 @@ public class API {
         return resourceList;
     }
 
-    @XmlElement(name="resource", type = Resource.class)
+    @XmlElement(name = "resource",
+                type = Resource.class)
     public void setResource(Resource resource) {
         this.resourceList.add(resource);
     }

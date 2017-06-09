@@ -35,6 +35,9 @@ import javax.xml.transform.stream.StreamSource;
 
 import static org.wso2.ei.tools.synapse2ballerina.builder.ASTBuilder.addImport;
 
+/**
+ * Represents synapse's payload factory mediator
+ */
 @XmlRootElement(name = "payloadFactory")
 public class PayloadFactoryMediator implements Mediator {
 
@@ -70,10 +73,9 @@ public class PayloadFactoryMediator implements Mediator {
         ballerinaASTModelBuilder.createVariable(responseVariableName, true);
 
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createBackTickExpression("`"+getPayload().trim()+"`");
+        ballerinaASTModelBuilder.createBackTickExpression("`" + getPayload().trim() + "`");
         ballerinaASTModelBuilder.addTypes(getMediaType());
         ballerinaASTModelBuilder.createVariable("payload", true);
-
 
         addImport(Constants.BLANG_PKG_MESSAGES);
         ballerinaASTModelBuilder

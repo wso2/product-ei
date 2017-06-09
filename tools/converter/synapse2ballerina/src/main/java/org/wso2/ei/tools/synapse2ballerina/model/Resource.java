@@ -25,6 +25,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
+/**
+ * Represents synapse API's resource
+ */
 public class Resource {
     //todo introduce enum later
     private List<String> methodList = new ArrayList<>();
@@ -34,8 +37,6 @@ public class Resource {
     private String urlMapping;
 
     private List<Sequence> sequenceList = new ArrayList<>();
-
-
 
     public List<String> getMethodList() {
         return methodList;
@@ -70,10 +71,12 @@ public class Resource {
     }
 
     @XmlElements({
-                            @XmlElement(name = "inSequence", type = Sequence.class),
-                            @XmlElement(name = "outSequence", type = Sequence.class)
-                    })
-    public void setSequence (Sequence sequence) {
+                         @XmlElement(name = "inSequence",
+                                     type = Sequence.class),
+                         @XmlElement(name = "outSequence",
+                                     type = Sequence.class)
+                 })
+    public void setSequence(Sequence sequence) {
         this.sequenceList.add(sequence);
     }
 
