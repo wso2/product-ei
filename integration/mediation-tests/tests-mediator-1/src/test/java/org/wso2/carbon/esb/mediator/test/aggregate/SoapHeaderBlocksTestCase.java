@@ -32,7 +32,7 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
     private final int MAX_TIME = 120000;
     private final String carFileName = "SoapHeaderTestRegFiles_1.0.0";
     private final String carFileNameWithExtension = "SoapHeaderTestRegFiles_1.0.0.car";
-    private final String serviceName="TestProxy";
+    private final String serviceName="SoapHeaderBlockTestProxy";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {

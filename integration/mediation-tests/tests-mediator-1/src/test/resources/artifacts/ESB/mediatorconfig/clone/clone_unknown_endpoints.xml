@@ -3,7 +3,7 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <sequence name="cloningMessages">
+    <sequence name="cloningMessages9" transports="https http">
         <clone id="clone3" sequential="true">
             <target sequence="anon">
                 <sequence>
@@ -32,10 +32,10 @@
         </clone>
     </sequence>
 
-    <proxy name="CloneIntegrationAnonymousEndpointsTestProxy">
+    <proxy name="CloneIntegrationAnonymousEndpointsTestProxy" transports="https http">
         <target>
             <inSequence>
-                <sequence key="cloningMessages"/>
+                <sequence key="cloningMessages9"/>
             </inSequence>
             <outSequence>
                 <sequence key="aggregateMessagesSeq"/>

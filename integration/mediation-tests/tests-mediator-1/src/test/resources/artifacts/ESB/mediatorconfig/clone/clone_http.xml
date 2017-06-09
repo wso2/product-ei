@@ -14,7 +14,7 @@
             </onComplete>
         </aggregate>
     </sequence>
-    <sequence name="cloningMessages">
+    <sequence name="cloningMessages5">
         <clone sequential="true">
             <target sequence="anon">
                 <sequence>
@@ -72,7 +72,7 @@
         <description/>
         <target>
             <inSequence>
-                <sequence key="cloningMessages"/>
+                <sequence key="cloningMessages5"/>
             </inSequence>
             <outSequenc>
                 <sequence key="aggregateMessages"/>
