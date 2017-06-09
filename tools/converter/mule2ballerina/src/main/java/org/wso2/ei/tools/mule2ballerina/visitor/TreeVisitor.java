@@ -33,6 +33,7 @@ import org.wso2.ei.tools.mule2ballerina.model.Payload;
 import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
+import org.wso2.ei.tools.mule2ballerina.util.LogLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -292,22 +293,25 @@ public class TreeVisitor implements Visitor {
         }
         ballerinaASTAPI.createNameReference(Constant.BLANG_SYSTEM, Constant.BLANG_LOG);
         ballerinaASTAPI.startExprList();
-        switch (log.getLevel()) {
-        case "TRACE":
-            ballerinaASTAPI.createIntegerLiteral("1");
+
+        LogLevel logLevel = LogLevel.get(log.getLevel());
+
+        switch (logLevel) {
+        case LOG_TRACE:
+            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_TRACE.getValue());
             break;
-        case "DEBUG":
-            ballerinaASTAPI.createIntegerLiteral("2");
+        case LOG_DEBUG:
+            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_DEBUG.getValue());
             break;
-        case "WARN":
-            ballerinaASTAPI.createIntegerLiteral("4");
+        case LOG_WARN:
+            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_WARN.getValue());
             break;
-        case "ERROR":
-            ballerinaASTAPI.createIntegerLiteral("5");
+        case LOG_ERROR:
+            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_ERROR.getValue());
             break;
-        case "INFO":
+        case LOG_INFO:
         default:
-            ballerinaASTAPI.createIntegerLiteral("3");
+            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_INFO.getValue());
             break;
         }
 
