@@ -22,6 +22,9 @@ import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 
 import java.util.Map;
 
+/**
+ * Represents synapse's mediator
+ */
 public interface Mediator {
 
     void build(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters);

@@ -30,6 +30,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Maps the synapse to ballerina
+ */
 public class ASTBuilder {
 
     private static String serviceName;
