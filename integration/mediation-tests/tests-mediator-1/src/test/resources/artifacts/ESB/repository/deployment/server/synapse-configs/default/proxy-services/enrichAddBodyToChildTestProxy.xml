@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichAddBodyToChildTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full" />
+            <enrich>
+                <source type="body" clone="true"/>
+                <target xmlns:ns="http://services.samples" action="child" xpath="//ns:getQuoteResponse/ns:return" />
+            </enrich>
+            <send />
+        </outSequence>
+    </target>
+
+    <description></description>
+</proxy>

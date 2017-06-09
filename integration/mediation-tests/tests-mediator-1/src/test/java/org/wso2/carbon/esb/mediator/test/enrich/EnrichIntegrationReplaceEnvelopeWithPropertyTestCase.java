@@ -40,8 +40,7 @@ public class EnrichIntegrationReplaceEnvelopeWithPropertyTestCase extends ESBInt
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse_replace_envelope_property.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichReplaceEnvelopeWithPropertyTestProxy");
     }
 
     //test wether the rresponse contains the replaced payload.
@@ -86,7 +85,7 @@ public class EnrichIntegrationReplaceEnvelopeWithPropertyTestCase extends ESBInt
         AxisOperationClient operationClient = new AxisOperationClient();
         OMElement response = null;
         try {
-            response = operationClient.send(getProxyServiceURLHttp("enrichSample2"), null,
+            response = operationClient.send(getProxyServiceURLHttp("enrichReplaceEnvelopeWithPropertyTestProxy"), null,
                                             createQuoteRequestBody("WSO2"), "urn:getQuote");
         } finally {
             operationClient.destroy();

@@ -35,8 +35,7 @@ public class EnrichIntegrationAddDefinedPropertyToDefinedChildPropertyTestCase
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse_add_child_from_property.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichAddChildFromPropertyTestProxy");
     }
 
     //add a child to the response body, and check whether those child elements are contained in the response.
@@ -44,7 +43,7 @@ public class EnrichIntegrationAddDefinedPropertyToDefinedChildPropertyTestCase
     public void testEnrichMediator() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample2"), null,
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddChildFromPropertyTestProxy"), null,
                                                            "WSO2");
 
         assertNotNull(response, "Response message null");

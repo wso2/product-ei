@@ -1,0 +1,46 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichReplaceEnvelopeTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+
+
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full" />
+            <enrich>
+                <source type="inline" clone="true">
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soapenv:Header>
+                            <TestHeader>Test</TestHeader>
+                        </soapenv:Header>
+                        <soapenv:Body>
+
+                            <ns:getQuoteResponse xmlns:ns="http://services.samples">
+                                <ns:return xmlns:ax21="http://services.samples/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ax21:GetQuoteResponse">
+                                    <ax21:change>3.863100261988071</ax21:change>
+                                    <ax21:earnings>-9.934701745247875</ax21:earnings>
+                                    <ax21:high>-93.88647573070926</ax21:high>
+                                    <ax21:last>94.71661466590444</ax21:last>
+                                    <ax21:lastTradeTimestamp>Wed Jul 25 14:11:46 IST 2012</ax21:lastTradeTimestamp>
+                                    <ax21:name>ABC Company</ax21:name>
+                                    <ax21:symbol>ABC</ax21:symbol>
+                                    <ax21:newTag>Test Field</ax21:newTag>
+                                </ns:return>
+                            </ns:getQuoteResponse>
+                        </soapenv:Body>
+                    </soapenv:Envelope>
+                </source>
+                <target type="envelope" />
+            </enrich>
+            <log level="full" />
+            <send />
+        </outSequence>
+    </target>
+
+    <description></description>
+</proxy>

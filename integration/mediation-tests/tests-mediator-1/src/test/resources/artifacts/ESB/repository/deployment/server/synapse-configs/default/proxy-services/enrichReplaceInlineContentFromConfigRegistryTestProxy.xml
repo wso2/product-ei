@@ -1,0 +1,18 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="enrichReplaceInlineContentFromConfigRegistryTestProxy" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+            <enrich>
+                <source type="inline" clone="true" key="conf:/required/registry_configs.xml"/>
+                <target xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
+            </enrich>
+            <log level="full" />
+            <send />
+        </inSequence>
+        <outSequence>
+            <xslt key="gov:/xslt/transform_back.xslt" />
+            <send />
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

@@ -37,13 +37,13 @@ public class EnrichIntegrationAddPropertyAsSiblingTest extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/add_property_as_sibling.xml");
+        verifyProxyServiceExistence("enrichAddPropertyAsSiblingTestProxy");
     }
 
 
     @Test(groups = "wso2.esb", description = "Tests-Adding a defined property as a sibling of message")
     public void testAddPropertyAsSibling() throws AxisFault, XMLStreamException {
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample6"), null,
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddPropertyAsSiblingTestProxy"), null,
                                                            "IBM");
         assertNotNull(response, "Response is null");
         assertEquals(response.getFirstElement().getFirstChildWithName

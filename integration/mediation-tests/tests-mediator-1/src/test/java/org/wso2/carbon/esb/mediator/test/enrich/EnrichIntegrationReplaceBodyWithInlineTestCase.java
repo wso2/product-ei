@@ -34,27 +34,30 @@ public class EnrichIntegrationReplaceBodyWithInlineTestCase extends ESBIntegrati
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichReplaceBodyWithInlineTestProxy");
     }
 
-    @Test(groups = "wso2.esb", description = "Replace body with inline")
+    @Test(groups = "wso2.esb",
+          description = "Replace body with inline")
     public void testEnrichMediator() throws Exception {
         OMElement response1, response2;
 
-        response1 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, createFakeRequest("WSO2"));
-        String response1SymbolValue = response1.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
+        response1 = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichReplaceBodyWithInlineTestProxy"), null,
+                        createFakeRequest("WSO2"));
+        String response1SymbolValue = response1.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
 
         assertNotNull(response1, "Response message null");
         assertEquals(response1SymbolValue, "ABC", "Content not changed");
 
-        response2 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
-        String response2SymbolValue = response1.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
+        response2 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichReplaceBodyWithInlineTestProxy"), null, "WSO2");
+        String response2SymbolValue = response1.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
         assertNotNull(response2, "Response message null");
 
         assertEquals(response2SymbolValue, "ABC", "Content not changed");
         assertEquals(response2SymbolValue, response1SymbolValue, "Content not changed");
-
 
     }
 
