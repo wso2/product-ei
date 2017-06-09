@@ -289,15 +289,15 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - BallerinaFunction");
         /**
          * functionDefinition
-             :   'native' 'function'  callableUnitSignature ';'
-             |   'function' callableUnitSignature callableUnitBody
-             ;
+         :   'native' 'function'  callableUnitSignature ';'
+         |   'function' callableUnitSignature callableUnitBody
+         ;
          * callableUnitSignature
-             :   Identifier '(' parameterList? ')' returnParameters?
-             ;
+         :   Identifier '(' parameterList? ')' returnParameters?
+         ;
          * returnParameters
-             : '(' (parameterList | returnTypeList) ')'
-             ;
+         : '(' (parameterList | returnTypeList) ')'
+         ;
          */
 
         appendToBalSource(Constants.FUNCTION_STR + Constants.SPACE_STR + function.getName() + Constants.SPACE_STR +
@@ -411,14 +411,14 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - AssignStmt");
         /**
          * assignmentStatement
-            : variableReferenceList '=' (connectorInitExpression | actionInvocation | expression) ';';
+         : variableReferenceList '=' (connectorInitExpression | actionInvocation | expression) ';';
          * variableReferenceList
-            : variableReference (',' variableReference)*;
+         : variableReference (',' variableReference)*;
          * variableReference
-            :   nameReference                               # simpleVariableIdentifier// simple identifier
-            |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-            |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-            ;
+         :   nameReference                               # simpleVariableIdentifier// simple identifier
+         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+         ;
          */
         //handle lhs
         appendToBalSource(getIndentationForCurrentLine());
@@ -598,9 +598,9 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - ActionInvocationStmt");
         /**
          * actionInvocationStatement
-                        :   actionInvocation ';'
-                        |   variableReferenceList '=' actionInvocation ';'
-                        ;
+         :   actionInvocation ';'
+         |   variableReferenceList '=' actionInvocation ';'
+         ;
          */
         appendToBalSource(getIndentationForCurrentLine());
         actionInvocationStmt.getActionInvocationExpr().accept(this);
@@ -648,7 +648,6 @@ public class CodeGenVisitor implements NodeVisitor {
         transactionRollbackStmt.getRollbackBlock().getRollbackBlockStmt().accept(this);
         --indentDepth;
         appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
-
 
     }
 
@@ -805,9 +804,9 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - UnaryExpression");
         /**
          * expression
-                : ......
-                | ('+' | '-' | '!') expression    # unaryExpression
-                | ....
+         : ......
+         | ('+' | '-' | '!') expression    # unaryExpression
+         | ....
          */
         appendToBalSource(unaryExpression.getOperator().toString());
         unaryExpression.getRExpr().accept(this);
@@ -841,10 +840,10 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - ArrayMapAccessExpr");
         /**
          * variableReference
-             :   nameReference                               # simpleVariableIdentifier// simple identifier
-             |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-             |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-             ;
+         :   nameReference                               # simpleVariableIdentifier// simple identifier
+         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+         ;
          */
         appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
         arrayMapAccessExpr.getIndexExprs()[0].accept(this);
@@ -856,10 +855,10 @@ public class CodeGenVisitor implements NodeVisitor {
         logger.debug("Visit - FieldAccessExpr");
         /**
          * variableReference
-            :   nameReference                               # simpleVariableIdentifier// simple identifier
-            |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-            |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-            ;
+         :   nameReference                               # simpleVariableIdentifier// simple identifier
+         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+         ;
          */
         structAttributeAccessExpr.getVarRef().accept(this);
         if (structAttributeAccessExpr.getFieldExpr() != null) {
@@ -886,7 +885,7 @@ public class CodeGenVisitor implements NodeVisitor {
     @Override
     public void visit(BacktickExpr backtickExpr) {
         logger.debug("Visit - BacktickExpr");
-        appendToBalSource("`"+backtickExpr.getTemplateStr()+"`");
+        appendToBalSource("`" + backtickExpr.getTemplateStr() + "`");
     }
 
     @Override
