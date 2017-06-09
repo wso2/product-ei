@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <proxy name="StockQuoteProxy">
+    <proxy name="StockQuoteProxy" transports="https http">
         <target>
             <inSequence>
                 <call-template target="test_func">

@@ -1,6 +1,6 @@
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <proxy name="SplitAggregateProxy">
+    <proxy name="SplitAggregateProxy" transports="https http">
         <target faultSequence="errorHandler">
             <inSequence>
                 <!--use iterate sequence template to split incoming request and send-->

@@ -19,7 +19,7 @@
             <faultSequence/>
         </target>
     </proxy>
-    <proxy name="TestProxy"
+    <proxy name="SoapHeaderBlockTestProxy"
            transports="https"
            startOnLoad="true"
            trace="disable">
