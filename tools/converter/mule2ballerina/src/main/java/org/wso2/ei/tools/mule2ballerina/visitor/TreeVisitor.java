@@ -34,6 +34,7 @@ import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 import org.wso2.ei.tools.mule2ballerina.util.LogLevel;
+import org.wso2.ei.tools.mule2ballerina.util.MimeType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -128,11 +129,48 @@ public class TreeVisitor implements Visitor {
             importTracker.put(Constant.BLANG_PKG_MESSAGES, true);
         }
         logger.debug("----Payload");
-        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_PKG_MESSAGES_FUNC);
+
+        String payloadVariableName = "";
+
+        if (payload.getMimeType() != null) {
+            MimeType mimeType = MimeType.get(payload.getMimeType());
+
+            switch (mimeType) {
+            case XML:
+                ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
+                ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
+                payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
+                ballerinaASTAPI.createVariable(payloadVariableName, true); //name of the variable
+                ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
+                break;
+
+            /*
+            For Json variables, you have to manually remove the quotation surrounding the json value
+             */
+            case JSON:
+                ballerinaASTAPI.addComment(Constant.BLANG_COMMENT_JSON);
+                ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
+                ballerinaASTAPI.createStringLiteral(payload.getValue());
+                payloadVariableName = Constant.BLANG_VAR_JSON_PAYLOAD + ++variableCounter;
+                ballerinaASTAPI.createVariable(payloadVariableName, true); //name of the variable
+                ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
+                break;
+
+            default:
+                payloadVariableName = createVariableOfTypeString(payload.getValue(), true);
+                ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
+                break;
+            }
+        } else {
+            payloadVariableName = createVariableOfTypeString(payload.getValue(), true);
+            ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
+        }
+
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, refVarName);
         ballerinaASTAPI.createVariableRefExpr();
-        ballerinaASTAPI.createStringLiteral(payload.getValue());
+        ballerinaASTAPI.createNameReference(null, payloadVariableName);
+        ballerinaASTAPI.createVariableRefExpr();
         ballerinaASTAPI.endExprList(2);
         ballerinaASTAPI.createFunctionInvocation(true);
     }
@@ -195,7 +233,7 @@ public class TreeVisitor implements Visitor {
         }
 
         ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
-        funcParaName = Constant.BLANG_DEFAULT_MSG_PARAM_NAME + ++parameterCounter;
+        funcParaName = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
         ballerinaASTAPI.addParameter(0, false, funcParaName);
 
         if (listener.getPath() != null) {
@@ -211,15 +249,14 @@ public class TreeVisitor implements Visitor {
                             Constant.BLANG_VALUE, path);
                     ballerinaASTAPI.addAnnotationAttachment(1);
                     ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_STRING); //type of the parameter
-                    funcParaName = Constant.BLANG_CONNECT_PATHPARAM_NAME + ++parameterCounter;
+                    funcParaName = Constant.BLANG_VAR_CONNECT_PATHPARAM + ++parameterCounter;
                     ballerinaASTAPI.addParameter(1, false, funcParaName);
                 }
             }
         }
 
         ballerinaASTAPI.startCallableBody();
-        createVariableWithEmptyMap(Constant.BLANG_TYPE_MESSAGE, Constant.BLANG_RES_VARIABLE_NAME + ++variableCounter,
-                true);
+        createVariableWithEmptyMap(Constant.BLANG_TYPE_MESSAGE, Constant.BLANG_VAR_RESPONSE + ++variableCounter, true);
     }
 
     @Override
@@ -268,7 +305,7 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createStringLiteral(strUrl);
         ballerinaASTAPI.endExprList(1); // no of arguments
         ballerinaASTAPI.initializeConnector(true); //arguments available
-        connectorVarName = Constant.BLANG_CONNECT_VARIABLE_NAME + ++variableCounter;
+        connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
         ballerinaASTAPI.createVariable(connectorVarName, true);
     }
 
@@ -329,5 +366,13 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.addMapStructLiteral();
         ballerinaASTAPI.createVariable(variableName, exprAvailable);
         refVarName = variableName;
+    }
+
+    private String createVariableOfTypeString(String value, boolean exprAvailable) {
+        ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+        ballerinaASTAPI.createStringLiteral(value);
+        String variableName = Constant.BLANG_VAR_STRING_PAYLOAD + ++variableCounter;
+        ballerinaASTAPI.createVariable(variableName, exprAvailable); //name of the variable
+        return variableName;
     }
 }

@@ -34,7 +34,8 @@ public enum Attribute {
     METHOD("method", "method"),
     PROTOCOL("protocol", "protocol"),
     LEVEL("level", "level"),
-    MESSAGE("message", "message");
+    MESSAGE("message", "message"),
+    MIME_TYPE("mimeType", "mimeType");
 
     private String attribute;
     private String property;

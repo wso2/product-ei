@@ -51,6 +51,7 @@ import org.ballerinalang.model.expressions.ActionInvocationExpr;
 import org.ballerinalang.model.expressions.AddExpression;
 import org.ballerinalang.model.expressions.AndExpression;
 import org.ballerinalang.model.expressions.ArrayInitExpr;
+import org.ballerinalang.model.expressions.ArrayLengthExpression;
 import org.ballerinalang.model.expressions.ArrayMapAccessExpr;
 import org.ballerinalang.model.expressions.BacktickExpr;
 import org.ballerinalang.model.expressions.BasicLiteral;
@@ -97,7 +98,7 @@ import org.ballerinalang.model.statements.ReplyStmt;
 import org.ballerinalang.model.statements.ReturnStmt;
 import org.ballerinalang.model.statements.Statement;
 import org.ballerinalang.model.statements.ThrowStmt;
-import org.ballerinalang.model.statements.TransactionRollbackStmt;
+import org.ballerinalang.model.statements.TransactionStmt;
 import org.ballerinalang.model.statements.TransformStmt;
 import org.ballerinalang.model.statements.TryCatchStmt;
 import org.ballerinalang.model.statements.VariableDefStmt;
@@ -108,6 +109,8 @@ import org.ballerinalang.model.values.BInteger;
 import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+//import org.ballerinalang.model.statements.TransactionRollbackStmt;
 
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
@@ -628,13 +631,20 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     @Override
+    public void visit(TransactionStmt transactionStmt) {
+
+    }
+
+   /* @Override
     public void visit(TransactionRollbackStmt transactionRollbackStmt) {
         logger.debug("Visit - TransactionRollbackStmt");
 
-        /**
-         * transactionStatement : 'transaction' '{' statement* '}' rollbackClause;
-         * rollbackClause : 'aborted' '{' statement* '}';
-         */
+        */
+
+    /**
+     * transactionStatement : 'transaction' '{' statement* '}' rollbackClause;
+     * rollbackClause : 'aborted' '{' statement* '}';
+     *//*
         //handle transaction block
         appendToBalSource(getIndentationForCurrentLine() + Constants.TRANSACTION_STR + Constants.SPACE_STR +
                 Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
@@ -649,8 +659,7 @@ public class CodeGenVisitor implements NodeVisitor {
         --indentDepth;
         appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
 
-    }
-
+    }*/
     @Override
     public void visit(AbortStmt abortStmt) {
 
@@ -848,6 +857,11 @@ public class CodeGenVisitor implements NodeVisitor {
         appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
         arrayMapAccessExpr.getIndexExprs()[0].accept(this);
         appendToBalSource(Constants.ARRAY_END_STR);
+    }
+
+    @Override
+    public void visit(ArrayLengthExpression arrayLengthExpression) {
+
     }
 
     @Override
