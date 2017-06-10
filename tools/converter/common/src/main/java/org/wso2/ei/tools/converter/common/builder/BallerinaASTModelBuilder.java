@@ -214,7 +214,7 @@ public class BallerinaASTModelBuilder {
     public void createIntegerLiteral(String intLiteral) {
         modelBuilder.createIntegerLiteral(null, null, intLiteral);
     }
-    
+
     public void createBackTickExpression(String content) {
         modelBuilder.createBacktickExpr(null, null, content);
     }
@@ -246,7 +246,8 @@ public class BallerinaASTModelBuilder {
     public void createAction(String actionName, boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         if (processingActionInvocationStmt) {
-            modelBuilder.createActionInvocationStmt(null, null, nameReference, actionName, argsAvailable);
+            //  modelBuilder.createActionInvocationStmt(null, null, nameReference, actionName, argsAvailable);
+            modelBuilder.createActionInvocationStmt(null, null);
         } else {
             modelBuilder.addActionInvocationExpr(null, null, nameReference, actionName, argsAvailable);
         }
