@@ -28,14 +28,14 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>integration</artifactId>
+    <artifactId>integrations</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Integration Tests</name>
     <url>http://wso2.org</url>
 
     <modules>
+        <module>automation-extensions</module>
         <module>test-mb</module>
-        <!--<module>automation-extensions</module>-->
     </modules>
 
     <dependencies>

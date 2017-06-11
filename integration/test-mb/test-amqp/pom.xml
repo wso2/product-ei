@@ -48,8 +48,12 @@
                         <property>
                             <name>carbon.zip</name>
                             <value>
-                                ${basedir}/../../../distribution/target/wso2mb-${product.mb.version}.zip
+                                ${basedir}/../../../distribution/target/wso2ei-${product.ei.version}.zip
                             </value>
+                        </property>
+                        <property>
+                            <name>server.startup.script.file.name</name>
+                            <value>broker</value>
                         </property>
                         <property>
                             <name>framework.resource.location</name>
@@ -72,56 +76,6 @@
                     <workingDirectory>${basedir}/target</workingDirectory>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>copy-jacoco-dependencies</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${project.build.directory}/jacoco</outputDirectory>-->
-                            <!--<includeTypes>jar</includeTypes>-->
-                            <!--<includeArtifactIds>org.jacoco.agent</includeArtifactIds>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>copy-secVerifier</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${basedir}/target/security-verifier</outputDirectory>-->
-                            <!--<includeTypes>aar</includeTypes>-->
-                            <!--<includeArtifactIds>SecVerifier</includeArtifactIds>-->
-                            <!--<stripVersion>true</stripVersion>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>unpack-mar-jks</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>unpack</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<artifactItems>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.mb</groupId>-->
-                                    <!--<artifactId>wso2mb</artifactId>-->
-                                    <!--<version>${product.mb.version}</version>-->
-                                    <!--<type>zip</type>-->
-                                    <!--<overWrite>true</overWrite>-->
-                                    <!--<outputDirectory>${basedir}/target/tobeCopied/</outputDirectory>-->
-                                    <!--<includes>**/*.jks,**/*.mar,**/axis2_client.xml</includes>-->
-                                <!--</artifactItem>-->
-                            <!--</artifactItems>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -158,75 +112,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-                <!--<artifactId>maven-resources-plugin</artifactId>-->
-                <!--<version>2.6</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>copy-resources-jks</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-resources</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${basedir}/src/test/resources/keystores/products-->
-                            <!--</outputDirectory>-->
-                            <!--<resources>-->
-                                <!--<resource>-->
-                                    <!--<directory>-->
-                                        <!--${basedir}/target/tobeCopied/wso2mb-${product.mb.version}/repository/resources/security/-->
-                                    <!--</directory>-->
-                                    <!--<includes>-->
-                                        <!--<include>**/*.jks</include>-->
-                                    <!--</includes>-->
-                                <!--</resource>-->
-                            <!--</resources>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>copy-axis2files</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-resources</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${basedir}/src/test/resources/axis2config-->
-                            <!--</outputDirectory>-->
-                            <!--<resources>-->
-                                <!--<resource>-->
-                                    <!--<directory>-->
-                                        <!--${basedir}/target/tobeCopied/wso2mb-${product.mb.version}/repository/conf/axis2/-->
-                                    <!--</directory>-->
-                                    <!--<includes>-->
-                                        <!--<include>**/*.xml</include>-->
-                                    <!--</includes>-->
-                                <!--</resource>-->
-                            <!--</resources>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>copy-resources-mar</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-resources</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${basedir}/src/test/resources/client/modules-->
-                            <!--</outputDirectory>-->
-                            <!--<resources>-->
-                                <!--<resource>-->
-                                    <!--<directory>-->
-                                        <!--${basedir}/target/tobeCopied/wso2mb-${product.mb.version}/repository/deployment/client/modules-->
-                                    <!--</directory>-->
-                                    <!--<includes>-->
-                                        <!--<include>**/*.mar</include>-->
-                                    <!--</includes>-->
-                                <!--</resource>-->
-                            <!--</resources>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
@@ -236,13 +121,18 @@
             <artifactId>testng</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
+            <groupId>org.apache.geronimo.specs.wso2</groupId>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.andes.wso2</groupId>
+            <artifactId>andes-client</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.geronimo.specs.wso2</groupId>
-            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 
