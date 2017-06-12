@@ -43,8 +43,7 @@ public class PropertyIntegrationDisableAddressingForOutMessagesTestCase extends 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/disableAddressingForOutMessages.xml");
+        verifyProxyServiceExistence("disableAddressingTestProxy");
         axisOperationClient = new AxisOperationClient();
 
     }
@@ -53,7 +52,7 @@ public class PropertyIntegrationDisableAddressingForOutMessagesTestCase extends 
     public void testDisableAddressingForOutMessages() throws Exception {
 
         OMElement response = axisOperationClient.send
-                (getProxyServiceURLHttp("Axis2ProxyService"),
+                (getProxyServiceURLHttp("disableAddressingTestProxy"),
                  getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
                  createStandardRequest("wso2"),"urn:getQuote");
         assertNotNull(response, "Response is null");

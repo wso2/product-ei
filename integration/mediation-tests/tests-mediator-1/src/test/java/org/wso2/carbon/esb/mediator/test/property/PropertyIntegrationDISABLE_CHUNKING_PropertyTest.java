@@ -49,7 +49,7 @@ public class PropertyIntegrationDISABLE_CHUNKING_PropertyTest extends ESBIntegra
 
         wireServer.start();
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("Axis2ProxyService"), null,"WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("DISABLE_CHUNKING_TrueTestProxy"), null,"WSO2");
         } catch (Exception e) {
 
         }

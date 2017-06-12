@@ -49,16 +49,12 @@ import static org.testng.Assert.assertNotNull;
  */
 
 public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBIntegrationTest {
-
-    private ActiveMQServer activeMQServer
-            = new ActiveMQServer();
     private MessageConsumer consumer;
     private Connection connection;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        activeMQServer.startJMSBrokerAndConfigureESB();
         context = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
     }
 
@@ -72,9 +68,9 @@ public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBInte
             if (connection != null) {
                 connection.close();
             }
-            super.cleanup();
+
         } finally {
-            activeMQServer.stopJMSBrokerRevertESBConfiguration();
+            super.cleanup();
         }
     }
 

@@ -300,6 +300,15 @@
 		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
+        <parameter name="propertyIntegrationAxis2PropertiesTestCase" locked="false">
+            <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+            <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+            <parameter name="transport.jms.ConcurrentConsumers" locked="false">50</parameter>
+            <parameter name="transport.jms.MaxConcurrentConsumers" locked="false">200</parameter>
+        </parameter>
+
         <parameter name="default" locked="false">
         	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
         	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>

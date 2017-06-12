@@ -44,13 +44,10 @@ public class PropertyIntegrationOUT_ONLYPropertyTestCase extends ESBIntegrationT
 
     @Test(groups = "wso2.esb", description = "Tests when Out_Only property is disabled")
     public void testOutOnlyPropertyEnabledFalse() throws Exception {
-
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/OUT_ONLY_DISABLED.xml");
-
+        verifyProxyServiceExistence("OUT_ONLY_FalseTestProxy");
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("MyProxy"), null, "WSO2");
+                (getProxyServiceURLHttp("OUT_ONLY_FalseTestProxy"), null, "WSO2");
 
         assertTrue(response.toString().contains("GetQuoteResponse"));
         assertTrue(response.toString().contains("WSO2 Company"));
@@ -59,12 +56,10 @@ public class PropertyIntegrationOUT_ONLYPropertyTestCase extends ESBIntegrationT
     @Test(groups = "wso2.esb", description = "Tests when Out_Only property is enabled",
           dependsOnMethods = "testOutOnlyPropertyEnabledFalse", expectedExceptions = AxisFault.class)
     public void testOutOnlyPropertyEnabledTrue() throws Exception {
-
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/OUT_ONLY_ENABLED.xml");
+        verifyProxyServiceExistence("OUT_ONLY_TrueTestProxy");
 
         axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("MyProxy"), null, "WSO2");
+                (getProxyServiceURLHttp("OUT_ONLY_TrueTestProxy"), null, "WSO2");
     }
 }
 

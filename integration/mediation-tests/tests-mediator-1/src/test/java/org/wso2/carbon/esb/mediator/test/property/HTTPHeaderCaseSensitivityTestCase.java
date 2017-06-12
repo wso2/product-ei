@@ -35,8 +35,7 @@ public class HTTPHeaderCaseSensitivityTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/mediatorconfig/property/synapse_http_header_case_sensitivity.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("httpHeaderTestProxy");
     }
 
     /*Add a http header with name "TEST_HEADER" where all the letters are in uppercase.*/
@@ -47,7 +46,7 @@ public class HTTPHeaderCaseSensitivityTestCase extends ESBIntegrationTest {
         StockQuoteClient axis2Client1 = new StockQuoteClient();
         OMElement response;
         axis2Client1.addHttpHeader("TEST_HEADER", "uppercase");
-        response = axis2Client1.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("simpleProxy"), null,
+        response = axis2Client1.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("httpHeaderTestProxy"), null,
                                                             "WSO2");
         assertNotNull(response, "Response message null");
         OMElement returnElement = response.getFirstElement();
@@ -67,7 +66,7 @@ public class HTTPHeaderCaseSensitivityTestCase extends ESBIntegrationTest {
         StockQuoteClient axis2Client2 = new StockQuoteClient();
         OMElement response;
         axis2Client2.addHttpHeader("test_header", "lowercase");
-        response = axis2Client2.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("simpleProxy"), null,
+        response = axis2Client2.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("httpHeaderTestProxy"), null,
                                                             "WSO2");
         assertNotNull(response, "Response message null");
         OMElement returnElement = response.getFirstElement();
@@ -86,7 +85,7 @@ public class HTTPHeaderCaseSensitivityTestCase extends ESBIntegrationTest {
         StockQuoteClient axis2Client3 = new StockQuoteClient();
         OMElement response;
         axis2Client3.addHttpHeader("Test_Header", "mixed");
-        response = axis2Client3.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("simpleProxy"), null,
+        response = axis2Client3.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("httpHeaderTestProxy"), null,
                                                             "WSO2");
         assertNotNull(response, "Response message null");
         OMElement returnElement = response.getFirstElement();

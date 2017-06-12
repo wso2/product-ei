@@ -1,0 +1,13 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="RESPONSE_PropertyTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+            <send/>
+        </inSequence>
+    </target>
+</proxy>

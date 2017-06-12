@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="HTTP_SCTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log>
+                <property name="HTTP_SC" expression="$axis2:HTTP_SC"/>
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <property name="HTTP_SC" value="404" scope="axis2"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
