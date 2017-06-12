@@ -298,4 +298,12 @@
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15280RepeatServiceNameInURLTest"/>
         </classes>
     </test>
+
+    <!-- Test case is disabled because need axis2 1.6.1-wso2v21 version release -->
+<!--    <test name="RequestBoxJsonTests">
+        <classes>
+            <class name="org.wso2.ei.dataservice.integration.test.requestBox.RequestBoxJsonTestCase"/>
+        </classes>
+    </test>-->
+
 </suite>

@@ -16,7 +16,7 @@
   ~ under the License.
   -->
 
-<data name="JSONSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/json_sample">
+<data name="JSONSample" disableLegacyBoxcarringMode="true" enableBoxcarring="true" serviceNamespace="http://ws.wso2.org/dataservice/samples/json_sample">
    <config id="default">
       <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>
       <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/data-services/database/DATA_SERV_SAMP3</property>
