@@ -37,13 +37,12 @@ import static org.testng.Assert.assertEquals;
 public class PropertyIntegrationMessageFormatPropertyTestCase extends ESBIntegrationTest {
 
     private HttpClientUtil clientUtil;
-    private String proxyName = "MyProxy";
+    private String proxyName = "MESSAGE_FORMAT_TestProxy";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/MESSAGE_FORMAT.xml");
+        verifyProxyServiceExistence("MESSAGE_FORMAT_TestProxy");
         clientUtil = new HttpClientUtil();
     }
 

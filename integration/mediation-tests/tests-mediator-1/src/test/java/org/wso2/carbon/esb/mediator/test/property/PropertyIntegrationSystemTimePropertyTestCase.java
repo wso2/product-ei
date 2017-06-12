@@ -41,8 +41,7 @@ public class PropertyIntegrationSystemTimePropertyTestCase extends ESBIntegratio
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/SYSTEM_TIME.xml");
+        verifyProxyServiceExistence("SYSTEM_TIME_TestProxy");
 
     }
 
@@ -55,7 +54,7 @@ public class PropertyIntegrationSystemTimePropertyTestCase extends ESBIntegratio
     public void testSystemTime() throws Exception {
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("MyProxy"), null
+                getProxyServiceURLHttp("SYSTEM_TIME_TestProxy"), null
                 , "Wso2");
 
         assertNotNull(response, "Time returned is Null");

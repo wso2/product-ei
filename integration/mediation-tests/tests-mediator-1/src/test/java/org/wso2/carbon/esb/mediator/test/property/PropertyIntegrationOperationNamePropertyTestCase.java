@@ -38,8 +38,7 @@ public class PropertyIntegrationOperationNamePropertyTestCase extends ESBIntegra
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/OperationName.xml");
+        verifyProxyServiceExistence("propertyOperationNameTestProxy");
         clientUtil = new HttpClientUtil();
     }
 
@@ -51,7 +50,7 @@ public class PropertyIntegrationOperationNamePropertyTestCase extends ESBIntegra
     @Test(groups = "wso2.esb", description = "Testing functionality of OperationName Property")
     public void testOperationNameProperty() throws Exception {
 
-        OMElement response = clientUtil.get(getProxyServiceURLHttp("MyProxy"));
+        OMElement response = clientUtil.get(getProxyServiceURLHttp("propertyOperationNameTestProxy"));
         assertEquals(response.getText(),"mediate",
                      "Operation name should be mediate but received " + response.getText());
     }

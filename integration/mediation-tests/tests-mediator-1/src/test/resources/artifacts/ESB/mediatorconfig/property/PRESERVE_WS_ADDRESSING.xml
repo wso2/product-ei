@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="Axis2ProxyService" transports="https http" startOnLoad="true" trace="disable">
+    <proxy name="PRESERVE_WS_ADDRESSING_TestProxy" transports="https http" startOnLoad="true" trace="disable">
         <description/>
         <target>
             <inSequence>

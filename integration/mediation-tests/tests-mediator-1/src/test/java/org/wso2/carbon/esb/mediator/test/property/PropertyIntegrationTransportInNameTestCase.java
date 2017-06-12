@@ -34,8 +34,7 @@ public class PropertyIntegrationTransportInNameTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/TRANSPORT_IN_NAME.xml");
+        verifyProxyServiceExistence("TRANSPORT_IN_NAME_TestProxy");
 
     }
 
@@ -48,7 +47,7 @@ public class PropertyIntegrationTransportInNameTestCase extends ESBIntegrationTe
     public void testTransportInNameProperty() throws Exception {
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
-                                                                             ("HelloServiceProxy")
+                                                                             ("TRANSPORT_IN_NAME_TestProxy")
                 , null, "");
         assertEquals(response.toString(), "<transport>http</transport>",
                      "Transport information mismatch");

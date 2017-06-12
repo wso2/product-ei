@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="Axis2ProxyService" transports="https http" startOnLoad="true" trace="disable">
+    <proxy name="FORCE_HTTP_CONTENT_LENGTH_FalseTestProxy" transports="https http" startOnLoad="true" trace="disable">
         <description/>
         <target>
             <inSequence>
@@ -10,7 +10,7 @@
                     <property name="server-name" expression="get-property('SERVER_IP')"/>
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="WireMonitorEP2"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -19,7 +19,7 @@
         </target>
     </proxy>
 
-    <endpoint name="Axis2EP">
+    <endpoint name="WireMonitorEP2">
         <address uri="http://localhost:8994/services/SimpleStockQuoteService"/>
     </endpoint>
 </definitions>

@@ -40,8 +40,7 @@ public class
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/SYSTEM_DATE.xml");
+        verifyProxyServiceExistence("SYSTEM_DATE_TestProxy");
 
     }
 
@@ -54,7 +53,7 @@ public class
     public void testSystemDate() throws Exception {
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("MyProxy"), null, "MSFT");
+                (getProxyServiceURLHttp("SYSTEM_DATE_TestProxy"), null, "MSFT");
 
         assertNotNull(response);
 
