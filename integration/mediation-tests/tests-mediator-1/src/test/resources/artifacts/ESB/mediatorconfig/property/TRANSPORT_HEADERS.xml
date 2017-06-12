@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="Axis2ProxyService" transports="https http" startOnLoad="true" trace="disable">
+    <proxy name="TRANSPORT_HEADERS_TestProxy" transports="https http" startOnLoad="true" trace="disable">
         <description/>
         <target>
             <inSequence>
                 <property name="TRANSPORT_HEADERS" action="remove" scope="axis2"/>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="WireMonitorEP3"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -14,7 +14,7 @@
         </target>
     </proxy>
 
-    <endpoint name="Axis2EP">
+    <endpoint name="WireMonitorEP3">
         <address uri="http://localhost:8996/services/SimpleStockQuoteService"/>
     </endpoint>
 </definitions>

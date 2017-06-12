@@ -50,9 +50,7 @@ public class PropertyIntegrationForceSCAcceptedPropertyTestCase extends ESBInteg
     @Test(groups = "wso2.esb", description = "Testing functionality of FORCE_SC_ACCEPTED " +
                                              "- Enabled False")
     public void testFORCE_SC_ACCEPTEDPropertyEnabledFalseScenario() throws Exception {
-
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/FORCE_SC_ACCEPTED_Disabled.xml");
+        verifyProxyServiceExistence("FORCE_SC_ACCEPTED_FalseTestProxy");
 
         int responseStatus = 0;
 
@@ -61,7 +59,7 @@ public class PropertyIntegrationForceSCAcceptedPropertyTestCase extends ESBInteg
                                 File.separator + "property" + File.separator + "GetQuoteRequest.xml";
 
         File input = new File(strXMLFilename);
-        PostMethod post = new PostMethod(getProxyServiceURLHttp("Axis2ProxyService"));
+        PostMethod post = new PostMethod(getProxyServiceURLHttp("FORCE_SC_ACCEPTED_FalseTestProxy"));
         RequestEntity entity = new FileRequestEntity(input, "text/xml");
         post.setRequestEntity(entity);
         post.setRequestHeader("SOAPAction", "getQuote");
@@ -83,9 +81,7 @@ public class PropertyIntegrationForceSCAcceptedPropertyTestCase extends ESBInteg
                                              "Client should receive 202 message",
           dependsOnMethods = "testFORCE_SC_ACCEPTEDPropertyEnabledFalseScenario")
     public void testWithFORCE_SC_ACCEPTEDPropertyEnabledTrueScenario() throws Exception {
-
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/FORCE_SC_ACCEPTED_Enabled.xml");
+        verifyProxyServiceExistence("FORCE_SC_ACCEPTED_TrueTestProxy");
 
         int responseStatus = 0;
 
@@ -94,7 +90,7 @@ public class PropertyIntegrationForceSCAcceptedPropertyTestCase extends ESBInteg
                                 File.separator + "property" + File.separator + "PlaceOrder.xml";
 
         File input = new File(strXMLFilename);
-        PostMethod post = new PostMethod(getProxyServiceURLHttp("Axis2ProxyOutOnlyService"));
+        PostMethod post = new PostMethod(getProxyServiceURLHttp("FORCE_SC_ACCEPTED_TrueTestProxy"));
         RequestEntity entity = new FileRequestEntity(input, "text/xml");
         post.setRequestEntity(entity);
         post.setRequestHeader("SOAPAction", "placeOrder");

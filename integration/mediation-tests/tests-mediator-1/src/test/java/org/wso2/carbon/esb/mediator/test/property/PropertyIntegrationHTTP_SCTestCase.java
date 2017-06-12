@@ -40,8 +40,7 @@ public class PropertyIntegrationHTTP_SCTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/HTTP_SC.xml");
+        verifyProxyServiceExistence("HTTP_SCTestProxy");
 
     }
 
@@ -51,7 +50,7 @@ public class PropertyIntegrationHTTP_SCTestCase extends ESBIntegrationTest {
     }
 
     @Test(groups = "wso2.esb", description = "Getting HTTP status code number ")
-    public void testEnrichMediator() throws Exception {
+    public void testHttpResponseCode() throws Exception {
 
         int responseStatus = 0;
 
@@ -60,7 +59,7 @@ public class PropertyIntegrationHTTP_SCTestCase extends ESBIntegrationTest {
                                 File.separator + "property" + File.separator + "GetQuoteRequest.xml";
 
         File input = new File(strXMLFilename);
-        PostMethod post = new PostMethod(getProxyServiceURLHttp("Axis2ProxyService"));
+        PostMethod post = new PostMethod(getProxyServiceURLHttp("HTTP_SCTestProxy"));
         RequestEntity entity = new FileRequestEntity(input, "text/xml");
         post.setRequestEntity(entity);
         post.setRequestHeader("SOAPAction", "getQuote");
