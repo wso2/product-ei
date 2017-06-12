@@ -26,6 +26,8 @@ import org.wso2.ei.tools.mule2ballerina.model.HttpRequest;
 import org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig;
 import org.wso2.ei.tools.mule2ballerina.model.Logger;
 import org.wso2.ei.tools.mule2ballerina.model.Payload;
+import org.wso2.ei.tools.mule2ballerina.model.PropertyRemover;
+import org.wso2.ei.tools.mule2ballerina.model.PropertySetter;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 
 /**
@@ -50,4 +52,8 @@ public interface Visitor {
     public void visit(Comment comment);
 
     public void visit(Logger logger);
+
+    public void visit(PropertySetter propertySetter);
+
+    public void visit(PropertyRemover propertyRemover);
 }

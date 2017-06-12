@@ -29,7 +29,9 @@ public enum Element {
     MULE_SET_PAYLOAD("set-payload", "org.wso2.ei.tools.mule2ballerina.model.Payload"),
     MULE_HTTP_REQUEST("http:request", "org.wso2.ei.tools.mule2ballerina.model.HttpRequest"),
     MULE_HTTP_REQUEST_CONFIG("http:request-config", "org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig"),
-    MULE_LOGGER("logger", "org.wso2.ei.tools.mule2ballerina.model.Logger");
+    MULE_LOGGER("logger", "org.wso2.ei.tools.mule2ballerina.model.Logger"),
+    MULE_PROPERTY_SETTER("set-property", "org.wso2.ei.tools.mule2ballerina.model.PropertySetter"),
+    MULE_PROPERTY_REMOVER("remove-property", "org.wso2.ei.tools.mule2ballerina.model.PropertyRemover");
 
     private String value;
     private String mClassName;

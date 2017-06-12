@@ -31,6 +31,8 @@ import org.wso2.ei.tools.mule2ballerina.model.HttpRequest;
 import org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig;
 import org.wso2.ei.tools.mule2ballerina.model.Payload;
 import org.wso2.ei.tools.mule2ballerina.model.Processor;
+import org.wso2.ei.tools.mule2ballerina.model.PropertyRemover;
+import org.wso2.ei.tools.mule2ballerina.model.PropertySetter;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 import org.wso2.ei.tools.mule2ballerina.util.LogLevel;
@@ -60,7 +62,8 @@ public class TreeVisitor implements Visitor {
     private int parameterCounter = 0;
     private int variableCounter = 0;
     private String connectorVarName;
-    private String refVarName;
+    private String outboundMsg; //Holds outbound message variable name
+    private String inboundMsg; //Holds inbound message variable name
     private String funcParaName;
     private int resourceAnnotationCount = 0;
 
@@ -94,7 +97,7 @@ public class TreeVisitor implements Visitor {
             i++;
             //If end of flow
             if (flowSize == i) {
-                ballerinaASTAPI.createNameReference(null, refVarName);
+                ballerinaASTAPI.createNameReference(null, outboundMsg);
                 ballerinaASTAPI.createVariableRefExpr();
                 ballerinaASTAPI.createReplyStatement();
                 ballerinaASTAPI.endCallableBody();
@@ -145,7 +148,7 @@ public class TreeVisitor implements Visitor {
                 break;
 
             /*
-            For Json variables, you have to manually remove the quotation surrounding the json value
+            IMPORTANT: For Json variables, you have to manually remove the quotation surrounding the json value
              */
             case JSON:
                 ballerinaASTAPI.addComment(Constant.BLANG_COMMENT_JSON);
@@ -167,7 +170,7 @@ public class TreeVisitor implements Visitor {
         }
 
         ballerinaASTAPI.startExprList();
-        ballerinaASTAPI.createNameReference(null, refVarName);
+        ballerinaASTAPI.createNameReference(null, outboundMsg);
         ballerinaASTAPI.createVariableRefExpr();
         ballerinaASTAPI.createNameReference(null, payloadVariableName);
         ballerinaASTAPI.createVariableRefExpr();
@@ -233,8 +236,8 @@ public class TreeVisitor implements Visitor {
         }
 
         ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
-        funcParaName = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
-        ballerinaASTAPI.addParameter(0, false, funcParaName);
+        inboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
+        ballerinaASTAPI.addParameter(0, false, inboundMsg);
 
         if (listener.getPath() != null) {
             //check whether any path params have been used
@@ -249,6 +252,7 @@ public class TreeVisitor implements Visitor {
                             Constant.BLANG_VALUE, path);
                     ballerinaASTAPI.addAnnotationAttachment(1);
                     ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_STRING); //type of the parameter
+                    //TODO: 'funcParaName' might cause problems when accessing different path params in the logic
                     funcParaName = Constant.BLANG_VAR_CONNECT_PATHPARAM + ++parameterCounter;
                     ballerinaASTAPI.addParameter(1, false, funcParaName);
                 }
@@ -266,7 +270,7 @@ public class TreeVisitor implements Visitor {
         globalConfiguration.accept(this);
 
         ballerinaASTAPI.createVariableRefList();
-        ballerinaASTAPI.createNameReference(null, refVarName);
+        ballerinaASTAPI.createNameReference(null, outboundMsg);
         ballerinaASTAPI.createVariableRefExpr();
         ballerinaASTAPI.endVariableRefList(1);
         ballerinaASTAPI.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
@@ -274,7 +278,7 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createNameReference(null, connectorVarName);
         ballerinaASTAPI.createVariableRefExpr();
         ballerinaASTAPI.createStringLiteral(request.getPath());
-        ballerinaASTAPI.createNameReference(null, funcParaName);
+        ballerinaASTAPI.createNameReference(null, inboundMsg);
         ballerinaASTAPI.createVariableRefExpr();
         ballerinaASTAPI.endVariableRefList(3);
         ballerinaASTAPI.createAction(Constant.BLANG_CLIENT_CONNECTOR_GET_ACTION, true);
@@ -357,6 +361,52 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.addFunctionInvocationStatement(true);
     }
 
+    /**
+     * Add header to outbound message
+     * @param propertySetter
+     */
+    @Override
+    public void visit(PropertySetter propertySetter) {
+
+        if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_MESSAGES) == null) {
+            ballerinaASTAPI
+                    .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_MESSAGES), null);
+            importTracker.put(Constant.BLANG_PKG_MESSAGES, true);
+        }
+
+        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_ADD_HEADER);
+        ballerinaASTAPI.startExprList();
+        ballerinaASTAPI.createNameReference(null, outboundMsg);
+        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createStringLiteral(propertySetter.getPropertyName());
+        ballerinaASTAPI.createStringLiteral(propertySetter.getValue());
+        ballerinaASTAPI.endExprList(3);
+        ballerinaASTAPI.createFunctionInvocation(true);
+    }
+
+    /**
+     * Remove header from outbound message
+     * @param propertyRemover
+     */
+    @Override
+    public void visit(PropertyRemover propertyRemover) {
+
+        if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_MESSAGES) == null) {
+            ballerinaASTAPI
+                    .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_MESSAGES), null);
+            importTracker.put(Constant.BLANG_PKG_MESSAGES, true);
+        }
+
+        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_REMOVE_HEADER);
+        ballerinaASTAPI.startExprList();
+        ballerinaASTAPI.createNameReference(null, outboundMsg);
+        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createStringLiteral(propertyRemover.getPropertyName());
+        ballerinaASTAPI.endExprList(2);
+        ballerinaASTAPI.createFunctionInvocation(true);
+
+    }
+
     public BallerinaFile getBallerinaFile() {
         return ballerinaFile;
     }
@@ -365,7 +415,7 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.addTypes(typeOfTheParamater);
         ballerinaASTAPI.addMapStructLiteral();
         ballerinaASTAPI.createVariable(variableName, exprAvailable);
-        refVarName = variableName;
+        outboundMsg = variableName;
     }
 
     private String createVariableOfTypeString(String value, boolean exprAvailable) {

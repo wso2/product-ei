@@ -51,6 +51,8 @@ public class Constant {
     public static final String BLANG_SET_STRING_PAYLOAD = "setStringPayload";
     public static final String BLANG_SET_JSON_PAYLOAD = "setJsonPayload";
     public static final String BLANG_SET_XML_PAYLOAD = "setXmlPayload";
+    public static final String BLANG_ADD_HEADER = "addHeader";
+    public static final String BLANG_REMOVE_HEADER = "removeHeader";
 
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
