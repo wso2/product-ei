@@ -33,7 +33,7 @@ public class AppendPathTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/path_append_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteAppendPathTestProxy");
     }
 
 
@@ -46,7 +46,7 @@ public class AppendPathTestCase extends ESBIntegrationTest {
         log.info("getBackEndServiceUrl : " + getBackEndServiceUrl(""));
         log.info("addUrl : " + addUrl);
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteAppendPathTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

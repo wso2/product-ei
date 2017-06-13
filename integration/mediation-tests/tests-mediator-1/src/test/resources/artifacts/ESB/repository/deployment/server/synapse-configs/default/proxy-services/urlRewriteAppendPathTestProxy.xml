@@ -1,0 +1,30 @@
+<proxy  xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteAppendPathTestProxy" transports="https,http" statistics="disable" trace="disable"
+        startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="path.append" value="/SimpleStockQuoteService" scope="default"/>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="protocol" value="http"/>
+                    </condition>
+                    <action value="/SimpleStockQuoteService" type="append" fragment="path"/>
+                </rewriterule>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="protocol" value="https"/>
+                    </condition>
+                    <action xpath="get-property('path.append')" type="append" fragment="path"/>
+                    <action value="http" fragment="protocol" type="set"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

@@ -1,0 +1,20 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteSetUrlTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <action value="http://localhost:9000/services/SimpleStockQuoteService"
+                            type="set" fragment="full"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

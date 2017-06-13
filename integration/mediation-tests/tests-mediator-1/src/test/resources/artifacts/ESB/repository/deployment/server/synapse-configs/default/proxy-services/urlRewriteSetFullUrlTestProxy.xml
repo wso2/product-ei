@@ -1,0 +1,32 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteSetFullUrlTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="url.value"
+                      value="http://localhost:9000/services/SimpleStockQuoteService"
+                      scope="default"/>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="protocol" value="http"/>
+                    </condition>
+                    <action value="http://localhost:9000/services/SimpleStockQuoteService"
+                            type="set" fragment="full"/>
+                </rewriterule>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="protocol" value="https"/>
+                    </condition>
+                    <action xpath="get-property('url.value')" type="set" fragment="full"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

@@ -31,7 +31,7 @@ public class ReWriteFullUrlTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/full_url_rewrite_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteFulUriTestProxy");
     }
 
 
@@ -41,7 +41,7 @@ public class ReWriteFullUrlTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteFulUriTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));
