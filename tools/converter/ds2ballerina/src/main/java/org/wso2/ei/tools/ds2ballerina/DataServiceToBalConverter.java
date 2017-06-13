@@ -20,11 +20,17 @@ package org.wso2.ei.tools.ds2ballerina;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.ei.tools.converter.common.Utils;
 import org.wso2.ei.tools.ds2ballerina.beans.DataService;
 import org.wso2.ei.tools.ds2ballerina.configreader.DataServiceReader;
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This is the main execution point.
@@ -33,8 +39,7 @@ public class DataServiceToBalConverter {
 
     private static Logger logger = LoggerFactory.getLogger(DataServiceReader.class);
 
-    public static void main(String... args) throws IOException {
-
+    public static void main(String... args) {
         if (args == null || args.length == 0) {
             logger.error("Please provide source file/folder");
             System.exit(-1);
@@ -44,22 +49,34 @@ public class DataServiceToBalConverter {
         logger.info("Source file(s) in location: " + sourcePath.toString());
 
         String destination = args[1];
-        if (logger.isDebugEnabled()) {
-            logger.debug("Reading dataservice file in " + source.getPath());
-        }
-
         try {
-//            DataService dataService = DataServiceReader.readDataServiceFile(
-//             new File("/home/madhawa/DSS-BAM/wso2dss-3.5.1/samples/dbs/rdbms/ResourcesSample.dbs"));
-            DataService dataService = DataServiceReader.readDataServiceFile(source);
+            if (Files.isDirectory(sourcePath)) {
+                Path path = Utils.getPath(source, destination);
+                if (!Files.exists(path)) {
+                    path = Files.createDirectories(path);
+                }
+                destination = path.toString();
+                logger.info("Converted files saved in " + destination);
 
-            DataServiceReader.createBalModel(dataService, destination);
-
+                List<File> filesInFolder = Files.walk(Paths.get(args[0])).filter(Files::isRegularFile).
+                        map(Path::toFile).collect(Collectors.toList());
+                for (File file : filesInFolder) {
+                    DataService dataService = DataServiceReader.readDataServiceFile(file);
+                    String fileName = file.getName().substring(0, file.getName().indexOf('.')) + ".bal";
+                    DataServiceReader.createBalModel(dataService, destination + File.separator + fileName);
+                    logger.info(fileName + " created successfully.");
+                }
+            } else {
+                if (destination == null || destination.isEmpty()) {
+                    String fileName = source.getName();
+                    destination = fileName.substring(0, fileName.indexOf('.')) + ".bal";
+                }
+                logger.info("Generated ballerina file saved as " + destination);
+                DataService dataService = DataServiceReader.readDataServiceFile(source);
+                DataServiceReader.createBalModel(dataService, destination);
+            }
         } catch (IOException e) {
-            logger.error("Exception occurred, while converting " + source + " data service.");
-            throw e;
+            logger.error("Unable to generate ballerina file.", e);
         }
-
     }
-
 }

@@ -128,6 +128,16 @@
             <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
+            <type>zip</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -273,6 +283,14 @@
                                     <id>org.wso2.ei.converter.tools.mule2ballerina.feature</id>
                                     <version>${product.ei.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.ds2ballerina.feature</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.synapse2ballerina.feature</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -365,6 +383,14 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.ei.converter.tools.mule2ballerina.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.ds2ballerina.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.synapse2ballerina.feature.group</id>
                                     <version>${product.ei.version}</version>
                                 </feature>
                             </features>
