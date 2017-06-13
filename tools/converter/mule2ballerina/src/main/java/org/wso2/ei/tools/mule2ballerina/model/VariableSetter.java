@@ -18,38 +18,35 @@
 
 package org.wso2.ei.tools.mule2ballerina.model;
 
-import org.wso2.ei.tools.mule2ballerina.visitor.Visitable;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
- * {@code Flow} is the representation of the mule flow
+ * {@code VariableSetter} This class represents set-variable element
  */
-public class Flow extends BaseObject implements Visitable {
+public class VariableSetter extends BaseObject implements Processor {
 
-    protected String name;
-    protected Queue<Processor> flowProcessors;
+    private String variableName;
+    private String value;
 
-    public Flow() {
-        flowProcessors = new LinkedList<Processor>();
+    public String getVariableName() {
+        return variableName;
     }
 
-    public String getName() {
-        return name;
+    public void setVariableName(String variableName) {
+        this.variableName = variableName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getValue() {
+        return value;
     }
 
-    public Queue<Processor> getFlowProcessors() {
-        return flowProcessors;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public void addProcessor(Processor processor) {
-        flowProcessors.add(processor);
+    @Override
+    public String getConfigName() {
+        return null;
     }
 
     @Override

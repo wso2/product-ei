@@ -31,7 +31,11 @@ public enum Element {
     MULE_HTTP_REQUEST_CONFIG("http:request-config", "org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig"),
     MULE_LOGGER("logger", "org.wso2.ei.tools.mule2ballerina.model.Logger"),
     MULE_PROPERTY_SETTER("set-property", "org.wso2.ei.tools.mule2ballerina.model.PropertySetter"),
-    MULE_PROPERTY_REMOVER("remove-property", "org.wso2.ei.tools.mule2ballerina.model.PropertyRemover");
+    MULE_PROPERTY_REMOVER("remove-property", "org.wso2.ei.tools.mule2ballerina.model.PropertyRemover"),
+    MULE_VARIABLE_SETTER("set-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableSetter"),
+    MULE_VARIABLE_REMOVER("remove-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableRemover"),
+    MULE_FLOW_REF("flow-ref", "org.wso2.ei.tools.mule2ballerina.model.FlowReference"),
+    MULE_SUB_FLOW("sub-flow", "org.wso2.ei.tools.mule2ballerina.model.SubFlow");
 
     private String value;
     private String mClassName;

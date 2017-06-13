@@ -36,7 +36,8 @@ public enum Attribute {
     LEVEL("level", "level"),
     MESSAGE("message", "message"),
     MIME_TYPE("mimeType", "mimeType"),
-    PROPERTY_NAME("propertyName", "propertyName");
+    PROPERTY_NAME("propertyName", "propertyName"),
+    VARIABLE_NAME("variableName", "variableName");
 
     private String attribute;
     private String property;
