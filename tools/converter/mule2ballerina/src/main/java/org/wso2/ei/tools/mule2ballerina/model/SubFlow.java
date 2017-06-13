@@ -25,14 +25,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * {@code Flow} is the representation of the mule flow
+ * {@code SubFlow} represents sub-flow element
  */
-public class Flow extends BaseObject implements Visitable {
-
+public class SubFlow extends BaseObject implements Visitable {
     protected String name;
     protected Queue<Processor> flowProcessors;
 
-    public Flow() {
+    public SubFlow() {
         flowProcessors = new LinkedList<Processor>();
     }
 

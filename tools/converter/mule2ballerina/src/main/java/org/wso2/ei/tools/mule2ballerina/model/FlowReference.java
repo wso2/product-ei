@@ -18,23 +18,14 @@
 
 package org.wso2.ei.tools.mule2ballerina.model;
 
-import org.wso2.ei.tools.mule2ballerina.visitor.Visitable;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
- * {@code Flow} is the representation of the mule flow
+ * {@code FlowReference} class represents flow-ref element
  */
-public class Flow extends BaseObject implements Visitable {
+public class FlowReference extends BaseObject implements Processor, FlowRef {
 
-    protected String name;
-    protected Queue<Processor> flowProcessors;
-
-    public Flow() {
-        flowProcessors = new LinkedList<Processor>();
-    }
+    private String name;
 
     public String getName() {
         return name;
@@ -44,12 +35,9 @@ public class Flow extends BaseObject implements Visitable {
         this.name = name;
     }
 
-    public Queue<Processor> getFlowProcessors() {
-        return flowProcessors;
-    }
-
-    public void addProcessor(Processor processor) {
-        flowProcessors.add(processor);
+    @Override
+    public String getConfigName() {
+        return null;
     }
 
     @Override

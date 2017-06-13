@@ -37,12 +37,16 @@ public class Root extends BaseObject implements Visitable {
     private Stack<Flow> flowList;
     private Map<String, GlobalConfiguration> configMap;
     private Map<String, Queue<Flow>> serviceMap;
+    private Map<String, SubFlow> subFlowMap;
+    private Stack<SubFlow> subFlowStack;
 
     public Root() {
         flowList = new Stack<Flow>();
         globalConfigurations = new ArrayList<GlobalConfiguration>();
         configMap = new HashMap<String, GlobalConfiguration>();
         serviceMap = new HashMap<String, Queue<Flow>>();
+        subFlowMap = new HashMap<String, SubFlow>();
+        subFlowStack = new Stack<SubFlow>();
     }
 
     public List<GlobalConfiguration> getGlobalConfigurations() {
@@ -65,12 +69,28 @@ public class Root extends BaseObject implements Visitable {
         configMap.put(name, configuration);
     }
 
+    public void addSubFlow(String name, SubFlow subFlow) {
+        SubFlow subFlowRef = subFlowMap.get(name);
+        if (subFlowRef == null) {
+            subFlowMap.put(name, subFlow);
+        }
+        subFlowStack.add(subFlow);
+    }
+
     public Map<String, GlobalConfiguration> getConfigMap() {
         return configMap;
     }
 
     public Map<String, Queue<Flow>> getServiceMap() {
         return serviceMap;
+    }
+
+    public Map<String, SubFlow> getSubFlowMap() {
+        return subFlowMap;
+    }
+
+    public Stack<SubFlow> getSubFlowStack() {
+        return subFlowStack;
     }
 
     @Override

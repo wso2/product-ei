@@ -29,6 +29,7 @@ import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.Inbound;
 import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
+import org.wso2.ei.tools.mule2ballerina.model.SubFlow;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 
 import java.io.File;
@@ -62,6 +63,7 @@ public class ConfigReader {
     private AttributeMapper attributeMapper;
     private Root rootObj;
     private boolean flowStarted = false;
+    private boolean subFlowStarted = false;
     private List<String> unIdentifiedElements;
 
     public ConfigReader() {
@@ -81,7 +83,7 @@ public class ConfigReader {
                 switch (xmlEvent.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
                     StartElement startElement = xmlEvent.asStartElement();
-                    checkFlowStart(getElementOrAttributeName(startElement.getName()));
+                    checkFlowState(getElementOrAttributeName(startElement.getName()), true);
                     loadIntermediateMuleObjects(startElement);
                     break;
 
@@ -90,7 +92,7 @@ public class ConfigReader {
 
                 case XMLStreamConstants.END_ELEMENT:
                     EndElement endElement = xmlEvent.asEndElement();
-                    checkFlowEnd(getElementOrAttributeName(endElement.getName()));
+                    checkFlowState(getElementOrAttributeName(endElement.getName()), false);
                     break;
 
                 default:
@@ -141,7 +143,8 @@ public class ConfigReader {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
                 Comment comment = new Comment();
-                comment.setComment(" //Functionality provided by " + mElementName + " should be handled manually here");
+                comment.setComment(" //IMPORTANT: Functionality provided by " + mElementName + " should be handled "
+                        + "manually here");
                 buildMuleTree(comment);
             }
         }
@@ -213,15 +216,16 @@ public class ConfigReader {
         }
     }
 
-    public void checkFlowStart(String startElement) {
-        if (Constant.MULE_FLOW.equals(startElement)) {
-            flowStarted = true;
-        }
-    }
-
-    public void checkFlowEnd(String endElement) {
-        if (Constant.MULE_FLOW.equals(endElement)) {
-            flowStarted = false;
+    private void checkFlowState(String startOrEndElement, boolean isFlowStarted) {
+        switch (startOrEndElement) {
+        case Constant.MULE_FLOW:
+            flowStarted = isFlowStarted;
+            break;
+        case Constant.MULE_SUB_FLOW:
+            subFlowStarted = isFlowStarted;
+            break;
+        default:
+            break;
         }
     }
 
@@ -242,7 +246,7 @@ public class ConfigReader {
      *
      * @param muleObj any intermediate object
      */
-    public void buildMuleTree(BaseObject muleObj) {
+    private void buildMuleTree(BaseObject muleObj) {
 
         /* if the intermediate object represents a global configuration in mule, add it to global config list
         * Further if it's an inbound config, keep all the flows that belong to that config in a map, as it is needed
@@ -263,11 +267,20 @@ public class ConfigReader {
             }
         }
 
+        //TODO: Flow and Subflow share the same attributes; need to derive from a common class
         /* Keep a list of flows separately for tree navigation*/
         if (muleObj instanceof Flow) {
             Flow flow = (Flow) muleObj;
             if (flowStarted) {
                 rootObj.addMFlow(flow);
+            }
+        }
+
+        /* List of sub flows*/
+        if (muleObj instanceof SubFlow) {
+            SubFlow subFlow = (SubFlow) muleObj;
+            if (subFlowStarted) {
+                rootObj.addSubFlow(subFlow.getName(), subFlow);
             }
         }
 
@@ -292,6 +305,9 @@ public class ConfigReader {
                         }
                     }
                 }
+            } else if (subFlowStarted) {
+                SubFlow lastAddedSubFlow = rootObj.getSubFlowStack().peek();
+                lastAddedSubFlow.addProcessor((Processor) muleObj);
             }
         }
     }

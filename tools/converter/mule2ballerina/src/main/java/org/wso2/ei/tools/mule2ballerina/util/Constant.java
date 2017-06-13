@@ -25,6 +25,7 @@ public class Constant {
 
     public static final String MULE_TAG = "mule";
     public static final String MULE_FLOW = "flow";
+    public static final String MULE_SUB_FLOW = "sub-flow";
 
     //Ballerina Packages
     public static final String BLANG_HTTP = "http";

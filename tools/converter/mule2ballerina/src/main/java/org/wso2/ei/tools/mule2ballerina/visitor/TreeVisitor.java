@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
+import org.wso2.ei.tools.mule2ballerina.model.FlowReference;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListener;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListenerConfig;
@@ -34,6 +35,9 @@ import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.PropertyRemover;
 import org.wso2.ei.tools.mule2ballerina.model.PropertySetter;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
+import org.wso2.ei.tools.mule2ballerina.model.SubFlow;
+import org.wso2.ei.tools.mule2ballerina.model.VariableRemover;
+import org.wso2.ei.tools.mule2ballerina.model.VariableSetter;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 import org.wso2.ei.tools.mule2ballerina.util.LogLevel;
 import org.wso2.ei.tools.mule2ballerina.util.MimeType;
@@ -160,12 +164,14 @@ public class TreeVisitor implements Visitor {
                 break;
 
             default:
-                payloadVariableName = createVariableOfTypeString(payload.getValue(), true);
+                payloadVariableName = createVariableOfTypeString(payload.getValue(), Constant.BLANG_VAR_STRING_PAYLOAD,
+                        true, true);
                 ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
                 break;
             }
         } else {
-            payloadVariableName = createVariableOfTypeString(payload.getValue(), true);
+            payloadVariableName = createVariableOfTypeString(payload.getValue(), Constant.BLANG_VAR_STRING_PAYLOAD,
+                    true, true);
             ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
         }
 
@@ -363,6 +369,7 @@ public class TreeVisitor implements Visitor {
 
     /**
      * Add header to outbound message
+     *
      * @param propertySetter
      */
     @Override
@@ -386,6 +393,7 @@ public class TreeVisitor implements Visitor {
 
     /**
      * Remove header from outbound message
+     *
      * @param propertyRemover
      */
     @Override
@@ -404,6 +412,34 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createStringLiteral(propertyRemover.getPropertyName());
         ballerinaASTAPI.endExprList(2);
         ballerinaASTAPI.createFunctionInvocation(true);
+    }
+
+    @Override
+    public void visit(VariableSetter variableSetter) {
+        createVariableOfTypeString(variableSetter.getValue(), variableSetter.getVariableName(), true, false);
+    }
+
+    @Override
+    public void visit(VariableRemover variableRemover) {
+        // createVariableOfTypeString("", variableRemover.getVariableName(), true,false);
+      /*  ballerinaASTAPI.createStringLiteral("");
+        ballerinaASTAPI.createVariable(variableRemover.getVariableName(), false);*/
+        ballerinaASTAPI.createNameReference(null, variableRemover.getVariableName());
+        ballerinaASTAPI.createVariableRefExpr();
+    }
+
+    @Override
+    public void visit(FlowReference flowReference) {
+        if (mRoot.getSubFlowMap() != null && !mRoot.getSubFlowMap().isEmpty()) {
+            SubFlow subFlow = mRoot.getSubFlowMap().get(flowReference.getName());
+            for (Processor processor : subFlow.getFlowProcessors()) {
+                processor.accept(this);
+            }
+        }
+    }
+
+    @Override
+    public void visit(SubFlow subFlow) {
 
     }
 
@@ -418,10 +454,18 @@ public class TreeVisitor implements Visitor {
         outboundMsg = variableName;
     }
 
-    private String createVariableOfTypeString(String value, boolean exprAvailable) {
+    /**
+     * @param value
+     * @param varName
+     * @param exprAvailable
+     * @param isCounterUsed determines whether the variable name will be different
+     * @return
+     */
+    private String createVariableOfTypeString(String value, String varName, boolean exprAvailable,
+            boolean isCounterUsed) {
         ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
         ballerinaASTAPI.createStringLiteral(value);
-        String variableName = Constant.BLANG_VAR_STRING_PAYLOAD + ++variableCounter;
+        String variableName = (isCounterUsed ? varName + ++variableCounter : varName);
         ballerinaASTAPI.createVariable(variableName, exprAvailable); //name of the variable
         return variableName;
     }
