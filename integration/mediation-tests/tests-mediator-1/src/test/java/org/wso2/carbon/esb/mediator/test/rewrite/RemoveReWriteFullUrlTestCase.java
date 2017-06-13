@@ -31,7 +31,7 @@ public class RemoveReWriteFullUrlTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/remove_rewrite_full_url_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteRemoveFullUriTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Remove and rewrite full url",
@@ -40,7 +40,7 @@ public class RemoveReWriteFullUrlTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteRemoveFullUriTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

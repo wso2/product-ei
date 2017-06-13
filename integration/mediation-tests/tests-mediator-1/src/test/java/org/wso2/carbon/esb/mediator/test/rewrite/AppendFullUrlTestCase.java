@@ -31,7 +31,7 @@ public class AppendFullUrlTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/full_url_append_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteAppendFullUriTestProxy");
     }
 
     //todo requirement not clear for append keyword. it replace full url
@@ -41,7 +41,7 @@ public class AppendFullUrlTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteAppendFullUriTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

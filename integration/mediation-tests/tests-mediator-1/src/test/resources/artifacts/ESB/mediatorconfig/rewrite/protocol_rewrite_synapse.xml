@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="urlRewriteProxy" transports="https http" startOnLoad="true" trace="disable">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteReplaceProtocolTestProxy" transports="https http" startOnLoad="true" trace="disable">
         <description/>
         <target>
             <inSequence>
