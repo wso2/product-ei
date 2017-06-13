@@ -158,9 +158,10 @@ public class Util {
             Util.convertMessageToJson(modelBuilder, "m", "input");
 
             if (dataService.getQueries().get(resource.getCallQuery().getQueryId()).getParamMap() != null) {
-                for (Param param : dataService.getQueries().get(resource.getCallQuery().getQueryId())
-                        .getParamMap().values()) {
-                    Util.initializeParameter(modelBuilder, param, false, "_" + resource.getMethod() + resourcePath);
+                for (Param param : dataService.getQueries().get(resource.getCallQuery().getQueryId()).getParamMap()
+                        .values()) {
+                    Util.initializeParameter(modelBuilder, param, false,
+                            "_" + resource.getMethod().toLowerCase(Locale.ENGLISH) + resourcePath, "input");
                 }
             }
 
@@ -173,7 +174,42 @@ public class Util {
 
             initializeMessage(modelBuilder, "response");
 
+/*            modelBuilder.startExprList();
+            // m
+            modelBuilder.createVarRefExpr(null,null, methodNameReference);
+            modelBuilder.createStringLiteral(null,null,"Accept");
+
+            modelBuilder.endExprList(2);
+           ;
+
+
+
+            //messages,getHeader
+            modelBuilder.addFunctionInvocationExpr(null,null,methodNameReference,true);
+            modelBuilder.addVariableDefinitionStmt(null,null,new SimpleTypeName("string"), "httpM",true);
+            modelBuilder.startIfElseStmt(null);
+            modelBuilder.startIfClause(null);
+            modelBuilder.startExprList();
+
+            modelBuilder.createVarRefExpr(null,null, methodNameReference);
+            modelBuilder.createStringLiteral(null,null,"aaapli");
+            modelBuilder.endExprList(2);
+modelBuilder.addFunctionInvocationExpr(null,null, methodNameReference,true);
+
+            modelBuilder.startVarRefList();
+            modelBuilder.createVarRefExpr(null,null, methodNameReference);
+            modelBuilder.endVarRefList(1);
+
+            modelBuilder.createAssignmentStmt(null,null);
+            modelBuilder.addIfClause(null);
+modelBuilder.startElseClause(null);
+
+modelBuilder.addElseClause(null);
+            modelBuilder.addIfElseStmt();*/
+
             setJsonPayloadToMessage(modelBuilder, "response", "payload");
+            setMessagePayloadAccordingToAcceptHeader(modelBuilder, "response", "dt");
+
             replyMessage(modelBuilder, "response");
 
             // response message initialization
@@ -186,7 +222,7 @@ public class Util {
     }
 
     private static void initializeParameter(BLangModelBuilder modelBuilder, Param param, boolean isPathParam,
-            String path) {
+            String path, String jsonPayload) {
 
         String paramName = param.getName();
         modelBuilder.startMapStructLiteral();
@@ -200,14 +236,18 @@ public class Util {
         modelBuilder.validateAndSetPackagePath(null, valueNameReference);
         modelBuilder.createVarRefExpr(null, null, valueNameReference);
         if (!isPathParam) {
+            BLangModelBuilder.NameReference jsonPayloadNameReference = new BLangModelBuilder.NameReference(null,
+                    jsonPayload);
+            modelBuilder.validateAndSetPackagePath(null, jsonPayloadNameReference);
             BLangModelBuilder.NameReference wrapperParamNameReference = new BLangModelBuilder.NameReference(null, path);
             modelBuilder.validateAndSetPackagePath(null, wrapperParamNameReference);
             BLangModelBuilder.NameReference variableParamNameReference = new BLangModelBuilder.NameReference(null,
                     paramName);
             modelBuilder.validateAndSetPackagePath(null, variableParamNameReference);
-
+            modelBuilder.createVarRefExpr(null, null, jsonPayloadNameReference);
             modelBuilder.createVarRefExpr(null, null, wrapperParamNameReference);
             modelBuilder.createVarRefExpr(null, null, variableParamNameReference);
+            modelBuilder.createFieldRefExpr(null, null);
             modelBuilder.createFieldRefExpr(null, null);
 
             // Casting variable
@@ -315,7 +355,7 @@ public class Util {
         modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("json"), jsonVariableName, true);
     }
 
-/*    private static void convertDatatableToXML(BLangModelBuilder modelBuilder, String datatableVariableName,
+    private static void convertDatatableToXML(BLangModelBuilder modelBuilder, String datatableVariableName,
             String xmlVariableName) {
         modelBuilder.startExprList();
         BLangModelBuilder.NameReference datatableVariableNameReference = new BLangModelBuilder.NameReference(null,
@@ -328,16 +368,17 @@ public class Util {
         modelBuilder.validateAndSetPackagePath(null, toJsonNameReference);
         modelBuilder.addFunctionInvocationExpr(null, null, toJsonNameReference, true);
         modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("xml"), xmlVariableName, true);
-    }*/
+    }
 
     private static String getDirection(Param param) {
         if ("IN".equals(param.getType())) {
             return "0";
         } else if ("OUT".equals(param.getType())) {
             return "1";
-        } else {
+        } else if ("INOUT".equals(param.getType())) {
             return "2";
         }
+        return "0";
     }
 
     private static void initializeMessage(BLangModelBuilder modelBuilder, String messageVariableName) {
@@ -410,6 +451,59 @@ public class Util {
         return newConfigMap;
     }
 
+    private static void assignHeaderValueToVariableFromMessage(BLangModelBuilder modelBuilder, String headerName,
+            String variableName, String messageVariableName) {
+        modelBuilder.startExprList();
+        BLangModelBuilder.NameReference messageVariableNameReference = new BLangModelBuilder.NameReference(null,
+                messageVariableName);
+        modelBuilder.validateAndSetPackagePath(null, messageVariableNameReference);
+        modelBuilder.createVarRefExpr(null, null, messageVariableNameReference);
+        modelBuilder.createStringLiteral(null, null, headerName);
+        modelBuilder.endExprList(2);
+        BLangModelBuilder.NameReference getHeaderNameReference = new BLangModelBuilder.NameReference("messages",
+                "getHeader");
+        modelBuilder.validateAndSetPackagePath(null, getHeaderNameReference);
+        modelBuilder.addFunctionInvocationExpr(null, null, getHeaderNameReference, true);
+        modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("string"), variableName, true);
+    }
+
+    private static void setMessagePayloadAccordingToAcceptHeader(BLangModelBuilder modelBuilder,
+            String messageVariableName, String datatableVariableName) {
+        String acceptHeader = "acceptHeader";
+        String payload = "payload";
+        String responseMessage = "response";
+        assignHeaderValueToVariableFromMessage(modelBuilder, "Accept", acceptHeader, messageVariableName);
+        initializeMessage(modelBuilder, responseMessage);
+
+        // If block to check Accept Header
+        modelBuilder.startIfElseStmt(null);
+        modelBuilder.startIfClause(null);
+        modelBuilder.startExprList();
+
+        BLangModelBuilder.NameReference acceptHeaderNameReference = new BLangModelBuilder.NameReference(null,
+                acceptHeader);
+        modelBuilder.validateAndSetPackagePath(null, acceptHeaderNameReference);
+
+        modelBuilder.createVarRefExpr(null, null, acceptHeaderNameReference);
+        modelBuilder.createStringLiteral(null, null, "application/json");
+        modelBuilder.endExprList(2);
+        BLangModelBuilder.NameReference equalsIgnoreCaseNameReference = new BLangModelBuilder.NameReference("strings",
+                "equalsIgnoreCase");
+        modelBuilder.validateAndSetPackagePath(null, acceptHeaderNameReference);
+        modelBuilder.addFunctionInvocationExpr(null, null, equalsIgnoreCaseNameReference, true);
+
+        convertDatatableToJson(modelBuilder, datatableVariableName, payload);
+        setJsonPayloadToMessage(modelBuilder, responseMessage, payload);
+        modelBuilder.addIfClause(null);
+        modelBuilder.startElseClause(null);
+        convertDatatableToXML(modelBuilder, datatableVariableName, payload);
+        setJsonPayloadToMessage(modelBuilder, responseMessage, payload);
+        modelBuilder.addElseClause(null);
+
+        //        modelBuilder.addElseClause(null);
+        modelBuilder.addIfElseStmt();
+
+    }
 
  /*   private static String convertSQLDataTypeToBalDataType(Param param) {
 

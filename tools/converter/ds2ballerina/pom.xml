@@ -22,11 +22,9 @@
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-native</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.2.11</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>

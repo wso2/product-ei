@@ -197,6 +197,11 @@
                 <version>${product.ei.version}</version>
             </dependency>
             <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.2.11</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>mule2ballerina</artifactId>
                 <version>${product.ei.version}</version>
@@ -336,8 +341,8 @@
 
     <properties>
         <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
-        <ballerina.runtime.version>0.88-SNAPSHOT</ballerina.runtime.version>
-        <ballerina.core.version>0.88-SNAPSHOT</ballerina.core.version>
+        <ballerina.runtime.version>0.89-SNAPSHOT</ballerina.runtime.version>
+        <ballerina.core.version>0.89-SNAPSHOT</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>2.3.1</carbon.messaging.version>
         <carbon.transport.http.netty.version>4.3.0-m2</carbon.transport.http.netty.version>
