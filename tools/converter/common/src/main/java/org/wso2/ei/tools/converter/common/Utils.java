@@ -16,12 +16,14 @@
  *    under the License.
  */
 
-package org.wso2.ei.tools.converter.common.generator;
+package org.wso2.ei.tools.converter.common;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -29,10 +31,26 @@ import java.nio.file.Paths;
  */
 public class Utils {
 
+    private static final String GENERATED_BALLERINA_SOURCE = "generated-ballerina-source";
+
     public static void writeToBalFile(String filePath, String content) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), StandardCharsets.UTF_8)) {
             writer.write(content);
             writer.flush();
         }
+    }
+
+    public static Path getPath(File source, String destination) {
+        Path path;
+        if (destination == null || destination.isEmpty()) {
+            path = Paths.get(source.getAbsolutePath() + File.separator + GENERATED_BALLERINA_SOURCE);
+        } else {
+            if (destination.charAt(destination.length() - 1) == File.separatorChar) {
+                path = Paths.get(destination + GENERATED_BALLERINA_SOURCE);
+            } else {
+                path = Paths.get(destination + File.separator + GENERATED_BALLERINA_SOURCE);
+            }
+        }
+        return path;
     }
 }

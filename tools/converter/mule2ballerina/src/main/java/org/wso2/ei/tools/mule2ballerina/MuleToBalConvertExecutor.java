@@ -21,6 +21,7 @@ package org.wso2.ei.tools.mule2ballerina;
 import org.ballerinalang.model.BallerinaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.ei.tools.converter.common.Utils;
 import org.wso2.ei.tools.converter.common.generator.BallerinaSourceGenerator;
 import org.wso2.ei.tools.mule2ballerina.configreader.ConfigReader;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
@@ -41,9 +42,8 @@ import java.util.stream.Collectors;
 public class MuleToBalConvertExecutor {
 
     private static Logger logger = LoggerFactory.getLogger(ConfigReader.class);
-    private static final String GENERATED_BALLERINA_SOURCE = "generated-ballerina-source";
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) {
 
         if (args == null || args.length == 0) {
             logger.error("Please provide source file/folder");
@@ -54,47 +54,38 @@ public class MuleToBalConvertExecutor {
         logger.info("Source file(s) in location: " + sourcePath.toString());
 
         String destination = args[1];
-
-        if (Files.isDirectory(sourcePath)) {
-            Path path;
-            if (destination == null || destination.isEmpty()) {
-                path = Paths.get(source.getAbsolutePath() + File.separator + GENERATED_BALLERINA_SOURCE);
-            } else {
-                if (destination.charAt(destination.length() - 1) == File.separatorChar) {
-                    path = Paths.get(destination + GENERATED_BALLERINA_SOURCE);
-                } else {
-                    path = Paths.get(destination + File.separator + GENERATED_BALLERINA_SOURCE);
-                }
-            }
-            if (!Files.exists(path)) {
-                try {
+        try {
+            if (Files.isDirectory(sourcePath)) {
+                Path path = Utils.getPath(source, destination);
+                if (!Files.exists(path)) {
                     path = Files.createDirectories(path);
-                    destination = path.toString();
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                    return;
                 }
-            }
-            logger.info("Converted files saved in " + destination);
-            List<File> filesInFolder = Files.walk(Paths.get(args[0])).filter(Files::isRegularFile).map(Path::toFile).
-                    collect(Collectors.toList());
-            for (File file : filesInFolder) {
+                destination = path.toString();
+                logger.info("Converted files saved in " + destination);
+
+                List<File> filesInFolder = Files.walk(Paths.get(args[0])).filter(Files::isRegularFile).
+                        map(Path::toFile).collect(Collectors.toList());
+                for (File file : filesInFolder) {
+                    ConfigReader xmlParser = new ConfigReader();
+                    try (InputStream inputStream = xmlParser.getInputStream(file)) {
+                        String fileName = file.getName().substring(0, file.getName().indexOf('.')) + ".bal";
+                        createBalFile(xmlParser, inputStream, destination + File.separator + fileName);
+                        logger.info(fileName + " created successfully.");
+                    }
+                }
+            } else {
+                if (destination == null || destination.isEmpty()) {
+                    String fileName = source.getName();
+                    destination = fileName.substring(0, fileName.indexOf('.')) + ".bal";
+                }
+                logger.info("Generated ballerina file saved as " + destination);
                 ConfigReader xmlParser = new ConfigReader();
-                try (InputStream inputStream = xmlParser.getInputStream(file)) {
-                    String fileName = file.getName().substring(0, file.getName().indexOf('.')) + ".bal";
-                    createBalFile(xmlParser, inputStream, destination + File.separator + fileName);
+                try (InputStream inputStream = xmlParser.getInputStream(source)) {
+                    createBalFile(xmlParser, inputStream, destination);
                 }
             }
-        } else {
-            if (destination == null || destination.isEmpty()) {
-                String fileName = source.getName();
-                destination = fileName.substring(0, fileName.indexOf('.')) + ".bal";
-            }
-            logger.info("Generated ballerina file saved as " + destination);
-            ConfigReader xmlParser = new ConfigReader();
-            try (InputStream inputStream = xmlParser.getInputStream(source)) {
-                createBalFile(xmlParser, inputStream, destination);
-            }
+        } catch (IOException e) {
+            logger.error("Unable to generate ballerina file.", e);
         }
     }
 
@@ -114,5 +105,6 @@ public class MuleToBalConvertExecutor {
 
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         sourceGenerator.generate(ballerinaFile, destination);
+
     }
 }

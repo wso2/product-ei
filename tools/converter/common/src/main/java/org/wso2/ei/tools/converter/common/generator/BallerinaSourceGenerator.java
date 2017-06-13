@@ -19,6 +19,7 @@
 package org.wso2.ei.tools.converter.common.generator;
 
 import org.ballerinalang.model.BallerinaFile;
+import org.wso2.ei.tools.converter.common.Utils;
 
 import java.io.IOException;
 
