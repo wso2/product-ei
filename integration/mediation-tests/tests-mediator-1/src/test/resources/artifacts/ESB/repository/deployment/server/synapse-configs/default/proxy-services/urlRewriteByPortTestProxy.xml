@@ -1,0 +1,24 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteByPortTestProxy" transports="https,http" statistics="disable" trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="protocol" value="http" scope="default"/>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <condition>
+                        <equal xmlns="" type="url" source="port" value="9000"/>
+                    </condition>
+                    <action xpath="get-property('protocol')" regex="\w.*" type="replace"
+                            fragment="protocol"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

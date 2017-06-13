@@ -30,7 +30,7 @@ public class SetFullUrlWhenNoAddressingUrlTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/full_url_set_when_no_url_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteSetUrlTestProxy");
 
     }
 
@@ -44,7 +44,7 @@ public class SetFullUrlWhenNoAddressingUrlTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteSetUrlTestProxy"),
                 null,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

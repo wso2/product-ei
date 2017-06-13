@@ -1,0 +1,25 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="FormatPayloadWithOMTypeArgsExpressionTestProxy" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <!-- using payloadFactory mediator to transform the request message -->
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true"/>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <property xmlns:ns="http://services.samples" name="request" expression="//ns:payload/ns:request"
+                      scope="default" type="OM"/>
+            <payloadFactory>
+                <format>
+                    <ns:getQuote xmlns:ns="http://services.samples">$1</ns:getQuote>
+                </format>
+                <args>
+                    <arg expression="get-property('request')"/>
+                </args>
+            </payloadFactory>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+    </target>
+    <description></description>
+</proxy>

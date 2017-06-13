@@ -34,7 +34,7 @@ public class ProtocolReWriteFromProperty extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/protocol_rewrite_from_property_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteReplaceFromPropertyTestProxy");
     }
 
 
@@ -44,7 +44,7 @@ public class ProtocolReWriteFromProperty extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteReplaceFromPropertyTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));
