@@ -203,7 +203,29 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
+                <artifactId>ds2ballerina</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>synapse2ballerina</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
+                <type>zip</type>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>
+                <type>zip</type>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
                 <type>zip</type>
                 <version>${product.ei.version}</version>
             </dependency>
