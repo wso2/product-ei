@@ -23,19 +23,13 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 /**
  * {@code HttpListenerConfig} represents mule listener-config element
  */
-public class HttpListenerConfig extends BaseObject implements GlobalConfiguration {
+public class HttpListenerConfig extends BaseObject implements Inbound, GlobalConfiguration {
 
     private String name;
     private String host;
 
-    /**
-     * @http:Port {value:"9090"}
-     */
     private String port;
 
-    /**
-     * @http:BasePath {value:"/hello"}
-     */
     private String basePath;
 
     @Override

@@ -29,6 +29,7 @@ public class HttpRequestConfig extends BaseObject implements GlobalConfiguration
     private String host;
     private String basePath;
     private String port;
+    private String protocol;
 
     @Override
     public void accept(Visitor visitor) {
@@ -65,5 +66,13 @@ public class HttpRequestConfig extends BaseObject implements GlobalConfiguration
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 }

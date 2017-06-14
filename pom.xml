@@ -152,7 +152,7 @@
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>org.ballerinalang</groupId>
+                <groupId>org.ballerinalang.tools</groupId>
                 <artifactId>ballerina</artifactId>
                 <version>${ballerina.runtime.version}</version>
                 <type>zip</type>
@@ -212,6 +212,44 @@
                 <artifactId>commons-configuration</artifactId>
                 <version>${commons.configuration.version}</version>
                 <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.2.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>mule2ballerina</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>ds2ballerina</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>synapse2ballerina</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
+                <type>zip</type>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>
+                <type>zip</type>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
+                <type>zip</type>
+                <version>${product.ei.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -337,8 +375,8 @@
 
     <properties>
         <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
-        <ballerina.runtime.version>0.8.3</ballerina.runtime.version>
-        <ballerina.core.version>0.88-SNAPSHOT</ballerina.core.version>
+        <ballerina.runtime.version>0.89-SNAPSHOT</ballerina.runtime.version>
+        <ballerina.core.version>0.89-SNAPSHOT</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>2.3.1</carbon.messaging.version>
         <carbon.transport.http.netty.version>4.3.0-m2</carbon.transport.http.netty.version>
@@ -351,11 +389,8 @@
         <carbon.cache.version>1.1.3</carbon.cache.version>
         <carbon.deployment.version>5.1.0</carbon.deployment.version>
         <carbon.datasources.version>1.1.0</carbon.datasources.version>
-        <carbon.business.messaging.version>4.0.0-SNAPSHOT</carbon.business.messaging.version>
+        <carbon.business.messaging.version>4.0.1-SNAPSHOT</carbon.business.messaging.version>
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
-        <testng.version>6.9.9</testng.version>
-        <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
-        <commons.configuration.version>1.10</commons.configuration.version>
         <slf4j.version>1.7.22</slf4j.version>
     </properties>
 </project>

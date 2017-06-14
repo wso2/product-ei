@@ -18,13 +18,6 @@
 
 package org.wso2.ei.tools.converter.common.generator;
 
-import org.ballerinalang.bre.ConnectorVarLocation;
-import org.ballerinalang.bre.ConstantLocation;
-import org.ballerinalang.bre.GlobalVarLocation;
-import org.ballerinalang.bre.ServiceVarLocation;
-import org.ballerinalang.bre.StackVarLocation;
-import org.ballerinalang.bre.StructVarLocation;
-import org.ballerinalang.bre.WorkerVarLocation;
 import org.ballerinalang.model.AnnotationAttachment;
 import org.ballerinalang.model.AnnotationAttributeDef;
 import org.ballerinalang.model.AnnotationDef;
@@ -35,7 +28,9 @@ import org.ballerinalang.model.BallerinaAction;
 import org.ballerinalang.model.BallerinaConnectorDef;
 import org.ballerinalang.model.BallerinaFile;
 import org.ballerinalang.model.BallerinaFunction;
+import org.ballerinalang.model.CompilationUnit;
 import org.ballerinalang.model.ConstDef;
+import org.ballerinalang.model.Function;
 import org.ballerinalang.model.GlobalVariableDef;
 import org.ballerinalang.model.ImportPackage;
 import org.ballerinalang.model.NodeVisitor;
@@ -49,8 +44,8 @@ import org.ballerinalang.model.expressions.ActionInvocationExpr;
 import org.ballerinalang.model.expressions.AddExpression;
 import org.ballerinalang.model.expressions.AndExpression;
 import org.ballerinalang.model.expressions.ArrayInitExpr;
+import org.ballerinalang.model.expressions.ArrayLengthExpression;
 import org.ballerinalang.model.expressions.ArrayMapAccessExpr;
-import org.ballerinalang.model.expressions.BacktickExpr;
 import org.ballerinalang.model.expressions.BasicLiteral;
 import org.ballerinalang.model.expressions.ConnectorInitExpr;
 import org.ballerinalang.model.expressions.DivideExpr;
@@ -74,14 +69,12 @@ import org.ballerinalang.model.expressions.NotEqualExpression;
 import org.ballerinalang.model.expressions.NullLiteral;
 import org.ballerinalang.model.expressions.OrExpression;
 import org.ballerinalang.model.expressions.RefTypeInitExpr;
-import org.ballerinalang.model.expressions.ResourceInvocationExpr;
 import org.ballerinalang.model.expressions.StructInitExpr;
 import org.ballerinalang.model.expressions.SubtractExpression;
 import org.ballerinalang.model.expressions.TypeCastExpression;
 import org.ballerinalang.model.expressions.TypeConversionExpr;
 import org.ballerinalang.model.expressions.UnaryExpression;
 import org.ballerinalang.model.expressions.VariableRefExpr;
-import org.ballerinalang.model.invokers.MainInvoker;
 import org.ballerinalang.model.statements.AbortStmt;
 import org.ballerinalang.model.statements.ActionInvocationStmt;
 import org.ballerinalang.model.statements.AssignStmt;
@@ -95,15 +88,19 @@ import org.ballerinalang.model.statements.ReplyStmt;
 import org.ballerinalang.model.statements.ReturnStmt;
 import org.ballerinalang.model.statements.Statement;
 import org.ballerinalang.model.statements.ThrowStmt;
-import org.ballerinalang.model.statements.TransactionRollbackStmt;
+import org.ballerinalang.model.statements.TransactionStmt;
 import org.ballerinalang.model.statements.TransformStmt;
 import org.ballerinalang.model.statements.TryCatchStmt;
 import org.ballerinalang.model.statements.VariableDefStmt;
 import org.ballerinalang.model.statements.WhileStmt;
 import org.ballerinalang.model.statements.WorkerInvocationStmt;
 import org.ballerinalang.model.statements.WorkerReplyStmt;
+import org.ballerinalang.model.values.BInteger;
+import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+//import org.ballerinalang.model.statements.TransactionRollbackStmt;
 
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
@@ -111,72 +108,104 @@ import org.slf4j.LoggerFactory;
  */
 public class CodeGenVisitor implements NodeVisitor {
 
-    //private static Log log = LogFactory.getLog(CodeGenVisitor.class);
     private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
-    private String ballerinaSourceStr = "";
 
-    //Stack to hold code block ends
-    //private Stack<String> codeBlockStack = new Stack<>();
-
-    //TODO remove this method later
-    private void logExecMethod() {
-        StackTraceElement stackTraceElements[] = Thread.currentThread().getStackTrace();
-        logger.info(stackTraceElements[3].getMethodName());
-    }
+    private StringBuilder balSourceBuilder = new StringBuilder();
+    private int indentDepth = 0;
+    private int previousIndentDepth = 0;
+    private String indentStr = "";
+    private BLangProgram balProgram = null;
 
     @Override
     public void visit(BLangProgram bLangProgram) {
-        logExecMethod();
+        logger.debug("Visit - BLangProgram");
+        balProgram = bLangProgram;
+
+        //process each ServicePackages
+        for (BLangPackage bLangPackage : balProgram.getServicePackages()) {
+            //add import packages
+            for (ImportPackage importPackage : bLangPackage.getImportPackages()) {
+                appendToBalSource(importPackage.getSymbolName().toString() + Constants.NEWLINE_STR);
+            }
+
+            //process services
+            for (Service service : bLangPackage.getServices()) {
+                service.accept(this);
+            }
+
+            //process functions within the package
+            for (Function function : bLangPackage.getFunctions()) {
+                function.accept(this);
+            }
+        }
     }
 
     @Override
     public void visit(BLangPackage bLangPackage) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BallerinaFile bFile) {
-        logExecMethod();
+        //get Import packages
+        //TODO need to decide to get import packages from BLangProgram or from BallerinaFile
+        ImportPackage[] importPackages = bFile.getImportPackages();
+        for (ImportPackage importPackage : importPackages) {
+            if (Constants.IMPLICIT_PACKAGE.equals(importPackage.getSymbolName().getName())) {
+                continue;
+            }
+            //no need to consider indentation due to imports happens at the beginning of the file
+            appendToBalSource(Constants.IMPORT_STR + Constants.SPACE_STR + importPackage.getSymbolName().getName()
+                    + Constants.STMTEND_STR + Constants.NEWLINE_STR);
+        }
+
+        CompilationUnit[] compilationUnits = bFile.getCompilationUnits();
+        for (CompilationUnit compilationUnit : compilationUnits) {
+            compilationUnit.accept(this);
+        }
+
     }
 
     @Override
     public void visit(ImportPackage importPkg) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ConstDef constant) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(GlobalVariableDef globalVar) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(Service service) {
-        logExecMethod();
 
         //Visit annotationAttachment
         AnnotationAttachment[] annotationAttachments = service.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            annotationAttachment.accept(this);
+            appendToBalSource(Constants.NEWLINE_STR);
         }
 
         /**
          serviceDefinition : 'service' Identifier serviceBody;
          * */
-
-        ballerinaSourceStr += Constants.SERVICE_STR + " " + service.getName() + " " + Constants.STMTBLOCK_START_STR
-                + Constants.NEWLINE_STR;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.SERVICE_STR + Constants.SPACE_STR +
+                service.getName() + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
 
         /**
          * serviceBody: '{' variableDefinitionStatement* resourceDefinition* '}';
          * resourceDefinition: annotationAttachment* 'resource' Identifier '(' parameterList ')' callableUnitBody;
          * annotationAttachment: '@' nameReference '{' annotationAttributeList? '}'
          */
-        //TODO:Visit variable definition statements
+        for (VariableDefStmt variableDefStmt : service.getVariableDefStmts()) {
+            variableDefStmt.accept(this);
+        }
 
         //Visit Resource definitions
         Resource[] resources = service.getResources();
@@ -185,18 +214,18 @@ public class CodeGenVisitor implements NodeVisitor {
         }
 
         //Service visit completed
-        ballerinaSourceStr += Constants.STMTBLOCK_END_STR;
+        appendToBalSource(Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+        --indentDepth;
 
     }
 
     @Override
     public void visit(BallerinaConnectorDef connector) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(Resource resource) {
-        logExecMethod();
 
         /**
          * resourceDefinition : annotationAttachment* 'resource' Identifier '(' parameterList ')' callableUnitBody;
@@ -207,22 +236,25 @@ public class CodeGenVisitor implements NodeVisitor {
         //visit annotations
         AnnotationAttachment[] annotationAttachments = resource.getAnnotations();
         for (AnnotationAttachment annotationAttachment : annotationAttachments) {
-            ballerinaSourceStr += annotationAttachment.toString() + Constants.NEWLINE_STR;
+            appendToBalSource(getIndentationForCurrentLine());
+            annotationAttachment.accept(this);
+            appendToBalSource(Constants.NEWLINE_STR);
         }
 
-        ballerinaSourceStr += Constants.RESOURCE_STR + Constants.SPACE_STR + resource.getSymbolName() +
-                Constants.SPACE_STR + Constants.PARENTHESES_START_STR;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.RESOURCE_STR + Constants.SPACE_STR +
+                resource.getIdentifier().getName() + Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
 
         ParameterDef[] parameterDefs = resource.getParameterDefs();
-        for (ParameterDef parameterDef : parameterDefs) {
-            parameterDef.accept(this);
-            //TODO Handle multiple parameters adding commas
+        for (int i = 0; i < parameterDefs.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            parameterDefs[i].accept(this);
         }
 
         //end of parameters
-        ballerinaSourceStr += Constants.PARENTHESES_END_STR + Constants.SPACE_STR +
-                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR;
-
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR
+                + Constants.NEWLINE_STR);
         //process resource block
         /**
          * callableUnitBody : '{' statement* workerDeclaration* '}';
@@ -234,297 +266,567 @@ public class CodeGenVisitor implements NodeVisitor {
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
          *                                                                                          expression) )? ';';
          */
+        ++indentDepth;
         BlockStmt blockStmt = resource.getCallableUnitBody();
-
         Statement[] statements = blockStmt.getStatements();
         for (Statement statement : statements) {
             statement.accept(this);
         }
-
+        --indentDepth;
         //end of resource statements block
-        ballerinaSourceStr += Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR;
-
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(BallerinaFunction function) {
-        logExecMethod();
+        logger.debug("Visit - BallerinaFunction");
+        /**
+         * functionDefinition
+         :   'native' 'function'  callableUnitSignature ';'
+         |   'function' callableUnitSignature callableUnitBody
+         ;
+         * callableUnitSignature
+         :   Identifier '(' parameterList? ')' returnParameters?
+         ;
+         * returnParameters
+         : '(' (parameterList | returnTypeList) ')'
+         ;
+         */
+
+        appendToBalSource(Constants.FUNCTION_STR + Constants.SPACE_STR + function.getName() + Constants.SPACE_STR +
+                Constants.PARENTHESES_START_STR);
+        //process parameterList
+        ParameterDef[] parameterDefs = function.getParameterDefs();
+        for (int i = 0; i < parameterDefs.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            parameterDefs[i].accept(this);
+        }
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR);
+
+        if (function.getReturnParameters().length > 0) {
+            appendToBalSource(Constants.PARENTHESES_START_STR);
+            //process return parameters
+            ParameterDef[] returnParamDefs = function.getReturnParameters();
+            for (int i = 0; i < returnParamDefs.length; i++) {
+                if (i > 0) {
+                    appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+                }
+                returnParamDefs[i].accept(this);
+            }
+            appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR);
+        }
+
+        appendToBalSource(Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        function.getCallableUnitBody().accept(this);
+        --indentDepth;
+        appendToBalSource(Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(BTypeMapper typeMapper) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BallerinaAction action) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(Worker worker) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AnnotationAttachment annotation) {
-        logExecMethod();
+        logger.debug("Visit - AnnotationAttachment");
+        /**
+         *  annotationAttachment : '@' nameReference '{' annotationAttributeList? '}';
+         */
+        appendToBalSource(annotation.toString());
     }
 
     @Override
     public void visit(ParameterDef parameterDef) {
-        logExecMethod();
 
         //TODO handle annotations for parameter
-
-        ballerinaSourceStr += parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName();
+        if (parameterDef.getAnnotations().length > 0) {
+            for (AnnotationAttachment annotation : parameterDef.getAnnotations()) {
+                annotation.accept(this);
+                appendToBalSource(Constants.SPACE_STR);
+            }
+        }
+        appendToBalSource(parameterDef.getTypeName() + Constants.SPACE_STR + parameterDef.getSymbolName());
     }
 
     @Override
     public void visit(VariableDef variableDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(StructDef structDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AnnotationAttributeDef annotationAttributeDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AnnotationDef annotationDef) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(VariableDefStmt varDefStmt) {
-        logExecMethod();
-
+        logger.debug("Visit - VariableDefStmt");
         /**
          * variableDefinitionStatement : typeName Identifier ('=' (connectorInitExpression | actionInvocation |
          *                                                                                      expression) )? ';';
          */
 
         VariableDef variableDef = varDefStmt.getVariableDef();
-        String varDefStr = variableDef.getTypeName().getName() + Constants.SPACE_STR + variableDef.getSymbolName()
+        String varLHSDefStr = variableDef.getTypeName().toString() + Constants.SPACE_STR + variableDef.getSymbolName()
                 + Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR;
 
-        Expression rhsExpr = varDefStmt.getRExpr();
-
-        if (rhsExpr instanceof RefTypeInitExpr) {
-            RefTypeInitExpr refTypeInitExpr = (RefTypeInitExpr) rhsExpr;
-            Expression[] argExpressions = refTypeInitExpr.getArgExprs();
-
-            if (argExpressions.length > 0) {
-                //TODO handle args
-            } else {
-                //TODO : for now assume "{}"
-                varDefStr += "{}";
-            }
-        }
-
-        ballerinaSourceStr += varDefStr + Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        appendToBalSource(getIndentationForCurrentLine() + varLHSDefStr);
+        varDefStmt.getRExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(AssignStmt assignStmt) {
-        logExecMethod();
+        logger.debug("Visit - AssignStmt");
+        /**
+         * assignmentStatement
+         : variableReferenceList '=' (connectorInitExpression | actionInvocation | expression) ';';
+         * variableReferenceList
+         : variableReference (',' variableReference)*;
+         * variableReference
+         :   nameReference                               # simpleVariableIdentifier// simple identifier
+         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+         ;
+         */
+        //handle lhs
+        appendToBalSource(getIndentationForCurrentLine());
+        Expression[] lhsExpressions = assignStmt.getLExprs();
+        for (Expression lhsExpression : lhsExpressions) {
+            lhsExpression.accept(this);
+        }
+        appendToBalSource(Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR);
+        //handle rhs
+        assignStmt.getRExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(BlockStmt blockStmt) {
-        logExecMethod();
+        logger.debug("Visit - BlockStmt");
+
+        //traverse statements
+        for (Statement statement : blockStmt.getStatements()) {
+            statement.accept(this);
+        }
     }
 
     @Override
     public void visit(CommentStmt commentStmt) {
-        logExecMethod();
+        logger.debug("Visit - CommentStmt");
+        appendToBalSource(getIndentationForCurrentLine() + commentStmt.getComment() + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(IfElseStmt ifElseStmt) {
-        logExecMethod();
+        logger.debug("Visit - IfElseStmt");
+        /**
+         * ifElseStatement : ifClause elseIfClause* elseClause?;
+         * ifClause : 'if' '(' expression ')' '{' statement* '}';
+         * elseIfClause : 'else' 'if' '(' expression ')' '{' statement* '}';
+         * elseClause : 'else' '{' statement*'}';
+         */
+        appendToBalSource(getIndentationForCurrentLine() + Constants.IF_STR + Constants.SPACE_STR +
+                Constants.PARENTHESES_START_STR);
+        //process if clause expression
+        ifElseStmt.getCondition().accept(this);
+        appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                Constants.NEWLINE_STR);
+
+        //process then block
+        ++indentDepth;
+        ifElseStmt.getThenBody().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+
+        //process else if clauses
+        if (ifElseStmt.getElseIfBlocks().length > 0) {
+            for (IfElseStmt.ElseIfBlock elseIfBlock : ifElseStmt.getElseIfBlocks()) {
+                appendToBalSource(Constants.SPACE_STR + Constants.ELSE_STR + Constants.SPACE_STR + Constants.IF_STR +
+                        Constants.SPACE_STR + Constants.PARENTHESES_START_STR);
+                elseIfBlock.getElseIfCondition().accept(this);
+                appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                        Constants.NEWLINE_STR);
+                ++indentDepth;
+                elseIfBlock.getElseIfBody().accept(this);
+                --indentDepth;
+                appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+            }
+        }
+
+        //process else block
+        appendToBalSource(Constants.SPACE_STR + Constants.ELSE_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        ifElseStmt.getElseBody().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(ReplyStmt replyStmt) {
-        logExecMethod();
-
         /**
          * replyStatement : 'reply' expression ';';
          */
-        ballerinaSourceStr += Constants.REPLY_STR + Constants.SPACE_STR;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.REPLY_STR + Constants.SPACE_STR);
 
         Expression replyExpression = replyStmt.getReplyExpr();
         if (replyExpression instanceof VariableRefExpr) {
-            ballerinaSourceStr += ((VariableRefExpr) replyExpression).getSymbolName();
+            appendToBalSource(((VariableRefExpr) replyExpression).getSymbolName().toString());
         }
 
-        ballerinaSourceStr += Constants.STMTEND_STR + Constants.NEWLINE_STR;
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(ReturnStmt returnStmt) {
-        logExecMethod();
+        logger.debug("Visit - ReturnStmt");
+        /**
+         * returnStatement : 'return' expressionList? ';';
+         * expressionList:expression (',' expression)*;
+         */
+        appendToBalSource(getIndentationForCurrentLine() + Constants.RETURN_STR + Constants.SPACE_STR);
+        Expression[] expressions = returnStmt.getExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(WhileStmt whileStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BreakStmt breakStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(TryCatchStmt tryCatchStmt) {
-        logExecMethod();
+        logger.debug("Visit - TryCatchStmt");
+        /**
+         * tryCatchStatement:   'try' '{' statement* '}' catchClauses;
+         * catchClauses: catchClause+ finallyClause?| finallyClause;
+         * catchClause:  'catch' '(' typeName Identifier ')' '{' statement* '}';
+         * finallyClause: 'finally' '{' statement* '}';
+         */
+        //process try block
+        appendToBalSource(getIndentationForCurrentLine() + Constants.TRY_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        tryCatchStmt.getTryBlock().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        //process catch blocks
+        for (TryCatchStmt.CatchBlock catchBlock : tryCatchStmt.getCatchBlocks()) {
+            appendToBalSource(Constants.SPACE_STR + Constants.CATCH_STR + Constants.SPACE_STR +
+                    Constants.PARENTHESES_START_STR);
+            catchBlock.getParameterDef().accept(this);
+            appendToBalSource(Constants.PARENTHESES_END_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR +
+                    Constants.NEWLINE_STR);
+            ++indentDepth;
+            catchBlock.getCatchBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        }
+        //process finally block
+        if (tryCatchStmt.getFinallyBlock() != null) {
+            appendToBalSource(Constants.SPACE_STR + Constants.FINALLY_STR + Constants.SPACE_STR +
+                    Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+            ++indentDepth;
+            tryCatchStmt.getFinallyBlock().getFinallyBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+        }
+        appendToBalSource(Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(ThrowStmt throwStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(FunctionInvocationStmt functionInvocationStmt) {
-        logExecMethod();
+        logger.debug("Visit - FunctionInvocationStmt");
+        /**
+         * functionInvocationStatement : nameReference '(' expressionList? ')' ';';
+         */
+        appendToBalSource(getIndentationForCurrentLine());
+        functionInvocationStmt.getFunctionInvocationExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(ActionInvocationStmt actionInvocationStmt) {
-        logExecMethod();
+        logger.debug("Visit - ActionInvocationStmt");
+        /**
+         * actionInvocationStatement
+         :   actionInvocation ';'
+         |   variableReferenceList '=' actionInvocation ';'
+         ;
+         */
+        appendToBalSource(getIndentationForCurrentLine());
+        actionInvocationStmt.getActionInvocationExpr().accept(this);
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(WorkerInvocationStmt workerInvocationStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(WorkerReplyStmt workerReplyStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ForkJoinStmt forkJoinStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(TransformStmt transformStmt) {
-        logExecMethod();
+
     }
 
     @Override
-    public void visit(TransactionRollbackStmt transactionRollbackStmt) {
-        logExecMethod();
+    public void visit(TransactionStmt transactionStmt) {
+
     }
 
+   /* @Override
+    public void visit(TransactionRollbackStmt transactionRollbackStmt) {
+        logger.debug("Visit - TransactionRollbackStmt");
+
+        */
+
+    /**
+     * transactionStatement : 'transaction' '{' statement* '}' rollbackClause;
+     * rollbackClause : 'aborted' '{' statement* '}';
+     *//*
+        //handle transaction block
+        appendToBalSource(getIndentationForCurrentLine() + Constants.TRANSACTION_STR + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        transactionRollbackStmt.getTransactionBlock().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.SPACE_STR +
+                Constants.ABORTED_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        //handle rollback block
+        ++indentDepth;
+        transactionRollbackStmt.getRollbackBlock().getRollbackBlockStmt().accept(this);
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+
+    }*/
     @Override
     public void visit(AbortStmt abortStmt) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(AddExpression addExpr) {
-        logExecMethod();
+        logger.debug("Visit - AddExpression");
+        /**
+         * expression
+         : ......
+         | expression ('+' | '-') expression  # binaryAddSubExpression
+         | ....
+         */
+        addExpr.getLExpr().accept(this);
+        appendToBalSource(Constants.SPACE_STR + addExpr.getOperator().toString() + Constants.SPACE_STR);
+        addExpr.getRExpr().accept(this);
     }
 
     @Override
     public void visit(AndExpression andExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(BasicLiteral basicLiteral) {
-        logExecMethod();
+        if (basicLiteral.getBValue() instanceof BString) {
+            appendToBalSource(Constants.QUOTE_STR + basicLiteral.getBValue().stringValue() + Constants.QUOTE_STR);
+        } else if (basicLiteral.getBValue() instanceof BInteger) {
+            appendToBalSource(basicLiteral.getBValue().stringValue());
+        }
     }
 
     @Override
     public void visit(DivideExpr divideExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(ModExpression modExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(EqualExpression equalExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(FunctionInvocationExpr functionInvocationExpr) {
-        logExecMethod();
+        logger.debug("Visit - FunctionInvocationExpr");
+        /**
+         * expression : simpleLiteral                        # simpleLiteralExpression
+         |   arrayLiteral                                    # arrayLiteralExpression
+         |   ..................
+         |   nameReference '(' expressionList? ')'           # functionInvocationExpression
+         */
+        appendToBalSource((functionInvocationExpr.getPackageName() == null ?
+                "" :
+                functionInvocationExpr.getPackageName() + Constants.COLON_STR) +
+                functionInvocationExpr.getName() + Constants.PARENTHESES_START_STR);
+        //process expression list
+        Expression[] argExpressions = functionInvocationExpr.getArgExprs();
+        for (int i = 0; i < argExpressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            argExpressions[i].accept(this);
+        }
+        //end of expressionList
+        appendToBalSource(Constants.PARENTHESES_END_STR);
     }
 
     @Override
     public void visit(ActionInvocationExpr actionInvocationExpr) {
-        logExecMethod();
+        logger.debug("Visit - ActionInvocationExpr");
+        /**
+         * actionInvocation : nameReference '.' Identifier '(' expressionList? ')';
+         * nameReference : (Identifier ':')? Identifier;
+         */
+        appendToBalSource(actionInvocationExpr.getPackageName() + Constants.COLON_STR +
+                actionInvocationExpr.getConnectorName() + Constants.PERIOD_STR + actionInvocationExpr.getName() +
+                Constants.PARENTHESES_START_STR);
+        //process expression list
+        Expression[] expressions = actionInvocationExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.PARENTHESES_END_STR);
     }
 
     @Override
     public void visit(GreaterEqualExpression greaterEqualExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(GreaterThanExpression greaterThanExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(LessEqualExpression lessEqualExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(LessThanExpression lessThanExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(MultExpression multExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(InstanceCreationExpr instanceCreationExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(NotEqualExpression notEqualExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(OrExpression orExpression) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(SubtractExpression subtractExpression) {
-        logExecMethod();
+        logger.debug("Visit - AddExpression");
+        /**
+         * expression
+         : ......
+         | expression ('+' | '-') expression  # binaryAddSubExpression
+         | ....
+         */
+        subtractExpression.getLExpr().accept(this);
+        appendToBalSource(Constants.SPACE_STR + subtractExpression.getOperator().toString() + Constants.SPACE_STR);
+        subtractExpression.getRExpr().accept(this);
     }
 
     @Override
     public void visit(UnaryExpression unaryExpression) {
-        logExecMethod();
+        logger.debug("Visit - UnaryExpression");
+        /**
+         * expression
+         : ......
+         | ('+' | '-' | '!') expression    # unaryExpression
+         | ....
+         */
+        appendToBalSource(unaryExpression.getOperator().toString());
+        unaryExpression.getRExpr().accept(this);
+
     }
 
     @Override
     public void visit(TypeCastExpression typeCastExpression) {
-        logExecMethod();
+        logger.debug("Visit - TypeCastExpression");
+        /**
+         * expression
+         : ......
+         | '(' typeName ')' expression   # typeCastingExpression
+         | ....
+         */
+        if (typeCastExpression.getTypeName() != null) {
+            appendToBalSource(Constants.PARENTHESES_START_STR + typeCastExpression.getTypeName() +
+                    Constants.PARENTHESES_END_STR + Constants.SPACE_STR);
+        }
+        typeCastExpression.getRExpr().accept(this);
+
     }
 
     @Override
@@ -534,120 +836,216 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
-        logExecMethod();
+        logger.debug("Visit - ArrayMapAccessExpr");
+        /**
+         * variableReference
+         :   nameReference                               # simpleVariableIdentifier// simple identifier
+         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+         ;
+         */
+        appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
+        arrayMapAccessExpr.getIndexExprs()[0].accept(this);
+        appendToBalSource(Constants.ARRAY_END_STR);
+    }
+
+    @Override
+    public void visit(ArrayLengthExpression arrayLengthExpression) {
+
     }
 
     @Override
     public void visit(FieldAccessExpr structAttributeAccessExpr) {
-        logExecMethod();
+        logger.debug("Visit - FieldAccessExpr");
+        /**
+         * variableReference
+         :   nameReference                               # simpleVariableIdentifier// simple identifier
+         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+         ;
+         */
+        structAttributeAccessExpr.getVarRef().accept(this);
+        if (structAttributeAccessExpr.getFieldExpr() != null) {
+            appendToBalSource(Constants.PERIOD_STR);
+            structAttributeAccessExpr.getFieldExpr().accept(this);
+        }
     }
 
     @Override
     public void visit(JSONFieldAccessExpr jsonPathExpr) {
-        logExecMethod();
+        logger.debug("Visit - JSONFieldAccessExpr");
+
+        if (jsonPathExpr.getVarRef() instanceof BasicLiteral) {
+            appendToBalSource(((BasicLiteral) jsonPathExpr.getVarRef()).getBValue().stringValue());
+        } else {
+            jsonPathExpr.getVarRef().accept(this);
+        }
+        if (jsonPathExpr.getFieldExpr() != null) {
+            appendToBalSource(Constants.PERIOD_STR);
+            jsonPathExpr.getFieldExpr().accept(this);
+        }
     }
 
-    @Override
+    /*@Override
     public void visit(BacktickExpr backtickExpr) {
-        logExecMethod();
-    }
+        logger.debug("Visit - BacktickExpr");
+        appendToBalSource("`" + backtickExpr.getTemplateStr() + "`");
+    }*/
 
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
-        logExecMethod();
+        logger.debug("Visit - ArrayInitExpr");
+        /**
+         * arrayLiteral : '[' expressionList? ']';
+         */
+        appendToBalSource(Constants.ARRAY_START_STR);
+        Expression[] expressArgs = arrayInitExpr.getArgExprs();
+        for (int i = 0; i < expressArgs.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressArgs[i].accept(this);
+        }
+        appendToBalSource(Constants.ARRAY_END_STR);
     }
 
     @Override
     public void visit(RefTypeInitExpr refTypeInitExpr) {
-        logExecMethod();
+        logger.debug("Visit - RefTypeInitExpr");
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+
+        if (refTypeInitExpr.getArgExprs().length > 0) {
+            Expression[] args = refTypeInitExpr.getArgExprs();
+            for (int i = 0; i < args.length; i++) {
+                if (i > 0) {
+                    appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+                }
+                args[i].accept(this);
+            }
+        }
+
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
     public void visit(ConnectorInitExpr connectorInitExpr) {
-        logExecMethod();
+        /**
+         * connectorInitExpression : 'create' nameReference '(' expressionList? ')';
+         * expressionList : expression (',' expression)*;
+         */
+        appendToBalSource(Constants.CREATE_STR).append(Constants.SPACE_STR).
+                append(connectorInitExpr.getTypeName().toString()).append(Constants.PARENTHESES_START_STR);
+
+        Expression[] expressArgs = connectorInitExpr.getArgExprs();
+        for (int i = 0; i < expressArgs.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            /*if (expressArgs[i] instanceof BasicLiteral) {
+                BValue arg = ((BasicLiteral) expressArgs[i]).getBValue();
+                appendToBalSource(arg.stringValue());
+            }*/
+            expressArgs[i].accept(this);
+        }
+        appendToBalSource(Constants.PARENTHESES_END_STR);
     }
 
     @Override
     public void visit(StructInitExpr structInitExpr) {
-        logExecMethod();
+        logger.debug("Visit - StructInitExpr");
+        //TODO assume StructInitExpr similar as MapInitExpr for now
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+        Expression[] expressions = structInitExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
     public void visit(MapInitExpr mapInitExpr) {
-        logExecMethod();
+        logger.debug("Visit - MapInitExpr");
+
+        /**
+         * mapStructLiteral : '{' (mapStructKeyValue (',' mapStructKeyValue)*)? '}';
+         * mapStructKeyValue : expression ':' expression
+         ;
+         */
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+        Expression[] expressions = mapInitExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
     public void visit(JSONInitExpr jsonInitExpr) {
-        logExecMethod();
+        logger.debug("Visit - JSONInitExpr");
+        appendToBalSource(Constants.STMTBLOCK_START_STR);
+        Expression[] expressions = jsonInitExpr.getArgExprs();
+        for (int i = 0; i < expressions.length; i++) {
+            if (i > 0) {
+                appendToBalSource(Constants.COMMA_STR + Constants.SPACE_STR);
+            }
+            expressions[i].accept(this);
+        }
+        appendToBalSource(Constants.STMTBLOCK_END_STR);
     }
 
     @Override
     public void visit(JSONArrayInitExpr jsonArrayInitExpr) {
-        logExecMethod();
+
     }
 
     @Override
     public void visit(KeyValueExpr keyValueExpr) {
-        logExecMethod();
+        logger.debug("Visit - KeyValueExpr");
+        keyValueExpr.getKeyExpr().accept(this);
+        appendToBalSource(Constants.COLON_STR);
+        keyValueExpr.getValueExpr().accept(this);
+
     }
 
     @Override
     public void visit(VariableRefExpr variableRefExpr) {
-        logExecMethod();
+        appendToBalSource(variableRefExpr.getSymbolName().toString());
     }
 
     @Override
     public void visit(NullLiteral nullLiteral) {
-        logExecMethod();
-    }
 
-    @Override
-    public void visit(StackVarLocation stackVarLocation) {
-        logExecMethod();
     }
-
-    @Override
-    public void visit(ServiceVarLocation serviceVarLocation) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(GlobalVarLocation globalVarLocation) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(ConnectorVarLocation connectorVarLocation) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(ConstantLocation constantLocation) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(StructVarLocation structVarLocation) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(ResourceInvocationExpr resourceIExpr) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(MainInvoker mainInvoker) {
-        logExecMethod();
-    }
-
-    @Override
-    public void visit(WorkerVarLocation workerVarLocation) {
-        logExecMethod();
-    }
+    
 
     public String getBallerinaSourceStr() {
-        return ballerinaSourceStr;
+        return balSourceBuilder.toString();
+    }
+
+    private StringBuilder appendToBalSource(String str) {
+        return balSourceBuilder.append(str);
+    }
+
+    /*private void appendToBalSourceWithNewLine(String str) {
+        ballerinaSourceStr += Constants.NEWLINE_STR + str;
+    }*/
+
+    private String getIndentationForCurrentLine() {
+
+        if (previousIndentDepth != indentDepth) {
+            String indentation = "";
+            for (int i = 0; i < indentDepth; i++) {
+                indentation = indentation.concat(Constants.TAB_STR);
+            }
+            previousIndentDepth = indentDepth;
+            indentStr = indentation;
+        }
+        return indentStr;
     }
 }

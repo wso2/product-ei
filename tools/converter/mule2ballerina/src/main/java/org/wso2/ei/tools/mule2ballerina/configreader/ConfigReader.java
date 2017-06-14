@@ -20,12 +20,12 @@ package org.wso2.ei.tools.mule2ballerina.configreader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
-import org.wso2.ei.tools.mule2ballerina.model.Flow;
+import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
-import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 
@@ -56,19 +56,19 @@ public class ConfigReader {
 
     private ElementMapper mapperObject;
     private AttributeMapper attributeMapper;
-    private Root mRoot;
+    private Root rootObj;
     private boolean flowStarted = false;
+    private boolean subFlowStarted = false;
     private List<String> unIdentifiedElements;
 
     public ConfigReader() {
         mapperObject = new ElementMapper();
         attributeMapper = new AttributeMapper();
-        mRoot = new Root();
+        rootObj = new Root();
         unIdentifiedElements = new ArrayList<String>();
     }
 
     public void readXML(InputStream inputStream) {
-
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             XMLEventReader eventReader = xmlInputFactory.createXMLEventReader(inputStream);
@@ -78,6 +78,7 @@ public class ConfigReader {
                 switch (xmlEvent.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
                     StartElement startElement = xmlEvent.asStartElement();
+                    checkFlowState(getElementOrAttributeName(startElement.getName()), true);
                     loadIntermediateMuleObjects(startElement);
                     break;
 
@@ -86,48 +87,61 @@ public class ConfigReader {
 
                 case XMLStreamConstants.END_ELEMENT:
                     EndElement endElement = xmlEvent.asEndElement();
-                    checkFlowEnd(endElement);
+                    checkFlowState(getElementOrAttributeName(endElement.getName()), false);
                     break;
 
                 default:
                     break;
                 }
             }
-
         } catch (XMLStreamException e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
         }
     }
 
-    public InputStream getInputStream(String fileName) {
-        File file = new File(fileName);
-        FileInputStream fis = null;
+    /**
+     * Given a mule configuration file get it's inputstream
+     *
+     * @param file Mule configuration file
+     * @return input stream
+     */
+    public InputStream getInputStream(File file) {
+        FileInputStream fileInputStream = null;
         try {
-            fis = new FileInputStream(file);
+            fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            logger.error("Error");
+            logger.error(e.getMessage(), e);
         }
-        //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        //InputStream inputStream = classloader.getResourceAsStream(fileName);
-        return fis;
+        return fileInputStream;
     }
 
+    /**
+     * Populate relevant intermediate object that is mapped to mule element
+     * If the mule element is not mapped to an object, put it in an unidentified element list and make a comment in
+     * ballerina code specifying that feature should be manually handled.
+     *
+     * @param mElement represents any mule element
+     */
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
-
+        Class<?> intermediateClass = null;
         if (mClassName != null) {
-            Class<?> mClass = null;
             try {
-                mClass = Class.forName(mClassName);
-                populateMuleObject(mElement.getAttributes(), mClass);
+                intermediateClass = Class.forName(mClassName);
+                populateMuleObject(mElement.getAttributes(), intermediateClass);
 
             } catch (ClassNotFoundException e) {
-                logger.error(e.toString());
+                logger.error(e.getMessage(), e);
             }
         } else {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
+                Comment comment = new Comment();
+                comment.setComment(" //IMPORTANT: Functionality provided by " + mElementName + " should be handled "
+                        + "manually here");
+                DataCarrierDTO dataCarrierDTO = populateDataCarrier(comment);
+                comment.buildTree(dataCarrierDTO);
             }
         }
     }
@@ -142,6 +156,12 @@ public class ConfigReader {
         return getElementOrAttributeName(qName);
     }
 
+    /**
+     * Given a mule element or an attribute get string value of it with the prefix attached to it
+     *
+     * @param qName
+     * @return
+     */
     private String getElementOrAttributeName(QName qName) {
         String prefix = (qName != null ? qName.getPrefix() : "");
         String mainElement = (qName != null ? qName.getLocalPart() : "");
@@ -149,9 +169,14 @@ public class ConfigReader {
         return name;
     }
 
+    /**
+     * Populate intermediate object properties with mule attribute values
+     *
+     * @param attributes List of attributes associate with a mule element
+     * @param mClass     Intermediate class that is mapped to the mule element
+     */
     private void populateMuleObject(Iterator<Attribute> attributes, Class<?> mClass) {
         try {
-
             java.lang.Object object = mClass.newInstance();
 
             attributes.forEachRemaining(attribute -> {
@@ -161,64 +186,65 @@ public class ConfigReader {
                         Field field = mClass.getDeclaredField(property);
                         field.setAccessible(true);
                         field.set(object, attribute.getValue());
-                        if ("name".equals(property) && object instanceof GlobalConfiguration) {
-                            mRoot.addGlobalConfigurationMap(attribute.getValue(), (GlobalConfiguration) object);
+
+                        /*if the element is a global configuration keep it against it's name as this will
+                        * be useful when navigating the processors to identify their global configuration
+                        */
+                        if (object instanceof GlobalConfiguration && "name".equals(property)) {
+                            rootObj.addGlobalConfigurationMap(attribute.getValue(), (GlobalConfiguration) object);
                         }
                     }
                 } catch (NoSuchFieldException e) {
-                    logger.error(
-                        " Ignoring NoSuchFieldException : There can be attributes in mule xml that we don't support "
-                            + "in our objects" + e.getMessage());
+                    logger.warn(" Ignoring NoSuchFieldException : There can be attributes in mule xml that is not "
+                            + "mapped " + e);
                 } catch (IllegalAccessException e) {
-                    logger.error(e.toString());
+                    logger.error(e.getMessage(), e);
                 }
             });
 
             BaseObject muleObj = (BaseObject) object;
-
-            buildMTree(muleObj);
+            DataCarrierDTO dataCarrierDTO = populateDataCarrier(muleObj);
+            muleObj.buildTree(dataCarrierDTO);
 
         } catch (IllegalAccessException e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
         } catch (InstantiationException e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
         }
     }
 
-    public void checkFlowEnd(EndElement endElement) {
-        if (Constant.MULE_FLOW.equals(endElement.getName().toString())) {
-            flowStarted = false;
+    private void checkFlowState(String startOrEndElement, boolean isFlowStarted) {
+        switch (startOrEndElement) {
+        case Constant.MULE_FLOW:
+            flowStarted = isFlowStarted;
+            break;
+        case Constant.MULE_SUB_FLOW:
+            subFlowStarted = isFlowStarted;
+            break;
+        default:
+            break;
         }
     }
 
-    public Root getmRoot() {
-        return mRoot;
+    private DataCarrierDTO populateDataCarrier(BaseObject muleObj) {
+        DataCarrierDTO dataCarrierDTO = new DataCarrierDTO();
+        dataCarrierDTO.setBaseObject(muleObj);
+        dataCarrierDTO.setRootObject(rootObj);
+        dataCarrierDTO.setFlowStarted(flowStarted);
+        dataCarrierDTO.setSubFlowStarted(subFlowStarted);
+        return dataCarrierDTO;
     }
 
-    public void setMuleRoot(Root muleRoot) {
-        this.mRoot = muleRoot;
+    public Root getRootObj() {
+        return rootObj;
+    }
+
+    public void setRootObj(Root rootObj) {
+        this.rootObj = rootObj;
     }
 
     public List<String> getUnIdentifiedElements() {
         return unIdentifiedElements;
     }
 
-    public void buildMTree(BaseObject muleObj) {
-        if (muleObj instanceof GlobalConfiguration) {
-            mRoot.addGlobalConfiguration((GlobalConfiguration) muleObj);
-        }
-
-        if (muleObj instanceof Flow) {
-            Flow flow = (Flow) muleObj;
-            mRoot.addMFlow(flow);
-            flowStarted = true;
-        }
-
-        if (muleObj instanceof Processor) {
-            if (flowStarted) {
-                Flow lastAddedFlow = mRoot.getFlowList().peek();
-                lastAddedFlow.addProcessor((Processor) muleObj);
-            }
-        }
-    }
 }

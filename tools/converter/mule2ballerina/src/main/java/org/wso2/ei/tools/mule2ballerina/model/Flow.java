@@ -18,6 +18,7 @@
 
 package org.wso2.ei.tools.mule2ballerina.model;
 
+import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitable;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
@@ -29,8 +30,8 @@ import java.util.Queue;
  */
 public class Flow extends BaseObject implements Visitable {
 
-    private String name;
-    private Queue<Processor> flowProcessors;
+    protected String name;
+    protected Queue<Processor> flowProcessors;
 
     public Flow() {
         flowProcessors = new LinkedList<Processor>();
@@ -55,5 +56,22 @@ public class Flow extends BaseObject implements Visitable {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    /**
+     * Keep a list of flows separately for tree navigation
+     *
+     * @param dataCarrierDTO
+     */
+    @Override
+    public void buildTree(DataCarrierDTO dataCarrierDTO) {
+
+        BaseObject muleObj = dataCarrierDTO.getBaseObject();
+        Root rootObj = dataCarrierDTO.getRootObject();
+
+        Flow flow = (Flow) muleObj;
+        if (dataCarrierDTO.isFlowStarted()) {
+            rootObj.addMFlow(flow);
+        }
     }
 }

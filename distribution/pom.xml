@@ -119,8 +119,23 @@
             <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>org.ballerinalang</groupId>
+            <groupId>org.ballerinalang.tools</groupId>
             <artifactId>ballerina</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
             <type>zip</type>
         </dependency>
     </dependencies>
@@ -179,9 +194,9 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.ballerinalang</groupId>
+                                    <groupId>org.ballerinalang.tools</groupId>
                                     <artifactId>ballerina</artifactId>
-                                    <version>0.8.3</version>
+                                    <version>${ballerina.runtime.version}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ballerina</outputDirectory>
@@ -263,6 +278,18 @@
                                 <feature>
                                     <id>org.wso2.carbon.business.messaging.admin.services.feature</id>
                                     <version>${carbon.business.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.mule2ballerina.feature</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.ds2ballerina.feature</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.synapse2ballerina.feature</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                             </features>
                         </configuration>
@@ -353,6 +380,18 @@
                                 <feature>
                                     <id>org.wso2.carbon.deployment.engine.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.mule2ballerina.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.ds2ballerina.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.converter.tools.synapse2ballerina.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                             </features>
                         </configuration>

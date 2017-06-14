@@ -18,33 +18,37 @@
 
 package org.wso2.ei.tools.converter.common;
 
-import org.ballerinalang.model.BallerinaFile;
-import org.ballerinalang.model.Service;
-import org.wso2.ei.tools.converter.common.builder.TestBallerinaASTBuilder;
+import org.ballerinalang.BLangProgramLoader;
+import org.ballerinalang.model.BLangProgram;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.generator.CodeGenVisitor;
-import org.wso2.ei.tools.converter.common.generator.Utils;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Test Main exec class
  */
 public class Main {
-    //private static Logger logger = LoggerFactory.getLogger(CodeGenVisitor.class);
 
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) throws IOException {
-        /*logger.info("hello");
+        /*logger.info("hello");*/
 
-        Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
-        Path balFile = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-tools-0.87/samples/" +
-                                                                "helloWorldService/helloWorldService.bal");
-        BLangProgramLoader bLangLoader = new BLangProgramLoader();
-        BLangProgram bProgram = bLangLoader.loadMain(balHome, balFile);
+        //Path balHome = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-0.88-SNAPSHOT");
+        //Path balFile = Paths.get("/home/milinda/WSO2/Integration/EI/EI7/Ballerina/ballerina-tools-0.87/samples/" +
+        //        "helloWorldService/passthroughService.bal");
+        Path balHome = Paths.get(args[0]);
+        Path balFile = Paths.get(args[1]);
 
-        logger.info(bProgram.getScopeName());*/
+        BLangProgram bLangProgram = new BLangProgramLoader().loadService(balHome, balFile);
 
         CodeGenVisitor codeGenVisitor = new CodeGenVisitor();
-        BallerinaFile ballerinaFile = TestBallerinaASTBuilder.buildBallerinaAST();
+        bLangProgram.accept(codeGenVisitor);
+        logger.info(codeGenVisitor.getBallerinaSourceStr());
+        /*BallerinaFile ballerinaFile = TestBallerinaASTBuilder.buildBallerinaAST();
 
         Service targetService = null;
         if (ballerinaFile.getCompilationUnits().length > 0) {
@@ -57,9 +61,9 @@ public class Main {
             System.out.print("CodeVisit start");
 
             targetService.accept(codeGenVisitor);
-
-            String targetFile = System.getProperty("targetFilePath");
-            Utils.writeToBalFile(targetFile, codeGenVisitor.getBallerinaSourceStr());
-        }
+            System.out.print(codeGenVisitor.getBallerinaSourceStr());
+            //String targetFile = System.getProperty("targetFilePath");
+            //Utils.writeToBalFile(targetFile, codeGenVisitor.getBallerinaSourceStr());
+        }*/
     }
 }

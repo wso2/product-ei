@@ -19,7 +19,7 @@
 package org.wso2.ei.tools.mule2ballerina.elementmapper;
 
 /**
- * {@code Attribute} enumeration holds the list of attributes belong to mule elements
+ * {@code Attribute} enumeration holds the list of attributes that belong to mule elements
  */
 public enum Attribute {
 
@@ -31,7 +31,13 @@ public enum Attribute {
     PATH("path", "path"),
     ALLOWED_MOTHODS("allowedMethods", "allowedMethods"),
     VALUE("value", "value"),
-    METHOD("method", "method");;
+    METHOD("method", "method"),
+    PROTOCOL("protocol", "protocol"),
+    LEVEL("level", "level"),
+    MESSAGE("message", "message"),
+    MIME_TYPE("mimeType", "mimeType"),
+    PROPERTY_NAME("propertyName", "propertyName"),
+    VARIABLE_NAME("variableName", "variableName");
 
     private String attribute;
     private String property;

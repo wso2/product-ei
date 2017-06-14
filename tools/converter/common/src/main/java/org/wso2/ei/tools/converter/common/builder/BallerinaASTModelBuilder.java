@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.mule2ballerina.builder;
+package org.wso2.ei.tools.converter.common.builder;
 
 import org.ballerinalang.model.BLangPackage;
 import org.ballerinalang.model.BLangProgram;
@@ -39,14 +39,6 @@ import java.util.Stack;
  */
 public class BallerinaASTModelBuilder {
 
-    private boolean processingActionInvocationStmt = false;
-    private Stack<BLangModelBuilder.NameReference> nameReferenceStack = new Stack<>();
-    private Stack<SimpleTypeName> typeNameStack = new Stack<>();
-    private BLangProgram programScope;
-    private BLangPackage bLangPackage;
-    private BLangModelBuilder modelBuilder;
-    private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
-
     private static final PackageRepository PACKAGE_REPOSITORY = new PackageRepository() {
         @Override
         public PackageSource loadPackage(Path path) {
@@ -58,6 +50,13 @@ public class BallerinaASTModelBuilder {
             return null;
         }
     };
+    private boolean processingActionInvocationStmt = false;
+    private Stack<BLangModelBuilder.NameReference> nameReferenceStack = new Stack<>();
+    private Stack<SimpleTypeName> typeNameStack = new Stack<>();
+    private BLangProgram programScope;
+    private BLangPackage bLangPackage;
+    private BLangModelBuilder modelBuilder;
+    private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
 
     public BallerinaASTModelBuilder() {
 
@@ -81,6 +80,14 @@ public class BallerinaASTModelBuilder {
         modelBuilder.addImportPackage(null, null, pkgPath, asPkgName);
     }
 
+    /**
+     * TODO: Need to refactor this to support multiple key value pairs of an annotation
+     *
+     * @param pkgName     name of the package
+     * @param name        functionality name you want to use
+     * @param key         annotation attribute key
+     * @param actualvalue annotation attribute value
+     */
     public void createAnnotationAttachment(String pkgName, String name, String key, String actualvalue) {
         modelBuilder.startAnnotationAttachment(null);
 
@@ -93,8 +100,14 @@ public class BallerinaASTModelBuilder {
         }
     }
 
-    public void addAnnotationAttachment(int attribuesAvailable) {
-        modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attribuesAvailable);
+    /**
+     * Adds an annotation. For an attachment to be added first it needs to be created using
+     * 'createAnnotationAttachment' method
+     *
+     * @param attributesCount is never used in ballerina side, even though it expects a value
+     */
+    public void addAnnotationAttachment(int attributesCount) {
+        modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attributesCount);
     }
 
     public void startService() {
@@ -117,7 +130,7 @@ public class BallerinaASTModelBuilder {
     /**
      * Add built in ref types
      *
-     * @param builtInRefTypeName
+     * @param builtInRefTypeName built in type
      */
     public void addTypes(String builtInRefTypeName) {
         SimpleTypeName simpleTypeName = new SimpleTypeName(builtInRefTypeName);
@@ -127,11 +140,19 @@ public class BallerinaASTModelBuilder {
     public void createRefereceTypeName() {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         SimpleTypeName typeName = new SimpleTypeName(nameReference.getName(), nameReference.getPackageName(),
-            nameReference.getPackagePath());
+                nameReference.getPackagePath());
 
         typeNameStack.push(typeName);
     }
 
+    /**
+     * Create a function parameter
+     *
+     * @param annotationCount        number of annotations - this is required in case of PathParam or QueryParam
+     *                               annotations
+     * @param processingReturnParams return parameter or not
+     * @param paramName              name of the function parameter
+     */
     public void addParameter(int annotationCount, boolean processingReturnParams, String paramName) {
         modelBuilder.addParam(null, null, typeNameStack.pop(), paramName, annotationCount, processingReturnParams);
     }
@@ -150,12 +171,22 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createMapStructLiteral(null, null);
     }
 
+    /**
+     * @param varName       name of the variable
+     * @param exprAvailable expression availability
+     */
     public void createVariable(String varName, boolean exprAvailable) {
         SimpleTypeName typeName = typeNameStack.pop();
 
         modelBuilder.addVariableDefinitionStmt(null, null, typeName, varName, exprAvailable);
     }
 
+    /**
+     * Create a name reference
+     *
+     * @param pkgName package name
+     * @param name    functionality name you want to use
+     */
     public void createNameReference(String pkgName, String name) {
         BLangModelBuilder.NameReference nameReference;
 
@@ -180,6 +211,15 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createStringLiteral(null, null, stringLiteral);
     }
 
+    public void createIntegerLiteral(String intLiteral) {
+        modelBuilder.createIntegerLiteral(null, null, intLiteral);
+    }
+
+    public void createBackTickExpression(String content) {
+        //TODO : update to match with new Ballerina changes
+        //modelBuilder.createBacktickExpr(null, null, content);
+    }
+
     public void createFunctionInvocation(boolean argsAvailable) {
         modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
     }
@@ -191,7 +231,7 @@ public class BallerinaASTModelBuilder {
     public void initializeConnector(boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         SimpleTypeName connectorTypeName = new SimpleTypeName(nameReference.getName(), nameReference.getPackageName(),
-            null);
+                null);
 
         modelBuilder.createConnectorInitExpr(null, null, connectorTypeName, argsAvailable);
     }
@@ -207,7 +247,8 @@ public class BallerinaASTModelBuilder {
     public void createAction(String actionName, boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         if (processingActionInvocationStmt) {
-            modelBuilder.createActionInvocationStmt(null, null, nameReference, actionName, argsAvailable);
+            //  modelBuilder.createActionInvocationStmt(null, null, nameReference, actionName, argsAvailable);
+            modelBuilder.createActionInvocationStmt(null, null);
         } else {
             modelBuilder.addActionInvocationExpr(null, null, nameReference, actionName, argsAvailable);
         }
@@ -224,5 +265,13 @@ public class BallerinaASTModelBuilder {
 
     public Map<String, String> getBallerinaPackageMap() {
         return ballerinaPackageMap;
+    }
+
+    public void addComment(String comment) {
+        modelBuilder.addCommentStmt(null, null, comment);
+    }
+
+    public void addFunctionInvocationStatement(boolean argsAvailable) {
+        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
     }
 }
