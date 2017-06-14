@@ -26,39 +26,40 @@ import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 /**
- *    Tests continue after property of the router mediator
+ * Tests continue after property of the router mediator
  */
 
 public class RouterMediatorContinueAfterPropertyTestCase extends ESBIntegrationTest {
-
 
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
     }
 
-    @Test(groups = "wso2.esb", description = "Tests with continueAfter=true")
+    @Test(groups = "wso2.esb",
+          description = "Tests with continueAfter=true")
     public void testContinueAfterTrue() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_continueAfter_true_test.xml");
-        OMElement response =
-                axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        verifyProxyServiceExistence("routerContinueAfterTrueTestProxy");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("routerContinueAfterTrueTestProxy"), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
 
-    @Test(groups = "wso2.esb", description = "Tests with continueAfter=false")
+    @Test(groups = "wso2.esb",
+          description = "Tests with continueAfter=false")
     public void testContinueAfterFalse() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_continueAfter_false_test.xml");
-        OMElement response=null;
-        try{
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
-        }catch (Exception e){
+        verifyProxyServiceExistence("routerContinueAfterFalseTestProxy");
+        OMElement response = null;
+        try {
+            response = axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("routerContinueAfterFalseTestProxy"), null,
+                            "WSO2");
+        } catch (Exception e) {
 
         }
 
-        Assert.assertTrue(response==null,"Response should be null");
+        Assert.assertTrue(response == null, "Response should be null");
     }
-
 
     @AfterClass
     public void close() throws Exception {
