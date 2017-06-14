@@ -216,7 +216,8 @@ public class BallerinaASTModelBuilder {
     }
 
     public void createBackTickExpression(String content) {
-        modelBuilder.createBacktickExpr(null, null, content);
+        //TODO : update to match with new Ballerina changes
+        //modelBuilder.createBacktickExpr(null, null, content);
     }
 
     public void createFunctionInvocation(boolean argsAvailable) {
