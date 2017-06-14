@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.mediator.test.payload.factory;
 
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
@@ -123,6 +124,12 @@ public class JsonFormat_IncomingJson_ArgsJsonExpression_WithStream_TestCase exte
         loadESBConfigurationFromClasspath("artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonXmlExpressions_values.xml");
         postRequestWithJsonPayload(XML_PAYLOAD,XML_TYPE);
         assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void undeployProxyService() throws Exception {
+        super.cleanup();
+        super.init();
     }
 
     private void postRequestWithJsonPayload(String payload,String contentType) throws Exception{

@@ -18,7 +18,7 @@
 
 -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <api xmlns="http://ws.apache.org/ns/synapse" name="esbjava4433" context="/esbjava4433">
+    <api xmlns="http://ws.apache.org/ns/synapse" name="JsonFormatIncomingJsonStartsWithSpaceTest" context="/startsWithSpaceTest">
         <resource methods="POST">
             <inSequence>
                 <payloadFactory media-type="json">

@@ -35,13 +35,13 @@ public class RouterMediatorExpressionTestCase extends ESBIntegrationTest {
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
+        verifyProxyServiceExistence("routerExpressionTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Tests the matches part of the expression")
     public void testMatchesExpression() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_expression_test.xml");
         OMElement response =
-                axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+                axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("routerExpressionTestProxy"), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
 
