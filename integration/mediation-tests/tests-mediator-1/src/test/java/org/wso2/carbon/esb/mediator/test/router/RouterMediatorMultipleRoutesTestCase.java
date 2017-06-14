@@ -45,57 +45,56 @@ public class RouterMediatorMultipleRoutesTestCase extends ESBIntegrationTest {
         axis2Server1.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE);
 
         axis2Server2.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE);
+
+        verifyProxyServiceExistence("routerMultipleTestProxy");
     }
 
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", description = "Tests message whether message is routed correctly")
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = "wso2.esb",
+          description = "Tests message whether message is routed correctly")
     public void testRoutes() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_multiple_routs_test.xml");
 
         //start server one only. Requests to other servers will return null
         axis2Server1.start();
-        OMElement response =
-                axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        String serviceUrl = getProxyServiceURLHttp("routerMultipleTestProxy");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest( serviceUrl, null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
-        try{
-            response=null;
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
-        }catch(Exception e){
+        try {
+            response = null;
+            response = axis2Client.sendSimpleStockQuoteRequest(serviceUrl, null, "IBM");
+        } catch (Exception e) {
 
         }
-        Assert.assertTrue(response==null,"Response should be null");
+        Assert.assertTrue(response == null, "Response should be null");
         axis2Server1.stop();
 
         //start server one only. Requests to other servers will return null
         axis2Server2.start();
-        response=null;
-        response =
-                axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
+        response = null;
+        response = axis2Client.sendSimpleStockQuoteRequest(serviceUrl, null, "IBM");
         Assert.assertTrue(response.toString().contains("IBM"));
-        try{
-            response=null;
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
-        }
-        catch (Exception e){
+        try {
+            response = null;
+            response = axis2Client.sendSimpleStockQuoteRequest(serviceUrl, null, "WSO2");
+        } catch (Exception e) {
 
         }
-        Assert.assertTrue(response==null,"Response should be null");
+        Assert.assertTrue(response == null, "Response should be null");
         axis2Server2.stop();
 
     }
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-        if(axis2Server1.isStarted()){
+        if (axis2Server1.isStarted()) {
             axis2Server1.stop();
         }
-        if(axis2Server2.isStarted()){
+        if (axis2Server2.isStarted()) {
             axis2Server2.stop();
         }
-        axis2Server1=null;
-        axis2Server2=null;
+        axis2Server1 = null;
+        axis2Server2 = null;
         super.cleanup();
     }
 
