@@ -23,7 +23,7 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 /**
  * {@code FlowReference} class represents flow-ref element
  */
-public class FlowReference extends BaseObject implements Processor, FlowRef {
+public class FlowReference extends BaseObject implements Processor {
 
     private String name;
 
