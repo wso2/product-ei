@@ -12,16 +12,7 @@
     <name>MB Test Module</name>
     <artifactId>org.wso2.ei.mb.test</artifactId>
     <packaging>pom</packaging>
-
     <modules>
         <module>test-amqp</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>

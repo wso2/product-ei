@@ -43,8 +43,8 @@
 
     <modules>
         <module>components</module>
-        <module>features</module>
         <module>tools</module>
+        <module>features</module>
         <module>distribution</module>
         <module>integration</module>
     </modules>
@@ -198,22 +198,6 @@
                 <version>${product.ei.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.geronimo.specs.wso2</groupId>
-                <artifactId>geronimo-jms_1.1_spec</artifactId>
-                <version>${orbit.version.geronimo-jms_1.1_spec}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-configuration</groupId>
-                <artifactId>commons-configuration</artifactId>
-                <version>${commons.configuration.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
                 <version>2.2.11</version>
@@ -250,6 +234,27 @@
                 <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
                 <type>zip</type>
                 <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs.wso2</groupId>
+                <artifactId>geronimo-jms_1.1_spec</artifactId>
+                <version>${orbit.version.geronimo-jms_1.1_spec}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons.configuration.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.andes.wso2</groupId>
+                <artifactId>andes-client</artifactId>
+                <version>${andes.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -342,23 +347,6 @@
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                     </configuration>
                 </plugin>
-                <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-deploy-plugin</artifactId>-->
-                <!--</plugin>-->
-                <!--<plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.5.3</version>
-                </plugin>-->
-                <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--</plugin>-->
-                <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-                <!--<version>${maven.build.helper.plugin.version}</version>-->
-                <!--</plugin>-->
                 <plugin>
                     <groupId>org.wso2.carbon.maven</groupId>
                     <artifactId>carbon-feature-plugin</artifactId>
@@ -392,6 +380,10 @@
         <carbon.business.messaging.version>4.0.1-SNAPSHOT</carbon.business.messaging.version>
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
         <slf4j.version>1.7.22</slf4j.version>
+        <testng.version>6.9.9</testng.version>
+        <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
+        <commons.configuration.version>1.10</commons.configuration.version>
+        <andes.version>3.2.20</andes.version>
     </properties>
 </project>
 

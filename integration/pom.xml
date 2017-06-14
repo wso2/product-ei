@@ -34,14 +34,7 @@
     <url>http://wso2.org</url>
 
     <modules>
-        <module>automation-extensions</module>
+        <!--<module>automation-extensions</module>-->
         <module>test-mb</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-        </dependency>
-    </dependencies>
 </project>
