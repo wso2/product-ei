@@ -16,10 +16,16 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.mule2ballerina.model;
+package org.wso2.ei.tools.mule2ballerina.builder;
+
+import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 
 /**
- * {@code FlowRef} interface is used to identify a sub flow
+ * {@code TreeBuilder} interface for the tree builder and provides a default method to build the tree
  */
-public interface FlowRef {
+public interface TreeBuilder {
+
+    public default void buildTree(DataCarrierDTO dataCarrierDTO) {
+    }
+
 }

@@ -438,11 +438,6 @@ public class TreeVisitor implements Visitor {
         }
     }
 
-    @Override
-    public void visit(SubFlow subFlow) {
-
-    }
-
     public BallerinaFile getBallerinaFile() {
         return ballerinaFile;
     }

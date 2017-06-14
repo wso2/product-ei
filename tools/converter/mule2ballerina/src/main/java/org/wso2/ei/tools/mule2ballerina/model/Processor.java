@@ -18,12 +18,49 @@
 
 package org.wso2.ei.tools.mule2ballerina.model;
 
+import org.wso2.ei.tools.mule2ballerina.builder.TreeBuilder;
+import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitable;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * {@code Processor} class represents any mule processor element
  */
-public interface Processor extends Visitable {
+public interface Processor extends Visitable, TreeBuilder {
 
     String getConfigName();
+
+    /**
+     * If the intermediate object is a processor within a flow add it to the correct flow
+     * If it's an inbound connector, add the flow which has that connector to the global config map
+     *
+     * @param dataCarrierDTO
+     */
+    @Override
+    public default void buildTree(DataCarrierDTO dataCarrierDTO) {
+
+        BaseObject muleObj = dataCarrierDTO.getBaseObject();
+        Root rootObj = dataCarrierDTO.getRootObject();
+
+        if (dataCarrierDTO.isFlowStarted()) {
+            Flow lastAddedFlow = rootObj.getFlowList().peek();
+            lastAddedFlow.addProcessor((Processor) muleObj);
+            if (muleObj instanceof Inbound) {
+                Queue<Flow> flowQueue = null;
+                if (rootObj.getServiceMap() != null) {
+                    Inbound inboundObj = (Inbound) muleObj;
+                    flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
+                    if (flowQueue == null) {
+                        flowQueue = new LinkedList<Flow>();
+                        flowQueue.add(lastAddedFlow);
+                        rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
+                    } else {
+                        flowQueue.add(lastAddedFlow);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -20,16 +20,13 @@ package org.wso2.ei.tools.mule2ballerina.configreader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
-import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
-import org.wso2.ei.tools.mule2ballerina.model.Inbound;
-import org.wso2.ei.tools.mule2ballerina.model.Processor;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
-import org.wso2.ei.tools.mule2ballerina.model.SubFlow;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 
 import java.io.File;
@@ -39,9 +36,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -145,7 +140,8 @@ public class ConfigReader {
                 Comment comment = new Comment();
                 comment.setComment(" //IMPORTANT: Functionality provided by " + mElementName + " should be handled "
                         + "manually here");
-                buildMuleTree(comment);
+                DataCarrierDTO dataCarrierDTO = populateDataCarrier(comment);
+                comment.buildTree(dataCarrierDTO);
             }
         }
     }
@@ -194,7 +190,7 @@ public class ConfigReader {
                         /*if the element is a global configuration keep it against it's name as this will
                         * be useful when navigating the processors to identify their global configuration
                         */
-                        if ("name".equals(property) && object instanceof GlobalConfiguration) {
+                        if (object instanceof GlobalConfiguration && "name".equals(property)) {
                             rootObj.addGlobalConfigurationMap(attribute.getValue(), (GlobalConfiguration) object);
                         }
                     }
@@ -207,7 +203,8 @@ public class ConfigReader {
             });
 
             BaseObject muleObj = (BaseObject) object;
-            buildMuleTree(muleObj);
+            DataCarrierDTO dataCarrierDTO = populateDataCarrier(muleObj);
+            muleObj.buildTree(dataCarrierDTO);
 
         } catch (IllegalAccessException e) {
             logger.error(e.getMessage(), e);
@@ -229,6 +226,15 @@ public class ConfigReader {
         }
     }
 
+    private DataCarrierDTO populateDataCarrier(BaseObject muleObj) {
+        DataCarrierDTO dataCarrierDTO = new DataCarrierDTO();
+        dataCarrierDTO.setBaseObject(muleObj);
+        dataCarrierDTO.setRootObject(rootObj);
+        dataCarrierDTO.setFlowStarted(flowStarted);
+        dataCarrierDTO.setSubFlowStarted(subFlowStarted);
+        return dataCarrierDTO;
+    }
+
     public Root getRootObj() {
         return rootObj;
     }
@@ -241,74 +247,4 @@ public class ConfigReader {
         return unIdentifiedElements;
     }
 
-    /**
-     * Build intermediate object tree required for navigation
-     *
-     * @param muleObj any intermediate object
-     */
-    private void buildMuleTree(BaseObject muleObj) {
-
-        /* if the intermediate object represents a global configuration in mule, add it to global config list
-        * Further if it's an inbound config, keep all the flows that belong to that config in a map, as it is needed
-        * to determine the end of service point in ballerina stack
-        */
-        if (muleObj instanceof GlobalConfiguration) {
-            rootObj.addGlobalConfiguration((GlobalConfiguration) muleObj);
-            if (muleObj instanceof Inbound) {
-                Queue<Flow> flowQueue = null;
-                if (rootObj.getServiceMap() != null) {
-                    Inbound inboundObj = (Inbound) muleObj;
-                    flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
-                    if (flowQueue == null) {
-                        flowQueue = new LinkedList<Flow>();
-                        rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
-                    }
-                }
-            }
-        }
-
-        //TODO: Flow and Subflow share the same attributes; need to derive from a common class
-        /* Keep a list of flows separately for tree navigation*/
-        if (muleObj instanceof Flow) {
-            Flow flow = (Flow) muleObj;
-            if (flowStarted) {
-                rootObj.addMFlow(flow);
-            }
-        }
-
-        /* List of sub flows*/
-        if (muleObj instanceof SubFlow) {
-            SubFlow subFlow = (SubFlow) muleObj;
-            if (subFlowStarted) {
-                rootObj.addSubFlow(subFlow.getName(), subFlow);
-            }
-        }
-
-        /* If the intermediate object is a processor within a flow add it to the correct flow
-        *  If it's an inbound connector, add the flow which has that connector to the global config map
-        */
-        if (muleObj instanceof Processor) {
-            if (flowStarted) {
-                Flow lastAddedFlow = rootObj.getFlowList().peek();
-                lastAddedFlow.addProcessor((Processor) muleObj);
-                if (muleObj instanceof Inbound) {
-                    Queue<Flow> flowQueue = null;
-                    if (rootObj.getServiceMap() != null) {
-                        Inbound inboundObj = (Inbound) muleObj;
-                        flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
-                        if (flowQueue == null) {
-                            flowQueue = new LinkedList<Flow>();
-                            flowQueue.add(lastAddedFlow);
-                            rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
-                        } else {
-                            flowQueue.add(lastAddedFlow);
-                        }
-                    }
-                }
-            } else if (subFlowStarted) {
-                SubFlow lastAddedSubFlow = rootObj.getSubFlowStack().peek();
-                lastAddedSubFlow.addProcessor((Processor) muleObj);
-            }
-        }
-    }
 }

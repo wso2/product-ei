@@ -30,7 +30,6 @@ import org.wso2.ei.tools.mule2ballerina.model.Payload;
 import org.wso2.ei.tools.mule2ballerina.model.PropertyRemover;
 import org.wso2.ei.tools.mule2ballerina.model.PropertySetter;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
-import org.wso2.ei.tools.mule2ballerina.model.SubFlow;
 import org.wso2.ei.tools.mule2ballerina.model.VariableRemover;
 import org.wso2.ei.tools.mule2ballerina.model.VariableSetter;
 
@@ -67,5 +66,4 @@ public interface Visitor {
 
     public void visit(FlowReference flowReference);
 
-    public void visit(SubFlow subFlow);
 }
