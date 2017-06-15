@@ -391,11 +391,14 @@ public class CodeGenVisitor implements NodeVisitor {
          */
 
         VariableDef variableDef = varDefStmt.getVariableDef();
-        String varLHSDefStr = variableDef.getTypeName().toString() + Constants.SPACE_STR + variableDef.getSymbolName()
-                + Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR;
+        String varLHSDefStr = variableDef.getTypeName().toString() + Constants.SPACE_STR + variableDef.getSymbolName();
 
         appendToBalSource(getIndentationForCurrentLine() + varLHSDefStr);
-        varDefStmt.getRExpr().accept(this);
+        if (varDefStmt.getRExpr() != null) {
+            //have RHS expression eg: string str = <Some connectorInitExpression | actionInvocation | expression>;
+            appendToBalSource(Constants.SPACE_STR + Constants.EQUAL_STR + Constants.SPACE_STR);
+            varDefStmt.getRExpr().accept(this);
+        }
         appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
