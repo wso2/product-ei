@@ -36,6 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
     @XmlAttribute private boolean returnUpdatedRowCount;
 
+    @XmlAttribute private boolean returnGeneratedKeys;
+
     @XmlAttribute(name = "id") private String queryId;
 
     @XmlElement(name = "sql") private String sqlQuery;
@@ -43,6 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @XmlElement(name = "param") private ArrayList<Param> params;
 
     @XmlElement(name = "result") private Result result;
+
+    @XmlElement(name = "properties")
+    private Properties properties;
 
     public String getConfigId() {
         return configId;
@@ -72,5 +77,13 @@ import javax.xml.bind.annotation.XmlRootElement;
             }
         }
         return paramMap;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public boolean isReturnGeneratedKeys() {
+        return returnGeneratedKeys;
     }
 }

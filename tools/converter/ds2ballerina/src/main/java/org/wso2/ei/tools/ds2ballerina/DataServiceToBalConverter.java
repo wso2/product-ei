@@ -49,9 +49,11 @@ public class DataServiceToBalConverter {
         logger.info("Source file(s) in location: " + sourcePath.toString());
 
         String destination = args[1];
+//        String destination = "/home/madhawa/DSS-BAM/i.bal";
+
         try {
             if (Files.isDirectory(sourcePath)) {
-                Path path = Utils.getPath(source, destination);
+                Path path = Utils.getPath(sourcePath.toFile(), destination);
                 if (!Files.exists(path)) {
                     path = Files.createDirectories(path);
                 }
@@ -68,11 +70,11 @@ public class DataServiceToBalConverter {
                 }
             } else {
                 if (destination == null || destination.isEmpty()) {
-                    String fileName = source.getName();
+                    String fileName = sourcePath.toString();
                     destination = fileName.substring(0, fileName.indexOf('.')) + ".bal";
                 }
                 logger.info("Generated ballerina file saved as " + destination);
-                DataService dataService = DataServiceReader.readDataServiceFile(source);
+                DataService dataService = DataServiceReader.readDataServiceFile(sourcePath.toFile());
                 DataServiceReader.createBalModel(dataService, destination);
             }
         } catch (IOException e) {
