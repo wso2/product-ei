@@ -128,7 +128,6 @@ public class CodeGenVisitor implements NodeVisitor {
             }
 
             //process struct definitions
-            bLangPackage.getStructDefs();
             for (StructDef structDef : bLangPackage.getStructDefs()) {
                 structDef.accept(this);
             }
