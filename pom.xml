@@ -46,6 +46,7 @@
         <module>tools</module>
         <module>features</module>
         <module>distribution</module>
+        <module>integration</module>
     </modules>
 
     <dependencyManagement>
@@ -234,6 +235,27 @@
                 <type>zip</type>
                 <version>${product.ei.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs.wso2</groupId>
+                <artifactId>geronimo-jms_1.1_spec</artifactId>
+                <version>${orbit.version.geronimo-jms_1.1_spec}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons.configuration.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.andes.wso2</groupId>
+                <artifactId>andes-client</artifactId>
+                <version>${andes.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -358,6 +380,10 @@
         <carbon.business.messaging.version>4.0.1-SNAPSHOT</carbon.business.messaging.version>
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
         <slf4j.version>1.7.22</slf4j.version>
+        <testng.version>6.9.9</testng.version>
+        <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
+        <commons.configuration.version>1.10</commons.configuration.version>
+        <andes.version>3.2.22-SNAPSHOT</andes.version>
     </properties>
 </project>
 

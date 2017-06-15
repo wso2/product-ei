@@ -82,6 +82,18 @@ public class TreeVisitor implements Visitor {
         for (Flow flow : root.getFlowList()) {
             flow.accept(this);
         }
+        for (Flow privateFlow : root.getPrivateFlowList()) {
+            ballerinaASTAPI.startFunction();
+            ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
+            String messageRef = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
+            ballerinaASTAPI.addParameter(0, false, messageRef);
+            ballerinaASTAPI.startCallableBody();
+            for (Processor processor : privateFlow.getFlowProcessors()) {
+                processor.accept(this);
+            }
+            ballerinaASTAPI.endCallableBody();
+            ballerinaASTAPI.endOfFunction(privateFlow.getName());
+        }
         logger.debug("-ERoot");
         ballerinaFile = ballerinaASTAPI.buildBallerinaFile();
     }
@@ -145,7 +157,10 @@ public class TreeVisitor implements Visitor {
             switch (mimeType) {
             case XML:
                 ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
-                ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
+                /*Backtick expression is not longer supported in Ballerina. Improvements may come in a future release*/
+                // ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
+                ballerinaASTAPI.addComment("//IMPORTANT: This functionality will come in a future release. ");
+                ballerinaASTAPI.createStringLiteral(payload.getValue());
                 payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
                 ballerinaASTAPI.createVariable(payloadVariableName, true); //name of the variable
                 ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
@@ -428,12 +443,37 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createVariableRefExpr();
     }
 
+    /**
+     * When a flow reference is called, it might either refer to a sub flow or a private flow. In case of a sub flow,
+     * add the processors that's been referred in it, in the calling resource. But if it's a private flow call the
+     * respective function.
+     *
+     * @param flowReference
+     */
     @Override
     public void visit(FlowReference flowReference) {
+        //Add the sub flow processors also into the calling resource
         if (mRoot.getSubFlowMap() != null && !mRoot.getSubFlowMap().isEmpty()) {
             SubFlow subFlow = mRoot.getSubFlowMap().get(flowReference.getName());
-            for (Processor processor : subFlow.getFlowProcessors()) {
-                processor.accept(this);
+            if (subFlow != null) {
+                ballerinaASTAPI.addComment("//------Consider wrapping the following logic in a function-----");
+                for (Processor processor : subFlow.getFlowProcessors()) {
+                    processor.accept(this);
+                }
+                ballerinaASTAPI.addComment("//-------------------------------------------------------------");
+            }
+        }
+        if (mRoot.getPrivateFlowMap() != null && !mRoot.getPrivateFlowMap().isEmpty()) {
+            Flow privateFlow = mRoot.getPrivateFlowMap().get(flowReference.getName());
+            if (privateFlow != null) {
+                /*ballerinaASTAPI.addComment(
+                        "//Calling the function that has the processors belong to " + flowReference.getName());*/
+                ballerinaASTAPI.createNameReference(null, flowReference.getName());
+                ballerinaASTAPI.startExprList();
+                ballerinaASTAPI.createNameReference(null, outboundMsg);
+                ballerinaASTAPI.createVariableRefExpr();
+                ballerinaASTAPI.endExprList(1);
+                ballerinaASTAPI.createFunctionInvocation(true);
             }
         }
     }

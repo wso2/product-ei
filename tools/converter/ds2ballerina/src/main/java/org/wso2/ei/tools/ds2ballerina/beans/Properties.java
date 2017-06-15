@@ -18,36 +18,22 @@
 
 package org.wso2.ei.tools.ds2ballerina.beans;
 
-import org.wso2.ei.tools.ds2ballerina.beans.helper.ConfigPropertyMapAdapter;
+import org.wso2.ei.tools.ds2ballerina.beans.helper.QueryPropertyMapAdapter;
 
 import java.util.Map;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * Object for config element.
+ * Represents Properties
  */
-@XmlRootElement(name = "config") public class Config {
+public class Properties {
 
-    @XmlAttribute private boolean enableOData;
-
-    @XmlAttribute private String id;
-
-    @XmlJavaTypeAdapter(ConfigPropertyMapAdapter.class) @XmlElement(name = "property")
+    @XmlJavaTypeAdapter(QueryPropertyMapAdapter.class) @XmlElement(name = "property")
     private Map<String, String> propertiesMap;
 
-    public Map<String, String> getPropertiesMap() {
-        return propertiesMap;
-    }
-
-    public boolean isEnableOData() {
-        return enableOData;
-    }
-
-    public String getId() {
-        return id;
+    public String getPropertyValue(String key) {
+        return propertiesMap.get(key);
     }
 
 }

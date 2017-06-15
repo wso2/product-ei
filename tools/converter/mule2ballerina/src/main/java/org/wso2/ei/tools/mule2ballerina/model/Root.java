@@ -39,6 +39,8 @@ public class Root extends BaseObject implements Visitable {
     private Map<String, Queue<Flow>> serviceMap;
     private Map<String, SubFlow> subFlowMap;
     private Stack<SubFlow> subFlowStack;
+    private Map<String, Flow> privateFlowMap;
+    private Stack<Flow> privateFlowList;
 
     public Root() {
         flowList = new Stack<Flow>();
@@ -47,6 +49,8 @@ public class Root extends BaseObject implements Visitable {
         serviceMap = new HashMap<String, Queue<Flow>>();
         subFlowMap = new HashMap<String, SubFlow>();
         subFlowStack = new Stack<SubFlow>();
+        privateFlowMap = new HashMap<String, Flow>();
+        privateFlowList = new Stack<Flow>();
     }
 
     public List<GlobalConfiguration> getGlobalConfigurations() {
@@ -65,6 +69,10 @@ public class Root extends BaseObject implements Visitable {
         this.flowList.add(muleFlow);
     }
 
+    public void addPrivateFlow(Flow privateFlow) {
+        this.privateFlowList.add(privateFlow);
+    }
+
     public void addGlobalConfigurationMap(String name, GlobalConfiguration configuration) {
         configMap.put(name, configuration);
     }
@@ -75,6 +83,13 @@ public class Root extends BaseObject implements Visitable {
             subFlowMap.put(name, subFlow);
         }
         subFlowStack.add(subFlow);
+    }
+
+    public void addPrivateFlow(String name, Flow privateFlow) {
+        SubFlow subFlowRef = subFlowMap.get(name);
+        if (subFlowRef == null) {
+            privateFlowMap.put(name, privateFlow);
+        }
     }
 
     public Map<String, GlobalConfiguration> getConfigMap() {
@@ -91,6 +106,14 @@ public class Root extends BaseObject implements Visitable {
 
     public Stack<SubFlow> getSubFlowStack() {
         return subFlowStack;
+    }
+
+    public Map<String, Flow> getPrivateFlowMap() {
+        return privateFlowMap;
+    }
+
+    public Stack<Flow> getPrivateFlowList() {
+        return privateFlowList;
     }
 
     @Override

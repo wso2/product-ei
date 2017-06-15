@@ -40,27 +40,37 @@ public interface Processor extends Visitable, TreeBuilder {
      */
     @Override
     public default void buildTree(DataCarrierDTO dataCarrierDTO) {
-
         BaseObject muleObj = dataCarrierDTO.getBaseObject();
         Root rootObj = dataCarrierDTO.getRootObject();
 
         if (dataCarrierDTO.isFlowStarted()) {
             Flow lastAddedFlow = rootObj.getFlowList().peek();
             lastAddedFlow.addProcessor((Processor) muleObj);
-            if (muleObj instanceof Inbound) {
-                Queue<Flow> flowQueue = null;
-                if (rootObj.getServiceMap() != null) {
-                    Inbound inboundObj = (Inbound) muleObj;
-                    flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
-                    if (flowQueue == null) {
-                        flowQueue = new LinkedList<Flow>();
-                        flowQueue.add(lastAddedFlow);
-                        rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
-                    } else {
-                        flowQueue.add(lastAddedFlow);
+            if (lastAddedFlow.getFlowProcessors().size() < 2) { //If this is the first processor
+                if (muleObj instanceof Inbound) {
+                    Queue<Flow> flowQueue = null;
+                    if (rootObj.getServiceMap() != null) {
+                        Inbound inboundObj = (Inbound) muleObj;
+                        flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
+                        if (flowQueue == null) {
+                            flowQueue = new LinkedList<Flow>();
+                            flowQueue.add(lastAddedFlow);
+                            rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
+                        } else {
+                            flowQueue.add(lastAddedFlow);
+                        }
                     }
+                } else {
+                    //If there are no inbound connectors and if this is the first processor that means this needs to
+                    // be added to a private flow and remove it from the main flow stack
+                    rootObj.getFlowList().pop();
+                    rootObj.addPrivateFlow(lastAddedFlow.getName(), lastAddedFlow); //This might not need
+                    rootObj.addPrivateFlow(lastAddedFlow);
                 }
             }
+        } else if (dataCarrierDTO.isSubFlowStarted()) {
+            SubFlow lastAddedSubFlow = rootObj.getSubFlowStack().peek();
+            lastAddedSubFlow.addProcessor((Processor) muleObj);
         }
     }
 }
