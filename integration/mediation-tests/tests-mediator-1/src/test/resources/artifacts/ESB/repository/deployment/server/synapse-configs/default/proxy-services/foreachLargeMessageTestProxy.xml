@@ -1,0 +1,34 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="foreachLargeMessageTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <foreach expression="//ns:CheckPriceRequest" xmlns:ns="http://services.samples">
+                <sequence>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <ns:getQuote>
+                                <ns:request>
+                                    <ns:symbol>$1</ns:symbol>
+                                </ns:request>
+                            </ns:getQuote>
+                        </format>
+                        <args>
+                            <arg evaluator="xml" expression="//ns:CheckPriceRequest/ns:Code"/>
+                        </args>
+                    </payloadFactory>
+                    <log level="full">
+                        <property name="foreach" value="in"/>
+                    </log>
+                </sequence>
+            </foreach>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -56,9 +56,7 @@ public class NestedForEachTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"},
             description = "Transforming a Message Using a Nested ForEach Construct")
     public void testNestedForEach() throws Exception {
-
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/nested_foreach.xml");
+        verifyProxyServiceExistence("foreachNestedTestProxy");
 
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -76,7 +74,7 @@ public class NestedForEachTestCase extends ESBIntegrationTest {
                         "    </soap:Body>\n" +
                         "</soap:Envelope>\n";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachNestedTestProxy"), request);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
