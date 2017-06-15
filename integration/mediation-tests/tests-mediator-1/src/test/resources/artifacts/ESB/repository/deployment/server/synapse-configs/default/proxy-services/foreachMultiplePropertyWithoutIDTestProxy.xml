@@ -1,0 +1,104 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="foreachMultiplePropertyWithoutIDTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <foreach xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:m0="http://services.samples"
+                     expression="//m0:getQuote/m0:request">
+                <sequence>
+                    <log level="custom">
+                        <property name="1_fe_originalpayload"
+                                  expression="get-property('FOREACH_ORIGINAL_MESSAGE')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="1_fe_count" expression="get-property('FOREACH_COUNTER')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="1_fe_group"
+                                  expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                    </log>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <m0:symbol>$1_$2</m0:symbol>
+                        </format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                            <arg evaluator="xml" expression="//m0:code"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <log level="custom">
+                <property name="1_in_originalpayload"
+                          expression="get-property('FOREACH_ORIGINAL_MESSAGE')"/>
+            </log>
+            <log level="custom">
+                <property name="1_in_count" expression="get-property('FOREACH_COUNTER')"/>
+            </log>
+            <log level="custom">
+                <property name="1_in_group"
+                          expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group" xmlns:m0="http://services.samples" />
+            </log>
+            <log level="full">
+                <property name="1_in_payload" value="end foreach 1" />
+            </log>
+            <payloadFactory media-type="xml" xmlns:m0="http://services.samples">
+                <format>
+                    <m0:checkPrice>
+                        <m0:group>Group2</m0:group>
+                        <m0:code>IBM</m0:code>
+                        <m0:code>WSO2</m0:code>
+                        <m0:code>MSFT</m0:code>
+                        <m0:code>SUN</m0:code>
+                    </m0:checkPrice>
+                </format>
+                <args/>
+            </payloadFactory>
+            <log level="full">
+                <property name="loc" value="after transform" />
+            </log>
+            <foreach xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:m0="http://services.samples"
+                     expression="//m0:checkPrice/m0:code">
+                <sequence>
+                    <log level="custom">
+                        <property name="2_fe_originalpayload"
+                                  expression="get-property('FOREACH_ORIGINAL_MESSAGE')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="2_fe_count" expression="get-property('FOREACH_COUNTER')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="2_fe_group"
+                                  expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                    </log>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <m0:symbol>$1_$2</m0:symbol>
+                        </format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                            <arg evaluator="xml" expression="//m0:code"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <log level="custom">
+                <property name="2_in_originalpayload"
+                          expression="get-property('FOREACH_ORIGINAL_MESSAGE')"/>
+            </log>
+            <log level="custom">
+                <property name="2_in_count" expression="get-property('FOREACH_COUNTER')"/>
+            </log>
+            <log level="custom">
+                <property name="2_in_group"
+                          expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group" xmlns:m0="http://services.samples" />
+            </log>
+            <log level="full">
+                <property name="2_in_payload" value="end foreach 2" />
+            </log>
+        </inSequence>
+        <outSequence/>
+
+    </target>
+</proxy>

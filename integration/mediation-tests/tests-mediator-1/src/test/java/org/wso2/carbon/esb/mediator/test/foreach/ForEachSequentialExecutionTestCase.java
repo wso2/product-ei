@@ -51,7 +51,7 @@ public class ForEachSequentialExecutionTestCase extends ESBIntegrationTest {
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
-        String response = client.send(getMainSequenceURL(), createMultipleSymbolPayLoad(10),
+        String response = client.send(getProxyServiceURLHttp("foreachSequentialExecutionTestProxy"), createMultipleSymbolPayLoad(10),
                 "urn:getQuote");
         Assert.assertNotNull(response);
 

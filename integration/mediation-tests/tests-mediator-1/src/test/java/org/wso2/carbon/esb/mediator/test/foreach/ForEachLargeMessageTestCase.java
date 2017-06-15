@@ -41,6 +41,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         init();
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_single_request.xml");
+        verifyProxyServiceExistence("foreachLargeMessageTestProxy");
         symbol = FixedSizeSymbolGenerator.generateMessageMB(1);
         logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -53,7 +54,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         OMElement response;
         for (int i = 0; i < 5; i++) {
             response =
-                    axis2Client.sendCustomQuoteRequest(getMainSequenceURL(),
+                    axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("foreachLargeMessageTestProxy"),
                             null, "IBM" + symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("IBM"), "Incorrect symbol in response");
@@ -86,7 +87,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         OMElement response;
         for (int i = 0; i < 10; i++) {
             response =
-                    axis2Client.sendCustomQuoteRequest(getMainSequenceURL(),
+                    axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("foreachLargeMessageTestProxy"),
                             null, "SUN" + symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("SUN"), "Incorrect symbol in response");
@@ -118,7 +119,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response =
-                axis2Client.sendCustomQuoteRequest(getMainSequenceURL(),
+                axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("foreachLargeMessageTestProxy"),
                         null, "MSFT" + symbol2);
         Assert.assertNotNull(response);
         Assert.assertTrue(response.toString().contains("MSFT"), "Incorrect symbol in response");

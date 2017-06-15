@@ -42,8 +42,7 @@ public class ForEachJSONPayloadTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/foreach_json.xml");
+        verifyProxyServiceExistence("foreachJSONTestProxy");
     }
 
     @Test(groups = {"wso2.esb"},
@@ -56,7 +55,7 @@ public class ForEachJSONPayloadTestCase extends ESBIntegrationTest {
 
         String request = "{\"getQuote\":{\"request\":[{\"symbol\":\"IBM\"},{\"symbol\":\"WSO2\"},{\"symbol\":\"MSFT\"}]}}";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachJSONTestProxy"), request);
 
         boolean reachedEnd = false;
 

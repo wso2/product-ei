@@ -47,8 +47,7 @@ public class ForEachPropertiesTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach properties in a single foreach construct")
     public void testSingleForEachProperties() throws Exception {
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/foreach_property_single.xml");
+        verifyProxyServiceExistence("foreachSinglePropertyTestProxy");
 
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -67,7 +66,7 @@ public class ForEachPropertiesTestCase extends ESBIntegrationTest {
                         "    </soap:Body>\n" +
                         "</soap:Envelope>\n";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachSinglePropertyTestProxy"), request);
 
         int msgCounter = 0;
 
@@ -154,8 +153,7 @@ public class ForEachPropertiesTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach properties in a multiple foreach constructs without id specified")
     public void testMultipleForEachPropertiesWithoutID() throws Exception {
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/foreach_property_multiple_withoutid.xml");
+        verifyProxyServiceExistence("foreachMultiplePropertyWithoutIDTestProxy");
 
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -174,7 +172,7 @@ public class ForEachPropertiesTestCase extends ESBIntegrationTest {
                         "    </soap:Body>\n" +
                         "</soap:Envelope>\n";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachMultiplePropertyWithoutIDTestProxy"), request);
 
         int msgCounter1 = 0;
         int msgCounter2 = 0;
@@ -349,8 +347,7 @@ public class ForEachPropertiesTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach properties in a multiple foreach constructs with id specified")
     public void testMultipleForEachPropertiesWithID() throws Exception {
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/foreach_property_multiple_withid.xml");
+        verifyProxyServiceExistence("foreachMultiplePropertyWithIDTestProxy");
 
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -369,7 +366,7 @@ public class ForEachPropertiesTestCase extends ESBIntegrationTest {
                         "    </soap:Body>\n" +
                         "</soap:Envelope>\n";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachMultiplePropertyWithIDTestProxy"), request);
 
         int msgCounter1 = 0;
         int msgCounter2 = 0;
