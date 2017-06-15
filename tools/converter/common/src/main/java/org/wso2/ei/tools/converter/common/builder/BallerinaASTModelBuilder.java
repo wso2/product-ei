@@ -127,6 +127,14 @@ public class BallerinaASTModelBuilder {
         modelBuilder.addResource(null, null, resourceName, annotationCount);
     }
 
+    public void startFunction() {
+        modelBuilder.startFunctionDef(null);
+    }
+
+    public void endOfFunction(String functionName) {
+        modelBuilder.addFunction(null, functionName, false); //isNative is false
+    }
+
     /**
      * Add built in ref types
      *
