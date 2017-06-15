@@ -100,7 +100,6 @@ import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import org.ballerinalang.model.statements.TransactionRollbackStmt;
 
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
@@ -126,6 +125,12 @@ public class CodeGenVisitor implements NodeVisitor {
             //add import packages
             for (ImportPackage importPackage : bLangPackage.getImportPackages()) {
                 appendToBalSource(importPackage.getSymbolName().toString() + Constants.NEWLINE_STR);
+            }
+
+            //process struct definitions
+            bLangPackage.getStructDefs();
+            for (StructDef structDef : bLangPackage.getStructDefs()) {
+                structDef.accept(this);
             }
 
             //process services
@@ -369,7 +374,23 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(StructDef structDef) {
+        logger.debug("Visit - StructDef");
 
+        /**
+         * structDefinition :'struct' Identifier structBody;
+         * structBody : '{' fieldDefinition* '}';
+         * fieldDefinition : typeName Identifier ('=' simpleLiteral)? ';';
+         */
+
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STRUCT_STR + Constants.SPACE_STR +
+                structDef.getName() + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        ++indentDepth;
+        //process fieldDefinition
+        for (VariableDefStmt variableDefStmt : structDef.getFieldDefStmts()) {
+            variableDefStmt.accept(this);
+        }
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
