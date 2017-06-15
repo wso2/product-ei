@@ -29,6 +29,7 @@ import org.wso2.ei.mb.test.utils.ServerManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
 
@@ -90,15 +91,15 @@ public class QueueTestCase {
         QueueReceiver queueReceiver = new QueueReceiver();
         queueReceiver.registerSubscriber();
 
-        Thread.sleep(1000L);
+        TimeUnit.SECONDS.sleep(1L);
 
         // Start JMS queue publisher.
         QueueSender queueSender = new QueueSender();
         queueSender.sendMessages(sendMessageCount);
 
-        Thread.sleep(1000L);
+        TimeUnit.SECONDS.sleep(1L);
 
-        int a = queueReceiver.receivedMessageCount();
+        int receivedMessageCount = queueReceiver.receivedMessageCount();
 
         // close queue sender.
         queueSender.closeSender();
@@ -106,7 +107,8 @@ public class QueueTestCase {
         // close queue receiver.
         queueReceiver.closeReceiver();
 
-        Assert.assertEquals(a, sendMessageCount, "assertion failed : " + a);
+        Assert.assertEquals(receivedMessageCount, sendMessageCount, "assertion failed. Expected message count : "
+                            + sendMessageCount + ".Received message count : " + receivedMessageCount);
     }
 
     /**

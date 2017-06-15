@@ -75,10 +75,8 @@ public class ArchiveExtractor {
                 } else {
                     File resourceFile =
                             new File(entryName.substring(0, entryName.lastIndexOf(File.separator)));
-                    if (!resourceFile.exists()) {
-                        if (!resourceFile.mkdirs()) {
-                            break;
-                        }
+                    if (!resourceFile.exists() && !resourceFile.mkdirs()) {
+                        break;
                     }
                 }
                 fileOutputStream = new FileOutputStream(entryName);

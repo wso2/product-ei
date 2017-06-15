@@ -383,7 +383,7 @@
         <testng.version>6.9.9</testng.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
         <commons.configuration.version>1.10</commons.configuration.version>
-        <andes.version>3.2.20</andes.version>
+        <andes.version>3.2.22-SNAPSHOT</andes.version>
     </properties>
 </project>
 

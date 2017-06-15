@@ -32,23 +32,7 @@ public class FileManipulator {
      * @return
      */
     public static boolean deleteDirectory(File directory) {
-        if (directory.isDirectory()) {
-            String[] childFilePathList = directory.list();
-            if (childFilePathList != null) {
-                for (String child : childFilePathList) {
-                    boolean success = deleteDirectory(new File(directory, child));
-
-                    // If delete directory failed returns false.
-                    if (!success) {
-                        return false;
-                    }
-                }
-            }
-        }
 
         return directory.delete();
     }
-
-
-
 }

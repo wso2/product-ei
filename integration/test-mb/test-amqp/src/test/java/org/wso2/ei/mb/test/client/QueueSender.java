@@ -44,13 +44,14 @@ public class QueueSender {
     private String carbonDefaultHostname = "localhost";
     private String carbonDefaultPort = "5672";
 
+    private String userName = "admin";
+    private String password = "admin";
+    private String queueName = "testQueue";
+
     private QueueConnection queueConnection;
     private QueueSession queueSession;
     private javax.jms.QueueSender queueSender;
 
-    String userName = "admin";
-    String password = "admin";
-    String queueName = "testQueue";
 
     public QueueSender() throws JMSException, NamingException {
 

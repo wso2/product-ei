@@ -38,11 +38,15 @@ public class ServerManager {
      */
     private static Logger log = Logger.getLogger(ServerManager.class);
 
+    /**
+     * Broker startup script name.
+     */
+    private static final String brokerStartupScriptName = "broker";
+
     private String carbonHome;
     private Process process;
     private ServerLogReader inputStreamHandler;
     private ServerLogReader errorStreamHandler;
-
 
     /**
      * Setup server home by extracting the distribution on temporary directory.
@@ -72,7 +76,6 @@ public class ServerManager {
         return carbonHome;
     }
 
-
     /**
      * Start server instance
      *
@@ -100,7 +103,6 @@ public class ServerManager {
         errorStreamHandler.start();
 
         long startupWaitTimeOut = 60000L;
-
         long time = System.currentTimeMillis() + startupWaitTimeOut;
 
         while (true) {
@@ -151,7 +153,6 @@ public class ServerManager {
         errorStreamHandler.stop();
     }
 
-
     /**
      * Return pid of server instance.
      *
@@ -169,7 +170,6 @@ public class ServerManager {
         return commandOutput;
     }
 
-
     /**
      * This method will verify if required script exist in specified carbon home directory
      * under "bin" sub directory.
@@ -183,7 +183,7 @@ public class ServerManager {
         String serverStartupScriptFileName = System.getProperty("server.startup.script.file.name");
 
         if (serverStartupScriptFileName.isEmpty()) {
-            serverStartupScriptFileName = "broker";
+            serverStartupScriptFileName = brokerStartupScriptName;
         }
 
         File[] scriptFiles = (new File(carbonHome + File.separator + "bin")).listFiles();

@@ -75,7 +75,7 @@ public class QueueMessageListener implements MessageListener {
                 }
             }
         } catch (JMSException e) {
-            log.error("Error occurred while receiving message.", e);
+            log.error("Error occurred while reading message.", e);
         }
     }
 

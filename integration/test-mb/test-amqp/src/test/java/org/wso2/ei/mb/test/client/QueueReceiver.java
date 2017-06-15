@@ -42,15 +42,15 @@ public class QueueReceiver {
     private String carbonVirtualHostName = "carbon";
     private String carbonDefaultHostName = "localhost";
     private String carbonDefaultPort = "5672";
-    private QueueConnection queueConnection;
-    private QueueSession queueSession;
 
-    String userName = "admin";
-    String password = "admin";
-    String queueName = "testQueue";
+    private String userName = "admin";
+    private String password = "admin";
+    private String queueName = "testQueue";
 
     private QueueMessageListener messageListener;
     private MessageConsumer consumer;
+    private QueueSession queueSession;
+    private QueueConnection queueConnection;
 
     public QueueReceiver() throws NamingException, JMSException {
         Properties properties = new Properties();
