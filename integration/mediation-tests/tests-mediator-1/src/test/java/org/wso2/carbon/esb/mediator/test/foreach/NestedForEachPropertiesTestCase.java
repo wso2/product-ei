@@ -47,8 +47,7 @@ public class NestedForEachPropertiesTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach properties in a nested foreach constructs with id specified")
     public void testNestedForEachPropertiesWithID() throws Exception {
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/nested_foreach_property.xml");
+        verifyProxyServiceExistence("foreachNestedPropertiesTestProxy");
 
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -67,7 +66,7 @@ public class NestedForEachPropertiesTestCase extends ESBIntegrationTest {
                         "    </soap:Body>\n" +
                         "</soap:Envelope>\n";
 
-        sendRequest(getMainSequenceURL(), request);
+        sendRequest(getProxyServiceURLHttp("foreachNestedPropertiesTestProxy"), request);
 
         int msgCounterOuter = 0;
         int msgCounterInner = 0;

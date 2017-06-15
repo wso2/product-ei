@@ -1,0 +1,40 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="foreachNestedTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <foreach expression="//m0:getQuote/m0:request" xmlns:m0="http://services.samples">
+                <sequence>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <m0:checkPriceRequest>
+                                <m0:code>$1-1</m0:code>
+                                <m0:code>$1-2</m0:code>
+                            </m0:checkPriceRequest>
+                        </format>
+                        <args>
+                            <arg evaluator="xml" expression="//m0:request/m0:symbol"/>
+                        </args>
+                    </payloadFactory>
+                    <log level="full">
+                        <property name="foreach" value="first"/>
+                    </log>
+                    <foreach expression="//m0:code" xmlns:m0="http://services.samples">
+                        <sequence>
+                            <payloadFactory media-type="xml">
+                                <format>
+                                    <m0:symbol>$1</m0:symbol>
+                                </format>
+                                <args>
+                                    <arg evaluator="xml" expression="//m0:code"/>
+                                </args>
+                            </payloadFactory>
+                        </sequence>
+                    </foreach>
+                </sequence>
+            </foreach>
+            <log level="full">
+                <property name="foreach" value="after"/>
+            </log>
+        </inSequence>
+    </target>
+</proxy>
