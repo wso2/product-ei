@@ -28,6 +28,7 @@ public class Constants {
     public static final String REPLY_STR = "reply";
     public static final String CREATE_STR = "create";
     public static final String TRANSACTION_STR = "transaction";
+    public static final String COMMITTED_STR = "committed";
     public static final String ABORTED_STR = "aborted";
     public static final String IF_STR = "if";
     public static final String ELSE_STR = "else";

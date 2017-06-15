@@ -625,34 +625,46 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(TransactionStmt transactionStmt) {
+        logger.debug("Visit - TransactionStmt");
 
-    }
-
-   /* @Override
-    public void visit(TransactionRollbackStmt transactionRollbackStmt) {
-        logger.debug("Visit - TransactionRollbackStmt");
-
-        */
-
-    /**
-     * transactionStatement : 'transaction' '{' statement* '}' rollbackClause;
-     * rollbackClause : 'aborted' '{' statement* '}';
-     *//*
-        //handle transaction block
+        /**
+         * transactionStatement : 'transaction' '{' statement* '}' transactionHandlers;
+         * transactionHandlers : abortedClause? committedClause? | committedClause? abortedClause? ;
+         * abortedClause : 'aborted' '{' statement* '}';
+         * committedClause : 'committed' '{' statement* '}';
+         */
         appendToBalSource(getIndentationForCurrentLine() + Constants.TRANSACTION_STR + Constants.SPACE_STR +
                 Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
         ++indentDepth;
-        transactionRollbackStmt.getTransactionBlock().accept(this);
+        //process transaction block
+        transactionStmt.getTransactionBlock().accept(this);
         --indentDepth;
-        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.SPACE_STR +
-                Constants.ABORTED_STR + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
-        //handle rollback block
-        ++indentDepth;
-        transactionRollbackStmt.getRollbackBlock().getRollbackBlockStmt().accept(this);
-        --indentDepth;
-        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
 
-    }*/
+        //process transaction handlers
+        if (transactionStmt.getCommittedBlock() != null) {
+            //committed block exists, process it
+            appendToBalSource(Constants.SPACE_STR + Constants.COMMITTED_STR + Constants.SPACE_STR +
+                    Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+            ++indentDepth;
+            transactionStmt.getCommittedBlock().getCommittedBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        }
+
+        if (transactionStmt.getAbortedBlock() != null) {
+            //aborted block exists, process it
+            appendToBalSource(Constants.SPACE_STR + Constants.ABORTED_STR + Constants.SPACE_STR +
+                    Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+            ++indentDepth;
+            transactionStmt.getAbortedBlock().getAbortedBlockStmt().accept(this);
+            --indentDepth;
+            appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR);
+        }
+        appendToBalSource(Constants.NEWLINE_STR);
+
+    }
+
     @Override
     public void visit(AbortStmt abortStmt) {
 
