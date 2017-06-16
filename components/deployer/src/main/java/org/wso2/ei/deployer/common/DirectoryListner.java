@@ -28,6 +28,9 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
+/**
+ * {@link DirectoryListner} Directory watcher and invoke relevant registered callbacks
+ */
 public class DirectoryListner {
 
     private static Logger logger = LoggerFactory.getLogger(DirectoryListner.class);

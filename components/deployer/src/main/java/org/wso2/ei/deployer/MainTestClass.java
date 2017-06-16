@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Temporary test main class
+ * TODO Remove when not needed
+ */
 public class MainTestClass {
 
     private static Logger logger = LoggerFactory.getLogger(MainTestClass.class);

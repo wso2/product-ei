@@ -20,6 +20,9 @@ package org.wso2.ei.deployer.common;
 
 import java.nio.file.WatchKey;
 
+/**
+ * {@link EventCallback} Event callback for artifact deployer
+ */
 public interface EventCallback {
     public void exec(WatchKey watchKey);
 }

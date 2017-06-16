@@ -21,6 +21,9 @@ package org.wso2.ei.deployer.common;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 
+/**
+ * {@link EventCallback} implementation to react directory changes
+ */
 public class DirChangeCallback implements EventCallback{
 
     @Override
