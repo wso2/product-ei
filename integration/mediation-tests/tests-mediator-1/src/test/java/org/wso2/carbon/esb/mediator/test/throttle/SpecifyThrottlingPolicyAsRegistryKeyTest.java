@@ -42,7 +42,7 @@ public class SpecifyThrottlingPolicyAsRegistryKeyTest extends ESBIntegrationTest
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        isProxyDeployed("throttlingPolicyFromRegistryTestProxy");
+        verifyProxyServiceExistence("throttlingPolicyFromRegistryTestProxy");
     }
 
     @Test(groups = "wso2.esb",

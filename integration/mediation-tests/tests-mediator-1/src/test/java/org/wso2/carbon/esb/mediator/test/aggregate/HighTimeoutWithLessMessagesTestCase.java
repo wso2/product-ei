@@ -39,7 +39,7 @@ public class HighTimeoutWithLessMessagesTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorHighTimeoutTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorHighTimeoutTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorHighTimeoutTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

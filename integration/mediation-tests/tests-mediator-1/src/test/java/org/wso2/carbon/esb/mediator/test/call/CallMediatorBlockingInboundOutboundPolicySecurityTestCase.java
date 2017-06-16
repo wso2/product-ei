@@ -39,8 +39,8 @@ public class CallMediatorBlockingInboundOutboundPolicySecurityTestCase extends E
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("callMediatorBlockingInboundPolicyProxy");
-        isLocalEntryDeployed("sec_policy_3");
+        verifyProxyServiceExistence("callMediatorBlockingInboundPolicyProxy");
+        verifyLocalEntryExistence("sec_policy_3");
     }
 
     @Test(groups = { "wso2.esb" },

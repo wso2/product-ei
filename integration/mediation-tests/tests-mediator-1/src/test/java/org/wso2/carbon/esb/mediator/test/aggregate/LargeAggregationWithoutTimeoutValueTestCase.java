@@ -38,7 +38,7 @@ public class LargeAggregationWithoutTimeoutValueTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorWithoutTimeoutTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorWithoutTimeoutTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorWithoutTimeoutTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

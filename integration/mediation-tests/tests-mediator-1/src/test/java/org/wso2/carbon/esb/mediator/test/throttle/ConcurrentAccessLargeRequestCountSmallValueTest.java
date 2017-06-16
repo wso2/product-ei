@@ -52,7 +52,7 @@ public class ConcurrentAccessLargeRequestCountSmallValueTest extends ESBIntegrat
     public void setEnvironment() throws Exception {
 
         super.init();
-        isProxyDeployed("throttlingConcurrentAccessLargeRequestCountTestProxy");
+        verifyProxyServiceExistence("throttlingConcurrentAccessLargeRequestCountTestProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyAndRequestThrottleTestClients = new ConcurrencyAndRequestThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];

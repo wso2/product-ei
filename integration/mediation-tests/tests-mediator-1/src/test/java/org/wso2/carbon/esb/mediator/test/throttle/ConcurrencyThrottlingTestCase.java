@@ -47,7 +47,7 @@ public class ConcurrencyThrottlingTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        isProxyDeployed("throttlingMxConcurrentAccessTestProxy");
+        verifyProxyServiceExistence("throttlingMxConcurrentAccessTestProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyThrottleTestClients = new ConcurrencyThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
