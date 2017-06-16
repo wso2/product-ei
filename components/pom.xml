@@ -41,5 +41,6 @@
     </licenses>
 
     <modules>
+        <module>deployer</module>
     </modules>
 </project>
