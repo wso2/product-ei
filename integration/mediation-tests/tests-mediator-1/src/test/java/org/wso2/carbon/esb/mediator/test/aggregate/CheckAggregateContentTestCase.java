@@ -39,7 +39,7 @@ public class CheckAggregateContentTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorContentTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorContentTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorContentTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

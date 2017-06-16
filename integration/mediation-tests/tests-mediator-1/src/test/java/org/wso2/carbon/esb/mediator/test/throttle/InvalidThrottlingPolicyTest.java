@@ -33,7 +33,7 @@ public class InvalidThrottlingPolicyTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("invalidThrottlingPolicyTestProxy");
+        verifyProxyServiceExistence("invalidThrottlingPolicyTestProxy");
     }
 
     @Test(groups = "wso2.esb",

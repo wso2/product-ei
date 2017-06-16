@@ -33,7 +33,7 @@ public class AggregateWithinTimeoutTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorTimeoutTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorTimeoutTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTimeoutTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

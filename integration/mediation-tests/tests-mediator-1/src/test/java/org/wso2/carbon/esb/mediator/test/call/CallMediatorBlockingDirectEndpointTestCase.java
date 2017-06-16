@@ -36,7 +36,7 @@ public class CallMediatorBlockingDirectEndpointTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("callMediatorBlockingProxy");
+        verifyProxyServiceExistence("callMediatorBlockingProxy");
     }
 
     @Test(groups = { "wso2.esb" },

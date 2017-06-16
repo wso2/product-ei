@@ -42,8 +42,8 @@ public class CallMediatorBlockingSecurityTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
                         + File.separator + "call" + File.separator + "CallMediatorBlockingSecurity.xml");
-        isProxyDeployed("callMediatorBlockingEndpointSecurityProxy");
-        isLocalEntryDeployed("sec_policy_3");
+        verifyProxyServiceExistence("callMediatorBlockingEndpointSecurityProxy");
+        verifyLocalEntryExistence("sec_policy_3");
     }
 
     @Test(groups = { "wso2.esb" },
