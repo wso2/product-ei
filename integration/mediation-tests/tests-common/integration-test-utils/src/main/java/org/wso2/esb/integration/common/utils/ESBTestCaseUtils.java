@@ -245,7 +245,7 @@ public class ESBTestCaseUtils {
 			OMElement endpoint = endpoints.next();
 			String ep = endpoint.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(endPointAdminClient.getEndpointNames(), ep)) {
-				Assert.fail("Endpoint already exist " + endpoint + ". Use different name");
+				Assert.fail("Endpoint already exist " + ep + ". Use different name");
 			}
             Assert.assertTrue(endPointAdminClient.addEndPoint(endpoint)," Endpoint addition failed");
             Assert.assertTrue(isEndpointDeployed(backendURL, sessionCookie, ep), " Endpoint deployment failed");
