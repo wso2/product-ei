@@ -3,7 +3,7 @@
     <target>
         <inSequence>
             <enrich> xmlns="http://ws.apache.org/ns/synapse"
-                <source clone="false"  type="inline" key="init_req"/>
+                <source clone="false"  type="inline" key="init_req_LE"/>
                 <target action="replace" type="body" />
 
             </enrich>
