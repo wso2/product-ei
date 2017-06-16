@@ -48,7 +48,7 @@ public class MaximumConcurrentAccessTest extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        isProxyDeployed("throttlingMaxConcurrentAccessProxy");
+        verifyProxyServiceExistence("throttlingMaxConcurrentAccessProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyThrottleTestClients = new ConcurrencyThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];

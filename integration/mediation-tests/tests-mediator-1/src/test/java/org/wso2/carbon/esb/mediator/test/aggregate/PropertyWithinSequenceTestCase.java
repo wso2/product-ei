@@ -38,7 +38,7 @@ public class PropertyWithinSequenceTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorPropertyTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorPropertyTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorPropertyTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

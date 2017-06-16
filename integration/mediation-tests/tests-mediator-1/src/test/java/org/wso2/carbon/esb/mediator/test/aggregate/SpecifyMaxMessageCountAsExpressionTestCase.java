@@ -40,7 +40,7 @@ public class SpecifyMaxMessageCountAsExpressionTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorBothMinMaxTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorBothMinMaxTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorBothMinMaxTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

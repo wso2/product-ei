@@ -42,7 +42,7 @@ public class OnCompleteSequenceFromRegistryTestCase extends ESBIntegrationTest {
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(), getSessionCookie());
         uploadResourcesToConfigRegistry();
-        isProxyDeployed("aggregateMediatorOnCompleteFromConfTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorOnCompleteFromConfTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorOnCompleteFromConfTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

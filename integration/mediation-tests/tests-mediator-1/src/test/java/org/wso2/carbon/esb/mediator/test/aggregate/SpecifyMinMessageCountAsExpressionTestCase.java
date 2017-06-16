@@ -41,7 +41,7 @@ public class SpecifyMinMessageCountAsExpressionTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorMinExpressionTestProxy");
+        verifyProxyServiceExistence("aggregateMediatorMinExpressionTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorMinExpressionTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");

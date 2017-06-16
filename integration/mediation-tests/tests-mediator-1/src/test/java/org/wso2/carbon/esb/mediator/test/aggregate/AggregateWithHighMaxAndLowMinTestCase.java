@@ -41,7 +41,7 @@ public class AggregateWithHighMaxAndLowMinTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        isProxyDeployed("aggregateMediatorTestProxy1");
+        verifyProxyServiceExistence("aggregateMediatorTestProxy1");
         aggregatedRequestClient= new AggregatedRequestClient();
         aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy1"));
         aggregatedRequestClient.setSymbol("IBM");
