@@ -83,6 +83,7 @@
             <class name="org.wso2.carbon.esb.nhttp.transport.test.OCSPCertificateValidationTestCase"/>
             <class name="org.wso2.carbon.esb.nhttp.transport.test.RetrieveBackendWsdlTestCase"/>
             <class name="org.wso2.carbon.esb.nhttp.transport.test.SetHostHttpHeaderTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.CheckAuthHeaderOrderTestCase"/>
         </classes>
     </test>
 
