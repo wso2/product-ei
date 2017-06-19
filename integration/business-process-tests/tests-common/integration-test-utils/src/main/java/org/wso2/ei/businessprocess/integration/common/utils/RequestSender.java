@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class RequestSender {
@@ -110,7 +111,7 @@ public class RequestSender {
             }
 
             if (read > 0) {
-                String wsdl = new String(bLine);
+                String wsdl = new String(bLine, StandardCharsets.UTF_8);
                 if (wsdl.contains("definitions")) {
                     return true;
                 }

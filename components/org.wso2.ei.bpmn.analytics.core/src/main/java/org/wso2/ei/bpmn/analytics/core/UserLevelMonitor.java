@@ -20,12 +20,15 @@ package org.wso2.ei.bpmn.analytics.core;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.wso2.ei.bpmn.analytics.core.clients.BPMNAnalyticsCoreRestClient;
 import org.wso2.ei.bpmn.analytics.core.models.AggregateField;
 import org.wso2.ei.bpmn.analytics.core.utils.BPMNAnalyticsCoreUtils;
 import org.wso2.ei.bpmn.analytics.core.models.AggregateQuery;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -100,7 +103,7 @@ public class UserLevelMonitor {
 							                          userCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Total Involved Time Vs UserId UserLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -171,7 +174,7 @@ public class UserLevelMonitor {
 							                           order, userCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Total Completed Tasks Vs UserId UserLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -246,7 +249,7 @@ public class UserLevelMonitor {
 					                                                               order, count);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | XMLStreamException | IOException e) {
 			log.error("BPMN Analytics Core - Total Involved Time Vs ProcessId UserLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -322,7 +325,7 @@ public class UserLevelMonitor {
 					                                                                order, count);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Total Involved Instance Count Vs ProcessId UserLevelMonitoring error.", e);
 		}
 
@@ -395,7 +398,7 @@ public class UserLevelMonitor {
 					                                                                taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException | JSONException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - User Level Task Instance Count Vs Task Id UserLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -466,7 +469,7 @@ public class UserLevelMonitor {
 							                          taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - User Level Avg Execution Time Vs Task Id UserLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {

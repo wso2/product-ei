@@ -20,13 +20,17 @@ package org.wso2.ei.bpmn.analytics.core;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.XML;
 import org.wso2.ei.bpmn.analytics.core.clients.BPMNAnalyticsCoreRestClient;
 import org.wso2.ei.bpmn.analytics.core.models.AggregateField;
 import org.wso2.ei.bpmn.analytics.core.models.AggregateQuery;
 import org.wso2.ei.bpmn.analytics.core.models.SearchQuery;
 import org.wso2.ei.bpmn.analytics.core.utils.BPMNAnalyticsCoreUtils;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -74,14 +78,13 @@ public class ProcessLevelMonitor {
 				query.setAggregateFields(aggregateFields);
 
 				if (log.isDebugEnabled()) {
-					log.debug("Query to get Total Completed Tasks Vs User Id for process: " + processId + " | Result:" +
-							BPMNAnalyticsCoreUtils.getJSONString(query));
+					log.debug("Query to get Total Completed Tasks Vs User Id for process: " + processId + " | Result:"
+							+ BPMNAnalyticsCoreUtils.getJSONString(query));
 				}
 
 				String result = BPMNAnalyticsCoreRestClient
-						.post(BPMNAnalyticsCoreUtils
-								      .getURL(BPMNAnalyticsCoreConstants.ANALYTICS_AGGREGATE),
-						      BPMNAnalyticsCoreUtils.getJSONString(query));
+						.post(BPMNAnalyticsCoreUtils.getURL(BPMNAnalyticsCoreConstants.ANALYTICS_AGGREGATE),
+								BPMNAnalyticsCoreUtils.getJSONString(query));
 
 				JSONArray unsortedResultArray = new JSONArray(result);
 				Hashtable<String, Integer> table = new Hashtable<>();
@@ -90,19 +93,17 @@ public class ProcessLevelMonitor {
 					for (int i = 0; i < unsortedResultArray.length(); i++) {
 						JSONObject jsonObj = unsortedResultArray.getJSONObject(i);
 						JSONObject values = jsonObj.getJSONObject(BPMNAnalyticsCoreConstants.VALUES);
-						String assignee =
-								values.getJSONArray(BPMNAnalyticsCoreConstants.ASSIGN_USER).getString(0);
-						int totalInvolvedTasks =
-								values.getInt(BPMNAnalyticsCoreConstants.COMPLETED_TOTAL_TASKS);
+						String assignee = values.getJSONArray(BPMNAnalyticsCoreConstants.ASSIGN_USER).getString(0);
+						int totalInvolvedTasks = values.getInt(BPMNAnalyticsCoreConstants.COMPLETED_TOTAL_TASKS);
 						table.put(assignee, totalInvolvedTasks);
 					}
 					sortedResult = BPMNAnalyticsCoreUtils
 							.getIntegerValueSortedList(table, BPMNAnalyticsCoreConstants.ASSIGN_USER,
-							                           BPMNAnalyticsCoreConstants.COMPLETED_TOTAL_TASKS,
-							                           order, userCount);
+									BPMNAnalyticsCoreConstants.COMPLETED_TOTAL_TASKS, order, userCount);
 				}
 			}
-		} catch (Exception e) {
+
+		} catch (XMLStreamException | JSONException | IOException e) {
 			log.error("BPMN Analytics Core - Total Completed Tasks Vs UserId UserLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -170,7 +171,7 @@ public class ProcessLevelMonitor {
 							                          taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | XMLStreamException | IOException e) {
 			log.error("BPMN Analytics Core - total execution time Vs UserId ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -243,7 +244,7 @@ public class ProcessLevelMonitor {
 					                                                               processCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | XMLStreamException | IOException e) {
 			log.error("BPMN Analytics Core - Avg Execution Time Vs ProcessId ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -316,7 +317,7 @@ public class ProcessLevelMonitor {
 					                                                                processCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | XMLStreamException | IOException e) {
 			log.error("BPMN Analytics Core - Process Instance Count Vs ProcessId ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -385,7 +386,7 @@ public class ProcessLevelMonitor {
 							                          processCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Avg Execution Time Vs Process Version ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -453,7 +454,7 @@ public class ProcessLevelMonitor {
 							                           order, processCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Process Instance Count Vs Process Version ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -517,7 +518,7 @@ public class ProcessLevelMonitor {
 							                          BPMNAnalyticsCoreConstants.DURATION, order, limit);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Execution Time Vs Process InstanceId ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -617,7 +618,7 @@ public class ProcessLevelMonitor {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Date Vs Process Instance Count ProcessLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
