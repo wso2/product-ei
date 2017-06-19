@@ -19,38 +19,38 @@
 package org.wso2.ei.tools.mule2ballerina.elementmapper;
 
 /**
- * {@code Element} enumeration keeps mule elements against internal mclasses
+ * {@code Element} enumeration keeps mule elements against its representative internal class
  */
 public enum Element {
 
-    MULE_HTTP_LISTENER_CONFIG("http:listener-config", "org.wso2.ei.tools.mule2ballerina.model" + ".HttpListenerConfig"),
-    MULE_HTTP_LISTENER("http:listener", "org.wso2.ei.tools.mule2ballerina.model.HttpListener"),
-    MULE_FLOW("flow", "org.wso2.ei.tools.mule2ballerina.model.Flow"),
-    MULE_SET_PAYLOAD("set-payload", "org.wso2.ei.tools.mule2ballerina.model.Payload"),
-    MULE_HTTP_REQUEST("http:request", "org.wso2.ei.tools.mule2ballerina.model.HttpRequest"),
-    MULE_HTTP_REQUEST_CONFIG("http:request-config", "org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig"),
-    MULE_LOGGER("logger", "org.wso2.ei.tools.mule2ballerina.model.Logger"),
-    MULE_PROPERTY_SETTER("set-property", "org.wso2.ei.tools.mule2ballerina.model.PropertySetter"),
-    MULE_PROPERTY_REMOVER("remove-property", "org.wso2.ei.tools.mule2ballerina.model.PropertyRemover"),
-    MULE_VARIABLE_SETTER("set-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableSetter"),
-    MULE_VARIABLE_REMOVER("remove-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableRemover"),
-    MULE_FLOW_REF("flow-ref", "org.wso2.ei.tools.mule2ballerina.model.FlowReference"),
-    MULE_SUB_FLOW("sub-flow", "org.wso2.ei.tools.mule2ballerina.model.SubFlow");
+    HTTP_LISTENER_CONFIG("http:listener-config", "org.wso2.ei.tools.mule2ballerina.model" + ".HttpListenerConfig"),
+    HTTP_LISTENER("http:listener", "org.wso2.ei.tools.mule2ballerina.model.HttpListener"),
+    FLOW("flow", "org.wso2.ei.tools.mule2ballerina.model.Flow"),
+    SET_PAYLOAD("set-payload", "org.wso2.ei.tools.mule2ballerina.model.Payload"),
+    HTTP_REQUEST("http:request", "org.wso2.ei.tools.mule2ballerina.model.HttpRequest"),
+    HTTP_REQUEST_CONFIG("http:request-config", "org.wso2.ei.tools.mule2ballerina.model.HttpRequestConfig"),
+    LOGGER("logger", "org.wso2.ei.tools.mule2ballerina.model.Logger"),
+    PROPERTY_SETTER("set-property", "org.wso2.ei.tools.mule2ballerina.model.PropertySetter"),
+    PROPERTY_REMOVER("remove-property", "org.wso2.ei.tools.mule2ballerina.model.PropertyRemover"),
+    VARIABLE_SETTER("set-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableSetter"),
+    VARIABLE_REMOVER("remove-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableRemover"),
+    FLOW_REF("flow-ref", "org.wso2.ei.tools.mule2ballerina.model.FlowReference"),
+    SUB_FLOW("sub-flow", "org.wso2.ei.tools.mule2ballerina.model.SubFlow");
 
     private String value;
-    private String mClassName;
+    private String internalClassName;
 
     Element(final String value, final String intermediateMClassname) {
         this.value = value;
-        this.mClassName = intermediateMClassname;
+        this.internalClassName = intermediateMClassname;
     }
 
     public String getValue() {
         return value;
     }
 
-    public String getmClassName() {
-        return mClassName;
+    public String getInternalClassName() {
+        return internalClassName;
     }
 
     @Override

@@ -26,12 +26,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * {@code GlobalConfiguration} represents any mule global configuration
+ * {@code GlobalConfiguration} represents any mule global configuration and any global configuration in mule config
+ * file should be added to the intermediate object stack through this class
  */
 public interface GlobalConfiguration extends Visitable, TreeBuilder {
 
+    String getName();
+
     /**
-     * if the intermediate object represents a global configuration in mule, add it to global config list
+     * If the intermediate object represents a global configuration in mule, add it to global config list
      * Further if it's an inbound config, keep all the flows that belong to that config in a map, as it is needed
      * to determine the end of service point in ballerina stack
      *
@@ -40,14 +43,23 @@ public interface GlobalConfiguration extends Visitable, TreeBuilder {
     @Override
     public default void buildTree(DataCarrierDTO dataCarrierDTO) {
 
-        BaseObject muleObj = dataCarrierDTO.getBaseObject();
+        BaseObject baseObj = dataCarrierDTO.getBaseObject();
         Root rootObj = dataCarrierDTO.getRootObject();
+        GlobalConfiguration globalConfiguration = (GlobalConfiguration) baseObj;
+        rootObj.addGlobalConfiguration((GlobalConfiguration) baseObj);
 
-        rootObj.addGlobalConfiguration((GlobalConfiguration) muleObj);
-        if (muleObj instanceof Inbound) {
+         /* If the element is a global configuration keep it against it's name as this will
+          * be useful when navigating the processors to identify their global configuration */
+        rootObj.addGlobalConfigurationMap(globalConfiguration.getName(), (GlobalConfiguration) globalConfiguration);
+
+        /*If the global configuration represents an inbound global config, check whether a flow queue is maintained
+          for that inbound config.If there's not create an empty flow queue against the global config and put it in the
+          service map of root
+         */
+        if (baseObj instanceof Inbound) {
             Queue<Flow> flowQueue = null;
             if (rootObj.getServiceMap() != null) {
-                Inbound inboundObj = (Inbound) muleObj;
+                Inbound inboundObj = (Inbound) baseObj;
                 flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
                 if (flowQueue == null) {
                     flowQueue = new LinkedList<Flow>();

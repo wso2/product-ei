@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 /**
- * {@code HttpListenerConfig} represents mule listener-config element
+ * {@code HttpListenerConfig} represents mule http:listener-config element
  */
 public class HttpListenerConfig extends BaseObject implements Inbound, GlobalConfiguration {
 

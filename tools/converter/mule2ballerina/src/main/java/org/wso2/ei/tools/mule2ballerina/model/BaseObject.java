@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.builder.TreeBuilder;
 
 /**
- * Represents any mule object
+ * Represents any mule element
  */
 public abstract class BaseObject implements TreeBuilder {
 

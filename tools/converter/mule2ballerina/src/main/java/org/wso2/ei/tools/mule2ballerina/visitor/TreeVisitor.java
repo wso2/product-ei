@@ -49,7 +49,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * {@code TreeVisitor} visits intermediate object tree and populate Ballerina AST
+ * {@code TreeVisitor} visits intermediate object stack and populate Ballerina AST
  */
 public class TreeVisitor implements Visitor {
 
@@ -61,27 +61,34 @@ public class TreeVisitor implements Visitor {
     private Map<String, Boolean> serviceTrack = new HashMap<String, Boolean>();
     private Map<String, Boolean> importTracker = new HashMap<String, Boolean>();
     private String inboundName;
-    private int serviceCounter = 0;
-    private int resourceCounter = 0;
-    private int parameterCounter = 0;
-    private int variableCounter = 0;
-    private String connectorVarName;
+    private int serviceCounter = 0; //For dynamic service name creation
+    private int resourceCounter = 0; //For dynamic resource name creation
+    private int parameterCounter = 0; //For dynamic parameter name creation
+    private int variableCounter = 0; //For dynamic variable name creation
+    private String connectorVarName; //For dynamic connector variable name creation
     private String outboundMsg; //Holds outbound message variable name
     private String inboundMsg; //Holds inbound message variable name
     private String funcParaName;
-    private int resourceAnnotationCount = 0;
+    private int resourceAnnotationCount = 0; //Keeps track of annotation count of a resource
 
     public TreeVisitor(Root mRoot) {
         ballerinaASTAPI = new BallerinaASTModelBuilder();
         this.mRoot = mRoot;
     }
 
+    /**
+     * Visit Root. Main flows and private flows are visited separately as they serve two different purposes.
+     *
+     * @param root
+     */
     @Override
     public void visit(Root root) {
         logger.debug("-SRoot");
+        //Visit each main flow to create resources
         for (Flow flow : root.getFlowList()) {
             flow.accept(this);
         }
+        //Visit each private flow to create functions. (Private flows are treated as functions.)
         for (Flow privateFlow : root.getPrivateFlowList()) {
             ballerinaASTAPI.startFunction();
             ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
@@ -92,14 +99,14 @@ public class TreeVisitor implements Visitor {
                 processor.accept(this);
             }
             ballerinaASTAPI.endCallableBody();
-            ballerinaASTAPI.endOfFunction(privateFlow.getName());
+            ballerinaASTAPI.endOfFunction(privateFlow.getName()); //Function name will be the same as private flow name
         }
         logger.debug("-ERoot");
         ballerinaFile = ballerinaASTAPI.buildBallerinaFile();
     }
 
     /**
-     * Navigate flow processors
+     * Navigate flow processors. Flow is equivalent of a resource in Ballerina
      *
      * @param flow
      */
@@ -118,21 +125,21 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.createReplyStatement();
                 ballerinaASTAPI.endCallableBody();
                 String resourceName = Constant.BLANG_RESOURCE_NAME + ++resourceCounter;
-                ballerinaASTAPI.endOfResource(resourceName, resourceAnnotationCount);
+                ballerinaASTAPI.endOfResource(resourceName, resourceAnnotationCount); //End of resource
                 resourceAnnotationCount = 0;
                 logger.debug("--EFlow");
 
                 /* At the end of each flow get the flow queue associate with its config and
-                 * remove it from the queue. So that when there are no flows (resources) associate with a config
+                 * remove this flow from the queue, so that when there are no flows (resources) associate with a config
                  * (service) we can close the service
                  */
                 if (mRoot.getServiceMap() != null) {
                     Queue<Flow> flows = mRoot.getServiceMap().get(inboundName);
                     if (flows != null) {
                         flows.remove();
-                        if (flows.size() == 0) {
+                        if (flows.size() == 0) { //If no more resources
                             String serviceName = Constant.BLANG_SERVICE_NAME + ++serviceCounter;
-                            ballerinaASTAPI.endOfService(serviceName);
+                            ballerinaASTAPI.endOfService(serviceName); //End of service
                         }
                     }
                 }
@@ -140,6 +147,13 @@ public class TreeVisitor implements Visitor {
         }
     }
 
+    /**
+     * Set the payload of the outbound message. Currently only String,JSON and XML types are supported. All the
+     * other types are treated as Strings. First a variable
+     * will be created to hold the value and then set the payload with that value.
+     *
+     * @param payload
+     */
     @Override
     public void visit(Payload payload) {
         if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_MESSAGES) == null) {
@@ -199,6 +213,11 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createFunctionInvocation(true);
     }
 
+    /**
+     * HTTP listener is equivalent of http server connector in Ballerina
+     *
+     * @param listenerConfig
+     */
     @Override
     public void visit(HttpListenerConfig listenerConfig) {
 
@@ -223,6 +242,12 @@ public class TreeVisitor implements Visitor {
         }
     }
 
+    /**
+     * When the inbound connector is encountered, first visit it's global configuration to start the service and then
+     * start the resource definition.
+     *
+     * @param listener
+     */
     @Override
     public void visit(HttpListener listener) {
         logger.debug("----HttpListener");
@@ -233,7 +258,7 @@ public class TreeVisitor implements Visitor {
         , because for the creation of a resource, a service definition has to be started, which only happens once the
         first processor's config is visited */
         ballerinaASTAPI.startResource();
-        String allowedMethods = Constant.BLANG_METHOD_GET;
+        String allowedMethods = Constant.BLANG_METHOD_GET; //Default http request method is set to GET
         if (listener.getAllowedMethods() != null) {
             allowedMethods = listener.getAllowedMethods();
             String[] methodBits = allowedMethods.split(",");
@@ -249,6 +274,7 @@ public class TreeVisitor implements Visitor {
             resourceAnnotationCount++;
         }
 
+        //Add the Path annotation
         if (listener.getPath() != null) {
             ballerinaASTAPI.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_PATH, Constant.BLANG_VALUE,
                     listener.getPath());
@@ -256,10 +282,12 @@ public class TreeVisitor implements Visitor {
             resourceAnnotationCount++;
         }
 
+        //Add inbound message as a resource parameter
         ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
         inboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
         ballerinaASTAPI.addParameter(0, false, inboundMsg);
 
+        //Then add path parameters
         if (listener.getPath() != null) {
             //check whether any path params have been used
             String[] pathParams = listener.getPath().split("/");
@@ -281,9 +309,16 @@ public class TreeVisitor implements Visitor {
         }
 
         ballerinaASTAPI.startCallableBody();
+        //Create empty outbound message
         createVariableWithEmptyMap(Constant.BLANG_TYPE_MESSAGE, Constant.BLANG_VAR_RESPONSE + ++variableCounter, true);
     }
 
+    /**
+     * HttpRequest represents a http client connector in Ballerina. First visit this element's global config element to
+     * populate required values necessary for client connector creation.
+     *
+     * @param request
+     */
     @Override
     public void visit(HttpRequest request) {
         logger.debug("----HttpRequest");
@@ -306,6 +341,11 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createAssignmentStatement();
     }
 
+    /**
+     * HttpRequestConfig contains attributes required to create http client connector in Ballerina.
+     *
+     * @param requestConfig
+     */
     @Override
     public void visit(HttpRequestConfig requestConfig) {
         logger.debug("----HttpRequestConfig");
@@ -334,15 +374,20 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createVariable(connectorVarName, true);
     }
 
+    /**
+     * Add a comment in Ballerina code.
+     *
+     * @param comment
+     */
     @Override
     public void visit(Comment comment) {
         ballerinaASTAPI.addComment(comment.getComment());
     }
 
     /**
-     * Prints the logger message in correct log level. In mule, if the message is not set with any value it prints
-     * out the whole message property details. Since in Ballerina, this is not directly available that is not
-     * provided here.
+     * Prints the logger message in correct log level. In mule, if the message property of logger is not set with any
+     * value it print out the whole message property details. In Ballerina, since this is not directly available that
+     * is not provided here.
      *
      * @param log
      */
@@ -383,7 +428,7 @@ public class TreeVisitor implements Visitor {
     }
 
     /**
-     * Add header to outbound message
+     * Add a header to outbound message
      *
      * @param propertySetter
      */
@@ -429,11 +474,21 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createFunctionInvocation(true);
     }
 
+    /**
+     * Create a variable of type string in Ballerina with the mule variable value
+     *
+     * @param variableSetter
+     */
     @Override
     public void visit(VariableSetter variableSetter) {
         createVariableOfTypeString(variableSetter.getValue(), variableSetter.getVariableName(), true, false);
     }
 
+    /**
+     * Set the variable value in Ballerina to null
+     *
+     * @param variableRemover
+     */
     @Override
     public void visit(VariableRemover variableRemover) {
         // createVariableOfTypeString("", variableRemover.getVariableName(), true,false);
@@ -490,6 +545,8 @@ public class TreeVisitor implements Visitor {
     }
 
     /**
+     * Create a variable of type string.
+     *
      * @param value
      * @param varName
      * @param exprAvailable

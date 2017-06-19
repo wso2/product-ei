@@ -26,7 +26,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * {@code Processor} class represents any mule processor element
+ * {@code Processor} class represents any mule processor element. Any element inside a flow is considered to be a
+ * message processor
  */
 public interface Processor extends Visitable, TreeBuilder {
 
@@ -34,23 +35,27 @@ public interface Processor extends Visitable, TreeBuilder {
 
     /**
      * If the intermediate object is a processor within a flow add it to the correct flow
-     * If it's an inbound connector, add the flow which has that connector to the global config map
+     * If it's an inbound connector, add the flow which has that connector to the global config map (service map in
+     * root)
      *
      * @param dataCarrierDTO
      */
     @Override
     public default void buildTree(DataCarrierDTO dataCarrierDTO) {
-        BaseObject muleObj = dataCarrierDTO.getBaseObject();
+        BaseObject baseObj = dataCarrierDTO.getBaseObject();
         Root rootObj = dataCarrierDTO.getRootObject();
 
-        if (dataCarrierDTO.isFlowStarted()) {
-            Flow lastAddedFlow = rootObj.getFlowList().peek();
-            lastAddedFlow.addProcessor((Processor) muleObj);
+        if (dataCarrierDTO.isFlowStarted()) { //If flow started
+            Flow lastAddedFlow = rootObj.getFlowList().peek(); //Get the last added flow in flow stack
+            lastAddedFlow.addProcessor((Processor) baseObj); //Add processor to processor queue
             if (lastAddedFlow.getFlowProcessors().size() < 2) { //If this is the first processor
-                if (muleObj instanceof Inbound) {
+                /*If this is an inbound connector, get the flow queue associated with it's global inbound config and
+                if it's null, create a new flow queue and add the this flow to it.
+                */
+                if (baseObj instanceof Inbound) {
                     Queue<Flow> flowQueue = null;
                     if (rootObj.getServiceMap() != null) {
-                        Inbound inboundObj = (Inbound) muleObj;
+                        Inbound inboundObj = (Inbound) baseObj;
                         flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
                         if (flowQueue == null) {
                             flowQueue = new LinkedList<Flow>();
@@ -61,16 +66,16 @@ public interface Processor extends Visitable, TreeBuilder {
                         }
                     }
                 } else {
-                    //If there are no inbound connectors and if this is the first processor that means this needs to
-                    // be added to a private flow and remove it from the main flow stack
+                    /*If this is not an inbound connector and if this is the first processor, that means this needs to
+                     be added to a private flow and remove it from the main flow stack */
                     rootObj.getFlowList().pop();
-                    rootObj.addPrivateFlow(lastAddedFlow.getName(), lastAddedFlow); //This might not need
-                    rootObj.addPrivateFlow(lastAddedFlow);
+                    rootObj.addPrivateFlow(lastAddedFlow.getName(), lastAddedFlow);
+                    rootObj.addToPrivateFlowStack(lastAddedFlow);
                 }
             }
-        } else if (dataCarrierDTO.isSubFlowStarted()) {
+        } else if (dataCarrierDTO.isSubFlowStarted()) { //If it's the sub flow that's been started
             SubFlow lastAddedSubFlow = rootObj.getSubFlowStack().peek();
-            lastAddedSubFlow.addProcessor((Processor) muleObj);
+            lastAddedSubFlow.addProcessor((Processor) baseObj); //Adds the processor to sub flow
         }
     }
 }

@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 /**
- * {@code HttpRequest} represents mule http request element
+ * {@code HttpRequest} represents mule http:request element
  */
 public class HttpRequest extends BaseObject implements Processor {
 

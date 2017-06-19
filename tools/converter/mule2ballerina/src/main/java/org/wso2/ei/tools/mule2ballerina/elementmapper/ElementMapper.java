@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@code ElementMapper} holds a map of internal mclasses against the relevant mule element
+ * {@code ElementMapper} holds a map of internal classes against the relevant mule element
  */
 public class ElementMapper {
 
@@ -30,7 +30,7 @@ public class ElementMapper {
 
     public ElementMapper() {
         for (Element element : Element.values()) {
-            elementToObjMapper.put(element.getValue(), element.getmClassName());
+            elementToObjMapper.put(element.getValue(), element.getInternalClassName());
         }
     }
 
