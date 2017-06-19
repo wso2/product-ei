@@ -21,6 +21,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.lang.CharSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.registry.core.utils.RegistryUtils;
@@ -30,6 +31,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import javax.xml.stream.XMLStreamException;
 
 /**
@@ -63,8 +65,12 @@ public class BPMNAnalyticsCoreRestClient {
 				throw new RuntimeException(errorCode);
 			}
 
+			String charsetname = StandardCharsets.UTF_8.name();
+			if (postRequest.getResponseCharSet() != null) {
+				charsetname = postRequest.getResponseCharSet();
+			}
 			InputStreamReader reader =
-					new InputStreamReader((postRequest.getResponseBodyAsStream()));
+					new InputStreamReader((postRequest.getResponseBodyAsStream()), charsetname);
 			br = new BufferedReader(reader);
 
 			String output = null;

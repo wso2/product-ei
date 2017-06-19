@@ -20,6 +20,7 @@ package org.wso2.ei.bpmn.analytics.core;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.wso2.ei.bpmn.analytics.core.clients.BPMNAnalyticsCoreRestClient;
 import org.wso2.ei.bpmn.analytics.core.models.AggregateField;
@@ -27,6 +28,8 @@ import org.wso2.ei.bpmn.analytics.core.models.AggregateQuery;
 import org.wso2.ei.bpmn.analytics.core.utils.BPMNAnalyticsCoreUtils;
 import org.wso2.ei.bpmn.analytics.core.models.SearchQuery;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -96,7 +99,7 @@ public class TaskLevelMonitor {
 							                          taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Avg Execution Time Vs TaskId TaskLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -165,7 +168,7 @@ public class TaskLevelMonitor {
 					                                                                taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Task Instance Count Vs TaskId TaskLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -235,7 +238,7 @@ public class TaskLevelMonitor {
 							                           order, taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Task Instance Count Vs UserId TaskLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -304,7 +307,7 @@ public class TaskLevelMonitor {
 							                          taskCount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Avg Waiting Time Vs UserId TaskLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -369,7 +372,7 @@ public class TaskLevelMonitor {
 							                          BPMNAnalyticsCoreConstants.DURATION, order, limit);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Execution Time Vs Task InstanceId TaskLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -451,7 +454,7 @@ public class TaskLevelMonitor {
 							                      BPMNAnalyticsCoreConstants.TASK_INSTANCE_COUNT);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - Date Vs Task Instance Count TaskLevelMonitoring error.", e);
 		}
 		if (log.isDebugEnabled()) {
@@ -575,7 +578,7 @@ public class TaskLevelMonitor {
 					log.debug("Task List Result:" + taskIdList);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JSONException | IOException | XMLStreamException e) {
 			log.error("BPMN Analytics Core - task id list error.", e);
 		}
 		return taskIdList;

@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 
@@ -98,11 +99,15 @@ public class SamplesInvoker {
             System.exit(0);
         } finally {
             try {
-                fin.close();
+                if (fin != null) {
+                    fin.close();
+                }
             } catch (IOException e) {
             }
             try {
-                bin.close();
+                if (bin != null) {
+                    bin.close();
+                }
             } catch (IOException e) {
             }
         }
