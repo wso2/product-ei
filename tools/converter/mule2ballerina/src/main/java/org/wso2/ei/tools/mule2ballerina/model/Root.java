@@ -29,18 +29,18 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * {@code Root} This is the root of the intermediate object tree
+ * {@code Root} This is the root of the intermediate object stack
  */
 public class Root extends BaseObject implements Visitable {
 
     private List<GlobalConfiguration> globalConfigurations;
-    private Stack<Flow> flowList;
-    private Map<String, GlobalConfiguration> configMap;
-    private Map<String, Queue<Flow>> serviceMap;
-    private Map<String, SubFlow> subFlowMap;
-    private Stack<SubFlow> subFlowStack;
-    private Map<String, Flow> privateFlowMap;
-    private Stack<Flow> privateFlowList;
+    private Stack<Flow> flowList; //Flows in LIFO order
+    private Map<String, GlobalConfiguration> configMap; //All global configurations against it's name
+    private Map<String, Queue<Flow>> serviceMap; //Map of services and it's resources maintained as a queue
+    private Map<String, SubFlow> subFlowMap; //All subflows against their names
+    private Stack<SubFlow> subFlowStack; //Subflows maintained in FILO order
+    private Map<String, Flow> privateFlowMap; //Map of private flows against their names
+    private Stack<Flow> privateFlowList; //Private flow list in FILO order
 
     public Root() {
         flowList = new Stack<Flow>();
@@ -65,11 +65,12 @@ public class Root extends BaseObject implements Visitable {
         this.globalConfigurations.add(globalConfiguration);
     }
 
-    public void addMFlow(Flow muleFlow) {
-        this.flowList.add(muleFlow);
+    /* Maintain main flows in LIFO order */
+    public void addMFlow(Flow flow) {
+        this.flowList.add(flow);
     }
 
-    public void addPrivateFlow(Flow privateFlow) {
+    public void addToPrivateFlowStack(Flow privateFlow) {
         this.privateFlowList.add(privateFlow);
     }
 

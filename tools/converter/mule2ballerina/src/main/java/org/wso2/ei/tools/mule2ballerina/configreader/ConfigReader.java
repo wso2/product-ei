@@ -25,7 +25,6 @@ import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
-import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
 
@@ -48,7 +47,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 /**
- * {@code ConfigReader} class reads mule configuration file and builds the Mule tree
+ * {@code ConfigReader} class reads mule configuration file and builds the intermediate object stack
  */
 public class ConfigReader {
 
@@ -68,6 +67,11 @@ public class ConfigReader {
         unIdentifiedElements = new ArrayList<String>();
     }
 
+    /**
+     * Process XML as a stream of events
+     *
+     * @param inputStream
+     */
     public void readXML(InputStream inputStream) {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
@@ -129,7 +133,7 @@ public class ConfigReader {
         if (mClassName != null) {
             try {
                 intermediateClass = Class.forName(mClassName);
-                populateMuleObject(mElement.getAttributes(), intermediateClass);
+                populateIntermediateObject(mElement.getAttributes(), intermediateClass);
 
             } catch (ClassNotFoundException e) {
                 logger.error(e.getMessage(), e);
@@ -146,20 +150,33 @@ public class ConfigReader {
         }
     }
 
+    /**
+     * Get mule element's name with the prefix in string format
+     *
+     * @param muleElement represents a mule tag
+     * @return
+     */
     private String getElementName(StartElement muleElement) {
         QName qName = (muleElement != null ? muleElement.getName() : null);
         return getElementOrAttributeName(qName);
     }
 
+    /**
+     * Get  mule attribute name with the prefix in string format
+     *
+     * @param attribute mule attribute
+     * @return
+     */
     private String getAttributeName(Attribute attribute) {
         QName qName = (attribute != null ? attribute.getName() : null);
         return getElementOrAttributeName(qName);
     }
 
     /**
-     * Given a mule element or an attribute get string value of it with the prefix attached to it
+     * Given a valid identifier for a mule element or an attribute, get string value of it with the prefix attached
+     * to it
      *
-     * @param qName
+     * @param qName valid identifier for mule element or attribute
      * @return
      */
     private String getElementOrAttributeName(QName qName) {
@@ -170,12 +187,13 @@ public class ConfigReader {
     }
 
     /**
-     * Populate intermediate object properties with mule attribute values
+     * Populate intermediate object properties with mule attribute values and add that element in its proper place in
+     * the intermediate object stack
      *
      * @param attributes List of attributes associate with a mule element
      * @param mClass     Intermediate class that is mapped to the mule element
      */
-    private void populateMuleObject(Iterator<Attribute> attributes, Class<?> mClass) {
+    private void populateIntermediateObject(Iterator<Attribute> attributes, Class<?> mClass) {
         try {
             java.lang.Object object = mClass.newInstance();
 
@@ -186,17 +204,10 @@ public class ConfigReader {
                         Field field = mClass.getDeclaredField(property);
                         field.setAccessible(true);
                         field.set(object, attribute.getValue());
-
-                        /*if the element is a global configuration keep it against it's name as this will
-                        * be useful when navigating the processors to identify their global configuration
-                        */
-                        if (object instanceof GlobalConfiguration && "name".equals(property)) {
-                            rootObj.addGlobalConfigurationMap(attribute.getValue(), (GlobalConfiguration) object);
-                        }
                     }
                 } catch (NoSuchFieldException e) {
-                    logger.warn(" Ignoring NoSuchFieldException : There can be attributes in mule xml that is not "
-                            + "mapped " + e);
+                    logger.warn(
+                            " NoSuchFieldException : There can be attributes in mule xml that is not " + "mapped " + e);
                 } catch (IllegalAccessException e) {
                     logger.error(e.getMessage(), e);
                 }
@@ -213,6 +224,12 @@ public class ConfigReader {
         }
     }
 
+    /**
+     * Given a mule element, if it's a flow or a subflow, determine the flow start or end.
+     *
+     * @param startOrEndElement start or end tag of any mule element
+     * @param isFlowStarted     Track flow start or end
+     */
     private void checkFlowState(String startOrEndElement, boolean isFlowStarted) {
         switch (startOrEndElement) {
         case Constant.MULE_FLOW:
@@ -226,15 +243,27 @@ public class ConfigReader {
         }
     }
 
-    private DataCarrierDTO populateDataCarrier(BaseObject muleObj) {
+    /**
+     * Populate DataCarrierDTO with necessary details, so that the intermediate object can be inserted in it's proper
+     * place in the intermediate stack
+     *
+     * @param baseObject represents any intermediate object
+     * @return
+     */
+    private DataCarrierDTO populateDataCarrier(BaseObject baseObject) {
         DataCarrierDTO dataCarrierDTO = new DataCarrierDTO();
-        dataCarrierDTO.setBaseObject(muleObj);
+        dataCarrierDTO.setBaseObject(baseObject);
         dataCarrierDTO.setRootObject(rootObj);
         dataCarrierDTO.setFlowStarted(flowStarted);
         dataCarrierDTO.setSubFlowStarted(subFlowStarted);
         return dataCarrierDTO;
     }
 
+    /**
+     * Get the root of the intermediate stack that holds all the intermediate objects
+     *
+     * @return
+     */
     public Root getRootObj() {
         return rootObj;
     }
@@ -243,6 +272,11 @@ public class ConfigReader {
         this.rootObj = rootObj;
     }
 
+    /**
+     * Get unidentified elements as a list of strings
+     *
+     * @return
+     */
     public List<String> getUnIdentifiedElements() {
         return unIdentifiedElements;
     }

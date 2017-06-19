@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 /**
- * {@code Comment} Represents a comment
+ * {@code Comment} Represents converter comments that should be added to Ballerina code
  */
 public class Comment extends BaseObject implements Processor {
 

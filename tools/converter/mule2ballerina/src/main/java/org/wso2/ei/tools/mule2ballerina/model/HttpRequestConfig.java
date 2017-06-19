@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 /**
- * {@code HttpRequestConfig} represents mule request-config element
+ * {@code HttpRequestConfig} represents mule http:request-config element
  */
 public class HttpRequestConfig extends BaseObject implements GlobalConfiguration {
 

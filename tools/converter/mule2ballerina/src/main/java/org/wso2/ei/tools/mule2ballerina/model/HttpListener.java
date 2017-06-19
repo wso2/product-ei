@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 /**
- * {@code HttpListener} represents mule http listener element
+ * {@code HttpListener} represents mule http:listener element
  */
 public class HttpListener extends BaseObject implements Inbound, Processor {
 
@@ -59,6 +59,11 @@ public class HttpListener extends BaseObject implements Inbound, Processor {
         this.configRef = configRef;
     }
 
+    /**
+     * Get this element's global configuration name
+     *
+     * @return
+     */
     @Override
     public String getName() {
         return configRef;

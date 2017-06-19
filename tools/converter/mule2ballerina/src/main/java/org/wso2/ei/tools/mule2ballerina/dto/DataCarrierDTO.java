@@ -22,7 +22,7 @@ import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 
 /**
- * {@code DataCarrierDTO} carries data necessary for tree builder
+ * {@code DataCarrierDTO} carries data necessary for intermediate object stack builder
  */
 public class DataCarrierDTO {
 
