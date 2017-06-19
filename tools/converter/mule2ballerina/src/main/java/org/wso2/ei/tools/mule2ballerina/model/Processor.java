@@ -52,18 +52,15 @@ public interface Processor extends Visitable, TreeBuilder {
                 /*If this is an inbound connector, get the flow queue associated with it's global inbound config and
                 if it's null, create a new flow queue and add the this flow to it.
                 */
-                if (baseObj instanceof Inbound) {
-                    Queue<Flow> flowQueue = null;
-                    if (rootObj.getServiceMap() != null) {
-                        Inbound inboundObj = (Inbound) baseObj;
-                        flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
-                        if (flowQueue == null) {
-                            flowQueue = new LinkedList<Flow>();
-                            flowQueue.add(lastAddedFlow);
-                            rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
-                        } else {
-                            flowQueue.add(lastAddedFlow);
-                        }
+                if (baseObj instanceof Inbound && rootObj.getServiceMap() != null) {
+                    Inbound inboundObj = (Inbound) baseObj;
+                    Queue<Flow> flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
+                    if (flowQueue == null) {
+                        flowQueue = new LinkedList<Flow>();
+                        flowQueue.add(lastAddedFlow);
+                        rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
+                    } else {
+                        flowQueue.add(lastAddedFlow);
                     }
                 } else {
                     /*If this is not an inbound connector and if this is the first processor, that means this needs to

@@ -56,15 +56,12 @@ public interface GlobalConfiguration extends Visitable, TreeBuilder {
           for that inbound config.If there's not create an empty flow queue against the global config and put it in the
           service map of root
          */
-        if (baseObj instanceof Inbound) {
-            Queue<Flow> flowQueue = null;
-            if (rootObj.getServiceMap() != null) {
-                Inbound inboundObj = (Inbound) baseObj;
-                flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
-                if (flowQueue == null) {
-                    flowQueue = new LinkedList<Flow>();
-                    rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
-                }
+        if (baseObj instanceof Inbound && rootObj.getServiceMap() != null) {
+            Inbound inboundObj = (Inbound) baseObj;
+            Queue<Flow> flowQueue = rootObj.getServiceMap().get(inboundObj.getName());
+            if (flowQueue == null) {
+                flowQueue = new LinkedList<Flow>();
+                rootObj.getServiceMap().put(inboundObj.getName(), flowQueue);
             }
         }
     }
