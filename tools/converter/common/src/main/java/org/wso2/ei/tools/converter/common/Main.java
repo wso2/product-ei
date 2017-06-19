@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 
 /**
  * Test Main exec class
+ * TODO Remove this class when not needed for testing
  */
 public class Main {
 

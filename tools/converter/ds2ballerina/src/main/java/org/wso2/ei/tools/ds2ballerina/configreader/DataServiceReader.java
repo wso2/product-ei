@@ -92,6 +92,9 @@ public class DataServiceReader {
         //String asPkgName = null;
         modelBuilder.addImportPackage(null, null, pkgPath3, null);
 
+        String pkgPath4 = "ballerina.lang.strings";
+        modelBuilder.addImportPackage(null, null, pkgPath4, null);
+
         modelBuilder.startAnnotationAttachment(null);
 
         BLangModelBuilder.NameReference nameReference;

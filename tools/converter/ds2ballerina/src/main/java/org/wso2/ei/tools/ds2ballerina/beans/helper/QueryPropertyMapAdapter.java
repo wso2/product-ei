@@ -25,11 +25,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * Helper class to create property map.
  */
-public class MapAdaptor extends XmlAdapter<Property, Map<String, String>> {
+public class QueryPropertyMapAdapter extends XmlAdapter<Property, Map<String, String>> {
 
     Map<String, String> map;
 
-    MapAdaptor() {
+    QueryPropertyMapAdapter() {
         map = new HashMap<>();
     }
 
