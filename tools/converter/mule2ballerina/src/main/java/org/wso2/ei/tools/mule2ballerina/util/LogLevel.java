@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Maintains the log levels
+ * Maintains the log levels needed for Ballerina object stack population
  */
 public enum LogLevel {
 

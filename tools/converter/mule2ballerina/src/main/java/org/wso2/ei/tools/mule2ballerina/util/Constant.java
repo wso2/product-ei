@@ -45,8 +45,8 @@ public class Constant {
     public static final String BLANG_TYPE_XML = "xml";
     public static final String BLANG_TYPE_JSON = "json";
 
-    public static final String BLANG_RESOURCE_NAME = "myResource";
-    public static final String BLANG_SERVICE_NAME = "myService";
+    public static final String BLANG_RESOURCE_NAME = "Resource";
+    public static final String BLANG_SERVICE_NAME = "Service";
 
     //Functions in messages package
     public static final String BLANG_SET_STRING_PAYLOAD = "setStringPayload";

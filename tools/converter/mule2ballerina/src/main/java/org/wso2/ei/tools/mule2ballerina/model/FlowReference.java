@@ -21,7 +21,7 @@ package org.wso2.ei.tools.mule2ballerina.model;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
 /**
- * {@code FlowReference} class represents flow-ref element
+ * {@code FlowReference} class represents flow-ref element inside a flow
  */
 public class FlowReference extends BaseObject implements Processor {
 

@@ -28,7 +28,7 @@ import java.util.Queue;
  */
 public class SubFlow extends BaseObject {
     protected String name;
-    protected Queue<Processor> flowProcessors;
+    protected Queue<Processor> flowProcessors; //Processors belong to a sub flow in FIFO order
 
     public SubFlow() {
         flowProcessors = new LinkedList<Processor>();
@@ -51,7 +51,7 @@ public class SubFlow extends BaseObject {
     }
 
     /**
-     * List of sub flows
+     * Adds the sub flow to the root
      *
      * @param dataCarrierDTO
      */

@@ -26,12 +26,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * {@code Flow} is the representation of the mule flow
+ * {@code Flow} This class represents both a flow and a private flow
  */
 public class Flow extends BaseObject implements Visitable {
 
     protected String name;
-    protected Queue<Processor> flowProcessors;
+    protected Queue<Processor> flowProcessors; /*All the processors inside a flow needs to be in FIFO order to
+    generate Ballerina code in its proper order*/
 
     public Flow() {
         flowProcessors = new LinkedList<Processor>();
@@ -70,8 +71,8 @@ public class Flow extends BaseObject implements Visitable {
         Root rootObj = dataCarrierDTO.getRootObject();
 
         Flow flow = (Flow) muleObj;
-        if (dataCarrierDTO.isFlowStarted()) {
-            rootObj.addMFlow(flow);
+        if (dataCarrierDTO.isFlowStarted()) { //If the flow has just started
+            rootObj.addMFlow(flow); //Add it to root's flow stack
         }
     }
 }
