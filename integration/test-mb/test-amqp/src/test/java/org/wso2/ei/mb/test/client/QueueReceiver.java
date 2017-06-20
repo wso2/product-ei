@@ -18,6 +18,8 @@
 
 package org.wso2.ei.mb.test.client;
 
+import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
+
 import java.util.Properties;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
@@ -45,14 +47,13 @@ public class QueueReceiver {
 
     private String userName = "admin";
     private String password = "admin";
-    private String queueName = "testQueue";
 
     private QueueMessageListener messageListener;
     private MessageConsumer consumer;
     private QueueSession queueSession;
     private QueueConnection queueConnection;
 
-    public QueueReceiver() throws NamingException, JMSException {
+    public QueueReceiver(String queueName, JMSAcknowledgeMode acknowledgeMode) throws NamingException, JMSException {
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
         properties.put(connectionFactoryNamePrefix + connectionFactoryName, getTCPConnectionURL(userName, password));
@@ -63,7 +64,7 @@ public class QueueReceiver {
         QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx.lookup(connectionFactoryName);
         queueConnection = connFactory.createQueueConnection();
         queueConnection.start();
-        queueSession = queueConnection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+        queueSession = queueConnection.createQueueSession(false, acknowledgeMode.getType());
 
         Queue queue = (Queue) ctx.lookup(queueName);
         consumer = queueSession.createConsumer(queue);
@@ -78,7 +79,7 @@ public class QueueReceiver {
      */
     public MessageConsumer registerSubscriber() throws JMSException {
 
-        messageListener = new QueueMessageListener(5);
+        messageListener = new QueueMessageListener(5, queueSession.getAcknowledgeMode());
         consumer.setMessageListener(messageListener);
 
         return consumer;

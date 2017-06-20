@@ -18,6 +18,8 @@
 
 package org.wso2.ei.mb.test.client;
 
+import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
+
 import java.util.Properties;
 import javax.jms.JMSException;
 import javax.jms.Queue;
@@ -46,14 +48,13 @@ public class QueueSender {
 
     private String userName = "admin";
     private String password = "admin";
-    private String queueName = "testQueue";
 
     private QueueConnection queueConnection;
     private QueueSession queueSession;
     private javax.jms.QueueSender queueSender;
 
 
-    public QueueSender() throws JMSException, NamingException {
+    public QueueSender(String queueName, JMSAcknowledgeMode acknowledgeMode) throws JMSException, NamingException {
 
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
@@ -64,29 +65,42 @@ public class QueueSender {
         QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx.lookup(connectionFactoryName);
         queueConnection = connFactory.createQueueConnection();
         queueConnection.start();
-        queueSession = queueConnection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+        queueSession = queueConnection.createQueueSession(false, acknowledgeMode.getType());
         // Send message
         Queue queue = (Queue) ctx.lookup(queueName);
         // create the message to send
         queueSender = queueSession.createSender(queue);
-
-
 
     }
 
     /**
      * Send queue messages
      * @param sendMessageCount Number of message to be sent
+     * @param textPayload String payload to be sent
      * @throws NamingException
      * @throws JMSException
      */
-    public void sendMessages(int sendMessageCount) throws JMSException {
+    public void sendMessages(int sendMessageCount, String textPayload) throws JMSException {
 
-        TextMessage textMessage = queueSession.createTextMessage("Test Message Content");
+        TextMessage textMessage = queueSession.createTextMessage(textPayload);
 
         for (int i = 0; i < sendMessageCount; i++) {
             queueSender.send(textMessage);
         }
+    }
+
+    /**
+     * Send single queue message
+     * @param textPayload String payload to be sent
+     * @throws NamingException
+     * @throws JMSException
+     */
+    public void sendMessage(String textPayload) throws JMSException {
+
+        TextMessage textMessage = queueSession.createTextMessage(textPayload);
+
+        queueSender.send(textMessage);
+
     }
 
     /**

@@ -127,6 +127,7 @@
         <dependency>
             <groupId>org.wso2.andes.wso2</groupId>
             <artifactId>andes-client</artifactId>
+            <version>${andes.version}</version>
         </dependency>
     </dependencies>
 

@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
+import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 import org.wso2.ei.mb.test.utils.ServerManager;
 
 import java.io.File;
@@ -67,7 +68,7 @@ public class QueueTestCase {
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
             } catch (IOException e) {
-                log.error("IO exception", e);
+                log.error("IO exception occured when trying to initialize server environment", e);
             }
         }
     }
@@ -81,6 +82,7 @@ public class QueueTestCase {
      *
      * @throws JMSException
      * @throws NamingException
+     * @throws InterruptedException
      */
     @Test
     public void performSingleQueueSendReceiveTestCase() throws JMSException, NamingException, InterruptedException {
@@ -88,14 +90,14 @@ public class QueueTestCase {
         int sendMessageCount = 5;
 
         // Start JMS queue subscriber.
-        QueueReceiver queueReceiver = new QueueReceiver();
+        QueueReceiver queueReceiver = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(1L);
 
         // Start JMS queue publisher.
-        QueueSender queueSender = new QueueSender();
-        queueSender.sendMessages(sendMessageCount);
+        QueueSender queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        queueSender.sendMessages(sendMessageCount, "text message");
 
         TimeUnit.SECONDS.sleep(1L);
 
@@ -108,8 +110,98 @@ public class QueueTestCase {
         queueReceiver.closeReceiver();
 
         Assert.assertEquals(receivedMessageCount, sendMessageCount, "assertion failed. Expected message count : "
-                            + sendMessageCount + ".Received message count : " + receivedMessageCount);
+                + sendMessageCount + ".Received message count : " + receivedMessageCount);
     }
+
+    /**
+     * 1. Create 2 consumers for simple queue
+     * 2. Publish 3000 message to queue
+     * 3. Total messages received by both consumers should be 3000 messages.
+     *
+     * @throws JMSException
+     * @throws NamingException
+     * @throws InterruptedException
+     */
+    @Test
+    public void performManyConsumersTestCase() throws JMSException, NamingException, InterruptedException {
+        int sendCount = 3000;
+        int expectedCount = 3000;
+
+        //create consumer 1
+        QueueReceiver queueReceiver1 = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        queueReceiver1.registerSubscriber();
+
+        TimeUnit.SECONDS.sleep(50L);
+
+        //create consumer 2
+        QueueReceiver queueReceiver2 = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        queueReceiver2.registerSubscriber();
+
+        TimeUnit.SECONDS.sleep(50L);
+
+        //create publisher
+        QueueSender queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        queueSender.sendMessages(sendCount, "text message");
+
+        TimeUnit.SECONDS.sleep(50L);
+
+        int receivedMessageCount = queueReceiver1.receivedMessageCount() + queueReceiver2.receivedMessageCount();
+
+        // close queue sender.
+        queueSender.closeSender();
+
+        // close queue receiver 1.
+        queueReceiver1.closeReceiver();
+
+        // close queue receiver 2.
+        queueReceiver2.closeReceiver();
+
+        Assert.assertEquals(receivedMessageCount, expectedCount, "assertion failed in manyConsumers test case " +
+                "Expected message count : "
+                + expectedCount + ".Received message count : " + receivedMessageCount);
+    }
+
+    /**
+     * 1. Subscribe to a queue named "CASEInsensitiveQueue".
+     * 2. Publish 500 messages to 'caseINSENSITIVEQueue'.
+     * 3. Consumer should receive 500 messages.
+     *
+     * @throws JMSException
+     * @throws NamingException
+     * @throws InterruptedException
+     */
+    @Test
+    public void performDifferentCasesQueueSendReceiveTestCase() throws JMSException, NamingException,
+            InterruptedException {
+
+        int sendCount = 500;
+        int expectedCount = 500;
+
+        //create consumer to CASEInsensitiveQueue
+        QueueReceiver queueReceiver = new QueueReceiver("CASEInsensitiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        queueReceiver.registerSubscriber();
+
+        TimeUnit.SECONDS.sleep(25L);
+
+        // Create publisher to caseINSENSITIVEQueue
+        QueueSender queueSender = new QueueSender("caseINSENSITIVEQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        queueSender.sendMessages(sendCount, "text message");
+
+        TimeUnit.SECONDS.sleep(25L);
+
+        int receivedMessageCount = queueReceiver.receivedMessageCount();
+
+        // close queue sender.
+        queueSender.closeSender();
+
+        // close queue receiver .
+        queueReceiver.closeReceiver();
+
+        // Evaluating
+        Assert.assertEquals(receivedMessageCount, expectedCount, "Message receiving failed.");
+
+    }
+
 
     /**
      * Clean up after test case.

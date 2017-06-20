@@ -20,6 +20,7 @@ package org.wso2.ei.mb.test.client;
 
 
 import org.testng.log4testng.Logger;
+import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -43,6 +44,11 @@ public class QueueMessageListener implements MessageListener {
     private int delay = 0;
 
     /**
+     * Acknoledgement mode
+     */
+    private int acknowledgeMode = 0;
+
+    /**
      * current message count.
      */
     private int currentMessageCount = 0;
@@ -52,8 +58,9 @@ public class QueueMessageListener implements MessageListener {
      *
      * @param delay wait delay for message listener.
      */
-    public QueueMessageListener(int delay) {
+    public QueueMessageListener(int delay, int acknowledgeMode) {
         this.delay = delay;
+        this.acknowledgeMode = acknowledgeMode;
     }
 
     /**
@@ -63,9 +70,13 @@ public class QueueMessageListener implements MessageListener {
      */
     public void onMessage(Message message) {
         TextMessage receivedMessage = (TextMessage) message;
+
         try {
-            log.info("message received => " + (currentMessageCount + 1) + " - " + receivedMessage.getText());
             currentMessageCount++;
+
+            if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode) && (getMessageCount() % 10 == 0)) {
+                receivedMessage.acknowledge();
+            }
 
             if (delay != 0) {
                 try {
@@ -81,6 +92,7 @@ public class QueueMessageListener implements MessageListener {
 
     /**
      * Get total message counts for queue receiver.
+     *
      * @return currentMessageCount
      */
     public int getMessageCount() {
