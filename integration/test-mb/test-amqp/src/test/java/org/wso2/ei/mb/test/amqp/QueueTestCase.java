@@ -128,19 +128,19 @@ public class QueueTestCase {
         int expectedCount = 3000;
 
         //create consumer 1
-        QueueReceiver queueReceiver1 = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver1 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueReceiver1.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         //create consumer 2
-        QueueReceiver queueReceiver2 = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver2 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueReceiver2.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         //create publisher
-        QueueSender queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueSender.sendMessages(sendCount, "text message");
 
         TimeUnit.SECONDS.sleep(50L);

@@ -135,7 +135,7 @@ public class AcknowledgementsTestCase {
      * 6. Second receiver will read up 500 messages.
      * 7. Check whether total received messages were equal to {@link #EXPECTED_COUNT}.
      *
-     * @throws CloneNotSupportedException
+     * @throws InterruptedException
      * @throws JMSException
      * @throws NamingException
      */
@@ -143,19 +143,20 @@ public class AcknowledgementsTestCase {
     public void autoAcknowledgementsDropReceiverTestCase() throws InterruptedException, JMSException, NamingException {
 
         // Creating a initial JMS consumer with autoack mode
-        QueueReceiver queueReceiver = new QueueReceiver("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver = new QueueReceiver("autoAckDropReceiverTestQueue",
+                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         // Creating a JMS publisher
-        QueueSender queueSender = new QueueSender("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("autoAckDropReceiverTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueSender.sendMessages(SEND_COUNT, "text message");
         int receivedMessageCountSub1 = 0;
 
         TimeUnit.SECONDS.sleep(50L);
 
-        // Wait until messages are received by first consumer client.
+        // Wait until 500 messages are received by first consumer client.
         while (true) {
             receivedMessageCountSub1 = queueReceiver.receivedMessageCount();
             if (receivedMessageCountSub1 >= (SEND_COUNT / 2)) {
@@ -165,7 +166,8 @@ public class AcknowledgementsTestCase {
         }
 
         // Creating a secondary JMS consumer client configuration
-        QueueReceiver queueReceiver2 = new QueueReceiver("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver2 = new QueueReceiver("autoAckDropReceiverTestQueue",
+                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
         queueReceiver2.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
@@ -220,6 +222,12 @@ public class AcknowledgementsTestCase {
         long totalMessagesReceived = queueReceiver.receivedMessageCount() + queueReceiver2
                 .receivedMessageCount();
 
+        queueReceiver.closeReceiver();
+
+        queueReceiver2.closeReceiver();
+
+        queueSender.closeSender();
+
         Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Expected message count not received.");
     }
 
@@ -251,6 +259,10 @@ public class AcknowledgementsTestCase {
         TimeUnit.SECONDS.sleep(10L);
 
         long totalMessagesReceived = queueReceiver.receivedMessageCount();
+
+        queueReceiver.closeReceiver();
+
+        queueSender.closeSender();
 
         // Evaluating
         Assert.assertTrue(totalMessagesReceived >= EXPECTED_COUNT / 10, "The number of received messages " +
