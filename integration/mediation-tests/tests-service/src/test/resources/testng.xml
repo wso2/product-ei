@@ -84,6 +84,14 @@
         <packages>
             <package name="org.wso2.carbon.esb.car.deployment.test"/>
         </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.car.deployment.test.CAppDeactivateAndRestartTestCase">
+                <!--TODO : Enable CAppDeactivateAndRestartTestCase when kernel version updated to 4.4.17-->
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
     </test>
     <test name="ScheduleTask-Test" preserve-order="true" verbose="2" parallel="false">
         <packages>
