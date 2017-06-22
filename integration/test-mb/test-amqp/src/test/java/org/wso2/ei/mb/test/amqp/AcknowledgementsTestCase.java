@@ -25,11 +25,13 @@ import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
+import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 import org.wso2.ei.mb.test.utils.ServerManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -61,6 +63,16 @@ public class AcknowledgementsTestCase {
     private ServerManager serverManager = new ServerManager();
 
     /**
+     * initiate configuration reader instance
+     */
+    private ConfigurationReader configurationReader = new ConfigurationReader();
+
+    /**
+     * create config map
+     */
+    private Map<String, String> clientConfigPropertiesMap;
+
+    /**
      * Initialise test environment.
      */
     @BeforeClass
@@ -75,6 +87,9 @@ public class AcknowledgementsTestCase {
         if (distributionArchive.exists() && !distributionArchive.isDirectory()) {
             try {
                 String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
+
+                // load client configs to map
+                clientConfigPropertiesMap = configurationReader.readClientConfigProperties();
 
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
@@ -101,13 +116,15 @@ public class AcknowledgementsTestCase {
             throws JMSException, NamingException, IOException, InterruptedException {
 
         // Creating a JMS consumer
-        QueueReceiver queueReceiver = new QueueReceiver("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver = new QueueReceiver("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         // Creating a JMS publisher
-        QueueSender queueSender = new QueueSender("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(SEND_COUNT, "text message");
 
         TimeUnit.SECONDS.sleep(50L);
@@ -138,19 +155,22 @@ public class AcknowledgementsTestCase {
      * @throws InterruptedException
      * @throws JMSException
      * @throws NamingException
+     * @throws IOException
      */
     @Test
-    public void autoAcknowledgementsDropReceiverTestCase() throws InterruptedException, JMSException, NamingException {
+    public void autoAcknowledgementsDropReceiverTestCase() throws InterruptedException, JMSException, NamingException,
+            IOException {
 
         // Creating a initial JMS consumer with autoack mode
         QueueReceiver queueReceiver = new QueueReceiver("autoAckDropReceiverTestQueue",
-                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, clientConfigPropertiesMap);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         // Creating a JMS publisher
-        QueueSender queueSender = new QueueSender("autoAckDropReceiverTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("autoAckDropReceiverTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(SEND_COUNT, "text message");
         int receivedMessageCountSub1 = 0;
 
@@ -167,7 +187,7 @@ public class AcknowledgementsTestCase {
 
         // Creating a secondary JMS consumer client configuration
         QueueReceiver queueReceiver2 = new QueueReceiver("autoAckDropReceiverTestQueue",
-                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, clientConfigPropertiesMap);
         queueReceiver2.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
@@ -202,19 +222,22 @@ public class AcknowledgementsTestCase {
             throws JMSException, NamingException, IOException, InterruptedException {
 
         // Creating a initial JMS consumer client configuration
-        QueueReceiver queueReceiver = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE);
+        QueueReceiver queueReceiver = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         // Creating a JMS publisher client configuration
-        QueueSender queueSender = new QueueSender("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(SEND_COUNT, "text message");
 
         TimeUnit.SECONDS.sleep(50L);
 
         // Creating a second JMS consumer with client ack mode
-        QueueReceiver queueReceiver2 = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE);
+        QueueReceiver queueReceiver2 = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver2.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
@@ -247,13 +270,15 @@ public class AcknowledgementsTestCase {
             throws JMSException, NamingException, IOException, InterruptedException {
 
         // Creating a initial JMS consumer client configuration
-        QueueReceiver queueReceiver = new QueueReceiver("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE);
+        QueueReceiver queueReceiver = new QueueReceiver("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(10L);
 
         // Creating a JMS publisher client configuration
-        QueueSender queueSender = new QueueSender("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(SEND_COUNT / 10, "text message");
 
         TimeUnit.SECONDS.sleep(10L);

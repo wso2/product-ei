@@ -25,11 +25,13 @@ import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
+import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 import org.wso2.ei.mb.test.utils.ServerManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -50,6 +52,16 @@ public class QueueTestCase {
     private ServerManager serverManager = new ServerManager();
 
     /**
+     * initiate configuration reader instance
+     */
+    private ConfigurationReader configurationReader = new ConfigurationReader();
+
+    /**
+     * create config map
+     */
+    private Map<String, String> clientConfigPropertiesMap;
+
+    /**
      * Initialise test environment.
      */
     @BeforeClass
@@ -64,6 +76,9 @@ public class QueueTestCase {
         if (distributionArchive.exists() && !distributionArchive.isDirectory()) {
             try {
                 String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
+
+                // load client configs to map
+                clientConfigPropertiesMap = configurationReader.readClientConfigProperties();
 
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
@@ -83,20 +98,24 @@ public class QueueTestCase {
      * @throws JMSException
      * @throws NamingException
      * @throws InterruptedException
+     * @throws IOException
      */
     @Test
-    public void performSingleQueueSendReceiveTestCase() throws JMSException, NamingException, InterruptedException {
+    public void performSingleQueueSendReceiveTestCase() throws JMSException, NamingException, InterruptedException,
+            IOException {
 
         int sendMessageCount = 5;
 
         // Start JMS queue subscriber.
-        QueueReceiver queueReceiver = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(1L);
 
         // Start JMS queue publisher.
-        QueueSender queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(sendMessageCount, "text message");
 
         TimeUnit.SECONDS.sleep(1L);
@@ -121,26 +140,30 @@ public class QueueTestCase {
      * @throws JMSException
      * @throws NamingException
      * @throws InterruptedException
+     * @throws IOException
      */
     @Test
-    public void performManyConsumersTestCase() throws JMSException, NamingException, InterruptedException {
+    public void performManyConsumersTestCase() throws JMSException, NamingException, InterruptedException, IOException {
         int sendCount = 3000;
         int expectedCount = 3000;
 
         //create consumer 1
-        QueueReceiver queueReceiver1 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver1 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver1.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         //create consumer 2
-        QueueReceiver queueReceiver2 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver2 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver2.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(50L);
 
         //create publisher
-        QueueSender queueSender = new QueueSender("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(sendCount, "text message");
 
         TimeUnit.SECONDS.sleep(50L);
@@ -169,22 +192,25 @@ public class QueueTestCase {
      * @throws JMSException
      * @throws NamingException
      * @throws InterruptedException
+     * @throws IOException
      */
     @Test
     public void performDifferentCasesQueueSendReceiveTestCase() throws JMSException, NamingException,
-            InterruptedException {
+            InterruptedException, IOException {
 
         int sendCount = 500;
         int expectedCount = 500;
 
         //create consumer to CASEInsensitiveQueue
-        QueueReceiver queueReceiver = new QueueReceiver("CASEInsensitiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueReceiver queueReceiver = new QueueReceiver("CASEInsensitiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueReceiver.registerSubscriber();
 
         TimeUnit.SECONDS.sleep(25L);
 
         // Create publisher to caseINSENSITIVEQueue
-        QueueSender queueSender = new QueueSender("caseINSENSITIVEQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE);
+        QueueSender queueSender = new QueueSender("caseINSENSITIVEQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                clientConfigPropertiesMap);
         queueSender.sendMessages(sendCount, "text message");
 
         TimeUnit.SECONDS.sleep(25L);

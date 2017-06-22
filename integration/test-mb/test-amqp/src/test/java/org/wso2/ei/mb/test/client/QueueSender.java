@@ -18,8 +18,11 @@
 
 package org.wso2.ei.mb.test.client;
 
+import org.wso2.ei.mb.test.utils.ConfigurationConstants;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 import javax.jms.JMSException;
 import javax.jms.Queue;
@@ -41,24 +44,18 @@ public class QueueSender {
     private static final String queueNamePrefix = "queue.";
     private static final String connectionFactoryName = "andesConnectionfactory";
 
-    private String carbonClientId = "carbon";
-    private String carbonVirtualHostName = "carbon";
-    private String carbonDefaultHostname = "localhost";
-    private String carbonDefaultPort = "5672";
-
-    private String userName = "admin";
-    private String password = "admin";
-
     private QueueConnection queueConnection;
     private QueueSession queueSession;
     private javax.jms.QueueSender queueSender;
 
-
-    public QueueSender(String queueName, JMSAcknowledgeMode acknowledgeMode) throws JMSException, NamingException {
+    public QueueSender(String queueName, JMSAcknowledgeMode acknowledgeMode,
+                       Map<String, String> clientConfigPropertiesMap)
+            throws JMSException, NamingException, IOException {
 
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
-        properties.put(connectionFactoryNamePrefix + connectionFactoryName, getTCPConnectionURL(userName, password));
+        properties.put(connectionFactoryNamePrefix + connectionFactoryName,
+                getTCPConnectionURL(clientConfigPropertiesMap));
         properties.put(queueNamePrefix + queueName, queueName);
         InitialContext ctx = new InitialContext(properties);
         // Lookup connection factory
@@ -77,7 +74,6 @@ public class QueueSender {
      * Send queue messages
      * @param sendMessageCount Number of message to be sent
      * @param textPayload String payload to be sent
-     * @throws NamingException
      * @throws JMSException
      */
     public void sendMessages(int sendMessageCount, String textPayload) throws JMSException {
@@ -92,7 +88,6 @@ public class QueueSender {
     /**
      * Send single queue message
      * @param textPayload String payload to be sent
-     * @throws NamingException
      * @throws JMSException
      */
     public void sendMessage(String textPayload) throws JMSException {
@@ -115,17 +110,27 @@ public class QueueSender {
 
     /**
      * Provide connection URL based on defined parameters.
-     * @param username username for basic authentication
-     * @param password password for basic authentication
+     *
+     * @param clientConfigPropertiesMap client connection config properties map
      * @return connection URL
      */
-    private String getTCPConnectionURL(String username, String password) {
+    private String getTCPConnectionURL(Map<String, String> clientConfigPropertiesMap) {
         // amqp://{username}:{password}@carbon/carbon?brokerlist='tcp://{hostname}:{port}'
+
         return new StringBuffer()
-                .append("amqp://").append(username).append(":").append(password)
-                .append("@").append(carbonClientId)
-                .append("/").append(carbonVirtualHostName)
-                .append("?brokerlist='tcp://").append(carbonDefaultHostname).append(":").
-                        append(carbonDefaultPort).append("'").toString();
+                .append("amqp://").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.DEFAULT_USERNAME_PROPERTY)).append(":")
+                .append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY))
+                .append("@").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_CLIENT_ID_PROPERTY))
+                .append("/").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_VIRTUAL_HOSTNAME_PROPERTY))
+                .append("?brokerlist='tcp://").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_DEFAULT_HOSTNAME_PROPERTY))
+                .append(":")
+                .append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_DEFAULT_PORT_PROPERTY))
+                .append("'").toString();
     }
 }

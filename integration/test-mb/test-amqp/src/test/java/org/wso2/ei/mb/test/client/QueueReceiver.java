@@ -18,8 +18,11 @@
 
 package org.wso2.ei.mb.test.client;
 
+import org.wso2.ei.mb.test.utils.ConfigurationConstants;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
@@ -40,23 +43,18 @@ public class QueueReceiver {
     private static final String connectionFactoryNamePrefix = "connectionfactory.";
     private static final String connectionFactoryName = "andesConnectionfactory";
 
-    private String carbonClientId = "carbon";
-    private String carbonVirtualHostName = "carbon";
-    private String carbonDefaultHostName = "localhost";
-    private String carbonDefaultPort = "5672";
-
-    private String userName = "admin";
-    private String password = "admin";
-
     private QueueMessageListener messageListener;
     private MessageConsumer consumer;
     private QueueSession queueSession;
     private QueueConnection queueConnection;
 
-    public QueueReceiver(String queueName, JMSAcknowledgeMode acknowledgeMode) throws NamingException, JMSException {
+    public QueueReceiver(String queueName, JMSAcknowledgeMode acknowledgeMode,
+                         Map<String, String> clientConfigPropertiesMap)
+            throws NamingException, JMSException, IOException {
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
-        properties.put(connectionFactoryNamePrefix + connectionFactoryName, getTCPConnectionURL(userName, password));
+        properties.put(connectionFactoryNamePrefix + connectionFactoryName,
+                getTCPConnectionURL(clientConfigPropertiesMap));
         properties.put("queue." + queueName, queueName);
         InitialContext ctx = new InitialContext(properties);
 
@@ -74,7 +72,6 @@ public class QueueReceiver {
      * Create JMS session/connection for subscriber based on defined parameters.
      *
      * @return MessageConsumer
-     * @throws NamingException
      * @throws JMSException
      */
     public MessageConsumer registerSubscriber() throws JMSException {
@@ -111,18 +108,27 @@ public class QueueReceiver {
     /**
      * Provide connection URL based on defined parameters.
      *
-     * @param username username for basic authentication
-     * @param password password for basic authentication
+     * @param clientConfigPropertiesMap client connection config properties map
      * @return connection URL
      */
-    private String getTCPConnectionURL(String username, String password) {
+    private String getTCPConnectionURL(Map<String, String> clientConfigPropertiesMap) {
         // amqp://{username}:{password}@carbon/carbon?brokerlist='tcp://{hostname}:{port}'
+
         return new StringBuffer()
-                .append("amqp://").append(username).append(":").append(password)
-                .append("@").append(carbonClientId)
-                .append("/").append(carbonVirtualHostName)
-                .append("?brokerlist='tcp://").append(carbonDefaultHostName).append(":")
-                .append(carbonDefaultPort).append("'").toString();
+                .append("amqp://").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.DEFAULT_USERNAME_PROPERTY)).append(":")
+                .append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY))
+                .append("@").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_CLIENT_ID_PROPERTY))
+                .append("/").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_VIRTUAL_HOSTNAME_PROPERTY))
+                .append("?brokerlist='tcp://").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_DEFAULT_HOSTNAME_PROPERTY))
+                .append(":")
+                .append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_DEFAULT_PORT_PROPERTY))
+                .append("'").toString();
     }
 
 }
