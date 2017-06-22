@@ -26,6 +26,7 @@ public class Constant {
     public static final String MULE_TAG = "mule";
     public static final String MULE_FLOW = "flow";
     public static final String MULE_SUB_FLOW = "sub-flow";
+    public static final String MULE_ASYNC_FLOW = "async";
 
     //Ballerina Packages
     public static final String BLANG_HTTP = "http";
@@ -47,6 +48,7 @@ public class Constant {
 
     public static final String BLANG_RESOURCE_NAME = "Resource";
     public static final String BLANG_SERVICE_NAME = "Service";
+    public static final String BLANG_WORKER_NAME = "Worker";
 
     //Functions in messages package
     public static final String BLANG_SET_STRING_PAYLOAD = "setStringPayload";
@@ -68,6 +70,8 @@ public class Constant {
     public static final String BLANG_VAR_XML_PAYLOAD = "xmlPayload";
     public static final String BLANG_VAR_JSON_PAYLOAD = "jsonPayload";
     public static final String BLANG_VAR_STRING_PAYLOAD = "stringPayload";
+    public static final String BLANG_VAR_WORKER_MSG = "workerMsg";
+    public static final String BLANG_VAR_DEFAULT_WORKER = "default";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";

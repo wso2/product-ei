@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * {@code Root} This is the root of the intermediate object stack
@@ -41,6 +42,7 @@ public class Root extends BaseObject implements Visitable {
     private Stack<SubFlow> subFlowStack; //Subflows maintained in FILO order
     private Map<String, Flow> privateFlowMap; //Map of private flows against their names
     private Stack<Flow> privateFlowList; //Private flow list in FILO order
+    private List<AsynchronousTask> asyncTaskList;
 
     public Root() {
         flowList = new Stack<Flow>();
@@ -51,6 +53,7 @@ public class Root extends BaseObject implements Visitable {
         subFlowStack = new Stack<SubFlow>();
         privateFlowMap = new HashMap<String, Flow>();
         privateFlowList = new Stack<Flow>();
+        asyncTaskList = new CopyOnWriteArrayList<AsynchronousTask>();
     }
 
     public List<GlobalConfiguration> getGlobalConfigurations() {
@@ -93,6 +96,10 @@ public class Root extends BaseObject implements Visitable {
         }
     }
 
+    public void addAsynchronousTask(AsynchronousTask task) {
+        asyncTaskList.add(task);
+    }
+
     public Map<String, GlobalConfiguration> getConfigMap() {
         return configMap;
     }
@@ -115,6 +122,10 @@ public class Root extends BaseObject implements Visitable {
 
     public Stack<Flow> getPrivateFlowList() {
         return privateFlowList;
+    }
+
+    public List<AsynchronousTask> getAsyncTaskList() {
+        return asyncTaskList;
     }
 
     @Override

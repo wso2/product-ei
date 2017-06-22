@@ -30,6 +30,7 @@ public class DataCarrierDTO {
     private Root rootObject;
     private boolean flowStarted;
     private boolean subFlowStarted;
+    private boolean asyncFlowStarted;
 
     public BaseObject getBaseObject() {
         return baseObject;
@@ -61,5 +62,13 @@ public class DataCarrierDTO {
 
     public void setSubFlowStarted(boolean subFlowStarted) {
         this.subFlowStarted = subFlowStarted;
+    }
+
+    public boolean isAsyncFlowStarted() {
+        return asyncFlowStarted;
+    }
+
+    public void setAsyncFlowStarted(boolean asyncFlowStarted) {
+        this.asyncFlowStarted = asyncFlowStarted;
     }
 }

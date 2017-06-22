@@ -22,6 +22,7 @@ import org.ballerinalang.model.BallerinaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
+import org.wso2.ei.tools.mule2ballerina.model.AsynchronousTask;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.FlowReference;
@@ -70,6 +71,7 @@ public class TreeVisitor implements Visitor {
     private String inboundMsg; //Holds inbound message variable name
     private String funcParaName;
     private int resourceAnnotationCount = 0; //Keeps track of annotation count of a resource
+    private int workerCounter = 0;
 
     public TreeVisitor(Root mRoot) {
         ballerinaASTAPI = new BallerinaASTModelBuilder();
@@ -124,6 +126,28 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.createVariableRefExpr();
                 ballerinaASTAPI.createReplyStatement();
                 ballerinaASTAPI.endCallableBody();
+
+                //Workers should be declared after reply statement but before end of resource
+                if (mRoot.getAsyncTaskList() != null) {
+                    for (AsynchronousTask asynchronousTask : mRoot.getAsyncTaskList()) {
+                        ballerinaASTAPI.enterWorkerDeclaration();
+                        ballerinaASTAPI.createWorkerDefinition(asynchronousTask.getName());
+                        ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE);
+                        ballerinaASTAPI.createVariable(Constant.BLANG_VAR_WORKER_MSG, false);
+                        ballerinaASTAPI.startExprList();
+                        ballerinaASTAPI.createNameReference(null, Constant.BLANG_VAR_WORKER_MSG);
+                        ballerinaASTAPI.createVariableRefExpr();
+                        ballerinaASTAPI.endExprList(1);
+                        ballerinaASTAPI.exitWorkerReply(Constant.BLANG_VAR_DEFAULT_WORKER);
+                        outboundMsg = Constant.BLANG_VAR_WORKER_MSG;
+                        for (Processor asyncProcessor : asynchronousTask.getAsyncProcessors()) {
+                            asyncProcessor.accept(this);
+                        }
+                        ballerinaASTAPI.exitWorkerDeclaration(asynchronousTask.getName());
+                    }
+                    mRoot.getAsyncTaskList().clear();
+                }
+
                 String resourceName = Constant.BLANG_RESOURCE_NAME + ++resourceCounter;
                 ballerinaASTAPI.endOfResource(resourceName, resourceAnnotationCount); //End of resource
                 resourceAnnotationCount = 0;
@@ -531,6 +555,25 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.createFunctionInvocation(true);
             }
         }
+    }
+
+    /**
+     * AsynchronousTask maps to Workers in Ballerina
+     *
+     * @param asynchronousTask
+     */
+    @Override
+    public void visit(AsynchronousTask asynchronousTask) {
+        ballerinaASTAPI.addComment("//Call Worker!");
+        ballerinaASTAPI.startExprList();
+        ballerinaASTAPI.createNameReference(null, inboundMsg);
+        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.endExprList(1);
+        String workerName = Constant.BLANG_WORKER_NAME + ++workerCounter;
+        ballerinaASTAPI.createWorkerInvocationStmt(workerName);
+
+        asynchronousTask.setName(workerName);
+        mRoot.addAsynchronousTask(asynchronousTask); //This needs to be visited only after reply statement in resource
     }
 
     public BallerinaFile getBallerinaFile() {

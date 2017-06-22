@@ -58,6 +58,7 @@ public class ConfigReader {
     private Root rootObj;
     private boolean flowStarted = false;
     private boolean subFlowStarted = false;
+    private boolean asyncFlowStarted = false;
     private List<String> unIdentifiedElements;
 
     public ConfigReader() {
@@ -238,6 +239,9 @@ public class ConfigReader {
         case Constant.MULE_SUB_FLOW:
             subFlowStarted = isFlowStarted;
             break;
+        case Constant.MULE_ASYNC_FLOW:
+            asyncFlowStarted = isFlowStarted;
+            break;
         default:
             break;
         }
@@ -256,6 +260,7 @@ public class ConfigReader {
         dataCarrierDTO.setRootObject(rootObj);
         dataCarrierDTO.setFlowStarted(flowStarted);
         dataCarrierDTO.setSubFlowStarted(subFlowStarted);
+        dataCarrierDTO.setAsyncFlowStarted(asyncFlowStarted);
         return dataCarrierDTO;
     }
 
