@@ -35,7 +35,8 @@ public enum Element {
     VARIABLE_SETTER("set-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableSetter"),
     VARIABLE_REMOVER("remove-variable", "org.wso2.ei.tools.mule2ballerina.model.VariableRemover"),
     FLOW_REF("flow-ref", "org.wso2.ei.tools.mule2ballerina.model.FlowReference"),
-    SUB_FLOW("sub-flow", "org.wso2.ei.tools.mule2ballerina.model.SubFlow");
+    SUB_FLOW("sub-flow", "org.wso2.ei.tools.mule2ballerina.model.SubFlow"),
+    ASYNC("async", "org.wso2.ei.tools.mule2ballerina.model.AsynchronousTask");
 
     private String value;
     private String internalClassName;

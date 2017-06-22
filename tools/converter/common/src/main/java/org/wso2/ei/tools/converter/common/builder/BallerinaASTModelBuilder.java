@@ -57,6 +57,7 @@ public class BallerinaASTModelBuilder {
     private BLangPackage bLangPackage;
     private BLangModelBuilder modelBuilder;
     private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
+    //  private boolean isWorkerStarted = false;
 
     public BallerinaASTModelBuilder() {
 
@@ -263,7 +264,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void createAssignmentStatement() {
-        modelBuilder.createAssignmentStmt(null, null);
+        // modelBuilder.createAssignmentStmt(null, null);
     }
 
     public BallerinaFile buildBallerinaFile() {
@@ -281,5 +282,29 @@ public class BallerinaASTModelBuilder {
 
     public void addFunctionInvocationStatement(boolean argsAvailable) {
         modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
+    }
+
+    public void createWorkerInvocationStmt(String workerName) {
+        modelBuilder.createWorkerInvocationStmt(workerName, null, null);
+    }
+
+    public void enterWorkerDeclaration() {
+        //  isWorkerStarted = true;
+        modelBuilder.startWorkerUnit();
+        modelBuilder.startCallableUnitBody(null);
+    }
+
+    public void createWorkerDefinition(String workerName) {
+        modelBuilder.createWorkerDefinition(null, workerName);
+    }
+
+    public void exitWorkerReply(String defaultWorkerName) {
+        modelBuilder.createWorkerReplyStmt(defaultWorkerName, null, null);
+    }
+
+    public void exitWorkerDeclaration(String workerName) {
+        modelBuilder.endCallableUnitBody();
+        modelBuilder.createWorker(null, null, workerName);
+        //  isWorkerStarted = false;
     }
 }

@@ -18,6 +18,7 @@
 
 package org.wso2.ei.tools.mule2ballerina.visitor;
 
+import org.wso2.ei.tools.mule2ballerina.model.AsynchronousTask;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.FlowReference;
@@ -65,5 +66,7 @@ public interface Visitor {
     public void visit(VariableRemover variableRemover);
 
     public void visit(FlowReference flowReference);
+
+    public void visit(AsynchronousTask asynchronousTask);
 
 }
