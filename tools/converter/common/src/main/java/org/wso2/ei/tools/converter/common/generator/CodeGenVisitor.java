@@ -100,7 +100,6 @@ import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
  * and serialize to ballerina source
@@ -276,6 +275,11 @@ public class CodeGenVisitor implements NodeVisitor {
         for (Statement statement : statements) {
             statement.accept(this);
         }
+
+        for (Worker worker : resource.getWorkers()) {
+            worker.accept(this);
+        }
+
         --indentDepth;
         //end of resource statements block
         appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
@@ -341,7 +345,19 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(Worker worker) {
-
+        logger.debug("Visit - Worker");
+        appendToBalSource(getIndentationForCurrentLine() + Constants.WORKER_STR + Constants.SPACE_STR + worker.getName()
+                + Constants.SPACE_STR +
+                Constants.STMTBLOCK_START_STR);
+        ++indentDepth;
+        BlockStmt blockStmt = worker.getCallableUnitBody();
+        Statement[] statements = blockStmt.getStatements();
+        appendToBalSource(Constants.NEWLINE_STR);
+        for (Statement statement : statements) {
+            statement.accept(this);
+        }
+        --indentDepth;
+        appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -625,12 +641,31 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(WorkerInvocationStmt workerInvocationStmt) {
-
+        logger.debug("Visit - WorkerInvocationStmt");
+        appendToBalSource(getIndentationForCurrentLine());
+        for (Expression expressions : workerInvocationStmt.getExpressionList()) {
+            expressions.accept(this);
+            if (workerInvocationStmt.getExpressionList().length > 1) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+        }
+        appendToBalSource(Constants.SPACE_STR + Constants.SEND + Constants.SPACE_STR + workerInvocationStmt.getName());
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
     public void visit(WorkerReplyStmt workerReplyStmt) {
-
+        logger.debug("Visit - WorkerReplyStmt");
+        appendToBalSource(getIndentationForCurrentLine());
+        for (Expression expressions : workerReplyStmt.getExpressionList()) {
+            expressions.accept(this);
+            if (workerReplyStmt.getExpressionList().length > 1) {
+                appendToBalSource(Constants.COMMA_STR);
+            }
+        }
+        appendToBalSource(
+                Constants.SPACE_STR + Constants.RECEIVE + Constants.SPACE_STR + workerReplyStmt.getWorkerName());
+        appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
     }
 
     @Override
@@ -1057,7 +1092,6 @@ public class CodeGenVisitor implements NodeVisitor {
     public void visit(NullLiteral nullLiteral) {
 
     }
-    
 
     public String getBallerinaSourceStr() {
         return balSourceBuilder.toString();

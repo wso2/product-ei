@@ -25,16 +25,20 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 import java.util.LinkedList;
 
 /**
- * {@code Flow} This class represents both a flow and a private flow
+ * {@code AsynchronousTask} represents mule async element
  */
-public class Flow extends BaseObject implements Visitable {
+public class AsynchronousTask extends BaseObject implements Visitable, Processor {
 
-    protected String name;
-    protected LinkedList<Processor> flowProcessors; /*All the processors inside a flow needs to be in FIFO order to
-    generate Ballerina code in its proper order*/
+    private String name;
+    protected LinkedList<Processor> asyncProcessors;
 
-    public Flow() {
-        flowProcessors = new LinkedList<Processor>();
+    public AsynchronousTask() {
+        asyncProcessors = new LinkedList<Processor>();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     public String getName() {
@@ -45,33 +49,28 @@ public class Flow extends BaseObject implements Visitable {
         this.name = name;
     }
 
-    public LinkedList<Processor> getFlowProcessors() {
-        return flowProcessors;
+    @Override
+    public String getConfigName() {
+        return null;
     }
 
     public void addProcessor(Processor processor) {
-        flowProcessors.add(processor);
+        asyncProcessors.add(processor);
     }
 
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public LinkedList<Processor> getAsyncProcessors() {
+        return asyncProcessors;
     }
 
-    /**
-     * Keep a list of flows separately for tree navigation
-     *
-     * @param dataCarrierDTO
-     */
     @Override
     public void buildTree(DataCarrierDTO dataCarrierDTO) {
-
         BaseObject baseObj = dataCarrierDTO.getBaseObject();
         Root rootObj = dataCarrierDTO.getRootObject();
 
-        Flow flow = (Flow) baseObj;
-        if (dataCarrierDTO.isFlowStarted()) { //If the flow has just started
-            rootObj.addMFlow(flow); //Add it to root's flow stack
+        Flow lastAddedFlow = rootObj.getFlowList().peek(); //Get the last added flow from flow stack
+        //Add processor to processor queue
+        if (dataCarrierDTO.isAsyncFlowStarted()) { //If the async flow has just started
+            lastAddedFlow.addProcessor((Processor) baseObj); //Add it as a processor
         }
     }
 }

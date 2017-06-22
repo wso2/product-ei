@@ -38,6 +38,7 @@ public class Constants {
     public static final String FUNCTION_STR = "function";
     public static final String RETURN_STR = "return";
     public static final String STRUCT_STR = "struct";
+    public static final String WORKER_STR = "worker";
 
 
     public static final String SPACE_STR = " ";
@@ -56,6 +57,8 @@ public class Constants {
     public static final String COLON_STR = ":";
     public static final String PERIOD_STR = ".";
     public static final String ANNOTATION_AT_STR = "@";
+    public static final String SEND = "->";
+    public static final String RECEIVE = "<-";
 
     public static final String IMPLICIT_PACKAGE = "ballerina.lang.errors";
 }

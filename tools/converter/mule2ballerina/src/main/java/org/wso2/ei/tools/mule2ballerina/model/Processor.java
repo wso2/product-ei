@@ -27,7 +27,8 @@ import java.util.Queue;
 
 /**
  * {@code Processor} class represents any mule processor element. Any element inside a flow is considered to be a
- * message processor
+ * message processor. This class determines where each processor belongs. Eg:- Inside flow, private flow, sub flow or
+ * async flow
  */
 public interface Processor extends Visitable, TreeBuilder {
 
@@ -45,7 +46,8 @@ public interface Processor extends Visitable, TreeBuilder {
         BaseObject baseObj = dataCarrierDTO.getBaseObject();
         Root rootObj = dataCarrierDTO.getRootObject();
 
-        if (dataCarrierDTO.isFlowStarted()) { //If flow started
+        /*If flow started, but not inside an async scope*/
+        if (dataCarrierDTO.isFlowStarted() && !dataCarrierDTO.isAsyncFlowStarted()) {
             Flow lastAddedFlow = rootObj.getFlowList().peek(); //Get the last added flow in flow stack
             lastAddedFlow.addProcessor((Processor) baseObj); //Add processor to processor queue
             if (lastAddedFlow.getFlowProcessors().size() < 2) { //If this is the first processor
@@ -73,6 +75,20 @@ public interface Processor extends Visitable, TreeBuilder {
         } else if (dataCarrierDTO.isSubFlowStarted()) { //If it's the sub flow that's been started
             SubFlow lastAddedSubFlow = rootObj.getSubFlowStack().peek();
             lastAddedSubFlow.addProcessor((Processor) baseObj); //Adds the processor to sub flow
+        } else if (dataCarrierDTO.isFlowStarted() && dataCarrierDTO.isAsyncFlowStarted()) {
+            //Flow started and inside async flow
+            Flow lastAddedFlow = rootObj.getFlowList().peek(); //Get the last added flow in flow stack
+            //Get all the processors of last added flow
+            LinkedList<Processor> processors = (lastAddedFlow != null ? lastAddedFlow.getFlowProcessors() : null);
+            //Get the last added processor
+            Processor processor = (processors != null ? processors.getLast() : null);
+            //If the last added processor is an async task
+            if (processor != null && processor instanceof AsynchronousTask) {
+                //Add the baseObj under asynchronous task processors
+                AsynchronousTask asynchronousTask = (AsynchronousTask) processor;
+                asynchronousTask.addProcessor((Processor) baseObj);
+            }
         }
+
     }
 }
