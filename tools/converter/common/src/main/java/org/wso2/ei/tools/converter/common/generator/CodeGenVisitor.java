@@ -350,12 +350,9 @@ public class CodeGenVisitor implements NodeVisitor {
                 + Constants.SPACE_STR +
                 Constants.STMTBLOCK_START_STR);
         ++indentDepth;
-        BlockStmt blockStmt = worker.getCallableUnitBody();
-        Statement[] statements = blockStmt.getStatements();
         appendToBalSource(Constants.NEWLINE_STR);
-        for (Statement statement : statements) {
-            statement.accept(this);
-        }
+        BlockStmt blockStmt = worker.getCallableUnitBody();
+        blockStmt.accept(this);
         --indentDepth;
         appendToBalSource(getIndentationForCurrentLine() + Constants.STMTBLOCK_END_STR + Constants.NEWLINE_STR);
     }
