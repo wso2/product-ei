@@ -40,7 +40,9 @@ public class ESBJAVA3051HTTPPatchMethodSupportTestCase extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/http_transport/HTTPPatchMethodSupportTestSynapse.xml");
+        verifyAPIExistence("PatchTestAPI");
+        verifyProxyServiceExistence("PatchRespondTestProxy");
+        verifyProxyServiceExistence("PatchTestProxy");
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
@@ -50,7 +52,7 @@ public class ESBJAVA3051HTTPPatchMethodSupportTestCase extends ESBIntegrationTes
         SimpleHttpClient httpClient = new SimpleHttpClient();
         String requestXML = "<echo>wso2</echo>";
         String requestContentType = "application/xml";
-        HttpResponse httpResponse = httpClient.doPatch(contextUrls.getServiceUrl() + "/PatchRespondProxy", null,requestXML ,requestContentType);
+        HttpResponse httpResponse = httpClient.doPatch(getProxyServiceURLHttp("PatchRespondTestProxy"), null,requestXML ,requestContentType);
         HttpEntity resEntity = httpResponse.getEntity();
         BufferedReader rd = new BufferedReader(new InputStreamReader(resEntity.getContent()));
         String result = "";
@@ -67,7 +69,7 @@ public class ESBJAVA3051HTTPPatchMethodSupportTestCase extends ESBIntegrationTes
         SimpleHttpClient httpClient = new SimpleHttpClient();
         String requestXML = "<echo>wso2</echo>";
         String requestContentType = "application/xml";
-        HttpResponse httpResponse = httpClient.doPatch(contextUrls.getServiceUrl().replace("/services", "") + "/test", null,requestXML ,requestContentType);
+        HttpResponse httpResponse = httpClient.doPatch(getApiInvocationURL("patchtest"), null,requestXML ,requestContentType);
         HttpEntity resEntity = httpResponse.getEntity();
         BufferedReader rd = new BufferedReader(new InputStreamReader(resEntity.getContent()));
         String result = "";
@@ -84,7 +86,7 @@ public class ESBJAVA3051HTTPPatchMethodSupportTestCase extends ESBIntegrationTes
         SimpleHttpClient httpClient = new SimpleHttpClient();
         String requestXML = "<echo>wso2</echo>";
         String requestContentType = "application/xml";
-        HttpResponse httpResponse = httpClient.doPatch(contextUrls.getServiceUrl() + "/PatchProxy", null,requestXML ,requestContentType);
+        HttpResponse httpResponse = httpClient.doPatch(getProxyServiceURLHttp("PatchTestProxy"), null,requestXML ,requestContentType);
         HttpEntity resEntity = httpResponse.getEntity();
         BufferedReader rd = new BufferedReader(new InputStreamReader(resEntity.getContent()));
         String result = "";
