@@ -41,7 +41,8 @@ public class RetrieveBackendWsdlTestCase extends ESBIntegrationTest {
 
         super.init();
         httpClientUtil = new HttpClientUtil();
-        backendWSDLUrl=getProxyServiceURLHttp("StockQuoteProxy1")  +"?wsdl";
+        backendWSDLUrl=getProxyServiceURLHttp("StockQuoteWSDLTestProxy")  +"?wsdl";
+        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/proxywsdl.xml");
     }
 
     /**
@@ -53,9 +54,6 @@ public class RetrieveBackendWsdlTestCase extends ESBIntegrationTest {
      */
     @Test(groups = "wso2.esb")
     public void testRetrieveBackendServiceWsdl() throws Exception {
-
-        loadSampleESBConfiguration(151);
-
         OMElement result = httpClientUtil.get(backendWSDLUrl);
 
         // Return the backend service WSDLL instead of  proxy WSDL

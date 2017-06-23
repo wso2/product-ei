@@ -36,12 +36,12 @@ import static org.testng.Assert.assertTrue;
  */
 public class ESBJAVA4402MessageWithoutPayloadTestCase extends ESBIntegrationTest {
     private static final Log log = LogFactory.getLog(ESBJAVA4402MessageWithoutPayloadTestCase.class);
-    private static final String PROXY_SERVICE_NAME = "TestProxy";
+    private static final String PROXY_SERVICE_NAME = "ESBJAVA4402MessageWithoutPayloadTestProxy";
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/MessageWithoutPayload/synapse.xml");
+        verifyProxyServiceExistence("ESBJAVA4402MessageWithoutPayloadTestProxy");
     }
 
     /**

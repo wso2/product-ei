@@ -1,0 +1,9 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="RestServiceTestProxy"
+       statistics="disable" trace="disable" transports="https,http">
+    <target endpoint="http://localhost:9009/services/StudentService">
+        <inSequence/>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
