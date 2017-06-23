@@ -132,8 +132,8 @@ public class AcknowledgementsTestCase {
             int receivedMessageCount = queueReceiver.receivedMessageCount();
 
             // Evaluating results
-            Assert.assertEquals(receivedMessageCount, EXPECTED_COUNT, "Total number of sent and received messages" +
-                    " are not equal");
+            Assert.assertEquals(receivedMessageCount, EXPECTED_COUNT, "Total number of sent and received messages"
+                    + " are not equal");
 
         } finally {
             // close queue sender.
@@ -178,6 +178,7 @@ public class AcknowledgementsTestCase {
             // Creating a initial JMS consumer with autoack mode
             queueReceiver = new QueueReceiver("autoAckDropReceiverTestQueue",
                     JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, configurationReader);
+            queueReceiver.setMaximumMessageCount(500);
             queueReceiver.registerSubscriber();
 
             // Creating a JMS publisher
@@ -185,14 +186,7 @@ public class AcknowledgementsTestCase {
                     configurationReader);
             queueSender.sendMessages(SEND_COUNT, "text message");
 
-            // Wait until 500 messages are received by first consumer client.
-            while (true) {
-                receivedMessageCountSub1 = queueReceiver.receivedMessageCount();
-                if (receivedMessageCountSub1 >= (SEND_COUNT / 2)) {
-                    queueReceiver.closeReceiver();
-                    break;
-                }
-            }
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
 
             // Creating a secondary JMS consumer client configuration
             queueReceiverTwo = new QueueReceiver("autoAckDropReceiverTestQueue",
@@ -205,8 +199,8 @@ public class AcknowledgementsTestCase {
             int totalMessagesReceived = receivedMessageCountSub1 + queueReceiverTwo.receivedMessageCount();
 
             // Evaluating
-            Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Total number of received messages should be" +
-                    " equal to total number of sent messages");
+            Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Total number of received messages should be"
+                    + " equal to total number of sent messages");
 
         } finally {
             // close queue sender.
@@ -319,8 +313,8 @@ public class AcknowledgementsTestCase {
             long totalMessagesReceived = queueReceiver.receivedMessageCount();
 
             // Evaluating
-            Assert.assertTrue(totalMessagesReceived >= EXPECTED_COUNT / 10, "The number of received messages " +
-                    "(" + totalMessagesReceived + ") should be equal or more than the amount sent");
+            Assert.assertTrue(totalMessagesReceived >= EXPECTED_COUNT / 10, "The number of received messages "
+                    + "(" + totalMessagesReceived + ") should be equal or more than the amount sent");
 
         } finally {
             // close queue sender.

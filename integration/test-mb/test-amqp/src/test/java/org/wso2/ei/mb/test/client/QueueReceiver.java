@@ -49,6 +49,7 @@ public class QueueReceiver {
     private QueueSession queueSession;
     private QueueConnection queueConnection;
     private JMSAcknowledgeMode acknowledgeMode;
+    private int maximumMessageCount = Integer.MAX_VALUE;
 
     /**
      * This constructor creates a queue receiver object which is used as the subscriber
@@ -91,7 +92,7 @@ public class QueueReceiver {
      */
     public MessageConsumer registerSubscriber() throws JMSException {
 
-        messageListener = new QueueMessageListener(5, acknowledgeMode);
+        messageListener = new QueueMessageListener(5, acknowledgeMode, maximumMessageCount, this);
         consumer.setMessageListener(messageListener);
 
         return consumer;
@@ -118,6 +119,20 @@ public class QueueReceiver {
         queueSession.close();
         queueConnection.stop();
         queueConnection.close();
+    }
+
+    /**
+     * get Maximum Messages Count
+     */
+    public int getMaximumMessageCount() {
+        return maximumMessageCount;
+    }
+
+    /**
+     * set Maximum Messages Count
+     */
+    public void setMaximumMessageCount(int maximumMessageCount) {
+        this.maximumMessageCount = maximumMessageCount;
     }
 
     /**

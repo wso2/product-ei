@@ -54,13 +54,26 @@ public class QueueMessageListener implements MessageListener {
     private int currentMessageCount = 0;
 
     /**
+     * maximum message count.
+     */
+    private int maximumMessageCount;
+
+    /**
+     * QueueReceiver object
+     */
+    private QueueReceiver receiver;
+
+    /**
      * Queue message listener for receive messages.
      *
      * @param delay wait delay for message listener.
      */
-    public QueueMessageListener(int delay, JMSAcknowledgeMode acknowledgeMode) {
+    public QueueMessageListener(int delay, JMSAcknowledgeMode acknowledgeMode, int maximumMessageCount,
+                                QueueReceiver receiver) {
         this.delay = delay;
         this.acknowledgeMode = acknowledgeMode;
+        this.maximumMessageCount = maximumMessageCount;
+        this.receiver = receiver;
     }
 
     /**
@@ -74,16 +87,21 @@ public class QueueMessageListener implements MessageListener {
         try {
             currentMessageCount++;
 
-            if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode.getType())
-                    && (getMessageCount() % 10 == 0)) {
-                receivedMessage.acknowledge();
-            }
+            if (currentMessageCount >= maximumMessageCount) {
+                receiver.closeReceiver();
+            } else {
 
-            if (delay != 0) {
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    log.error("Error occurred while waiting for messages", e);
+                if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode.getType())
+                        && (getMessageCount() % 10 == 0)) {
+                    receivedMessage.acknowledge();
+                }
+
+                if (delay != 0) {
+                    try {
+                        Thread.sleep(delay);
+                    } catch (InterruptedException e) {
+                        log.error("Error occurred while waiting for messages", e);
+                    }
                 }
             }
         } catch (JMSException e) {

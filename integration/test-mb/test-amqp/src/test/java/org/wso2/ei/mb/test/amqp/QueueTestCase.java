@@ -180,8 +180,8 @@ public class QueueTestCase {
 
             int receivedMessageCount = queueReceiver.receivedMessageCount() + queueReceiverTwo.receivedMessageCount();
 
-            Assert.assertEquals(receivedMessageCount, expectedCount, "assertion failed in manyConsumers test case " +
-                    "Expected message count : "
+            Assert.assertEquals(receivedMessageCount, expectedCount, "assertion failed in manyConsumers test case "
+                    + "Expected message count : "
                     + expectedCount + ".Received message count : " + receivedMessageCount);
 
         } finally {
