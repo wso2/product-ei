@@ -29,14 +29,15 @@ import java.util.Properties;
  */
 public class ConfigurationReader {
 
+    // Create a map of Config key and Config value
+    private Map<String, String> clientConfigPropertyMap = new HashMap<String, String>();
+
     /**
-     * This method returns a map of client configs as defined in clientconfig.properties file
-     * @return A Map of clientConfig Properties
+     * Initializes a config reader object while reading from config file
      * @throws IOException
      */
-    public Map<String, String> readClientConfigProperties() throws IOException {
+    public ConfigurationReader() throws IOException {
 
-        Map<String, String> clientConfigPropertyMap = new HashMap<String, String>();
         InputStream propertyFileInputStream = getClass().getClassLoader().getResourceAsStream(
                 ConfigurationConstants.CLIENT_CONFIG_PROPERTY_FILE);
         Properties configProperties = new Properties();
@@ -56,6 +57,14 @@ public class ConfigurationReader {
                 configProperties.getProperty(ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY));
 
         propertyFileInputStream.close();
+
+    }
+    /**
+     * This method returns the map of client configs
+     * @return A Map of clientConfig Properties
+     * @throws IOException
+     */
+    public Map<String, String> getClientConfigProperties() throws IOException {
 
         return clientConfigPropertyMap;
     }

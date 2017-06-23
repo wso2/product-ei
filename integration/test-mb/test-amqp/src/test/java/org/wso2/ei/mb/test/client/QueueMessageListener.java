@@ -46,7 +46,7 @@ public class QueueMessageListener implements MessageListener {
     /**
      * Acknoledgement mode
      */
-    private int acknowledgeMode = 0;
+    private JMSAcknowledgeMode acknowledgeMode = JMSAcknowledgeMode.AUTO_ACKNOWLEDGE;
 
     /**
      * current message count.
@@ -58,7 +58,7 @@ public class QueueMessageListener implements MessageListener {
      *
      * @param delay wait delay for message listener.
      */
-    public QueueMessageListener(int delay, int acknowledgeMode) {
+    public QueueMessageListener(int delay, JMSAcknowledgeMode acknowledgeMode) {
         this.delay = delay;
         this.acknowledgeMode = acknowledgeMode;
     }
@@ -74,7 +74,8 @@ public class QueueMessageListener implements MessageListener {
         try {
             currentMessageCount++;
 
-            if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode) && (getMessageCount() % 10 == 0)) {
+            if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode.getType())
+                    && (getMessageCount() % 10 == 0)) {
                 receivedMessage.acknowledge();
             }
 

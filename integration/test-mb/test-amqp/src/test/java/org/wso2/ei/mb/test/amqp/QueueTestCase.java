@@ -31,7 +31,6 @@ import org.wso2.ei.mb.test.utils.ServerManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -54,12 +53,12 @@ public class QueueTestCase {
     /**
      * initiate configuration reader instance
      */
-    private ConfigurationReader configurationReader = new ConfigurationReader();
+    private ConfigurationReader configurationReader;
 
     /**
-     * create config map
+     * Delay for multiple message test cases
      */
-    private Map<String, String> clientConfigPropertiesMap;
+    private static final Long PUBLISHER_DELAY = 50L;
 
     /**
      * Initialise test environment.
@@ -78,7 +77,7 @@ public class QueueTestCase {
                 String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
 
                 // load client configs to map
-                clientConfigPropertiesMap = configurationReader.readClientConfigProperties();
+                configurationReader = new ConfigurationReader();
 
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
@@ -97,39 +96,49 @@ public class QueueTestCase {
      *
      * @throws JMSException
      * @throws NamingException
-     * @throws InterruptedException
      * @throws IOException
+     * @throws InterruptedException
+     *
      */
-    @Test
-    public void performSingleQueueSendReceiveTestCase() throws JMSException, NamingException, InterruptedException,
-            IOException {
+    @Test(groups = "wso2.mb")
+    public void performSingleQueueSendReceiveTestCase() throws JMSException, NamingException, IOException,
+            InterruptedException {
 
         int sendMessageCount = 5;
+        QueueReceiver queueReceiver = null;
+        QueueSender queueSender = null;
 
-        // Start JMS queue subscriber.
-        QueueReceiver queueReceiver = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver.registerSubscriber();
+        try {
+            // Start JMS queue subscriber.
+            queueReceiver = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiver.registerSubscriber();
 
-        TimeUnit.SECONDS.sleep(1L);
+            TimeUnit.SECONDS.sleep(1L);
 
-        // Start JMS queue publisher.
-        QueueSender queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(sendMessageCount, "text message");
+            // Start JMS queue publisher.
+            queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(sendMessageCount, "text message");
 
-        TimeUnit.SECONDS.sleep(1L);
+            TimeUnit.SECONDS.sleep(1L);
 
-        int receivedMessageCount = queueReceiver.receivedMessageCount();
+            int receivedMessageCount = queueReceiver.receivedMessageCount();
 
-        // close queue sender.
-        queueSender.closeSender();
+            Assert.assertEquals(receivedMessageCount, sendMessageCount, "assertion failed. Expected message count : "
+                    + sendMessageCount + ".Received message count : " + receivedMessageCount);
 
-        // close queue receiver.
-        queueReceiver.closeReceiver();
+        } finally {
 
-        Assert.assertEquals(receivedMessageCount, sendMessageCount, "assertion failed. Expected message count : "
-                + sendMessageCount + ".Received message count : " + receivedMessageCount);
+            // close queue sender.
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
+            // close queue receiver.
+            if (queueReceiver != null) {
+                queueReceiver.closeReceiver();
+            }
+        }
     }
 
     /**
@@ -139,49 +148,58 @@ public class QueueTestCase {
      *
      * @throws JMSException
      * @throws NamingException
-     * @throws InterruptedException
      * @throws IOException
+     * @throws InterruptedException
      */
-    @Test
-    public void performManyConsumersTestCase() throws JMSException, NamingException, InterruptedException, IOException {
+    @Test(groups = "wso2.mb")
+    public void performManyConsumersTestCase() throws JMSException, NamingException, IOException, InterruptedException {
         int sendCount = 3000;
-        int expectedCount = 3000;
+        int expectedCount = sendCount;
 
-        //create consumer 1
-        QueueReceiver queueReceiver1 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver1.registerSubscriber();
+        QueueReceiver queueReceiver = null;
+        QueueReceiver queueReceiverTwo = null;
+        QueueSender queueSender = null;
 
-        TimeUnit.SECONDS.sleep(50L);
+        try {
+            //create consumer 1
+            queueReceiver = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiver.registerSubscriber();
 
-        //create consumer 2
-        QueueReceiver queueReceiver2 = new QueueReceiver("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver2.registerSubscriber();
+            //create consumer 2
+            queueReceiverTwo = new QueueReceiver("manyConsumersTestQueue",
+                    JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, configurationReader);
+            queueReceiverTwo.registerSubscriber();
 
-        TimeUnit.SECONDS.sleep(50L);
+            //create publisher
+            queueSender = new QueueSender("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(sendCount, "text message");
 
-        //create publisher
-        QueueSender queueSender = new QueueSender("manyConsumersTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(sendCount, "text message");
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
 
-        TimeUnit.SECONDS.sleep(50L);
+            int receivedMessageCount = queueReceiver.receivedMessageCount() + queueReceiverTwo.receivedMessageCount();
 
-        int receivedMessageCount = queueReceiver1.receivedMessageCount() + queueReceiver2.receivedMessageCount();
+            Assert.assertEquals(receivedMessageCount, expectedCount, "assertion failed in manyConsumers test case " +
+                    "Expected message count : "
+                    + expectedCount + ".Received message count : " + receivedMessageCount);
 
-        // close queue sender.
-        queueSender.closeSender();
+        } finally {
+            // close queue sender.
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
+            // close queue receiver 1.
+            if (queueReceiver != null) {
+                queueReceiver.closeReceiver();
+            }
 
-        // close queue receiver 1.
-        queueReceiver1.closeReceiver();
+            // close queue receiver 2.
+            if (queueReceiverTwo != null) {
+                queueReceiverTwo.closeReceiver();
+            }
+        }
 
-        // close queue receiver 2.
-        queueReceiver2.closeReceiver();
-
-        Assert.assertEquals(receivedMessageCount, expectedCount, "assertion failed in manyConsumers test case " +
-                "Expected message count : "
-                + expectedCount + ".Received message count : " + receivedMessageCount);
     }
 
     /**
@@ -191,41 +209,48 @@ public class QueueTestCase {
      *
      * @throws JMSException
      * @throws NamingException
-     * @throws InterruptedException
      * @throws IOException
+     * @throws InterruptedException
      */
-    @Test
-    public void performDifferentCasesQueueSendReceiveTestCase() throws JMSException, NamingException,
-            InterruptedException, IOException {
+    @Test(groups = "wso2.mb")
+    public void performDifferentCasesQueueSendReceiveTestCase() throws JMSException, NamingException, IOException,
+            InterruptedException {
 
         int sendCount = 500;
         int expectedCount = 500;
 
-        //create consumer to CASEInsensitiveQueue
-        QueueReceiver queueReceiver = new QueueReceiver("CASEInsensitiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver.registerSubscriber();
+        QueueReceiver queueReceiver = null;
+        QueueSender queueSender = null;
 
-        TimeUnit.SECONDS.sleep(25L);
+        try {
 
-        // Create publisher to caseINSENSITIVEQueue
-        QueueSender queueSender = new QueueSender("caseINSENSITIVEQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(sendCount, "text message");
+            //create consumer to CASEInsensitiveQueue
+            queueReceiver = new QueueReceiver("CASEInsensitiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiver.registerSubscriber();
 
-        TimeUnit.SECONDS.sleep(25L);
+            // Create publisher to caseINSENSITIVEQueue
+            queueSender = new QueueSender("caseINSENSITIVEQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(sendCount, "text message");
 
-        int receivedMessageCount = queueReceiver.receivedMessageCount();
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY / 2);
 
-        // close queue sender.
-        queueSender.closeSender();
+            int receivedMessageCount = queueReceiver.receivedMessageCount();
 
-        // close queue receiver .
-        queueReceiver.closeReceiver();
+            // Evaluating
+            Assert.assertEquals(receivedMessageCount, expectedCount, "Message receiving failed.");
 
-        // Evaluating
-        Assert.assertEquals(receivedMessageCount, expectedCount, "Message receiving failed.");
-
+        } finally {
+            // close queue sender.
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
+            // close queue receiver.
+            if (queueReceiver != null) {
+                queueReceiver.closeReceiver();
+            }
+        }
     }
 
 

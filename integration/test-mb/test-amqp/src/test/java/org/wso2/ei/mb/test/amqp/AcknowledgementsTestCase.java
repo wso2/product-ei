@@ -31,7 +31,6 @@ import org.wso2.ei.mb.test.utils.ServerManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -55,7 +54,7 @@ public class AcknowledgementsTestCase {
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
-    private static Logger log = Logger.getLogger(QueueTestCase.class);
+    private static Logger log = Logger.getLogger(AcknowledgementsTestCase.class);
 
     /**
      * Initiate new server manager instance.
@@ -65,12 +64,12 @@ public class AcknowledgementsTestCase {
     /**
      * initiate configuration reader instance
      */
-    private ConfigurationReader configurationReader = new ConfigurationReader();
+    private ConfigurationReader configurationReader;
 
     /**
-     * create config map
+     * Delay for multiple message test cases
      */
-    private Map<String, String> clientConfigPropertiesMap;
+    private static final Long PUBLISHER_DELAY = 50L;
 
     /**
      * Initialise test environment.
@@ -89,7 +88,7 @@ public class AcknowledgementsTestCase {
                 String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
 
                 // load client configs to map
-                clientConfigPropertiesMap = configurationReader.readClientConfigProperties();
+                configurationReader = new ConfigurationReader();
 
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
@@ -111,35 +110,43 @@ public class AcknowledgementsTestCase {
      * @throws IOException
      * @throws InterruptedException
      */
-    @Test
-    public void autoAcknowledgementsTestCase()
-            throws JMSException, NamingException, IOException, InterruptedException {
+    @Test(groups = "wso2.mb")
+    public void autoAcknowledgementsTestCase() throws JMSException, NamingException, IOException, InterruptedException {
 
-        // Creating a JMS consumer
-        QueueReceiver queueReceiver = new QueueReceiver("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver.registerSubscriber();
+        QueueReceiver queueReceiver = null;
+        QueueSender queueSender = null;
 
-        TimeUnit.SECONDS.sleep(50L);
+        try {
+            // Creating a JMS consumer
+            queueReceiver = new QueueReceiver("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiver.registerSubscriber();
 
-        // Creating a JMS publisher
-        QueueSender queueSender = new QueueSender("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(SEND_COUNT, "text message");
+            // Creating a JMS publisher
+            queueSender = new QueueSender("autoAckTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(SEND_COUNT, "text message");
 
-        TimeUnit.SECONDS.sleep(50L);
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
 
-        int receivedMessageCount = queueReceiver.receivedMessageCount();
+            int receivedMessageCount = queueReceiver.receivedMessageCount();
 
-        // close queue sender.
-        queueSender.closeSender();
+            // Evaluating results
+            Assert.assertEquals(receivedMessageCount, EXPECTED_COUNT, "Total number of sent and received messages" +
+                    " are not equal");
 
-        // close queue receiver .
-        queueReceiver.closeReceiver();
+        } finally {
+            // close queue sender.
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
 
-        // Evaluating results
-        Assert.assertEquals(receivedMessageCount, EXPECTED_COUNT, "Total number of sent and received messages" +
-                " are not equal");
+            // close queue receiver.
+            if (queueReceiver != null) {
+                queueReceiver.closeReceiver();
+            }
+        }
+
     }
 
     /**
@@ -152,56 +159,67 @@ public class AcknowledgementsTestCase {
      * 6. Second receiver will read up 500 messages.
      * 7. Check whether total received messages were equal to {@link #EXPECTED_COUNT}.
      *
-     * @throws InterruptedException
      * @throws JMSException
      * @throws NamingException
      * @throws IOException
+     * @throws InterruptedException
      */
-    @Test
-    public void autoAcknowledgementsDropReceiverTestCase() throws InterruptedException, JMSException, NamingException,
-            IOException {
+    @Test(groups = "wso2.mb", enabled = false)
+    public void autoAcknowledgementsDropReceiverTestCase() throws  JMSException, NamingException, IOException,
+            InterruptedException {
 
-        // Creating a initial JMS consumer with autoack mode
-        QueueReceiver queueReceiver = new QueueReceiver("autoAckDropReceiverTestQueue",
-                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, clientConfigPropertiesMap);
-        queueReceiver.registerSubscriber();
-
-        TimeUnit.SECONDS.sleep(50L);
-
-        // Creating a JMS publisher
-        QueueSender queueSender = new QueueSender("autoAckDropReceiverTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(SEND_COUNT, "text message");
+        QueueReceiver queueReceiver = null;
+        QueueReceiver queueReceiverTwo = null;
+        QueueSender queueSender = null;
         int receivedMessageCountSub1 = 0;
 
-        TimeUnit.SECONDS.sleep(50L);
+        try {
 
-        // Wait until 500 messages are received by first consumer client.
-        while (true) {
-            receivedMessageCountSub1 = queueReceiver.receivedMessageCount();
-            if (receivedMessageCountSub1 >= (SEND_COUNT / 2)) {
-                queueReceiver.closeReceiver();
-                break;
+            // Creating a initial JMS consumer with autoack mode
+            queueReceiver = new QueueReceiver("autoAckDropReceiverTestQueue",
+                    JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, configurationReader);
+            queueReceiver.registerSubscriber();
+
+            // Creating a JMS publisher
+            queueSender = new QueueSender("autoAckDropReceiverTestQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(SEND_COUNT, "text message");
+
+            // Wait until 500 messages are received by first consumer client.
+            while (true) {
+                receivedMessageCountSub1 = queueReceiver.receivedMessageCount();
+                if (receivedMessageCountSub1 >= (SEND_COUNT / 2)) {
+                    queueReceiver.closeReceiver();
+                    break;
+                }
+            }
+
+            // Creating a secondary JMS consumer client configuration
+            queueReceiverTwo = new QueueReceiver("autoAckDropReceiverTestQueue",
+                    JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, configurationReader);
+            queueReceiverTwo.registerSubscriber();
+
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
+
+            // Get total received messages count
+            int totalMessagesReceived = receivedMessageCountSub1 + queueReceiverTwo.receivedMessageCount();
+
+            // Evaluating
+            Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Total number of received messages should be" +
+                    " equal to total number of sent messages");
+
+        } finally {
+            // close queue sender.
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
+
+            // close queue receiver.
+            if (queueReceiver != null) {
+                queueReceiverTwo.closeReceiver();
             }
         }
 
-        // Creating a secondary JMS consumer client configuration
-        QueueReceiver queueReceiver2 = new QueueReceiver("autoAckDropReceiverTestQueue",
-                JMSAcknowledgeMode.AUTO_ACKNOWLEDGE, clientConfigPropertiesMap);
-        queueReceiver2.registerSubscriber();
-
-        TimeUnit.SECONDS.sleep(50L);
-
-        // Get total received messages count
-        int totalMessagesReceived = receivedMessageCountSub1 + queueReceiver2.receivedMessageCount();
-
-        queueReceiver2.closeReceiver();
-
-        queueSender.closeSender();
-
-        // Evaluating
-        Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Total number of received messages should be" +
-                " equal to total number of sent messages");
     }
 
     /**
@@ -217,41 +235,54 @@ public class AcknowledgementsTestCase {
      * @throws IOException
      * @throws InterruptedException
      */
-    @Test
-    public void performClientAcknowledgementsTestCase()
-            throws JMSException, NamingException, IOException, InterruptedException {
+    @Test(groups = "wso2.mb")
+    public void performClientAcknowledgementsTestCase()throws JMSException, NamingException, IOException,
+            InterruptedException {
 
-        // Creating a initial JMS consumer client configuration
-        QueueReceiver queueReceiver = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver.registerSubscriber();
+        QueueReceiver queueReceiver = null;
+        QueueReceiver queueReceiverTwo = null;
+        QueueSender queueSender = null;
 
-        TimeUnit.SECONDS.sleep(50L);
+        try {
+            // Creating a initial JMS consumer client configuration
+            queueReceiver = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiver.registerSubscriber();
 
-        // Creating a JMS publisher client configuration
-        QueueSender queueSender = new QueueSender("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(SEND_COUNT, "text message");
+            // Creating a JMS publisher client configuration
+            queueSender = new QueueSender("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(SEND_COUNT, "text message");
 
-        TimeUnit.SECONDS.sleep(50L);
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
 
-        // Creating a second JMS consumer with client ack mode
-        QueueReceiver queueReceiver2 = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver2.registerSubscriber();
+            // Creating a second JMS consumer with client ack mode
+            queueReceiverTwo = new QueueReceiver("clientAckTestQueue", JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiverTwo.registerSubscriber();
 
-        TimeUnit.SECONDS.sleep(50L);
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
 
-        long totalMessagesReceived = queueReceiver.receivedMessageCount() + queueReceiver2
-                .receivedMessageCount();
+            long totalMessagesReceived = queueReceiver.receivedMessageCount() + queueReceiverTwo
+                    .receivedMessageCount();
 
-        queueReceiver.closeReceiver();
+            Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Expected message count not received.");
 
-        queueReceiver2.closeReceiver();
+        } finally {
 
-        queueSender.closeSender();
+            if (queueReceiver != null) {
+                queueReceiver.closeReceiver();
+            }
 
-        Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Expected message count not received.");
+            if (queueReceiverTwo != null) {
+                queueReceiverTwo.closeReceiver();
+            }
+
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
+        }
+
     }
 
     /**
@@ -265,33 +296,43 @@ public class AcknowledgementsTestCase {
      * @throws IOException
      * @throws InterruptedException
      */
-    @Test
-    public void duplicatesOkAcknowledgementsTest()
-            throws JMSException, NamingException, IOException, InterruptedException {
+    @Test(groups = "wso2.mb")
+    public void duplicatesOkAcknowledgementsTest() throws JMSException, NamingException, IOException,
+            InterruptedException {
 
-        // Creating a initial JMS consumer client configuration
-        QueueReceiver queueReceiver = new QueueReceiver("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueReceiver.registerSubscriber();
+        QueueReceiver queueReceiver = null;
+        QueueSender queueSender = null;
 
-        TimeUnit.SECONDS.sleep(10L);
+        try {
+            // Creating a initial JMS consumer client configuration
+            queueReceiver = new QueueReceiver("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE,
+                    configurationReader);
+            queueReceiver.registerSubscriber();
 
-        // Creating a JMS publisher client configuration
-        QueueSender queueSender = new QueueSender("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE,
-                clientConfigPropertiesMap);
-        queueSender.sendMessages(SEND_COUNT / 10, "text message");
+            // Creating a JMS publisher client configuration
+            queueSender = new QueueSender("dupOkAckTestQueue", JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE,
+                    configurationReader);
+            queueSender.sendMessages(SEND_COUNT / 10, "text message");
 
-        TimeUnit.SECONDS.sleep(10L);
+            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY / 10);
 
-        long totalMessagesReceived = queueReceiver.receivedMessageCount();
+            long totalMessagesReceived = queueReceiver.receivedMessageCount();
 
-        queueReceiver.closeReceiver();
+            // Evaluating
+            Assert.assertTrue(totalMessagesReceived >= EXPECTED_COUNT / 10, "The number of received messages " +
+                    "(" + totalMessagesReceived + ") should be equal or more than the amount sent");
 
-        queueSender.closeSender();
+        } finally {
+            // close queue sender.
+            if (queueSender != null) {
+                queueSender.closeSender();
+            }
 
-        // Evaluating
-        Assert.assertTrue(totalMessagesReceived >= EXPECTED_COUNT / 10, "The number of received messages " +
-                "(" + totalMessagesReceived + ") should be equal or more than the amount sent");
+            // close queue receiver.
+            if (queueReceiver != null) {
+                queueReceiver.closeReceiver();
+            }
+        }
     }
 
     /**

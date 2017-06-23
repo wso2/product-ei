@@ -19,6 +19,7 @@
 package org.wso2.ei.mb.test.client;
 
 import org.wso2.ei.mb.test.utils.ConfigurationConstants;
+import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 
 import java.io.IOException;
@@ -48,10 +49,21 @@ public class QueueSender {
     private QueueSession queueSession;
     private javax.jms.QueueSender queueSender;
 
+    /**
+     * This method creates a QueueSender object which acts as the publisher to a queue
+     * @param queueName queue name to be published
+     * @param acknowledgeMode acknowledge mode
+     * @param configurationReader configuration reader object to read the client configs
+     * @throws JMSException
+     * @throws NamingException
+     * @throws IOException
+     */
     public QueueSender(String queueName, JMSAcknowledgeMode acknowledgeMode,
-                       Map<String, String> clientConfigPropertiesMap)
+                       ConfigurationReader configurationReader)
             throws JMSException, NamingException, IOException {
 
+        // map of config key and config value
+        Map<String, String> clientConfigPropertiesMap = configurationReader.getClientConfigProperties();
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
         properties.put(connectionFactoryNamePrefix + connectionFactoryName,

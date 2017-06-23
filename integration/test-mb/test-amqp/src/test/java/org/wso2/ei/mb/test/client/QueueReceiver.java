@@ -19,6 +19,7 @@
 package org.wso2.ei.mb.test.client;
 
 import org.wso2.ei.mb.test.utils.ConfigurationConstants;
+import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 
 import java.io.IOException;
@@ -47,10 +48,24 @@ public class QueueReceiver {
     private MessageConsumer consumer;
     private QueueSession queueSession;
     private QueueConnection queueConnection;
+    private JMSAcknowledgeMode acknowledgeMode;
 
+    /**
+     * This constructor creates a queue receiver object which is used as the subscriber
+     * @param queueName name of the queue to be subscribed
+     * @param acknowledgeMode acknowledge mode
+     * @param configurationReader configuration reader object to read the JMS client config
+     * @throws NamingException
+     * @throws JMSException
+     * @throws IOException
+     */
     public QueueReceiver(String queueName, JMSAcknowledgeMode acknowledgeMode,
-                         Map<String, String> clientConfigPropertiesMap)
+                         ConfigurationReader configurationReader)
             throws NamingException, JMSException, IOException {
+
+        this.acknowledgeMode = acknowledgeMode;
+        // map of config key and config value
+        Map<String, String> clientConfigPropertiesMap = configurationReader.getClientConfigProperties();
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
         properties.put(connectionFactoryNamePrefix + connectionFactoryName,
@@ -76,7 +91,7 @@ public class QueueReceiver {
      */
     public MessageConsumer registerSubscriber() throws JMSException {
 
-        messageListener = new QueueMessageListener(5, queueSession.getAcknowledgeMode());
+        messageListener = new QueueMessageListener(5, acknowledgeMode);
         consumer.setMessageListener(messageListener);
 
         return consumer;
