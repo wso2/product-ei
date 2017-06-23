@@ -196,7 +196,7 @@ public class AcknowledgementsTestCase {
             TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
 
             // Get total received messages count
-            int totalMessagesReceived = receivedMessageCountSub1 + queueReceiverTwo.receivedMessageCount();
+            int totalMessagesReceived = queueReceiver.receivedMessageCount() + queueReceiverTwo.receivedMessageCount();
 
             // Evaluating
             Assert.assertEquals(totalMessagesReceived, EXPECTED_COUNT, "Total number of received messages should be"

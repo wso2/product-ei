@@ -86,7 +86,6 @@ public class QueueMessageListener implements MessageListener {
 
         try {
             currentMessageCount++;
-
             if (currentMessageCount >= maximumMessageCount) {
                 receiver.closeReceiver();
             } else {
