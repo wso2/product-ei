@@ -46,7 +46,7 @@ public class MessageWithoutContentTypeTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/messagewithoutcontent/synapse.xml");
+        verifyProxyServiceExistence("messageWithoutContentTypeTestProxy");
     }
 
     /**
@@ -64,7 +64,7 @@ public class MessageWithoutContentTypeTestCase extends ESBIntegrationTest {
     public void testMessageWithoutContentType() throws Exception {
 
         // Get target URL
-        String strURL = getMainSequenceURL();
+        String strURL = getProxyServiceURLHttp("messageWithoutContentTypeTestProxy");
         // Get SOAP action
         String strSoapAction = "getQuote";
         // Get file to be posted
