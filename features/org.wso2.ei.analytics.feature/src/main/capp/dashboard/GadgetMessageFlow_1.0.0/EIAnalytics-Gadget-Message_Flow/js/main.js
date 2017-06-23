@@ -5,8 +5,8 @@ var page = gadgetUtil.getCurrentPage();
 var qs = gadgetUtil.getQueryString();
 var timeFrom, timeTo, timeUnit = null;
 
-var TOPDOWN = "TD";
-var LEFT_TO_RIGHT = "TD";
+var TOPDOWN = "LR";
+var LEFT_TO_RIGHT = "LR";
 var orientation = TOPDOWN;
 var gadgetMaximized = gadgetUtil.getView() == 'maximized';
 
@@ -91,6 +91,8 @@ $(function() {
     }, onData, onError);
 
     $("body").on("click", ".nodeLabel", function(e) {
+        $(".nodeLabel").removeClass('selected');
+        $(this).addClass('selected')
         e.preventDefault();
         if ($(this).data("node-type") === "UNKNOWN") {
             return;
@@ -228,23 +230,18 @@ function onData(response) {
                 "scale(" + d3.event.scale + ")");
         });
 
-    //TODO hide zoom when the gadget is gadgetMaximized
-    if (gadgetMaximized) {
-        svg.call(zoom);
-        var nanoScrollerSelector = $(".nano");
-        nanoScrollerSelector.nanoScroller();
-    } else {
-        
-    }
+    svg.call(zoom);
+    var nanoScrollerSelector = $(".nano");
+    nanoScrollerSelector.nanoScroller();
     inner.call(render, g);
 
     // Zoom and scale to fit
-    var graphWidth = g.graph().width + 80;
-    var graphHeight = g.graph().height + 40;
+    var graphWidth = g.graph().width + 10;
+    var graphHeight = g.graph().height + 10;
     var width = parseInt(svg.style("width").replace(/px/, ""));
     var height = parseInt(svg.style("height").replace(/px/, ""));
     var zoomScale = Math.min(width / graphWidth, height / graphHeight);
-    var translate = [(width / 2) - ((graphWidth * zoomScale) / 2), (height / 2) - ((graphHeight * zoomScale) / 2)];
+    var translate = [(width / 2) - ((graphWidth * zoomScale) / 2) , (height / 2) - ((graphHeight * zoomScale) / 2) * 0.93];
 
     zoom.translate(translate);
     zoom.scale(zoomScale);
@@ -280,15 +277,15 @@ function buildLabel(node) {
         });
     }
     var targetUrl = pageUrl + '?' + hiddenParams;
-    var labelText = '<div class="nodeLabel" data-node-type="' + node.type + '" data-component-id="' + node.modifiedId
-    + '" data-hash-code="' + hashCode + '" data-target-url="' + targetUrl + '"><h4><a href="#">' + node.label + "</a></h4>";
+    var labelText = '<a href="#"><div class="nodeLabel" data-node-type="' + node.type + '" data-component-id="' + node.modifiedId
+    + '" data-hash-code="' + hashCode + '" data-target-url="' + targetUrl + '"><h4>' + node.label + "</h4>";
 
-    if (node.dataAttributes && gadgetMaximized) {
+    if (node.dataAttributes) {
         node.dataAttributes.forEach(function(item, i) {
             labelText += "<h5><label>" + item.name + " : </label><span>" + item.value + "</span></h5>";
         });
     }
-    labelText += "</div>";
+    labelText += "</div></a>";
     return labelText;
 };
 
@@ -302,3 +299,11 @@ $('body').on('click', '#btnViewToggle', function(){
         .find('.ues-component-full-handle')
         .click();
 });
+
+$("body").on("mousedown touchstart", function(e) {
+    $(this).addClass('grabbing')
+})
+
+$("body").on("mouseup touchend", function(e) {
+    $(this).removeClass('grabbing')
+})

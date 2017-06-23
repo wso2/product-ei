@@ -5,7 +5,16 @@ html, body {
 }
 body {
     min-height: 100%;
+    cursor: -webkit-grab; 
+    cursor: grab;
 }
+
+body.grabbing {
+    min-height: 100%;
+    cursor: -webkit-grabbing;
+    cursor: grabbing; 
+}
+
 .page-content-wrapper {
     width: 100%;
     height: 100%;
@@ -80,4 +89,17 @@ text {
     vertical-align: text-bottom;
     margin-bottom: 2px;
     margin-right: 5px;
+}
+
+a:hover {
+    color: #5fdbcc;
+    cursor:pointer;
+}
+
+label{
+    cursor:pointer;
+}
+
+.selected {
+    color: #5fdbcc;
 }
