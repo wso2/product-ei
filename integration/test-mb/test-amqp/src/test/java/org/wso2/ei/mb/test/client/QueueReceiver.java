@@ -92,7 +92,7 @@ public class QueueReceiver {
      */
     public MessageConsumer registerSubscriber() throws JMSException {
 
-        messageListener = new QueueMessageListener(5, acknowledgeMode, maximumMessageCount, this);
+        messageListener = new QueueMessageListener(5, acknowledgeMode, maximumMessageCount);
         consumer.setMessageListener(messageListener);
 
         return consumer;
@@ -118,6 +118,17 @@ public class QueueReceiver {
         consumer.close();
         queueSession.close();
         queueConnection.stop();
+        queueConnection.close();
+    }
+
+    /**
+     * Close JMS connection/session and clean up resources.
+     *
+     * @throws JMSException
+     */
+    public void stopReceiver() throws JMSException {
+        consumer.close();
+        queueSession.close();
         queueConnection.close();
     }
 

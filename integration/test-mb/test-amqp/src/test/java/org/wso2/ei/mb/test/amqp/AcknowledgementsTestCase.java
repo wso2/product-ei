@@ -27,7 +27,9 @@ import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
 import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
+import org.wso2.ei.mb.test.utils.QueueSignalHandler;
 import org.wso2.ei.mb.test.utils.ServerManager;
+import sun.misc.Signal;
 
 import java.io.File;
 import java.io.IOException;
@@ -164,14 +166,13 @@ public class AcknowledgementsTestCase {
      * @throws IOException
      * @throws InterruptedException
      */
-    @Test(groups = "wso2.mb", enabled = false)
+    @Test(groups = "wso2.mb")
     public void autoAcknowledgementsDropReceiverTestCase() throws  JMSException, NamingException, IOException,
             InterruptedException {
 
         QueueReceiver queueReceiver = null;
         QueueReceiver queueReceiverTwo = null;
         QueueSender queueSender = null;
-        int receivedMessageCountSub1 = 0;
 
         try {
 
@@ -186,7 +187,8 @@ public class AcknowledgementsTestCase {
                     configurationReader);
             queueSender.sendMessages(SEND_COUNT, "text message");
 
-            TimeUnit.SECONDS.sleep(PUBLISHER_DELAY);
+            // Capture the maximum amount reached signal
+            Signal.handle(new Signal("HUP"), new QueueSignalHandler(queueReceiver));
 
             // Creating a secondary JMS consumer client configuration
             queueReceiverTwo = new QueueReceiver("autoAckDropReceiverTestQueue",
@@ -208,8 +210,8 @@ public class AcknowledgementsTestCase {
                 queueSender.closeSender();
             }
 
-            // close queue receiver.
-            if (queueReceiver != null) {
+           // close queue receiver.
+            if (queueReceiverTwo != null) {
                 queueReceiverTwo.closeReceiver();
             }
         }

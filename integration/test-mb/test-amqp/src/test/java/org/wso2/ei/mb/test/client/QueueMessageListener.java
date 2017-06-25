@@ -21,11 +21,13 @@ package org.wso2.ei.mb.test.client;
 
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
+import sun.misc.Signal;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+
 
 /**
  * Queue message listener for receive messages.
@@ -59,21 +61,14 @@ public class QueueMessageListener implements MessageListener {
     private int maximumMessageCount;
 
     /**
-     * QueueReceiver object
-     */
-    private QueueReceiver receiver;
-
-    /**
      * Queue message listener for receive messages.
      *
      * @param delay wait delay for message listener.
      */
-    public QueueMessageListener(int delay, JMSAcknowledgeMode acknowledgeMode, int maximumMessageCount,
-                                QueueReceiver receiver) {
+    public QueueMessageListener(int delay, JMSAcknowledgeMode acknowledgeMode, int maximumMessageCount) {
         this.delay = delay;
         this.acknowledgeMode = acknowledgeMode;
         this.maximumMessageCount = maximumMessageCount;
-        this.receiver = receiver;
     }
 
     /**
@@ -86,10 +81,16 @@ public class QueueMessageListener implements MessageListener {
 
         try {
             currentMessageCount++;
-            if (currentMessageCount >= maximumMessageCount) {
-                receiver.closeReceiver();
+
+            //checks whether maximum message count is reached
+            if ((currentMessageCount >= maximumMessageCount)) {
+
+                // Creates a signal
+                Signal.raise(new Signal("HUP"));
+
             } else {
 
+                // checks whether the receiver is in client ack and sends an ack accordingly
                 if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode.getType())
                         && (getMessageCount() % 10 == 0)) {
                     receivedMessage.acknowledge();
@@ -116,4 +117,5 @@ public class QueueMessageListener implements MessageListener {
     public int getMessageCount() {
         return currentMessageCount;
     }
+
 }
