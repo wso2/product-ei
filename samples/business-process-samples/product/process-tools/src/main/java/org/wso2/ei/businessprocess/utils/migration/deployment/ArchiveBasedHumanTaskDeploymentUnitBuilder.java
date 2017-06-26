@@ -67,14 +67,12 @@ public class ArchiveBasedHumanTaskDeploymentUnitBuilder extends HumanTaskDeploym
     };
     private File humantaskDir;
     private String fileName;
-    private int tenantId;
     private long version;
     private String md5sum;
     private List<Definition> wsdlDefinitions = new ArrayList<Definition>();
     private InputStream hiDefinition;
     private InputStream hiConfiguration;
     private File humanTaskDefinitionFile;
-    private Map<String, InputStream> wsdlsMap = new HashMap<String, InputStream>();
     private Map<String, InputStream> schemasMap = new HashMap<String, InputStream>();
 
     // Build human task deployment unit with unextracted archive
@@ -83,7 +81,6 @@ public class ArchiveBasedHumanTaskDeploymentUnitBuilder extends HumanTaskDeploym
             throws HumanTaskDeploymentException {
         String hiArchiveZipName = hiArchiveZip.getName();
         this.fileName = FilenameUtils.removeExtension(hiArchiveZipName);
-        this.tenantId = tenantId;
         this.version = version;
         this.md5sum = md5sum;
         humantaskDir = extractHumanTaskArchive(hiArchiveZip, tenantId, version, BPS_HOME);
@@ -100,7 +97,6 @@ public class ArchiveBasedHumanTaskDeploymentUnitBuilder extends HumanTaskDeploym
         this.fileName = packageName;
         this.version = version;
         this.humantaskDir = extractedTaskArchive;
-        this.tenantId = tenantId;
         this.md5sum = md5sum;
         buildHumanInteractionDocuments();
         buildDeploymentConfiguration();

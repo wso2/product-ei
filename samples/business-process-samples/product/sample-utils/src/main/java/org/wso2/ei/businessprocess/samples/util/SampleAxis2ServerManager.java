@@ -127,8 +127,8 @@ public class SampleAxis2ServerManager {
             String port = System.getProperty("http_port");
             if (port != null) {
                 try {
-                    new Integer(port);
-                    trsIn.getParameter("port").setValue(port);
+                    //check validity of the given port value and set parameter
+                    trsIn.getParameter("port").setValue(Integer.valueOf(port).toString());
                 } catch (NumberFormatException e) {
                     log.error("Given port is not a valid integer. Using 9000 for port.");
                     trsIn.getParameter("port").setValue("9000");
