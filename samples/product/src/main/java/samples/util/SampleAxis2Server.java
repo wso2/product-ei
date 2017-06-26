@@ -65,11 +65,11 @@ public class SampleAxis2Server {
         Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
-    private static void startServer(String[] args) throws Exception {
+    public static void startServer(String[] args) throws Exception {
         SampleAxis2ServerManager.getInstance().start(args);
     }
 
-    private static void stopServer() throws Exception {
+    public static void stopServer() throws Exception {
         SampleAxis2ServerManager.getInstance().stop();
     }
 
