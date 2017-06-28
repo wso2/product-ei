@@ -19,7 +19,7 @@
     <parent>
         <artifactId>ei-component-parent</artifactId>
         <groupId>org.wso2.ei</groupId>
-        <version>6.1.2-SNAPSHOT</version>
+        <version>6.2.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
