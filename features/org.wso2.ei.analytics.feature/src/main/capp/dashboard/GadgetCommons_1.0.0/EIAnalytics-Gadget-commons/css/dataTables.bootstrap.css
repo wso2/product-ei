@@ -370,3 +370,8 @@ div.FixedHeader_Cloned table {
 	margin: 0 !important
 }
 
+
+.cmb-search {
+	background-color: transparent;
+	border-color: #616b7d;
+}

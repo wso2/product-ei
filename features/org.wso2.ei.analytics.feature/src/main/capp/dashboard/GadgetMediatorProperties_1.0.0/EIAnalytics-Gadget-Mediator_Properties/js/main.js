@@ -39,20 +39,40 @@ function onData(response) {
             $("#canvas").html(gadgetUtil.getEmptyRecordsText());
             return;
         }
-        if(data.payload.before) {
-            $("#payloadBfr").text(data.payload.before);
-        }
-        if(data.payload.after) {
-            $("#payloadAftr").text(data.payload.after);
-        }
+
+        drawMergeView("payloadView", data.payload.before.trim(), data.payload.after.trim());
 
         if(data.transportProperties) {
-           drawPropertyTable(data.transportProperties,$("#tblTransportBfr tbody"),BEFORE);
-           drawPropertyTable(data.transportProperties,$("#tblTransportAftr tbody"),AFTER);
+           var transportPropertiesBefore = "";
+           var transportPropertiesAfter = "";
+            data.transportProperties.forEach(function (property) {
+                if(typeof(property.before) === "string") {
+                    property.before = "'" + property.before + "'";
+                }
+                if(typeof(property.after) === "string") {
+                    property.after = "'" + property.after + "'";
+                }
+
+                transportPropertiesBefore += property.name + " : "+ property.before + "\n";
+                transportPropertiesAfter += property.name + " : "+ property.after + "\n";
+            });
+            drawMergeView("transportPropView", transportPropertiesBefore.trim(), transportPropertiesAfter.trim());
         }
+
         if(data.contextProperties) {
-           drawPropertyTable(data.contextProperties,$("#tblCtxtBfr tbody"),BEFORE);
-           drawPropertyTable(data.contextProperties,$("#tblCtxtAftr tbody"),AFTER);
+            var contextPropertiesBefore = "";
+            var contextPropertiesAfter = "";
+            data.contextProperties.forEach(function (property) {
+                if(typeof(property.before) === "string") {
+                    property.before = "'" + property.before + "'";
+                }
+                if(typeof(property.after) === "string") {
+                    property.after = "'" + property.after + "'";
+                }
+                contextPropertiesBefore += property.name + " : "+ property.before + "\n";
+                contextPropertiesAfter += property.name + " : "+ property.after + "\n";
+            });
+            drawMergeView("contextPropView", contextPropertiesBefore.trim(), contextPropertiesAfter.trim());
         }
     } catch (e) {
         $("#gadget-message").html(gadgetUtil.getErrorText(e));
@@ -63,18 +83,15 @@ function onError(msg) {
     $("#gadget-message").html(gadgetUtil.getErrorText(msg));
 };
 
-function drawPropertyTable(properties,tbody,side) {
-    tbody.empty();
-    properties.forEach(function (property) {
-        var tr = jQuery('<tr/>');
-        var tdKey = jQuery('<td/>');
-        var tdValue = jQuery('<td/>');
-        tr.append(tdKey.append(property.name));
-        if(side === BEFORE) {
-            tr.append(tdValue.append(property.before));
-        } else {
-            tr.append(tdValue.append(property.after));
-        }
-        tr.appendTo(tbody);
+function drawMergeView(placeholder, before, after) {
+    var view = document.getElementById(placeholder);
+    view.innerHTML = "";
+      var dv = CodeMirror.MergeView(view, {
+        value: before,
+        origLeft: after,
+        lineNumbers: true,
+        theme:"ambiance",
+        highlightDifferences: true,
+        connect: "connect"
     });
 }
