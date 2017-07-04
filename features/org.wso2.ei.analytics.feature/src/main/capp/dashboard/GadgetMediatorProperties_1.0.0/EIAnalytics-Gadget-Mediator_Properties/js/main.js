@@ -40,7 +40,7 @@ function onData(response) {
             return;
         }
 
-        drawMergeView("payloadView", data.payload.before.trim(), data.payload.after.trim());
+        drawMergeView("payloadView", data.payload.before.trim(), data.payload.after.trim(), true);
 
         if(data.transportProperties) {
            var transportPropertiesBefore = "";
@@ -56,7 +56,7 @@ function onData(response) {
                 transportPropertiesBefore += property.name + " : "+ property.before + "\n";
                 transportPropertiesAfter += property.name + " : "+ property.after + "\n";
             });
-            drawMergeView("transportPropView", transportPropertiesBefore.trim(), transportPropertiesAfter.trim());
+            drawMergeView("transportPropView", transportPropertiesBefore.trim(), transportPropertiesAfter.trim(), false);
         }
 
         if(data.contextProperties) {
@@ -72,7 +72,7 @@ function onData(response) {
                 contextPropertiesBefore += property.name + " : "+ property.before + "\n";
                 contextPropertiesAfter += property.name + " : "+ property.after + "\n";
             });
-            drawMergeView("contextPropView", contextPropertiesBefore.trim(), contextPropertiesAfter.trim());
+            drawMergeView("contextPropView", contextPropertiesBefore.trim(), contextPropertiesAfter.trim(), false);
         }
     } catch (e) {
         $("#gadget-message").html(gadgetUtil.getErrorText(e));
@@ -83,8 +83,19 @@ function onError(msg) {
     $("#gadget-message").html(gadgetUtil.getErrorText(msg));
 };
 
-function drawMergeView(placeholder, before, after) {
+function drawMergeView(placeholder, before, after, isFormatted) {
+    debugger;
     var view = document.getElementById(placeholder);
+    if(isJSON(before)) {
+        before = JSON.stringify(JSON.parse(before), null, "\t");   
+    } else {
+        before = formatXML(before);
+    }
+    if(isJSON(after)) {
+        after = JSON.stringify(JSON.parse(after), null, "\t");  
+    } else {
+        after = formatXML(after);
+    }
     view.innerHTML = "";
       var dv = CodeMirror.MergeView(view, {
         value: before,
@@ -94,4 +105,71 @@ function drawMergeView(placeholder, before, after) {
         highlightDifferences: true,
         connect: "connect"
     });
+    if (isFormatted) {
+        // dv.left.orig.autoFormatRange({line:0, ch:0}, {line:dv.left.orig.lineCount(), ch:1000});
+        // dv.edit.autoFormatRange({line:0, ch:0}, {line:dv.edit.lineCount(), ch:1000}); 
+        // dv.left.orig.setCursor({line:0, ch:0});
+        // dv.edit.setCursor({line:0, ch:0});
+    }
 }
+
+function isJSON(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+
+function formatXML(xml) {
+    var reg = /(>)(<)(\/*)/g;
+    var wsexp = / *(.*) +\n/g;
+    var contexp = /(<.+>)(.+\n)/g;
+    xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
+    var pad = 0;
+    var formatted = '';
+    var lines = xml.split('\n');
+    var indent = 0;
+    var lastType = 'other';
+    // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions 
+    var transitions = {
+        'single->single'    : 0,
+        'single->closing'   : -1,
+        'single->opening'   : 0,
+        'single->other'     : 0,
+        'closing->single'   : 0,
+        'closing->closing'  : -1,
+        'closing->opening'  : 0,
+        'closing->other'    : 0,
+        'opening->single'   : 1,
+        'opening->closing'  : 0, 
+        'opening->opening'  : 1,
+        'opening->other'    : 1,
+        'other->single'     : 0,
+        'other->closing'    : -1,
+        'other->opening'    : 0,
+        'other->other'      : 0
+    };
+
+    for (var i=0; i < lines.length; i++) {
+        var ln = lines[i];
+        var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
+        var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
+        var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
+        var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
+        var fromTo = lastType + '->' + type;
+        lastType = type;
+        var padding = '';
+
+        indent += transitions[fromTo];
+        for (var j = 0; j < indent; j++) {
+            padding += '    ';
+        }
+
+        formatted += padding + ln + '\n';
+    }
+
+    return formatted;
+};
