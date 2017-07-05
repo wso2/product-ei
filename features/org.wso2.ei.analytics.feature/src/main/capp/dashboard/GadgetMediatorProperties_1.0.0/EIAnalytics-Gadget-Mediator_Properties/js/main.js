@@ -40,7 +40,7 @@ function onData(response) {
             return;
         }
 
-        drawMergeView("payloadView", data.payload.before.trim(), data.payload.after.trim(), true);
+        drawMergeView("payloadView", data.payload.before.trim(), data.payload.after.trim());
 
         if(data.transportProperties) {
            var transportPropertiesBefore = "";
@@ -56,7 +56,7 @@ function onData(response) {
                 transportPropertiesBefore += property.name + " : "+ property.before + "\n";
                 transportPropertiesAfter += property.name + " : "+ property.after + "\n";
             });
-            drawMergeView("transportPropView", transportPropertiesBefore.trim(), transportPropertiesAfter.trim(), false);
+            drawMergeView("transportPropView", transportPropertiesBefore.trim(), transportPropertiesAfter.trim());
         }
 
         if(data.contextProperties) {
@@ -72,7 +72,7 @@ function onData(response) {
                 contextPropertiesBefore += property.name + " : "+ property.before + "\n";
                 contextPropertiesAfter += property.name + " : "+ property.after + "\n";
             });
-            drawMergeView("contextPropView", contextPropertiesBefore.trim(), contextPropertiesAfter.trim(), false);
+            drawMergeView("contextPropView", contextPropertiesBefore.trim(), contextPropertiesAfter.trim());
         }
     } catch (e) {
         $("#gadget-message").html(gadgetUtil.getErrorText(e));
@@ -83,8 +83,7 @@ function onError(msg) {
     $("#gadget-message").html(gadgetUtil.getErrorText(msg));
 };
 
-function drawMergeView(placeholder, before, after, isFormatted) {
-    debugger;
+function drawMergeView(placeholder, before, after) {
     var view = document.getElementById(placeholder);
     if(isJSON(before)) {
         before = JSON.stringify(JSON.parse(before), null, "\t");   
@@ -105,12 +104,6 @@ function drawMergeView(placeholder, before, after, isFormatted) {
         highlightDifferences: true,
         connect: "connect"
     });
-    if (isFormatted) {
-        // dv.left.orig.autoFormatRange({line:0, ch:0}, {line:dv.left.orig.lineCount(), ch:1000});
-        // dv.edit.autoFormatRange({line:0, ch:0}, {line:dv.edit.lineCount(), ch:1000}); 
-        // dv.left.orig.setCursor({line:0, ch:0});
-        // dv.edit.setCursor({line:0, ch:0});
-    }
 }
 
 function isJSON(str) {
@@ -133,7 +126,6 @@ function formatXML(xml) {
     var lines = xml.split('\n');
     var indent = 0;
     var lastType = 'other';
-    // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions 
     var transitions = {
         'single->single'    : 0,
         'single->closing'   : -1,
@@ -155,9 +147,9 @@ function formatXML(xml) {
 
     for (var i=0; i < lines.length; i++) {
         var ln = lines[i];
-        var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
-        var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
-        var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
+        var single = Boolean(ln.match(/<.+\/>/));
+        var closing = Boolean(ln.match(/<\/.+>/));
+        var opening = Boolean(ln.match(/<[^!].*>/));
         var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
         var fromTo = lastType + '->' + type;
         lastType = type;
