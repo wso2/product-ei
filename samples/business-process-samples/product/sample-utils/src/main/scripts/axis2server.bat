@@ -111,7 +111,7 @@ set CARBON_CLASSPATH=..\..\repository\components\lib,%CARBON_CLASSPATH%
 set CARBON_CLASSPATH=..\..\repository\components\plugins,%CARBON_CLASSPATH%
 set CARBON_CLASSPATH=..\..\lib\core\WEB-INF\lib,%CARBON_CLASSPATH%
 set CARBON_CLASSPATH=..\..\repository\components\extensions,%CARBON_CLASSPATH%
-set CARBON_CLASSPATH=..\..\lib\endorsed,%CARBON_CLASSPATH%
+set CARBON_CLASSPATH=..\..\lib\bps-endorsed,%CARBON_CLASSPATH%
 
 set confpath=%AXIS2_HOME%repository\conf\axis2.xml
 set AXIS2_ENDORSED=%AXIS2_HOME%..\..\lib\endorsed

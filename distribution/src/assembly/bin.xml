@@ -922,6 +922,13 @@
                 <include>**/saxon9he.jar</include>
             </includes>
         </fileSet>
+        <!-- added a bps specific endorsed directory. Fix https://wso2.org/jira/browse/ESBJAVA-5118-->
+        <fileSet>
+            <directory>
+                target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib/bps-endorsed/</outputDirectory>
+        </fileSet>
         <fileSet>
             <directory>./src/resources</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/lib/</outputDirectory>
@@ -3505,16 +3512,6 @@
             <fileMode>644</fileMode>
         </file>
         <!--END Analytics JS APIs artifacts -->
-
-        <file>
-            <source>
-                target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed/xalan-2.7.2.wso2v2.jar
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib/endorsed/</outputDirectory>
-            <!--commented since this tag causes issues in maven assembly plugin when copying zip formats-->
-            <!--filtered>true</filtered-->
-            <fileMode>644</fileMode>
-        </file>
 
         <file>
             <source>
