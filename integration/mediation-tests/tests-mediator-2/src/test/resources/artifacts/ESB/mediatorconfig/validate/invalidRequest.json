@@ -1,0 +1,255 @@
+{
+  "BookHeader": {
+    "Booking": {
+      "state": "Pending",
+      "TransactionId": "wiwfijdjjjdvxcvn"
+    },
+    "Record": {
+      "BookId": "abc",
+      "CustomerID": "abcdef",
+      "TenantId": "wso2"
+    }
+  },
+  "CustomerDetail": {
+    "starPoints": [
+      {
+        "Id": "ddn ddf",
+        "ValidationId": "sss ppp",
+        "Latitude": -125875419,
+        "Longitude": 567,
+        "Height": -689990939,
+        "OnlineDevices": [
+          {
+            "MachineId": "mac book",
+            "MachineGUID": "eruefjdnfsndmndmnf",
+            "MachineType": "apple",
+            "Category": "high",
+            "ParentGuid": "sdkjdfjjdfjnvmcdlk",
+            "OwnerType": "director",
+            "ShortDescription": "lab machine",
+            "LongDescription": "lab machine at wso2",
+            "LogicalMachineId": "ddfjsdjdsgfgmspowe",
+            "LogicalMachineNumber": 45754372,
+            "FunctionalMachineNumber": 73911269,
+            "FunctionalDeviceNxame": -98430916,
+            "SerialNumber": "efksdgdsnmndsmnv",
+            "Identifier": "sunrise",
+            "OperatingWattage": 24238562,
+            "WarrentyPeriod": 25156743,
+            "Capacity": -23859945,
+            "MinVoltage": -27036878,
+            "MaxVoltage": -39964389,
+            "ChargingCapacity": 24535801,
+            "Strings": [
+              {
+                "PluginType": 41024571,
+                "Model": 83724368,
+                "Type": -98330065,
+                "Socket Detail": 50249394,
+                "PowerModel": "round",
+                "NumberOfPorts": 56281539
+              },
+              {
+                "PluginType": 64253591,
+                "Model": 44003816,
+                "Type": -48279574,
+                "Socket Detail": -79740041,
+                "PowerModel": "square",
+                "NumberOfPorts": -55387475
+              },
+              {
+                "PluginType": 26956687,
+                "Model": 84561447,
+                "Type": -52183233,
+                "Socket Detail": 70933503,
+                "PowerModel": "horizontal",
+                "NumberOfPorts": 88612710
+              },
+              {
+                "PluginType": 66276193,
+                "Model": 92053625,
+                "Type": -45416231,
+                "Socket Detail": -12868119,
+                "PowerModel": "vertical",
+                "NumberOfPorts": 28255970
+              }
+            ]
+          },
+          {
+            "MachineId": "ddfhdhfg",
+            "MachineGUID": "dcvjoieoirwejkdmcfds",
+            "MachineType": "lenovo",
+            "Category": "IBM",
+            "ParentGuid": "wwdjsjdfdsjf",
+            "OwnerType": "developer",
+            "ShortDescription": "dfjsdf ddsjfjj dsksk",
+            "LongDescription": "sddsf ddmfn  dfs ddd dfds",
+            "LogicalMachineId": "erewindmmfkdcm,c",
+            "LogicalMachineNumber": -54191189,
+            "FunctionalMachineNumber": -93438684,
+            "FunctionalDeviceNxame": -51852363,
+            "SerialNumber": "wekjewjrhjfd",
+            "Identifier": "dfsdfnsngfndmgnmfn",
+            "OperatingWattage": -30115868,
+            "WarrentyPeriod": 85948205,
+            "Capacity": 33220764,
+            "MinVoltage": 49794723,
+            "MaxVoltage": 283183,
+            "ChargingCapacity": -93866666,
+            "Strings": [
+              {
+                "PluginType": 28679577,
+                "Model": -12200460,
+                "Type": -57304651,
+                "Socket Detail": 96163542,
+                "PowerModel": "vertical",
+                "NumberOfPorts": -84834229
+              },
+              {
+                "PluginType": -5117735,
+                "Model": 73385550,
+                "Type": 95940152,
+                "Socket Detail": -33568589,
+                "PowerModel": "horizontal",
+                "NumberOfPorts": 91876125
+              },
+              {
+                "PluginType": -62404645,
+                "Model": -20618019,
+                "Type": 22193292,
+                "Socket Detail": -70414193,
+                "PowerModel": "round",
+                "NumberOfPorts": 52617072
+              },
+              {
+                "PluginType": 81134127,
+                "Model": -62492491,
+                "Type": -15416532,
+                "Socket Detail": 66588196,
+                "PowerModel": "small",
+                "NumberOfPorts": -79165458
+              },
+              {
+                "PluginType": -93049700,
+                "Model": 22072269,
+                "Type": -33252270,
+                "Socket Detail": 6312077,
+                "PowerModel": "negative",
+                "NumberOfPorts": 49528061
+              }
+            ]
+          },
+          {
+            "MachineId": "dffdnfndfng",
+            "MachineGUID": "sdnsdjkfhsjdhgjh",
+            "MachineType": "android",
+            "Category": "phone",
+            "ParentGuid": "dkfjsdfjdhfghdfjgh",
+            "OwnerType": "reader",
+            "ShortDescription": "used to read books",
+            "LongDescription": "dfdngjndfj dfdskjjf dfdkgkj",
+            "LogicalMachineId": "lsnfjsndjdfjhgjh",
+            "LogicalMachineNumber": -32816258,
+            "FunctionalMachineNumber": 95838224,
+            "FunctionalDeviceNxame": 36079173,
+            "SerialNumber": "jsdjhsdhfhdhh",
+            "Identifier": "eeuur344jhj",
+            "OperatingWattage": -23427634,
+            "WarrentyPeriod": 51243759,
+            "Capacity": 41641508,
+            "MinVoltage": -12470206,
+            "MaxVoltage": -29930496,
+            "ChargingCapacity": -35326163,
+            "Strings": [
+              {
+                "PluginType": -32099957,
+                "Model": -50246275,
+                "Type": 72804211,
+                "Socket Detail": 75335303,
+                "PowerModel": "round",
+                "NumberOfPorts": -72270258
+              }
+            ]
+          },
+          {
+            "MachineId": "djddjhgjdfhg",
+            "MachineGUID": "ssdfjsdh24873fjdsjfher",
+            "MachineType": "tab",
+            "Category": "third party",
+            "ParentGuid": "xzfnzsdvdkjf",
+            "OwnerType": "random user",
+            "ShortDescription": "dsdfdjghdfj fifsdhf dfkjdjh",
+            "LongDescription": "ddsnjf fejfsdjfh dlkakk cxnjx",
+            "LogicalMachineId": "efdhdjhfj354dfjhsdjhf",
+            "LogicalMachineNumber": -85747753,
+            "FunctionalMachineNumber": -77762104,
+            "FunctionalDeviceNxame": 13967016,
+            "SerialNumber": "sadsj sadsdjfj dsjsh",
+            "Identifier": "ccxnvjc dskskj sadakj",
+            "OperatingWattage": 38684834,
+            "WarrentyPeriod": -80767845,
+            "Capacity": 66209356,
+            "MinVoltage": -58770601,
+            "MaxVoltage": 73603117,
+            "ChargingCapacity": -39736155,
+            "Strings": [
+              {
+                "PluginType": -59568470,
+                "Model": 70689543,
+                "Type": 29177718,
+                "Socket Detail": -89247976,
+                "PowerModel": "round",
+                "NumberOfPorts": -10005259
+              },
+              {
+                "PluginType": 33755220,
+                "Model": -73113583,
+                "Type": -96235063,
+                "Socket Detail": 40021963,
+                "PowerModel": "vertical",
+                "NumberOfPorts": 46219079
+              },
+              {
+                "PluginType": 83858196,
+                "Model": 80493556,
+                "Type": 40007576,
+                "Socket Detail": -52377034,
+                "PowerModel": "horizontal",
+                "NumberOfPorts": -38233319
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "Requests": [
+      {
+        "RequestType": "book retrieve request",
+        "RequestCost": "not pre planned",
+        "RequestTime": "dfh sdjfjh sdsfj",
+        "AdditionalCost": 28331728,
+        "ValidationStatus": "none",
+        "SavingGuarantee": false,
+        "SavingGuaranteeValue": -47616105,
+        "Discount": 75500283,
+        "SubOrders": [
+          {
+            "Id": "dsdfds hjkk",
+            "Quantity": -51722332,
+            "Value": -82718878
+          },
+          {
+            "Id": "adshf asdjfshdf",
+            "Quantity": -7358129,
+            "Value": 19661315
+          },
+          {
+            "Id": "dfdf llgjgj",
+            "Quantity": 82502133,
+            "Value": 27248477
+          }
+        ]
+      }
+    ]
+  }
+}
