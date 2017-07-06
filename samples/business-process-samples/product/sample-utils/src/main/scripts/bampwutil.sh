@@ -110,5 +110,5 @@ fi
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
--Djava.endorsed.dirs="$CARBON_HOME/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Djava.endorsed.dirs="$CARBON_HOME/lib/bps-endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
 org.wso2.bps.samples.util.PasswordEncryptUtil $*

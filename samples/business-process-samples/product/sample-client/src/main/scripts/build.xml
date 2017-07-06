@@ -63,7 +63,7 @@
             <sysproperty key="javax.net.ssl.trustStore" value="./../../repository/resources/security/client-truststore.jks"/>
             <sysproperty key="javax.net.ssl.trustStorePassword" value="wso2carbon"/>
             <sysproperty key="java.io.tmpdir" value="./../../tmp/sampleClient"/>
-            <sysproperty key="java.endorsed.dirs" value="./../../lib/endorsed"/>
+            <sysproperty key="java.endorsed.dirs" value="./../../lib/bps-endorsed"/>
             <sysproperty key="carbon.home" value="./../.."/>
         </java>
     </target>
@@ -87,7 +87,7 @@
         <fileset dir="../../lib">
             <include name="*.jar"/>
         </fileset>
-        <fileset dir="../../lib/endorsed">
+        <fileset dir="../../lib/bps-endorsed">
             <include name="*.jar"/>
         </fileset>
         <fileset dir="../../repository/components/extensions">
