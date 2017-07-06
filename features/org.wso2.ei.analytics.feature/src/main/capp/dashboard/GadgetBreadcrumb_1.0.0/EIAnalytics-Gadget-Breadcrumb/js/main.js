@@ -7,10 +7,11 @@ var currentLocation;
 
 $(function() {
     
-    if('message' === pageName){
+    if ('message' === pageName){
         $('.breadcrumb li:first-child()').remove();
-        $('.breadcrumb').append('<li><a class="back" href=""><i class="icon fw fw-redo fw-flip-horizontal"></i> Back</a></li>')
-    }else{
+        $('.breadcrumb').append('<li><a class="back"href="">'+
+            +'<i class="icon fw fw-redo fw-flip-horizontal"></i> Back</a></li>')
+    } else {
         $("#homeLink").attr("href", baseUrl);
     }
 
@@ -27,28 +28,29 @@ $(function() {
         var li = $('<li/>');
         var a = $('<a/>');
         
-        if(['message','mediator'].indexOf(text) > -1){
+        if (['message','mediator'].indexOf(text) > -1){
             li.addClass("text-muted truncate hidden");
             li.append(text);
-        }
-        else{
+        } else {
             li.addClass("truncate");
             a.attr("href",url);
             a.text(text);
             li.append(a);
         }
+
         ol.append(li);
 
-        if('message' === pageName){
+        if ('message' === pageName){
             $('.breadcrumb li.hidden').next().addClass('hide-slash');
         }
     }
 
     $(".breadcrumb").on('click', 'a', function(e) {
         e.preventDefault();
-        if($(this).hasClass('back')){
+
+        if ($(this).hasClass('back')){
             parent.window.history.back();
-        }else{
+        } else {
             parent.window.location = $(this).attr('href');
         }
         
