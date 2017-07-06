@@ -922,6 +922,7 @@
                 <include>**/saxon9he.jar</include>
             </includes>
         </fileSet>
+        <!-- added a bps specific endorsed directory. Fix https://wso2.org/jira/browse/ESBJAVA-5118-->
         <fileSet>
             <directory>
                 target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed
