@@ -69,6 +69,16 @@ $(function() {
         $('#btnDropdown > span:first-child').html($(this).html());
         $('#btnDropdown').addClass('active');
         switch($(this).data('value')){
+            case 'Last5Minutes':
+                dateLabel.html(moment().subtract(5, 'minutes').format('MMMM D, YYYY hh:mm:ss A') + ' - ' + moment().format('MMMM D, YYYY hh:mm:ss A'));
+                message = {
+                    timeFrom: new Date(moment().subtract(5, 'minutes')).getTime(),
+                    timeTo: new Date(moment()).getTime(),
+                    timeUnit: "Minute"
+                };
+                gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
+                gadgetUtil.updateURLParam("timeTo", message.timeTo.toString());
+                break;  
             case 'LastHour':
                 dateLabel.html(moment().subtract(1, 'hours').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
                 message = {
