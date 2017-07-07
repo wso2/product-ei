@@ -277,10 +277,17 @@ function buildLabel(node) {
         });
     }
     var targetUrl = pageUrl + '?' + hiddenParams;
-    var labelText = '<a href="#"><div class="nodeLabel" data-node-type="' + node.type + '" data-component-id="' + node.modifiedId
-    + '" data-hash-code="' + hashCode + '" data-target-url="' + targetUrl + '"><h4>' + node.label + "</h4>";
+    var labelText;
 
     if (node.dataAttributes) {
+        var nodeClasses = "nodeLabel";
+        if (node.dataAttributes[1].value === "Failed") {
+            nodeClasses += " failed-node";
+        }
+        
+        labelText = '<a href="#"><div class="' + nodeClasses +'" data-node-type="' + node.type + '" data-component-id="' + node.modifiedId
+        + '" data-hash-code="' + hashCode + '" data-target-url="' + targetUrl + '"><h4>' + node.label + "</h4>";
+
         node.dataAttributes.forEach(function(item, i) {
             labelText += "<h5><label>" + item.name + " : </label><span>" + item.value + "</span></h5>";
         });

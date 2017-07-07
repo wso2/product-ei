@@ -33,6 +33,7 @@
             <div class="clearfix">
                 <div class="btn-group pull-right" id="date-select">
                     <div class="btn-group pull-right" role="group">
+                        <button role="date-update" data-value="Last5Minutes" type="button" class="btn btn-default hidden-xs">Last 5 Minutes</button>
                         <button role="date-update" data-value="LastHour" type="button" class="btn btn-default hidden-xs">Last Hour</button>
                         <button role="date-update" data-value="LastDay" type="button" class="btn btn-default hidden-xs">Last 24 Hours</button>
                         <button role="date-update" data-value="LastMonth" type="button" class="btn btn-default hidden-xs">Last 30 Days</button>
@@ -47,6 +48,7 @@
                             <span>Last Hour</span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu btn-dropdown-menu pull-right" role="menu">
+                          <li><a href="javascript:void(0)" role="date-update" data-value="LastHour">Last 5 Minutes</a></li>
                             <li><a href="javascript:void(0)" role="date-update" data-value="LastHour">Last Hour</a></li>
                             <li><a href="javascript:void(0)" role="date-update" data-value="LastDay">Last 24 Hours</a></li>
                             <li><a href="javascript:void(0)" role="date-update" data-value="LastMonth"s>Last 30 Days</a></li>
