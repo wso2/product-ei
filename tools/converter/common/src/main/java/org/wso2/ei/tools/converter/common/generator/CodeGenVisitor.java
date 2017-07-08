@@ -44,20 +44,16 @@ import org.ballerinalang.model.expressions.ActionInvocationExpr;
 import org.ballerinalang.model.expressions.AddExpression;
 import org.ballerinalang.model.expressions.AndExpression;
 import org.ballerinalang.model.expressions.ArrayInitExpr;
-import org.ballerinalang.model.expressions.ArrayLengthExpression;
-import org.ballerinalang.model.expressions.ArrayMapAccessExpr;
 import org.ballerinalang.model.expressions.BasicLiteral;
 import org.ballerinalang.model.expressions.ConnectorInitExpr;
 import org.ballerinalang.model.expressions.DivideExpr;
 import org.ballerinalang.model.expressions.EqualExpression;
 import org.ballerinalang.model.expressions.Expression;
-import org.ballerinalang.model.expressions.FieldAccessExpr;
 import org.ballerinalang.model.expressions.FunctionInvocationExpr;
 import org.ballerinalang.model.expressions.GreaterEqualExpression;
 import org.ballerinalang.model.expressions.GreaterThanExpression;
 import org.ballerinalang.model.expressions.InstanceCreationExpr;
 import org.ballerinalang.model.expressions.JSONArrayInitExpr;
-import org.ballerinalang.model.expressions.JSONFieldAccessExpr;
 import org.ballerinalang.model.expressions.JSONInitExpr;
 import org.ballerinalang.model.expressions.KeyValueExpr;
 import org.ballerinalang.model.expressions.LessEqualExpression;
@@ -74,13 +70,16 @@ import org.ballerinalang.model.expressions.SubtractExpression;
 import org.ballerinalang.model.expressions.TypeCastExpression;
 import org.ballerinalang.model.expressions.TypeConversionExpr;
 import org.ballerinalang.model.expressions.UnaryExpression;
-import org.ballerinalang.model.expressions.VariableRefExpr;
+import org.ballerinalang.model.expressions.variablerefs.FieldBasedVarRefExpr;
+import org.ballerinalang.model.expressions.variablerefs.IndexBasedVarRefExpr;
+import org.ballerinalang.model.expressions.variablerefs.SimpleVarRefExpr;
 import org.ballerinalang.model.statements.AbortStmt;
 import org.ballerinalang.model.statements.ActionInvocationStmt;
 import org.ballerinalang.model.statements.AssignStmt;
 import org.ballerinalang.model.statements.BlockStmt;
 import org.ballerinalang.model.statements.BreakStmt;
 import org.ballerinalang.model.statements.CommentStmt;
+import org.ballerinalang.model.statements.ContinueStmt;
 import org.ballerinalang.model.statements.ForkJoinStmt;
 import org.ballerinalang.model.statements.FunctionInvocationStmt;
 import org.ballerinalang.model.statements.IfElseStmt;
@@ -99,6 +98,12 @@ import org.ballerinalang.model.values.BInteger;
 import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+//import org.ballerinalang.model.expressions.ArrayLengthExpression;
+//import org.ballerinalang.model.expressions.ArrayMapAccessExpr;
+//import org.ballerinalang.model.expressions.FieldAccessExpr;
+//import org.ballerinalang.model.expressions.JSONFieldAccessExpr;
+//import org.ballerinalang.model.expressions.VariableRefExpr;
 
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
@@ -197,8 +202,11 @@ public class CodeGenVisitor implements NodeVisitor {
         /**
          serviceDefinition : 'service' Identifier serviceBody;
          * */
-        appendToBalSource(getIndentationForCurrentLine() + Constants.SERVICE_STR + Constants.SPACE_STR +
-                service.getName() + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR + Constants.NEWLINE_STR);
+        appendToBalSource(
+                getIndentationForCurrentLine() + Constants.SERVICE_STR + Constants.ANGLE_BRACKET_START_STR + service
+                        .getProtocolPkgName() + Constants.ANGLE_BRACKET_END_STR +
+                        Constants.SPACE_STR + service.getName() + Constants.SPACE_STR + Constants.STMTBLOCK_START_STR
+                        + Constants.NEWLINE_STR);
         ++indentDepth;
 
         /**
@@ -531,8 +539,8 @@ public class CodeGenVisitor implements NodeVisitor {
         appendToBalSource(getIndentationForCurrentLine() + Constants.REPLY_STR + Constants.SPACE_STR);
 
         Expression replyExpression = replyStmt.getReplyExpr();
-        if (replyExpression instanceof VariableRefExpr) {
-            appendToBalSource(((VariableRefExpr) replyExpression).getSymbolName().toString());
+        if (replyExpression instanceof SimpleVarRefExpr) {
+            appendToBalSource(((SimpleVarRefExpr) replyExpression).getSymbolName().toString());
         }
 
         appendToBalSource(Constants.STMTEND_STR + Constants.NEWLINE_STR);
@@ -563,6 +571,11 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(BreakStmt breakStmt) {
+
+    }
+
+    @Override
+    public void visit(ContinueStmt continueStmt) {
 
     }
 
@@ -901,22 +914,22 @@ public class CodeGenVisitor implements NodeVisitor {
 
     }
 
-    @Override
+  /*  @Override
     public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
         logger.debug("Visit - ArrayMapAccessExpr");
-        /**
-         * variableReference
-         :   nameReference                               # simpleVariableIdentifier// simple identifier
-         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-         ;
-         */
+        *//**
+     * variableReference
+     :   nameReference                               # simpleVariableIdentifier// simple identifier
+     |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+     |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+     ;
+     *//*
         appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
         arrayMapAccessExpr.getIndexExprs()[0].accept(this);
         appendToBalSource(Constants.ARRAY_END_STR);
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public void visit(ArrayLengthExpression arrayLengthExpression) {
 
     }
@@ -924,13 +937,15 @@ public class CodeGenVisitor implements NodeVisitor {
     @Override
     public void visit(FieldAccessExpr structAttributeAccessExpr) {
         logger.debug("Visit - FieldAccessExpr");
-        /**
-         * variableReference
-         :   nameReference                               # simpleVariableIdentifier// simple identifier
-         |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-         |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-         ;
-         */
+        */
+
+    /**
+     * variableReference
+     * :   nameReference                               # simpleVariableIdentifier// simple identifier
+     * |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
+     * |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
+     * ;
+     *//*
         structAttributeAccessExpr.getVarRef().accept(this);
         if (structAttributeAccessExpr.getFieldExpr() != null) {
             appendToBalSource(Constants.PERIOD_STR);
@@ -951,14 +966,13 @@ public class CodeGenVisitor implements NodeVisitor {
             appendToBalSource(Constants.PERIOD_STR);
             jsonPathExpr.getFieldExpr().accept(this);
         }
-    }
+    }*/
 
     /*@Override
     public void visit(BacktickExpr backtickExpr) {
         logger.debug("Visit - BacktickExpr");
         appendToBalSource("`" + backtickExpr.getTemplateStr() + "`");
     }*/
-
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
         logger.debug("Visit - ArrayInitExpr");
@@ -1081,9 +1095,25 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     @Override
+    public void visit(SimpleVarRefExpr simpleVarRefExpr) {
+        logger.debug("Visit - SimpleVarRefExpr");
+        appendToBalSource(simpleVarRefExpr.getVarName());
+    }
+
+    @Override
+    public void visit(FieldBasedVarRefExpr fieldBasedVarRefExpr) {
+
+    }
+
+    @Override
+    public void visit(IndexBasedVarRefExpr indexBasedVarRefExpr) {
+
+    }
+
+    /*@Override
     public void visit(VariableRefExpr variableRefExpr) {
         appendToBalSource(variableRefExpr.getSymbolName().toString());
-    }
+    }*/
 
     @Override
     public void visit(NullLiteral nullLiteral) {

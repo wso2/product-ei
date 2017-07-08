@@ -25,14 +25,18 @@ import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
 import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
+import org.wso2.ei.tools.mule2ballerina.model.Database;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
 import org.wso2.ei.tools.mule2ballerina.util.Constant;
+import org.wso2.ei.tools.mule2ballerina.util.ConstructorHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +46,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
@@ -60,6 +65,7 @@ public class ConfigReader {
     private boolean subFlowStarted = false;
     private boolean asyncFlowStarted = false;
     private List<String> unIdentifiedElements;
+    private DataCarrierDTO dataCarrierDTO;
 
     public ConfigReader() {
         mapperObject = new ElementMapper();
@@ -77,6 +83,7 @@ public class ConfigReader {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             XMLEventReader eventReader = xmlInputFactory.createXMLEventReader(inputStream);
+            xmlInputFactory.setProperty(XMLInputFactory.IS_COALESCING, true);
 
             while (eventReader.hasNext()) {
                 XMLEvent xmlEvent = eventReader.nextEvent();
@@ -87,7 +94,8 @@ public class ConfigReader {
                     loadIntermediateMuleObjects(startElement);
                     break;
 
-                case XMLStreamConstants.CHARACTERS:
+                case XMLStreamConstants.CDATA:
+                    populateCData(xmlEvent.asCharacters());
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
@@ -132,13 +140,7 @@ public class ConfigReader {
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
         Class<?> intermediateClass = null;
         if (mClassName != null) {
-            try {
-                intermediateClass = Class.forName(mClassName);
-                populateIntermediateObject(mElement.getAttributes(), intermediateClass);
-
-            } catch (ClassNotFoundException e) {
-                logger.error(e.getMessage(), e);
-            }
+            populateIntermediateObject(mElement.getAttributes(), mClassName, mElementName);
         } else {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
@@ -192,19 +194,30 @@ public class ConfigReader {
      * the intermediate object stack
      *
      * @param attributes List of attributes associate with a mule element
-     * @param mClass     Intermediate class that is mapped to the mule element
+     * @param mClassName Intermediate class that is mapped to the mule element
      */
-    private void populateIntermediateObject(Iterator<Attribute> attributes, Class<?> mClass) {
+    private void populateIntermediateObject(Iterator<Attribute> attributes, String mClassName, String elementName) {
         try {
-            java.lang.Object object = mClass.newInstance();
+            java.lang.Object object = null;
+            Class<?> mClass = Class.forName(mClassName);
+            String constructorArgExist = (ConstructorHelper.get(elementName) != null ?
+                    ConstructorHelper.get(elementName) :
+                    null);
+            if (constructorArgExist != null) {
+                Constructor constructor = mClass.getConstructor(new Class[] { String.class });
+                object = (Object) constructor.newInstance(ConstructorHelper.get(elementName));
+            } else {
+                object = mClass.newInstance();
+            }
 
+            final Object finalObject = object;
             attributes.forEachRemaining(attribute -> {
                 try {
                     String property = attributeMapper.getmAttributeMapper().get(getAttributeName(attribute));
                     if (property != null) {
                         Field field = mClass.getDeclaredField(property);
                         field.setAccessible(true);
-                        field.set(object, attribute.getValue());
+                        field.set(finalObject, attribute.getValue());
                     }
                 } catch (NoSuchFieldException e) {
                     logger.warn(
@@ -214,14 +227,37 @@ public class ConfigReader {
                 }
             });
 
-            BaseObject muleObj = (BaseObject) object;
-            DataCarrierDTO dataCarrierDTO = populateDataCarrier(muleObj);
-            muleObj.buildTree(dataCarrierDTO);
+            BaseObject baseObj = (BaseObject) finalObject;
+            dataCarrierDTO = populateDataCarrier(baseObj);
+            //If it's not a database object add it to tree (postpone adding db object until query is set)
+            if (!(baseObj instanceof Database)) {
+                baseObj.buildTree(dataCarrierDTO);
+            }
 
         } catch (IllegalAccessException e) {
             logger.error(e.getMessage(), e);
         } catch (InstantiationException e) {
             logger.error(e.getMessage(), e);
+        } catch (ClassNotFoundException e) {
+            logger.error(e.getMessage(), e);
+        } catch (NoSuchMethodException e) {
+            logger.error(e.getMessage(), e);
+        } catch (InvocationTargetException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * DB queries are represented as CDATA. After setting the query only database object should be added to the tree
+     *
+     * @param characters
+     */
+    private void populateCData(Characters characters) {
+        String data = characters.getData();
+        if (dataCarrierDTO.getBaseObject() instanceof Database) {
+            Database db = (Database) dataCarrierDTO.getBaseObject();
+            db.setQuery(data);
+            db.buildTree(dataCarrierDTO);
         }
     }
 
