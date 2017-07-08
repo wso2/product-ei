@@ -45,7 +45,9 @@ public class PropertyXPATH2FunctionsTestCase extends ESBIntegrationTest {
                 getESBResourceLocation() + File.separator + "mediatorconfig" + File.separator + "property"
                         + File.separator + "synapse.properties"));
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/property/XPATH2Function.xml");
+        loadESBConfigurationFromClasspath(
+                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
+                        + File.separator + "property" + File.separator + "XPATH2Function.xml");
     }
 
     @AfterClass(alwaysRun = true)
