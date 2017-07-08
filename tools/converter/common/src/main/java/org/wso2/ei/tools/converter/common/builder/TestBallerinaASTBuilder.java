@@ -73,14 +73,11 @@ public class TestBallerinaASTBuilder {
         //String asPkgName = null;
         modelBuilder.addImportPackage(null, null, pkgPath, null);
 
-
         String pkgPath1 = "ballerina.net.http";
         //String asPkgName1 = null;
         modelBuilder.addImportPackage(null, null, pkgPath1, null);
 
-
-        modelBuilder.startAnnotationAttachment(null);
-
+        modelBuilder.startAnnotationAttachment();
 
         BLangModelBuilder.NameReference nameReference;
 
@@ -90,31 +87,22 @@ public class TestBallerinaASTBuilder {
         modelBuilder.validateAndSetPackagePath(null, nameReference);
         nameReferenceStack.push(nameReference);
 
-
         String stringLiteral = "/hello";
         modelBuilder.createStringLiteral(null, null, stringLiteral);
 
-
         modelBuilder.createLiteralTypeAttributeValue(null, null);
 
-
         String key = "value";
-        modelBuilder.createAnnotationKeyValue(null, key);
-
+        modelBuilder.createAnnotationKeyValue(null, null, key);
 
         int attribuesAvailable = 1;
-        modelBuilder.addAnnotationAttachment(null, null,
-                nameReferenceStack.pop(), attribuesAvailable);
+        modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attribuesAvailable);
 
-
-        modelBuilder.startServiceDef(null);
-
+        modelBuilder.startServiceDef();
 
         modelBuilder.startResourceDef();
 
-
-        modelBuilder.startAnnotationAttachment(null);
-
+        modelBuilder.startAnnotationAttachment();
 
         BLangModelBuilder.NameReference nameReference1;
 
@@ -124,42 +112,30 @@ public class TestBallerinaASTBuilder {
         modelBuilder.validateAndSetPackagePath(null, nameReference1);
         nameReferenceStack.push(nameReference1);
 
-
         int attribuesAvailable1 = 0;
-        modelBuilder.addAnnotationAttachment(null, null,
-                nameReferenceStack.pop(), attribuesAvailable1);
-
+        modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attribuesAvailable1);
 
         String builtInRefTypeName = "message";
         SimpleTypeName simpleTypeName = new SimpleTypeName(builtInRefTypeName);
         typeNameStack.push(simpleTypeName);
 
-
         int annotationCount = 0;
-        modelBuilder.addParam(null, null, typeNameStack.pop(),
-                "m", annotationCount, processingReturnParams);
+        modelBuilder.addParam(null, null, typeNameStack.pop(), "m", annotationCount, processingReturnParams);
 
-
-        modelBuilder.startCallableUnitBody(null);
-
+        modelBuilder.startCallableUnitBody();
 
         String builtInRefTypeName1 = "message";
         SimpleTypeName simpleTypeName1 = new SimpleTypeName(builtInRefTypeName1);
         typeNameStack.push(simpleTypeName1);
 
-
         modelBuilder.startMapStructLiteral();
 
-
         modelBuilder.createMapStructLiteral(null, null);
-
 
         SimpleTypeName typeName = typeNameStack.pop();
         String varName = "response";
         boolean exprAvailable = true;
-        modelBuilder.addVariableDefinitionStmt(null, null, typeName, varName,
-                exprAvailable);
-
+        modelBuilder.addVariableDefinitionStmt(null, null, typeName, varName, exprAvailable);
 
         BLangModelBuilder.NameReference nameReference2;
         String pkgName2 = "messages";
@@ -170,28 +146,22 @@ public class TestBallerinaASTBuilder {
 
         modelBuilder.startExprList();
 
-
         BLangModelBuilder.NameReference nameReference3;
         String name3 = "response";
         nameReference3 = new BLangModelBuilder.NameReference(null, name3);
         nameReferenceStack.push(nameReference3);
 
-        modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
-
+        //   modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
 
         String stringLiteral1 = "Hello, World!";
         modelBuilder.createStringLiteral(null, null, stringLiteral1);
-
 
         int childCountExprList = 3;
         int noOfArguments = childCountExprList / 2 + 1;
         modelBuilder.endExprList(noOfArguments);
 
-
         boolean argsAvailable = true;
-        modelBuilder.createFunctionInvocationStmt(null, null,
-                nameReferenceStack.pop(), argsAvailable);
-
+        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
 
         BLangModelBuilder.NameReference nameReference4;
         String name4 = "response";
@@ -199,23 +169,18 @@ public class TestBallerinaASTBuilder {
         modelBuilder.validateAndSetPackagePath(null, nameReference4);
         nameReferenceStack.push(nameReference4);
 
-        modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
-
+        //    modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
 
         modelBuilder.createReplyStmt(null, null);
 
-
-        modelBuilder.endCallableUnitBody();
-
+        modelBuilder.endCallableUnitBody(null);
 
         String resourceName = "sayHello";
         int annotationCount2 = 1;
         modelBuilder.addResource(null, null, resourceName, annotationCount2);
 
-
         String serviceName = "helloWorld";
-        modelBuilder.createService(null, serviceName);
-
+        modelBuilder.createService(null, null, serviceName, "http");
 
         BallerinaFile bFile = modelBuilder.build();
         System.out.print("Done building AST!");

@@ -18,16 +18,18 @@
 
 package org.wso2.ei.tools.mule2ballerina.model;
 
-import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
+import java.util.LinkedList;
 
 /**
- * {@code SubFlow} represents sub-flow element
+ * {@code BaseFlow} represents a generic flow
  */
-public class SubFlow extends BaseFlow {
-   /* protected String name;
-    protected Queue<Processor> flowProcessors; //Processors belong to a sub flow in FIFO order
+public class BaseFlow extends BaseObject {
 
-    public SubFlow() {
+    protected String name;
+    protected LinkedList<Processor> flowProcessors; /*All the processors inside a flow needs to be in FIFO order to
+    generate Ballerina code in its proper order*/
+
+    public BaseFlow() {
         flowProcessors = new LinkedList<Processor>();
     }
 
@@ -39,29 +41,11 @@ public class SubFlow extends BaseFlow {
         this.name = name;
     }
 
-    public Queue<Processor> getFlowProcessors() {
+    public LinkedList<Processor> getFlowProcessors() {
         return flowProcessors;
     }
 
     public void addProcessor(Processor processor) {
         flowProcessors.add(processor);
-    }*/
-
-    /**
-     * Adds the sub flow to the root
-     *
-     * @param dataCarrierDTO
-     */
-    @Override
-    public void buildTree(DataCarrierDTO dataCarrierDTO) {
-
-        BaseObject muleObj = dataCarrierDTO.getBaseObject();
-        Root rootObj = dataCarrierDTO.getRootObject();
-
-        SubFlow subFlow = (SubFlow) muleObj;
-        if (dataCarrierDTO.isSubFlowStarted()) {
-            rootObj.addSubFlow(subFlow.getName(), subFlow);
-        }
     }
-
 }

@@ -20,6 +20,8 @@ package org.wso2.ei.tools.mule2ballerina.visitor;
 
 import org.wso2.ei.tools.mule2ballerina.model.AsynchronousTask;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
+import org.wso2.ei.tools.mule2ballerina.model.Database;
+import org.wso2.ei.tools.mule2ballerina.model.DatabaseConfig;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.FlowReference;
 import org.wso2.ei.tools.mule2ballerina.model.HttpListener;
@@ -68,5 +70,9 @@ public interface Visitor {
     public void visit(FlowReference flowReference);
 
     public void visit(AsynchronousTask asynchronousTask);
+
+    public void visit(Database database);
+
+    public void visit(DatabaseConfig databaseConfig);
 
 }

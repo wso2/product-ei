@@ -22,16 +22,14 @@ import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitable;
 import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
 
-import java.util.LinkedList;
-
 /**
  * {@code Flow} This class represents both a flow and a private flow
  */
-public class Flow extends BaseObject implements Visitable {
+public class Flow extends BaseFlow implements Visitable {
 
-    protected String name;
-    protected LinkedList<Processor> flowProcessors; /*All the processors inside a flow needs to be in FIFO order to
-    generate Ballerina code in its proper order*/
+    /*protected String name;
+    protected LinkedList<Processor> flowProcessors; *//*All the processors inside a flow needs to be in FIFO order to
+    generate Ballerina code in its proper order*//*
 
     public Flow() {
         flowProcessors = new LinkedList<Processor>();
@@ -51,7 +49,7 @@ public class Flow extends BaseObject implements Visitable {
 
     public void addProcessor(Processor processor) {
         flowProcessors.add(processor);
-    }
+    }*/
 
     @Override
     public void accept(Visitor visitor) {

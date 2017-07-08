@@ -40,7 +40,6 @@ public class Constants {
     public static final String STRUCT_STR = "struct";
     public static final String WORKER_STR = "worker";
 
-
     public static final String SPACE_STR = " ";
     public static final String TAB_STR = "    ";
     public static final String STMTBLOCK_START_STR = "{";
@@ -59,6 +58,8 @@ public class Constants {
     public static final String ANNOTATION_AT_STR = "@";
     public static final String SEND = "->";
     public static final String RECEIVE = "<-";
+    public static final String ANGLE_BRACKET_START_STR = "<";
+    public static final String ANGLE_BRACKET_END_STR = ">";
 
     public static final String IMPLICIT_PACKAGE = "ballerina.lang.errors";
 }

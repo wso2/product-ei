@@ -90,14 +90,14 @@ public class BallerinaASTModelBuilder {
      * @param actualvalue annotation attribute value
      */
     public void createAnnotationAttachment(String pkgName, String name, String key, String actualvalue) {
-        modelBuilder.startAnnotationAttachment(null);
+        modelBuilder.startAnnotationAttachment();
 
         createNameReference(pkgName, name);
 
         if (key != null && actualvalue != null) {
             modelBuilder.createStringLiteral(null, null, actualvalue);
             modelBuilder.createLiteralTypeAttributeValue(null, null);
-            modelBuilder.createAnnotationKeyValue(null, key);
+            modelBuilder.createAnnotationKeyValue(null, null, key);
         }
     }
 
@@ -112,15 +112,15 @@ public class BallerinaASTModelBuilder {
     }
 
     public void startService() {
-        modelBuilder.startServiceDef(null);
+        modelBuilder.startServiceDef();
     }
 
     public void startResource() {
         modelBuilder.startResourceDef();
     }
 
-    public void endOfService(String serviceName) {
-        modelBuilder.createService(null, serviceName);
+    public void endOfService(String serviceName, String protocolPkgName) {
+        modelBuilder.createService(null, null, serviceName, protocolPkgName);
 
     }
 
@@ -129,11 +129,11 @@ public class BallerinaASTModelBuilder {
     }
 
     public void startFunction() {
-        modelBuilder.startFunctionDef(null);
+        modelBuilder.startFunctionDef();
     }
 
     public void endOfFunction(String functionName) {
-        modelBuilder.addFunction(null, functionName, false); //isNative is false
+        modelBuilder.addFunction(null, null, functionName, false); //isNative is false
     }
 
     /**
@@ -167,17 +167,23 @@ public class BallerinaASTModelBuilder {
     }
 
     public void startCallableBody() {
-        modelBuilder.startCallableUnitBody(null);
+        modelBuilder.startCallableUnitBody();
     }
 
     public void endCallableBody() {
-        modelBuilder.endCallableUnitBody();
+        modelBuilder.endCallableUnitBody(null);
     }
 
-    //TODO:Ask, what this does
-    public void addMapStructLiteral() {
+    public void startMapStructLiteral() {
         modelBuilder.startMapStructLiteral();
+    }
+
+    public void createMapStructLiteral() {
         modelBuilder.createMapStructLiteral(null, null);
+    }
+
+    public void addMapStructKeyValue() {
+        modelBuilder.addMapStructKeyValue(null, null);
     }
 
     /**
@@ -212,8 +218,18 @@ public class BallerinaASTModelBuilder {
         modelBuilder.endExprList(noOfArguments);
     }
 
-    public void createVariableRefExpr() {
-        modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
+    /*
+    This is no longer in use. Instead use createSimpleVarRefExpr
+     */
+   /* public void createVariableRefExpr() {
+        //  modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
+    }*/
+
+    public void createSimpleVarRefExpr() {
+        BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
+        modelBuilder.resolvePackageFromNameReference(nameReference);
+        // simple variable ref whitespaces are already captured through name ref
+        modelBuilder.createSimpleVarRefExpr(null, nameReference.getWhiteSpaceDescriptor(), nameReference);
     }
 
     public void createStringLiteral(String stringLiteral) {
@@ -264,7 +280,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void createAssignmentStatement() {
-        // modelBuilder.createAssignmentStmt(null, null);
+        modelBuilder.createAssignmentStmt(null, null, false);
     }
 
     public BallerinaFile buildBallerinaFile() {
@@ -291,7 +307,7 @@ public class BallerinaASTModelBuilder {
     public void enterWorkerDeclaration() {
         //  isWorkerStarted = true;
         modelBuilder.startWorkerUnit();
-        modelBuilder.startCallableUnitBody(null);
+        modelBuilder.startCallableUnitBody();
     }
 
     public void createWorkerDefinition(String workerName) {
@@ -303,7 +319,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void exitWorkerDeclaration(String workerName) {
-        modelBuilder.endCallableUnitBody();
+        modelBuilder.endCallableUnitBody(null);
         modelBuilder.createWorker(null, null, workerName);
         //  isWorkerStarted = false;
     }

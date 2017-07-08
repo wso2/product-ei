@@ -37,7 +37,10 @@ public enum Attribute {
     MESSAGE("message", "message"),
     MIME_TYPE("mimeType", "mimeType"),
     PROPERTY_NAME("propertyName", "propertyName"),
-    VARIABLE_NAME("variableName", "variableName");
+    VARIABLE_NAME("variableName", "variableName"),
+    USER("user", "user"),
+    PASSWORD("password", "password"),
+    DATABASE("database", "database");
 
     private String attribute;
     private String property;

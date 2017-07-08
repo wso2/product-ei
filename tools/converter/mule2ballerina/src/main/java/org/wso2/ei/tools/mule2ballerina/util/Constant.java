@@ -32,9 +32,12 @@ public class Constant {
     public static final String BLANG_HTTP = "http";
     public static final String BLANG_SYSTEM = "system";
     public static final String BLANG_PKG_MESSAGES = "messages";
+    public static final String BLANG_PKG_SQL = "sql";
+    public static final String BLANG_PKG_LOGGER = "logger";
 
     //Ballerina Annotations
-    public static final String BLANG_BASEPATH = "BasePath";
+    public static final String BLANG_CONFIG = "config";
+    public static final String BLANG_BASEPATH = "basePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
     public static final String BLANG_PATH = "Path";
@@ -45,6 +48,8 @@ public class Constant {
     public static final String BLANG_TYPE_STRING = "string";
     public static final String BLANG_TYPE_XML = "xml";
     public static final String BLANG_TYPE_JSON = "json";
+    public static final String BLANG_TYPE_MAP = "map";
+    public static final String BLANG_TYPE_DATATABLE = "datatable";
 
     public static final String BLANG_RESOURCE_NAME = "Resource";
     public static final String BLANG_SERVICE_NAME = "Service";
@@ -60,7 +65,18 @@ public class Constant {
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
 
+    //SQL package
+    public static final String BLANG_CLIENT_CONNECTOR_SELECT_ACTION = " select";
+    public static final String BLANG_SQL_PARAMETER = " Parameter";
+
     public static final String BLANG_LOG = "log";
+
+    //Functions in ballerina.utils.logger
+    public static final String BLANG_DEBUG = "debug";
+    public static final String BLANG_ERROR = "error";
+    public static final String BLANG_INFO = "info";
+    public static final String BLANG_TRACE = "trace";
+    public static final String BLANG_WARN = "warn";
 
     //Variable names
     public static final String BLANG_DEFAULT_VAR_MSG = "msg";
@@ -72,6 +88,9 @@ public class Constant {
     public static final String BLANG_VAR_STRING_PAYLOAD = "stringPayload";
     public static final String BLANG_VAR_WORKER_MSG = "workerMsg";
     public static final String BLANG_VAR_DEFAULT_WORKER = "default";
+    public static final String BLANG_VAR_PROP_MAP = "propertiesMap";
+    public static final String BLANG_VAR_DATATABLE = "datatable";
+    public static final String BLANG_VAR_QUERY = "query";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";
@@ -83,4 +102,5 @@ public class Constant {
     public static final String DEFAULT_PORT = "80";
     public static final String DIVIDER = "/";
     public static final String BACKTICK = "`";
+    public static final String QUOTE_STR = "\"";
 }

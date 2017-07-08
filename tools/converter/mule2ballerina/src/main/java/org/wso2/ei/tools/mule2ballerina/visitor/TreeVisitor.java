@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.mule2ballerina.model.AsynchronousTask;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
+import org.wso2.ei.tools.mule2ballerina.model.Database;
+import org.wso2.ei.tools.mule2ballerina.model.DatabaseConfig;
 import org.wso2.ei.tools.mule2ballerina.model.Flow;
 import org.wso2.ei.tools.mule2ballerina.model.FlowReference;
 import org.wso2.ei.tools.mule2ballerina.model.GlobalConfiguration;
@@ -62,6 +64,7 @@ public class TreeVisitor implements Visitor {
     private Map<String, Boolean> serviceTrack = new HashMap<String, Boolean>();
     private Map<String, Boolean> importTracker = new HashMap<String, Boolean>();
     private String inboundName;
+    private String protocolPkgName;
     private int serviceCounter = 0; //For dynamic service name creation
     private int resourceCounter = 0; //For dynamic resource name creation
     private int parameterCounter = 0; //For dynamic parameter name creation
@@ -123,7 +126,7 @@ public class TreeVisitor implements Visitor {
             //If end of flow
             if (flowSize == i) {
                 ballerinaASTAPI.createNameReference(null, outboundMsg);
-                ballerinaASTAPI.createVariableRefExpr();
+                ballerinaASTAPI.createSimpleVarRefExpr();
                 ballerinaASTAPI.createReplyStatement();
                 ballerinaASTAPI.endCallableBody();
 
@@ -136,7 +139,7 @@ public class TreeVisitor implements Visitor {
                         ballerinaASTAPI.createVariable(Constant.BLANG_VAR_WORKER_MSG, false);
                         ballerinaASTAPI.startExprList();
                         ballerinaASTAPI.createNameReference(null, Constant.BLANG_VAR_WORKER_MSG);
-                        ballerinaASTAPI.createVariableRefExpr();
+                        ballerinaASTAPI.createSimpleVarRefExpr();
                         ballerinaASTAPI.endExprList(1);
                         ballerinaASTAPI.exitWorkerReply(Constant.BLANG_VAR_DEFAULT_WORKER);
                         outboundMsg = Constant.BLANG_VAR_WORKER_MSG;
@@ -163,7 +166,7 @@ public class TreeVisitor implements Visitor {
                         flows.remove();
                         if (flows.size() == 0) { //If no more resources
                             String serviceName = Constant.BLANG_SERVICE_NAME + ++serviceCounter;
-                            ballerinaASTAPI.endOfService(serviceName); //End of service
+                            ballerinaASTAPI.endOfService(serviceName, protocolPkgName); //End of service
                         }
                     }
                 }
@@ -188,6 +191,11 @@ public class TreeVisitor implements Visitor {
         logger.debug("----Payload");
 
         String payloadVariableName = "";
+        //If the string is wrapped around quotes remove them first.
+        String payloadValue = ((payload.getValue() != null && Constant.QUOTE_STR
+                .equals(String.valueOf(payload.getValue().charAt(0)))) ?
+                (payload.getValue().substring(1, payload.getValue().length() - 1)) :
+                payload.getValue());
 
         if (payload.getMimeType() != null) {
             MimeType mimeType = MimeType.get(payload.getMimeType());
@@ -197,8 +205,8 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
                 /*Backtick expression is not longer supported in Ballerina. Improvements may come in a future release*/
                 // ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
-                ballerinaASTAPI.addComment("//IMPORTANT: This functionality will come in a future release. ");
-                ballerinaASTAPI.createStringLiteral(payload.getValue());
+                ballerinaASTAPI.addComment("//TODO: set xml payload ");
+                ballerinaASTAPI.createStringLiteral(payloadValue);
                 payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
                 ballerinaASTAPI.createVariable(payloadVariableName, true); //name of the variable
                 ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
@@ -210,29 +218,29 @@ public class TreeVisitor implements Visitor {
             case JSON:
                 ballerinaASTAPI.addComment(Constant.BLANG_COMMENT_JSON);
                 ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
-                ballerinaASTAPI.createStringLiteral(payload.getValue());
+                ballerinaASTAPI.createStringLiteral(payloadValue);
                 payloadVariableName = Constant.BLANG_VAR_JSON_PAYLOAD + ++variableCounter;
                 ballerinaASTAPI.createVariable(payloadVariableName, true); //name of the variable
                 ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
                 break;
 
             default:
-                payloadVariableName = createVariableOfTypeString(payload.getValue(), Constant.BLANG_VAR_STRING_PAYLOAD,
-                        true, true);
+                payloadVariableName = createVariableOfTypeString(payloadValue, Constant.BLANG_VAR_STRING_PAYLOAD, true,
+                        true);
                 ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
                 break;
             }
         } else {
-            payloadVariableName = createVariableOfTypeString(payload.getValue(), Constant.BLANG_VAR_STRING_PAYLOAD,
-                    true, true);
+            payloadVariableName = createVariableOfTypeString(payloadValue, Constant.BLANG_VAR_STRING_PAYLOAD, true,
+                    true);
             ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
         }
 
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, outboundMsg);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.createNameReference(null, payloadVariableName);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.endExprList(2);
         ballerinaASTAPI.createFunctionInvocation(true);
     }
@@ -258,11 +266,12 @@ public class TreeVisitor implements Visitor {
 
             /*Create annotations belong to the service definition*/
             ballerinaASTAPI
-                    .createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_BASEPATH, Constant.BLANG_VALUE,
+                    .createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_CONFIG, Constant.BLANG_BASEPATH,
                             listenerConfig.getBasePath());
             ballerinaASTAPI.addAnnotationAttachment(1); //attributesCount is never used
             serviceTrack.put(listenerConfig.getName(), true);
             inboundName = listenerConfig.getName();
+            protocolPkgName = Constant.BLANG_HTTP;
         }
     }
 
@@ -351,15 +360,16 @@ public class TreeVisitor implements Visitor {
 
         ballerinaASTAPI.createVariableRefList();
         ballerinaASTAPI.createNameReference(null, outboundMsg);
-        ballerinaASTAPI.createVariableRefExpr();
+        // ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.endVariableRefList(1);
         ballerinaASTAPI.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, connectorVarName);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.createStringLiteral(request.getPath());
         ballerinaASTAPI.createNameReference(null, inboundMsg);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.endVariableRefList(3);
         ballerinaASTAPI.createAction(Constant.BLANG_CLIENT_CONNECTOR_GET_ACTION, true);
         ballerinaASTAPI.createAssignmentStatement();
@@ -418,36 +428,38 @@ public class TreeVisitor implements Visitor {
     @Override
     public void visit(org.wso2.ei.tools.mule2ballerina.model.Logger log) {
         /*If ballerina system package is not already added to import packages , add it*/
-        if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_SYSTEM) == null) {
-            ballerinaASTAPI.addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_SYSTEM), null);
-            importTracker.put(Constant.BLANG_SYSTEM, true);
+        if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_LOGGER) == null) {
+            ballerinaASTAPI
+                    .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_LOGGER), null);
+            importTracker.put(Constant.BLANG_PKG_LOGGER, true);
         }
-        ballerinaASTAPI.createNameReference(Constant.BLANG_SYSTEM, Constant.BLANG_LOG);
-        ballerinaASTAPI.startExprList();
+        // ballerinaASTAPI.createNameReference(Constant.BLANG_SYSTEM, Constant.BLANG_LOG);
 
         LogLevel logLevel = LogLevel.get(log.getLevel());
 
         switch (logLevel) {
         case LOG_TRACE:
-            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_TRACE.getValue());
+            // ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_TRACE.getValue());
+            ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_LOGGER, Constant.BLANG_TRACE);
             break;
         case LOG_DEBUG:
-            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_DEBUG.getValue());
+            ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_LOGGER, Constant.BLANG_DEBUG);
             break;
         case LOG_WARN:
-            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_WARN.getValue());
+            ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_LOGGER, Constant.BLANG_WARN);
             break;
         case LOG_ERROR:
-            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_ERROR.getValue());
+            ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_LOGGER, Constant.BLANG_ERROR);
             break;
         case LOG_INFO:
         default:
-            ballerinaASTAPI.createIntegerLiteral(LogLevel.LOG_INFO.getValue());
+            ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_LOGGER, Constant.BLANG_INFO);
             break;
         }
 
+        ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createStringLiteral(log.getMessage());
-        ballerinaASTAPI.endExprList(2);
+        ballerinaASTAPI.endExprList(1);
         ballerinaASTAPI.addFunctionInvocationStatement(true);
     }
 
@@ -468,7 +480,7 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_ADD_HEADER);
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, outboundMsg);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.createStringLiteral(propertySetter.getPropertyName());
         ballerinaASTAPI.createStringLiteral(propertySetter.getValue());
         ballerinaASTAPI.endExprList(3);
@@ -492,7 +504,7 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_REMOVE_HEADER);
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, outboundMsg);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.createStringLiteral(propertyRemover.getPropertyName());
         ballerinaASTAPI.endExprList(2);
         ballerinaASTAPI.createFunctionInvocation(true);
@@ -519,7 +531,7 @@ public class TreeVisitor implements Visitor {
       /*  ballerinaASTAPI.createStringLiteral("");
         ballerinaASTAPI.createVariable(variableRemover.getVariableName(), false);*/
         ballerinaASTAPI.createNameReference(null, variableRemover.getVariableName());
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
     }
 
     /**
@@ -550,7 +562,7 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTAPI.createNameReference(null, flowReference.getName());
                 ballerinaASTAPI.startExprList();
                 ballerinaASTAPI.createNameReference(null, outboundMsg);
-                ballerinaASTAPI.createVariableRefExpr();
+                ballerinaASTAPI.createSimpleVarRefExpr();
                 ballerinaASTAPI.endExprList(1);
                 ballerinaASTAPI.createFunctionInvocation(true);
             }
@@ -567,7 +579,7 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.addComment("//Call Worker!");
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, inboundMsg);
-        ballerinaASTAPI.createVariableRefExpr();
+        ballerinaASTAPI.createSimpleVarRefExpr();
         ballerinaASTAPI.endExprList(1);
         String workerName = Constant.BLANG_WORKER_NAME + ++workerCounter;
         ballerinaASTAPI.createWorkerInvocationStmt(workerName);
@@ -576,13 +588,87 @@ public class TreeVisitor implements Visitor {
         mRoot.addAsynchronousTask(asynchronousTask); //This needs to be visited only after reply statement in resource
     }
 
+    @Override
+    public void visit(Database database) {
+        logger.debug("----Database");
+        GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(database.getConfigName());
+        globalConfiguration.accept(this);
+
+        String query = createVariableOfTypeString(database.getQuery(), Constant.BLANG_VAR_QUERY, true, true);
+
+        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_SQL, Constant.BLANG_SQL_PARAMETER);
+
+        ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_DATATABLE);
+        ballerinaASTAPI.createStringLiteral("");
+        String variableName = Constant.BLANG_VAR_DATATABLE + ++variableCounter;
+        ballerinaASTAPI.createVariable(variableName, true);
+
+        ballerinaASTAPI.createVariableRefList();
+        ballerinaASTAPI.createNameReference(null, variableName);
+        ballerinaASTAPI.createSimpleVarRefExpr();
+        ballerinaASTAPI.endVariableRefList(1);
+        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_SQL, Constant.BLANG_CLIENT_CONNECTOR);
+        ballerinaASTAPI.startExprList();
+        ballerinaASTAPI.createNameReference(null, connectorVarName);
+        ballerinaASTAPI.createSimpleVarRefExpr();
+        //  ballerinaASTAPI.createStringLiteral(database.getQuery());
+        ballerinaASTAPI.createNameReference(null, query);
+        ballerinaASTAPI.createSimpleVarRefExpr();
+        ballerinaASTAPI.createNameReference(null, "parameters");
+        ballerinaASTAPI.createSimpleVarRefExpr();
+        ballerinaASTAPI.endVariableRefList(3);
+        ballerinaASTAPI.createAction(Constant.BLANG_CLIENT_CONNECTOR_SELECT_ACTION, true);
+        ballerinaASTAPI.createAssignmentStatement();
+    }
+
+    @Override
+    public void visit(DatabaseConfig databaseConfig) {
+
+        if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_SQL) == null) {
+            ballerinaASTAPI
+                    .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_SQL), null);
+            importTracker.put(Constant.BLANG_PKG_SQL, true);
+        }
+
+        ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MAP);
+        ballerinaASTAPI.startMapStructLiteral();
+        ballerinaASTAPI.createStringLiteral("maximumPoolSize");
+        ballerinaASTAPI.createStringLiteral("1");
+        ballerinaASTAPI.createStringLiteral("password");
+        ballerinaASTAPI.createStringLiteral(databaseConfig.getPassword());
+        ballerinaASTAPI.createStringLiteral("username");
+        ballerinaASTAPI.createStringLiteral(databaseConfig.getUser());
+        ballerinaASTAPI.createStringLiteral("jdbcUrl");
+        ballerinaASTAPI.createStringLiteral("jdbc:mysql://172.17.0.2:3306/library");
+        //Create four key value pairs for the above properties
+        for (int i = 0; i < 4; i++) {
+            ballerinaASTAPI.addMapStructKeyValue();
+        }
+        ballerinaASTAPI.createMapStructLiteral();
+        String propertyVar = Constant.BLANG_VAR_PROP_MAP + ++variableCounter;
+        ballerinaASTAPI.createVariable(propertyVar, true);
+
+        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_SQL, Constant.BLANG_CLIENT_CONNECTOR);
+        ballerinaASTAPI.createRefereceTypeName();
+        /*Create an object out of above created ref type and initialize it with values*/
+        ballerinaASTAPI.createNameReference(Constant.BLANG_PKG_SQL, Constant.BLANG_CLIENT_CONNECTOR);
+        ballerinaASTAPI.startExprList();
+        ballerinaASTAPI.createNameReference(null, propertyVar);
+        ballerinaASTAPI.createSimpleVarRefExpr();
+        ballerinaASTAPI.endExprList(1); // no of arguments
+        ballerinaASTAPI.initializeConnector(true); //arguments available
+        connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
+        ballerinaASTAPI.createVariable(connectorVarName, true);
+    }
+
     public BallerinaFile getBallerinaFile() {
         return ballerinaFile;
     }
 
     private void createVariableWithEmptyMap(String typeOfTheParamater, String variableName, boolean exprAvailable) {
         ballerinaASTAPI.addTypes(typeOfTheParamater);
-        ballerinaASTAPI.addMapStructLiteral();
+        ballerinaASTAPI.startMapStructLiteral();
+        ballerinaASTAPI.createMapStructLiteral();
         ballerinaASTAPI.createVariable(variableName, exprAvailable);
         outboundMsg = variableName;
     }
