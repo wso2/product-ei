@@ -37,8 +37,8 @@ public enum Element {
     FLOW_REF("flow-ref", "org.wso2.ei.tools.mule2ballerina.model.FlowReference"),
     SUB_FLOW("sub-flow", "org.wso2.ei.tools.mule2ballerina.model.SubFlow"),
     DB_SELECT("db:select", "org.wso2.ei.tools.mule2ballerina.model.Database"),
-    DB_CONFIG("db:mysql-config", "org.wso2.ei.tools.mule2ballerina.model.DatabaseConfig");
-    //  DB_QUERY("db:parameterized-query", "org.wso2.ei.tools.mule2ballerina.model.Database");
+    DB_CONFIG("db:mysql-config", "org.wso2.ei.tools.mule2ballerina.model.DatabaseConfig"),
+    ASYNC("async", "org.wso2.ei.tools.mule2ballerina.model.AsynchronousTask");
 
     private String value;
     private String internalClassName;
