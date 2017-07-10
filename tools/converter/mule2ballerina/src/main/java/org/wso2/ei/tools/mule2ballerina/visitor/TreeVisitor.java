@@ -97,8 +97,10 @@ public class TreeVisitor implements Visitor {
         for (Flow privateFlow : root.getPrivateFlowList()) {
             ballerinaASTAPI.startFunction();
             ballerinaASTAPI.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
-            String messageRef = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
-            ballerinaASTAPI.addParameter(0, false, messageRef);
+           /*Set the new message variable to 'outboundMsg' since all the other elements inside function will use this
+            as their message reference */
+            outboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
+            ballerinaASTAPI.addParameter(0, false, outboundMsg);
             ballerinaASTAPI.startCallableBody();
             for (Processor processor : privateFlow.getFlowProcessors()) {
                 processor.accept(this);
@@ -588,6 +590,10 @@ public class TreeVisitor implements Visitor {
         mRoot.addAsynchronousTask(asynchronousTask); //This needs to be visited only after reply statement in resource
     }
 
+    /**
+     * This method will be refactored in future
+     * @param database
+     */
     @Override
     public void visit(Database database) {
         logger.debug("----Database");
@@ -621,6 +627,10 @@ public class TreeVisitor implements Visitor {
         ballerinaASTAPI.createAssignmentStatement();
     }
 
+    /**
+     * This method will be refactored in future.
+     * @param databaseConfig
+     */
     @Override
     public void visit(DatabaseConfig databaseConfig) {
 

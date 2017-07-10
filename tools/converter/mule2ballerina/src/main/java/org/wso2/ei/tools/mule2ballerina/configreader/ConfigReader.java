@@ -220,8 +220,19 @@ public class ConfigReader {
                         field.set(finalObject, attribute.getValue());
                     }
                 } catch (NoSuchFieldException e) {
-                    logger.warn(
-                            " NoSuchFieldException : There can be attributes in mule xml that is not " + "mapped " + e);
+                    //If the field cannot be found in the class check whether its available in the super class
+                    String property = attributeMapper.getmAttributeMapper().get(getAttributeName(attribute));
+                    Class<?> superClass = mClass.getSuperclass();
+                    Field field = null;
+                    try {
+                        field = superClass.getDeclaredField(property);
+                        field.setAccessible(true);
+                        field.set(finalObject, attribute.getValue());
+                    } catch (NoSuchFieldException ex) {
+                        logger.warn(" NoSuchFieldException " + ex);
+                    } catch (IllegalAccessException ex) {
+                        logger.error(ex.getMessage(), ex);
+                    }
                 } catch (IllegalAccessException e) {
                     logger.error(e.getMessage(), e);
                 }
