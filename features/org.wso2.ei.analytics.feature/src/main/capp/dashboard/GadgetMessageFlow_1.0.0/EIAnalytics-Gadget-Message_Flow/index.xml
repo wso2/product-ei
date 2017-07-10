@@ -38,8 +38,13 @@
             <div class="nano">
                 <div class="nano-content">
                     <div class="page-content-wrapper">
-                        <div id="canvas"></div>
-                        <svg id="svg-canvas" width="100%" height="100%"></svg>
+                      <div class="zoom-panel">
+                          <button class="btn-zoom" id="btnZoomIn">+</button><br/>
+                          <button class="btn-zoom" id="btnZoomOut">-</button><br/>
+                          <button class="btn-zoom" id="btnZoomFit"><i class="fw fw-square-outline"></i></button>
+                      </div>
+                      <div id="canvas"></div>
+                      <svg id="svg-canvas" width="100%" height="100%"></svg>
                     </div>
                 </div>
             </div>
@@ -77,12 +82,16 @@
 
         </head>
         <body>
-
             <div class="nano">
                 <div class="nano-content">
                     <div class="page-content-wrapper">
-                        <div id="canvas"></div>
-                        <svg id="svg-canvas" width="100%" height="100%"></svg>
+                      <div class="zoom-panel">
+                          <button class="btn-zoom" id="btnZoomIn">+</button><br/>
+                          <button class="btn-zoom" id="btnZoomOut">-</button><br/>
+                          <button class="btn-zoom" id="btnZoomFit"><i class="fw fw-square-outline"></i></button>
+                      </div>
+                      <div id="canvas"></div>
+                      <svg id="svg-canvas" width="100%" height="100%"></svg>
                     </div>
                 </div>
             </div>

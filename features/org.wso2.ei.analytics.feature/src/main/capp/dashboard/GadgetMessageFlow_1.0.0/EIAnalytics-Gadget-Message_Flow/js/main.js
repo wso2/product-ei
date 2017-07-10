@@ -228,6 +228,8 @@ function onData(response) {
         zoom = d3.behavior.zoom().on("zoom", function() {
             inner.attr("transform", "translate(" + d3.event.translate + ")" +
                 "scale(" + d3.event.scale + ")");
+            zoomScale = d3.event.scale;
+            translate = d3.event.translate;
         });
 
     svg.call(zoom);
@@ -247,8 +249,39 @@ function onData(response) {
     zoom.scale(zoomScale);
     // zoom.event(isUpdate ? svg.transition().duration(500) : d3.select("svg"));
     zoom.event(svg);
+    d3.selectAll('#btnZoomIn').on('click', function() {
+        zoomScale += 0.05;
+        interpolateZoom(translate, zoomScale, inner);
+    });
 
+    d3.selectAll('#btnZoomOut').on('click', function() {
+        if(zoomScale > 0.05) {
+            zoomScale -= 0.05;
+            interpolateZoom(translate, zoomScale, inner);  
+        }
+
+    });
+
+    d3.selectAll('#btnZoomFit').on('click', function() {
+        var zoomScale = Math.min(width / graphWidth, height / graphHeight);
+        var translate = [(width / 2) - ((graphWidth * zoomScale) / 2) , (height / 2) - ((graphHeight * zoomScale) / 2) * 0.93];
+        zoom.translate(translate);
+        zoom.scale(zoomScale);
+        zoom.event(svg);
+    });
 };
+
+function interpolateZoom (translate, scale, svg) {
+    var self = this;
+    return d3.transition().duration(350).tween("zoom", function () {
+        var iTranslate = d3.interpolate(zoom.translate(), translate),
+            iScale = d3.interpolate(zoom.scale(), scale);
+        return function (t) {
+            zoom.scale(iScale(t)).translate(iTranslate(t));
+            svg.attr("transform", "translate(" + zoom.translate() + ")" + "scale(" + zoom.scale() + ")");
+        };
+    });
+}
 
 function isParent(searchNodes, id) {
    for (var x = 0; x < searchNodes.length; x++) { 
