@@ -229,7 +229,7 @@ public class ConfigReader {
                         field.setAccessible(true);
                         field.set(finalObject, attribute.getValue());
                     } catch (NoSuchFieldException ex) {
-                        logger.warn(" NoSuchFieldException " + ex);
+                        logger.warn(" NoSuchFieldException ", ex);
                     } catch (IllegalAccessException ex) {
                         logger.error(ex.getMessage(), ex);
                     }
