@@ -212,8 +212,8 @@ public class ConfigReader {
 
             final Object finalObject = object;
             attributes.forEachRemaining(attribute -> {
+                String property = attributeMapper.getmAttributeMapper().get(getAttributeName(attribute));
                 try {
-                    String property = attributeMapper.getmAttributeMapper().get(getAttributeName(attribute));
                     if (property != null) {
                         Field field = mClass.getDeclaredField(property);
                         field.setAccessible(true);
@@ -221,13 +221,14 @@ public class ConfigReader {
                     }
                 } catch (NoSuchFieldException e) {
                     //If the field cannot be found in the class check whether its available in the super class
-                    String property = attributeMapper.getmAttributeMapper().get(getAttributeName(attribute));
                     Class<?> superClass = mClass.getSuperclass();
                     Field field = null;
                     try {
-                        field = superClass.getDeclaredField(property);
-                        field.setAccessible(true);
-                        field.set(finalObject, attribute.getValue());
+                        if (property != null && superClass != null) {
+                            field = superClass.getDeclaredField(property);
+                            field.setAccessible(true);
+                            field.set(finalObject, attribute.getValue());
+                        }
                     } catch (NoSuchFieldException ex) {
                         logger.warn(" NoSuchFieldException ", ex);
                     } catch (IllegalAccessException ex) {
