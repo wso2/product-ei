@@ -28,8 +28,8 @@
     <path id="synapse.class.path">
         <pathelement path="${java.class.path}"/>
         <fileset dir="${synapse.home}">
-            <include name="lib/*.jar"/>
-            <include name="repository/components/plugins/*.jar"/>
+            <include name="wso2/lib/*.jar"/>
+            <include name="wso2/components/plugins/*.jar"/>
         </fileset>
     </path>
 
