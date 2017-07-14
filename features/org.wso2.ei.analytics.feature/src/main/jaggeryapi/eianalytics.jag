@@ -564,7 +564,28 @@
                                     compIds.push(compId);
                                 }
                                 if (parentId != null && (compIds.indexOf(parentId) < 0)) {
-                                    compIds.splice(compIds.indexOf(compId), 1);
+                                    var matchingParentId;
+
+                                    // This logic traverse towards the root of the configuration tree from
+                                    // the current node, until it finds the parent of the node or any ancestor node
+                                    // exists within the message flow. If any node found, it assigns the node as
+                                    // its parent.  This link is used to draw the message flow.
+                                    for (var j = 1; j < schema.length; j++) {
+                                        if (compIds.indexOf(schema[i - j]["parentId"]) != -1) {
+                                            matchingParentId = schema[i - j]["parentId"];
+                                            break;
+                                        }
+                                    }
+                                    tmpResult.push({
+                                        "id": originalCompId,
+                                        "label": componentLabel,
+                                        "parents": [matchingParentId],
+                                        "group": schema[i]["group"],
+                                        "type": componentType,
+                                        "dataAttributes": dataAttributes,
+                                        "hiddenAttributes": hiddenAttributes,
+                                        "modifiedId": componentId
+                                    });
                                 } else if (schema[i]["parentId"] == schema[i]["group"]) {
                                     tmpResult.push({
                                         "id": originalCompId,

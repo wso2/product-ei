@@ -1,0 +1,311 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://www.beegy.com/TOBEDFINED",
+  "type": "object",
+  "required":["BookHeader","CustomerDetail"],
+  "properties": {
+    "BookHeader": {
+      "type": "object",
+      "required": [
+        "Booking",
+        "Record"
+      ],
+      "properties": {
+        "Definition": {
+          "type": "object",
+          "properties": {
+            "Protocol": {
+              "type": "object",
+              "required": [
+                "ProtocolId"
+              ],
+              "properties": {
+                "ProtocolId": {
+                  "type": "string"
+                },
+                "Version": {
+                  "type": "string"
+                },
+                "Location": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Booking": {
+          "type": "object",
+          "required": [
+            "bookingID",
+            "state"
+          ],
+          "properties": {
+            "TransactionId": {
+              "type": "string"
+            },
+            "bookingID": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string",
+              "enum": [
+                "Request",
+                "Response",
+                "Pending",
+                "Acknowledge",
+                "Fault"
+              ]
+            },
+            "RecordDateTime": {
+              "type": "string",
+              "format": "date-time",
+              "description": "ISO 8601 compliant serialisation of a date example: 2012-04-23T18:25:43.511Z"
+            }
+          }
+        },
+        "Record": {
+          "type": "object",
+          "required": [
+            "BookId"
+          ],
+          "properties": {
+            "BookId": {
+              "type": "string"
+            },
+            "TenantId": {
+              "type": "string"
+            },
+            "CustomerID": {
+              "type": "string"
+            }
+          }
+        },
+        "Destination": {
+          "type": "object",
+          "required": [
+            "DestinationId"
+          ],
+          "properties": {
+            "DestinationId": {
+              "type": "string"
+            },
+            "TenantId": {
+              "type": "string"
+            },
+            "DestinationComponentId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CustomerDetail": {
+      "type": "object",
+      "properties": {
+        "CustomerId": {
+          "type": "string"
+        },
+        "CustomerGuid": {
+          "type": "string"
+        },
+        "PartnerID": {
+          "type": "string"
+        },
+        "PartnerServiceEmail": {
+          "type": "string"
+        },
+        "ContactSalutation": {
+          "type": "string"
+        },
+        "ContactTitle": {
+          "type": "string"
+        },
+        "ContactFirstId": {
+          "type": "string"
+        },
+        "ContactLastId": {
+          "type": "string"
+        },
+        "ContactEmail": {
+          "type": "string"
+        },
+        "starPoints": {
+          "type": "array",
+          "items": {
+            "Id": {
+              "type": "string"
+            },
+            "ValidationId": {
+              "type": "string"
+            },
+            "Latitude": {
+              "type": "number"
+            },
+            "Longitude": {
+              "type": "number"
+            },
+            "Height": {
+              "type": "number"
+            },
+            "OnlineDevices": {
+              "type": "array",
+              "items": {
+                "MachineId": {
+                  "type": "string"
+                },
+                "MachineGUID": {
+                  "type": "string"
+                },
+                "MachineType": {
+                  "type": "string"
+                },
+                "Category": {
+                  "type": "string"
+                },
+                "ParentGuid": {
+                  "type": "string"
+                },
+                "OwnerType": {
+                  "type": "string"
+                },
+                "ShortDescription": {
+                  "type": "string"
+                },
+                "LongDescription": {
+                  "type": "string"
+                },
+                "LogicalMachineId": {
+                  "type": "string"
+                },
+                "LogicalMachineNumber": {
+                  "type": "number"
+                },
+                "FunctionalMachineNumber": {
+                  "type": "number"
+                },
+                "FunctionalDeviceNxame": {
+                  "type": "number"
+                },
+                "SerialNumber": {
+                  "type": "string"
+                },
+                "Identifier": {
+                  "type": "string"
+                },
+                "OperatingWattage": {
+                  "type": "number"
+                },
+                "WarrentyPeriod": {
+                  "type": "number"
+                },
+                "Capacity": {
+                  "type": "number"
+                },
+                "MinVoltage": {
+                  "type": "number"
+                },
+                "MaxVoltage": {
+                  "type": "number"
+                },
+                "ChargingCapacity": {
+                  "type": "number"
+                },
+                "Strings": {
+                  "type": "array",
+                  "items": {
+                    "PluginType": {
+                      "type": "number"
+                    },
+                    "Model": {
+                      "type": "number"
+                    },
+                    "Type": {
+                      "type": "number"
+                    },
+                    "Socket Detail": {
+                      "type": "number"
+                    },
+                    "PowerModel": {
+                      "type": "string"
+                    },
+                    "NumberOfPorts": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Requests": {
+          "type": "array",
+          "items": {
+            "RequestType": {
+              "type": "string"
+            },
+            "RequestCost": {
+              "type": "string"
+            },
+            "RequestTime": {
+              "type": "string"
+            },
+            "AdditionalCost": {
+              "type": "number"
+            },
+            "ValidationStatus": {
+              "type": "string"
+            },
+            "SavingGuarantee": {
+              "type": "boolean"
+            },
+            "SavingGuaranteeValue": {
+              "type": "number"
+            },
+            "Discount": {
+              "type": "number"
+            },
+            "SubOrders": {
+              "type": "array",
+              "items": {
+                "Id": {
+                  "type": "string"
+                },
+                "Quantity": {
+                  "type": "number"
+                },
+                "Value": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "CMTrailer": {
+      "type": "object",
+      "properties": {
+        "CMError": {
+          "type": "object",
+          "properties": {
+            "ErrorMessage": {
+              "type": "string"
+            },
+            "ErrorCode": {
+              "type": "string"
+            },
+            "ErrorDetails": {
+              "type": "string"
+            },
+            "ErrorException": {
+              "type": "string"
+            },
+            "ErrorComponentId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

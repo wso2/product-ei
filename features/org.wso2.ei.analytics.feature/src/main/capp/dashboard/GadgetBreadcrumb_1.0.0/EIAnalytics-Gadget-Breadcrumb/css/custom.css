@@ -1,3 +1,13 @@
 body {
     height: 30px;
 }
+
+.back{
+    margin: 0px 5px 0px -15px;
+    padding: 7px;
+    background-color: #bdc3c7;
+    color: #333 !important;
+}
+.hide-slash:before{
+	display: none;
+}

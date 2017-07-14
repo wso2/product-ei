@@ -33,6 +33,7 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.RetrieveBackendWsdlTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.SetHostHttpHeaderTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.PttMaximumOpenConnections"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA5135ResponseBodyWith202TestCase"/>
         </classes>
     </test>
 

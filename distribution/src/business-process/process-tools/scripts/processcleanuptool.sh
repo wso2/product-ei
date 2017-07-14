@@ -98,7 +98,7 @@ CARBON_CLASSPATH=$CARBON_CLASSPATH:$CARBON_HOME/../lib/runtimes/cxf/commons-logg
 "$JAVA_HOME/bin/java" \
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
--Djava.endorsed.dirs="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Djava.endorsed.dirs="$CARBON_HOME/../lib/bps-endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
 -Dcarbon.components.dir.path="$CARBON_HOME/../../wso2/components/plugins/" \
 -Dcarbon.home="$CARBON_HOME" \
 org.wso2.ei.businessprocess.utils.processcleanup.CleanupExecutor $*

@@ -10,8 +10,8 @@ $(function() {
         datePickerBtn = $('#btnCustomRange');
     //if there are url elemements present, use them. Otherwis use last hour
 
-    var timeFrom = moment().subtract(29, 'days');
-    var timeTo = moment();
+    var timeFrom = moment().startOf('minute').subtract(29, 'days');
+    var timeTo = moment().startOf('minute');
     var message = {};
 
     var count = 0;
@@ -19,8 +19,7 @@ $(function() {
     //make the selected time range highlighted
     $("#date-select [role=date-update][data-value=LastMonth]").addClass("active");
     lastMonthUpdate();
-
-    cb(moment(timeFrom), moment(timeTo));
+    cb(timeFrom, timeTo);
 
     function cb(start, end) {
         dateLabel.html(start.format('MMMM D, YYYY hh:mm A') + ' - ' + end.format('MMMM D, YYYY hh:mm A'));
@@ -40,7 +39,7 @@ $(function() {
     }
     
     $(datePickerBtn).on('apply.daterangepicker', function(ev, picker) {
-        cb(picker.startDate, picker.endDate);
+        cb(moment(picker.startDate).startOf('minute'), moment(picker.endDate).startOf('minute'));
     });
     
     $(datePickerBtn).on('show.daterangepicker', function(ev, picker) {
@@ -69,13 +68,22 @@ $(function() {
         $("#date-select [data-value=" + $(this).data('value') + "]").addClass("active");
         $('#btnDropdown > span:first-child').html($(this).html());
         $('#btnDropdown').addClass('active');
-        
         switch($(this).data('value')){
+            case 'Last5Minutes':
+                dateLabel.html(moment().subtract(5, 'minutes').format('MMMM D, YYYY hh:mm:ss A') + ' - ' + moment().format('MMMM D, YYYY hh:mm:ss A'));
+                message = {
+                    timeFrom: new Date(moment().subtract(5, 'minutes')).getTime(),
+                    timeTo: new Date(moment()).getTime(),
+                    timeUnit: "Minute"
+                };
+                gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
+                gadgetUtil.updateURLParam("timeTo", message.timeTo.toString());
+                break;  
             case 'LastHour':
                 dateLabel.html(moment().subtract(1, 'hours').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
                 message = {
-                    timeFrom: new Date(moment().subtract(1, 'hours')).getTime(),
-                    timeTo: new Date(moment()).getTime(),
+                    timeFrom: new Date(moment().startOf('minute').subtract(1, 'hours')).getTime(),
+                    timeTo: new Date(moment().startOf('minute')).getTime(),
                     timeUnit: "Hour"
                 };
                 gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
@@ -84,8 +92,8 @@ $(function() {
             case 'LastDay':
                 dateLabel.html(moment().subtract(1, 'day').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
                 message = {
-                    timeFrom: new Date(moment().subtract(1, 'day')).getTime(),
-                    timeTo: new Date(moment()).getTime(),
+                    timeFrom: new Date(moment().startOf('minute').subtract(1, 'day')).getTime(),
+                    timeTo: new Date(moment().startOf('minute')).getTime(),
                     timeUnit: "Day"
                 };
                 gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
@@ -97,8 +105,8 @@ $(function() {
             case 'LastYear':
                 dateLabel.html(moment().subtract(1, 'year').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
                 message = {
-                    timeFrom: new Date(moment().subtract(1, 'year')).getTime(),
-                    timeTo: new Date(moment()).getTime(),
+                    timeFrom: new Date(moment().startOf('minute').subtract(1, 'year')).getTime(),
+                    timeTo: new Date(moment().startOf('minute')).getTime(),
                     timeUnit: "Year"
                 };
                 gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());
@@ -107,7 +115,6 @@ $(function() {
             default:
                 return;
         }
-        
         gadgets.Hub.publish(TOPIC, message);
         
         $(gadgetWrapper).removeClass('btn-dropdown-menu-open');
@@ -117,8 +124,8 @@ $(function() {
     function lastMonthUpdate() {
         dateLabel.html(moment().subtract(29, 'days').format('MMMM D, YYYY hh:mm A') + ' - ' + moment().format('MMMM D, YYYY hh:mm A'));
         message = {
-            timeFrom: new Date(moment().subtract(29, 'days')).getTime(),
-            timeTo: new Date(moment()).getTime(),
+            timeFrom: new Date(moment().startOf('minute').subtract(29, 'days')).getTime(),
+            timeTo: new Date(moment().startOf('minute')).getTime(),
             timeUnit: "Month"
         };
         gadgetUtil.updateURLParam("timeFrom", message.timeFrom.toString());

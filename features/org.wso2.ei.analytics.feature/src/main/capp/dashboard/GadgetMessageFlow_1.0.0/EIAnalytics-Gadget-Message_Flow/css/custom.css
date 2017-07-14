@@ -92,7 +92,7 @@ text {
 }
 
 a:hover {
-    color: #5fdbcc;
+    color: #5fdbcc !important;
     cursor:pointer;
 }
 
@@ -101,5 +101,34 @@ label{
 }
 
 .selected {
-    color: #5fdbcc;
+    color: #5fdbcc !important;
+}
+
+.failed-node {
+    color: #e26861;
+}
+
+.failed-node:hover {
+    color: #5fdbcc !important;
+    cursor:pointer;
+}
+
+.node rect .failed-node  {
+    fill: transparent;
+    stroke: #e26861;
+    stroke-width: 2px;
+}
+
+.btn-zoom {
+    width: 30px;
+    height:30px;
+    background: #636C7C;
+    color: #fff;
+    border-color: #353C48;
+}
+
+.zoom-panel {
+    right: 0px;
+    padding: 3px;
+    position: absolute;
 }

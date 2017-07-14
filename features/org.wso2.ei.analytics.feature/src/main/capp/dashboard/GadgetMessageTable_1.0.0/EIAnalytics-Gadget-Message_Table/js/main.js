@@ -46,9 +46,6 @@ $(function() {
              '<"dataTablesBottom"' +
              'lip' +
              '>',
-        language: {
-            searchPlaceholder: "beforePayload: \"value\" OR afterPayload: \"value\""
-        },
         "processing": true,
         "serverSide": true,
         "columns" : [
@@ -76,9 +73,30 @@ $(function() {
 
     //Binding custom searching on Enter key press
     $('#tblMessages_filter input').unbind();
+
+
+    
+    var searchContent = "Search : " 
+                        +" <select id='cmbColumns' class = 'input-sm cmb-search'>"
+                            +"<option value='messageFlowId'>Message ID</option>"
+                            +"<option value='host'>Host</option>"
+                            +"<option value='status'>Status</option>"
+                            +"<option value='lucene'>Lucene Query</option>"
+                            +"</select>";
+
+
+    $("#tblMessages_filter input").parent().contents().filter(function(){
+        return (this.nodeType == 3);
+    }).remove();
+    $('#tblMessages_filter input').parent().prepend(searchContent);
     $('#tblMessages_filter input').bind('keyup', function(e) {
     if(e.keyCode == 13) {
-        oTable.search( this.value).draw();
+        var selection  = $("#cmbColumns").val();
+        if(selection === "lucene") {
+           oTable.search( this.value).draw();
+        } else {
+            oTable.search("_" + selection + ":" + this.value + "*").draw();
+        }
     }
     });
 

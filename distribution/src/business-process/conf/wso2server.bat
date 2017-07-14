@@ -164,7 +164,7 @@ rem ---------- Add jars to classpath ----------------
 
 set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%
 
-set JAVA_ENDORSED=".\..\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
+set JAVA_ENDORSED=".\..\lib\bps-endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
 rem ---------------- Setting default profile for Runtime if not parsed --------------
 

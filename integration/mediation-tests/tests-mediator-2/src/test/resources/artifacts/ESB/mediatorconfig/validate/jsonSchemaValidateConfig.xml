@@ -38,6 +38,33 @@
             </inSequence>
         </target>
     </proxy>
+    <api context="/myjson" name="test">
+        <resource methods="POST">
+            <inSequence>
+                <validate>
+                    <schema key="conf:/largeJsonSchema.json"/>
+                    <on-fail>
+                        <log level="custom">
+                            <property name="." value="*******Validation Fail********"/>
+                        </log>
+                        <payloadFactory media-type="json">
+                            <format>{  "Result": "fail"}</format>
+                            <args/>
+                        </payloadFactory>
+                        <respond/>
+                    </on-fail>
+                </validate>
+                <log level="custom">
+                    <property name="." value="*******SUCESS********"/>
+                </log>
+                <payloadFactory media-type="json">
+                    <format>{  "Result": "success"}</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
     <localEntry key="stockquote-json-schema"><![CDATA[{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
