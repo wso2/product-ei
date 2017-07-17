@@ -39,9 +39,9 @@ public class Root extends BaseObject implements Visitable {
     private Map<String, GlobalConfiguration> configMap; //All global configurations against it's name
     private Map<String, Queue<Flow>> serviceMap; //Map of services and it's resources maintained as a queue
     private Map<String, SubFlow> subFlowMap; //All subflows against their names
-    private Stack<SubFlow> subFlowStack; //Subflows maintained in FILO order
+    private Stack<SubFlow> subFlowStack; //Subflows maintained in LIFO order
     private Map<String, Flow> privateFlowMap; //Map of private flows against their names
-    private Stack<Flow> privateFlowList; //Private flow list in FILO order
+    private Stack<Flow> privateFlowList; //Private flow list in LIFO order
     private List<AsynchronousTask> asyncTaskList;
 
     public Root() {
@@ -90,8 +90,12 @@ public class Root extends BaseObject implements Visitable {
     }
 
     public void addPrivateFlow(String name, Flow privateFlow) {
-        SubFlow subFlowRef = subFlowMap.get(name);
+       /* SubFlow subFlowRef = subFlowMap.get(name);
         if (subFlowRef == null) {
+            privateFlowMap.put(name, privateFlow);
+        }*/
+        Flow privateFlowRef = privateFlowMap.get(name);
+        if (privateFlowRef == null) {
             privateFlowMap.put(name, privateFlow);
         }
     }

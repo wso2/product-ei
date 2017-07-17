@@ -138,7 +138,7 @@ public class ConfigReader {
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
-        Class<?> intermediateClass = null;
+       // Class<?> intermediateClass = null;
         if (mClassName != null) {
             populateIntermediateObject(mElement.getAttributes(), mClassName, mElementName);
         } else {

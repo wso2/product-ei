@@ -21,7 +21,8 @@ package org.wso2.ei.tools.mule2ballerina.builder;
 import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 
 /**
- * {@code TreeBuilder} interface for the tree builder and provides a default method to build the tree
+ * {@code TreeBuilder} interface for the tree builder and provides a default method to build the tree, so that only
+ * the elements that act as object insertion points need to provide implementation for this
  */
 public interface TreeBuilder {
 

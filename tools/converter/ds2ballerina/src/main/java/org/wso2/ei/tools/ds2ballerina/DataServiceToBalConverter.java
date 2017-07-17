@@ -53,7 +53,7 @@ public class DataServiceToBalConverter {
 
         try {
             if (Files.isDirectory(sourcePath)) {
-                Path path = Utils.getPath(sourcePath.toFile(), destination);
+                Path path = Utils.getPath(sourcePath.toFile(), destination, false);
                 if (!Files.exists(path)) {
                     path = Files.createDirectories(path);
                 }

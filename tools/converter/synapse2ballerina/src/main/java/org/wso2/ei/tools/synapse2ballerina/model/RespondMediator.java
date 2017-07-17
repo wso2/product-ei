@@ -35,7 +35,7 @@ public class RespondMediator implements Mediator {
         String variableName = (String) parameters.get(Constants.RESPONSE_VAR_NAME);
 
         ballerinaASTModelBuilder.createNameReference(null, variableName);
-        ballerinaASTModelBuilder.createVariableRefExpr();
+      //  ballerinaASTModelBuilder.createVariableRefExpr();
         ballerinaASTModelBuilder.createReplyStatement();
 
     }
