@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ *
+  ~ * WSO2 Inc. licenses this file to you under the Apache License,
+  ~ * Version 2.0 (the "License"); you may not use this file except
+  ~ * in compliance with the License.
+  ~ * You may obtain a copy of the License at
+  ~ *
+  ~ * http://www.apache.org/licenses/LICENSE-2.0
+  ~ *
+  ~ * Unless required by applicable law or agreed to in writing,
+  ~ * software distributed under the License is distributed on an
+  ~ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ * KIND, either express or implied. See the License for the
+  ~ * specific language governing permissions and limitations
+  ~ * under the License.
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
+    <sequence name="errorSeq">
+        <log level="custom">
+            <property name="ERRR_LOG" value="=============ERROR============"/>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <response xmlns="">
+                    <error>
+                        <error-code>$1</error-code>
+                        <error-message>$2</error-message>
+                        <error-detail>$3</error-detail>
+                        <error-exception>$4</error-exception>
+                    </error>
+                </response>
+            </format>
+            <args>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_CODE')" xmlns:ns="http://org.apache.synapse/xsd"/>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_MESSAGE')" xmlns:ns="http://org.apache.synapse/xsd"/>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_DETAIL')" xmlns:ns="http://org.apache.synapse/xsd"/>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_EXCEPTION')" xmlns:ns="http://org.apache.synapse/xsd"/>
+            </args>
+        </payloadFactory>
+        <respond/>
+    </sequence>
+    <sequence name="apiErrorseq">
+        <log level="custom">
+            <property name="ERRR_LOG" value="=============API_ERROR============"/>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <response xmlns="">
+                    <error>
+                        <error-code>$1</error-code>
+                        <error-message>$2</error-message>
+                        <error-detail>$3</error-detail>
+                        <error-exception>$4</error-exception>
+                    </error>
+                </response>
+            </format>
+            <args>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_CODE')"
+                     xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_MESSAGE')"
+                     xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_DETAIL')"
+                     xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+                <arg evaluator="xml"
+                     expression="get-property('ERROR_EXCEPTION')"
+                     xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+            </args>
+        </payloadFactory>
+        <respond/>
+    </sequence>
+    <sequence name="aggregatingOnTimeOutSeq" onError="errorSeq">
+        <aggregate>
+            <completeCondition timeout="3">
+                <messageCount max="-1" min="-1"/>
+            </completeCondition>
+            <onComplete enclosingElementProperty="enclosingElement"
+                        expression="//market"
+                        xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns2="http://org.apache.synapse/xsd">
+                <sequence key="invalidSequence"/>
+                <respond/>
+            </onComplete>
+        </aggregate>
+    </sequence>
+    <sequence name="fault">
+        <!-- Log the message at the full log level with the ERROR_MESSAGE and the ERROR_CODE-->
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <!-- Drops the messages by default if there is a fault -->
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <!-- Log all messages passing through -->
+            <log level="full"/>
+            <!-- ensure that the default configuration only sends if it is one of samples -->
+            <!-- Otherwise Synapse would be an open proxy by default (BAD!)               -->
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <!-- Send the messages where they have been sent (i.e. implicit "To" EPR) -->
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api context="/testApiAggregate" name="testApiAggregate">
+        <resource methods="POST">
+            <inSequence>
+                <property description="Define enclosing element"
+                          name="enclosingElement" scope="default">
+                    <aggregatedContent/>
+                </property>
+                <iterate description="Iterate requestMessage" expression="//market">
+                    <target>
+                        <sequence>
+                            <filter xpath="//name[.='Colombo']">
+                                <then>
+                                    <script language="js"><![CDATA[java.lang.Thread.sleep(15000);]]></script>
+                                </then>
+                                <else/>
+                            </filter>
+                            <sequence key="aggregatingOnTimeOutSeq"/>
+                        </sequence>
+                    </target>
+                </iterate>
+            </inSequence>
+            <outSequence/>
+            <faultSequence>
+                <sequence key="apiErrorseq"/>
+            </faultSequence>
+        </resource>
+    </api>
+    <!-- You can add any flat sequences, endpoints, etc.. to this synapse.xml file if you do
+    *not* want to keep the artifacts in several files -->
+</definitions>
