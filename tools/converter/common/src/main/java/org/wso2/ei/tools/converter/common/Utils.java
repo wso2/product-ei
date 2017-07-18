@@ -110,6 +110,7 @@ public class Utils {
             inputStream.reset();
         } catch (IOException e) {
             isZip = false;
+            logger.error("Error in checking zip stream", e);
         }
         return isZip;
     }
@@ -156,7 +157,7 @@ public class Utils {
                     }
                     logger.debug("-----------------------------------------------------------------------------------");
                 } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
+                    logger.error("Error in extracting files from zip or car file", e);
                 }
             } else {
                 boolean isZipStream = isZipStream(new FileInputStream(source));
@@ -170,9 +171,9 @@ public class Utils {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("File not found when trying to extract zip files", e);
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Error in creating directories for extracted files", e);
         }
         return returnDestFolder;
     }
@@ -214,16 +215,16 @@ public class Utils {
                 zipEntry = zis.getNextEntry();
             }
         } catch (FileNotFoundException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("FileNotFoundException in unZip", e);
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("IOException in unZip", e);
         } finally {
             try {
                 if (fos != null) {
                     fos.close();
                 }
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                logger.error("IOException in unZip when trying to close file output stream", e);
             }
         }
     }
@@ -268,16 +269,16 @@ public class Utils {
                 zipEntry = zis.getNextEntry();
             }
         } catch (FileNotFoundException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("FileNotFoundException in unzipMule", e);
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("IOException in unzipMule", e);
         } finally {
             try {
                 if (fos != null) {
                     fos.close();
                 }
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                logger.error("IOException in unzipMule when trying to close file output stream", e);
             }
         }
     }

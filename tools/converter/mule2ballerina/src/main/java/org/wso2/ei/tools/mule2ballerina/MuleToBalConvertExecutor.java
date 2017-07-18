@@ -166,7 +166,7 @@ public class MuleToBalConvertExecutor {
             try {
                 path = Files.createDirectories(path);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                logger.error("Error in creating destination directory to host generated bal files", e);
             }
         }
         if (actualFiles != null) {
@@ -182,11 +182,11 @@ public class MuleToBalConvertExecutor {
                                     fileName);
                             logger.info(fileName + " created successfully.");
                         } catch (IOException e) {
-                            logger.error(e.getMessage(), e);
+                            logger.error("Error in reading mule config files", e);
                         }
                     }
                 } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
+                    logger.error("Error in reading mule files", e);
                 }
             }
         }

@@ -98,9 +98,9 @@ public class SynapseToBalConvertExecutor {
                     }
                 }
             }
-        } else {
-            //Only the mentioned archive needs to be considered when generating bal source
-        }
+        }/* else {
+            Only the mentioned archive needs to be considered when generating bal source
+        }*/
 
     }
 
