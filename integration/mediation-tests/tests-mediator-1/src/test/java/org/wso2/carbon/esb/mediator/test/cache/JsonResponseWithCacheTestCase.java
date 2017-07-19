@@ -75,7 +75,12 @@ public class JsonResponseWithCacheTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void stop() throws Exception {
-        super.cleanup();
+        try {
+            super.cleanup();
+        } finally {
+            serverConfigurationManager.restoreToLastConfiguration();
+            serverConfigurationManager = null;
+        }
     }
 
 }
