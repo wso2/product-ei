@@ -28,9 +28,7 @@
                 <property name="messageType" value="multipart/form-data" scope="axis2"/>
                 <respond/>
             </inSequence>
-            <outSequence>
-                <send/>
-            </outSequence>
+            <outSequence/>
         </resource>
     </api>
 </definitions>

@@ -60,7 +60,7 @@ public class MultipartFormdataMIMEBoundaryTestCase extends ESBIntegrationTest  {
             for (String pair : pairs) {
                 if (pair.contains(boundary)) {
                     String[] boundaryDetails = pair.split("=");
-                    Assert.assertTrue(boundaryDetails[1].contains("MIIIMEBoundary_"), "MIMEBoundary is not set in Content-Type header");
+                    Assert.assertTrue(boundaryDetails[1].contains("MIMEBoundary_"), "MIMEBoundary is not set in Content-Type header");
                 }
             }
         }
