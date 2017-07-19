@@ -33,6 +33,7 @@ import org.ballerinalang.model.ConstDef;
 import org.ballerinalang.model.Function;
 import org.ballerinalang.model.GlobalVariableDef;
 import org.ballerinalang.model.ImportPackage;
+import org.ballerinalang.model.NamespaceDeclaration;
 import org.ballerinalang.model.NodeVisitor;
 import org.ballerinalang.model.ParameterDef;
 import org.ballerinalang.model.Resource;
@@ -70,9 +71,11 @@ import org.ballerinalang.model.expressions.SubtractExpression;
 import org.ballerinalang.model.expressions.TypeCastExpression;
 import org.ballerinalang.model.expressions.TypeConversionExpr;
 import org.ballerinalang.model.expressions.UnaryExpression;
+import org.ballerinalang.model.expressions.XMLQNameExpr;
 import org.ballerinalang.model.expressions.variablerefs.FieldBasedVarRefExpr;
 import org.ballerinalang.model.expressions.variablerefs.IndexBasedVarRefExpr;
 import org.ballerinalang.model.expressions.variablerefs.SimpleVarRefExpr;
+import org.ballerinalang.model.expressions.variablerefs.XMLAttributesRefExpr;
 import org.ballerinalang.model.statements.AbortStmt;
 import org.ballerinalang.model.statements.ActionInvocationStmt;
 import org.ballerinalang.model.statements.AssignStmt;
@@ -83,6 +86,7 @@ import org.ballerinalang.model.statements.ContinueStmt;
 import org.ballerinalang.model.statements.ForkJoinStmt;
 import org.ballerinalang.model.statements.FunctionInvocationStmt;
 import org.ballerinalang.model.statements.IfElseStmt;
+import org.ballerinalang.model.statements.NamespaceDeclarationStmt;
 import org.ballerinalang.model.statements.ReplyStmt;
 import org.ballerinalang.model.statements.ReturnStmt;
 import org.ballerinalang.model.statements.Statement;
@@ -736,6 +740,16 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     @Override
+    public void visit(NamespaceDeclarationStmt namespaceDeclarationStmt) {
+
+    }
+
+    @Override
+    public void visit(NamespaceDeclaration namespaceDeclaration) {
+
+    }
+
+    @Override
     public void visit(AddExpression addExpr) {
         logger.debug("Visit - AddExpression");
         /**
@@ -1107,6 +1121,16 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(IndexBasedVarRefExpr indexBasedVarRefExpr) {
+
+    }
+
+    @Override
+    public void visit(XMLAttributesRefExpr xmlAttributesRefExpr) {
+
+    }
+
+    @Override
+    public void visit(XMLQNameExpr xmlqNameExpr) {
 
     }
 

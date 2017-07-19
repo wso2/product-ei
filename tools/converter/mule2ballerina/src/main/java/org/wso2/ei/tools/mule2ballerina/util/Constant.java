@@ -103,4 +103,6 @@ public class Constant {
     public static final String DIVIDER = "/";
     public static final String BACKTICK = "`";
     public static final String QUOTE_STR = "\"";
+
+    public static final String OPTION = "-z";
 }

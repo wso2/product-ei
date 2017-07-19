@@ -95,7 +95,7 @@ public class DataServiceReader {
         String pkgPath4 = "ballerina.lang.strings";
         modelBuilder.addImportPackage(null, null, pkgPath4, null);
 
-        modelBuilder.startAnnotationAttachment(null);
+      //  modelBuilder.startAnnotationAttachment(null);
 
         BLangModelBuilder.NameReference nameReference;
 
@@ -110,19 +110,19 @@ public class DataServiceReader {
         modelBuilder.createLiteralTypeAttributeValue(null, null);
 
         String key = "value";
-        modelBuilder.createAnnotationKeyValue(null, key);
+      //  modelBuilder.createAnnotationKeyValue(null, key);
 
         int attribuesAvailable = 1;
         modelBuilder.addAnnotationAttachment(null, null, nameReference, attribuesAvailable);
 
-        modelBuilder.startServiceDef(null);
+      //  modelBuilder.startServiceDef(null);
 
         Util.createConfigProperties(modelBuilder, dataservice);
         // done
 
         Util.createResources(modelBuilder, dataservice);
 
-        modelBuilder.createService(null, dataservice.getName());
+     //   modelBuilder.createService(null, dataservice.getName());
         BallerinaFile bFile = modelBuilder.build();
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
 //        sourceGenerator.generate(bFile, "/home/madhawa/DSS-BAM/madhawa-dss1.bal");

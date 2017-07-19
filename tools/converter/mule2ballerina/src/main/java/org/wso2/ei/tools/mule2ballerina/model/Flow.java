@@ -27,30 +27,6 @@ import org.wso2.ei.tools.mule2ballerina.visitor.Visitor;
  */
 public class Flow extends BaseFlow implements Visitable {
 
-    /*protected String name;
-    protected LinkedList<Processor> flowProcessors; *//*All the processors inside a flow needs to be in FIFO order to
-    generate Ballerina code in its proper order*//*
-
-    public Flow() {
-        flowProcessors = new LinkedList<Processor>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LinkedList<Processor> getFlowProcessors() {
-        return flowProcessors;
-    }
-
-    public void addProcessor(Processor processor) {
-        flowProcessors.add(processor);
-    }*/
-
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

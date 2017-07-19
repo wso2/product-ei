@@ -108,7 +108,7 @@ public class ConfigReader {
                 }
             }
         } catch (XMLStreamException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Error parsing mule xml config", e);
         }
     }
 
@@ -123,7 +123,7 @@ public class ConfigReader {
         try {
             fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Error in getting input stream from mule config xml", e);
         }
         return fileInputStream;
     }
@@ -138,7 +138,6 @@ public class ConfigReader {
     private void loadIntermediateMuleObjects(StartElement mElement) {
         String mElementName = getElementName(mElement);
         String mClassName = mapperObject.getElementToObjMapper().get(mElementName);
-        Class<?> intermediateClass = null;
         if (mClassName != null) {
             populateIntermediateObject(mElement.getAttributes(), mClassName, mElementName);
         } else {
@@ -230,12 +229,14 @@ public class ConfigReader {
                             field.set(finalObject, attribute.getValue());
                         }
                     } catch (NoSuchFieldException ex) {
-                        logger.warn(" NoSuchFieldException ", ex);
+                        logger.warn(" Property for the mapped mule attribute cannot be found in the relevant class "
+                                , ex);
                     } catch (IllegalAccessException ex) {
-                        logger.error(ex.getMessage(), ex);
+                        logger.error("IllegalAccessException thrown when setting properties in super class", ex);
                     }
                 } catch (IllegalAccessException e) {
-                    logger.error(e.getMessage(), e);
+                    logger.error("IllegalAccessException thrown when setting properties in created intermediate "
+                             + " object ", e);
                 }
             });
 
@@ -246,16 +247,9 @@ public class ConfigReader {
                 baseObj.buildTree(dataCarrierDTO);
             }
 
-        } catch (IllegalAccessException e) {
-            logger.error(e.getMessage(), e);
-        } catch (InstantiationException e) {
-            logger.error(e.getMessage(), e);
-        } catch (ClassNotFoundException e) {
-            logger.error(e.getMessage(), e);
-        } catch (NoSuchMethodException e) {
-            logger.error(e.getMessage(), e);
-        } catch (InvocationTargetException e) {
-            logger.error(e.getMessage(), e);
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | NoSuchMethodException |
+                InvocationTargetException e) {
+            logger.error("Error occured while populating intermediate object that is mapped to a mule element", e);
         }
     }
 

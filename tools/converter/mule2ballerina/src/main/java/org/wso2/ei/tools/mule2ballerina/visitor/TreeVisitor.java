@@ -88,7 +88,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(Root root) {
-        logger.debug("-SRoot");
+        logger.info("-SRoot");
         //Visit each main flow to create resources
         for (Flow flow : root.getFlowList()) {
             flow.accept(this);
@@ -108,7 +108,7 @@ public class TreeVisitor implements Visitor {
             ballerinaASTAPI.endCallableBody();
             ballerinaASTAPI.endOfFunction(privateFlow.getName()); //Function name will be the same as private flow name
         }
-        logger.debug("-ERoot");
+        logger.info("-ERoot");
         ballerinaFile = ballerinaASTAPI.buildBallerinaFile();
     }
 
@@ -119,7 +119,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(Flow flow) {
-        logger.debug("--SFlow");
+        logger.info("--SFlow");
         int i = 0;
         int flowSize = flow.getFlowProcessors().size();
         for (Processor processor : flow.getFlowProcessors()) {
@@ -156,7 +156,7 @@ public class TreeVisitor implements Visitor {
                 String resourceName = Constant.BLANG_RESOURCE_NAME + ++resourceCounter;
                 ballerinaASTAPI.endOfResource(resourceName, resourceAnnotationCount); //End of resource
                 resourceAnnotationCount = 0;
-                logger.debug("--EFlow");
+                logger.info("--EFlow");
 
                 /* At the end of each flow get the flow queue associate with its config and
                  * remove this flow from the queue, so that when there are no flows (resources) associate with a config
@@ -190,7 +190,7 @@ public class TreeVisitor implements Visitor {
                     .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_MESSAGES), null);
             importTracker.put(Constant.BLANG_PKG_MESSAGES, true);
         }
-        logger.debug("----Payload");
+        logger.info("----Payload");
 
         String payloadVariableName = "";
         //If the string is wrapped around quotes remove them first.
@@ -260,7 +260,7 @@ public class TreeVisitor implements Visitor {
             ballerinaASTAPI.addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_HTTP), null);
             importTracker.put(Constant.BLANG_HTTP, true);
         }
-        logger.debug("--HttpListenerConfig");
+        logger.info("--HttpListenerConfig");
 
         /*If the service is not yet created, start creating service definition*/
         if (serviceTrack.get(listenerConfig.getName()) == null) {
@@ -285,7 +285,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(HttpListener listener) {
-        logger.debug("----HttpListener");
+        logger.info("----HttpListener");
         GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(listener.getConfigName());
         globalConfiguration.accept(this);
 
@@ -356,7 +356,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(HttpRequest request) {
-        logger.debug("----HttpRequest");
+        logger.info("----HttpRequest");
         GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(request.getConfigName());
         globalConfiguration.accept(this);
 
@@ -384,7 +384,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(HttpRequestConfig requestConfig) {
-        logger.debug("----HttpRequestConfig");
+        logger.info("----HttpRequestConfig");
         /*Create reference type variable LHS*/
         ballerinaASTAPI.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTAPI.createRefereceTypeName();
@@ -417,6 +417,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(Comment comment) {
+        logger.info("----Comment" + comment.getComment());
         ballerinaASTAPI.addComment(comment.getComment());
     }
 
@@ -429,6 +430,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(org.wso2.ei.tools.mule2ballerina.model.Logger log) {
+        logger.info("----Logger");
         /*If ballerina system package is not already added to import packages , add it*/
         if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_LOGGER) == null) {
             ballerinaASTAPI
@@ -472,7 +474,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(PropertySetter propertySetter) {
-
+        logger.info("----PropertySetter");
         if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_MESSAGES) == null) {
             ballerinaASTAPI
                     .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_MESSAGES), null);
@@ -496,7 +498,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(PropertyRemover propertyRemover) {
-
+        logger.info("----PropertyRemover");
         if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_MESSAGES) == null) {
             ballerinaASTAPI
                     .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_MESSAGES), null);
@@ -519,6 +521,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(VariableSetter variableSetter) {
+        logger.info("----VariableSetter");
         createVariableOfTypeString(variableSetter.getValue(), variableSetter.getVariableName(), true, false);
     }
 
@@ -529,6 +532,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(VariableRemover variableRemover) {
+        logger.info("----VariableRemover");
         // createVariableOfTypeString("", variableRemover.getVariableName(), true,false);
       /*  ballerinaASTAPI.createStringLiteral("");
         ballerinaASTAPI.createVariable(variableRemover.getVariableName(), false);*/
@@ -545,6 +549,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(FlowReference flowReference) {
+        logger.info("----FlowReference");
         //Add the sub flow processors also into the calling resource
         if (mRoot.getSubFlowMap() != null && !mRoot.getSubFlowMap().isEmpty()) {
             SubFlow subFlow = mRoot.getSubFlowMap().get(flowReference.getName());
@@ -578,6 +583,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(AsynchronousTask asynchronousTask) {
+        logger.info("----AsynchronousTask");
         ballerinaASTAPI.addComment("//Call Worker!");
         ballerinaASTAPI.startExprList();
         ballerinaASTAPI.createNameReference(null, inboundMsg);
@@ -596,7 +602,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(Database database) {
-        logger.debug("----Database");
+        logger.info("----Database");
         GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(database.getConfigName());
         globalConfiguration.accept(this);
 
@@ -633,7 +639,7 @@ public class TreeVisitor implements Visitor {
      */
     @Override
     public void visit(DatabaseConfig databaseConfig) {
-
+        logger.info("----DatabaseConfig");
         if (importTracker.isEmpty() || importTracker.get(Constant.BLANG_PKG_SQL) == null) {
             ballerinaASTAPI
                     .addImportPackage(ballerinaASTAPI.getBallerinaPackageMap().get(Constant.BLANG_PKG_SQL), null);

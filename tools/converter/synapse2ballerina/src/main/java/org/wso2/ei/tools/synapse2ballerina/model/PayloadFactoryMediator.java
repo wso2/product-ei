@@ -69,7 +69,7 @@ public class PayloadFactoryMediator implements Mediator {
         String responseVariableName = (String) parameters.get(Constants.RESPONSE_VAR_NAME);
 
         ballerinaASTModelBuilder.addTypes(Constants.BLANG_TYPE_MESSAGE);
-        ballerinaASTModelBuilder.addMapStructLiteral();
+     //   ballerinaASTModelBuilder.addMapStructLiteral();
         ballerinaASTModelBuilder.createVariable(responseVariableName, true);
 
         ballerinaASTModelBuilder.startExprList();
@@ -83,10 +83,10 @@ public class PayloadFactoryMediator implements Mediator {
 
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createNameReference(null, responseVariableName);
-        ballerinaASTModelBuilder.createVariableRefExpr();
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
 
         ballerinaASTModelBuilder.createNameReference(null, "payload");
-        ballerinaASTModelBuilder.createVariableRefExpr();
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
 
         ballerinaASTModelBuilder.endExprList(2);
         ballerinaASTModelBuilder.createFunctionInvocation(true);

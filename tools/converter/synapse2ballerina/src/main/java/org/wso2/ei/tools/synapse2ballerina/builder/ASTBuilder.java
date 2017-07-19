@@ -60,7 +60,7 @@ public class ASTBuilder {
             buildResource(resource);
         }
 
-        ballerinaASTModelBuilder.endOfService(api.getName());
+        ballerinaASTModelBuilder.endOfService(api.getName(), "http");
 
         return ballerinaASTModelBuilder.buildBallerinaFile();
     }
