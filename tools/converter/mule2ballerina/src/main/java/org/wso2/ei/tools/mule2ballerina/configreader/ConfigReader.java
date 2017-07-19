@@ -249,7 +249,7 @@ public class ConfigReader {
 
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | NoSuchMethodException |
                 InvocationTargetException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Error occured while populating intermediate object that is mapped to a mule element", e);
         }
     }
 
