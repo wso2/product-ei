@@ -46,11 +46,12 @@ public class MuleToBalConvertExecutor {
     private static Logger logger = LoggerFactory.getLogger(ConfigReader.class);
     private static final String XML_EXTENSION = "xml";
     private static final String MULE_TAG = "</mule>";
+    private static final String BALLERINA_FILE_EXTENSION = ".bal";
 
     public static void main(String... args) {
 
         if (args == null || args.length == 0) {
-            logger.error("Please provide mule-config-file/mule-zip/folder containing these");
+            logger.error("Please provide mule-config-file/mule-zip or a folder containing these");
             System.exit(-1);
         }
 
@@ -59,7 +60,7 @@ public class MuleToBalConvertExecutor {
 
             String generatedBalLocation = null;
             if (args.length < 2) { //Check whether source location is given
-                logger.error("Please provide mule-config-file/mule-zip/folder containing these");
+                logger.error("Please provide mule-config-file/mule-zip or a folder containing these");
                 System.exit(-1);
             } else if (args.length == 2) {
                 generatedBalLocation = null;
@@ -69,7 +70,10 @@ public class MuleToBalConvertExecutor {
 
             //isNormalExtractOn set to false
             String destinationFolder = Utils.extractFiles(args[1], generatedBalLocation, false);
-            logger.debug("Extracted files are in: " + destinationFolder);
+
+            if (logger.isDebugEnabled()) {
+                logger.debug("Extracted mule files are in: " + destinationFolder);
+            }
 
             File source = new File(args[1]);
 
@@ -78,7 +82,9 @@ public class MuleToBalConvertExecutor {
             if (files != null) {
                 for (File file : files) {
                     if (file.isDirectory()) {
-                        logger.debug("Outer Directory: " + file.getName());
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Outer Directory: " + file.getName());
+                        }
                         File[] innerFiles = file.listFiles();
                         if (innerFiles != null) {
                             for (File innerFile : innerFiles) {
@@ -93,7 +99,7 @@ public class MuleToBalConvertExecutor {
         } else {
             File source = new File(args[0]);
             Path sourcePath = source.toPath().toAbsolutePath();
-            logger.info("Source file(s) in location: " + sourcePath.toString());
+            logger.info("Mule configs are in this location: " + sourcePath.toString());
             String destination = null;
             if (args.length < 2) {
                 destination = null;
@@ -108,14 +114,15 @@ public class MuleToBalConvertExecutor {
                         path = Files.createDirectories(path);
                     }
                     destination = path.toString();
-                    logger.info("Converted files saved in " + destination);
+                    logger.info("Generated ballerina files are saved in " + destination);
 
                     List<File> filesInFolder = Files.walk(Paths.get(args[0])).filter(Files::isRegularFile).
                             map(Path::toFile).collect(Collectors.toList());
                     for (File file : filesInFolder) {
                         ConfigReader xmlParser = new ConfigReader();
                         try (InputStream inputStream = xmlParser.getInputStream(file)) {
-                            String fileName = file.getName().substring(0, file.getName().indexOf('.')) + ".bal";
+                            String fileName =
+                                    file.getName().substring(0, file.getName().indexOf('.')) + BALLERINA_FILE_EXTENSION;
                             createBalFile(xmlParser, inputStream, destination + File.separator + fileName);
                             logger.info(fileName + " created successfully.");
                         }
@@ -123,9 +130,9 @@ public class MuleToBalConvertExecutor {
                 } else {
                     if (destination == null || destination.isEmpty()) {
                         String fileName = source.getName();
-                        destination = fileName.substring(0, fileName.indexOf('.')) + ".bal";
+                        destination = fileName.substring(0, fileName.indexOf('.')) + BALLERINA_FILE_EXTENSION;
                     }
-                    logger.info("Generated ballerina file saved as " + destination);
+                    logger.info("Generated ballerina file are saved in " + destination);
                     ConfigReader xmlParser = new ConfigReader();
                     try (InputStream inputStream = xmlParser.getInputStream(source)) {
                         createBalFile(xmlParser, inputStream, destination);
@@ -156,12 +163,14 @@ public class MuleToBalConvertExecutor {
     }
 
     private static void iterateMuleFiles(File innerDirectory, File source, String generatedBalSourceLocation) {
-        logger.debug("Inner Directory: " + innerDirectory.getName());
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Inner Directory: " + innerDirectory.getName());
+        }
         ConfigReader xmlParser = new ConfigReader();
         File[] actualFiles = innerDirectory.listFiles();
         //Get the destination path where you want to save your bal files. isExtract = false
         Path path = Utils.getPath(source, generatedBalSourceLocation, false);
-        logger.info("Converted files are saved in " + path.toString());
         if (!Files.exists(path)) {
             try {
                 path = Files.createDirectories(path);
@@ -176,8 +185,8 @@ public class MuleToBalConvertExecutor {
                             StandardCharsets.UTF_8);
                     if (XML_EXTENSION.equals(Utils.getFileExtension(actualFile)) && content.contains(MULE_TAG)) {
                         try (InputStream inputStream = xmlParser.getInputStream(actualFile)) {
-                            String fileName =
-                                    actualFile.getName().substring(0, actualFile.getName().indexOf('.')) + ".bal";
+                            String fileName = actualFile.getName().substring(0, actualFile.getName().indexOf('.'))
+                                    + BALLERINA_FILE_EXTENSION;
                             createBalFile(xmlParser, inputStream, path + File.separator +
                                     fileName);
                             logger.info(fileName + " created successfully.");

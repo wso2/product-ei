@@ -235,7 +235,8 @@ public class ConfigReader {
                         logger.error("IllegalAccessException thrown when setting properties in super class", ex);
                     }
                 } catch (IllegalAccessException e) {
-                    logger.error("IllegalAccessException in populateIntermediateObject ", e);
+                    logger.error("IllegalAccessException thrown when setting properties in created intermediate "
+                             + " object ", e);
                 }
             });
 
@@ -246,16 +247,9 @@ public class ConfigReader {
                 baseObj.buildTree(dataCarrierDTO);
             }
 
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | NoSuchMethodException |
+                InvocationTargetException e) {
             logger.error(e.getMessage(), e);
-        } catch (InstantiationException e) {
-            logger.error("InstantiationException in populateIntermediateObject", e);
-        } catch (ClassNotFoundException e) {
-            logger.error("ClassNotFoundException in populateIntermediateObject", e);
-        } catch (NoSuchMethodException e) {
-            logger.error("NoSuchMethodException in populateIntermediateObject", e);
-        } catch (InvocationTargetException e) {
-            logger.error("InvocationTargetException in populateIntermediateObject", e);
         }
     }
 

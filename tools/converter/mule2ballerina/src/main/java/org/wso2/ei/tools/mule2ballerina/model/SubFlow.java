@@ -24,28 +24,6 @@ import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
  * {@code SubFlow} represents sub-flow element
  */
 public class SubFlow extends BaseFlow {
-   /* protected String name;
-    protected Queue<Processor> flowProcessors; //Processors belong to a sub flow in FIFO order
-
-    public SubFlow() {
-        flowProcessors = new LinkedList<Processor>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Queue<Processor> getFlowProcessors() {
-        return flowProcessors;
-    }
-
-    public void addProcessor(Processor processor) {
-        flowProcessors.add(processor);
-    }*/
 
     /**
      * Adds the sub flow to the root
