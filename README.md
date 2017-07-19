@@ -28,6 +28,18 @@ All the open issues pertaining to WSO2 Enterprise Integrator are reported at the
 - Run the Maven command ``mvn clean install`` from the root directory
 - Extract the Product EI distribution created at product-ei/distribution/target/wso2ei-6.1.1.zip in to your local directory
 
+### Certificate validation errors
+WSO2 EI includes the MSF4J profile. That profile make use of an old version of the Eclipse Equinox framework that is signed with a certificate that is not trusted by recent versions of Java.
+
+If the Maven build fails with the error ***One or more certificates rejected. Cannot proceed with installation***, that means you have to manually import the certificate to the Java certificate store.
+
+In that case, you can check what certificate is missing from the certificate store with the following command started from the root of the Product EI source directory:
+
+```jarsigner -verify ./p2-profile/msf4j-profile/target/p2-repo/plugins/org.eclipse.equinox.ds_(version).jar -verbose -certs```
+
+For example, you need to download the certificate with thumbprint ***97817950D81C9670CC34D809CF794431367EF474*** from the DigiCert website (https://www.digicert.com/digicert-root-certificates.htm). To import it, you need to run the following command as root from your Java security directory (ex: /usr/lib/jvm/java-8-oracle/jre/lib/security/):
+
+```keytool -import -file GTECyberTrustGlobalRoot.crt -keystore cacerts```
 
 |  Branch | Build Status |
 | :------------ |:-------------
