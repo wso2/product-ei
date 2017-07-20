@@ -328,7 +328,7 @@ function buildLabel(node) {
             var imgURL = imgFolderPath + 'img/' + mediatorName + '.svg';
 
             $.ajax({
-                url: "imgURL",
+                url:imgURL,
                 async: false,
                 success: function(data){
                     var $svg = $(data).find('svg');
@@ -341,7 +341,7 @@ function buildLabel(node) {
                 },
                 error: function(data) {
                     $.ajax({
-                    url: imgFolderPath + 'img/bammediator.svg',
+                    url: imgFolderPath + 'img/mediator.svg',
                     async: false,
                     success: function(data){
                         var $svg = $(data).find('svg');
