@@ -1,0 +1,26 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "root",
+  "type" : "object",
+  "properties" : {
+    "IPU58_Output" : {
+      "id" : "http://wso2jsonschema.org/IPU58_Output",
+      "type" : "object",
+      "properties" : {
+        "InitialisationCodePin" : {
+          "id" : "http://wso2jsonschema.org/IPU58_Output/InitialisationCodePin",
+          "type" : "string"
+        },
+        "CodeRetour" : {
+          "id" : "http://wso2jsonschema.org/IPU58_Output/CodeRetour",
+          "type" : "string"
+        },
+        "NbrSaisiesRestantes" : {
+          "id" : "http://wso2jsonschema.org/IPU58_Output/NbrSaisiesRestantes",
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

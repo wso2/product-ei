@@ -1,0 +1,10 @@
+map_S_IPU_EnC0DeCHaRHyPh3n_58_Output_S_root = function(){
+var outputroot={};
+
+outputroot =  {};
+outputroot.IPU58_Output =  {};
+outputroot.IPU58_Output.InitialisationCodePin = inputns_IPU_EnC0DeCHaRHyPh3n_58_Output.ns_InitialisationCodePin;
+outputroot.IPU58_Output.CodeRetour = inputns_IPU_EnC0DeCHaRHyPh3n_58_Output.ns_CodeRetour;
+outputroot.IPU58_Output.NbrSaisiesRestantes = inputns_IPU_EnC0DeCHaRHyPh3n_58_Output.ns_NbrSaisiesRestantes;
+return outputroot;
+};

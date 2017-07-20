@@ -1,0 +1,24 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "ns:IPU-58_Output",
+  "type" : "object",
+  "properties" : {
+    "ns:InitialisationCodePin" : {
+      "id" : "http://wso2jsonschema.org/ns:InitialisationCodePin",
+      "type" : "string"
+    },
+    "ns:CodeRetour" : {
+      "id" : "http://wso2jsonschema.org/ns:CodeRetour",
+      "type" : "string"
+    },
+    "ns:NbrSaisiesRestantes" : {
+      "id" : "http://wso2jsonschema.org/ns:NbrSaisiesRestantes",
+      "type" : "string"
+    }
+  },
+  "namespaces" : [ {
+    "prefix" : "ns",
+    "url" : "http://systemeu.fr"
+  } ]
+}

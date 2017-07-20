@@ -302,6 +302,7 @@
         <classes>
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5021MultiplePrefixesAndDashSupport"/>
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5045XsiNilElementSupport"/>
+            <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5200DashSupportForMappingData"/>
         </classes>
     </test>
     <test name="Aggregate-Mediator-Test" preserve-order="true" verbose="2">
