@@ -41,6 +41,8 @@ For example, you need to download the certificate with thumbprint ***97817950D81
 
 ```keytool -import -file GTECyberTrustGlobalRoot.crt -keystore cacerts```
 
+***Note:*** The default password for the certificate store is *changeit*
+
 |  Branch | Build Status |
 | :------------ |:-------------
 | master      | [![Build Status](https://wso2.org/jenkins/job/product-ei/badge/icon)](https://wso2.org/jenkins/job/product-ei) |
