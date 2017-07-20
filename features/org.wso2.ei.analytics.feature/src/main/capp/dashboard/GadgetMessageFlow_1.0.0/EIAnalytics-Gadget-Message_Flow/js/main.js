@@ -320,15 +320,9 @@ function buildLabel(node) {
 
         }
         var mediatorIconMap = {
-            "invokemediator":{
-                "icon":"invoke"
-            },
-            "callmediator":{
-                "icon":"call-mediator"
-            },
-            "enqueuemediator":{
-                "icon":"enqueuemediator"
-            },
+            "invokemediator":"invokemediator",
+            "callmediator":"callmediator",
+            "enqueuemediator":"enqueuemediator",
             "sendmediator":{
                 "icon":"send-mediator"
             },
@@ -472,44 +466,49 @@ function buildLabel(node) {
         if (node.type.toLowerCase() === 'mediator') {
 
             var mediatorName = node.label.split(':')[0].toLowerCase();
-            var mediatorIcon;
             var imgFolderPath = $('img[class=hidden]').attr('src').slice(0,-1);
 
-            if(mediatorIconMap[mediatorName]){
-                mediatorIcon = mediatorIconMap[mediatorName].icon;
-            }
-            else{
-                mediatorIcon = mediatorIconMap.default.icon;
-            }
-
-            var imgURL = imgFolderPath + 'img/' + mediatorIcon + '.svg';
+            var imgURL = imgFolderPath + 'img/' + mediatorName + '.svg';
 
             var iconSVG;
 
             $.ajax({
-                url: imgURL,
+                url: "/jghghjg",
                 async: false,
                 success: function(data){
                     var $svg = $(data).find('svg');
                     $svg = $svg.removeAttr('xmlns:a');
-                    if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+                    if (!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
                         $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
                     }
 
                     iconSVG = $svg.get(0).outerHTML;
+                },
+                error: function(data) {
+                    $.ajax({
+                    url: imgFolderPath + 'img/bammediator.svg',
+                    async: false,
+                    success: function(data){
+                        var $svg = $(data).find('svg');
+                        $svg = $svg.removeAttr('xmlns:a');
+                        if (!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+                            $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+                        }
+
+                        iconSVG = $svg.get(0).outerHTML;
+                    },
+                    dataType: 'xml'
+                    });
                 },
                 dataType: 'xml'
             });
 
             icon = iconSVG;
 
-        }
-
-        else if (node.type.toLowerCase() === 'endpoint') {
+        } else if (node.type.toLowerCase() === 'endpoint') {
             icon = '<i class="icon fw fw-endpoint"></i>';
-        }
-        else {
-            icon = ''
+        } else {
+            icon = '';
         }
 
 

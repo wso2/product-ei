@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~   Copyright (c) 2017 WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ ~
+ ~   Licensed under the Apache License, Version 2.0 (the "License");
+ ~   you may not use this file except in compliance with the License.
+ ~   You may obtain a copy of the License at
+ ~
+ ~        http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~   Unless required by applicable law or agreed to in writing, software
+ ~   distributed under the License is distributed on an "AS IS" BASIS,
+ ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~   See the License for the specific language governing permissions and
+ ~   limitations under the License.
+-->
+<svg version="1.1" id="transactionmediator" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve">
+<path d="M10.3192549,0.7621338l-0.5856199,0.542612l0.8560419,0.9249736L1.9327216,2.2721386l0.0100157,0.7977161
+	l8.6504745-0.042419L9.6812,3.9783323l0.5744257,0.5526273l1.8116522-1.8817616L10.3192549,0.7621338z M13.25,6.2020674v5.8386803
+	H0.75V6.2020674H13.25 M14,5.4520674H0v7.3386803h14V5.4520674L14,5.4520674z M1.1217263,11.5129271h3.6199949V7.8929324H1.1217263
+	V11.5129271z M1.8717263,8.6429319h2.1199951v2.1199951H1.8717263V8.6429319z M5.1474056,10.5266447h3.6199951V6.8966398H5.1474056
+	V10.5266447z M5.8974056,7.6466398h2.1199951v2.1300049H5.8974056V7.6466398z M9.1730852,11.5129271h3.6199951V7.8929324H9.1730852
+	V11.5129271z M9.9230852,8.6429319h2.1199951v2.1199951H9.9230852V8.6429319z"/>
+</svg>
