@@ -24,7 +24,7 @@ import org.wso2.carbon.esb.datamapper.common.DataMapperIntegrationTest;
 
 import java.io.File;
 
-public class ESBJAVA5200DashSupportForMappingData extends DataMapperIntegrationTest {
+public class ESBJAVA5200DashSupportForMappingDataTestCase extends DataMapperIntegrationTest {
 
     private final String DM_ARTIFACT_ROOT_PATH = "/artifacts/ESB/mediatorconfig/datamapper/dashSupport/";
     private final String DM_REGISTRY_ROOT_PATH = "datamapper/";
@@ -51,7 +51,7 @@ public class ESBJAVA5200DashSupportForMappingData extends DataMapperIntegrationT
                 "<CodeRetour>2</CodeRetour>" +
                 "<NbrSaisiesRestantes>3</NbrSaisiesRestantes>" +
                 "</IPU58_Output>" +
-                "</root>");
+                "</root>", "Fail to map data having dashes");
 
     }
 }
