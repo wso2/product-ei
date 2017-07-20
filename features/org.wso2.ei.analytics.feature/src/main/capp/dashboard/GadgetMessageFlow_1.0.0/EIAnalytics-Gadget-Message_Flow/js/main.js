@@ -327,10 +327,8 @@ function buildLabel(node) {
 
             var imgURL = imgFolderPath + 'img/' + mediatorName + '.svg';
 
-            var iconSVG;
-
             $.ajax({
-                url: "/jghghjg",
+                url: "imgURL",
                 async: false,
                 success: function(data){
                     var $svg = $(data).find('svg');
@@ -339,7 +337,7 @@ function buildLabel(node) {
                         $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
                     }
 
-                    iconSVG = $svg.get(0).outerHTML;
+                    icon = $svg.get(0).outerHTML;
                 },
                 error: function(data) {
                     $.ajax({
@@ -352,7 +350,7 @@ function buildLabel(node) {
                             $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
                         }
 
-                        iconSVG = $svg.get(0).outerHTML;
+                        icon = $svg.get(0).outerHTML;
                     },
                     dataType: 'xml'
                     });
@@ -360,7 +358,6 @@ function buildLabel(node) {
                 dataType: 'xml'
             });
 
-            icon = iconSVG;
 
         } else if (node.type.toLowerCase() === 'endpoint') {
             icon = '<i class="icon fw fw-endpoint"></i>';
