@@ -55,9 +55,9 @@ else {
 }
 
 $(function() {
-    
+
     if (qs[PARAM_ID] == null) {
-        
+
         switch(page.name) {
             case 'api':
                 $("#canvas").html(gadgetUtil.getInfoText('Please select an API and a valid date range to view stats.'));
@@ -77,7 +77,7 @@ $(function() {
             default:
                 $("#canvas").html(gadgetUtil.getInfoText());
         };
-        
+
         return;
     }
     timeFrom = gadgetUtil.timeFrom();
@@ -257,7 +257,7 @@ function onData(response) {
     d3.selectAll('#btnZoomOut').on('click', function() {
         if(zoomScale > 0.05) {
             zoomScale -= 0.05;
-            interpolateZoom(translate, zoomScale, inner);  
+            interpolateZoom(translate, zoomScale, inner);
         }
 
     });
@@ -284,13 +284,14 @@ function interpolateZoom (translate, scale, svg) {
 }
 
 function isParent(searchNodes, id) {
-   for (var x = 0; x < searchNodes.length; x++) { 
+   for (var x = 0; x < searchNodes.length; x++) {
         if (searchNodes[x].parent == id) {
             return true;
         }
    }
    return false;
 }
+
 
 function buildLabel(node) {
     var pageUrl = MEDIATOR_PAGE_URL;
@@ -316,10 +317,204 @@ function buildLabel(node) {
         var nodeClasses = "nodeLabel";
         if (node.dataAttributes[1].value === "Failed") {
             nodeClasses += " failed-node";
+
         }
-        
-        labelText = '<a href="#"><div class="' + nodeClasses +'" data-node-type="' + node.type + '" data-component-id="' + node.modifiedId
-        + '" data-hash-code="' + hashCode + '" data-target-url="' + targetUrl + '"><h4>' + node.label + "</h4>";
+        var mediatorIconMap = {
+            "invokemediator":{
+                "icon":"invoke"
+            },
+            "callmediator":{
+                "icon":"call-mediator"
+            },
+            "enqueuemediator":{
+                "icon":"enqueuemediator"
+            },
+            "sendmediator":{
+                "icon":"send-mediator"
+            },
+            "loopbackmediator":{
+                "icon":"loop-back"
+            },
+            "sequencemediator":{
+                "icon":"sequence"
+            },
+            "respondmediator":{
+                "icon":"return"
+            },
+            "eventmediator":{
+                "icon":"event-mediator"
+            },
+            "propertymediator":{
+                "icon":"property"
+            },
+            "calltemplatemediator":{
+                "icon":"call-template-mediator"
+            },
+            "enrichmediator":{
+                "icon":"enrich-mediator"
+            },
+            "datamappermediator":{
+                "icon":"data-mapper"
+            },
+            "logmediator":{
+                "icon":"log"
+            },
+            "filtermediator":{
+                "icon":"filter"
+            },
+            "outmediator":{
+                "icon":"right-arrow"
+            },
+            "inmediator":{
+                "icon":"left-arrow"
+            },
+            "validatemediator":{
+                "icon":"validate-mediator"
+            },
+            "switchmediator":{
+                "icon":"switch-mediator"
+            },
+            "conditionalroutermediator":{
+                "icon":"conditional-router-mediator"
+            },
+            "xsltmediator":{
+                "icon":"xslt-mediator"
+            },
+            "fastxsltmediator":{
+                "icon":"fast-xslt-mediator"
+            },
+            "urlrewritemediator":{
+                "icon":"url-rewrite-mediator"
+            },
+            "xquerymediator":{
+                "icon":"xquery-mediator"
+            },
+            "headermediator":{
+                "icon":"header"
+            },
+            "faultmediator":{
+                "icon":"fault-mediator"
+            },
+            "payloadfactorymediator":{
+                "icon":"payload-factory"
+            },
+            "cachemediator":{
+                "icon":"cache-mediator"
+            },
+            "foreachmediator":{
+                "icon":"foreach"
+            },
+            "clonemediator":{
+                "icon":"clone"
+            },
+            "storemediator":{
+                "icon":"store-mediator"
+            },
+            "iteratemediator":{
+                "icon":"iterate-mediator"
+            },
+            "aggregatemediator":{
+                "icon":"aggregate-mediator"
+            },
+            "calloutmediator":{
+                "icon":"callout-mediator"
+            },
+            "transactionmediator":{
+                "icon":"transaction-mediator"
+            },
+            "throttlemediator":{
+                "icon":"throttle-mediator"
+            },
+            "dbreportmediator":{
+                "icon":"db-report-mediator"
+            },
+            "dblookupmediator":{
+                "icon":"db-lookup-mediator"
+            },
+            "ejbmediator":{
+                "icon":"ejb-mediator"
+            },
+            "rulemediator":{
+                "icon":"rule-mediator"
+            },
+            "entitlementmediator":{
+                "icon":"entitlement-mediator"
+            },
+            "oauthmediator":{
+                "icon":"oauth-mediator"
+            },
+            "smooksmediator":{
+                "icon":"smooks-mediator"
+            },
+            "beanmediator":{
+                "icon":"bean-mediator"
+            },
+            "classmediator":{
+                "icon":"class-mediator"
+            },
+            "pojocommandmediator":{
+                "icon":"pojo-command-mediator"
+            },
+            "scriptmediator":{
+                "icon":"script-mediator"
+            },
+            "springmediator":{
+                "icon":"spring-mediator"
+            },
+            "bammediator":{
+                "icon":"bam-mediator"
+            },
+            "default":{
+                "icon":"api"
+            }
+        };
+
+        if (node.type.toLowerCase() === 'mediator') {
+
+            var mediatorName = node.label.split(':')[0].toLowerCase();
+            var mediatorIcon;
+            var imgFolderPath = $('img[class=hidden]').attr('src').slice(0,-1);
+
+            if(mediatorIconMap[mediatorName]){
+                mediatorIcon = mediatorIconMap[mediatorName].icon;
+            }
+            else{
+                mediatorIcon = mediatorIconMap.default.icon;
+            }
+
+            var imgURL = imgFolderPath + 'img/' + mediatorIcon + '.svg';
+
+            var iconSVG;
+
+            $.ajax({
+                url: imgURL,
+                async: false,
+                success: function(data){
+                    var $svg = $(data).find('svg');
+                    $svg = $svg.removeAttr('xmlns:a');
+                    if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+                        $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+                    }
+
+                    iconSVG = $svg.get(0).outerHTML;
+                },
+                dataType: 'xml'
+            });
+
+            icon = iconSVG;
+
+        }
+
+        else if (node.type.toLowerCase() === 'endpoint') {
+            icon = '<i class="icon fw fw-endpoint"></i>';
+        }
+        else {
+            icon = ''
+        }
+
+
+        labelText = '<a href="#" class="' + nodeClasses +'">'+ icon +'<div data-node-type="' + node.type + '" data-component-id="' + node.modifiedId
+            + '" data-hash-code="' + hashCode + '" data-target-url="' + targetUrl + '"><h4>' + node.label + "</h4>";
 
         node.dataAttributes.forEach(function(item, i) {
             labelText += "<h5><label>" + item.name + " : </label><span>" + item.value + "</span></h5>";
