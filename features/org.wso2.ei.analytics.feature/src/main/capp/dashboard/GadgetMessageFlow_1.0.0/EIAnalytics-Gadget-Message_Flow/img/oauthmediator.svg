@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~   Copyright (c) 2017 WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ ~
+ ~   Licensed under the Apache License, Version 2.0 (the "License");
+ ~   you may not use this file except in compliance with the License.
+ ~   You may obtain a copy of the License at
+ ~
+ ~        http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~   Unless required by applicable law or agreed to in writing, software
+ ~   distributed under the License is distributed on an "AS IS" BASIS,
+ ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~   See the License for the specific language governing permissions and
+ ~   limitations under the License.
+-->
+<svg version="1.1" id="oauthmediator" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve">
+<path d="M14,7.0019531l-1.3447876,1.3968506l-0.4263916-0.4102173l0.677002-0.7058716L10.1600952,7.314209
+	l-0.0074463-0.5921631l2.7505493-0.0314941l-0.635437-0.6865845l0.4346924-0.402771L14,7.0019531z M2.5497437,5.6011963
+	l-0.4346924,0.402771l0.635437,0.6865845L0,6.7220459L0.0074463,7.314209l2.7456665-0.0314941L2.0761719,7.9885864
+	l0.4263916,0.4102173l1.3447876-1.3968506L2.5497437,5.6011963z M9.9252319,8.5999756
+	c-0.5-0.2999878-1.0499878-0.5-1.5499878-0.6499634C8.2252197,7.8999634,8.1252441,7.8499756,7.9752197,7.75
+	C7.8752441,7.7000122,7.8752441,7.5999756,7.8251953,7.4500122c0-0.0500488,0-0.1000366,0-0.2000122
+	c0.4000244-0.5499878,0.6500244-1.4000244,0.6500244-2.1000366C8.4752197,4.0499878,7.8251953,3.75,7.0751953,3.75
+	S5.6752319,4.0499878,5.6752319,5.1499634c0,0.75,0.2999878,1.6500244,0.7000122,2.1500244c0,0.0499878,0,0.0999756,0,0.0999756
+	c0,0.1000366-0.0500488,0.25-0.1500244,0.3000488c-0.2000122,0.1499634-0.2999878,0.1999512-0.4500122,0.25
+	C5.2252197,8.1499634,4.6752319,8.2999878,4.2252197,8.5999756c-0.25,0.1500244-0.3999634,0.4500122-0.5,0.75
+	c-0.0999756,0.25-0.1500244,0.6000366-0.1500244,0.9000244h3.5h3.5c0-0.2999878-0.0499878-0.6500244-0.1499634-0.9500122
+	C10.3251953,9,10.1752319,8.75,9.9252319,8.5999756z"/>
+</svg>

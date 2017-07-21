@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~   Copyright (c) 2017 WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ ~
+ ~   Licensed under the Apache License, Version 2.0 (the "License");
+ ~   you may not use this file except in compliance with the License.
+ ~   You may obtain a copy of the License at
+ ~
+ ~        http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~   Unless required by applicable law or agreed to in writing, software
+ ~   distributed under the License is distributed on an "AS IS" BASIS,
+ ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~   See the License for the specific language governing permissions and
+ ~   limitations under the License.
+-->
+<svg version="1.1" id="enqueuemediator" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve">
+<path d="M9.9699707,8.3149719v4.0300293H14V8.3149719H9.9699707z M13.3800049,11.7249451h-2.789978V8.934967h2.789978V11.7249451z
+	 M4.9799805,12.3450012h4.0400391V8.3149719H4.9799805V12.3450012z M5.6099854,8.934967h2.7800293v2.789978H5.6099854V8.934967z
+	 M0,5.684967h1.8300171v1.8099976H1.0100098l0.8200073,0.8200073H0v4.0300293h4.0300293V8.3149719H2.2000122l0.8200073-0.8200073
+	H2.2000122V5.684967h1.8300171V1.6549988H0V5.684967z M3.4099731,11.7249451h-2.789978V8.934967h2.789978V11.7249451z
+	 M0.6199951,2.2850037h2.789978v2.7799683h-2.789978V2.2850037z"/>
+</svg>

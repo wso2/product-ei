@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~   Copyright (c) 2017 WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ ~
+ ~   Licensed under the Apache License, Version 2.0 (the "License");
+ ~   you may not use this file except in compliance with the License.
+ ~   You may obtain a copy of the License at
+ ~
+ ~        http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~   Unless required by applicable law or agreed to in writing, software
+ ~   distributed under the License is distributed on an "AS IS" BASIS,
+ ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~   See the License for the specific language governing permissions and
+ ~   limitations under the License.
+-->
+<svg version="1.1" id="conditionalroutermediator"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14 14"
+	 style="enable-background:new 0 0 14 14;" xml:space="preserve">
+<path d="M7.8800049,11.7799683H14V13H7.8800049c-0.25,0.5899658-0.8300171,1-1.5,1
+	c-0.9000244,0-1.6199951-0.7200317-1.6199951-1.6199951c0-0.8900146,0.7199707-1.6199951,1.6199951-1.6199951
+	C7.0599976,10.7600098,7.6400146,11.1799927,7.8800049,11.7799683z M6.3800049,5.5100098
+	c-0.9000244,0-1.6199951,0.7199707-1.6199951,1.6199951C4.7600098,8.0199585,5.4799805,8.75,6.3800049,8.75
+	c0.6799927,0,1.2600098-0.4200439,1.5-1.0200195H14v-1.210022H7.8800049
+	C7.6400146,5.9299927,7.0599976,5.5100098,6.3800049,5.5100098z M7.8800049,1.0100098C7.6400146,0.4199829,7.0499878,0,6.3800049,0
+	C5.4799805,0,4.7600098,0.7299805,4.7600098,1.6199951c0,0.2000122,0.039978,0.3900146,0.1099854,0.5599976L0,6.0859985v1.2799683
+	l5.4799805-4.3959961c0.2600098,0.1700439,0.5700073,0.2700195,0.9000244,0.2700195c0.6799927,0,1.2600098-0.4199829,1.5-1.0200195
+	H14V1.0100098H7.8800049z"/>
+</svg>
