@@ -132,3 +132,11 @@ label{
     padding: 3px;
     position: absolute;
 }
+
+.nodeLabel > svg {
+    height: 30px;
+}
+
+.nodeLabel > svg path {
+    fill: #fff;
+}
