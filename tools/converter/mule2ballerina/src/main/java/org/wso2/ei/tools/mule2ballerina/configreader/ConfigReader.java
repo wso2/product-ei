@@ -20,6 +20,7 @@ package org.wso2.ei.tools.mule2ballerina.configreader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.ei.tools.converter.common.util.Constant;
 import org.wso2.ei.tools.mule2ballerina.dto.DataCarrierDTO;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.AttributeMapper;
 import org.wso2.ei.tools.mule2ballerina.elementmapper.ElementMapper;
@@ -27,7 +28,6 @@ import org.wso2.ei.tools.mule2ballerina.model.BaseObject;
 import org.wso2.ei.tools.mule2ballerina.model.Comment;
 import org.wso2.ei.tools.mule2ballerina.model.Database;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
-import org.wso2.ei.tools.mule2ballerina.util.Constant;
 import org.wso2.ei.tools.mule2ballerina.util.ConstructorHelper;
 
 import java.io.File;
@@ -204,7 +204,7 @@ public class ConfigReader {
                     null);
             if (constructorArgExist != null) {
                 Constructor constructor = mClass.getConstructor(new Class[] { String.class });
-                object = (Object) constructor.newInstance(ConstructorHelper.get(elementName));
+                object = constructor.newInstance(ConstructorHelper.get(elementName));
             } else {
                 object = mClass.newInstance();
             }
@@ -283,6 +283,9 @@ public class ConfigReader {
             break;
         case Constant.MULE_ASYNC_FLOW:
             asyncFlowStarted = isFlowStarted;
+            if (!isFlowStarted) {
+                rootObj.getScopeStack().pop();
+            }
             break;
         default:
             break;

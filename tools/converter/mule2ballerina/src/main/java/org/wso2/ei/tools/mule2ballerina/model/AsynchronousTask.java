@@ -27,7 +27,7 @@ import java.util.LinkedList;
 /**
  * {@code AsynchronousTask} represents mule async element
  */
-public class AsynchronousTask extends BaseObject implements Visitable, Processor {
+public class AsynchronousTask extends BaseObject implements Visitable, Processor, Scope {
 
     private String name;
     protected LinkedList<Processor> asyncProcessors;
@@ -54,6 +54,7 @@ public class AsynchronousTask extends BaseObject implements Visitable, Processor
         return null;
     }
 
+    @Override
     public void addProcessor(Processor processor) {
         asyncProcessors.add(processor);
     }
@@ -71,6 +72,7 @@ public class AsynchronousTask extends BaseObject implements Visitable, Processor
         //Add processor to processor queue
         if (dataCarrierDTO.isAsyncFlowStarted()) { //If the async flow has just started
             lastAddedFlow.addProcessor((Processor) baseObj); //Add it as a processor
+            rootObj.addToScopeStack((Scope) baseObj);
         }
     }
 }

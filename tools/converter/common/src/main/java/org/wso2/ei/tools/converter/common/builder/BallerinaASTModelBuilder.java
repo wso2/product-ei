@@ -64,7 +64,8 @@ public class BallerinaASTModelBuilder {
         GlobalScope globalScope = BLangPrograms.populateGlobalScope();
         NativeScope nativeScope = BLangPrograms.populateNativeScope();
 
-        programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
+     //   programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
+        programScope = new BLangProgram(globalScope, nativeScope);
         bLangPackage = new BLangPackage(".", PACKAGE_REPOSITORY, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);
         modelBuilder = new BLangModelBuilder(packageBuilder, ".");
@@ -183,7 +184,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void addMapStructKeyValue() {
-        modelBuilder.addMapStructKeyValue(null, null);
+     //   modelBuilder.addMapStructKeyValue(null, null);
     }
 
     /**
@@ -246,7 +247,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void createFunctionInvocation(boolean argsAvailable) {
-        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
+        modelBuilder.createFunctionInvocationStmt(null, null, argsAvailable);
     }
 
     public void createReplyStatement() {
@@ -297,7 +298,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void addFunctionInvocationStatement(boolean argsAvailable) {
-        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
+        modelBuilder.createFunctionInvocationStmt(null, null, argsAvailable);
     }
 
     public void createWorkerInvocationStmt(String workerName) {

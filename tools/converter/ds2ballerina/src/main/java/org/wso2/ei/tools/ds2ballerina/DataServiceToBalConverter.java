@@ -20,7 +20,7 @@ package org.wso2.ei.tools.ds2ballerina;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.ei.tools.converter.common.Utils;
+import org.wso2.ei.tools.converter.common.util.Utils;
 import org.wso2.ei.tools.ds2ballerina.beans.DataService;
 import org.wso2.ei.tools.ds2ballerina.configreader.DataServiceReader;
 

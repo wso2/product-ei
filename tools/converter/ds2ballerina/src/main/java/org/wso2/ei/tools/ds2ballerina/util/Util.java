@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Util class to create ballerina model.
+ * util class to create ballerina model.
  */
 public class Util {
 
@@ -57,7 +57,7 @@ public class Util {
             for (Map.Entry<String, String> entry : configPropertiesMap.entrySet()) {
                 modelBuilder.createStringLiteral(null, null, entry.getKey());
                 modelBuilder.createStringLiteral(null, null, entry.getValue());
-                modelBuilder.addMapStructKeyValue(null, null);
+              //  modelBuilder.addMapStructKeyValue(null, null);
             }
             modelBuilder.createMapStructLiteral(null, null);
             String builtInRefTypeName1 = "map";
@@ -200,7 +200,7 @@ public class Util {
         modelBuilder.validateAndSetPackagePath(null, sqlTypeNameReference);
     //    modelBuilder.createVarRefExpr(null, null, sqlTypeNameReference);
         modelBuilder.createStringLiteral(null, null, param.getSqlType());
-        modelBuilder.addMapStructKeyValue(null, null);
+    //    modelBuilder.addMapStructKeyValue(null, null);
 
         BLangModelBuilder.NameReference valueNameReference = new BLangModelBuilder.NameReference(null, "value");
         modelBuilder.validateAndSetPackagePath(null, valueNameReference);
@@ -229,13 +229,13 @@ public class Util {
      //       modelBuilder.createVarRefExpr(null, null, variableParamNameReference);
 
         }
-        modelBuilder.addMapStructKeyValue(null, null);
+    //    modelBuilder.addMapStructKeyValue(null, null);
 
         BLangModelBuilder.NameReference directionNameReference = new BLangModelBuilder.NameReference(null, "direction");
         modelBuilder.validateAndSetPackagePath(null, directionNameReference);
     //    modelBuilder.createVarRefExpr(null, null, directionNameReference);
         modelBuilder.createIntegerLiteral(null, null, getDirection(param));
-        modelBuilder.addMapStructKeyValue(null, null);
+    //    modelBuilder.addMapStructKeyValue(null, null);
 
         modelBuilder.createMapStructLiteral(null, null);
 
@@ -315,7 +315,7 @@ public class Util {
         BLangModelBuilder.NameReference getJsonPayloadNameReference = new BLangModelBuilder.NameReference("messages",
                 "getJsonPayload");
         modelBuilder.validateAndSetPackagePath(null, getJsonPayloadNameReference);
-        modelBuilder.addFunctionInvocationExpr(null, null, getJsonPayloadNameReference, true);
+     //   modelBuilder.addFunctionInvocationExpr(null, null, getJsonPayloadNameReference, true);
         modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("json"), outputVariable, true);
     }
 
@@ -348,7 +348,7 @@ public class Util {
         BLangModelBuilder.NameReference toJsonNameReference = new BLangModelBuilder.NameReference("datatables",
                 "toJson");
         modelBuilder.validateAndSetPackagePath(null, toJsonNameReference);
-        modelBuilder.addFunctionInvocationExpr(null, null, toJsonNameReference, true);
+     //   modelBuilder.addFunctionInvocationExpr(null, null, toJsonNameReference, true);
         modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("json"), jsonVariableName, true);
     }
 
@@ -365,7 +365,7 @@ public class Util {
         BLangModelBuilder.NameReference toJsonNameReference = new BLangModelBuilder.NameReference("datatables",
                 "toXml");
         modelBuilder.validateAndSetPackagePath(null, toJsonNameReference);
-        modelBuilder.addFunctionInvocationExpr(null, null, toJsonNameReference, true);
+     //   modelBuilder.addFunctionInvocationExpr(null, null, toJsonNameReference, true);
         modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("xml"), xmlVariableName, true);
     }
 
@@ -464,7 +464,7 @@ public class Util {
         BLangModelBuilder.NameReference setJsonPayloadNameReference = new BLangModelBuilder.NameReference("messages",
                 "setJsonPayload");
         modelBuilder.validateAndSetPackagePath(null, setJsonPayloadNameReference);
-        modelBuilder.createFunctionInvocationStmt(null, null, setJsonPayloadNameReference, true);
+     //   modelBuilder.createFunctionInvocationStmt(null, null, setJsonPayloadNameReference, true);
     }
 
     private static void setXmlPayloadToMessage(BLangModelBuilder modelBuilder, String messageVariableName,
@@ -482,7 +482,7 @@ public class Util {
         BLangModelBuilder.NameReference setJsonPayloadNameReference = new BLangModelBuilder.NameReference("messages",
                 "setXmlPayload");
         modelBuilder.validateAndSetPackagePath(null, setJsonPayloadNameReference);
-        modelBuilder.createFunctionInvocationStmt(null, null, setJsonPayloadNameReference, true);
+     //   modelBuilder.createFunctionInvocationStmt(null, null, setJsonPayloadNameReference, true);
     }
 
 
@@ -540,7 +540,7 @@ public class Util {
         BLangModelBuilder.NameReference getHeaderNameReference = new BLangModelBuilder.NameReference("messages",
                 "getHeader");
         modelBuilder.validateAndSetPackagePath(null, getHeaderNameReference);
-        modelBuilder.addFunctionInvocationExpr(null, null, getHeaderNameReference, true);
+     //   modelBuilder.addFunctionInvocationExpr(null, null, getHeaderNameReference, true);
         modelBuilder.addVariableDefinitionStmt(null, null, new SimpleTypeName("string"), variableName, true);
     }
 
@@ -567,7 +567,7 @@ public class Util {
         BLangModelBuilder.NameReference equalsIgnoreCaseNameReference = new BLangModelBuilder.NameReference("strings",
                 "equalsIgnoreCase");
         modelBuilder.validateAndSetPackagePath(null, equalsIgnoreCaseNameReference);
-        modelBuilder.addFunctionInvocationExpr(null, null, equalsIgnoreCaseNameReference, true);
+     //   modelBuilder.addFunctionInvocationExpr(null, null, equalsIgnoreCaseNameReference, true);
 
         convertDatatableToJson(modelBuilder, datatableVariableName, payload);
         setJsonPayloadToMessage(modelBuilder, responseMessage, payload);

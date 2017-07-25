@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.mule2ballerina.util;
+package org.wso2.ei.tools.converter.common.util;
 
 /**
- * This class holds common contents used within this module
+ * This class holds common contents used within mule and synapse converter
  */
 public class Constant {
 
@@ -36,7 +36,7 @@ public class Constant {
     public static final String BLANG_PKG_LOGGER = "logger";
 
     //Ballerina Annotations
-    public static final String BLANG_CONFIG = "config";
+    public static final String BLANG_CONFIG = "configuration";
     public static final String BLANG_BASEPATH = "basePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";

@@ -21,11 +21,11 @@ package org.wso2.ei.tools.mule2ballerina;
 import org.ballerinalang.model.BallerinaFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.ei.tools.converter.common.Utils;
 import org.wso2.ei.tools.converter.common.generator.BallerinaSourceGenerator;
+import org.wso2.ei.tools.converter.common.util.Constant;
+import org.wso2.ei.tools.converter.common.util.Utils;
 import org.wso2.ei.tools.mule2ballerina.configreader.ConfigReader;
 import org.wso2.ei.tools.mule2ballerina.model.Root;
-import org.wso2.ei.tools.mule2ballerina.util.Constant;
 import org.wso2.ei.tools.mule2ballerina.visitor.TreeVisitor;
 
 import java.io.File;
@@ -128,11 +128,14 @@ public class MuleToBalConvertExecutor {
                         }
                     }
                 } else {
+                    String fileName = source.getName();
                     if (destination == null || destination.isEmpty()) {
-                        String fileName = source.getName();
                         destination = fileName.substring(0, fileName.indexOf('.')) + BALLERINA_FILE_EXTENSION;
+                    } else {
+                        destination = destination + fileName.substring(0, fileName.indexOf('.')) +
+                                BALLERINA_FILE_EXTENSION;
                     }
-                    logger.info("Generated ballerina file are saved in " + destination);
+                    logger.info("Generated ballerina file is " + destination);
                     ConfigReader xmlParser = new ConfigReader();
                     try (InputStream inputStream = xmlParser.getInputStream(source)) {
                         createBalFile(xmlParser, inputStream, destination);

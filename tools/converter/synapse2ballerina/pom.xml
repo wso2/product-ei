@@ -44,5 +44,9 @@
             <groupId>org.wso2.ei</groupId>
             <artifactId>common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.synapse</groupId>
+            <artifactId>synapse-core</artifactId>
+        </dependency>
     </dependencies>
 </project>

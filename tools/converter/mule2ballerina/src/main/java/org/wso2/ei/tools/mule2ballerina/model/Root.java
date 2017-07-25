@@ -43,6 +43,7 @@ public class Root extends BaseObject implements Visitable {
     private Map<String, Flow> privateFlowMap; //Map of private flows against their names
     private Stack<Flow> privateFlowList; //Private flow list in LIFO order
     private List<AsynchronousTask> asyncTaskList;
+    private Stack<Scope> scopeStack;
 
     public Root() {
         flowList = new Stack<Flow>();
@@ -54,6 +55,7 @@ public class Root extends BaseObject implements Visitable {
         privateFlowMap = new HashMap<String, Flow>();
         privateFlowList = new Stack<Flow>();
         asyncTaskList = new CopyOnWriteArrayList<AsynchronousTask>();
+        scopeStack = new Stack<Scope>();
     }
 
     public List<GlobalConfiguration> getGlobalConfigurations() {
@@ -100,6 +102,10 @@ public class Root extends BaseObject implements Visitable {
         }
     }
 
+    public void addToScopeStack(Scope scopeProcessor) {
+        scopeStack.add(scopeProcessor);
+    }
+
     public void addAsynchronousTask(AsynchronousTask task) {
         asyncTaskList.add(task);
     }
@@ -130,6 +136,10 @@ public class Root extends BaseObject implements Visitable {
 
     public List<AsynchronousTask> getAsyncTaskList() {
         return asyncTaskList;
+    }
+
+    public Stack<Scope> getScopeStack() {
+        return scopeStack;
     }
 
     @Override

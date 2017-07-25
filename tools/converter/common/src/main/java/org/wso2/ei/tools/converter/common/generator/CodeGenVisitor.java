@@ -38,6 +38,7 @@ import org.ballerinalang.model.NodeVisitor;
 import org.ballerinalang.model.ParameterDef;
 import org.ballerinalang.model.Resource;
 import org.ballerinalang.model.Service;
+import org.ballerinalang.model.SimpleVariableDef;
 import org.ballerinalang.model.StructDef;
 import org.ballerinalang.model.VariableDef;
 import org.ballerinalang.model.Worker;
@@ -57,6 +58,7 @@ import org.ballerinalang.model.expressions.InstanceCreationExpr;
 import org.ballerinalang.model.expressions.JSONArrayInitExpr;
 import org.ballerinalang.model.expressions.JSONInitExpr;
 import org.ballerinalang.model.expressions.KeyValueExpr;
+import org.ballerinalang.model.expressions.LambdaExpression;
 import org.ballerinalang.model.expressions.LessEqualExpression;
 import org.ballerinalang.model.expressions.LessThanExpression;
 import org.ballerinalang.model.expressions.MapInitExpr;
@@ -71,7 +73,13 @@ import org.ballerinalang.model.expressions.SubtractExpression;
 import org.ballerinalang.model.expressions.TypeCastExpression;
 import org.ballerinalang.model.expressions.TypeConversionExpr;
 import org.ballerinalang.model.expressions.UnaryExpression;
+import org.ballerinalang.model.expressions.XMLCommentLiteral;
+import org.ballerinalang.model.expressions.XMLElementLiteral;
+import org.ballerinalang.model.expressions.XMLLiteral;
+import org.ballerinalang.model.expressions.XMLPILiteral;
 import org.ballerinalang.model.expressions.XMLQNameExpr;
+import org.ballerinalang.model.expressions.XMLSequenceLiteral;
+import org.ballerinalang.model.expressions.XMLTextLiteral;
 import org.ballerinalang.model.expressions.variablerefs.FieldBasedVarRefExpr;
 import org.ballerinalang.model.expressions.variablerefs.IndexBasedVarRefExpr;
 import org.ballerinalang.model.expressions.variablerefs.SimpleVarRefExpr;
@@ -103,12 +111,6 @@ import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import org.ballerinalang.model.expressions.ArrayLengthExpression;
-//import org.ballerinalang.model.expressions.ArrayMapAccessExpr;
-//import org.ballerinalang.model.expressions.FieldAccessExpr;
-//import org.ballerinalang.model.expressions.JSONFieldAccessExpr;
-//import org.ballerinalang.model.expressions.VariableRefExpr;
-
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
  * and serialize to ballerina source
@@ -129,7 +131,7 @@ public class CodeGenVisitor implements NodeVisitor {
         balProgram = bLangProgram;
 
         //process each ServicePackages
-        for (BLangPackage bLangPackage : balProgram.getServicePackages()) {
+        for (BLangPackage bLangPackage : balProgram.getPackages()) {
             //add import packages
             for (ImportPackage importPackage : bLangPackage.getImportPackages()) {
                 appendToBalSource(importPackage.getSymbolName().toString() + Constants.NEWLINE_STR);
@@ -392,7 +394,7 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     @Override
-    public void visit(VariableDef variableDef) {
+    public void visit(SimpleVariableDef simpleVariableDef) {
 
     }
 
@@ -1141,6 +1143,41 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(NullLiteral nullLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLLiteral xmlLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLElementLiteral xmlElementLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLCommentLiteral xmlCommentLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLTextLiteral xmlTextLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLPILiteral xmlpiLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLSequenceLiteral xmlSequenceLiteral) {
+
+    }
+
+    @Override
+    public void visit(LambdaExpression lambdaExpression) {
 
     }
 
