@@ -85,6 +85,7 @@
             <class name="org.wso2.carbon.esb.nhttp.transport.test.RetrieveBackendWsdlTestCase"/>
             <class name="org.wso2.carbon.esb.nhttp.transport.test.SetHostHttpHeaderTestCase"/>
             <class name="org.wso2.carbon.esb.nhttp.transport.test.CheckAuthHeaderOrderTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.MultipartFormdataMIMEBoundaryTestCase"/>
         </classes>
     </test>
 
