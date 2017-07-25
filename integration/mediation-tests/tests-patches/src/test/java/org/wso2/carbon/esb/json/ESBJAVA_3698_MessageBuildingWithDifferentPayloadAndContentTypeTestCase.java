@@ -65,7 +65,7 @@ public class ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestC
 
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (int i = 0; i < logs.length; i++) {
-            if (logs[i].getMessage().contains("Could not save JSON payload")) {
+            if (logs[i].getMessage().contains("Error occurred while processing document for application/json")) {
                 isError = true;
                 break;
             }
