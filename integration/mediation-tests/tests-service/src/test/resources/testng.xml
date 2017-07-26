@@ -10,7 +10,6 @@
     <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
         <packages>
             <package name="org.wso2.carbon.esb.proxyservice.test.proxyservices"/>
-            <package name="org.wso2.carbon.esb.proxyservice.test.loggingProxy"/>
             <package name="org.wso2.carbon.esb.proxyservice.test.customProxy"/>
             <package name="org.wso2.carbon.esb.proxyservice.test.passThroughProxy"/>
             <package name="org.wso2.carbon.esb.proxyservice.test.transformerProxy"/>
@@ -30,6 +29,14 @@
                     <exclude name=".*"/>
                 </methods>
             </class>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.PickEndPointFromRegistryTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.ProxyServiceEnablingHTTPTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.ProxyServiceEndPointThroughURLTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.RequestLogLevelFullResponseLogLevelFullTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.RequestLogLevelNoneResponseLogLevelNoneTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.RequestLogLevelSimpleResponseLogLevelSimpleTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.WSDLOptionsSpecifiedInlineTestCase"/>
+            <class name="org.wso2.carbon.esb.proxyservice.test.loggingProxy.WSDLOptionsSpecifiedSourceUrlTestCase"/>
         </classes>
     </test>
     <test name="Endpoint-Test" preserve-order="true" verbose="2" parallel="false">
