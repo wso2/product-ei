@@ -1163,7 +1163,9 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(XMLTextLiteral xmlTextLiteral) {
-
+        logger.debug("Visit - XMLTextLiteral");
+        appendToBalSource(xmlTextLiteral.getType().getName() + " ");
+        xmlTextLiteral.getContent().accept(this);
     }
 
     @Override

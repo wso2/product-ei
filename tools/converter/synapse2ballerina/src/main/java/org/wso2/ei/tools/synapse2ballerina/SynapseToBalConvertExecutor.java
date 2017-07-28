@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.generator.BallerinaSourceGenerator;
 import org.wso2.ei.tools.synapse2ballerina.visitor.SynapseConfigVisitor;
 
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -35,14 +36,18 @@ public class SynapseToBalConvertExecutor {
 
     private static Logger logger = LoggerFactory.getLogger(SynapseToBalConvertExecutor.class);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         SynapseConfiguration synapseConfiguration = SynapseConfigurationBuilder.
-                getConfiguration("/home/rukshani/mule2bal/Extract/synapse/def.xml", new Properties());
+                getConfiguration("/home/rukshani/mule2bal/Extract/synapse/cbr.xml", new Properties());
 
         SynapseConfigVisitor configVisitor = new SynapseConfigVisitor();
         BallerinaFile ballerinaFile = configVisitor.visit(synapseConfiguration);
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
-        sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Extract/synapse/passthrough.bal");
+        try {
+            sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Extract/synapse/cbr.bal");
+        } catch (IOException e) {
+           logger.error("Error occured while generating ballerina source", e);
+        }
     }
 }

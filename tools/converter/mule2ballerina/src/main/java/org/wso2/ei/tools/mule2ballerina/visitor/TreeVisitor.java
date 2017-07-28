@@ -203,8 +203,8 @@ public class TreeVisitor implements Visitor {
                 ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
                 /*Backtick expression is not longer supported in Ballerina. Improvements may come in a future release*/
                 // ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
-                ballerinaASTModelBuilder.addComment("//TODO: set xml payload ");
-                ballerinaASTModelBuilder.createStringLiteral(payloadValue);
+                ballerinaASTModelBuilder.addComment("//TODO: Change the double quotes to back tick. ");
+                ballerinaASTModelBuilder.createXMLLiteral(payloadValue);
                 payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
                 ballerinaASTModelBuilder.createVariable(payloadVariableName, true); //name of the variable
                 ballerinaASTModelBuilder

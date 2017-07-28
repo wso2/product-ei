@@ -1,11 +1,34 @@
+/*
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.ei.tools.synapse2ballerina.visitor;
 
 import org.apache.synapse.Mediator;
 import org.apache.synapse.config.SynapseConfiguration;
+import org.apache.synapse.config.xml.AnonymousListMediator;
+import org.apache.synapse.config.xml.SwitchCase;
 import org.apache.synapse.endpoints.HTTPEndpoint;
 import org.apache.synapse.endpoints.IndirectEndpoint;
 import org.apache.synapse.mediators.base.SequenceMediator;
 import org.apache.synapse.mediators.builtin.CallMediator;
+import org.apache.synapse.mediators.builtin.RespondMediator;
+import org.apache.synapse.mediators.filters.SwitchMediator;
+import org.apache.synapse.mediators.transform.PayloadFactoryMediator;
 import org.apache.synapse.rest.API;
 import org.apache.synapse.rest.Resource;
 import org.ballerinalang.model.BallerinaFile;
@@ -75,10 +98,6 @@ public class SynapseConfigVisitor implements Visitor {
         for (Resource resource : api.getResources()) {
             ResourceWrapper resourceWrapper = new ResourceWrapper(resource);
             resourceWrapper.accept(this);
-            ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
-            ballerinaASTModelBuilder.createSimpleVarRefExpr();
-            ballerinaASTModelBuilder.createReplyStatement();
-            ballerinaASTModelBuilder.endCallableBody();
             String resourceName = Constant.BLANG_RESOURCE_NAME + ++resourceCounter;
             ballerinaASTModelBuilder.endOfResource(resourceName, resourceAnnotationCount); //End of resource
             resourceAnnotationCount = 0;
@@ -147,12 +166,18 @@ public class SynapseConfigVisitor implements Visitor {
     @Override
     public void visit(Mediator mediator) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Mediator >> " + mediator.getType());
+            logger.debug("Mediator >> " + mediator.getType() + " or " + mediator.getMediatorName());
         }
-        if (artifacts.get(mediator.getType()) != null) {
+        //Mediator name needs to be checked, in case of payloadfactory mediator
+        if ((artifacts.get(mediator.getType()) != null) || (artifacts.get(mediator.getMediatorName()) != null)) {
             Class<?> wrapperClass;
             try {
-                wrapperClass = Class.forName(artifacts.get(mediator.getType()));
+                if (artifacts.get(mediator.getType()) != null) {
+                    wrapperClass = Class.forName(artifacts.get(mediator.getType()));
+                } else {
+                    wrapperClass = Class.forName(artifacts.get(mediator.getMediatorName()));
+                }
+
                 Constructor constructor = wrapperClass.getConstructor(new Class[] { Mediator.class });
                 Object object = constructor.newInstance(mediator);
                 ((MediatorWrapper) object).accept(this);
@@ -212,6 +237,116 @@ public class SynapseConfigVisitor implements Visitor {
         //TODO: Support for other http methods as well
         ballerinaASTModelBuilder.createAction(Constant.BLANG_CLIENT_CONNECTOR_GET_ACTION, true);
         ballerinaASTModelBuilder.createAssignmentStatement();
+    }
+
+    /**
+     * Ballerina Reply for a resource
+     *
+     * @param respondMediator
+     */
+    @Override
+    public void visit(RespondMediator respondMediator) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("RespondMediator");
+        }
+
+        ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.createReplyStatement();
+        ballerinaASTModelBuilder.endCallableBody();
+    }
+
+    /**
+     * Set the json or xml payload
+     * @param payloadFactoryMediator
+     */
+    @Override
+    public void visit(PayloadFactoryMediator payloadFactoryMediator) {
+        addImport(Constant.BLANG_PKG_MESSAGES);
+        String payloadVariableName = "";
+        if ("json".equals(payloadFactoryMediator.getType())) {
+
+            ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
+            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
+            ballerinaASTModelBuilder.createStringLiteral(payloadFactoryMediator.getFormat());
+            payloadVariableName = Constant.BLANG_VAR_JSON_PAYLOAD + ++variableCounter;
+            ballerinaASTModelBuilder.createVariable(payloadVariableName, true); //name of the variable
+            ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
+        } else if ("xml".equals(payloadFactoryMediator.getType())) {
+
+            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
+                /*Backtick expression is not longer supported in Ballerina. Improvements may come in a future release*/
+            // ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
+            ballerinaASTModelBuilder.addComment("//IMPORTANT: Change the double quotes to back tick. ");
+            ballerinaASTModelBuilder.createXMLLiteral(payloadFactoryMediator.getFormat());
+            payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
+            ballerinaASTModelBuilder.createVariable(payloadVariableName, true); //name of the variable
+            ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
+        }
+
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.startExprList();
+        ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.createNameReference(null, payloadVariableName);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.endExprList(2);
+        ballerinaASTModelBuilder.createFunctionInvocation(true);
+    }
+
+    /**
+     * SwitchMediator maps to ballerina if else clause
+     *
+     * @param switchMediator
+     */
+    @Override
+    public void visit(SwitchMediator switchMediator) {
+
+        ballerinaASTModelBuilder.addComment("//IMPORTANT: Change the expressions to suit the requirement.");
+
+        //Inside if
+        ballerinaASTModelBuilder.enterIfStatement();
+        ballerinaASTModelBuilder.createNameReference(null, switchMediator.getSource().getExpression() + "==" +
+                switchMediator.getCases().get(0).getRegex());
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        AnonymousListMediator anonymousListMediator = switchMediator.getCases().get(0).getCaseMediator();
+        List<Mediator> mediatorList = anonymousListMediator.getList();
+        for (Mediator mediator : mediatorList) {
+            MediatorWrapper mediatorWrapper = new MediatorWrapper(mediator);
+            mediatorWrapper.accept(this);
+        }
+        ballerinaASTModelBuilder.exitIfClause();
+
+        if (switchMediator.getCases().size() > 1) {
+            for (int i = 1; i < switchMediator.getCases().size(); i++) {
+                //Inside else if
+                ballerinaASTModelBuilder.enterElseIfClause();
+                ballerinaASTModelBuilder.createNameReference(null, switchMediator.getSource().getExpression() + "==" +
+                        switchMediator.getCases().get(i).getRegex());
+                ballerinaASTModelBuilder.createSimpleVarRefExpr();
+                AnonymousListMediator anonymousList = switchMediator.getCases().get(i).getCaseMediator();
+                List<Mediator> caseMediators = anonymousList.getList();
+                for (Mediator mediator : caseMediators) {
+                    MediatorWrapper mediatorWrapper = new MediatorWrapper(mediator);
+                    mediatorWrapper.accept(this);
+                }
+                ballerinaASTModelBuilder.exitElseIfClause();
+            }
+        }
+
+        //inside else
+        ballerinaASTModelBuilder.enterElseClause();
+        SwitchCase switchCase = switchMediator.getDefaultCase();
+        AnonymousListMediator defaultAnonymousMediator = switchCase.getCaseMediator();
+        List<Mediator> defaultCaseMediators = defaultAnonymousMediator.getList();
+        for (Mediator mediator : defaultCaseMediators) {
+            MediatorWrapper mediatorWrapper = new MediatorWrapper(mediator);
+            mediatorWrapper.accept(this);
+        }
+        ballerinaASTModelBuilder.exitElseClause();
+
+        ballerinaASTModelBuilder.exitIfElseStatement();
+
     }
 
     private void createVariableWithEmptyMap(String typeOfTheParamater, String variableName, boolean exprAvailable) {

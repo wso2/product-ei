@@ -261,6 +261,16 @@
                 <artifactId>synapse-core</artifactId>
                 <version>${synapse.core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>${com.jayway.jsonpath.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path-assert</artifactId>
+                <version>${com.jayway.jsonpath.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -368,8 +378,8 @@
 
     <properties>
         <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
-        <ballerina.runtime.version>0.91-SNAPSHOT</ballerina.runtime.version>
-        <ballerina.core.version>0.91-SNAPSHOT</ballerina.core.version>
+        <ballerina.runtime.version>0.91.1-SNAPSHOT</ballerina.runtime.version>
+        <ballerina.core.version>0.91.1-SNAPSHOT</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>2.3.1</carbon.messaging.version>
         <carbon.transport.http.netty.version>4.3.0-m2</carbon.transport.http.netty.version>
@@ -390,6 +400,7 @@
         <commons.configuration.version>1.10</commons.configuration.version>
         <andes.version>3.2.22-SNAPSHOT</andes.version>
         <synapse.core.version>2.1.7-wso2v16</synapse.core.version>
+        <com.jayway.jsonpath.version>0.8.0</com.jayway.jsonpath.version>
     </properties>
 </project>
 

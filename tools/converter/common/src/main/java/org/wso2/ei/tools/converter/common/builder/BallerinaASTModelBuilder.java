@@ -64,7 +64,7 @@ public class BallerinaASTModelBuilder {
         GlobalScope globalScope = BLangPrograms.populateGlobalScope();
         NativeScope nativeScope = BLangPrograms.populateNativeScope();
 
-     //   programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
+        //   programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
         programScope = new BLangProgram(globalScope, nativeScope);
         bLangPackage = new BLangPackage(".", PACKAGE_REPOSITORY, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);
@@ -184,7 +184,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void addMapStructKeyValue() {
-     //   modelBuilder.addMapStructKeyValue(null, null);
+        //   modelBuilder.addMapStructKeyValue(null, null);
     }
 
     /**
@@ -324,4 +324,38 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createWorker(null, null, workerName);
         //  isWorkerStarted = false;
     }
+
+    public void enterIfStatement() {
+        modelBuilder.startIfElseStmt();
+        modelBuilder.startIfClause();
+    }
+
+    public void exitIfClause() {
+        modelBuilder.addIfClause(null, null);
+    }
+
+    public void enterElseIfClause() {
+        modelBuilder.startElseIfClause();
+    }
+
+    public void exitElseIfClause() {
+        modelBuilder.addElseIfClause(null, null);
+    }
+
+    public void enterElseClause() {
+        modelBuilder.startElseClause();
+    }
+
+    public void exitElseClause() {
+        modelBuilder.addElseClause(null, null);
+    }
+
+    public void exitIfElseStatement() {
+        modelBuilder.addIfElseStmt(null);
+    }
+
+    public void createXMLLiteral(String xmlLiteral) {
+        modelBuilder.createXMLTextLiteral(null, null, xmlLiteral);
+    }
+
 }
