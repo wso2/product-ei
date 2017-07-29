@@ -30,7 +30,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * {@code SynapseToBalConvertExecutor} is the starting point for synapse2ballerina converter
+ * {@code SynapseToBalConvertExecutor} is the starting point for synapse2ballerina converter. This class will be
+ * refactored.
  */
 public class SynapseToBalConvertExecutor {
 
@@ -38,14 +39,15 @@ public class SynapseToBalConvertExecutor {
 
     public static void main(String[] args) {
 
+        //For the time being, provide synapse definition for args[0] and destination for args[1]
         SynapseConfiguration synapseConfiguration = SynapseConfigurationBuilder.
-                getConfiguration("/home/rukshani/mule2bal/Extract/synapse/configs/synapse_cbr.xml", new Properties());
+                getConfiguration(args[0], new Properties());
 
         SynapseConfigVisitor configVisitor = new SynapseConfigVisitor();
         BallerinaFile ballerinaFile = configVisitor.visit(synapseConfiguration);
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         try {
-            sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Extract/synapse/configs/synapse_cbr.bal");
+            sourceGenerator.generate(ballerinaFile, args[1]);
         } catch (IOException e) {
             logger.error("Error occured while generating ballerina source", e);
         }
