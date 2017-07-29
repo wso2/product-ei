@@ -23,7 +23,7 @@ import org.apache.synapse.mediators.builtin.RespondMediator;
 import org.wso2.ei.tools.synapse2ballerina.visitor.Visitor;
 
 /**
- * {@code RespondMediatorWrapper} wrapper for synapse RespondMediator
+ * {@code RespondMediatorWrapper} Wrapper for synapse RespondMediator
  */
 public class RespondMediatorWrapper extends MediatorWrapper {
 

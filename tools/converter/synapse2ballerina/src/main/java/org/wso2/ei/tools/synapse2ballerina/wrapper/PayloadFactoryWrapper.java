@@ -24,7 +24,7 @@ import org.apache.synapse.mediators.transform.PayloadFactoryMediator;
 import org.wso2.ei.tools.synapse2ballerina.visitor.Visitor;
 
 /**
- * {@code PayloadFactoryWrapper} wrapper for synapse PayloadFactoryMediator
+ * {@code PayloadFactoryWrapper} Wrapper for synapse PayloadFactoryMediator
  */
 public class PayloadFactoryWrapper extends MediatorWrapper {
 

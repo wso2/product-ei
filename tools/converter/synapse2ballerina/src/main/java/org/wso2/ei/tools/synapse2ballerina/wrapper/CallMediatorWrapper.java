@@ -23,7 +23,7 @@ import org.apache.synapse.mediators.builtin.CallMediator;
 import org.wso2.ei.tools.synapse2ballerina.visitor.Visitor;
 
 /**
- * {@code CallMediatorWrapper} wrapper for synapse CallMediator
+ * {@code CallMediatorWrapper} Wrapper for synapse CallMediator
  */
 public class CallMediatorWrapper extends MediatorWrapper {
 

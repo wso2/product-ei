@@ -265,19 +265,16 @@ public class SynapseConfigVisitor implements Visitor {
     public void visit(PayloadFactoryMediator payloadFactoryMediator) {
         addImport(Constant.BLANG_PKG_MESSAGES);
         String payloadVariableName = "";
-        if ("json".equals(payloadFactoryMediator.getType())) {
-
+        if (org.wso2.ei.tools.synapse2ballerina.util.Constant.JSON.equals(payloadFactoryMediator.getType())) {
             ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
             ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
             ballerinaASTModelBuilder.createStringLiteral(payloadFactoryMediator.getFormat());
             payloadVariableName = Constant.BLANG_VAR_JSON_PAYLOAD + ++variableCounter;
             ballerinaASTModelBuilder.createVariable(payloadVariableName, true); //name of the variable
             ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
-        } else if ("xml".equals(payloadFactoryMediator.getType())) {
 
+        } else if (org.wso2.ei.tools.synapse2ballerina.util.Constant.XML.equals(payloadFactoryMediator.getType())) {
             ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
-                /*Backtick expression is not longer supported in Ballerina. Improvements may come in a future release*/
-            // ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
             ballerinaASTModelBuilder.addComment("//IMPORTANT: Change the double quotes to back tick. ");
             ballerinaASTModelBuilder.createXMLLiteral(payloadFactoryMediator.getFormat());
             payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
@@ -338,7 +335,6 @@ public class SynapseConfigVisitor implements Visitor {
                 //content based routing - xml
                 addImport(Constant.BLANG_PKG_MESSAGES);
                 variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
-
                 getPayload(Constant.BLANG_TYPE_XML, variableName, Constant.BLANG_GET_XML_PAYLOAD, expressionStr);
             }
         }

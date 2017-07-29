@@ -23,7 +23,7 @@ import org.apache.synapse.mediators.filters.SwitchMediator;
 import org.wso2.ei.tools.synapse2ballerina.visitor.Visitor;
 
 /**
- * {@code SwitchMediatorWrapper} wrapper for synapse SwitchMediator
+ * {@code SwitchMediatorWrapper} Wrapper for synapse SwitchMediator
  */
 public class SwitchMediatorWrapper extends MediatorWrapper {
 
