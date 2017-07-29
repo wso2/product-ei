@@ -258,6 +258,7 @@ public class SynapseConfigVisitor implements Visitor {
 
     /**
      * Set the json or xml payload
+     *
      * @param payloadFactoryMediator
      */
     @Override
@@ -302,12 +303,53 @@ public class SynapseConfigVisitor implements Visitor {
     @Override
     public void visit(SwitchMediator switchMediator) {
 
+        //Identify whether this is header based or content based routing
+        String expressionStr = switchMediator.getSource().getExpression();
+        String headerOrPayload = "";
+        String variableName = "";
+
+        if (expressionStr != null) {
+            if (expressionStr.startsWith(org.wso2.ei.tools.synapse2ballerina.util.Constant.HEADER_IDENTIFIER_1)) {
+                //header based routing
+                headerOrPayload = expressionStr.substring(5);
+                addImport(Constant.BLANG_PKG_MESSAGES);
+                variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
+                getHeaderValues(variableName, headerOrPayload);
+
+            } else if (expressionStr
+                    .startsWith(org.wso2.ei.tools.synapse2ballerina.util.Constant.HEADER_IDENTIFIER_2)) {
+                //header based routing
+                headerOrPayload = expressionStr.substring(25);
+                //Remove last bracket
+                headerOrPayload = headerOrPayload.substring(0, headerOrPayload.length() - 1);
+                addImport(Constant.BLANG_PKG_MESSAGES);
+                variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
+                getHeaderValues(variableName, headerOrPayload);
+
+            }
+            String pathType = switchMediator.getSource().getPathType();
+            if (org.wso2.ei.tools.synapse2ballerina.util.Constant.JSON_PATH.equals(pathType)) {
+                //content based routing - json
+                addImport(Constant.BLANG_PKG_MESSAGES);
+                variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
+                getPayload(Constant.BLANG_TYPE_JSON, variableName, Constant.BLANG_GET_JSON_PAYLOAD, expressionStr);
+
+            } else if (org.wso2.ei.tools.synapse2ballerina.util.Constant.XML_PATH.equals(pathType)) {
+                //content based routing - xml
+                addImport(Constant.BLANG_PKG_MESSAGES);
+                variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
+
+                getPayload(Constant.BLANG_TYPE_XML, variableName, Constant.BLANG_GET_XML_PAYLOAD, expressionStr);
+            }
+        }
+
         ballerinaASTModelBuilder.addComment("//IMPORTANT: Change the expressions to suit the requirement.");
 
         //Inside if
         ballerinaASTModelBuilder.enterIfStatement();
-        ballerinaASTModelBuilder.createNameReference(null, switchMediator.getSource().getExpression() + "==" +
-                switchMediator.getCases().get(0).getRegex());
+        ballerinaASTModelBuilder.createNameReference(null,
+                variableName + org.wso2.ei.tools.synapse2ballerina.util.Constant.EQUALS_SIGN +
+                        switchMediator.getCases().get(0).getRegex());
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         AnonymousListMediator anonymousListMediator = switchMediator.getCases().get(0).getCaseMediator();
         List<Mediator> mediatorList = anonymousListMediator.getList();
@@ -321,8 +363,9 @@ public class SynapseConfigVisitor implements Visitor {
             for (int i = 1; i < switchMediator.getCases().size(); i++) {
                 //Inside else if
                 ballerinaASTModelBuilder.enterElseIfClause();
-                ballerinaASTModelBuilder.createNameReference(null, switchMediator.getSource().getExpression() + "==" +
-                        switchMediator.getCases().get(i).getRegex());
+                ballerinaASTModelBuilder.createNameReference(null,
+                        variableName + org.wso2.ei.tools.synapse2ballerina.util.Constant.EQUALS_SIGN +
+                                switchMediator.getCases().get(i).getRegex());
                 ballerinaASTModelBuilder.createSimpleVarRefExpr();
                 AnonymousListMediator anonymousList = switchMediator.getCases().get(i).getCaseMediator();
                 List<Mediator> caseMediators = anonymousList.getList();
@@ -368,5 +411,82 @@ public class SynapseConfigVisitor implements Visitor {
                     .addImportPackage(ballerinaASTModelBuilder.getBallerinaPackageMap().get(packageName), null);
             importTracker.put(packageName, true);
         }
+    }
+
+    /**
+     * Get header values
+     *
+     * @param variableName
+     * @param headerOrPayload
+     */
+    private void getHeaderValues(String variableName, String headerOrPayload) {
+        ballerinaASTModelBuilder
+                .addComment("//IMPORTANT TODO: Return value from the header needs to be stored in " + variableName);
+        ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+        ballerinaASTModelBuilder.createVariable(variableName, true); //name of the variable
+        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_GET_HEADER);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.startExprList();
+        ballerinaASTModelBuilder.createNameReference(null, inboundMsg);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.createStringLiteral(headerOrPayload);
+        ballerinaASTModelBuilder.endExprList(2);
+        ballerinaASTModelBuilder.createFunctionInvocation(true);
+
+               /* ballerinaASTModelBuilder.createNameReference(null, variableName);
+                ballerinaASTModelBuilder.createRefereceTypeName();
+                ballerinaASTModelBuilder.addParameter(0,true,variableName);
+                ballerinaASTModelBuilder.addReturnTypes();*/
+    }
+
+    /**
+     * Get payload
+     *
+     * @param type
+     * @param variableName
+     * @param functionName
+     */
+    private void getPayload(String type, String variableName, String functionName, String expressionStr) {
+        ballerinaASTModelBuilder
+                .addComment("//IMPORTANT TODO: Return value from the payload needs to be stored in " + variableName);
+        ballerinaASTModelBuilder.addTypes(type); //type of the variable
+        ballerinaASTModelBuilder.createVariable(variableName, true); //name of the variable
+        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, functionName);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.startExprList();
+        ballerinaASTModelBuilder.createNameReference(null, inboundMsg);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.endExprList(1);
+        ballerinaASTModelBuilder.createFunctionInvocation(true);
+
+        /*if (Constant.BLANG_TYPE_JSON.equals(type)) {
+            addImport(Constant.BLANG_PKG_JSON);
+            getPathValue(variableName, expressionStr);
+        } else if (Constant.BLANG_TYPE_XML.equals(type)) {
+            addImport(Constant.BLANG_PKG_XML);
+            getPathValue(variableName, expressionStr);
+        }*/
+        ballerinaASTModelBuilder.addComment("//IMPORTANT TODO: Get the string value from json or xml path.");
+
+    }
+
+    /**
+     * Get json or xml path value into a string variable
+     */
+    private void getPathValue(String variableName, String expressionStr) {
+
+        String jsonOrXMLVarName = variableName;
+        variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
+        ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+        ballerinaASTModelBuilder.createVariable(variableName, true); //name of the variable
+        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_GET_STRING);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.startExprList();
+        ballerinaASTModelBuilder.createNameReference(null, jsonOrXMLVarName);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.createStringLiteral(expressionStr);
+        ballerinaASTModelBuilder.endExprList(2);
+        ballerinaASTModelBuilder.createFunctionInvocation(true);
+
     }
 }

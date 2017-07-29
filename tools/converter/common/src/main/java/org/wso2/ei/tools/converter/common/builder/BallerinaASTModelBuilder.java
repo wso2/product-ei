@@ -358,4 +358,19 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createXMLTextLiteral(null, null, xmlLiteral);
     }
 
+    public void addFunctionInvocationExpression(boolean argsAvailable) {
+        modelBuilder.addFunctionInvocationExpr(null, null, argsAvailable);
+    }
+
+    /**
+     * Return from a function. Only support one return type for the moment.
+     */
+    public void addReturnTypes() {
+        SimpleTypeName[] list = new SimpleTypeName[1];
+        for (int i = 0; i >= 0; i--) {
+            list[i] = typeNameStack.pop();
+        }
+        modelBuilder.addReturnTypes(null, list);
+    }
+
 }

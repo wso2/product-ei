@@ -39,15 +39,15 @@ public class SynapseToBalConvertExecutor {
     public static void main(String[] args) {
 
         SynapseConfiguration synapseConfiguration = SynapseConfigurationBuilder.
-                getConfiguration("/home/rukshani/mule2bal/Extract/synapse/cbr.xml", new Properties());
+                getConfiguration("/home/rukshani/mule2bal/Extract/synapse/configs/synapse_cbr.xml", new Properties());
 
         SynapseConfigVisitor configVisitor = new SynapseConfigVisitor();
         BallerinaFile ballerinaFile = configVisitor.visit(synapseConfiguration);
         BallerinaSourceGenerator sourceGenerator = new BallerinaSourceGenerator();
         try {
-            sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Extract/synapse/cbr.bal");
+            sourceGenerator.generate(ballerinaFile, "/home/rukshani/mule2bal/Extract/synapse/configs/synapse_cbr.bal");
         } catch (IOException e) {
-           logger.error("Error occured while generating ballerina source", e);
+            logger.error("Error occured while generating ballerina source", e);
         }
     }
 }

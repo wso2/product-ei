@@ -34,6 +34,8 @@ public class Constant {
     public static final String BLANG_PKG_MESSAGES = "messages";
     public static final String BLANG_PKG_SQL = "sql";
     public static final String BLANG_PKG_LOGGER = "logger";
+    public static final String BLANG_PKG_JSON = "jsons";
+    public static final String BLANG_PKG_XML = "xmls";
 
     //Ballerina Annotations
     public static final String BLANG_CONFIG = "configuration";
@@ -61,6 +63,10 @@ public class Constant {
     public static final String BLANG_SET_XML_PAYLOAD = "setXmlPayload";
     public static final String BLANG_ADD_HEADER = "addHeader";
     public static final String BLANG_REMOVE_HEADER = "removeHeader";
+    public static final String BLANG_GET_HEADER = "getHeader";
+    public static final String BLANG_GET_JSON_PAYLOAD = "getJsonPayload";
+    public static final String BLANG_GET_XML_PAYLOAD = "getXmlPayload";
+    public static final String BLANG_GET_STRING = "getString";
 
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
@@ -91,6 +97,7 @@ public class Constant {
     public static final String BLANG_VAR_PROP_MAP = "propertiesMap";
     public static final String BLANG_VAR_DATATABLE = "datatable";
     public static final String BLANG_VAR_QUERY = "query";
+    public static final String BLANG_VAR_NAME = "variable";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";
