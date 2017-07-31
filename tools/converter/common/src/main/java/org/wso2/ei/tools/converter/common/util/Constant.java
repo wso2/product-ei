@@ -67,6 +67,7 @@ public class Constant {
     public static final String BLANG_GET_JSON_PAYLOAD = "getJsonPayload";
     public static final String BLANG_GET_XML_PAYLOAD = "getXmlPayload";
     public static final String BLANG_GET_STRING = "getString";
+    public static final String BLANG_PARSE = "parse";
 
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
