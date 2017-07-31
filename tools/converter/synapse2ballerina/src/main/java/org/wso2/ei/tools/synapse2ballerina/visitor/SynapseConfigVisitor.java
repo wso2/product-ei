@@ -189,6 +189,8 @@ public class SynapseConfigVisitor implements Visitor {
             }
         } else {
             logger.info(mediator.getType() + " is not supported by synapse migration tool!");
+            ballerinaASTModelBuilder.addComment(mediator.getType() + " is not supported by synapse migration tool! "
+                    + "yet");
         }
     }
 
@@ -413,26 +415,22 @@ public class SynapseConfigVisitor implements Visitor {
      * Get header values
      *
      * @param variableName
-     * @param headerOrPayload
+     * @param header
      */
-    private void getHeaderValues(String variableName, String headerOrPayload) {
-        ballerinaASTModelBuilder
-                .addComment("//IMPORTANT TODO: Return value from the header needs to be stored in " + variableName);
+    private void getHeaderValues(String variableName, String header) {
         ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
-        ballerinaASTModelBuilder.createVariable(variableName, true); //name of the variable
         ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_GET_HEADER);
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createNameReference(null, inboundMsg);
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.createStringLiteral(headerOrPayload);
+        ballerinaASTModelBuilder.createStringLiteral(header);
         ballerinaASTModelBuilder.endExprList(2);
-        ballerinaASTModelBuilder.createFunctionInvocation(true);
-
-               /* ballerinaASTModelBuilder.createNameReference(null, variableName);
-                ballerinaASTModelBuilder.createRefereceTypeName();
-                ballerinaASTModelBuilder.addParameter(0,true,variableName);
-                ballerinaASTModelBuilder.addReturnTypes();*/
+        ballerinaASTModelBuilder.addFunctionInvocationExpression(true);
+        ballerinaASTModelBuilder.createVariable(variableName, true); //name of the variable
+      //  ballerinaASTModelBuilder.addParameter(0,true,inboundMsg);
+        ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+        ballerinaASTModelBuilder.addReturnTypes();
     }
 
     /**
