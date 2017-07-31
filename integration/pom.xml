@@ -32,11 +32,55 @@
     <name>WSO2 Enterprise Integrator - Integration Tests</name>
     <url>http://wso2.org</url>
 
-    <modules>
-        <module>automation-extensions</module>
-        <module>mediation-tests</module>
-        <module>business-process-tests</module>
-        <module>dataservice-hosting-tests</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>automation-extensions</module>
+                <module>mediation-tests</module>
+                <module>business-process-tests</module>
+                <module>dataservice-hosting-tests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>mediation-tests-profile</id>
+            <activation>
+                <property>
+                    <name>mediation.integration.test.profile</name>
+                </property>
+            </activation>
+            <modules>
+                <module>automation-extensions</module>
+                <module>mediation-tests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>business-process-tests-profile</id>
+            <activation>
+                <property>
+                    <name>business-process.integration.test.profile</name>
+                </property>
+            </activation>
+            <modules>
+                <module>automation-extensions</module>
+                <module>business-process-tests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>data-service-tests-profile</id>
+            <activation>
+                <property>
+                    <name>dataservices.integration.test.profile</name>
+                </property>
+            </activation>
+            <modules>
+                <module>automation-extensions</module>
+                <module>dataservice-hosting-tests</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
