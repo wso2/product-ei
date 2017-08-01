@@ -37,4 +37,5 @@ public class SequenceMediatorWrapper implements VisitableWrapper {
     public void accept(Visitor visitor) {
         visitor.visit(sequenceMediator);
     }
+
 }

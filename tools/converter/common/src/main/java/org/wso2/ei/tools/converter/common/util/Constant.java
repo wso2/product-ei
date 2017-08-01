@@ -100,6 +100,21 @@ public class Constant {
     public static final String BLANG_VAR_QUERY = "query";
     public static final String BLANG_VAR_NAME = "variable";
 
+    public static final String JSON = "json";
+    public static final String XML = "xml";
+
+    //Parameter names
+    public static final String OUTBOUND_MSG = "OutboundMessage";
+    public static final String INBOUND_MSG = "InboundMessage";
+    public static final String HEADER_NAME = "HeaderName";
+    public static final String VARIABLE_NAME = "VariableName";
+    public static final String TYPE = "Type";
+    public static final String FUNCTION_NAME = "FunctionName";
+    public static final String FORMAT = "Format";
+    public static final String PAYLOAD_VAR_NAME = "PayloadVariableName";
+    public static final String CONNECTOR_VAR_NAME = "ConnectorVarName";
+    public static final String URL = "Url";
+
     //Comments
     public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";
 

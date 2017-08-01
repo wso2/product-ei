@@ -36,4 +36,5 @@ public class ResourceWrapper implements VisitableWrapper {
     public void accept(Visitor visitor) {
         visitor.visit(resource);
     }
+
 }
