@@ -218,8 +218,6 @@
             <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathTrpPropertyTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathExtensionTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathBodyTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.NullValueTransportHeaderTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.PropertyXPATH2FunctionsTestCase"/>
         </classes>
     </test>
     <test name="Property-mediator-Test-1" preserve-order="true" verbose="2">

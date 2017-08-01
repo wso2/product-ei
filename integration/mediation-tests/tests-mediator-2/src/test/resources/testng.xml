@@ -12,7 +12,6 @@
     <!-- This was commented since fails in batch execution - passed locally when individual run-->
     <test name="Server-Stratup" preserve-order="true" verbose="2">
         <classes>
-            <class name="org.wso2.carbon.esb.mediator.test.classMediator.InvokeAfterRemovingPropertiesTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsFloat"/>
             <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsLong"/>
             <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustom"/>
@@ -25,7 +24,6 @@
             <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryCustomVariableAsInt"/>
             <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryEmptyEmptySoapRequestTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.xquery.XQueryReplaceEmptyMessageBody"/>
-            <class name="org.wso2.carbon.esb.mediator.test.classMediator.InvokeAfterRemovingPropertiesTestCase"/>
         </classes>
     </test>
 
