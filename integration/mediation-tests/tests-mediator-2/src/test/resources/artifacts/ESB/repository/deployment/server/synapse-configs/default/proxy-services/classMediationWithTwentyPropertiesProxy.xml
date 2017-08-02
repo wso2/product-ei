@@ -1,5 +1,5 @@
 <proxy xmlns="http://ws.apache.org/ns/synapse" name="classMediationWithTwentyPropertiesProxy" transports="https http"
-       startOnLoad="true" trace="disable">
+       startOnLoad="true" trace="disable" onError="mediationFault">
     <description/>
     <target>
         <inSequence>
