@@ -1,0 +1,40 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="classMediationWithTwentyPropertiesProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <class name="org.wso2.carbon.test.mediator.SimpleClassMediator">
+                <property name="percentageChange" value="-1.5"/>
+                <property name="bonusFor" value="5"/>
+                <property name="earnings" value="-9"/>
+                <property name="marketCap" value="3.8"/>
+                <property name="prevClose" value="-132"/>
+                <property name="symbol" value="IBM"/>
+                <property name="change" value="-2"/>
+                <property name="perRatio" value="-18.9"/>
+                <property name="open" value="-173.2"/>
+                <property name="market" value="CSE"/>
+                <property name="discountFactor" value="10"/>
+                <property name="email" value="user@wso2.org"/>
+                <property name="name" value="IBM Company"/>
+                <property name="volume" value="20000"/>
+                <property name="userName" value="esb user"/>
+                <property name="mediator" value="D2O"/>
+                <property name="high" value="-175"/>
+                <property name="low" value="-172"/>
+                <property name="taxFor" value="5"/>
+                <property name="broker" value="SMS"/>
+                <property name="lastTradeTimeStamp" value="2015"/>
+                <property name="capitalAcquired" value="1.9"/>
+            </class>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
