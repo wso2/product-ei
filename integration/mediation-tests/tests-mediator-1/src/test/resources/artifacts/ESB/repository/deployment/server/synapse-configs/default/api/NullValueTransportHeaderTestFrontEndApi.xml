@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/nullValueTransportHeaderTestFrontEnd" name="NullValueTransportHeaderTestFrontEndApi">
+    <resource methods="POST">
+        <inSequence>
+            <call-template target="nullValueTransportHeaderTestTemplate">
+                <with-param name="end-point-url" value="http://localhost:8480/nullValueTransportHeaderTestBackEnd"/>
+            </call-template>
+        </inSequence>
+    </resource>
+</api>

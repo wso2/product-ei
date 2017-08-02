@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns="http://ws.apache.org/ns/synapse" name="nullValueTransportHeaderTestTemplate">
+    <sequence>
+        <log level="full">
+            <property name="INCOMING" value="AAA"/>
+        </log>
+        <property expression="$func:basic-auth" name="Authorization"
+                  scope="transport" type="STRING"
+                  xmlns:ns="http://org.apache.synapse/xsd"
+                  xmlns:ns2="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+        <call blocking="true">
+            <endpoint>
+                <http uri-template="http://localhost:8480/nullValueTransportHeaderTestBackEnd"/>
+            </endpoint>
+        </call>
+        <log level="full">
+            <property name="REPLY" value="BBB"/>
+        </log>
+        <respond/>
+    </sequence>
+</template>
