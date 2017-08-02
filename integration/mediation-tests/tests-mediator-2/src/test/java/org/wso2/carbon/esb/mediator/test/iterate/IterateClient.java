@@ -95,6 +95,30 @@ public class IterateClient {
     }
 
     /**
+     * This is used to send a multiple custom stockquote request
+     *
+     * @param address service address
+     * @param symbol  stock quote symbol
+     * @return
+     * @throws java.io.IOException
+     */
+    public String getMultipleCustomResponse(String address, String symbol, int iterations)
+            throws IOException {
+
+        AxisOperationClient operationClient = new AxisOperationClient();
+        OMElement response = null;
+        try {
+            response = operationClient.send(address, null, createMultipleCustomQuoteRequestBody(symbol, iterations), "urn:getQuote");
+        } finally {
+            operationClient.destroy();
+        }
+        Assert.assertNotNull(response, "Response null");
+
+        return response.toString();
+
+    }
+
+    /**
      * This is used to send a request which contains several getquote elements
      *
      * @param address service address
@@ -146,6 +170,21 @@ public class IterateClient {
             value2.addChild(fac.createOMText(value1, symbol));
             value1.addChild(value2);
             method.addChild(value1);
+        }
+        return method;
+    }
+
+    private OMElement createMultipleCustomQuoteRequestBody(String symbol, int iterations) {
+        SOAPFactory fac = OMAbstractFactory.getSOAP11Factory();
+        OMNamespace omNs = fac.createOMNamespace("http://services.samples", "ns");
+        OMElement method = fac.createOMElement("getQuote", omNs);
+
+        for (int i = 0; i < iterations; i++) {
+            OMElement chkPrice = fac.createOMElement("CheckPriceRequest", omNs);
+            OMElement code = fac.createOMElement("Code", omNs);
+            chkPrice.addChild(code);
+            code.setText(symbol);
+            method.addChild(chkPrice);
         }
         return method;
     }

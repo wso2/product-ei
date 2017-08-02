@@ -126,11 +126,6 @@ public class PropertyIntegrationAxis2PropertiesTestCase extends ESBIntegrationTe
             }
         }
 
-        OMElement synapse = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/property/" +
-                                                  "ConcurrentConsumers.xml");
-        updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
-
-
         int afterThreadCount = (Integer) mBeanServerConnection.getAttribute(
                 new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME), "ThreadCount");
 

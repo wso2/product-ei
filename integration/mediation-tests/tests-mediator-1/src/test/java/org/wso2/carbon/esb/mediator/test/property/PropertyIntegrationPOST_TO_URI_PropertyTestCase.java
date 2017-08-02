@@ -38,10 +38,7 @@ public class PropertyIntegrationPOST_TO_URI_PropertyTestCase extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/POST_TO_URI.xml");
         wireServer = new WireMonitorServer(8992);
-
 
     }
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -50,7 +47,8 @@ public class PropertyIntegrationPOST_TO_URI_PropertyTestCase extends ESBIntegrat
 
         wireServer.start();
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("POST_TO_URI_TestProxy"),null,"WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyPostToUriTestProxy"),
+                                                    null,"WSO2");
         } catch (Exception e) {
             //ignore since wire message is captured
         }
