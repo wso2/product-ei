@@ -93,7 +93,7 @@ public class Message {
 
         } else if (Constant.XML.equals((String) parameters.get(Constant.TYPE))) {
             ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
-            ballerinaASTModelBuilder.addComment("//IMPORTANT: Change the double quotes to back tick. ");
+            ballerinaASTModelBuilder.addComment("//TODO: Change the double quotes to back tick. ");
             ballerinaASTModelBuilder.createXMLLiteral((String) parameters.get(Constant.FORMAT));
             ballerinaASTModelBuilder.createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
             // the variable

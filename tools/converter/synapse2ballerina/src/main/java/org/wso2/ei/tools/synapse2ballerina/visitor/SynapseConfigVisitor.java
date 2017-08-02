@@ -262,7 +262,7 @@ public class SynapseConfigVisitor implements Visitor {
     public void visit(PayloadFactoryMediator payloadFactoryMediator) {
         BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_PKG_MESSAGES, importTracker);
         BallerinaProgramHelper.addComment(ballerinaASTModelBuilder,
-                "//IMPORTANT: If there are arguments, please " + "adjust the logic accordingly");
+                "//TODO: If there are arguments, please " + "adjust the logic accordingly");
         String payloadVariableName = "";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(Constant.TYPE, payloadFactoryMediator.getType());
@@ -354,7 +354,7 @@ public class SynapseConfigVisitor implements Visitor {
         }
 
         BallerinaProgramHelper.addComment(ballerinaASTModelBuilder,
-                "//IMPORTANT: Please make sure the conditional " + "expressions are correct.");
+                "//TODO: Please make sure the conditional " + "expressions are correct.");
 
         //Inside if
         BallerinaProgramHelper.enterIfStatement(ballerinaASTModelBuilder);

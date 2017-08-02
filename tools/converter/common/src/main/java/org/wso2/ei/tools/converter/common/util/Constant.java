@@ -125,7 +125,7 @@ public class Constant {
     public static final String VARIABLE_NAME_NEW = "NewVariableName";
 
     //Comments
-    public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";
+    public static final String BLANG_COMMENT_JSON = "//TODO : Remove  quotations surrounding the json value!";
 
     public static final String HTTP_PROTOCOL = "http://";
     public static final String HTTPS_PROTOCOL = "https://";
