@@ -24,17 +24,6 @@
             <respond/>
         </sequence>
     </template>
-    <api context="/backend" name="backEnd">
-        <resource methods="POST">
-            <inSequence>
-                <payloadFactory media-type="json">
-                    <format>{"company" : "wso2"}</format>
-                    <args/>
-                </payloadFactory>
-                <respond/>
-            </inSequence>
-        </resource>
-    </api>
     <api context="/testapi" name="testAPI">
         <resource methods="POST">
             <inSequence>
