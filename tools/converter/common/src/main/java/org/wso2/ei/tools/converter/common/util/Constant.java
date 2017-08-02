@@ -114,6 +114,15 @@ public class Constant {
     public static final String PAYLOAD_VAR_NAME = "PayloadVariableName";
     public static final String CONNECTOR_VAR_NAME = "ConnectorVarName";
     public static final String URL = "Url";
+    public static final String SERVICE_NAME = "ServiceName";
+    public static final String PROTOCOL_PKG_NAME = "ProtocolPkgName";
+    public static final String RESOURCE_NAME = "ResourceName";
+    public static final String RESOURCE_ANNOTATION_COUNT = "ResourceAnnotationCount";
+    public static final String BASEPATH_VALUE = "ResourceAnnotationCount";
+    public static final String METHOD_NAME = "MethodName";
+    public static final String EXPRESSION = "Expression";
+    public static final String PACKAGE_NAME = "PackageName";
+    public static final String VARIABLE_NAME_NEW = "NewVariableName";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";
@@ -126,6 +135,7 @@ public class Constant {
     public static final String DIVIDER = "/";
     public static final String BACKTICK = "`";
     public static final String QUOTE_STR = "\"";
+    public static final String EQUALS_SIGN = "==";
 
     public static final String OPTION = "-z";
 }

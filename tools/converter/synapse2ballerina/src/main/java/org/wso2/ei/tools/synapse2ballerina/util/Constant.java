@@ -27,7 +27,6 @@ public class Constant {
     public static final String HEADER_IDENTIFIER_2 = "get-property('transport'";
     public static final String JSON_PATH = "JSON_PATH";
     public static final String XML_PATH = "XML_PATH";
-    public static final String EQUALS_SIGN = "==";
     public static final String JSON = "json";
     public static final String XML = "xml";
 }

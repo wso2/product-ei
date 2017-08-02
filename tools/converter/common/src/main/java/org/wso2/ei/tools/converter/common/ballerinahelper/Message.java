@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * Ballerina message related work is handled through this
  */
-public class BallerinaMessage {
+public class Message {
 
     /**
      * Get header values

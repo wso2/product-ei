@@ -76,4 +76,86 @@ public class BallerinaProgramHelper {
         return outboundMsg;
     }
 
+    /**
+     * Define function parameter
+     *
+     * @param ballerinaASTModelBuilder
+     * @param parameters
+     */
+    public static void addFunctionParameter(BallerinaASTModelBuilder ballerinaASTModelBuilder,
+            Map<String, Object> parameters) {
+        ballerinaASTModelBuilder.addTypes((String) parameters.get(Constant.TYPE)); //type of the parameter
+        ballerinaASTModelBuilder.addParameter(0, false, (String) parameters.get(Constant.INBOUND_MSG));
+    }
+
+    public static void enterIfStatement(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.enterIfStatement();
+    }
+
+    public static void exitIfClause(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.exitIfClause();
+    }
+
+    public static void enterElseIfClause(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.enterElseIfClause();
+    }
+
+    public static void exitElseIfClause(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.exitElseIfClause();
+    }
+
+    public static void enterElseClause(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.enterElseClause();
+    }
+
+    public static void exitElseClause(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.exitElseClause();
+    }
+
+    public static void exitIfElseStatement(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
+        ballerinaASTModelBuilder.exitIfElseStatement();
+    }
+
+    public static void createExpression(BallerinaASTModelBuilder ballerinaASTModelBuilder,
+            Map<String, Object> parameters) {
+        ballerinaASTModelBuilder
+                .createNameReference(null, (String) parameters.get(Constant.VARIABLE_NAME) + Constant.EQUALS_SIGN +
+                        Constant.QUOTE_STR + (String) parameters.get(Constant.EXPRESSION) + Constant.QUOTE_STR);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+    }
+
+    /**
+     * Get json or xml path value into a string variable
+     */
+    public static String getPathValue(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters,
+            Map<String, Boolean> importTracker) {
+        if (Constant.BLANG_TYPE_JSON.equals((String) parameters.get(Constant.TYPE))) {
+            BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_PKG_JSON, importTracker);
+        } else if (Constant.BLANG_TYPE_XML.equals((String) parameters.get(Constant.TYPE))) {
+            BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_PKG_XML, importTracker);
+        }
+
+        String jsonOrXMLVarName = (String) parameters.get(Constant.VARIABLE_NAME);
+        String variableName = (String) parameters.get(Constant.VARIABLE_NAME_NEW);
+
+        ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+        ballerinaASTModelBuilder
+                .createNameReference((String) parameters.get(Constant.PACKAGE_NAME), Constant.BLANG_GET_STRING);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.startExprList();
+        ballerinaASTModelBuilder.createNameReference(null, jsonOrXMLVarName);
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.EXPRESSION));
+        ballerinaASTModelBuilder.endExprList(2);
+        ballerinaASTModelBuilder.addFunctionInvocationExpression(true);
+        ballerinaASTModelBuilder.createVariable(variableName, true); //name of the variable
+        ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+        ballerinaASTModelBuilder.addReturnTypes();
+        return variableName;
+    }
+
+    public static void addComment(BallerinaASTModelBuilder ballerinaASTModelBuilder, String comment) {
+        ballerinaASTModelBuilder.addComment(comment);
+    }
+
 }
