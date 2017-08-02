@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="InvokeAfterRemovingPropertiesTestProxy" transports="https http"
+       startOnLoad="true" trace="disable" onError="mediationFault">
+    <description/>
+    <target>
+        <inSequence>
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <class name="samples.mediators.DiscountQuoteMediator">
+                <property name="discountFactor" value="100"/>
+            </class>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
