@@ -43,7 +43,6 @@ public class NullNameSpaceForAttachPathTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception{
         super.init();
         symbol = FileUtils.readFileToString(new File(getESBResourceLocation() + "/mediatorconfig/iterate/iterate1.txt"));
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/null_namespace.xml");
     }
 
 
@@ -55,9 +54,10 @@ public class NullNameSpaceForAttachPathTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "Testing null namespace for 'attachPath' field")
     public void testNullNameSpaceForAttachPath() throws Exception{
 
-        OMElement response;
         try {
-            response =axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), symbol , "WSO2",5);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithNullNamespaceForAttachPathTestProxy"), symbol,
+                    "WSO2", 5);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             System.out.print(message.getReason());

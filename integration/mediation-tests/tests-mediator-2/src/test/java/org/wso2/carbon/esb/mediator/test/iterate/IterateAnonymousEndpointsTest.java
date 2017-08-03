@@ -43,15 +43,16 @@ public class IterateAnonymousEndpointsTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
 		super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/Iterate_anonymous_endpoints.xml");
 	}
 
 	@Test(groups = "wso2.esb", description = "Tests for anaonymous endpoints")
 	public void tesAnonymousEndpoints() throws Exception {
 
         IterateClient client = new IterateClient();
-		String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
-		Assert.assertNotNull(response);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("IterateWithAnonymousEndpointTestProxy"), "WSO2",
+                2);
+        Assert.assertNotNull(response);
 		OMElement envelope = client.toOMElement(response);
 		OMElement soapBody = envelope.getFirstElement();
 		Iterator iterator =

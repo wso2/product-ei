@@ -41,7 +41,6 @@ public class InvalidXPathTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception{
         super.init();
         symbol = FileUtils.readFileToString(new File(getESBResourceLocation() + "/mediatorconfig/iterate/iterate1.txt"));
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/invalid_XPath.xml");
     }
 
     /**
@@ -52,10 +51,9 @@ public class InvalidXPathTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "Tests an invalid 'attachPath' expression in Iterator Mediator")
         public void testInvalidXPath() throws Exception {
 
-
-        OMElement response;
         try {
-            response =axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, symbol,5);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("iterateInvalidXpathTestProxy"), null, symbol,5);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertEquals(message.getReason(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL,
