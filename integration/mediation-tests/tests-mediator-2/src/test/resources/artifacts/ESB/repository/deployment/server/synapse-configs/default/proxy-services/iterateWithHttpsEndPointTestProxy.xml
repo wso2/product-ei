@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithHttpsEndPointTestProxy" transports="http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate id="iterator" expression="//m0:getQuote/m0:request"
+                     preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+                <target>
+                    <sequence>
+                        <send>
+                            <endpoint>
+                                <address uri="https://localhost:8443/services/StockQuoteProxy"/>
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesForIterateTests"/>
+        </outSequence>
+    </target>
+</proxy>

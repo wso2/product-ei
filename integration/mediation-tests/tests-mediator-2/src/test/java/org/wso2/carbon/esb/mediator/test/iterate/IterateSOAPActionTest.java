@@ -38,15 +38,14 @@ public class IterateSOAPActionTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_SOAP_Action.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Tests SOAP action property ")
     public void testSOAPAction() throws Exception {
         AxisServiceClient axisServiceClient = new AxisServiceClient();
-        OMElement response =
-                axisServiceClient.sendReceive(createSimpleQuoteRequestBody("WSO2"),
-                                              getMainSequenceURL(), "");
+        OMElement response = axisServiceClient.sendReceive(createSimpleQuoteRequestBody("WSO2"),
+                getProxyServiceURLHttp("iterateWithSOAPActionTestProxy"),
+                "");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
 

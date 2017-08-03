@@ -57,11 +57,10 @@ public class InvalidSoapActionTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Tests an invalid 'soapAction' in the iterate mediator")
     public void testInvalidSoapActionInvalidPayloadFirstElement() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/invalid_soapaction.xml");
-
-        OMElement response;
         try {
-            response = axisServiceClient.sendReceive(createCustomQuoteRequest("WSO2"), getMainSequenceURL(), "");
+            axisServiceClient.sendReceive(createCustomQuoteRequest("WSO2"),
+                    getProxyServiceURLHttp("iterateInvalidSoapActionInvalidPayloadTestProxy"),
+                    "");
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertTrue(message.getReason().contains("AxisFault while getting response"),
@@ -82,10 +81,10 @@ public class InvalidSoapActionTestCase extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"}, description = "Tests an invalid 'soapAction' in the iterate mediator")
     public void testInvalidSoapActionValidPayloadFirstElement() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/invalid_soapaction_valid_payload.xml");
-
         OMElement response;
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("iterateInvalidSoapActionValidPayloadTestProxy"), null,
+                "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
 

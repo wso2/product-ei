@@ -1,0 +1,18 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateInvalidTargetAddressTestProxy" transports="http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate id="iterator" expression="//m0:getQuote/m0:request"
+                     preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+                <target to="http://localhost:9000/SimpleStockQuoteService">
+                    <sequence>
+                        <send/>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesForIterateTests"/>
+        </outSequence>
+    </target>
+</proxy>

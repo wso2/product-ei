@@ -43,7 +43,6 @@ public class InvalidTargetAddressTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception{
         super.init();
         symbol = FileUtils.readFileToString(new File(getESBResourceLocation() + "/mediatorconfig/iterate/iterate1.txt"));
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/invalid_target_address.xml");
     }
 
     /**
@@ -53,9 +52,10 @@ public class InvalidTargetAddressTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "Tests an invalid 'To Address'' in the clone target")
     public void testInvalidTargetAddress() throws Exception{
 
-        OMElement response;
         try {
-            response =axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, symbol,4);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("iterateInvalidTargetAddressTestProxy"), null,
+                    symbol, 4);
            Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertEquals(message.getReason(), ESBTestConstant.READ_TIME_OUT,

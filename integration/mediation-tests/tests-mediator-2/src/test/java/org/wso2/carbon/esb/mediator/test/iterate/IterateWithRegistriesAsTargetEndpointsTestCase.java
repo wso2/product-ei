@@ -51,11 +51,12 @@ public class IterateWithRegistriesAsTargetEndpointsTestCase extends ESBIntegrati
 
     @Test(groups = "wso2.esb", description = "Tests for sequence from governors registry ")
     public void testGovernanceEndPoint() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_govners_endpoint.xml");
         URL url =
                 new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/iterate/iterateEndpoint.xml");
         endPointAdminClient.addDynamicEndPoint("gov:/myEndpoint/iterateEndpoint", setEndpoints(new DataHandler(url)));
-        String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithGovernanceEndPointTestProxy"), "WSO2",
+                2);
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();
@@ -74,11 +75,11 @@ public class IterateWithRegistriesAsTargetEndpointsTestCase extends ESBIntegrati
 
     @Test(groups = "wso2.esb", description = "Tests for sequence from configuration registry")
     public void testConfigurationEndPoint() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_configuration_endpoint.xml");
         URL url =
                 new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/iterate/iterateEndpoint.xml");
         endPointAdminClient.addDynamicEndPoint("conf:/myEndpoint/iterateEndpoint", setEndpoints(new DataHandler(url)));
-        String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithConfigurationEndpoint"), "WSO2", 2);
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();

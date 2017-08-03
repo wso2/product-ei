@@ -1,0 +1,34 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithInvalidNameSpaceForExpressionTestProxy" transports="http" startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate id="iterator" expression="//m1:getQuote/m1:request"
+                     preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples"
+                     xmlns:m1="http://services.extras">
+                <target>
+                    <sequence>
+                        <log level="full">
+                            <property name="target1" value="************Checking Iterator Error Sequence*************"/>
+                        </log>
+                        <send>
+                            <endpoint>
+                                <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <aggregate id="iterator">
+                <completeCondition>
+                    <messageCount min="-1" max="-1" />
+                </completeCondition>
+                <onComplete xmlns:ns="http://org.apache.synapse/xsd"
+                            xmlns:ns3="http://org.apache.synapse/xsd" xmlns:m0="http://services.samples"
+                            expression="//m0:getQuoteResponse">
+                    <send />
+                </onComplete>
+            </aggregate>
+        </outSequence>
+    </target>
+</proxy>

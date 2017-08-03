@@ -46,9 +46,7 @@ public class IterateNamedEndpointsTest extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 		super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_named_endpoints.xml");
 		axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
-
 		axis2Server1.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE);
 		axis2Server1.start();
 	}
@@ -59,7 +57,8 @@ public class IterateNamedEndpointsTest extends ESBIntegrationTest {
 	public void testNamedEndpoints() throws Exception {
 
         IterateClient client = new IterateClient();
-		String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
+		String response = client.getMultipleResponse(
+				getProxyServiceURLHttp("iterateNamedEndpointsTestProxy"), "WSO2", 2);
 		Assert.assertNotNull(response);
 		OMElement envelope = client.toOMElement(response);
 		OMElement soapBody = envelope.getFirstElement();

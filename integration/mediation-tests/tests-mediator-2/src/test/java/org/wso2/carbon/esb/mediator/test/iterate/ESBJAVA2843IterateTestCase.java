@@ -40,13 +40,13 @@ public class ESBJAVA2843IterateTestCase extends ESBIntegrationTest {
     @BeforeClass()
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/ESBJAVA-2843-iterateIfPreservePayloadFalse.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Iterating when payload containing different element")
     public void testIteratorWithMultipleElement() throws Exception {
         IterateClient client = new IterateClient();
-        String response = client.send(getProxyServiceURLHttp("testMultipleElement"), createRequestPayload(), "urn:getQuote");
+        String response = client.send(getProxyServiceURLHttp("iterateWithMultipleElementsTestProxy"),
+                createRequestPayload(), "urn:getQuote");
         Assert.assertNotNull(response, "Response message null");
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();
