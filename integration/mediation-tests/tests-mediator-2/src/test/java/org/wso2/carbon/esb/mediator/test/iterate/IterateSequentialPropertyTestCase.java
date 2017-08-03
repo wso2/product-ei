@@ -63,13 +63,14 @@ public class IterateSequentialPropertyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_sequential.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Tests sequential='true' property")
     public void testSequentialProperty() throws Exception {
         AxisOperationClient operationClient = new AxisOperationClient();
-        String response = operationClient.send(getMainSequenceURL(), null, createMultipleQuoteRequestBody("WSO2", 10), "urn:getQuote").toString();
+        String response = operationClient.send(getProxyServiceURLHttp("iterateSequentialTestProxy"),
+                null, createMultipleQuoteRequestBody("WSO2", 10),
+                "urn:getQuote").toString();
         operationClient.destroy();
         Assert.assertNotNull(response);
         OMElement envelope = AXIOMUtil.stringToOM(response);

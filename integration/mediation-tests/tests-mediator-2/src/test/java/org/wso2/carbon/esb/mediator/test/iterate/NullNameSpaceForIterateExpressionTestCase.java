@@ -42,7 +42,6 @@ public class NullNameSpaceForIterateExpressionTestCase extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception{
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/null_namespace_for_expression.xml");
         symbol = FileUtils.readFileToString(new File(getESBResourceLocation() + "/mediatorconfig/iterate/iterate1.txt"));
 
     }
@@ -55,9 +54,10 @@ public class NullNameSpaceForIterateExpressionTestCase extends ESBIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "Testing null namespace for 'iterate expression' field")
     public void testNullNameSpaceForIterateExpression() throws Exception{
-        OMElement response;
         try {
-            response =axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, symbol,5);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithNullNamespaceForExpressionTestProxy"),
+                    null, symbol, 5);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             System.out.print(message.getReason());

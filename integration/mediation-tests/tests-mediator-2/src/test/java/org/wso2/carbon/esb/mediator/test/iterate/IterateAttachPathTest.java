@@ -42,15 +42,15 @@ public class IterateAttachPathTest extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 		super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterator_attach_path.xml");
 	}
 
 	@Test(groups = "wso2.esb", description = "Tests attach path property ")
 	public void testAttachPath() throws IOException, XMLStreamException {
 
         IterateClient client = new IterateClient();
-		String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
-    	//TODO has to check the line message and assert attach path has executed properly using logs
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithAttachPathTestProxy"), "WSO2", 2);
+        //TODO has to check the line message and assert attach path has executed properly using logs
         //Since that is still not available it is tested using below method
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);

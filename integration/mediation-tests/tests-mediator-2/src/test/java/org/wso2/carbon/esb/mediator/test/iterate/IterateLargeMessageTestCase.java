@@ -64,46 +64,36 @@ public class IterateLargeMessageTestCase extends ESBIntegrationTest {
 , ExecutionEnvironment.PLATFORM})
     @Test(groups = "wso2.esb", description = "Tests large message in small number 5")
     public void testSmallNumbers() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/simple_iterator.xml");
         OMElement response;
         for (int i = 0; i < 5; i++) {
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                            null, symbol);
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithHttpEndPointTestProxy"), null, symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("WSO2"));
-            response = null;
         }
     }
 
     @Test(groups = "wso2.esb", description = "Tests large message in large number 10", enabled = false)
     public void testLargeNumbers() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/simple_iterator.xml");
         OMElement response;
         for (int i = 0; i < 10; i++) {
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                            null, symbol);
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithHttpEndPointTestProxy"), null, symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("WSO2"));
-            response = null;
         }
     }
     
     @Test(groups = "wso2.esb", description = "Tests large message 3MB")
     public void testLargeMessage() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/simple_iterator.xml");
         String symbol2 = FixedSizeSymbolGenerator.generateMessageMB(3);
         OMElement response;
         for (int i = 0; i < 1; i++) {
-            response =
-                    axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                            null, symbol2);
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithHttpEndPointTestProxy"), null, symbol2);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("WSO2"));
-            response = null;
         }
-        symbol2 = null;
     }
 
 

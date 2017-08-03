@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithTargetGovernanceTestProxy" transports="http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate id="iterator" expression="//m0:getQuote/m0:request"
+                     preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+                <target sequence="gov:/sequences/iterate/iterateLogAndSendSequence"/>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesForIterateTests"/>
+        </outSequence>
+    </target>
+</proxy>
