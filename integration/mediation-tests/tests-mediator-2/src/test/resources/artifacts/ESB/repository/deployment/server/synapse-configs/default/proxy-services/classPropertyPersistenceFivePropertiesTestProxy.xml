@@ -1,0 +1,23 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="classPropertyPersistenceFivePropertiesTestProxy" transports="https http"
+       startOnLoad="true" trace="disable" onError="mediationFault">
+    <description/>
+    <target>
+        <inSequence>
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <class name="org.wso2.carbon.test.mediator.StockQuoteMediator">
+                <property name="bonusFor" value="5"/>
+                <property name="discountFactor" value="10"/>
+                <property name="email" value="user@wso2.org"/>
+                <property name="userName" value="esb user"/>
+                <property name="taxFor" value="5"/>
+            </class>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
