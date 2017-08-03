@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="dataMapperOneToOneJsonToJsonTestProxy"
+       transports="http,https"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <datamapper config="gov:/datamapper/one_to_one/json_to_json/testMap.js"
+                        inputSchema="gov:/datamapper/one_to_one/json_to_json/inschema.jsschema"
+                        outputSchema="gov:/datamapper/one_to_one/json_to_json/outschema.jsschema"
+                        inputType="JSON"
+                        outputType="JSON"/>
+            <respond/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>
