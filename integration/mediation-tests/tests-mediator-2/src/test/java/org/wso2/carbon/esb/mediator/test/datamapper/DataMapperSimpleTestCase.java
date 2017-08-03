@@ -39,7 +39,6 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
      */
 	@Test(groups = { "wso2.esb" }, description = "Datamapper simple one to one xml to xml conversion")
 	public void testOneToOneXmlToXml() throws Exception {
-		loadESBConfigurationFromClasspath(ARTIFACT_ROOT_PATH + "xml_to_xml/" + File.separator + "synapse.xml");
 		uploadResourcesToGovernanceRegistry(REGISTRY_ROOT_PATH + "xml_to_xml/",
 		                                    ARTIFACT_ROOT_PATH + "xml_to_xml" + File.separator);
 
@@ -78,8 +77,9 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
 		                 "         <fax>+94 11 2145300</fax>\n" +
 		                 "      </asiaoffice>\n" +
 		                 "   </company>\n";
-		String response = sendRequest(getProxyServiceURLHttp("OneToOneXmlToXml"), request, "text/xml");
-		Assert.assertEquals(response,
+        String response = sendRequest(getProxyServiceURLHttp("dataMapperOneToOneXmlToXmlTestProxy"),
+                                      request, "text/xml");
+        Assert.assertEquals(response,
 		                    "<company><offices><asiaoffice><fax> +1 408 689 4328</fax><phone> +1 650 745 " +
                             "4499</phone><address>WSO220Colombo 03</address></asiaoffice><europeoffice><fax>+94 11 " +
                             "2145300</fax><phone>+94 11 214 5345</phone><address>WSO220Colombo " +
@@ -95,7 +95,6 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
      */
 	@Test(groups = { "wso2.esb" }, description = "Datamapper simple one to one json to json conversion")
 	public void testOneToOneJsonToJson() throws Exception {
-		loadESBConfigurationFromClasspath(ARTIFACT_ROOT_PATH + "json_to_json/" + File.separator + "synapse.xml");
 		uploadResourcesToGovernanceRegistry(REGISTRY_ROOT_PATH + "json_to_json/",
 		                                    ARTIFACT_ROOT_PATH + "json_to_json" + File.separator);
 
@@ -136,8 +135,9 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
 		                 "    }\n" +
 		                 "}\n";
 
-		String response = sendRequest(getProxyServiceURLHttp("OneToOneJsonToJson"), request, "application/json");
-		Assert.assertEquals(response,
+        String response = sendRequest(getProxyServiceURLHttp("dataMapperOneToOneJsonToJsonTestProxy"),
+                                      request, "application/json");
+        Assert.assertEquals(response,
 		                    "{\"offices\":{\"usoffice\":{\"address\":\"WSO2787CA\",\"phone\":\" +1 650 745 4499\"," +
                             "\"fax\":\" +1 408 689 4328\"},\"europeoffice\":{\"address\":\"WSO22-6 London\"," +
                             "\"phone\":\"+44 203 318 6025\",\"fax\":\"+44 11 2145300\"}," +
@@ -154,7 +154,6 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
     @Test(groups = { "wso2.esb" }, description = "Data-mapper conversion of input xml messages with underscore "
             + "element names for xml messages with element names with underscore")
     public void testXmlWithUnderscoreToXmlWithUnderscore() throws Exception {
-        loadESBConfigurationFromClasspath(ARTIFACT_ROOT_PATH + "xml_un_to_xml_un/" + File.separator + "synapse.xml");
         uploadResourcesToGovernanceRegistry(REGISTRY_ROOT_PATH + "xml_un_to_xml_un/",
                 ARTIFACT_ROOT_PATH + "xml_un_to_xml_un" + File.separator);
         String expectedResponse = "<test xmlns:sf=\"urn:sobject.partner.soap.sforce.com\""
@@ -173,7 +172,9 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
                 + "            <sf:Id xmlns:sf=\"urn:sobject.partner.soap.sforce.com\">001E0000002SFO2IAO</sf:Id>\n"
                 + "            <sf:Name xmlns:sf=\"urn:sobject.partner.soap.sforce.com\">WSO2</sf:Name>\n"
                 + "        </axis2ns11:records_un>\n" + "</test>";
-        String response = sendRequest(getProxyServiceURLHttp("OneToOneXmlunToXmlun"), request, "text/xml");
+        String response = sendRequest(
+                getProxyServiceURLHttp("dataMapperXmlWithUnderscoreToXmlWithUnderscoreTestProxy"),
+                request, "text/xml");
         Assert.assertEquals(response,expectedResponse);
     }
 

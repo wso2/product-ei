@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="dataMapperXmlWithUnderscoreToXmlWithUnderscoreTestProxy"
+       transports="http,https"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <datamapper config="gov:/datamapper/one_to_one/xml_un_to_xml_un/testMap.js"
+                        inputSchema="gov:/datamapper/one_to_one/xml_un_to_xml_un/inschema.jsschema"
+                        outputSchema="gov:/datamapper/one_to_one/xml_un_to_xml_un/outschema.jsschema"
+                        inputType="XML"  outputType="XML"/>
+            <respond/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>
