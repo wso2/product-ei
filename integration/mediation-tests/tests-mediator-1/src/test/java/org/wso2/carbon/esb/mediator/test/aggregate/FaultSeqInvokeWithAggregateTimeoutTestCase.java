@@ -84,8 +84,7 @@ public class FaultSeqInvokeWithAggregateTimeoutTestCase extends ESBIntegrationTe
         HttpResponse response = HttpRequestUtil.
                 doPost(new URL(getApiInvocationURL("testApiAggregate")), message, requestHeader);
 
-        Assert.assertTrue(response.getData().contains("Sequence named Value " +
-                "{name ='null', keyValue ='invalidSequence'} cannot be found"), "Expected response was not"
+        Assert.assertTrue(response.getData().contains("SEQUENCE_ERROR_HANDLER"), "Expected response was not"
                 + " received. Got " + response.getData());
     }
 

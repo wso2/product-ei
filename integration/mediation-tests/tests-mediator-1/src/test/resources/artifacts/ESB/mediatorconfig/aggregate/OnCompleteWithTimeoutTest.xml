@@ -33,6 +33,7 @@
                         <error-message>$2</error-message>
                         <error-detail>$3</error-detail>
                         <error-exception>$4</error-exception>
+                        <error-handler-name>SEQUENCE_ERROR_HANDLER</error-handler-name>
                     </error>
                 </response>
             </format>
@@ -61,6 +62,7 @@
                         <error-message>$2</error-message>
                         <error-detail>$3</error-detail>
                         <error-exception>$4</error-exception>
+                        <error-handler-name>API_ERROR_SEQUENCE</error-handler-name>
                     </error>
                 </response>
             </format>
