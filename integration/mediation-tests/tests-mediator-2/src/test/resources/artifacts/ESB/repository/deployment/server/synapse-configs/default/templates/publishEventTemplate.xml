@@ -1,0 +1,22 @@
+<template xmlns="http://ws.apache.org/ns/synapse" name="publishEventTemplate">
+    <parameter name="num"/>
+    <sequence>
+        <publishEvent>
+            <eventSink>myeventsink</eventSink>
+            <streamName>meevents</streamName>
+            <streamVersion>1.0.0</streamVersion>
+            <attributes>
+                <meta/>
+                <correlation/>
+                <payload>
+                    <attribute defaultValue=""
+                               expression="$func:num" name="number"
+                               type="INTEGER"
+                               xmlns:ns="http://org.apache.synapse/xsd"
+                               xmlns:ns2="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+                </payload>
+                <arbitrary/>
+            </attributes>
+        </publishEvent>
+    </sequence>
+</template>

@@ -34,13 +34,13 @@ public class LoopbackIntegrationTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/core_mediator/synapseLoopbackMediatorConfig.xml");
     }
 
     @Test(groups = "wso2.esb", description = "LoopBack mediator test")
     public void testRespondMediator() throws AxisFault {
         OMElement stockQuoteResponse1 = null;
-        stockQuoteResponse1 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        stockQuoteResponse1 = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("loopBackMediatorTestProxy"), null, "WSO2");
         assertNotNull(stockQuoteResponse1, "Response is null");
 
         assertEquals(stockQuoteResponse1.getLocalName(),"messageBeforeLoopBack","First element should be messageBeforeLoopBack");

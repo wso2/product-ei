@@ -1,0 +1,20 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="publishEventMediatorErrorHandlingTestProxy" startOnLoad="true" trace="disable" transports="https http">
+    <description/>
+    <target faultSequence="myfault">
+        <inSequence>
+            <property name="number" value="a"/>
+            <call-template target="publishEventTemplate">
+                <with-param name="num" value="a"/>
+            </call-template>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <makefault version="soap11">
+                <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                <reason value="Fault Sequence Invoked"/>
+                <role/>
+            </makefault>
+            <respond/>
+        </faultSequence>
+    </target>
+</proxy>
