@@ -38,7 +38,6 @@ public class RespondIntegrationTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/core_mediator/synapseRepondMediatorConfig.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Respond mediator test")
@@ -47,7 +46,8 @@ public class RespondIntegrationTest extends ESBIntegrationTest {
         OMElement stockQuoteResponse2 = null;
         OMElement stockQuoteResponse3 = null;
 
-        stockQuoteResponse1 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        stockQuoteResponse1 = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("respondMediatorTestProxy"), null, "WSO2");
 
         assertNotNull(stockQuoteResponse1, "Response is null");
 
@@ -56,7 +56,8 @@ public class RespondIntegrationTest extends ESBIntegrationTest {
                 "WSO2", "Symbol does not match");
 
         // Checking Respond mediator
-        stockQuoteResponse2 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
+        stockQuoteResponse2 = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("respondMediatorTestProxy"), null, "IBM");
 
         assertNotNull(stockQuoteResponse2, "Response is not null");
         assertEquals(stockQuoteResponse2.getLocalName(), "getQuote", "Request does not match");
@@ -66,7 +67,8 @@ public class RespondIntegrationTest extends ESBIntegrationTest {
                 "IBM","Symbol does not match");
 
         try {
-            stockQuoteResponse3 = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "MSFT");
+            stockQuoteResponse3 = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("respondMediatorTestProxy"), null, "MSFT");
             fail("Request Should throws a AxisFault");
 
         } catch (AxisFault axisFault) {
