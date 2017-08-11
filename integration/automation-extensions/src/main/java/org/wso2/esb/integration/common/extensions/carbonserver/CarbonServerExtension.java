@@ -54,10 +54,13 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                         File confSource = new File(repository + File.separator + "conf");
                         File libDirectorySource = new File(
                                 repository + File.separator + "components" + File.separator + "lib");
+                        File dropinsDirectorySource = new File(
+                                repository + File.separator + "components" + File.separator + "dropins");
                         File deploymentDestination = new File(
                                 this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
                         File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
                         File libDestination = new File(this.getCarbonHome() + File.separator + "lib");
+                        File dropinsDestination = new File(this.getCarbonHome() + File.separator + "dropins");
                         if (confSource.exists() && confSource.isDirectory()) {
                             try {
                                 log.info("Copying " + confSource.getPath() + " to " + confDestination.getPath());
@@ -79,6 +82,15 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                             try {
                                 log.info("Copying " + libDirectorySource.getPath() + " to " + libDestination.getPath());
                                 FileUtils.copyDirectory(libDirectorySource, libDestination);
+                            } catch (IOException e) {
+                                log.error("Error while copying lib directory.", e);
+                            }
+                        }
+                        if (dropinsDirectorySource.exists() && dropinsDirectorySource.isDirectory()) {
+                            try {
+                                log.info("Copying " + dropinsDirectorySource.getPath() + " to "
+                                         + dropinsDestination.getPath());
+                                FileUtils.copyDirectory(dropinsDirectorySource, dropinsDestination);
                             } catch (IOException e) {
                                 log.error("Error while copying lib directory.", e);
                             }

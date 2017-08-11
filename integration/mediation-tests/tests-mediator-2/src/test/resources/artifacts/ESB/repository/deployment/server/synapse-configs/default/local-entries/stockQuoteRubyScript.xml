@@ -1,0 +1,2 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="stockQuoteRubyScript"
+            src="file:samples/service-bus/resources/script/stockquoteTransform.rb"/>

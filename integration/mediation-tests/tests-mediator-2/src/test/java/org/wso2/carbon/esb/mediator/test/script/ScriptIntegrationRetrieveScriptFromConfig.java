@@ -38,11 +38,7 @@ public class ScriptIntegrationRetrieveScriptFromConfig extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/script_mediator/synapse3.xml";
-        loadESBConfigurationFromClasspath(filePath);
         uploadResourcesToConfigRegistry();
-
-
     }
 
 
@@ -50,7 +46,9 @@ public class ScriptIntegrationRetrieveScriptFromConfig extends ESBIntegrationTes
     public void testRetrieveKey() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "IBM");
+        response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorJSRetrieveFromRegistryTestProxy"), null,
+                "IBM");
 
         assertNotNull(response, "Response message null");
         assertNotNull(response.getQName().getLocalPart(), "Fault response null localpart");

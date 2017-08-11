@@ -1,0 +1,16 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorRubyStoredInRegistryTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <script language="rb" key="gov:/script/stockquoteTransform.rb" function="transformRequest"/>
+            <send>
+                <endpoint name="stockquote">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <script language="rb" key="gov:/script/stockquoteTransform.rb" function="transformResponse"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
