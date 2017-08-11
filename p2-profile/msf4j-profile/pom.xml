@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>msf4j-profile</artifactId>
-    <version>6.1.1-SNAPSHOT</version>
+    <version>6.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
@@ -435,5 +435,4 @@
             </releases>
         </repository>
     </repositories>
-
 </project>
