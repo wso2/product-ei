@@ -47,7 +47,7 @@ goto end
 
 :okJavaHome
 rem check the CARBON_HOME environment variable
-
+setlocal EnableDelayedExpansion
 set CURRENT_DIR=%cd%
 if not "%CARBON_HOME%" == "" goto gotHome
 set CARBON_HOME=%CURRENT_DIR%
@@ -71,7 +71,6 @@ goto end
 
 :okHome
 rem set the classes
-setlocal EnableDelayedExpansion
 rem loop through the libs and add them to the class path
 cd "%CARBON_HOME%"
 
