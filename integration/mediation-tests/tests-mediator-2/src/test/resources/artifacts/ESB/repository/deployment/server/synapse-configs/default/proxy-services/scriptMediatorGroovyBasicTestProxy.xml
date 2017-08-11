@@ -1,0 +1,12 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorGroovyBasicTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <script language="groovy">println "The current time is: ${new Date()}"</script>
+            <send>
+                <endpoint name="endpoint_urn_uuid_4ECE7CA834EC574477533951">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </target>
+</proxy>
