@@ -37,14 +37,15 @@ public class InvalidFunctionTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config65/synapse.xml");
     }
 
     @Test(groups = "wso2.esb",
           description = "Try to invoke a non-existing function in a script. it throws an AxisFault.",
           expectedExceptions = {AxisFault.class})
     public void testInvokeNonExistingFunc() throws AxisFault {
-        axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorJSStoredInRegistryInvalidFunctionTestProxy"),
+                null, "WSO2");
     }
 
 

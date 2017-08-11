@@ -16,7 +16,6 @@ public class SetPropertyWithScopeInScriptMediatorTestCase extends ESBIntegration
 
     @BeforeClass(alwaysRun = true) public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/script_mediator/propertyWithScope.xml");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
@@ -30,8 +29,9 @@ public class SetPropertyWithScopeInScriptMediatorTestCase extends ESBIntegration
         StockQuoteClient axis2Client1 = new StockQuoteClient();
         boolean setPropertyInLog = false;
         boolean removePropertyInLog = false;
-        OMElement response;
-        response = axis2Client1.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("TestProxy"), null, "WSO2");
+        axis2Client1.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorSetPropertyWithScopeTestProxy"), null,
+                "WSO2");
         Thread.sleep(10000);
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
@@ -62,8 +62,9 @@ public class SetPropertyWithScopeInScriptMediatorTestCase extends ESBIntegration
         StockQuoteClient axis2Client1 = new StockQuoteClient();
         boolean setPropertyInLog = false;
         boolean removePropertyInLog = false;
-        OMElement response;
-        response = axis2Client1.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("TestProxy"), null, "WSO2");
+        axis2Client1.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorSetPropertyWithScopeTestProxy"), null,
+                "WSO2");
         Thread.sleep(10000);
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
@@ -92,8 +93,9 @@ public class SetPropertyWithScopeInScriptMediatorTestCase extends ESBIntegration
         StockQuoteClient axis2Client1 = new StockQuoteClient();
         boolean setPropertyInLog = false;
         boolean removePropertyInLog = false;
-        OMElement response;
-        response = axis2Client1.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("TestProxy"), null, "WSO2");
+        axis2Client1.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorSetPropertyWithScopeTestProxy"), null,
+                "WSO2");
         Thread.sleep(10000);
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 

@@ -1,0 +1,21 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorWithIncludeOptionTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <script language="js" key="conf:/script_js/test54.js" function="transformReq">
+                <include key="conf:/script_js/stockquoteTransform.js"/>
+            </script>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <script language="js" key="conf:/script_js/test54.js" function="transformRes">
+                <include key="conf:/script_js/stockquoteTransform.js"/>
+            </script>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -42,19 +42,13 @@ import static org.testng.Assert.assertNotNull;
 
 public class RubyScriptSupportTestCase extends ESBIntegrationTest {
 
-    private final String JRUBY_JAR = "jruby-complete-1.3.0.jar";
-    private final String JRUBY_JAR_LOCATION = "/artifacts/ESB/jar/";
-
     private ServerConfigurationManager serverManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
 
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
+        super.init();
         serverManager = new ServerConfigurationManager(context);
-        serverManager.copyToComponentDropins(new File(getClass().getResource(JRUBY_JAR_LOCATION + JRUBY_JAR).toURI()));
-        serverManager.restartGracefully();
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
 
     }
 
@@ -62,8 +56,9 @@ public class RubyScriptSupportTestCase extends ESBIntegrationTest {
 })
     @Test(groups = {"wso2.esb", "localOnly"}, description = "Script Mediator -Run a Ruby script with the mediator")
     public void testJRubyScriptMediation() throws Exception {
-        loadSampleESBConfiguration(353);
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorRubyBasicTestProxy"), null,
+                "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -84,10 +79,10 @@ public class RubyScriptSupportTestCase extends ESBIntegrationTest {
     public void testJRubyScriptMediationScriptFromGovRegistry() throws Exception {
         enableDebugLogging();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/synapseconfig/script_mediator/retrieve_script_from_gov_reg_mediation.xml");
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorRubyStoredInRegistryTestProxy"), null,
+                "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -105,12 +100,9 @@ public class RubyScriptSupportTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         try {
-            deleteSequence("main");
             Thread.sleep(5000);
             super.cleanup();
         } finally {
-            serverManager.removeFromComponentDropins(JRUBY_JAR);
-            serverManager.restartGracefully();
             serverManager = null;
         }
 
