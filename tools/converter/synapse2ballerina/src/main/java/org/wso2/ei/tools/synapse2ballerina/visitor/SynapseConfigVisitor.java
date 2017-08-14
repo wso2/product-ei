@@ -18,7 +18,6 @@
 
 package org.wso2.ei.tools.synapse2ballerina.visitor;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.synapse.Mediator;
 import org.apache.synapse.config.SynapseConfiguration;
 import org.apache.synapse.config.xml.AnonymousListMediator;
@@ -89,8 +88,8 @@ public class SynapseConfigVisitor implements Visitor {
         }
 
         //Each proxy will be mapped to a service in ballerina
-        for(ProxyService proxyService: configuration.getProxyServices()){
-            ProxyServiceWrapper proxyServiceWrapper = new ProxyServiceWrapper(proxyService );
+        for (ProxyService proxyService : configuration.getProxyServices()) {
+            ProxyServiceWrapper proxyServiceWrapper = new ProxyServiceWrapper(proxyService);
             proxyServiceWrapper.accept(this);
         }
 
@@ -158,12 +157,12 @@ public class SynapseConfigVisitor implements Visitor {
             logger.debug("Proxy");
         }
 
-        ArrayList<String> transportList = (ArrayList<String>)proxyService.getTransports();
+        ArrayList<String> transportList = (ArrayList<String>) proxyService.getTransports();
         //Assuming one proxy will only handle one transport type
         String transportType = transportList.get(0);
 
         ProxyServiceType proxyServiceType = ProxyServiceType.get(transportType);
-        switch (proxyServiceType){
+        switch (proxyServiceType) {
         case HTTP:
         case HTTPS:
             BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_HTTP, importTracker);
@@ -171,11 +170,12 @@ public class SynapseConfigVisitor implements Visitor {
             Map<String, Object> serviceParameters = new HashMap<String, Object>();
             serviceParameters.put(Constant.SERVICE_NAME, serviceName);
             serviceParameters.put(Constant.PROTOCOL_PKG_NAME, Constant.BLANG_HTTP);
-
             createResourceAndService(proxyService, serviceParameters, true);
-
+            break;
         case JMS:
-
+            break;
+        default:
+            break;
         }
     }
 
@@ -511,8 +511,8 @@ public class SynapseConfigVisitor implements Visitor {
         ballerinaASTModelBuilder.addReturnTypes();
     }*/
 
-    private void createResourceAndService(ProxyService proxyService, Map<String, Object> serviceParameters, boolean
-            replyNeeded){
+    private void createResourceAndService(ProxyService proxyService, Map<String, Object> serviceParameters,
+            boolean replyNeeded) {
 
         Service.startService(ballerinaASTModelBuilder);
 
@@ -521,7 +521,7 @@ public class SynapseConfigVisitor implements Visitor {
         resourceMethods[0] = Constant.BLANG_METHOD_GET;
         resourceMethods[1] = Constant.BLANG_METHOD_POST;
 
-        for(String method:resourceMethods){
+        for (String method : resourceMethods) {
             Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
             resourceAnnotations.put(Constant.METHOD_NAME, method);
             Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
@@ -546,11 +546,12 @@ public class SynapseConfigVisitor implements Visitor {
         SequenceMediatorWrapper inSequenceMediatorWrapper = new SequenceMediatorWrapper(inSequence);
         inSequenceMediatorWrapper.accept(this);
 
-        if(proxyService.getTargetEndpoint() != null){
+        if (proxyService.getTargetEndpoint() != null) {
             connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
 
-            HTTPEndpoint endpoint = (HTTPEndpoint) synapseConfiguration.getLocalRegistry().get(proxyService.getTargetEndpoint());
-            if(endpoint != null){
+            HTTPEndpoint endpoint = (HTTPEndpoint) synapseConfiguration.getLocalRegistry()
+                    .get(proxyService.getTargetEndpoint());
+            if (endpoint != null) {
                 Map<String, Object> connectorParameters = new HashMap<String, Object>();
                 connectorParameters.put(Constant.INBOUND_MSG, inboundMsg);
                 connectorParameters.put(Constant.OUTBOUND_MSG, outboundMsg);
@@ -569,7 +570,7 @@ public class SynapseConfigVisitor implements Visitor {
 
         //=============================================================================
 
-        if(replyNeeded){
+        if (replyNeeded) {
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put(Constant.OUTBOUND_MSG, outboundMsg);
             BallerinaProgramHelper.createReply(ballerinaASTModelBuilder, parameters);

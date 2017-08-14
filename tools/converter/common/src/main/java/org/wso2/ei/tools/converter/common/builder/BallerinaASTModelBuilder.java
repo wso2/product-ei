@@ -136,7 +136,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void endOfFunction(String functionName) {
-        modelBuilder.addFunction(null, null, functionName, false); //isNative is false
+        modelBuilder.addFunction(null, null, functionName, false, false); //isNative is false
     }
 
     /**
