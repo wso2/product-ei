@@ -19,6 +19,7 @@
 package org.wso2.ei.tools.synapse2ballerina.visitor;
 
 import org.apache.synapse.Mediator;
+import org.apache.synapse.core.axis2.ProxyService;
 import org.apache.synapse.mediators.base.SequenceMediator;
 import org.apache.synapse.mediators.builtin.CallMediator;
 import org.apache.synapse.mediators.builtin.RespondMediator;
@@ -33,6 +34,8 @@ import org.apache.synapse.rest.Resource;
 public interface Visitor {
 
      void visit(API api);
+
+     void visit(ProxyService proxyService);
 
      void visit(Resource api);
 

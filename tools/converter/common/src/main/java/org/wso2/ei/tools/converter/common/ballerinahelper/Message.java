@@ -83,6 +83,7 @@ public class Message {
      * Set the payload of a message
      */
     public static void setPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
+
         if (Constant.JSON.equals((String) parameters.get(Constant.TYPE))) {
             ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
             ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
@@ -98,7 +99,9 @@ public class Message {
             ballerinaASTModelBuilder.createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
             // the variable
             ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
-        }
+        }/* else if (Constant.STRING.equals((String) parameters.get(Constant.TYPE))) {
+
+        }*/
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.OUTBOUND_MSG));

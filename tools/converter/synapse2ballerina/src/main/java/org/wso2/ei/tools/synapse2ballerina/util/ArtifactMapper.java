@@ -31,7 +31,8 @@ public enum ArtifactMapper {
     RESPOND_MEDIATOR("RespondMediator", "org.wso2.ei.tools.synapse2ballerina.wrapper.RespondMediatorWrapper"),
     PAYLOAD_FACTORY_MEDIATOR("PayloadFactoryMediator", "org.wso2.ei.tools.synapse2ballerina.wrapper"
             + ".PayloadFactoryWrapper"),
-    SWITCH_MEDIATOR("SwitchMediator", "org.wso2.ei.tools.synapse2ballerina.wrapper.SwitchMediatorWrapper");
+    SWITCH_MEDIATOR("SwitchMediator", "org.wso2.ei.tools.synapse2ballerina.wrapper.SwitchMediatorWrapper"),
+    SEQUENCE_MEDIATOR("SequenceMediator", "org.wso2.ei.tools.synapse2ballerina.wrapper.SequenceMediatorWrapper");
 
     ArtifactMapper(String type, String wrapperClassName) {
         this.type = type;

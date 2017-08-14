@@ -14,7 +14,8 @@ public class Resource {
         ballerinaASTModelBuilder.startResource();
     }
 
-    public static void endOfService(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
+    public static void endOfResource(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object>
+            parameters) {
         ballerinaASTModelBuilder.endOfResource((String) parameters.get(Constant.RESOURCE_NAME),
                 (Integer) parameters.get(Constant.RESOURCE_ANNOTATION_COUNT));
     }

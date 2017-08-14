@@ -47,7 +47,7 @@ public class HttpClientConnector {
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.CONNECTOR_VAR_NAME));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.createStringLiteral(Constant.DIVIDER);
+        ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.PATH));
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.INBOUND_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.endVariableRefList(3);

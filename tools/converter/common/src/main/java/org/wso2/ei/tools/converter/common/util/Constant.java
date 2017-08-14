@@ -42,6 +42,7 @@ public class Constant {
     public static final String BLANG_BASEPATH = "basePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
+    public static final String BLANG_METHOD_POST = "POST";
     public static final String BLANG_PATH = "Path";
     public static final String BLANG_PATHPARAM = "PathParam";
 
@@ -102,6 +103,7 @@ public class Constant {
 
     public static final String JSON = "json";
     public static final String XML = "xml";
+    public static final String STRING = "string";
 
     //Parameter names
     public static final String OUTBOUND_MSG = "OutboundMessage";
@@ -123,6 +125,7 @@ public class Constant {
     public static final String EXPRESSION = "Expression";
     public static final String PACKAGE_NAME = "PackageName";
     public static final String VARIABLE_NAME_NEW = "NewVariableName";
+    public static final String PATH = "Path";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//TODO : Remove  quotations surrounding the json value!";

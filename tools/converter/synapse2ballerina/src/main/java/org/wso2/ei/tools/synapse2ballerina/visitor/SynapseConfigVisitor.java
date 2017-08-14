@@ -18,10 +18,12 @@
 
 package org.wso2.ei.tools.synapse2ballerina.visitor;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.synapse.Mediator;
 import org.apache.synapse.config.SynapseConfiguration;
 import org.apache.synapse.config.xml.AnonymousListMediator;
 import org.apache.synapse.config.xml.SwitchCase;
+import org.apache.synapse.core.axis2.ProxyService;
 import org.apache.synapse.endpoints.HTTPEndpoint;
 import org.apache.synapse.endpoints.IndirectEndpoint;
 import org.apache.synapse.mediators.base.SequenceMediator;
@@ -36,19 +38,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.ei.tools.converter.common.ballerinahelper.Annotation;
 import org.wso2.ei.tools.converter.common.ballerinahelper.BallerinaProgramHelper;
+import org.wso2.ei.tools.converter.common.ballerinahelper.Function;
 import org.wso2.ei.tools.converter.common.ballerinahelper.HttpClientConnector;
 import org.wso2.ei.tools.converter.common.ballerinahelper.Message;
 import org.wso2.ei.tools.converter.common.ballerinahelper.Service;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.converter.common.util.Constant;
 import org.wso2.ei.tools.synapse2ballerina.util.ArtifactMapper;
+import org.wso2.ei.tools.synapse2ballerina.util.ProxyServiceType;
 import org.wso2.ei.tools.synapse2ballerina.wrapper.APIWrapper;
 import org.wso2.ei.tools.synapse2ballerina.wrapper.MediatorWrapper;
+import org.wso2.ei.tools.synapse2ballerina.wrapper.ProxyServiceWrapper;
 import org.wso2.ei.tools.synapse2ballerina.wrapper.ResourceWrapper;
 import org.wso2.ei.tools.synapse2ballerina.wrapper.SequenceMediatorWrapper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,14 +76,42 @@ public class SynapseConfigVisitor implements Visitor {
     private int resourceCounter = 0; //For dynamic resource name creation
     private String connectorVarName; //For dynamic connector variable name creation
     private SynapseConfiguration synapseConfiguration;
+    private List<SequenceMediator> namedSequenceList = new ArrayList<SequenceMediator>();
 
     public BallerinaFile visit(SynapseConfiguration configuration) {
         ballerinaASTModelBuilder = new BallerinaASTModelBuilder();
         this.synapseConfiguration = configuration;
 
+        //Each API will have their own service in ballerina file
         for (API api : configuration.getAPIs()) {
             APIWrapper apiWrapper = new APIWrapper(api);
             apiWrapper.accept(this);
+        }
+
+        //Each proxy will be mapped to a service in ballerina
+        for(ProxyService proxyService: configuration.getProxyServices()){
+            ProxyServiceWrapper proxyServiceWrapper = new ProxyServiceWrapper(proxyService );
+            proxyServiceWrapper.accept(this);
+        }
+
+        //Call function: named sequences maps to functions in ballerina
+        if (!namedSequenceList.isEmpty()) {
+            for (SequenceMediator namedSequence : namedSequenceList) {
+                outboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
+                Map<String, Object> functionParas = new HashMap<String, Object>();
+                functionParas.put(Constant.OUTBOUND_MSG, outboundMsg);
+                Function.startFunction(ballerinaASTModelBuilder, functionParas);
+
+                List<Mediator> mediatorList = namedSequence.getList();
+                if (mediatorList != null) {
+                    for (Mediator mediator : mediatorList) {
+                        MediatorWrapper mediatorWrapper = new MediatorWrapper(mediator);
+                        mediatorWrapper.accept(this);
+                    }
+                }
+                functionParas.put(Constant.FUNCTION_NAME, namedSequence.getName());
+                Function.endFunction(ballerinaASTModelBuilder, functionParas);
+            }
         }
 
         return ballerinaASTModelBuilder.buildBallerinaFile();
@@ -108,7 +142,7 @@ public class SynapseConfigVisitor implements Visitor {
             resourceParameters.put(Constant.RESOURCE_NAME, resourceName);
             resourceParameters.put(Constant.RESOURCE_ANNOTATION_COUNT, Integer.valueOf(resourceAnnotationCount));
             org.wso2.ei.tools.converter.common.ballerinahelper.Resource
-                    .endOfService(ballerinaASTModelBuilder, resourceParameters); //End of resource
+                    .endOfResource(ballerinaASTModelBuilder, resourceParameters); //End of resource
             resourceAnnotationCount = 0;
         }
         String serviceName = api.getAPIName();
@@ -116,6 +150,33 @@ public class SynapseConfigVisitor implements Visitor {
         serviceParameters.put(Constant.SERVICE_NAME, serviceName);
         serviceParameters.put(Constant.PROTOCOL_PKG_NAME, Constant.BLANG_HTTP);
         Service.endOfService(ballerinaASTModelBuilder, serviceParameters); //End of service
+    }
+
+    @Override
+    public void visit(ProxyService proxyService) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Proxy");
+        }
+
+        ArrayList<String> transportList = (ArrayList<String>)proxyService.getTransports();
+        //Assuming one proxy will only handle one transport type
+        String transportType = transportList.get(0);
+
+        ProxyServiceType proxyServiceType = ProxyServiceType.get(transportType);
+        switch (proxyServiceType){
+        case HTTP:
+        case HTTPS:
+            BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_HTTP, importTracker);
+            String serviceName = proxyService.getName();
+            Map<String, Object> serviceParameters = new HashMap<String, Object>();
+            serviceParameters.put(Constant.SERVICE_NAME, serviceName);
+            serviceParameters.put(Constant.PROTOCOL_PKG_NAME, Constant.BLANG_HTTP);
+
+            createResourceAndService(proxyService, serviceParameters, true);
+
+        case JMS:
+
+        }
     }
 
     /**
@@ -159,9 +220,13 @@ public class SynapseConfigVisitor implements Visitor {
                 .createVariableWithEmptyMap(ballerinaASTModelBuilder, Constant.BLANG_TYPE_MESSAGE,
                         Constant.BLANG_VAR_RESPONSE + ++variableCounter, true);
 
-        SequenceMediator sequenceMediator = resource.getInSequence();
-        SequenceMediatorWrapper sequenceMediatorWrapper = new SequenceMediatorWrapper(sequenceMediator);
-        sequenceMediatorWrapper.accept(this);
+        SequenceMediator inSequence = resource.getInSequence();
+        SequenceMediatorWrapper inSequenceWrapper = new SequenceMediatorWrapper(inSequence);
+        inSequenceWrapper.accept(this);
+
+        SequenceMediator outSequence = resource.getOutSequence();
+        SequenceMediatorWrapper outSequenceMediatorWrapper = new SequenceMediatorWrapper(outSequence);
+        outSequenceMediatorWrapper.accept(this);
     }
 
     @Override
@@ -169,10 +234,27 @@ public class SynapseConfigVisitor implements Visitor {
         if (logger.isDebugEnabled()) {
             logger.debug("SequenceMediator");
         }
-        List<Mediator> mediatorList = sequenceMediator.getList();
-        for (Mediator mediator : mediatorList) {
-            MediatorWrapper mediatorWrapper = new MediatorWrapper(mediator);
-            mediatorWrapper.accept(this);
+        List<Mediator> mediatorList = null;
+        //If key is not null that means this is a named sequence which needs to map to a function in ballerina
+        if (sequenceMediator.getKey() != null) {
+            SequenceMediator namedSequence = (SequenceMediator) synapseConfiguration.getLocalRegistry()
+                    .get(sequenceMediator.getKey().getKeyValue());
+            //Keep a list of named sequences, so that the relevant function should be created at the end of services
+            namedSequenceList.add(namedSequence);
+            //call function
+            Map<String, Object> functionParas = new HashMap<String, Object>();
+            functionParas.put(Constant.OUTBOUND_MSG, outboundMsg);
+            functionParas.put(Constant.FUNCTION_NAME, sequenceMediator.getKey().getKeyValue());
+            Function.callFunction(ballerinaASTModelBuilder, functionParas);
+
+        } else {
+            mediatorList = sequenceMediator.getList();
+            if (mediatorList != null) {
+                for (Mediator mediator : mediatorList) {
+                    MediatorWrapper mediatorWrapper = new MediatorWrapper(mediator);
+                    mediatorWrapper.accept(this);
+                }
+            }
         }
     }
 
@@ -233,6 +315,7 @@ public class SynapseConfigVisitor implements Visitor {
         connectorParameters.put(Constant.OUTBOUND_MSG, outboundMsg);
         connectorParameters.put(Constant.CONNECTOR_VAR_NAME, connectorVarName);
         connectorParameters.put(Constant.URL, endpoint.getDefinition().getAddress());
+        connectorParameters.put(Constant.PATH, Constant.DIVIDER);
 
         HttpClientConnector.createConnector(ballerinaASTModelBuilder, connectorParameters);
         HttpClientConnector.callAction(ballerinaASTModelBuilder, connectorParameters);
@@ -427,4 +510,80 @@ public class SynapseConfigVisitor implements Visitor {
         ballerinaASTModelBuilder.addTypes(type); //type of the variable
         ballerinaASTModelBuilder.addReturnTypes();
     }*/
+
+    private void createResourceAndService(ProxyService proxyService, Map<String, Object> serviceParameters, boolean
+            replyNeeded){
+
+        Service.startService(ballerinaASTModelBuilder);
+
+        org.wso2.ei.tools.converter.common.ballerinahelper.Resource.startResource(ballerinaASTModelBuilder);
+        String[] resourceMethods = new String[2];
+        resourceMethods[0] = Constant.BLANG_METHOD_GET;
+        resourceMethods[1] = Constant.BLANG_METHOD_POST;
+
+        for(String method:resourceMethods){
+            Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
+            resourceAnnotations.put(Constant.METHOD_NAME, method);
+            Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
+            resourceAnnotationCount++;
+        }
+
+        inboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
+
+        Map<String, Object> functionParas = new HashMap<String, Object>();
+        functionParas.put(Constant.INBOUND_MSG, inboundMsg);
+        functionParas.put(Constant.TYPE, Constant.BLANG_TYPE_MESSAGE);
+        BallerinaProgramHelper.addFunctionParameter(ballerinaASTModelBuilder, functionParas);
+
+        org.wso2.ei.tools.converter.common.ballerinahelper.Resource.startCallableBody(ballerinaASTModelBuilder);
+        //Create empty outbound message
+        outboundMsg = BallerinaProgramHelper
+                .createVariableWithEmptyMap(ballerinaASTModelBuilder, Constant.BLANG_TYPE_MESSAGE,
+                        Constant.BLANG_VAR_RESPONSE + ++variableCounter, true);
+
+        //=========================Mediation Logic====================================
+        SequenceMediator inSequence = proxyService.getTargetInLineInSequence();
+        SequenceMediatorWrapper inSequenceMediatorWrapper = new SequenceMediatorWrapper(inSequence);
+        inSequenceMediatorWrapper.accept(this);
+
+        if(proxyService.getTargetEndpoint() != null){
+            connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
+
+            HTTPEndpoint endpoint = (HTTPEndpoint) synapseConfiguration.getLocalRegistry().get(proxyService.getTargetEndpoint());
+            if(endpoint != null){
+                Map<String, Object> connectorParameters = new HashMap<String, Object>();
+                connectorParameters.put(Constant.INBOUND_MSG, inboundMsg);
+                connectorParameters.put(Constant.OUTBOUND_MSG, outboundMsg);
+                connectorParameters.put(Constant.CONNECTOR_VAR_NAME, connectorVarName);
+                connectorParameters.put(Constant.URL, endpoint.getDefinition().getAddress());
+                connectorParameters.put(Constant.PATH, Constant.DIVIDER);
+
+                HttpClientConnector.createConnector(ballerinaASTModelBuilder, connectorParameters);
+                HttpClientConnector.callAction(ballerinaASTModelBuilder, connectorParameters);
+            }
+        }
+
+        SequenceMediator outSequence = proxyService.getTargetInLineOutSequence();
+        SequenceMediatorWrapper outSequenceMediatorWrapper = new SequenceMediatorWrapper(outSequence);
+        outSequenceMediatorWrapper.accept(this);
+
+        //=============================================================================
+
+        if(replyNeeded){
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put(Constant.OUTBOUND_MSG, outboundMsg);
+            BallerinaProgramHelper.createReply(ballerinaASTModelBuilder, parameters);
+        }
+
+        String resourceName = Constant.BLANG_RESOURCE_NAME + ++resourceCounter;
+
+        Map<String, Object> resourceParameters = new HashMap<String, Object>();
+        resourceParameters.put(Constant.RESOURCE_NAME, resourceName);
+        resourceParameters.put(Constant.RESOURCE_ANNOTATION_COUNT, Integer.valueOf(resourceAnnotationCount));
+        org.wso2.ei.tools.converter.common.ballerinahelper.Resource
+                .endOfResource(ballerinaASTModelBuilder, resourceParameters); //End of resource
+        resourceAnnotationCount = 0;
+
+        Service.endOfService(ballerinaASTModelBuilder, serviceParameters); //End of service
+    }
 }

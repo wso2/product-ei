@@ -35,7 +35,9 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * {@code BallerinaASTModelBuilder} is a high level API to build ballerina AST from BLangModelBuilder class
+ * {@code BallerinaASTModelBuilder} is a high level API to build ballerina AST from BLangModelBuilder class, but
+ * methods of this class shouldn't be called directly from any converter's visitor. These methods should be
+ * accessed through ballerinahelper package classes.
  */
 public class BallerinaASTModelBuilder {
 

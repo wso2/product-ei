@@ -155,7 +155,7 @@ public class BallerinaProgramHelper {
     }
 
     public static void addComment(BallerinaASTModelBuilder ballerinaASTModelBuilder, String comment) {
-        ballerinaASTModelBuilder.addComment(comment);
+        ballerinaASTModelBuilder.addComment("//" + comment);
     }
 
 }
