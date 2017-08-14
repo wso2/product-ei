@@ -37,16 +37,14 @@ public class SendIntegrationDynamicSequenceTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        resourceAdminServiceStub = new ResourceAdminServiceClient
-                (contextUrls.getBackEndUrl(), getSessionCookie());
+        resourceAdminServiceStub = new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/send/synapse_dynamic.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Receiving sequence dynamic and build message before receive")
     public void testSequenceDynamicBuildMessage() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testSequenceDynamicBuildMessage"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorDynamicReceiveSeqBuildMessageTrueTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();
@@ -57,7 +55,8 @@ public class SendIntegrationDynamicSequenceTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Receiving sequence dynamic and not build message before receive")
     public void sequenceDynamicBuildMessageNoTest() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testSequenceDynamicBuildMessageNo"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorDynamicReceiveSeqBuildMessageFalseTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();
