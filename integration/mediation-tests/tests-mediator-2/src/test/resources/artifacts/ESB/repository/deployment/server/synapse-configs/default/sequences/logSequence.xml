@@ -1,0 +1,4 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="logSequence">
+    <log level="full"/>
+    <send/>
+</sequence>

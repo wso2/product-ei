@@ -37,13 +37,12 @@ public class LogMediatorAfterSendMediatorTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/send/synapse_uncaught_exception.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "use Log mediator after send mediator", enabled = false)
     public void logMediatorAfterSendMediatorTest() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testLogMediatorAfterSend"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorWithLogAfterwardsTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();
