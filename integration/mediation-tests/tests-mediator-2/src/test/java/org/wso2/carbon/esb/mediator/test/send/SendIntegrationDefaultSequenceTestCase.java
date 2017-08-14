@@ -40,13 +40,12 @@ public class SendIntegrationDefaultSequenceTestCase extends ESBIntegrationTest {
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(), getSessionCookie());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/send/synapse_default.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "End point in local registry and default receiving sequence with build message before receive")
     public void testSequenceDefaultBuildMessageTest() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testSequenceDefaultBuildMessage"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorWithBuildMessageTrueTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();
@@ -57,7 +56,8 @@ public class SendIntegrationDefaultSequenceTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "End point in local registry and default receiving sequence with not build message before receive")
     public void testSequenceDefaultBuildMessageNo() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("testSequenceDefaultBuildMessageNo"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sendMediatorWithBuildMessageFalseTestProxy"), null, "WSO2");
         assertNotNull(response, "Response is null");
         assertEquals(response.getLocalName(), "getQuoteResponse", "getQuoteResponse mismatch");
         OMElement omElement = response.getFirstElement();

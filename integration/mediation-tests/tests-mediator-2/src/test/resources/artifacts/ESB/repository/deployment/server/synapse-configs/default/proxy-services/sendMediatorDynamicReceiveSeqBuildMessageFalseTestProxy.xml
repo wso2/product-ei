@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sendMediatorDynamicReceiveSeqBuildMessageTrueTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property name="receiving_sequence_property" value="logSequence"
+                      scope="default" type="STRING"/>
+            <send receive="{get-property('receiving_sequence_property')}" buildmessage="true">
+                <endpoint key="conf:/endpoints/registry_endpoint.xml"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <drop/>
+        </outSequence>
+    </target>
+</proxy>
