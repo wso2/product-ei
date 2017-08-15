@@ -1,0 +1,16 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sequenceMediatorDynamicSequenceTestProxy"
+       transports="http https"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <log category="INFO" level="simple" separator=","/>
+            <property name="TransformationSequence" expression="get-property('transport','Sequence')"/>
+            <sequence key="{get-property('TransformationSequence')}"/>
+        </inSequence>
+
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -33,28 +33,24 @@ import static org.testng.Assert.assertNotNull;
  * https://wso2.org/jira/browse/CARBON-12746
  */
 
-public class DynamicSequenceNullPointerExceptionTestCase extends ESBIntegrationTest {
+public class DynamicSequenceTestCase extends ESBIntegrationTest {
 
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception{
         super.init();
-        String filePath="/artifacts/ESB/mediatorconfig/sequence/synapse_proxy.xml" ;
-        loadESBConfigurationFromClasspath(filePath);
     }
     /*
         create a http header with name "Sequence" and value "correctsequence" and send a request. The
          correctsequence will direct the request to the correct end point.
     */
-    @Test(groups = "wso2.esb" , description = "When we have a dynamic sequence defined in a " +
-                                              "proxy " +
-                                              "service; ESB throws null pointer exception"
-    )
+    @Test(groups = "wso2.esb", description = "Define a dynamic sequence defined in a proxy service")
     public void testSequenceMediator() throws AxisFault{
 
         OMElement response;
-        axis2Client.addHttpHeader("Sequence","correctsequence");
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("simpleProxy"),null,"WSO2");
+        axis2Client.addHttpHeader("Sequence", "sendToStockQuoteServiceSequence");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("sequenceMediatorDynamicSequenceTestProxy"), null, "WSO2");
 
         assertNotNull(response, "Response message null");
         OMElement returnElement=response.getFirstElement();
