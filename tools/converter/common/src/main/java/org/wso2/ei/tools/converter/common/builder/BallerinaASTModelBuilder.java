@@ -85,21 +85,42 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     * TODO: Need to refactor this to support multiple key value pairs of an annotation
+     *
      *
      * @param pkgName     name of the package
      * @param name        functionality name you want to use
-     * @param key         annotation attribute key
-     * @param actualvalue annotation attribute value
      */
-    public void createAnnotationAttachment(String pkgName, String name, String key, String actualvalue) {
+    public void createAnnotationAttachment(String pkgName, String name) {
         modelBuilder.startAnnotationAttachment();
 
         createNameReference(pkgName, name);
+    }
 
+    /**
+     * Create annotation attributes - literal type
+     * @param key
+     * @param actualvalue
+     */
+    public void createAnnotationAttributeValue(String key, String actualvalue) {
         if (key != null && actualvalue != null) {
             modelBuilder.createStringLiteral(null, null, actualvalue);
             modelBuilder.createLiteralTypeAttributeValue(null, null);
+            modelBuilder.createAnnotationKeyValue(null, null, key);
+        }
+    }
+
+    /**
+     * Create annotation with array type attributes
+     * @param key
+     * @param actualValues
+     */
+    public void createAnnotationAttributeArrayType(String key, String[] actualValues) {
+        if (key != null && actualValues != null) {
+            for (String actualValue : actualValues) {
+                modelBuilder.createStringLiteral(null, null, actualValue);
+                modelBuilder.createLiteralTypeAttributeValue(null, null);
+            }
+            modelBuilder.createArrayTypeAttributeValue(null, null);
             modelBuilder.createAnnotationKeyValue(null, null, key);
         }
     }

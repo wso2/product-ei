@@ -423,12 +423,12 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(AnnotationAttributeDef annotationAttributeDef) {
-
+        logger.debug("Visit - AnnotationAttributeDef");
     }
 
     @Override
     public void visit(AnnotationDef annotationDef) {
-
+        logger.debug("Visit - AnnotationDef");
     }
 
     @Override
@@ -833,9 +833,14 @@ public class CodeGenVisitor implements NodeVisitor {
          * actionInvocation : nameReference '.' Identifier '(' expressionList? ')';
          * nameReference : (Identifier ':')? Identifier;
          */
-        appendToBalSource(actionInvocationExpr.getPackageName() + Constants.COLON_STR +
+       /* appendToBalSource(actionInvocationExpr.getPackageName() + Constants.COLON_STR +
                 actionInvocationExpr.getConnectorName() + Constants.PERIOD_STR + actionInvocationExpr.getName() +
+                Constants.PARENTHESES_START_STR);*/
+
+        appendToBalSource(actionInvocationExpr.getConnectorName() + Constants.PERIOD_STR +  actionInvocationExpr
+                .getName() +
                 Constants.PARENTHESES_START_STR);
+
         //process expression list
         Expression[] expressions = actionInvocationExpr.getArgExprs();
         for (int i = 0; i < expressions.length; i++) {

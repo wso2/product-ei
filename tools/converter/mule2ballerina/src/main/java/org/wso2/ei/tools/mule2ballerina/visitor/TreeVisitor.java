@@ -54,8 +54,6 @@ import org.wso2.ei.tools.mule2ballerina.util.MimeType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * {@code TreeVisitor} visits intermediate object stack and populate Ballerina AST
@@ -389,14 +387,14 @@ public class TreeVisitor implements Visitor {
             resourceAnnotationCount++;
         }
 
-        //Add the Path annotation
-        if (listener.getPath() != null) {
+        //TODO:Add the Path annotation
+       /* if (listener.getPath() != null) {
             ballerinaASTModelBuilder
                     .createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_PATH, Constant.BLANG_VALUE,
                             listener.getPath());
             ballerinaASTModelBuilder.addAnnotationAttachment(1);
             resourceAnnotationCount++;
-        }
+        }*/
 
         //Add inbound message as a resource parameter
         //  ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
@@ -407,8 +405,8 @@ public class TreeVisitor implements Visitor {
         functionParas.put(Constant.TYPE, Constant.BLANG_TYPE_MESSAGE);
         BallerinaProgramHelper.addFunctionParameter(ballerinaASTModelBuilder, functionParas);
 
-        //Then add path parameters
-        if (listener.getPath() != null) {
+        //TODO:Then add path parameters
+      /*  if (listener.getPath() != null) {
             //check whether any path params have been used
             String[] pathParams = listener.getPath().split("/");
             for (String path : pathParams) {
@@ -426,7 +424,7 @@ public class TreeVisitor implements Visitor {
                     ballerinaASTModelBuilder.addParameter(1, false, funcParaName);
                 }
             }
-        }
+        }*/
 
        /* ballerinaASTModelBuilder.startCallableBody();*/
         org.wso2.ei.tools.converter.common.ballerinahelper.Resource.startCallableBody(ballerinaASTModelBuilder);

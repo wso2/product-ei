@@ -43,14 +43,15 @@ public class HttpClientConnector {
         ballerinaASTModelBuilder.endVariableRefList(1);
 
         //Fill RHS - Call client connector
-        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
-        ballerinaASTModelBuilder.startExprList();
+       // ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.CONNECTOR_VAR_NAME));
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
+        ballerinaASTModelBuilder.startExprList();
+        /*ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.CONNECTOR_VAR_NAME));
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();*/
         ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.PATH));
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.INBOUND_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.endVariableRefList(3);
+        ballerinaASTModelBuilder.endVariableRefList(2);
         //TODO: Support for other http methods as well
         ballerinaASTModelBuilder.createAction(Constant.BLANG_CLIENT_CONNECTOR_GET_ACTION, true);
         ballerinaASTModelBuilder.createAssignmentStatement();

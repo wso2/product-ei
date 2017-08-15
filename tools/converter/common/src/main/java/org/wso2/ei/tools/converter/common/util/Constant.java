@@ -39,12 +39,14 @@ public class Constant {
 
     //Ballerina Annotations
     public static final String BLANG_CONFIG = "configuration";
+    public static final String BLANG_RESOURCE_CONFIG = "resourceConfig";
     public static final String BLANG_BASEPATH = "basePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
     public static final String BLANG_METHOD_POST = "POST";
     public static final String BLANG_PATH = "Path";
     public static final String BLANG_PATHPARAM = "PathParam";
+    public static final String BLANG_METHODS = "methods";
 
     //Ballerina types
     public static final String BLANG_TYPE_MESSAGE = "message";
