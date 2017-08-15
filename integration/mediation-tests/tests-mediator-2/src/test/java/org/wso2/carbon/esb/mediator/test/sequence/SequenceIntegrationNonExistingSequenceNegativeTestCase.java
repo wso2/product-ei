@@ -31,8 +31,6 @@ public class SequenceIntegrationNonExistingSequenceNegativeTestCase extends ESBI
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/mediatorconfig/sequence/synapse_sequence_mediator.xml";
-        loadESBConfigurationFromClasspath(filePath);
     }
 
     // give a non existing sequence and handle the exception..
@@ -42,8 +40,8 @@ public class SequenceIntegrationNonExistingSequenceNegativeTestCase extends ESBI
     )
     public void testEnrichMediator() throws Exception {
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample"), null,
-                                                    "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("sequenceMediatorNonExistingSequenceTestProxy"), null, "WSO2");
         } catch (AxisFault e) {
 
             assertEquals(e.getMessage(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL, "Invalid exception");
