@@ -1,0 +1,12 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sequenceMediatorNonExistingSequenceTestProxy"
+       transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <sequence key="non-existing"/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>
