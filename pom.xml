@@ -241,9 +241,9 @@
                 <version>${testng.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.geronimo.specs.wso2</groupId>
-                <artifactId>geronimo-jms_1.1_spec</artifactId>
-                <version>${orbit.version.geronimo-jms_1.1_spec}</version>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-jms_2.0_spec</artifactId>
+                <version>${geronimo-jms_2.0_spec.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-configuration</groupId>
@@ -396,7 +396,7 @@
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
         <slf4j.version>1.7.22</slf4j.version>
         <testng.version>6.9.9</testng.version>
-        <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
+        <geronimo-jms_2.0_spec.version>1.0-alpha-2</geronimo-jms_2.0_spec.version>
         <commons.configuration.version>1.10</commons.configuration.version>
         <andes.version>3.2.22-SNAPSHOT</andes.version>
         <synapse.core.version>2.1.7-wso2v16</synapse.core.version>
