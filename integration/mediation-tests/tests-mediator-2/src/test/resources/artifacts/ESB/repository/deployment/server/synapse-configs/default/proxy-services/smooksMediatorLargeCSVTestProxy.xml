@@ -1,0 +1,20 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="smooksMediatorLargeCSVTestProxy"
+       transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full" />
+            <smooks config-key="smooksTransform">
+                <input type="text" />
+                <output type="xml" />
+            </smooks>
+            <log level="full" />
+            <property name="RESPONSE" value="true"/>
+            <header name="To" action="remove"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>

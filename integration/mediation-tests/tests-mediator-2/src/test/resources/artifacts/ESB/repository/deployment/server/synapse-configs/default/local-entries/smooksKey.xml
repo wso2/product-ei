@@ -1,0 +1,2 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="smooksKey"
+            src="file:samples/service-bus/resources/smooks/smooks-config.xml"/>
