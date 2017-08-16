@@ -942,65 +942,6 @@ public class CodeGenVisitor implements NodeVisitor {
 
     }
 
-  /*  @Override
-    public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
-        logger.debug("Visit - ArrayMapAccessExpr");
-        *//**
-     * variableReference
-     :   nameReference                               # simpleVariableIdentifier// simple identifier
-     |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-     |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-     ;
-     *//*
-        appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
-        arrayMapAccessExpr.getIndexExprs()[0].accept(this);
-        appendToBalSource(Constants.ARRAY_END_STR);
-    }*/
-
-  /*  @Override
-    public void visit(ArrayLengthExpression arrayLengthExpression) {
-
-    }
-
-    @Override
-    public void visit(FieldAccessExpr structAttributeAccessExpr) {
-        logger.debug("Visit - FieldAccessExpr");
-        */
-
-    /**
-     * variableReference
-     * :   nameReference                               # simpleVariableIdentifier// simple identifier
-     * |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-     * |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-     * ;
-     *//*
-        structAttributeAccessExpr.getVarRef().accept(this);
-        if (structAttributeAccessExpr.getFieldExpr() != null) {
-            appendToBalSource(Constants.PERIOD_STR);
-            structAttributeAccessExpr.getFieldExpr().accept(this);
-        }
-    }
-
-    @Override
-    public void visit(JSONFieldAccessExpr jsonPathExpr) {
-        logger.debug("Visit - JSONFieldAccessExpr");
-
-        if (jsonPathExpr.getVarRef() instanceof BasicLiteral) {
-            appendToBalSource(((BasicLiteral) jsonPathExpr.getVarRef()).getBValue().stringValue());
-        } else {
-            jsonPathExpr.getVarRef().accept(this);
-        }
-        if (jsonPathExpr.getFieldExpr() != null) {
-            appendToBalSource(Constants.PERIOD_STR);
-            jsonPathExpr.getFieldExpr().accept(this);
-        }
-    }*/
-
-    /*@Override
-    public void visit(BacktickExpr backtickExpr) {
-        logger.debug("Visit - BacktickExpr");
-        appendToBalSource("`" + backtickExpr.getTemplateStr() + "`");
-    }*/
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
         logger.debug("Visit - ArrayInitExpr");
@@ -1148,11 +1089,6 @@ public class CodeGenVisitor implements NodeVisitor {
 
     }
 
-    /*@Override
-    public void visit(VariableRefExpr variableRefExpr) {
-        appendToBalSource(variableRefExpr.getSymbolName().toString());
-    }*/
-
     @Override
     public void visit(NullLiteral nullLiteral) {
 
@@ -1207,10 +1143,6 @@ public class CodeGenVisitor implements NodeVisitor {
     private StringBuilder appendToBalSource(String str) {
         return balSourceBuilder.append(str);
     }
-
-    /*private void appendToBalSourceWithNewLine(String str) {
-        ballerinaSourceStr += Constants.NEWLINE_STR + str;
-    }*/
 
     private String getIndentationForCurrentLine() {
 

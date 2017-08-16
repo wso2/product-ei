@@ -144,7 +144,7 @@ public class ConfigReader {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
                 Comment comment = new Comment();
-                comment.setComment(" //IMPORTANT: Functionality provided by " + mElementName + " should be handled "
+                comment.setComment(" //TODO: Functionality provided by " + mElementName + " should be handled "
                         + "manually here");
                 DataCarrierDTO dataCarrierDTO = populateDataCarrier(comment);
                 comment.buildTree(dataCarrierDTO);

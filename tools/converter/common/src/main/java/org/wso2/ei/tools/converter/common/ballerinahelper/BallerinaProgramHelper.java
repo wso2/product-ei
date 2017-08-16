@@ -19,6 +19,7 @@
 package org.wso2.ei.tools.converter.common.ballerinahelper;
 
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
+import org.wso2.ei.tools.converter.common.generator.Constants;
 import org.wso2.ei.tools.converter.common.util.Constant;
 
 import java.util.Map;
@@ -155,7 +156,7 @@ public class BallerinaProgramHelper {
     }
 
     public static void addComment(BallerinaASTModelBuilder ballerinaASTModelBuilder, String comment) {
-        ballerinaASTModelBuilder.addComment("//" + comment);
+        ballerinaASTModelBuilder.addComment(Constants.START_OF_COMMENT + comment);
     }
 
 }

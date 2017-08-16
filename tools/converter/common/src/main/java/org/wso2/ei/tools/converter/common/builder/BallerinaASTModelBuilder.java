@@ -59,14 +59,12 @@ public class BallerinaASTModelBuilder {
     private BLangPackage bLangPackage;
     private BLangModelBuilder modelBuilder;
     private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
-    //  private boolean isWorkerStarted = false;
 
     public BallerinaASTModelBuilder() {
 
         GlobalScope globalScope = BLangPrograms.populateGlobalScope();
         NativeScope nativeScope = BLangPrograms.populateNativeScope();
 
-        //   programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
         programScope = new BLangProgram(globalScope, nativeScope);
         bLangPackage = new BLangPackage(".", PACKAGE_REPOSITORY, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);
@@ -242,13 +240,6 @@ public class BallerinaASTModelBuilder {
         modelBuilder.endExprList(noOfArguments);
     }
 
-    /*
-    This is no longer in use. Instead use createSimpleVarRefExpr
-     */
-   /* public void createVariableRefExpr() {
-        //  modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
-    }*/
-
     public void createSimpleVarRefExpr() {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         modelBuilder.resolvePackageFromNameReference(nameReference);
@@ -296,7 +287,6 @@ public class BallerinaASTModelBuilder {
     public void createAction(String actionName, boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         if (processingActionInvocationStmt) {
-            //  modelBuilder.createActionInvocationStmt(null, null, nameReference, actionName, argsAvailable);
             modelBuilder.createActionInvocationStmt(null, null);
         } else {
             modelBuilder.addActionInvocationExpr(null, null, nameReference, actionName, argsAvailable);
@@ -329,7 +319,6 @@ public class BallerinaASTModelBuilder {
     }
 
     public void enterWorkerDeclaration() {
-        //  isWorkerStarted = true;
         modelBuilder.startWorkerUnit();
         modelBuilder.startCallableUnitBody();
     }
@@ -345,7 +334,6 @@ public class BallerinaASTModelBuilder {
     public void exitWorkerDeclaration(String workerName) {
         modelBuilder.endCallableUnitBody(null);
         modelBuilder.createWorker(null, null, workerName);
-        //  isWorkerStarted = false;
     }
 
     public void enterIfStatement() {

@@ -60,6 +60,7 @@ public class Constants {
     public static final String RECEIVE = "<-";
     public static final String ANGLE_BRACKET_START_STR = "<";
     public static final String ANGLE_BRACKET_END_STR = ">";
+    public static final String START_OF_COMMENT = "//";
 
     public static final String IMPLICIT_PACKAGE = "ballerina.lang.errors";
 }

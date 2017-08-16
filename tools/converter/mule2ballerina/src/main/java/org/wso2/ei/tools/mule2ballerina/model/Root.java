@@ -92,10 +92,6 @@ public class Root extends BaseObject implements Visitable {
     }
 
     public void addPrivateFlow(String name, Flow privateFlow) {
-       /* SubFlow subFlowRef = subFlowMap.get(name);
-        if (subFlowRef == null) {
-            privateFlowMap.put(name, privateFlow);
-        }*/
         Flow privateFlowRef = privateFlowMap.get(name);
         if (privateFlowRef == null) {
             privateFlowMap.put(name, privateFlow);

@@ -50,7 +50,6 @@ public class Message {
         ballerinaASTModelBuilder.addFunctionInvocationExpression(true);
         ballerinaASTModelBuilder
                 .createVariable((String) parameters.get(Constant.VARIABLE_NAME), true); //name of the variable
-        //  ballerinaASTModelBuilder.addParameter(0,true,inboundMsg);
         ballerinaASTModelBuilder
                 .addTypes(org.wso2.ei.tools.converter.common.util.Constant.BLANG_TYPE_STRING); //type of the variable
         ballerinaASTModelBuilder.addReturnTypes();

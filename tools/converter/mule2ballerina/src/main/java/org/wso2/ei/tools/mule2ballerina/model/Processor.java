@@ -81,19 +81,6 @@ public interface Processor extends Visitable, TreeBuilder {
         } else if (dataCarrierDTO.isSubFlowStarted()) { //If it's the sub flow that's been started
             SubFlow lastAddedSubFlow = rootObj.getSubFlowStack().peek();
             lastAddedSubFlow.addProcessor((Processor) baseObj); //Adds the processor to sub flow
-        } /*else if (dataCarrierDTO.isFlowStarted() && dataCarrierDTO.isAsyncFlowStarted()) {
-            //Flow started and inside async flow
-            Flow lastAddedFlow = rootObj.getFlowList().peek(); //Get the last added flow in flow stack
-            //Get all the processors of last added flow
-            LinkedList<Processor> processors = (lastAddedFlow != null ? lastAddedFlow.getFlowProcessors() : null);
-            //Get the last added processor
-            Processor processor = (processors != null ? processors.getLast() : null);
-            //If the last added processor is an async task
-            if (processor != null && processor instanceof AsynchronousTask) {
-                //Add the baseObj under asynchronous task processors
-                AsynchronousTask asynchronousTask = (AsynchronousTask) processor;
-                asynchronousTask.addProcessor((Processor) baseObj);
-            }
-        }*/
+        }
     }
 }
