@@ -26,9 +26,6 @@ public class ConcurrencyAndRequestThrottleTestClient implements Runnable {
     private String proxyServiceURL;
     private List list;
     private ThrottleTestCounter concurrencyThrottleCounter;
-    private ThrottleTestCounter requestThrottleCounter;
-    private int throttleMaxMsgCount;
-
 
     public ConcurrencyAndRequestThrottleTestClient(String proxyServiceURL,
                                                    List list,
@@ -38,8 +35,6 @@ public class ConcurrencyAndRequestThrottleTestClient implements Runnable {
         this.proxyServiceURL=proxyServiceURL;
         this.list=list;
         this.concurrencyThrottleCounter=ConcurrencyThrottleCounter;
-        this.requestThrottleCounter=requestThrottleCounter;
-        this.throttleMaxMsgCount=throttleMaxMsgCount;
         axis2Client=new StockQuoteClient();
     }
 
@@ -51,18 +46,6 @@ public class ConcurrencyAndRequestThrottleTestClient implements Runnable {
             OMElement response = axis2Client.sendSimpleStockQuoteRequest(proxyServiceURL, null, "WSO2");
             if(response.toString().contains("WSO2")){
                 list.add("Access Granted");
-
-                try{
-//                    since one request is already sent; "throttleMaxMagCount" th request will be Denied
-                    for (int i = 0; i < throttleMaxMsgCount; i++) {
-                        axis2Client.sendSimpleStockQuoteRequest(proxyServiceURL, null, "WSO2");
-                    }
-                }catch (Exception e){
-                    if(e.getMessage().contains("**Access Denied**")){
-                    requestThrottleCounter.increment();
-                    }
-
-                }
             }
         } catch (Exception e) {
             if(e.getMessage().contains("**Access Denied**")){
