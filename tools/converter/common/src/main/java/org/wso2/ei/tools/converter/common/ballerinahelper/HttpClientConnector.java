@@ -61,7 +61,6 @@ public class HttpClientConnector {
         ballerinaASTModelBuilder.endVariableRefList(1);
 
         //Fill RHS - Call client connector
-       // ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.CONNECTOR_VAR_NAME));
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.PATH));
