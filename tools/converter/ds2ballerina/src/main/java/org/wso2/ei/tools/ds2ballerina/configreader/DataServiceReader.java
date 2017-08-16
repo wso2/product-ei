@@ -69,7 +69,7 @@ public class DataServiceReader {
         GlobalScope globalScope = BLangPrograms.populateGlobalScope();
         NativeScope nativeScope = BLangPrograms.populateNativeScope();
 
-        BLangProgram programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
+        BLangProgram programScope = new BLangProgram(globalScope, nativeScope);
 
         BLangPackage bLangPackage = new BLangPackage(".", packageRepository, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);

@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.mule2ballerina.util;
+package org.wso2.ei.tools.converter.common.util;
 
 /**
- * This class holds common contents used within this module
+ * This class holds common contents used within mule and synapse converter
  */
 public class Constant {
 
@@ -34,14 +34,19 @@ public class Constant {
     public static final String BLANG_PKG_MESSAGES = "messages";
     public static final String BLANG_PKG_SQL = "sql";
     public static final String BLANG_PKG_LOGGER = "logger";
+    public static final String BLANG_PKG_JSON = "jsons";
+    public static final String BLANG_PKG_XML = "xmls";
 
     //Ballerina Annotations
-    public static final String BLANG_CONFIG = "config";
+    public static final String BLANG_CONFIG = "configuration";
+    public static final String BLANG_RESOURCE_CONFIG = "resourceConfig";
     public static final String BLANG_BASEPATH = "basePath";
     public static final String BLANG_VALUE = "value";
     public static final String BLANG_METHOD_GET = "GET";
+    public static final String BLANG_METHOD_POST = "POST";
     public static final String BLANG_PATH = "Path";
     public static final String BLANG_PATHPARAM = "PathParam";
+    public static final String BLANG_METHODS = "methods";
 
     //Ballerina types
     public static final String BLANG_TYPE_MESSAGE = "message";
@@ -61,6 +66,11 @@ public class Constant {
     public static final String BLANG_SET_XML_PAYLOAD = "setXmlPayload";
     public static final String BLANG_ADD_HEADER = "addHeader";
     public static final String BLANG_REMOVE_HEADER = "removeHeader";
+    public static final String BLANG_GET_HEADER = "getHeader";
+    public static final String BLANG_GET_JSON_PAYLOAD = "getJsonPayload";
+    public static final String BLANG_GET_XML_PAYLOAD = "getXmlPayload";
+    public static final String BLANG_GET_STRING = "getString";
+    public static final String BLANG_PARSE = "parse";
 
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
@@ -91,9 +101,36 @@ public class Constant {
     public static final String BLANG_VAR_PROP_MAP = "propertiesMap";
     public static final String BLANG_VAR_DATATABLE = "datatable";
     public static final String BLANG_VAR_QUERY = "query";
+    public static final String BLANG_VAR_NAME = "variable";
+
+    public static final String JSON = "json";
+    public static final String XML = "xml";
+    public static final String STRING = "string";
+
+    //Parameter names
+    public static final String OUTBOUND_MSG = "OutboundMessage";
+    public static final String INBOUND_MSG = "InboundMessage";
+    public static final String HEADER_NAME = "HeaderName";
+    public static final String VARIABLE_NAME = "VariableName";
+    public static final String TYPE = "Type";
+    public static final String FUNCTION_NAME = "FunctionName";
+    public static final String FORMAT = "Format";
+    public static final String PAYLOAD_VAR_NAME = "PayloadVariableName";
+    public static final String CONNECTOR_VAR_NAME = "ConnectorVarName";
+    public static final String URL = "Url";
+    public static final String SERVICE_NAME = "ServiceName";
+    public static final String PROTOCOL_PKG_NAME = "ProtocolPkgName";
+    public static final String RESOURCE_NAME = "ResourceName";
+    public static final String RESOURCE_ANNOTATION_COUNT = "ResourceAnnotationCount";
+    public static final String BASEPATH_VALUE = "ResourceAnnotationCount";
+    public static final String METHOD_NAME = "MethodName";
+    public static final String EXPRESSION = "Expression";
+    public static final String PACKAGE_NAME = "PackageName";
+    public static final String VARIABLE_NAME_NEW = "NewVariableName";
+    public static final String PATH = "Path";
 
     //Comments
-    public static final String BLANG_COMMENT_JSON = "//IMPORTANT : Remove  quotations surrounding the json value!";
+    public static final String BLANG_COMMENT_JSON = "//TODO : Remove  quotations surrounding the json value!";
 
     public static final String HTTP_PROTOCOL = "http://";
     public static final String HTTPS_PROTOCOL = "https://";
@@ -103,6 +140,7 @@ public class Constant {
     public static final String DIVIDER = "/";
     public static final String BACKTICK = "`";
     public static final String QUOTE_STR = "\"";
+    public static final String EQUALS_SIGN = "==";
 
     public static final String OPTION = "-z";
 }

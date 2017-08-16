@@ -16,27 +16,28 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.synapse2ballerina.model;
+package org.wso2.ei.tools.synapse2ballerina.wrapper;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
+import org.apache.synapse.Mediator;
+import org.apache.synapse.mediators.filters.SwitchMediator;
+import org.wso2.ei.tools.synapse2ballerina.visitor.Visitor;
 
 /**
- * Represents synapse endpoint element
+ * {@code SwitchMediatorWrapper} Wrapper for synapse SwitchMediator
  */
-public class EndpointElement {
+public class SwitchMediatorWrapper extends MediatorWrapper {
 
-    private Endpoint endpoint;
+    private SwitchMediator switchMediator;
 
-    public Endpoint getEndpoint() {
-        return endpoint;
+    public SwitchMediatorWrapper(Mediator original) {
+        super(original);
+        if (original instanceof SwitchMediator) {
+            this.switchMediator = (SwitchMediator) original;
+        }
     }
 
-    @XmlElements({
-                         @XmlElement(name = "http",
-                                     type = HttpEndpoint.class)
-                 })
-    public void setEndpoint(Endpoint endpoint) {
-        this.endpoint = endpoint;
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(switchMediator);
     }
 }

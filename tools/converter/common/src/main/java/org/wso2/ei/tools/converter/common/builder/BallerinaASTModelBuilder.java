@@ -35,7 +35,9 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * {@code BallerinaASTModelBuilder} is a high level API to build ballerina AST from BLangModelBuilder class
+ * {@code BallerinaASTModelBuilder} is a high level API to build ballerina AST from BLangModelBuilder class, but
+ * methods of this class shouldn't be called directly from any converter's visitor. These methods should be
+ * accessed through ballerinahelper package classes.
  */
 public class BallerinaASTModelBuilder {
 
@@ -57,14 +59,13 @@ public class BallerinaASTModelBuilder {
     private BLangPackage bLangPackage;
     private BLangModelBuilder modelBuilder;
     private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
-    //  private boolean isWorkerStarted = false;
 
     public BallerinaASTModelBuilder() {
 
         GlobalScope globalScope = BLangPrograms.populateGlobalScope();
         NativeScope nativeScope = BLangPrograms.populateNativeScope();
 
-        programScope = new BLangProgram(globalScope, nativeScope, BLangProgram.Category.SERVICE_PROGRAM);
+        programScope = new BLangProgram(globalScope, nativeScope);
         bLangPackage = new BLangPackage(".", PACKAGE_REPOSITORY, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);
         modelBuilder = new BLangModelBuilder(packageBuilder, ".");
@@ -82,21 +83,42 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     * TODO: Need to refactor this to support multiple key value pairs of an annotation
+     *
      *
      * @param pkgName     name of the package
      * @param name        functionality name you want to use
-     * @param key         annotation attribute key
-     * @param actualvalue annotation attribute value
      */
-    public void createAnnotationAttachment(String pkgName, String name, String key, String actualvalue) {
+    public void createAnnotationAttachment(String pkgName, String name) {
         modelBuilder.startAnnotationAttachment();
 
         createNameReference(pkgName, name);
+    }
 
+    /**
+     * Create annotation attributes - literal type
+     * @param key
+     * @param actualvalue
+     */
+    public void createAnnotationAttributeValue(String key, String actualvalue) {
         if (key != null && actualvalue != null) {
             modelBuilder.createStringLiteral(null, null, actualvalue);
             modelBuilder.createLiteralTypeAttributeValue(null, null);
+            modelBuilder.createAnnotationKeyValue(null, null, key);
+        }
+    }
+
+    /**
+     * Create annotation with array type attributes
+     * @param key
+     * @param actualValues
+     */
+    public void createAnnotationAttributeArrayType(String key, String[] actualValues) {
+        if (key != null && actualValues != null) {
+            for (String actualValue : actualValues) {
+                modelBuilder.createStringLiteral(null, null, actualValue);
+                modelBuilder.createLiteralTypeAttributeValue(null, null);
+            }
+            modelBuilder.createArrayTypeAttributeValue(null, null);
             modelBuilder.createAnnotationKeyValue(null, null, key);
         }
     }
@@ -133,7 +155,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void endOfFunction(String functionName) {
-        modelBuilder.addFunction(null, null, functionName, false); //isNative is false
+        modelBuilder.addFunction(null, null, functionName, false, false); //isNative is false
     }
 
     /**
@@ -183,7 +205,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void addMapStructKeyValue() {
-        modelBuilder.addMapStructKeyValue(null, null);
+        //   modelBuilder.addMapStructKeyValue(null, null);
     }
 
     /**
@@ -218,13 +240,6 @@ public class BallerinaASTModelBuilder {
         modelBuilder.endExprList(noOfArguments);
     }
 
-    /*
-    This is no longer in use. Instead use createSimpleVarRefExpr
-     */
-   /* public void createVariableRefExpr() {
-        //  modelBuilder.createVarRefExpr(null, null, nameReferenceStack.pop());
-    }*/
-
     public void createSimpleVarRefExpr() {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         modelBuilder.resolvePackageFromNameReference(nameReference);
@@ -246,7 +261,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void createFunctionInvocation(boolean argsAvailable) {
-        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
+        modelBuilder.createFunctionInvocationStmt(null, null, argsAvailable);
     }
 
     public void createReplyStatement() {
@@ -272,7 +287,6 @@ public class BallerinaASTModelBuilder {
     public void createAction(String actionName, boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         if (processingActionInvocationStmt) {
-            //  modelBuilder.createActionInvocationStmt(null, null, nameReference, actionName, argsAvailable);
             modelBuilder.createActionInvocationStmt(null, null);
         } else {
             modelBuilder.addActionInvocationExpr(null, null, nameReference, actionName, argsAvailable);
@@ -297,7 +311,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void addFunctionInvocationStatement(boolean argsAvailable) {
-        modelBuilder.createFunctionInvocationStmt(null, null, nameReferenceStack.pop(), argsAvailable);
+        modelBuilder.createFunctionInvocationStmt(null, null, argsAvailable);
     }
 
     public void createWorkerInvocationStmt(String workerName) {
@@ -305,7 +319,6 @@ public class BallerinaASTModelBuilder {
     }
 
     public void enterWorkerDeclaration() {
-        //  isWorkerStarted = true;
         modelBuilder.startWorkerUnit();
         modelBuilder.startCallableUnitBody();
     }
@@ -321,6 +334,54 @@ public class BallerinaASTModelBuilder {
     public void exitWorkerDeclaration(String workerName) {
         modelBuilder.endCallableUnitBody(null);
         modelBuilder.createWorker(null, null, workerName);
-        //  isWorkerStarted = false;
     }
+
+    public void enterIfStatement() {
+        modelBuilder.startIfElseStmt();
+        modelBuilder.startIfClause();
+    }
+
+    public void exitIfClause() {
+        modelBuilder.addIfClause(null, null);
+    }
+
+    public void enterElseIfClause() {
+        modelBuilder.startElseIfClause();
+    }
+
+    public void exitElseIfClause() {
+        modelBuilder.addElseIfClause(null, null);
+    }
+
+    public void enterElseClause() {
+        modelBuilder.startElseClause();
+    }
+
+    public void exitElseClause() {
+        modelBuilder.addElseClause(null, null);
+    }
+
+    public void exitIfElseStatement() {
+        modelBuilder.addIfElseStmt(null);
+    }
+
+    public void createXMLLiteral(String xmlLiteral) {
+        modelBuilder.createXMLTextLiteral(null, null, xmlLiteral);
+    }
+
+    public void addFunctionInvocationExpression(boolean argsAvailable) {
+        modelBuilder.addFunctionInvocationExpr(null, null, argsAvailable);
+    }
+
+    /**
+     * Return from a function. Only support one return type for the moment.
+     */
+    public void addReturnTypes() {
+        SimpleTypeName[] list = new SimpleTypeName[1];
+        for (int i = 0; i >= 0; i--) {
+            list[i] = typeNameStack.pop();
+        }
+        modelBuilder.addReturnTypes(null, list);
+    }
+
 }

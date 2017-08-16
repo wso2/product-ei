@@ -16,7 +16,7 @@
  *    under the License.
  */
 
-package org.wso2.ei.tools.converter.common;
+package org.wso2.ei.tools.converter.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

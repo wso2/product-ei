@@ -16,10 +16,24 @@
  * under the License.
  */
 
-package org.wso2.ei.tools.synapse2ballerina.model;
+package org.wso2.ei.tools.synapse2ballerina.wrapper;
+
+import org.apache.synapse.core.axis2.ProxyService;
+import org.wso2.ei.tools.synapse2ballerina.visitor.VisitableWrapper;
+import org.wso2.ei.tools.synapse2ballerina.visitor.Visitor;
 
 /**
- * Represents synapse Endpoint
+ * Represents a proxy service in synapse
  */
-public interface Endpoint {
+public class ProxyServiceWrapper implements VisitableWrapper {
+
+    private ProxyService proxyService;
+
+    public ProxyServiceWrapper(ProxyService original) {
+        this.proxyService = original;
+    }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(proxyService);
+    }
 }

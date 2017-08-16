@@ -19,7 +19,7 @@
 package org.wso2.ei.tools.converter.common.generator;
 
 import org.ballerinalang.model.BallerinaFile;
-import org.wso2.ei.tools.converter.common.Utils;
+import org.wso2.ei.tools.converter.common.util.Utils;
 
 import java.io.IOException;
 
@@ -34,17 +34,5 @@ public class BallerinaSourceGenerator {
 
         ballerinaFile.accept(codeGenVisitor);
         Utils.writeToBalFile(targetFilePath, codeGenVisitor.getBallerinaSourceStr());
-        /*Service targetService = null;
-        if (ballerinaFile.getCompilationUnits().length > 0) {
-            targetService = (ballerinaFile.getCompilationUnits()[0] instanceof Service) ?
-                    (Service) ballerinaFile.getCompilationUnits()[0] :
-                    null;
-        }
-
-        if (targetService != null) {
-            targetService.accept(codeGenVisitor);
-            System.out.print(codeGenVisitor.getBallerinaSourceStr());
-            Utils.writeToBalFile(targetFilePath, codeGenVisitor.getBallerinaSourceStr());
-        }*/
     }
 }

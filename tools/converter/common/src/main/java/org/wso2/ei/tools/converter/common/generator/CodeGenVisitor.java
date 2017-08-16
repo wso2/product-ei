@@ -38,6 +38,7 @@ import org.ballerinalang.model.NodeVisitor;
 import org.ballerinalang.model.ParameterDef;
 import org.ballerinalang.model.Resource;
 import org.ballerinalang.model.Service;
+import org.ballerinalang.model.SimpleVariableDef;
 import org.ballerinalang.model.StructDef;
 import org.ballerinalang.model.VariableDef;
 import org.ballerinalang.model.Worker;
@@ -57,6 +58,7 @@ import org.ballerinalang.model.expressions.InstanceCreationExpr;
 import org.ballerinalang.model.expressions.JSONArrayInitExpr;
 import org.ballerinalang.model.expressions.JSONInitExpr;
 import org.ballerinalang.model.expressions.KeyValueExpr;
+import org.ballerinalang.model.expressions.LambdaExpression;
 import org.ballerinalang.model.expressions.LessEqualExpression;
 import org.ballerinalang.model.expressions.LessThanExpression;
 import org.ballerinalang.model.expressions.MapInitExpr;
@@ -66,12 +68,19 @@ import org.ballerinalang.model.expressions.NotEqualExpression;
 import org.ballerinalang.model.expressions.NullLiteral;
 import org.ballerinalang.model.expressions.OrExpression;
 import org.ballerinalang.model.expressions.RefTypeInitExpr;
+import org.ballerinalang.model.expressions.StringTemplateLiteral;
 import org.ballerinalang.model.expressions.StructInitExpr;
 import org.ballerinalang.model.expressions.SubtractExpression;
 import org.ballerinalang.model.expressions.TypeCastExpression;
 import org.ballerinalang.model.expressions.TypeConversionExpr;
 import org.ballerinalang.model.expressions.UnaryExpression;
+import org.ballerinalang.model.expressions.XMLCommentLiteral;
+import org.ballerinalang.model.expressions.XMLElementLiteral;
+import org.ballerinalang.model.expressions.XMLLiteral;
+import org.ballerinalang.model.expressions.XMLPILiteral;
 import org.ballerinalang.model.expressions.XMLQNameExpr;
+import org.ballerinalang.model.expressions.XMLSequenceLiteral;
+import org.ballerinalang.model.expressions.XMLTextLiteral;
 import org.ballerinalang.model.expressions.variablerefs.FieldBasedVarRefExpr;
 import org.ballerinalang.model.expressions.variablerefs.IndexBasedVarRefExpr;
 import org.ballerinalang.model.expressions.variablerefs.SimpleVarRefExpr;
@@ -88,6 +97,7 @@ import org.ballerinalang.model.statements.FunctionInvocationStmt;
 import org.ballerinalang.model.statements.IfElseStmt;
 import org.ballerinalang.model.statements.NamespaceDeclarationStmt;
 import org.ballerinalang.model.statements.ReplyStmt;
+import org.ballerinalang.model.statements.RetryStmt;
 import org.ballerinalang.model.statements.ReturnStmt;
 import org.ballerinalang.model.statements.Statement;
 import org.ballerinalang.model.statements.ThrowStmt;
@@ -102,12 +112,6 @@ import org.ballerinalang.model.values.BInteger;
 import org.ballerinalang.model.values.BString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-//import org.ballerinalang.model.expressions.ArrayLengthExpression;
-//import org.ballerinalang.model.expressions.ArrayMapAccessExpr;
-//import org.ballerinalang.model.expressions.FieldAccessExpr;
-//import org.ballerinalang.model.expressions.JSONFieldAccessExpr;
-//import org.ballerinalang.model.expressions.VariableRefExpr;
 
 /**
  * @{@link CodeGenVisitor} implements @{@link NodeVisitor} to traverse through Ballerina model of the integration flow
@@ -129,7 +133,7 @@ public class CodeGenVisitor implements NodeVisitor {
         balProgram = bLangProgram;
 
         //process each ServicePackages
-        for (BLangPackage bLangPackage : balProgram.getServicePackages()) {
+        for (BLangPackage bLangPackage : balProgram.getPackages()) {
             //add import packages
             for (ImportPackage importPackage : bLangPackage.getImportPackages()) {
                 appendToBalSource(importPackage.getSymbolName().toString() + Constants.NEWLINE_STR);
@@ -392,7 +396,7 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     @Override
-    public void visit(VariableDef variableDef) {
+    public void visit(SimpleVariableDef simpleVariableDef) {
 
     }
 
@@ -419,12 +423,12 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(AnnotationAttributeDef annotationAttributeDef) {
-
+        logger.debug("Visit - AnnotationAttributeDef");
     }
 
     @Override
     public void visit(AnnotationDef annotationDef) {
-
+        logger.debug("Visit - AnnotationDef");
     }
 
     @Override
@@ -740,6 +744,11 @@ public class CodeGenVisitor implements NodeVisitor {
     }
 
     @Override
+    public void visit(RetryStmt retryStmt) {
+
+    }
+
+    @Override
     public void visit(NamespaceDeclarationStmt namespaceDeclarationStmt) {
 
     }
@@ -824,9 +833,14 @@ public class CodeGenVisitor implements NodeVisitor {
          * actionInvocation : nameReference '.' Identifier '(' expressionList? ')';
          * nameReference : (Identifier ':')? Identifier;
          */
-        appendToBalSource(actionInvocationExpr.getPackageName() + Constants.COLON_STR +
+       /* appendToBalSource(actionInvocationExpr.getPackageName() + Constants.COLON_STR +
                 actionInvocationExpr.getConnectorName() + Constants.PERIOD_STR + actionInvocationExpr.getName() +
+                Constants.PARENTHESES_START_STR);*/
+
+        appendToBalSource(actionInvocationExpr.getConnectorName() + Constants.PERIOD_STR +  actionInvocationExpr
+                .getName() +
                 Constants.PARENTHESES_START_STR);
+
         //process expression list
         Expression[] expressions = actionInvocationExpr.getArgExprs();
         for (int i = 0; i < expressions.length; i++) {
@@ -928,65 +942,6 @@ public class CodeGenVisitor implements NodeVisitor {
 
     }
 
-  /*  @Override
-    public void visit(ArrayMapAccessExpr arrayMapAccessExpr) {
-        logger.debug("Visit - ArrayMapAccessExpr");
-        *//**
-     * variableReference
-     :   nameReference                               # simpleVariableIdentifier// simple identifier
-     |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-     |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-     ;
-     *//*
-        appendToBalSource(arrayMapAccessExpr.getVarName() + Constants.ARRAY_START_STR);
-        arrayMapAccessExpr.getIndexExprs()[0].accept(this);
-        appendToBalSource(Constants.ARRAY_END_STR);
-    }*/
-
-  /*  @Override
-    public void visit(ArrayLengthExpression arrayLengthExpression) {
-
-    }
-
-    @Override
-    public void visit(FieldAccessExpr structAttributeAccessExpr) {
-        logger.debug("Visit - FieldAccessExpr");
-        */
-
-    /**
-     * variableReference
-     * :   nameReference                               # simpleVariableIdentifier// simple identifier
-     * |   nameReference ('['expression']')+           # mapArrayVariableIdentifier// arrays and map reference
-     * |   variableReference ('.' variableReference)+  # structFieldIdentifier// struct field reference
-     * ;
-     *//*
-        structAttributeAccessExpr.getVarRef().accept(this);
-        if (structAttributeAccessExpr.getFieldExpr() != null) {
-            appendToBalSource(Constants.PERIOD_STR);
-            structAttributeAccessExpr.getFieldExpr().accept(this);
-        }
-    }
-
-    @Override
-    public void visit(JSONFieldAccessExpr jsonPathExpr) {
-        logger.debug("Visit - JSONFieldAccessExpr");
-
-        if (jsonPathExpr.getVarRef() instanceof BasicLiteral) {
-            appendToBalSource(((BasicLiteral) jsonPathExpr.getVarRef()).getBValue().stringValue());
-        } else {
-            jsonPathExpr.getVarRef().accept(this);
-        }
-        if (jsonPathExpr.getFieldExpr() != null) {
-            appendToBalSource(Constants.PERIOD_STR);
-            jsonPathExpr.getFieldExpr().accept(this);
-        }
-    }*/
-
-    /*@Override
-    public void visit(BacktickExpr backtickExpr) {
-        logger.debug("Visit - BacktickExpr");
-        appendToBalSource("`" + backtickExpr.getTemplateStr() + "`");
-    }*/
     @Override
     public void visit(ArrayInitExpr arrayInitExpr) {
         logger.debug("Visit - ArrayInitExpr");
@@ -1134,13 +1089,50 @@ public class CodeGenVisitor implements NodeVisitor {
 
     }
 
-    /*@Override
-    public void visit(VariableRefExpr variableRefExpr) {
-        appendToBalSource(variableRefExpr.getSymbolName().toString());
-    }*/
-
     @Override
     public void visit(NullLiteral nullLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLLiteral xmlLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLElementLiteral xmlElementLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLCommentLiteral xmlCommentLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLTextLiteral xmlTextLiteral) {
+        logger.debug("Visit - XMLTextLiteral");
+        appendToBalSource(xmlTextLiteral.getType().getName() + " ");
+        xmlTextLiteral.getContent().accept(this);
+    }
+
+    @Override
+    public void visit(XMLPILiteral xmlpiLiteral) {
+
+    }
+
+    @Override
+    public void visit(XMLSequenceLiteral xmlSequenceLiteral) {
+
+    }
+
+    @Override
+    public void visit(LambdaExpression lambdaExpression) {
+
+    }
+
+    @Override
+    public void visit(StringTemplateLiteral stringTemplateLiteral) {
 
     }
 
@@ -1151,10 +1143,6 @@ public class CodeGenVisitor implements NodeVisitor {
     private StringBuilder appendToBalSource(String str) {
         return balSourceBuilder.append(str);
     }
-
-    /*private void appendToBalSourceWithNewLine(String str) {
-        ballerinaSourceStr += Constants.NEWLINE_STR + str;
-    }*/
 
     private String getIndentationForCurrentLine() {
 
