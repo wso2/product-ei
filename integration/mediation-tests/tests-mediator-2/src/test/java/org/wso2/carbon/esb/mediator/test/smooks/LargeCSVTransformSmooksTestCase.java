@@ -39,7 +39,6 @@ public class LargeCSVTransformSmooksTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception{
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/smooks/large_csv_smooks_test.xml");
     }
 
     /**                                            "
@@ -50,7 +49,8 @@ public class LargeCSVTransformSmooksTestCase extends ESBIntegrationTest {
     public void testLargeCSVTransformSmooks() throws Exception {
         OMElement response;
         CSVInputRequestUtil testCSVInputRequest = new CSVInputRequestUtil();
-        response = testCSVInputRequest.sendReceive(getMainSequenceURL(), generateCSVInput()) ;
+        response = testCSVInputRequest.sendReceive(
+                getProxyServiceURLHttp("smooksMediatorLargeCSVTestProxy"), generateCSVInput());
         Iterator csvRecs = response.getChildrenWithLocalName("csv-record");
 
         int recordCount = 0;
