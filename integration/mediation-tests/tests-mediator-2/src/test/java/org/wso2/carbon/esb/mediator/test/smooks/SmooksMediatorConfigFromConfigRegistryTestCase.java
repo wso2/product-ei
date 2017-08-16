@@ -26,7 +26,8 @@ import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClie
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.MultiMessageReceiver;
 
 
@@ -56,16 +57,12 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
         resourceAdminServiceStub = new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName()
 , context.getContextTenant().getContextUser().getPassword());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/vfsTransport/vfs_test_smook_config_at_registry.xml");
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getClass().getResource(COMMON_FILE_LOCATION + "axis2.xml").getPath()));
-        super.init();
         addVFSProxy();
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
 })
-    @Test(groups = {"wso2.esb", "local only"}, description = "Smooks configuration refer form configuration registry", enabled = false)
+    @Test(groups = {"wso2.esb", "local only"}, description = "Smooks configuration refer form configuration registry")
     public void testSmookConfigFromConfigRegistry() throws Exception {
         MultiMessageReceiver multiMessageReceiver = new MultiMessageReceiver(PORT);
 
@@ -96,7 +93,7 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
         assertTrue(totalResponse.contains("MSFT"), "MSFT is not in the response");
         assertTrue(totalResponse.contains("SUN"), "SUN is not in the response");
 
-        deleteProxyService("StockQuoteProxy");
+        deleteProxyService("smooksMediatorAtConfigRegTestProxy");
     }
 
     @AfterClass(alwaysRun = true)
@@ -104,14 +101,13 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
         try {
             if(isProxyDeployed)
             {
-                deleteProxyService("StockQuoteProxy");
+                deleteProxyService("smooksMediatorAtConfigRegTestProxy");
             }
             resourceAdminServiceStub.deleteResource("/_system/config/smooks");
 
         } finally {
             super.cleanup();
             Thread.sleep(3000);
-            serverConfigurationManager.restoreToLastConfiguration();
             resourceAdminServiceStub = null;
             serverConfigurationManager = null;
 
@@ -122,10 +118,12 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
     private void addVFSProxy()
             throws Exception {
 
-        addProxyService(AXIOMUtil.stringToOM("<proxy xmlns=\"http://ws.apache.org/ns/synapse\" name=\"StockQuoteProxy\" transports=\"vfs\">\n" +
+        addProxyService(AXIOMUtil.stringToOM("<proxy xmlns=\"http://ws.apache.org/ns/synapse\" "
+                                             + "name=\"smooksMediatorAtConfigRegTestProxy\" "
+                                             + "transports=\"vfs\">\n" +
                                              "        <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" +
                                              "        <!--CHANGE-->\n" +
-                                             "        <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "vfsTransport" + File.separator).getPath() + "test" + File.separator + "in" + File.separator + "</parameter>\n" +
+                                             "        <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(COMMON_FILE_LOCATION).getPath() + "test" + File.separator + "in" + File.separator + "</parameter>\n" +
                                              "        <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" +
                                              "        <parameter name=\"transport.vfs.FileNamePattern\">.*\\.txt</parameter>\n" +
                                              "        <parameter name=\"transport.PollInterval\">5</parameter>\n" +
@@ -142,7 +140,7 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
                                              "                    <input type=\"text\"/>\n" +
                                              "                    <output type=\"xml\"/>\n" +
                                              "                </smooks>\n" +
-                                             "                <xslt key=\"transform-xslt-key\"/>\n" +
+                                             "                <xslt key=\"smooksXsltTransform\"/>\n" +
                                              "                <log level=\"full\"/>\n" +
                                              "                <!--<property name=\"ContentType\" value=\"text/xml\" scope=\"axis2-client\"/>-->\n" +
                                              "                <!--<property name=\"messageType\" value=\"text/xml\" scope=\"axis2\"/>-->\n" +
