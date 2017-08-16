@@ -40,7 +40,6 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
     //Since Concurrent access is 6 even Max message count is set to 10 it will throttle at 6
 
     private List list;
-    private ConcurrencyAndRequestThrottleTestClient[] concurrencyAndRequestThrottleTestClients;
     private Thread[] clients;
     private ThrottleTestCounter clientsDone;
     private int grantedRequests;
@@ -55,7 +54,6 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
 
 
         list = Collections.synchronizedList(new ArrayList());
-        concurrencyAndRequestThrottleTestClients = new ConcurrencyAndRequestThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
         clientsDone = new ThrottleTestCounter();
         requestThrottledClients = new ThrottleTestCounter();
@@ -84,14 +82,12 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
 
         assertEquals(grantedRequests, AS_POLICY_ACCESS_GRANTED, "Fault: Concurrent throttle policy failure");
         assertEquals(deniedRequests, AS_POLICY_ACCESS_DENIED, "Fault: Concurrent throttle policy failure");
-        assertEquals(grantedRequests, requestThrottledClients.getCount(), "Fault: Request throttle policy failure");
 
     }
 
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        concurrencyAndRequestThrottleTestClients = null;
         clients = null;
         clientsDone = null;
         requestThrottledClients = null;
@@ -102,11 +98,8 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
 
     private void initClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
-            concurrencyAndRequestThrottleTestClients[i] = new ConcurrencyAndRequestThrottleTestClient(
-                    getMainSequenceURL(), list, clientsDone, requestThrottledClients, THROTTLE_MAX_MSG_COUNT);
-        }
-        for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
-            clients[i] = new Thread(concurrencyAndRequestThrottleTestClients[i]);
+            clients[i] = new Thread(new ConcurrencyAndRequestThrottleTestClient(
+                    getMainSequenceURL(), list, clientsDone, requestThrottledClients, THROTTLE_MAX_MSG_COUNT));
         }
     }
 
