@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2017, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <sequence name="fault">
+        <log category="INFO" level="full" separator=",">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log category="INFO" level="full" separator=","/>
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <then>
+                    <send/>
+                </then>
+                <else/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api context="/last-query-param-empty" name="ESBJAVA5208LastQueryParamEmptyAPI">
+        <resource methods="GET" uri-template="/pattern1?latitude={+latitude}&amp;longitude={+longitude}&amp;floor={+floor}">
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <m:checkQueryParam xmlns:m="http://services.samples/xsd">
+                            <m:latitude>$1</m:latitude>
+                            <m:longitude>$2</m:longitude>
+                            <m:floor>$3</m:floor>
+                        </m:checkQueryParam>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('query.param.latitude')"/>
+                        <arg evaluator="xml" expression="get-property('query.param.longitude')"/>
+                        <arg evaluator="xml" expression="get-property('query.param.floor')"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/pattern2*">
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <m:checkQueryParam xmlns:m="http://services.samples/xsd">
+                            <m:latitude>$1</m:latitude>
+                            <m:longitude>$2</m:longitude>
+                            <m:floor>$3</m:floor>
+                        </m:checkQueryParam>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('query.param.latitude')"/>
+                        <arg evaluator="xml" expression="get-property('query.param.longitude')"/>
+                        <arg evaluator="xml" expression="get-property('query.param.floor')"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/pattern3/*">
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <m:checkQueryParam xmlns:m="http://services.samples/xsd">
+                            <m:latitude>$1</m:latitude>
+                            <m:longitude>$2</m:longitude>
+                            <m:floor>$3</m:floor>
+                        </m:checkQueryParam>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('query.param.latitude')"/>
+                        <arg evaluator="xml" expression="get-property('query.param.longitude')"/>
+                        <arg evaluator="xml" expression="get-property('query.param.floor')"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>
