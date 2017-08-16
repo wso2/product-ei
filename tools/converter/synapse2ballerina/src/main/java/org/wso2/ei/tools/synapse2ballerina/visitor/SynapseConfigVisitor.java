@@ -191,12 +191,10 @@ public class SynapseConfigVisitor implements Visitor {
         org.wso2.ei.tools.converter.common.ballerinahelper.Resource.startResource(ballerinaASTModelBuilder);
         String[] allowedMethods = {Constant.BLANG_METHOD_GET}; //Default http request method is set to GET
         if (resource.getMethods() != null) {
-        //    for (String method : resource.getMethods()) {
                 Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
                 resourceAnnotations.put(Constant.METHOD_NAME, resource.getMethods());
                 Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
                 resourceAnnotationCount++;
-        //    }
         } else {
             Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
             resourceAnnotations.put(Constant.METHOD_NAME, allowedMethods);
