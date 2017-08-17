@@ -29,7 +29,6 @@ public class SwitchInsideSwitchTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/switch_inside_switch_config.xml");
     }
 
 
@@ -37,9 +36,9 @@ public class SwitchInsideSwitchTestCase extends ESBIntegrationTest {
     public void testSample2() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                           getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                           "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("switchMediatorSwitchInsideSwitchTestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         // TODO Assert Test property of INFO log for "This is Get Quote service"
         // & symbol property of INFO log for "Great stock - IBM"
 

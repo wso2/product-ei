@@ -1,0 +1,36 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="switchMediatorSubsequenceMatchingTestProxy"
+       transports="https,http" statistics="disable"
+       trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <switch source="//m0:getQuote/m0:request/m0:symbol" xmlns:m0="http://services.samples">
+                <case regex="^WSO\w*">
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="^IM\w*">
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="^FT\w*">
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </case>
+            </switch>
+            <drop/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>
