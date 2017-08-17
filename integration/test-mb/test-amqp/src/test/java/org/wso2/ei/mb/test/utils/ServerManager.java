@@ -97,6 +97,17 @@ public class ServerManager {
             process = Runtime.getRuntime().exec(cmdArray, (String[]) null, carbonHomeDirectory);
         }
 
+        //Adding shutdown hook to capture process termination
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    stopServer();
+                } catch (IOException e1) {
+                    log.error("Server did not shut down properly", e1);
+                }
+            }
+        });
+
         errorStreamHandler = new ServerLogReader("errorStream", process.getErrorStream());
         inputStreamHandler = new ServerLogReader("inputStream", process.getInputStream());
         inputStreamHandler.start();
@@ -111,6 +122,7 @@ public class ServerManager {
                 break;
             } else if (System.currentTimeMillis() >= time) {
                 log.error("Server did not started properly within " + startupWaitTimeOut + " milliseconds.");
+                break;
             }
         }
     }
