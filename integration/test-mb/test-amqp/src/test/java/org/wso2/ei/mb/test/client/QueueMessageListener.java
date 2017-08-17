@@ -20,11 +20,14 @@ package org.wso2.ei.mb.test.client;
 
 
 import org.testng.log4testng.Logger;
+import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
+import sun.misc.Signal;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+
 
 /**
  * Queue message listener for receive messages.
@@ -43,17 +46,29 @@ public class QueueMessageListener implements MessageListener {
     private int delay = 0;
 
     /**
+     * Acknoledgement mode
+     */
+    private JMSAcknowledgeMode acknowledgeMode = JMSAcknowledgeMode.AUTO_ACKNOWLEDGE;
+
+    /**
      * current message count.
      */
     private int currentMessageCount = 0;
+
+    /**
+     * maximum message count.
+     */
+    private int maximumMessageCount;
 
     /**
      * Queue message listener for receive messages.
      *
      * @param delay wait delay for message listener.
      */
-    public QueueMessageListener(int delay) {
+    public QueueMessageListener(int delay, JMSAcknowledgeMode acknowledgeMode, int maximumMessageCount) {
         this.delay = delay;
+        this.acknowledgeMode = acknowledgeMode;
+        this.maximumMessageCount = maximumMessageCount;
     }
 
     /**
@@ -63,15 +78,30 @@ public class QueueMessageListener implements MessageListener {
      */
     public void onMessage(Message message) {
         TextMessage receivedMessage = (TextMessage) message;
+
         try {
-            log.info("message received => " + (currentMessageCount + 1) + " - " + receivedMessage.getText());
             currentMessageCount++;
 
-            if (delay != 0) {
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    log.error("Error occurred while waiting for messages", e);
+            //checks whether maximum message count is reached
+            if ((currentMessageCount >= maximumMessageCount)) {
+
+                // Creates a signal
+                Signal.raise(new Signal("HUP"));
+
+            } else {
+
+                // checks whether the receiver is in client ack and sends an ack accordingly
+                if ((JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE.getType() == acknowledgeMode.getType())
+                        && (getMessageCount() % 10 == 0)) {
+                    receivedMessage.acknowledge();
+                }
+
+                if (delay != 0) {
+                    try {
+                        Thread.sleep(delay);
+                    } catch (InterruptedException e) {
+                        log.error("Error occurred while waiting for messages", e);
+                    }
                 }
             }
         } catch (JMSException e) {
@@ -81,9 +111,11 @@ public class QueueMessageListener implements MessageListener {
 
     /**
      * Get total message counts for queue receiver.
+     *
      * @return currentMessageCount
      */
     public int getMessageCount() {
         return currentMessageCount;
     }
+
 }
