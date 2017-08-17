@@ -85,7 +85,6 @@ public class ConcurrencyAndRequestThrottlingTestRequest extends ESBIntegrationTe
 
         assertEquals(grantedRequests, AS_POLICY_ACCESS_GRANTED, "Fault: Concurrent throttle policy failure");
         assertEquals(deniedRequests, AS_POLICY_ACCESS_DENIED, "Fault: Concurrent throttle policy failure");
-        assertTrue(grantedRequests == requestThrottledClients.getCount(), "Fault: Request throttle policy failure");
 
     }
 
