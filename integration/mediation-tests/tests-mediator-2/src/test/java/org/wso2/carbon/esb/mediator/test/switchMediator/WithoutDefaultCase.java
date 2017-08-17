@@ -35,7 +35,6 @@ public class WithoutDefaultCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/basic_and_without_default_case_synapse.xml");
     }
 
     @AfterClass(alwaysRun = true)
@@ -47,15 +46,15 @@ public class WithoutDefaultCase extends ESBIntegrationTest {
     public void testSwitchWithoutDefault() throws AxisFault, XPathExpressionException {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("switchSample1"),
-                                             getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                             "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("switchMediatorWithoutDefaultTestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         assertTrue(response.toString().contains("IBM"));
 
         try {
-            response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("switchSample1"),
-                                                               getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                               "test");
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("switchMediatorWithoutDefaultTestProxy"),
+                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "test");
             fail("This query must throw an exception.");
         } catch (AxisFault expected) {
             assertTrue(expected.getReason().contains(

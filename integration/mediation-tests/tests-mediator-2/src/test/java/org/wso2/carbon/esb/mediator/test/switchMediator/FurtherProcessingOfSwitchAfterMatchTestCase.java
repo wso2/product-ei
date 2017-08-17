@@ -28,22 +28,21 @@ public class FurtherProcessingOfSwitchAfterMatchTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/further_processing_of_switch_after_match.xml");
     }
 
 
     @Test(groups = {"wso2.esb"}, description = "Switch Mediator: Test whether further processing of the switch block is done after a match is found.")
     public void testFurtherProcessingOfSwitch() throws Exception {
 
-        axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                "IBM");
+        axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("switchMediatorFurtherProcessingAfterMatchTestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
 
         // TODO AsserTrue symbol property of INFO log for "Great stock - IBM"
         // TODO !AssertTrue Test property of INFO log for "Oh no! IBM again?"
     }
 
-
+    @AfterClass
     public void afterClass() throws Exception {
         super.cleanup();
     }
