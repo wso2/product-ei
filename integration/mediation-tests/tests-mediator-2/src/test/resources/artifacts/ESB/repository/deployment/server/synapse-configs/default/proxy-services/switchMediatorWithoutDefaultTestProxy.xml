@@ -1,0 +1,27 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="switchMediatorWithoutDefaultTestProxy" transports="https http"
+	   startOnLoad="true"
+	   trace="disable">
+	<description/>
+	<target>
+		<inSequence>
+			<switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+				<case regex="IBM">
+					<property name="symbol" value="Great stock - IBM" scope="default"/>
+					<send/>
+				</case>
+				<case regex="MSFT">
+					<property name="symbol" value="Are you sure? - MSFT"
+							  scope="default"/>
+					<send/>
+				</case>
+			</switch>
+			<log level="custom">
+				<property name="symbol" expression="get-property('symbol')"/>
+				<property name="epr" expression="get-property('To')"/>
+			</log>
+		</inSequence>
+		<outSequence>
+			<send/>
+		</outSequence>
+	</target>
+</proxy>

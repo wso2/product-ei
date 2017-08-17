@@ -32,7 +32,6 @@ public class SOAPNSBasedSwitchingNegativeCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/SOAP11_SOAP12_XPath_nagative_case.xml");
     }
 
     @AfterClass(alwaysRun = true)
@@ -42,19 +41,16 @@ public class SOAPNSBasedSwitchingNegativeCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Switch Mediator:Write xpath expression using SOAP 1.1/1.2 NS Send SOAP 1.1/1.2 response and assert switch")
     public void testXPathOnDifferentSOAPNS() throws AxisFault, XPathExpressionException {
-        OMElement response1 = null;
-        OMElement response2 = null;
-        response1 =
-                axis2Client.sendSimpleStockQuoteSoap11(getProxyServiceURLHttp("switchSoap11SampleNegative"),
-                                                       getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                       "IBM");
+        OMElement response1;
+        response1 = axis2Client.sendSimpleStockQuoteSoap11(
+                        getProxyServiceURLHttp("switchMediatorSoap11Soap12NegativeTestProxy"),
+                        getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
         Assert.assertTrue(response1.toString().contains("IBM"), "Asserting response for 'IBM'");
 
         try {
-            response2 =
-                    axis2Client.sendSimpleStockQuoteSoap12(getProxyServiceURLHttp("switchSoap11SampleNegative"),
-                                                           getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                           "IBM");
+            axis2Client.sendSimpleStockQuoteSoap12(
+                            getProxyServiceURLHttp("switchMediatorSoap11Soap12NegativeTestProxy"),
+                            getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
 
             Assert.fail("Test failed : SOAP 1.2 request is switched into SOAP 1.1 also.");
         } catch (AxisFault expected) {

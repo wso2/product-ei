@@ -33,7 +33,6 @@ public class SOAPNSBasedSwitching extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/SOAP11_SOAP12_XPath.xml");
 	}
 
 	@AfterClass(alwaysRun = true)
@@ -45,16 +44,14 @@ public class SOAPNSBasedSwitching extends ESBIntegrationTest {
 	public void testXPathOnDifferentSOAPNS() throws AxisFault, XPathExpressionException {
 		OMElement response;
 
-		response =
-		           axis2Client.sendSimpleStockQuoteSoap11(getProxyServiceURLHttp("switchSoap11Sample"),
-                                                          getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-		                                                  "IBM");
-		Assert.assertTrue(response.toString().contains("IBM"), "Asserting for IBM in response");
+        response = axis2Client.sendSimpleStockQuoteSoap11(
+                getProxyServiceURLHttp("switchMediatorSoap11Soap12TestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
+        Assert.assertTrue(response.toString().contains("IBM"), "Asserting for IBM in response");
 
-		response =
-		           axis2Client.sendSimpleStockQuoteSoap12(getProxyServiceURLHttp("switchSoap11Sample"),
-                                                          getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-		                                                  "MSFT");
+        response = axis2Client.sendSimpleStockQuoteSoap12(
+                getProxyServiceURLHttp("switchMediatorSoap11Soap12TestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "MSFT");
 
 		Assert.assertTrue(response.toString().contains("MSFT"), "Asserting for MSTF in response");
 	}
