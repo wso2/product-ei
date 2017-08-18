@@ -62,7 +62,8 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
 })
-    @Test(groups = {"wso2.esb", "local only"}, description = "Smooks configuration refer form configuration registry")
+    @Test(groups = {"wso2.esb", "local only"}, description = "Smooks configuration refer form configuration registry",
+            enabled = false)
     public void testSmookConfigFromConfigRegistry() throws Exception {
         MultiMessageReceiver multiMessageReceiver = new MultiMessageReceiver(PORT);
 
