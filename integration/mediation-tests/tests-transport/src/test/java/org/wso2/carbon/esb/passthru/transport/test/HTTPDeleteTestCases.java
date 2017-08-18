@@ -59,7 +59,6 @@ public class HTTPDeleteTestCases extends ESBIntegrationTest{
         String url = getProxyServiceURLHttp("testDeleteProxy");
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", "application/soap+xml; charset=UTF-8; action=\"urn:mediate\"");
-        //header.put("SOAPAction", "urn:mediate");
 
         HttpResponse response = httpClient.doDeleteWithPayload(url, header, requestMessage, "application/soap+xml");
 

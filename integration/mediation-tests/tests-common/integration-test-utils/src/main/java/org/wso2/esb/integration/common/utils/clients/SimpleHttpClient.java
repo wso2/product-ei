@@ -245,23 +245,19 @@ public class SimpleHttpClient {
     public HttpResponse doDeleteWithPayload(String url, final Map<String, String> headers,
             final String payload, String contentType) throws IOException {
 
+        boolean zip = false;
         HttpUriRequest request = new HttpDeleteWithEntity(url);
         setHeaders(headers, request);
         HttpEntityEnclosingRequest entityEncReq = (HttpEntityEnclosingRequest) request;
-        final boolean zip = headers != null && "gzip".equals(headers.get(HttpHeaders.CONTENT_ENCODING));
 
-        EntityTemplate ent = new EntityTemplate(new ContentProducer() {
-            public void writeTo(OutputStream outputStream) throws IOException {
-                OutputStream out = outputStream;
-                if (zip) {
-                    out = new GZIPOutputStream(outputStream);
-                }
-                out.write(payload.getBytes());
-                out.flush();
-                out.close();
-            }
-        });
+        //check if content encoding required
+        if (headers != null && "gzip".equals(headers.get(HttpHeaders.CONTENT_ENCODING))) {
+            zip = true;
+        }
+
+        EntityTemplate ent = new EntityTemplate(new EntityContentProducer(payload, zip));
         ent.setContentType(contentType);
+
         if (zip) {
             ent.setContentEncoding("gzip");
         }
@@ -330,6 +326,31 @@ public class SimpleHttpClient {
             for (Map.Entry<String, String> header : headers.entrySet()) {
                 request.setHeader(header.getKey(), header.getValue());
             }
+        }
+    }
+
+    /**
+     * {@link ContentProducer} implementation
+     */
+    private static class EntityContentProducer implements ContentProducer {
+
+        private boolean zip = false;
+        private String payload = null;
+
+        EntityContentProducer(String entityBody, boolean createGZipStream) {
+            this.zip = createGZipStream;
+            this.payload = entityBody;
+        }
+
+        @Override
+        public void writeTo(OutputStream outputStream) throws IOException {
+            OutputStream out = outputStream;
+            if (zip) {
+                out = new GZIPOutputStream(outputStream);
+            }
+            out.write(payload.getBytes());
+            out.flush();
+            out.close();
         }
     }
 
