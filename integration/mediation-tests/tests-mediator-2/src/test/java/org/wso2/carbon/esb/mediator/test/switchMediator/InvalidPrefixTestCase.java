@@ -29,17 +29,14 @@ public class InvalidPrefixTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/invalid_prefix.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "SwitchMediator:Negative Case 2: Invalid prefix")
     public void testSample2() throws Exception {
 
         try {
-
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
-                                                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE),
-                                                    "IBM");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("switchMediatorInvalidPrefixTestProxy"),
+                                                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "IBM");
             Assert.fail("This Request should throw AxisFault");
         } catch (AxisFault e) {
             Assert.assertEquals(e.getReason(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL,

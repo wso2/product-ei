@@ -1,0 +1,30 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="switchMediatorFurtherProcessingAfterMatchTestProxy"
+       transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                <case regex="IBM">
+                    <log>
+                        <property name="symbol" value="Great stock - IBM" />
+                    </log>
+                </case>
+                <case regex="IBM">
+                    <log>
+                        <property name="Test" value="Oh no! IBM again?" />
+                    </log>
+                </case>
+                <default>
+                    <log>
+                        <property name="symbol"
+                                  expression="fn:concat('Normal Stock - ', //m0:getQuote/m0:request/m0:symbol)" />
+                    </log>
+                </default>
+            </switch>
+            <send />
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>
