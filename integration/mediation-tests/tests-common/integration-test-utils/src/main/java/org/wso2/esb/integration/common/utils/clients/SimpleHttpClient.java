@@ -31,9 +31,12 @@ import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
+import org.wso2.esb.integration.common.utils.HttpDeleteWithEntity;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
@@ -232,6 +235,41 @@ public class SimpleHttpClient {
     }
 
     /**
+     * Send a HTTP DELETE request with entity body to the specified URL
+     *
+     * @param url         Target endpoint URL
+     * @param headers     Any HTTP headers that should be added to the request
+     * @return Returned HTTP response
+     * @throws IOException If an error occurs while making the invocation
+     */
+    public HttpResponse doDeleteWithPayload(String url, final Map<String, String> headers,
+            final String payload, String contentType) throws IOException {
+
+        HttpUriRequest request = new HttpDeleteWithEntity(url);
+        setHeaders(headers, request);
+        HttpEntityEnclosingRequest entityEncReq = (HttpEntityEnclosingRequest) request;
+        final boolean zip = headers != null && "gzip".equals(headers.get(HttpHeaders.CONTENT_ENCODING));
+
+        EntityTemplate ent = new EntityTemplate(new ContentProducer() {
+            public void writeTo(OutputStream outputStream) throws IOException {
+                OutputStream out = outputStream;
+                if (zip) {
+                    out = new GZIPOutputStream(outputStream);
+                }
+                out.write(payload.getBytes());
+                out.flush();
+                out.close();
+            }
+        });
+        ent.setContentType(contentType);
+        if (zip) {
+            ent.setContentEncoding("gzip");
+        }
+        entityEncReq.setEntity(ent);
+        return client.execute(request);
+    }
+
+    /**
      * Send a HTTP PUT request to the specified URL
      *
      * @param url         Target endpoint URL
@@ -266,6 +304,26 @@ public class SimpleHttpClient {
         entityEncReq.setEntity(ent);
         return client.execute(request);
     }
+
+    /**
+     * Function to extract response body as a string
+     * @param response org.apache.http.HttpResponse object containing response entity body
+     * @return returns the response entity body as a string
+     * @throws IOException
+     */
+    public static String responseEntityBodyToString(HttpResponse response) throws IOException {
+        if (response != null && response.getEntity() != null) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            String result = "";
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            return result;
+        }
+        return null;
+    }
+
 
     private void setHeaders(Map<String, String> headers, HttpUriRequest request) {
         if (headers != null && headers.size() > 0) {
