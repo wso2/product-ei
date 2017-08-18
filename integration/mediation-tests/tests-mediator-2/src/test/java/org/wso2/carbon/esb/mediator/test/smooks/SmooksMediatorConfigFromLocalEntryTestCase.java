@@ -56,7 +56,8 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
 })
-    @Test(groups = {"wso2.esb", "local only"}, description = "Testing Smooks configuration from local entry")
+    @Test(groups = {"wso2.esb", "local only"}, description = "Testing Smooks configuration from local entry"
+            , enabled = false)
     public void testSmookConfigFromLocalEntry() throws Exception {
         MultiMessageReceiver multiMessageReceiver = new MultiMessageReceiver(PORT);
         multiMessageReceiver.startServer();
