@@ -35,15 +35,15 @@ public class ValidateMediator2 extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator2/synapse.xml");
     }
 
     @Test(groups = {"wso2.esb"})
     public void TestWithoutXpath() throws XPathExpressionException {
         OMElement response = null;
         try {
-            response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
-                    , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("validateMediatorWithoutNameSpaceTestProxy"),
+                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             assertTrue(false, "Test fails to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {
             assertEquals(axisFault.getMessage(), "Invalid custom quote request");

@@ -80,7 +80,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
                          "  }" +
                          "}" +
                          "}";
-        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateRequest"))
+        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateMediatorJsonTestProxy"))
                 , payload, httpHeaders);
         Assert.assertTrue((!response.getData().equals("") && response.getData().contains("getQuote"))
                 , "Valid Request failed. Response: " + response.getData());
@@ -94,7 +94,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
                          "    \"request\": { \"symbol\": \"WSO2\" }" +
                          "  }" +
                          "}";
-        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateRequestFromRegistry"))
+        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateMediatorJsonSchemaFromRegTestProxy"))
                 , payload, httpHeaders);
         Assert.assertTrue((!response.getData().equals("") && response.getData().contains("getQuote"))
                 , "Valid Request failed. " + response.getData());
@@ -109,7 +109,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
                          "  }" +
                          "}" +
                          "}";
-        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateRequest"))
+        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateMediatorJsonTestProxy"))
                 , payload, httpHeaders);
         Assert.assertEquals(response.getResponseCode(), 500, "Response Code mismatched");
         Assert.assertTrue((!response.getData().equals("") && response.getData().contains("Invalid Request"))
@@ -124,7 +124,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
                          "    \"request\": { \"symbol1\": \"WSO2\" }" +
                          "  }" +
                          "}";
-        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateRequestFromRegistry"))
+        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateMediatorJsonSchemaFromRegTestProxy"))
                 , payload, httpHeaders);
         Assert.assertEquals(response.getResponseCode(), 500, "Response Code mismatched");
         Assert.assertTrue((!response.getData().equals("") && response.getData().contains("Invalid Request"))
@@ -140,7 +140,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
                          "  }" +
                          "}" +
                          "}";
-        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateRequest"))
+        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateMediatorJsonTestProxy"))
                 , payload, httpHeaders);
         Assert.assertEquals(response.getResponseCode(), 500, "Response Code mismatched");
         Assert.assertTrue((!response.getData().equals("") && response.getData().contains("Invalid Request"))
@@ -151,7 +151,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
                                              " stored in local-entry")
     public void inValidRequestEmptyJSONMessageTest() throws Exception {
         String payload = "{}";
-        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateRequest"))
+        HttpResponse response = doPost(new URL(getProxyServiceURLHttp("validateMediatorJsonTestProxy"))
                 , payload, httpHeaders);
         Assert.assertEquals(response.getResponseCode(), 500, "Response Code mismatched");
         Assert.assertTrue((!response.getData().equals("") && response.getData().contains("Invalid Request"))
@@ -186,7 +186,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
         String goodRequest = readFile( getESBResourceLocation() + File.separator
                 + "mediatorconfig" + File.separator + "validate"
                 + File.separator + "validRequest.json");
-        HttpResponse response = doPost(new URL(getApiInvocationURL("myjson"))
+        HttpResponse response = doPost(new URL(getApiInvocationURL("validateMediatorJson"))
                 , goodRequest, httpHeaders);
         Assert.assertTrue((response.getData().contains("success"))
                 , "Validation must be success. Response: " + response.getData());
@@ -202,7 +202,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
         String badRequest = readFile( getESBResourceLocation() + File.separator
                 + "mediatorconfig" + File.separator + "validate"
                 + File.separator + "invalidRequest.json");
-        HttpResponse response = doPost(new URL(getApiInvocationURL("myjson"))
+        HttpResponse response = doPost(new URL(getApiInvocationURL("validateMediatorJson"))
                 , badRequest, httpHeaders);
         Assert.assertTrue((response.getData().contains("fail"))
                 , "Validation must be fail. Response: " + response.getData());
