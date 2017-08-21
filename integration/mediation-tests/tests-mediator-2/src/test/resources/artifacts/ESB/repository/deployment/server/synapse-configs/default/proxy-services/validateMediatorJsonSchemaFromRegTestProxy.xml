@@ -1,0 +1,21 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="validateMediatorJsonSchemaFromRegTestProxy" startOnLoad="true"
+       transports="https http">
+    <description/>
+    <target>
+        <inSequence>
+            <validate>
+                <schema key="conf:/StockQuoteSchema.json"/>
+                <on-fail>
+                    <makefault version="soap11">
+                        <code value="soap11Env:VersionMismatch"
+                              xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        <reason value="Invalid Request"/>
+                        <role/>
+                    </makefault>
+                    <respond/>
+                </on-fail>
+            </validate>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>

@@ -77,7 +77,8 @@ public class ValidateIntegrationDynamicSchemaChangeTestCase extends ESBIntegrati
                                           + "validate" + File.separator + "synapse1.xml");
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("validateMediatorDynamicSchemaChangeTestProxy"), null, "WSO2");
             Assert.fail("Validate mediator on-fail did not executed as expected");
         } catch (AxisFault e) {
             Assert.assertTrue(e.getMessage().contains("Invalid custom quote request for Validate Mediator Test")
@@ -93,7 +94,8 @@ public class ValidateIntegrationDynamicSchemaChangeTestCase extends ESBIntegrati
         /** Time to set up schema - strictly necessary */
         Thread.sleep(30000);
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("validateMediatorDynamicSchemaChangeTestProxy"), null, "WSO2");
 
         Assert.assertTrue(response.toString().contains("GetQuoteResponse"), "GetQuoteResponse not found in response");
         Assert.assertTrue(response.toString().contains("WSO2 Company"), "GetQuoteResponse not found in response");

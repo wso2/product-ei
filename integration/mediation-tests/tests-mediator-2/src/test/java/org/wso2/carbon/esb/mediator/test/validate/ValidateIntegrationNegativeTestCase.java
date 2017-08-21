@@ -46,11 +46,10 @@ public class ValidateIntegrationNegativeTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Provide invalid dynamic key as shema location")
     public void TestWithInvalidDynamicKey() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/invalid_dynamic_key.xml");
         OMElement response = null;
         try {
-            response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
-                    , null, "WSO2");
+            response = axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("validateMediatorInvalidDynamicKeyTestProxy"), null, "WSO2");
             fail("This Request must throws a AxisFault");
         } catch (AxisFault axisFault) {
             assertEquals(axisFault.getMessage(), "Invalid custom quote request");
@@ -61,11 +60,10 @@ public class ValidateIntegrationNegativeTestCase extends ESBIntegrationTest {
                                                "XPath expression using \"source\" attribute " +
                                                "Check how mediator operates on the elements of SOAP body")
     public void TestWithInvalidXpath() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/validate_with_invalid_Xpath.xml");
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
-                    , null, "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("validateMediatorInvalidXPathTestProxy"), null, "WSO2");
         } catch (AxisFault expected) {
             assertEquals(expected.getMessage(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL, "Error Message mismatched");
         }

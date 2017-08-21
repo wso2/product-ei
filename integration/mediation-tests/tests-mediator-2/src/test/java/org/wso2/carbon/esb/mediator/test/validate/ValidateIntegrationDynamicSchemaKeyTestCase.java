@@ -43,13 +43,13 @@ public class ValidateIntegrationDynamicSchemaKeyTestCase extends
         OMElement payload1 = AXIOMUtil.stringToOM(requestPayload1);
         OMElement payload2 = AXIOMUtil.stringToOM(requestPayload2);
 
-        OMElement response1 = axis2Client.send(getProxyServiceURLHttps("testProxy"),
+        OMElement response1 = axis2Client.send(getProxyServiceURLHttps("validateSchemaATestProxy"),
                 null, "mediate", payload1);
         Assert.assertTrue(response1.toString().contains("ValidateSuccess"),
                 "Validate failed with schema a.");
 
         OMElement response2 = axis2Client.send(
-                getProxyServiceURLHttps("testProxy2"), null, "mediate", payload2);
+                getProxyServiceURLHttps("validateSchemaBTestProxy"), null, "mediate", payload2);
         Assert.assertTrue(response2.toString().contains("ValidateSuccess"),
                 "Validate failed with schema b.");
     }
