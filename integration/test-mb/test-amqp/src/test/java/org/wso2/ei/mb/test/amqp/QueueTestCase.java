@@ -25,11 +25,9 @@ import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
-import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
-import org.wso2.ei.mb.test.utils.ServerManager;
+import test.java.org.wso2.ei.mb.test.amqp.BrokerTest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
@@ -38,22 +36,12 @@ import javax.naming.NamingException;
 /**
  * Test cases for basic queue related scenarios.
  */
-public class QueueTestCase {
+public class QueueTestCase extends BrokerTest {
 
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
     private static Logger log = Logger.getLogger(QueueTestCase.class);
-
-    /**
-     * Initiate new server manager instance.
-     */
-    private ServerManager serverManager = new ServerManager();
-
-    /**
-     * initiate configuration reader instance
-     */
-    private ConfigurationReader configurationReader;
 
     /**
      * Delay for multiple message test cases
@@ -65,26 +53,7 @@ public class QueueTestCase {
      */
     @BeforeClass
     public void init() {
-
-        String archiveFilePath = System.getProperty("carbon.zip");
-
-        // Create file instance for given path.
-        File distributionArchive = new File(archiveFilePath);
-
-        // Verify if given archive path is a file and not a directory before proceed.
-        if (distributionArchive.exists() && !distributionArchive.isDirectory()) {
-            try {
-                String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
-
-                // load client configs to map
-                configurationReader = new ConfigurationReader();
-
-                // Start Enterprise Integrator broker instance
-                serverManager.startServer(tempCarbonHome);
-            } catch (IOException e) {
-                log.error("IO exception occured when trying to initialize server environment", e);
-            }
-        }
+        super.init();
     }
 
     /**
@@ -258,9 +227,7 @@ public class QueueTestCase {
      * Clean up after test case.
      */
     @AfterClass
-    public void cleanup() throws IOException {
-
-        // Stop server instance and clean up.
-        serverManager.stopServer();
+    public void clean() throws IOException {
+        super.cleanup();
     }
 }

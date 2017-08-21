@@ -25,13 +25,11 @@ import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
-import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 import org.wso2.ei.mb.test.utils.QueueSignalHandler;
-import org.wso2.ei.mb.test.utils.ServerManager;
 import sun.misc.Signal;
+import test.java.org.wso2.ei.mb.test.amqp.BrokerTest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
@@ -41,7 +39,7 @@ import javax.naming.NamingException;
 /**
  * This class includes test cases to test auto acknowledgements modes for queues
  */
-public class AcknowledgementsTestCase {
+public class AcknowledgementsTestCase extends BrokerTest {
 
     /**
      * The amount of messages to be sent.
@@ -59,16 +57,6 @@ public class AcknowledgementsTestCase {
     private static Logger log = Logger.getLogger(AcknowledgementsTestCase.class);
 
     /**
-     * Initiate new server manager instance.
-     */
-    private ServerManager serverManager = new ServerManager();
-
-    /**
-     * initiate configuration reader instance
-     */
-    private ConfigurationReader configurationReader;
-
-    /**
      * Delay for multiple message test cases
      */
     private static final Long PUBLISHER_DELAY = 50L;
@@ -78,26 +66,7 @@ public class AcknowledgementsTestCase {
      */
     @BeforeClass
     public void init() {
-
-        String archiveFilePath = System.getProperty("carbon.zip");
-
-        // Create file instance for given path.
-        File distributionArchive = new File(archiveFilePath);
-
-        // Verify if given archive path is a file and not a directory before proceed.
-        if (distributionArchive.exists() && !distributionArchive.isDirectory()) {
-            try {
-                String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
-
-                // load client configs to map
-                configurationReader = new ConfigurationReader();
-
-                // Start Enterprise Integrator broker instance
-                serverManager.startServer(tempCarbonHome);
-            } catch (IOException e) {
-                log.error("IO exception occured when trying to initialize server environment", e);
-            }
-        }
+        super.init();
     }
 
     /**
@@ -335,10 +304,8 @@ public class AcknowledgementsTestCase {
      * Clean up after test case.
      */
     @AfterClass
-    public void cleanup() throws IOException {
-
-        // Stop server instance and clean up.
-        serverManager.stopServer();
+    public void clean() throws IOException {
+        super.cleanup();
     }
 }
 
