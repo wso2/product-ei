@@ -310,12 +310,13 @@ public class SimpleHttpClient {
     public static String responseEntityBodyToString(HttpResponse response) throws IOException {
         if (response != null && response.getEntity() != null) {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            String result = "";
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("");
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                result += line;
+                strBuilder.append(line);
             }
-            return result;
+            return strBuilder.toString();
         }
         return null;
     }
