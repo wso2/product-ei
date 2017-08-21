@@ -1,0 +1,39 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="validateMediatorInvalidDynamicKeyTestProxy" transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="symbol" value="conf:/validate1/schema.xml"/>
+            <property name="isValid" value="true"/>
+            <validate>
+                <schema key="conf:/validate/schema.xml"/>
+                <on-fail>
+                    <makefault version="soap11" response="true">
+                        <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                              value="soap11Env:VersionMismatch"/>
+                        <reason value="Invalid custom quote request"/>
+                        <role/>
+                    </makefault>
+                    <property name="isValid" value="false"/>
+                </on-fail>
+            </validate>
+            <filter source="$ctx:isValid" regex="true">
+                <then>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </then>
+                <else>
+                    <log/>
+                </else>
+            </filter>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

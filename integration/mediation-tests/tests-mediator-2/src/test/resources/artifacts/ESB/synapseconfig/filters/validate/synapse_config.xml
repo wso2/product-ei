@@ -3,7 +3,7 @@
    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
       <parameter name="cachableDuration">15000</parameter>
    </registry>
-   <proxy name="testProxy2"
+   <proxy name="validateSchemaBTestProxy"
           transports="http https"
           startOnLoad="true"
           trace="disable">
@@ -17,7 +17,7 @@
          <faultSequence/>
       </target>
    </proxy>
-   <proxy name="testProxy"
+   <proxy name="validateSchemaATestProxy"
           transports="http https"
           startOnLoad="true"
           trace="disable">
@@ -69,26 +69,6 @@
          </xs:element>
       </xs:schema>
    </localEntry>
-   <sequence name="fault">
-      <log level="full">
-         <property name="MESSAGE" value="Executing default 'fault' sequence"/>
-         <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
-         <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
-      </log>
-      <drop/>
-   </sequence>
-   <sequence name="main">
-      <in>
-         <log level="full"/>
-         <filter source="get-property('To')" regex="http://localhost:9000.*">
-            <send/>
-         </filter>
-      </in>
-      <out>
-         <send/>
-      </out>
-      <description>The main sequence for the message mediation</description>
-   </sequence>
    <template name="validateRequestTemplate">
       <parameter name="schema"/>
       <sequence>
