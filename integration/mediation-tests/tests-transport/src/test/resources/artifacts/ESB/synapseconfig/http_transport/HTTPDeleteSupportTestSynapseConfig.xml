@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~     Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~     WSO2 Inc. licenses this file to you under the Apache License,
+  ~     Version 2.0 (the "License"); you may not use this file except
+  ~     in compliance with the License.
+  ~     You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing,
+  ~    software distributed under the License is distributed on an
+  ~    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~    KIND, either express or implied.  See the License for the
+  ~    specific language governing permissions and limitations
+  ~    under the License.
+  -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <api context="/testbackend" name="TestBackEndSimulateAPI">
+        <resource inSequence="testBackendAPISequence"
+                  methods="HEAD DELETE POST GET OPTIONS PUT PATCH" url-mapping="/*"/>
+    </api>
+    <api name="testDeleteCall" context="/testdeletecall">
+        <resource methods="DELETE POST PUT GET" url-mapping="/*" inSequence="makeCallWithDelete"/>
+    </api>
+
+    <proxy name="testDeleteProxy"
+           startOnLoad="true"
+           statistics="disable"
+           trace="disable"
+           transports="http,https">
+        <target>
+            <inSequence>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <Response xmlns="">
+                            <HTTPMethod>$1</HTTPMethod>
+                            <RequestMessage>$2</RequestMessage>
+                        </Response>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                        <arg evaluator="xml" expression="$body/Request/Message"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <sequence name="testBackendAPISequence">
+        <filter regex="application/json"
+                source="get-property('axis2', 'ContentType')" xmlns:ns="http://org.apache.synapse/xsd">
+            <then>
+                <log level="full">
+                    <property name="MESSAGE" value="JSON Request"/>
+                </log>
+                <payloadFactory media-type="json">
+                    <format>{"HTTPMethod":"$1","Response": {"RequestMessage":"$2"}}</format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                        <arg evaluator="json" expression="$.Request.Message"/>
+                    </args>
+                </payloadFactory>
+            </then>
+            <else>
+                <log>
+                    <property name="MESSAGE" value="XML Request"/>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <Response xmlns="">
+                            <HTTPMethod>$1</HTTPMethod>
+                            <RequestMessage>$2</RequestMessage>
+                        </Response>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('axis2', 'HTTP_METHOD')"/>
+                        <arg evaluator="xml" expression="$body/Request/Message"/>
+                    </args>
+                </payloadFactory>
+            </else>
+        </filter>
+        <log level="full"/>
+        <respond/>
+    </sequence>
+
+    <sequence name="deleteCallWithoutEntity">
+        <log level="full"/>
+        <property name="NO_ENTITY_BODY" scope="axis2" type="BOOLEAN" value="true"/>
+        <call>
+            <endpoint>
+                <address uri="http://localhost:8480/testbackend"/>
+            </endpoint>
+        </call>
+        <log level="full"/>
+        <respond/>
+    </sequence>
+
+    <sequence name="makeCallWithDelete">
+        <log level="full"/>
+        <payloadFactory media-type="json">
+            <format>{"Request" : {"Message":"This is request message to test HTTP DELETE"}}</format>
+        </payloadFactory>
+        <log level="full"/>
+        <property name="HTTP_METHOD" scope="axis2" type="STRING" value="DELETE"/>
+        <call>
+            <endpoint>
+                <address uri="http://localhost:8480/testbackend"/>
+            </endpoint>
+        </call>
+        <log level="full"/>
+        <respond/>
+    </sequence>
+
+</definitions>
