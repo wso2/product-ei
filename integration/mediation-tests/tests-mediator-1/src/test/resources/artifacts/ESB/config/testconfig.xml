@@ -894,17 +894,6 @@
         </products>
     </scenario>
 
-
-    <scenario testName="org.wso2.carbon.esb.mediator.test.send.SendIntegrationTestCase">
-        <products>
-            <product name="ESB">
-                <artifacts userId="1">
-                    <artifact name="send_mediator" type="synapseconfig"/>
-                </artifacts>
-            </product>
-        </products>
-    </scenario>
-
     <scenario testName="org.wso2.carbon.esb.mediator.test.fault.DemoTest">
         <products>
             <product name="AXIS2">
