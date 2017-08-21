@@ -48,14 +48,13 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                 public void configureServer() {
                     if ("ESB".equalsIgnoreCase(System.getProperty("server.list"))) {
                         //copying the files before server start. Ex: synapse artifacts, conf, etc...
-                        String repository = FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
-                                + File.separator + "ESB" + File.separator + "repository";
+                        String carbonHome = FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                                + File.separator + "ESB" + File.separator + "server";
+                        String repository = carbonHome + File.separator + "repository";
                         File deploymentSource = new File(repository + File.separator + "deployment");
                         File confSource = new File(repository + File.separator + "conf");
-                        File libDirectorySource = new File(
-                                repository + File.separator + "components" + File.separator + "lib");
-                        File dropinsDirectorySource = new File(
-                                repository + File.separator + "components" + File.separator + "dropins");
+                        File libDirectorySource = new File(carbonHome + File.separator + File.separator + "lib");
+                        File dropinsDirectorySource = new File(carbonHome + File.separator + "dropins");
                         File deploymentDestination = new File(
                                 this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
                         File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
