@@ -85,19 +85,15 @@ public class BallerinaProgramHelper {
      */
     public static void createAndInitializeMap(BallerinaASTModelBuilder ballerinaASTModelBuilder,
             Map<String, Object> parameters) {
-
         ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_MAP);
         ballerinaASTModelBuilder.startMapStructLiteral();
-
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
             ballerinaASTModelBuilder.createStringLiteral(entry.getKey());
             ballerinaASTModelBuilder.createStringLiteral((String) entry.getValue());
         }
-
         for (int i = 0; i < parameters.size(); i++) {
             ballerinaASTModelBuilder.addMapStructKeyValue();
         }
-
         ballerinaASTModelBuilder.createMapStructLiteral();
     }
 
