@@ -35,7 +35,6 @@ public class XQueryCustomVariableAsBoolean extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/xquery_variable_type_boolean_synapse101.xml");
     }
 
 
@@ -46,8 +45,7 @@ public class XQueryCustomVariableAsBoolean extends ESBIntegrationTest {
         RequestUtil getQuoteCustomRequest = new RequestUtil();
 
         response = getQuoteCustomRequest.sendReceive(
-                getProxyServiceURLHttp("StockQuoteProxy"),
-                "WSO2");
+                getProxyServiceURLHttp("xQueryCustomVariableAsBooleanTestProxy"), "WSO2");
         assertNotNull(response, "Response message null");
         assertEquals(response.getFirstElement().getFirstChildWithName(
                 new QName("http://services.samples/xsd", "symbol", "ax21")).getText(), "true", "Symbol name mismatched");
