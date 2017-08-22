@@ -46,18 +46,15 @@ public class ValidateMediatorTestCase extends ESBIntegrationTest {
         resourceAdminServiceClient.addResource("/_system/config/schema/schema1a", "application/xml"
                 , "Second Schema", new DataHandler(url2));
 
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "filters" + File.separator
-                                          + "validate" + File.separator + "validate_synapse.xml");
-
     }
 
     /*https://wso2.org/jira/browse/STRATOS-2297*/
     @Test(groups = "wso2.esb")
     public void validateMediatorDynamicSchemaTest() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
-                , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("validateMediatorDynamicSchemaFromConfigRegTestProxy"),
+                getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
 
         Assert.assertTrue(response.toString().contains("GetQuoteResponse"), "GetQuoteResponse not found in response");
         Assert.assertTrue(response.toString().contains("WSO2 Company"), "GetQuoteResponse not found in response");
