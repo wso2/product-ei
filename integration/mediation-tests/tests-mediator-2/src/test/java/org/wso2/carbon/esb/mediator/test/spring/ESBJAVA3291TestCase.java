@@ -28,9 +28,6 @@ import java.rmi.RemoteException;
 
 public class ESBJAVA3291TestCase extends ESBIntegrationTest {
 
-	private final String SIMPLE_BEAN_JAR = "org.wso2.carbon.test.mediator.errorMediator.jar";
-	private final String JAR_LOCATION = File.separator + "artifacts"
-			+ File.separator + "ESB" + File.separator + "jar";
 	private final String SPRING_XML_LOCATION = File.separator + "artifacts"
 			+ File.separator + "ESB" + File.separator + "mediatorconfig"
 			+ File.separator + "spring";
@@ -45,12 +42,6 @@ public class ESBJAVA3291TestCase extends ESBIntegrationTest {
 		super.init();
 		clearUploadedResource();
 		serverConfigurationManager = new ServerConfigurationManager(context);
-		serverConfigurationManager.copyToComponentLib(new File(getClass()
-				.getResource(JAR_LOCATION + File.separator + SIMPLE_BEAN_JAR)
-				.toURI()));
-		serverConfigurationManager.restartGracefully();
-
-		super.init();
 		uploadResourcesToConfigRegistry();
 		loadESBConfigurationFromClasspath(SPRING_XML_LOCATION + File.separator + "spring_mediation_error.xml");
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -65,8 +56,6 @@ public class ESBJAVA3291TestCase extends ESBIntegrationTest {
 			Thread.sleep(5000);
 		} finally {
             super.cleanup();
-			serverConfigurationManager.removeFromComponentLib(SIMPLE_BEAN_JAR);
-			serverConfigurationManager.restartGracefully();
 			serverConfigurationManager = null;
 		}
 	}

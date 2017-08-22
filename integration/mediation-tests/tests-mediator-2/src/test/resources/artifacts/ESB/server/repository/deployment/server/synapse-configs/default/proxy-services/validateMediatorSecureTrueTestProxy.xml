@@ -1,0 +1,24 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="validateMediatorSecureTrueTestProxy" transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <validate>
+                <property name="validation-feature-id" value="true"/>
+                <schema key="validateSchema3"/>
+                <on-fail>
+                    <!-- if the request does not validate againt schema throw a fault -->
+                    <makefault response="true">
+                        <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                        <reason value="Invalid custom quote request"/>
+                    </makefault>
+                </on-fail>
+            </validate>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

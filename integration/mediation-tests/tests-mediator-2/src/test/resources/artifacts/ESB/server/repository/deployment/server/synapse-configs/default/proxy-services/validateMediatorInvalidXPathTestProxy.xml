@@ -1,0 +1,28 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="validateMediatorInvalidXPathTestProxy" transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <validate source="//m0:requestElement/m0:getQuote" xmlns:m0="http://services.samples">
+                <schema key="validateSchema"/>
+                <on-fail>
+                    <!-- if the request does not validate againt schema throw a fault -->
+                    <makefault response="true">
+                        <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope"
+                              value="tns:Receiver" targetNamespace="http://services.samples"/>
+                        <reason value="Invalid custom quote request"/>
+                    </makefault>
+                </on-fail>
+            </validate>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
