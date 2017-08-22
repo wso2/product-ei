@@ -1,0 +1,25 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryMediatorEmptySoapRequestTestProxy" transports="http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <property name="symbol" value="IBM"/>
+            <log level="custom" separator=",">
+                <property name="before xquery" expression="$ctx:body"/>
+            </log>
+            <xquery key="xquery-empty-soap-request">
+                <variable name="symbol" expression="get-property('symbol')" type="STRING"/>
+            </xquery>
+            <log level="custom" separator=",">
+                <property name="after xquery" expression="$ctx:body"/>
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
