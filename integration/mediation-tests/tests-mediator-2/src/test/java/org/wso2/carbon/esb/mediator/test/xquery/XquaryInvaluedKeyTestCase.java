@@ -33,8 +33,6 @@ public class XquaryInvaluedKeyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/configForInvaliedXquaryKey/synapse.xml");
-
     }
 
 
@@ -42,8 +40,8 @@ public class XquaryInvaluedKeyTestCase extends ESBIntegrationTest {
     public void testXquaryInvaluedKey() throws IOException, XMLStreamException {
 
         try {
-            axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy")
-                    , null, "IBM");
+            axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("xQueryMediatorInvalidKeyTestProxy"),
+                    null, "IBM");
             Assert.fail("Did not throw expected AxisFaultException with the reason Unable to execute the query");
 
         } catch (AxisFault fault) {

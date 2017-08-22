@@ -1,0 +1,11 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xquery-empty-soap-request">
+    <x>
+        declare namespace m="http://services.samples";
+        declare variable $symbol as xs:string external;
+        &lt;m:getQuote xmlns:m="http://services.samples"&gt;
+        &lt;m:request&gt;
+        &lt;m:symbol&gt;{$symbol}&lt;/m:symbol&gt;
+        &lt;/m:request&gt;
+        &lt;/m:getQuote&gt;
+    </x>
+</localEntry>
