@@ -1,0 +1,7 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xquery-transformation">
+    <x xmlns="">
+        declare namespace m0="http://services.samples";
+        declare variable $payload as document-node() external;
+        &lt;m:symbol xmlns:m="http://services.samples"&gt;{$payload//m:request/m:symbols/m:company/child::text()}&lt;/m:symbol&gt;
+    </x>
+</localEntry>

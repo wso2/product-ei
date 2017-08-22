@@ -1,0 +1,19 @@
+<localEntry key="validateSchemaWithoutNameSpace">
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns="http://services.samples" elementFormDefault="qualified"
+               attributeFormDefault="unqualified" targetNamespace="http://services.samples">
+        <xs:element name="getFullQuote">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="request">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="symbol" type="xs:string"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:schema>
+</localEntry>
