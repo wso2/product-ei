@@ -18,6 +18,12 @@
 
 package org.wso2.ei.mb.test.client;
 
+import org.wso2.ei.mb.test.utils.ConfigurationConstants;
+import org.wso2.ei.mb.test.utils.ConfigurationReader;
+import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
+
+import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
@@ -38,24 +44,33 @@ public class QueueReceiver {
     private static final String connectionFactoryNamePrefix = "connectionfactory.";
     private static final String connectionFactoryName = "andesConnectionfactory";
 
-    private String carbonClientId = "carbon";
-    private String carbonVirtualHostName = "carbon";
-    private String carbonDefaultHostName = "localhost";
-    private String carbonDefaultPort = "5672";
-
-    private String userName = "admin";
-    private String password = "admin";
-    private String queueName = "testQueue";
-
     private QueueMessageListener messageListener;
     private MessageConsumer consumer;
     private QueueSession queueSession;
     private QueueConnection queueConnection;
+    private JMSAcknowledgeMode acknowledgeMode;
+    private int maximumMessageCount = Integer.MAX_VALUE;
 
-    public QueueReceiver() throws NamingException, JMSException {
+    /**
+     * This constructor creates a queue receiver object which is used as the subscriber
+     * @param queueName name of the queue to be subscribed
+     * @param acknowledgeMode acknowledge mode
+     * @param configurationReader configuration reader object to read the JMS client config
+     * @throws NamingException
+     * @throws JMSException
+     * @throws IOException
+     */
+    public QueueReceiver(String queueName, JMSAcknowledgeMode acknowledgeMode,
+                         ConfigurationReader configurationReader)
+            throws NamingException, JMSException, IOException {
+
+        this.acknowledgeMode = acknowledgeMode;
+        // map of config key and config value
+        Map<String, String> clientConfigPropertiesMap = configurationReader.getClientConfigProperties();
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
-        properties.put(connectionFactoryNamePrefix + connectionFactoryName, getTCPConnectionURL(userName, password));
+        properties.put(connectionFactoryNamePrefix + connectionFactoryName,
+                getTCPConnectionURL(clientConfigPropertiesMap));
         properties.put("queue." + queueName, queueName);
         InitialContext ctx = new InitialContext(properties);
 
@@ -63,7 +78,7 @@ public class QueueReceiver {
         QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx.lookup(connectionFactoryName);
         queueConnection = connFactory.createQueueConnection();
         queueConnection.start();
-        queueSession = queueConnection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+        queueSession = queueConnection.createQueueSession(false, acknowledgeMode.getType());
 
         Queue queue = (Queue) ctx.lookup(queueName);
         consumer = queueSession.createConsumer(queue);
@@ -73,12 +88,11 @@ public class QueueReceiver {
      * Create JMS session/connection for subscriber based on defined parameters.
      *
      * @return MessageConsumer
-     * @throws NamingException
      * @throws JMSException
      */
     public MessageConsumer registerSubscriber() throws JMSException {
 
-        messageListener = new QueueMessageListener(5);
+        messageListener = new QueueMessageListener(5, acknowledgeMode, maximumMessageCount);
         consumer.setMessageListener(messageListener);
 
         return consumer;
@@ -108,20 +122,54 @@ public class QueueReceiver {
     }
 
     /**
+     * Close JMS connection/session and clean up resources.
+     *
+     * @throws JMSException
+     */
+    public void stopReceiver() throws JMSException {
+        consumer.close();
+        queueSession.close();
+        queueConnection.close();
+    }
+
+    /**
+     * get Maximum Messages Count
+     */
+    public int getMaximumMessageCount() {
+        return maximumMessageCount;
+    }
+
+    /**
+     * set Maximum Messages Count
+     */
+    public void setMaximumMessageCount(int maximumMessageCount) {
+        this.maximumMessageCount = maximumMessageCount;
+    }
+
+    /**
      * Provide connection URL based on defined parameters.
      *
-     * @param username username for basic authentication
-     * @param password password for basic authentication
+     * @param clientConfigPropertiesMap client connection config properties map
      * @return connection URL
      */
-    private String getTCPConnectionURL(String username, String password) {
+    private String getTCPConnectionURL(Map<String, String> clientConfigPropertiesMap) {
         // amqp://{username}:{password}@carbon/carbon?brokerlist='tcp://{hostname}:{port}'
+
         return new StringBuffer()
-                .append("amqp://").append(username).append(":").append(password)
-                .append("@").append(carbonClientId)
-                .append("/").append(carbonVirtualHostName)
-                .append("?brokerlist='tcp://").append(carbonDefaultHostName).append(":")
-                .append(carbonDefaultPort).append("'").toString();
+                .append("amqp://").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.DEFAULT_USERNAME_PROPERTY)).append(":")
+                .append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY))
+                .append("@").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_CLIENT_ID_PROPERTY))
+                .append("/").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_VIRTUAL_HOSTNAME_PROPERTY))
+                .append("?brokerlist='tcp://").append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_DEFAULT_HOSTNAME_PROPERTY))
+                .append(":")
+                .append(clientConfigPropertiesMap.get(
+                        ConfigurationConstants.CARBON_DEFAULT_PORT_PROPERTY))
+                .append("'").toString();
     }
 
 }

@@ -24,6 +24,7 @@
     <test name="tests-amqp-sequential" preserve-order="true" parallel="false">
         <classes>
             <class name="org.wso2.ei.mb.test.amqp.QueueTestCase"/>
+            <class name="org.wso2.ei.mb.test.amqp.AcknowledgementsTestCase"/>
         </classes>
     </test>
 </suite>
