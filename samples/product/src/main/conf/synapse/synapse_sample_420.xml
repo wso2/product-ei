@@ -23,9 +23,14 @@
 
     <sequence name="main">
         <in>
-            <cache timeout="20" scope="per-host" collector="false"
-                   hashGenerator="org.wso2.carbon.mediator.cache.digest.DOMHASHGenerator">
-                <implementation type="memory" maxSize="100"/>
+            <cache collector="false" maxMessageSize="10000" timeout="20">
+                <protocol type="HTTP">
+                    <methods>POST</methods>
+                    <headersToExcludeInHash/>
+                    <responseCodes>2[0-9][0-9]</responseCodes>
+                    <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                </protocol>
+                <implementation maxSize="100"/>
             </cache>
             <send>
                 <endpoint name="inlined">
