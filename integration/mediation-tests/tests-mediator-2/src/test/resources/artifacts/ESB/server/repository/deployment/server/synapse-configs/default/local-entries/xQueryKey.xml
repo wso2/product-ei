@@ -1,0 +1,2 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xquery-key"
+            src="file:samples/service-bus/resources/xquery/xquery_req.xq"/>
