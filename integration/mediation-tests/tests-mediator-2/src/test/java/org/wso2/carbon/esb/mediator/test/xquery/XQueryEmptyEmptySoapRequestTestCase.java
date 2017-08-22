@@ -40,13 +40,13 @@ public class XQueryEmptyEmptySoapRequestTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/xquery_empty_soap_request.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Tests-XQuery test on empty message body")
     public void testEmptyMessageBody() throws AxisFault, XMLStreamException {
         OMElement payload = null;
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("empty"),null, payload);
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("xQueryMediatorEmptySoapRequestTestProxy"),null, payload);
         assertNotNull(response,"Response is null");
         assertEquals(response.getFirstElement().getFirstChildWithName
                 (new QName("http://services.samples/xsd", "symbol")).getText(),

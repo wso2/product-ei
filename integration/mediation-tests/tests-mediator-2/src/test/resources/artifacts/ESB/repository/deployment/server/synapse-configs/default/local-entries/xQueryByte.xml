@@ -1,0 +1,6 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xquery-byte">
+    <x xmlns="">
+        declare variable $symbol as xs:byte external;
+        &lt;m:symbol xmlns:m="http://services.samples"&gt;{$symbol}&lt;/m:symbol&gt;
+    </x>
+</localEntry>

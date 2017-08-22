@@ -1,0 +1,6 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xquery-double">
+    <x xmlns="">
+        declare variable $symbol as xs:double external;
+        &lt;m:symbol xmlns:m="http://services.samples"&gt;{$symbol}&lt;/m:symbol&gt;
+    </x>
+</localEntry>
