@@ -1,0 +1,34 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryCustomVariableAsIntTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="body" expression="$body/child::*[position()=1]"/>
+            <log level="full"/>
+            <xquery xmlns:m="http://services.samples" key="xquery-int"
+                    target="//m:getQuote/m:request/m:symbols">
+                <variable name="symbol" type="INT" value="512337203"/>
+            </xquery>
+            <log level="full"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <out>
+                <send/>
+            </out>
+        </outSequence>
+        <faultSequence>
+            <makefault version="soap11">
+                <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <property name="RESPONSE" value="true"/>
+            <header name="To" expression="get-property('ReplyTo')"/>
+            <send/>
+        </faultSequence>
+    </target>
+</proxy>

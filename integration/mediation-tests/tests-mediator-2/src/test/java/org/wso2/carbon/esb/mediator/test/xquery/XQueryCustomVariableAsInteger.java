@@ -34,7 +34,6 @@ public class XQueryCustomVariableAsInteger extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/xquery_variable_type_integer_synapse101.xml");
     }
 
 
@@ -44,8 +43,7 @@ public class XQueryCustomVariableAsInteger extends ESBIntegrationTest {
         OMElement response;
         RequestUtil getQuoteCustomRequest = new RequestUtil();
         response = getQuoteCustomRequest.sendReceive(
-                getProxyServiceURLHttp("StockQuoteProxy"),
-                "WSO2");
+                getProxyServiceURLHttp("xQueryCustomVariableAsIntegerTestProxy"), "WSO2");
         assertNotNull(response, "Response message null");
         assertEquals(response.getFirstElement().getFirstChildWithName(
                 new QName("http://services.samples/xsd", "symbol", "ax21")).getText(), "412337890", "Symbol name mismatched");
