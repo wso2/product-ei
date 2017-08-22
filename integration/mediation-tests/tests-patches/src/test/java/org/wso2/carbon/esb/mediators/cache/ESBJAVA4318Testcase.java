@@ -70,7 +70,10 @@ public class ESBJAVA4318Testcase extends ESBIntegrationTest {
                 + "         </ser:request>\n" + "      </ser:getFullQuote>\n" + "   </soapenv:Body>\n"
                 + "</soapenv:Envelope>";
 
-        final String expectedValue = "<b xmlns=\"http://ws.apache.org/ns/synapse\"><?xml-multiple  array?><xyz><a xmlns=\"\">after cache</a></xyz></b>";
+        final String expectedValue = "<?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope " +
+                "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"><soapenv:Body><b xmlns=\"http://ws" +
+                ".apache.org/ns/synapse\"><?xml-multiple  array?><xyz><a xmlns=\"\">after " +
+                "cache</a></xyz></b></soapenv:Body></soapenv:Envelope>";
 
         DefaultHttpClient httpclient = new DefaultHttpClient();
 
@@ -96,7 +99,7 @@ public class ESBJAVA4318Testcase extends ESBIntegrationTest {
 
         ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
         response2.getEntity().writeTo(baos2);
-        String actualValue2 = baos.toString();
+        String actualValue2 = baos2.toString();
         Assert.assertEquals(actualValue2, expectedValue);
     }
 }

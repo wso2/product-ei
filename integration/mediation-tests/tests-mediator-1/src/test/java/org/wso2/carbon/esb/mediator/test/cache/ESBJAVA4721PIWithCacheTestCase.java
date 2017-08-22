@@ -66,7 +66,7 @@ public class ESBJAVA4721PIWithCacheTestCase extends ESBIntegrationTest {
                 doGet((getApiInvocationURL("jsonTest") + "/backend"), requestHeader);
 
         //check if [] are preserved in response
-        Assert.assertTrue(response.getData().contains("[\"water\"]"),
+        Assert.assertTrue(response.getData().contains("[ \"water\" ]"),
                 "Expected response was not" + " received. Got " + response.getData());
     }
 
