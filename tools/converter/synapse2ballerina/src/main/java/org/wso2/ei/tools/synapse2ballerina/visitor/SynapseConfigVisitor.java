@@ -23,6 +23,8 @@ import org.apache.synapse.config.SynapseConfiguration;
 import org.apache.synapse.config.xml.AnonymousListMediator;
 import org.apache.synapse.config.xml.SwitchCase;
 import org.apache.synapse.core.axis2.ProxyService;
+import org.apache.synapse.endpoints.AddressEndpoint;
+import org.apache.synapse.endpoints.Endpoint;
 import org.apache.synapse.endpoints.HTTPEndpoint;
 import org.apache.synapse.endpoints.IndirectEndpoint;
 import org.apache.synapse.mediators.base.SequenceMediator;
@@ -39,11 +41,13 @@ import org.wso2.ei.tools.converter.common.ballerinahelper.Annotation;
 import org.wso2.ei.tools.converter.common.ballerinahelper.BallerinaProgramHelper;
 import org.wso2.ei.tools.converter.common.ballerinahelper.Function;
 import org.wso2.ei.tools.converter.common.ballerinahelper.HttpClientConnector;
+import org.wso2.ei.tools.converter.common.ballerinahelper.JMSClientConnector;
 import org.wso2.ei.tools.converter.common.ballerinahelper.Message;
 import org.wso2.ei.tools.converter.common.ballerinahelper.Service;
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.converter.common.util.Constant;
 import org.wso2.ei.tools.synapse2ballerina.util.ArtifactMapper;
+import org.wso2.ei.tools.synapse2ballerina.util.JMSPropertyMapper;
 import org.wso2.ei.tools.synapse2ballerina.util.ProxyServiceType;
 import org.wso2.ei.tools.synapse2ballerina.wrapper.APIWrapper;
 import org.wso2.ei.tools.synapse2ballerina.wrapper.MediatorWrapper;
@@ -189,12 +193,12 @@ public class SynapseConfigVisitor implements Visitor {
             logger.debug("Resource");
         }
         org.wso2.ei.tools.converter.common.ballerinahelper.Resource.startResource(ballerinaASTModelBuilder);
-        String[] allowedMethods = {Constant.BLANG_METHOD_GET}; //Default http request method is set to GET
+        String[] allowedMethods = { Constant.BLANG_METHOD_GET }; //Default http request method is set to GET
         if (resource.getMethods() != null) {
-                Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
-                resourceAnnotations.put(Constant.METHOD_NAME, resource.getMethods());
-                Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
-                resourceAnnotationCount++;
+            Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
+            resourceAnnotations.put(Constant.METHOD_NAME, resource.getMethods());
+            Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
+            resourceAnnotationCount++;
         } else {
             Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
             resourceAnnotations.put(Constant.METHOD_NAME, allowedMethods);
@@ -266,16 +270,17 @@ public class SynapseConfigVisitor implements Visitor {
         if (logger.isDebugEnabled()) {
             logger.debug("Mediator >> " + mediator.getType() + " or " + mediator.getMediatorName());
         }
+        String mediatorType = (mediator.getType() != null ? mediator.getType() : "");
+        String mediatorName = (mediator.getMediatorName() != null ? mediator.getMediatorName() : "");
         //Mediator name needs to be checked, in case of payloadfactory mediator
-        if ((artifacts.get(mediator.getType()) != null) || (artifacts.get(mediator.getMediatorName()) != null)) {
+        if ((artifacts.get(mediatorType) != null) || (artifacts.get(mediatorName) != null)) {
             Class<?> wrapperClass;
             try {
                 if (artifacts.get(mediator.getType()) != null) {
-                    wrapperClass = Class.forName(artifacts.get(mediator.getType()));
+                    wrapperClass = Class.forName(artifacts.get(mediatorType));
                 } else {
-                    wrapperClass = Class.forName(artifacts.get(mediator.getMediatorName()));
+                    wrapperClass = Class.forName(artifacts.get(mediatorName));
                 }
-
                 Constructor constructor = wrapperClass.getConstructor(new Class[] { Mediator.class });
                 Object object = constructor.newInstance(mediator);
                 ((MediatorWrapper) object).accept(this);
@@ -302,10 +307,91 @@ public class SynapseConfigVisitor implements Visitor {
         if (logger.isDebugEnabled()) {
             logger.debug("CallMediator");
         }
-        BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_HTTP, importTracker);
-        //TODO: Refactor this part to support other types of endpoints as well
-        IndirectEndpoint indirectEndpoint = (IndirectEndpoint) mediator.getEndpoint();
+        this.visit(mediator.getEndpoint());
+    }
+
+    /**
+     * @param endpoint
+     */
+    public void visit(Endpoint endpoint) {
+        if (endpoint instanceof IndirectEndpoint) {
+            this.visit((IndirectEndpoint) endpoint);
+        } else if (endpoint instanceof AddressEndpoint) {
+            this.visit((AddressEndpoint) endpoint);
+        }
+    }
+
+    public void visit(AddressEndpoint addressEndpoint) {
+        String address = (addressEndpoint.getDefinition() != null ?
+                addressEndpoint.getDefinition().getAddress() :
+                null);
+
+        if (address != null) {
+            //JMS Sender
+            if (address.startsWith(org.wso2.ei.tools.synapse2ballerina.util.Constant.JMS_PREFIX)) {
+                Map<String, String> jmsProperties = JMSPropertyMapper.getEnumMap();
+                BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_PKG_JMS, importTracker);
+
+                //Extract queue name and other jms properties from address
+                String queueName = address.substring(address.indexOf("/") + 1, address.indexOf("?"));
+                String propertyStr = address.substring(address.lastIndexOf("?") + 1); //JMS properties
+                String properties[] = propertyStr.split("&");
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                for (String property : properties) {
+                    String keyValuePair[] = property.split("="); //key value pair of a single property
+                    parameters.put(jmsProperties.get(keyValuePair[0]), keyValuePair[1]);
+                }
+                BallerinaProgramHelper.createAndInitializeMap(ballerinaASTModelBuilder, parameters);
+                String propertyVar = Constant.BLANG_VAR_PROP_MAP + ++variableCounter;
+                ballerinaASTModelBuilder.createVariable(propertyVar, true);
+
+                String jmsEPVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
+
+                // TODO:Clarify whether it is the outbound message's payload that needs to be sent to jms queue
+                // Get the payload from inbound message
+                BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_PKG_MESSAGES, importTracker);
+                Map<String, Object> payloadParas = new HashMap<String, Object>();
+                String variableName = Constant.BLANG_VAR_NAME + ++variableCounter;
+                payloadParas.put(Constant.TYPE, Constant.BLANG_TYPE_STRING);
+                payloadParas.put(Constant.VARIABLE_NAME, variableName);
+                payloadParas.put(Constant.FUNCTION_NAME, Constant.BLANG_GET_STRING_PAYLOAD);
+                payloadParas.put(Constant.INBOUND_MSG, inboundMsg);
+                Message.getPayload(ballerinaASTModelBuilder, payloadParas);
+
+                //Create a message type variable to store queue message
+                String jmsMsg = BallerinaProgramHelper
+                        .createVariableWithEmptyMap(ballerinaASTModelBuilder, Constant.BLANG_TYPE_MESSAGE,
+                                Constant.BLANG_DEFAULT_VAR_MSG + ++variableCounter, true);
+
+                Map<String, Object> payloadSetterParas = new HashMap<String, Object>();
+                payloadSetterParas.put(Constant.TYPE, Constant.STRING);
+                payloadSetterParas.put(Constant.OUTBOUND_MSG, jmsMsg);
+                payloadSetterParas.put(Constant.PAYLOAD_VAR_NAME, variableName);
+                Message.setPayload(ballerinaASTModelBuilder, payloadSetterParas, false);
+
+                Map<String, Object> connectorParas = new HashMap<String, Object>();
+                connectorParas.put(Constant.VARIABLE_NAME, propertyVar);
+                connectorParas.put(Constant.JMS_EP_VAR_NAME, jmsEPVarName);
+                connectorParas.put(Constant.JMS_MSG, jmsMsg);
+                connectorParas.put(Constant.JMS_QUEUE_NAME, queueName);
+                JMSClientConnector.createConnector(ballerinaASTModelBuilder, connectorParas);
+                JMSClientConnector.callAction(ballerinaASTModelBuilder, connectorParas);
+            }
+        }
+    }
+
+    public void visit(IndirectEndpoint indirectEndpoint) {
         HTTPEndpoint endpoint = (HTTPEndpoint) synapseConfiguration.getLocalRegistry().get(indirectEndpoint.getKey());
+        this.visit(endpoint);
+    }
+
+    /**
+     * HTTPEndpoint maps to a client connector in ballerina
+     *
+     * @param endpoint
+     */
+    public void visit(HTTPEndpoint endpoint) {
+        BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_HTTP, importTracker);
         connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
 
         Map<String, Object> connectorParameters = new HashMap<String, Object>();
@@ -357,7 +443,7 @@ public class SynapseConfigVisitor implements Visitor {
             payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
             parameters.put(Constant.PAYLOAD_VAR_NAME, payloadVariableName);
         }
-        Message.setPayload(ballerinaASTModelBuilder, parameters);
+        Message.setPayload(ballerinaASTModelBuilder, parameters, true);
     }
 
     /**
@@ -487,7 +573,6 @@ public class SynapseConfigVisitor implements Visitor {
         BallerinaProgramHelper.exitIfElseStatement(ballerinaASTModelBuilder);
     }
 
-
    /* private void parseJsonOrXML(String type, String packageName, String nextVariableName, String variableName) {
         if (Constant.BLANG_TYPE_JSON.equals(type)) {
             addImport(Constant.BLANG_PKG_JSON);
@@ -519,12 +604,10 @@ public class SynapseConfigVisitor implements Visitor {
         resourceMethods[0] = Constant.BLANG_METHOD_GET;
         resourceMethods[1] = Constant.BLANG_METHOD_POST;
 
-        for (String method : resourceMethods) {
-            Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
-            resourceAnnotations.put(Constant.METHOD_NAME, method);
-            Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
-            resourceAnnotationCount++;
-        }
+        Map<String, Object> resourceAnnotations = new HashMap<String, Object>();
+        resourceAnnotations.put(Constant.METHOD_NAME, resourceMethods);
+        Annotation.createResourceAnnotation(ballerinaASTModelBuilder, resourceAnnotations);
+        resourceAnnotationCount++;
 
         inboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
 
@@ -545,20 +628,10 @@ public class SynapseConfigVisitor implements Visitor {
         inSequenceMediatorWrapper.accept(this);
 
         if (proxyService.getTargetEndpoint() != null) {
-            connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
-
             HTTPEndpoint endpoint = (HTTPEndpoint) synapseConfiguration.getLocalRegistry()
                     .get(proxyService.getTargetEndpoint());
             if (endpoint != null) {
-                Map<String, Object> connectorParameters = new HashMap<String, Object>();
-                connectorParameters.put(Constant.INBOUND_MSG, inboundMsg);
-                connectorParameters.put(Constant.OUTBOUND_MSG, outboundMsg);
-                connectorParameters.put(Constant.CONNECTOR_VAR_NAME, connectorVarName);
-                connectorParameters.put(Constant.URL, endpoint.getDefinition().getAddress());
-                connectorParameters.put(Constant.PATH, Constant.DIVIDER);
-
-                HttpClientConnector.createConnector(ballerinaASTModelBuilder, connectorParameters);
-                HttpClientConnector.callAction(ballerinaASTModelBuilder, connectorParameters);
+                this.visit(endpoint);
             }
         }
 

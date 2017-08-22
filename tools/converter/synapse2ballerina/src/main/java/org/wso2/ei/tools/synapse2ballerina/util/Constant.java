@@ -30,4 +30,7 @@ public class Constant {
     public static final String JSON = "json";
     public static final String XML = "xml";
     public static final String NAMED_SEQUENCE_TYPE = "NAMED";
+    public static final String JMS_PREFIX = "jms:";
+
+
 }

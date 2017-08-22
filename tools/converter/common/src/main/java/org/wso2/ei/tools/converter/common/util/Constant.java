@@ -36,6 +36,7 @@ public class Constant {
     public static final String BLANG_PKG_LOGGER = "logger";
     public static final String BLANG_PKG_JSON = "jsons";
     public static final String BLANG_PKG_XML = "xmls";
+    public static final String BLANG_PKG_JMS = "jms";
 
     //Ballerina Annotations
     public static final String BLANG_CONFIG = "configuration";
@@ -69,11 +70,13 @@ public class Constant {
     public static final String BLANG_GET_HEADER = "getHeader";
     public static final String BLANG_GET_JSON_PAYLOAD = "getJsonPayload";
     public static final String BLANG_GET_XML_PAYLOAD = "getXmlPayload";
+    public static final String BLANG_GET_STRING_PAYLOAD = "getStringPayload";
     public static final String BLANG_GET_STRING = "getString";
     public static final String BLANG_PARSE = "parse";
 
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
+    public static final String BLANG_JMS_CONNECTOR_SEND_ACTION = "send";
 
     //SQL package
     public static final String BLANG_CLIENT_CONNECTOR_SELECT_ACTION = " select";
@@ -110,6 +113,7 @@ public class Constant {
     //Parameter names
     public static final String OUTBOUND_MSG = "OutboundMessage";
     public static final String INBOUND_MSG = "InboundMessage";
+    public static final String JMS_MSG = "JMSMessage";
     public static final String HEADER_NAME = "HeaderName";
     public static final String VARIABLE_NAME = "VariableName";
     public static final String TYPE = "Type";
@@ -128,6 +132,8 @@ public class Constant {
     public static final String PACKAGE_NAME = "PackageName";
     public static final String VARIABLE_NAME_NEW = "NewVariableName";
     public static final String PATH = "Path";
+    public static final String JMS_EP_VAR_NAME = "JSMEndpoint";
+    public static final String JMS_QUEUE_NAME = "JMSQueueName";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//TODO : Remove  quotations surrounding the json value!";

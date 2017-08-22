@@ -81,26 +81,43 @@ public class Message {
     /**
      * Set the payload of a message
      */
-    public static void setPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
+    public static void setPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters,
+            boolean isVariableCreationNeeded) {
 
         if (Constant.JSON.equals((String) parameters.get(Constant.TYPE))) {
-            ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
-            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
-            ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.FORMAT));
-            ballerinaASTModelBuilder.createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
-            // the variable
+            if (isVariableCreationNeeded) {
+                ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
+                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
+                ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.FORMAT));
+                ballerinaASTModelBuilder
+                        .createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
+                // the variable
+            }
             ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
 
         } else if (Constant.XML.equals((String) parameters.get(Constant.TYPE))) {
-            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
-            ballerinaASTModelBuilder.addComment("//TODO: Change the double quotes to back tick. ");
-            ballerinaASTModelBuilder.createXMLLiteral((String) parameters.get(Constant.FORMAT));
-            ballerinaASTModelBuilder.createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
-            // the variable
+            if (isVariableCreationNeeded) {
+                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
+                ballerinaASTModelBuilder.addComment("//TODO: Change the double quotes to back tick. ");
+                ballerinaASTModelBuilder.createXMLLiteral((String) parameters.get(Constant.FORMAT));
+                ballerinaASTModelBuilder
+                        .createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
+                // the variable
+            }
             ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
-        }/* else if (Constant.STRING.equals((String) parameters.get(Constant.TYPE))) {
 
-        }*/
+        } else if (Constant.STRING.equals((String) parameters.get(Constant.TYPE))) {
+            if (isVariableCreationNeeded) {
+                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+                ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.FORMAT));
+                ballerinaASTModelBuilder
+                        .createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
+                // the variable
+            }
+            ballerinaASTModelBuilder
+                    .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
+        }
+
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.OUTBOUND_MSG));
@@ -110,5 +127,4 @@ public class Message {
         ballerinaASTModelBuilder.endExprList(2);
         ballerinaASTModelBuilder.createFunctionInvocation(true);
     }
-
 }

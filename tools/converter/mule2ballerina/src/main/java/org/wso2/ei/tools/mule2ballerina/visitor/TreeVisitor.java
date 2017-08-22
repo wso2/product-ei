@@ -314,7 +314,7 @@ public class TreeVisitor implements Visitor {
                     .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
         }*/
 
-        Message.setPayload(ballerinaASTModelBuilder, parameters);
+        Message.setPayload(ballerinaASTModelBuilder, parameters, true);
 
     }
 

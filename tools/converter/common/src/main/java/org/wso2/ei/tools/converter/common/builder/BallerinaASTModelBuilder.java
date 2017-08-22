@@ -78,6 +78,14 @@ public class BallerinaASTModelBuilder {
         }
     }
 
+    public boolean isProcessingActionInvocationStmt() {
+        return processingActionInvocationStmt;
+    }
+
+    public void setProcessingActionInvocationStmt(boolean processingActionInvocationStmt) {
+        this.processingActionInvocationStmt = processingActionInvocationStmt;
+    }
+
     public void addImportPackage(String pkgPath, String asPkgName) {
         modelBuilder.addImportPackage(null, null, pkgPath, asPkgName);
     }
@@ -205,7 +213,7 @@ public class BallerinaASTModelBuilder {
     }
 
     public void addMapStructKeyValue() {
-        //   modelBuilder.addMapStructKeyValue(null, null);
+        modelBuilder.addKeyValueExpr(null, null);
     }
 
     /**
@@ -285,10 +293,10 @@ public class BallerinaASTModelBuilder {
     }
 
     public void createAction(String actionName, boolean argsAvailable) {
-        BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         if (processingActionInvocationStmt) {
             modelBuilder.createActionInvocationStmt(null, null);
         } else {
+            BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
             modelBuilder.addActionInvocationExpr(null, null, nameReference, actionName, argsAvailable);
         }
     }
