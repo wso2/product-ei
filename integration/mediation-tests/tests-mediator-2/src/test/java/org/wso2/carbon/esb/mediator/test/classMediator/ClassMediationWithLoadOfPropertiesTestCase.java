@@ -41,9 +41,23 @@ import static org.testng.Assert.assertNotNull;
 
 public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTest {
 
+    private final String CLASS_JAR="org.wso2.carbon.test.mediator.simpleClassMediator.jar";
+    private final String JAR_LOCATION= "/artifacts/ESB/jar";
+
+    private ServerConfigurationManager serverConfigurationManager;
+
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+
         super.init();
+        serverConfigurationManager=new ServerConfigurationManager(context);
+        serverConfigurationManager.copyToComponentLib
+                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR).toURI()));
+        serverConfigurationManager.restartGracefully();
+
+        super.init();
+        loadESBConfigurationFromClasspath(
+                "/artifacts/ESB/mediatorconfig/class/class_mediation_with_twenty_properties.xml");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -54,9 +68,7 @@ public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTe
                    ResourceAdminServiceExceptionException, XMLStreamException,
                    InterruptedException {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("classMediationWithTwentyPropertiesProxy"),null,
-                "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
 
         String lastPrice=response.getFirstElement()
                 .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
@@ -84,8 +96,13 @@ public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTe
 
     }
 
+
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception{
         super.cleanup();
+        serverConfigurationManager.removeFromComponentLib(CLASS_JAR);
+        serverConfigurationManager.restartGracefully();
+
+        serverConfigurationManager=null;
     }
 }
