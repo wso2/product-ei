@@ -47,20 +47,22 @@ public class PropertyPersistenceAddingTestCase extends ESBIntegrationTest{
 
         super.init();
         serverConfigurationManager=new ServerConfigurationManager(context);
-//        serverConfigurationManager.copyToComponentLib
-//                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_THREE_PROPERTIES).toURI()));
-//        serverConfigurationManager.restartGracefully();
-//
-//        super.init();
-//        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_three_properties.xml");
+        serverConfigurationManager.copyToComponentLib
+                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_THREE_PROPERTIES).toURI()));
+        serverConfigurationManager.restartGracefully();
+
+        super.init();
+        loadESBConfigurationFromClasspath(
+                "/artifacts/ESB/mediatorconfig/class/class_property_persistence_three_properties.xml");
     }
 
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
+    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
+})
     @Test(groups = {"wso2.esb","localOnly"}, description = "Class Mediator " +
                                                            " -Class mediator property persistence -adding properties")
     public void testMediationPropertyPersistenceAdding() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("classPropertyPersistentThreePropertiesTestProxy"),null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "WSO2");
 
         String lastPrice=response.getFirstElement()
                 .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
@@ -83,19 +85,19 @@ public class PropertyPersistenceAddingTestCase extends ESBIntegrationTest{
          */
 
 
-//        serverConfigurationManager.removeFromComponentLib(CLASS_JAR_THREE_PROPERTIES);
-//        serverConfigurationManager.copyToComponentLib
-//                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FIVE_PROPERTIES).toURI()));
+        serverConfigurationManager.removeFromComponentLib(CLASS_JAR_THREE_PROPERTIES);
+        serverConfigurationManager.copyToComponentLib(
+                new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FIVE_PROPERTIES).toURI()));
         loadSampleESBConfiguration(0);
         /* waiting for the new config file to be written to the disk */
         Thread.sleep(10000);
         serverConfigurationManager.restartGracefully();
 
         super.init();
-//        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
+        loadESBConfigurationFromClasspath(
+                "/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
-                ("classPropertyPersistentFivePropertiesTestProxy.xml"),null, "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "IBM");
 
         lastPrice=response.getFirstElement()
                 .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
@@ -125,8 +127,8 @@ public class PropertyPersistenceAddingTestCase extends ESBIntegrationTest{
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception{
         super.cleanup();
-//        serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
-//        serverConfigurationManager.restartGracefully();
-//        serverConfigurationManager=null;
+        serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
+        serverConfigurationManager.restartGracefully();
+        serverConfigurationManager=null;
     }
 }
