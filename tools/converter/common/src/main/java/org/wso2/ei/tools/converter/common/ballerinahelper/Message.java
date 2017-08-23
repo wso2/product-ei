@@ -20,22 +20,24 @@ package org.wso2.ei.tools.converter.common.ballerinahelper;
 
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.converter.common.util.Constant;
+import org.wso2.ei.tools.converter.common.util.Property;
 
 import java.util.Map;
 
 /**
- * Ballerina message related work is handled through this
+ * Ballerina message related work is handled through this.
  */
 public class Message {
 
     /**
-     * Get header values
+     * Get header values.
      *
-     * @param ballerinaASTModelBuilder
-     * @param parameters
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               parameters required to create ballerina statement to get header values from
+     *                                 message
      */
     public static void getHeaderValues(BallerinaASTModelBuilder ballerinaASTModelBuilder,
-            Map<String, Object> parameters) {
+            Map<Property, String> parameters) {
         ballerinaASTModelBuilder
                 .addTypes(org.wso2.ei.tools.converter.common.util.Constant.BLANG_TYPE_STRING); //type of the variable
         ballerinaASTModelBuilder
@@ -43,72 +45,87 @@ public class Message {
                         org.wso2.ei.tools.converter.common.util.Constant.BLANG_GET_HEADER);
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.INBOUND_MSG));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.INBOUND_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.HEADER_NAME));
+        ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.HEADER_NAME));
         ballerinaASTModelBuilder.endExprList(2);
         ballerinaASTModelBuilder.addFunctionInvocationExpression(true);
-        ballerinaASTModelBuilder
-                .createVariable((String) parameters.get(Constant.VARIABLE_NAME), true); //name of the variable
+        ballerinaASTModelBuilder.createVariable(parameters.get(Property.VARIABLE_NAME), true); //name of the variable
         ballerinaASTModelBuilder
                 .addTypes(org.wso2.ei.tools.converter.common.util.Constant.BLANG_TYPE_STRING); //type of the variable
         ballerinaASTModelBuilder.addReturnTypes();
     }
 
     /**
-     * Get payload
+     * Get payload.
      *
-     * @param ballerinaASTModelBuilder
-     * @param parameters
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               parameters required to create ballerina statement to get payload from message
      */
-    public static void getPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
-        ballerinaASTModelBuilder.addTypes((String) parameters.get(Constant.TYPE)); //type of the variable
+    public static void getPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<Property, String> parameters) {
+        ballerinaASTModelBuilder.addTypes(parameters.get(Property.TYPE)); //type of the variable
         ballerinaASTModelBuilder
                 .createNameReference(org.wso2.ei.tools.converter.common.util.Constant.BLANG_PKG_MESSAGES,
-                        (String) parameters.get(Constant.FUNCTION_NAME));
+                        parameters.get(Property.FUNCTION_NAME));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.INBOUND_MSG));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.INBOUND_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.endExprList(1);
         ballerinaASTModelBuilder.addFunctionInvocationExpression(true);
-        ballerinaASTModelBuilder
-                .createVariable((String) parameters.get(Constant.VARIABLE_NAME), true); //name of the variable
-        ballerinaASTModelBuilder.addTypes((String) parameters.get(Constant.TYPE)); //type of the variable
+        ballerinaASTModelBuilder.createVariable(parameters.get(Property.VARIABLE_NAME), true); //name of the variable
+        ballerinaASTModelBuilder.addTypes(parameters.get(Property.TYPE)); //type of the variable
         ballerinaASTModelBuilder.addReturnTypes();
     }
 
     /**
-     * Set the payload of a message
+     * Set the payload of a message.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               parameters required to create ballerina statement to set the payload of a message
+     * @param isVariableCreationNeeded
      */
-    public static void setPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
+    public static void setPayload(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<Property, String> parameters,
+            boolean isVariableCreationNeeded) {
 
-        if (Constant.JSON.equals((String) parameters.get(Constant.TYPE))) {
-            ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
-            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
-            ballerinaASTModelBuilder.createStringLiteral((String) parameters.get(Constant.FORMAT));
-            ballerinaASTModelBuilder.createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
-            // the variable
+        switch (parameters.get(Property.TYPE)) {
+        case Constant.JSON:
+            if (isVariableCreationNeeded) {
+                ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
+                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
+                ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.FORMAT));
+                ballerinaASTModelBuilder.createVariable(parameters.get(Property.PAYLOAD_VAR_NAME), true);
+            }
             ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
-
-        } else if (Constant.XML.equals((String) parameters.get(Constant.TYPE))) {
-            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
-            ballerinaASTModelBuilder.addComment("//TODO: Change the double quotes to back tick. ");
-            ballerinaASTModelBuilder.createXMLLiteral((String) parameters.get(Constant.FORMAT));
-            ballerinaASTModelBuilder.createVariable((String) parameters.get(Constant.PAYLOAD_VAR_NAME), true); //name of
-            // the variable
+            break;
+        case Constant.XML:
+            if (isVariableCreationNeeded) {
+                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+                ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.FORMAT));
+                ballerinaASTModelBuilder.createVariable(parameters.get(Property.PAYLOAD_VAR_NAME), true);
+            }
             ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
-        }/* else if (Constant.STRING.equals((String) parameters.get(Constant.TYPE))) {
+            break;
+        case Constant.STRING:
+            if (isVariableCreationNeeded) {
+                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_STRING); //type of the variable
+                ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.FORMAT));
+                ballerinaASTModelBuilder.createVariable(parameters.get(Property.PAYLOAD_VAR_NAME), true);
+            }
+            ballerinaASTModelBuilder
+                    .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
+            break;
+        default:
+            break;
+        }
 
-        }*/
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.OUTBOUND_MSG));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.OUTBOUND_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.PAYLOAD_VAR_NAME));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.PAYLOAD_VAR_NAME));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.endExprList(2);
         ballerinaASTModelBuilder.createFunctionInvocation(true);
     }
-
 }

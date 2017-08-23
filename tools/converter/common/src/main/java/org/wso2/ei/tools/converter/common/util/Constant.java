@@ -36,6 +36,7 @@ public class Constant {
     public static final String BLANG_PKG_LOGGER = "logger";
     public static final String BLANG_PKG_JSON = "jsons";
     public static final String BLANG_PKG_XML = "xmls";
+    public static final String BLANG_PKG_JMS = "jms";
 
     //Ballerina Annotations
     public static final String BLANG_CONFIG = "configuration";
@@ -56,6 +57,7 @@ public class Constant {
     public static final String BLANG_TYPE_MAP = "map";
     public static final String BLANG_TYPE_DATATABLE = "datatable";
 
+    //Ballerina key words
     public static final String BLANG_RESOURCE_NAME = "Resource";
     public static final String BLANG_SERVICE_NAME = "Service";
     public static final String BLANG_WORKER_NAME = "Worker";
@@ -69,11 +71,14 @@ public class Constant {
     public static final String BLANG_GET_HEADER = "getHeader";
     public static final String BLANG_GET_JSON_PAYLOAD = "getJsonPayload";
     public static final String BLANG_GET_XML_PAYLOAD = "getXmlPayload";
+    public static final String BLANG_GET_STRING_PAYLOAD = "getStringPayload";
     public static final String BLANG_GET_STRING = "getString";
     public static final String BLANG_PARSE = "parse";
 
+    //Ballerina connector related
     public static final String BLANG_CLIENT_CONNECTOR = "ClientConnector";
     public static final String BLANG_CLIENT_CONNECTOR_GET_ACTION = "get";
+    public static final String BLANG_JMS_CONNECTOR_SEND_ACTION = "send";
 
     //SQL package
     public static final String BLANG_CLIENT_CONNECTOR_SELECT_ACTION = " select";
@@ -88,7 +93,7 @@ public class Constant {
     public static final String BLANG_TRACE = "trace";
     public static final String BLANG_WARN = "warn";
 
-    //Variable names
+    //ballerina variable names - A counter will be used to create dynamic names out of these
     public static final String BLANG_DEFAULT_VAR_MSG = "msg";
     public static final String BLANG_VAR_RESPONSE = "response";
     public static final String BLANG_VAR_CONNECT = "connectRef";
@@ -106,28 +111,6 @@ public class Constant {
     public static final String JSON = "json";
     public static final String XML = "xml";
     public static final String STRING = "string";
-
-    //Parameter names
-    public static final String OUTBOUND_MSG = "OutboundMessage";
-    public static final String INBOUND_MSG = "InboundMessage";
-    public static final String HEADER_NAME = "HeaderName";
-    public static final String VARIABLE_NAME = "VariableName";
-    public static final String TYPE = "Type";
-    public static final String FUNCTION_NAME = "FunctionName";
-    public static final String FORMAT = "Format";
-    public static final String PAYLOAD_VAR_NAME = "PayloadVariableName";
-    public static final String CONNECTOR_VAR_NAME = "ConnectorVarName";
-    public static final String URL = "Url";
-    public static final String SERVICE_NAME = "ServiceName";
-    public static final String PROTOCOL_PKG_NAME = "ProtocolPkgName";
-    public static final String RESOURCE_NAME = "ResourceName";
-    public static final String RESOURCE_ANNOTATION_COUNT = "ResourceAnnotationCount";
-    public static final String BASEPATH_VALUE = "ResourceAnnotationCount";
-    public static final String METHOD_NAME = "MethodName";
-    public static final String EXPRESSION = "Expression";
-    public static final String PACKAGE_NAME = "PackageName";
-    public static final String VARIABLE_NAME_NEW = "NewVariableName";
-    public static final String PATH = "Path";
 
     //Comments
     public static final String BLANG_COMMENT_JSON = "//TODO : Remove  quotations surrounding the json value!";

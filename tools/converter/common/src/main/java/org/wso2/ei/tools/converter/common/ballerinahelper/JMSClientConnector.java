@@ -25,52 +25,46 @@ import org.wso2.ei.tools.converter.common.util.Property;
 import java.util.Map;
 
 /**
- * Represent Ballerina client connector.
+ * Represent ballerina jms connector.
  */
-public class HttpClientConnector {
+public class JMSClientConnector {
 
     /**
-     * Create ballerina http client connector.
+     * Create ballerina JMS connector.
      *
      * @param ballerinaASTModelBuilder High level API to build ballerina model
-     * @param parameters               parameters needed to create ballerina http client connector
+     * @param parameters               parameters needed to create JMS connector
      */
     public static void createConnector(BallerinaASTModelBuilder ballerinaASTModelBuilder,
             Map<Property, String> parameters) {
-        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
+        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_JMS, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTModelBuilder.createRefereceTypeName();
-        /*Create an object out of above created ref type and initialize it with values*/
-        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
+        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_PKG_JMS, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.URL));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.VARIABLE_NAME));
+        ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.endExprList(1); // no of arguments
         ballerinaASTModelBuilder.initializeConnector(true); //arguments available
-        ballerinaASTModelBuilder.createVariable(parameters.get(Property.CONNECTOR_VAR_NAME), true);
+        ballerinaASTModelBuilder.createVariable(parameters.get(Property.JMS_EP_VAR_NAME), true);
     }
 
     /**
-     * Call Ballerina client connector connector action.
+     * Call jms connector's send method.
      *
      * @param ballerinaASTModelBuilder High level API to build ballerina model
-     * @param parameters               parameters needed to call an action on ballerina http client connector
+     * @param parameters               parameters needed to call jms connector action
      */
     public static void callAction(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<Property, String> parameters) {
-        //Fill LHS - Assign response to outbound message
-        ballerinaASTModelBuilder.createVariableRefList();
-        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.OUTBOUND_MSG));
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.endVariableRefList(1);
-
         //Fill RHS - Call client connector
-        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.CONNECTOR_VAR_NAME));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.JMS_EP_VAR_NAME));
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.PATH));
-        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.INBOUND_MSG));
+        ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.JMS_QUEUE_NAME));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.JMS_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.endVariableRefList(2);
-        //TODO: Support for other http methods as well
-        ballerinaASTModelBuilder.createAction(Constant.BLANG_CLIENT_CONNECTOR_GET_ACTION, true);
-        ballerinaASTModelBuilder.createAssignmentStatement();
+        ballerinaASTModelBuilder.createAction(Constant.BLANG_JMS_CONNECTOR_SEND_ACTION, true);
+        ballerinaASTModelBuilder.setProcessingActionInvocationStmt(true);
+        ballerinaASTModelBuilder.createAction(null, false);
     }
 
 }

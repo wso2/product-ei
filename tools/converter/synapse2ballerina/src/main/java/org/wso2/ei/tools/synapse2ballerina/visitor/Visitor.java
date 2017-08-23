@@ -50,4 +50,5 @@ public interface Visitor {
      void visit(PayloadFactoryMediator payloadFactoryMediator);
 
      void visit(SwitchMediator switchMediator);
+
 }

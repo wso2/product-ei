@@ -20,29 +20,40 @@ package org.wso2.ei.tools.converter.common.ballerinahelper;
 
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.converter.common.util.Constant;
+import org.wso2.ei.tools.converter.common.util.Property;
 
 import java.util.Map;
 
 /**
- * Represent ballerina annotations
+ * Represent ballerina annotations.
  */
 public class Annotation {
 
+    /**
+     * Create service annotations.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               annotation values
+     */
     public static void createServiceAnnotation(BallerinaASTModelBuilder ballerinaASTModelBuilder,
-            Map<String, Object> parameters) {
+            Map<Property, String> parameters) {
+        ballerinaASTModelBuilder.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_CONFIG);
         ballerinaASTModelBuilder
-                .createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_CONFIG);
-        ballerinaASTModelBuilder.createAnnotationAttributeValue(Constant.BLANG_BASEPATH,
-                (String) parameters.get(Constant.BASEPATH_VALUE));
+                .createAnnotationAttributeValue(Constant.BLANG_BASEPATH, parameters.get(Property.BASEPATH_VALUE));
         ballerinaASTModelBuilder.addAnnotationAttachment(1); //attributesCount is never used
     }
 
+    /**
+     * Create resource annotations.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               annotation values
+     */
     public static void createResourceAnnotation(BallerinaASTModelBuilder ballerinaASTModelBuilder,
-            Map<String, Object> parameters) {
-        ballerinaASTModelBuilder
-                .createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_RESOURCE_CONFIG);
-        ballerinaASTModelBuilder.createAnnotationAttributeArrayType(Constant.BLANG_METHODS, (String[]) parameters.get
-                (Constant.METHOD_NAME));
+            Map<Property, Object> parameters) {
+        ballerinaASTModelBuilder.createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_RESOURCE_CONFIG);
+        ballerinaASTModelBuilder.createAnnotationAttributeArrayType(Constant.BLANG_METHODS,
+                (String[]) parameters.get(Property.METHOD_NAME));
         ballerinaASTModelBuilder.addAnnotationAttachment(1); //attributesCount is never used
     }
 
