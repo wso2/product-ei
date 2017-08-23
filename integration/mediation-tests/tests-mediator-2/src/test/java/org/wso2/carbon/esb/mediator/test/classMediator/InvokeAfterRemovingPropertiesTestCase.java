@@ -35,6 +35,7 @@ public class InvokeAfterRemovingPropertiesTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
+
     }
 
     @Test(groups = "wso2.esb", description = "Invoke after removing some properties")
@@ -49,9 +50,10 @@ public class InvokeAfterRemovingPropertiesTestCase extends ESBIntegrationTest {
         double discountedPrice = Double.parseDouble(responseString);
         assertTrue(discountedPrice > 0);
 
-        editedResponse = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("InvokeAfterRemovingPropertiesTestProxy"), null,
-                "WSO2");
+        String filePath = "/artifacts/ESB/synapseconfig/class_mediator/synapse.xml";
+        loadESBConfigurationFromClasspath(filePath);
+
+        editedResponse = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         assertNotNull(editedResponse, "Response message null");
 
 
