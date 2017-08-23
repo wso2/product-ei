@@ -19,25 +19,41 @@
 package org.wso2.ei.tools.converter.common.ballerinahelper;
 
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
-import org.wso2.ei.tools.converter.common.util.Constant;
+import org.wso2.ei.tools.converter.common.util.Property;
 
 import java.util.Map;
 
 /**
- * Represent ballerina resource
+ * Represent ballerina resource.
  */
 public class Resource {
 
+    /**
+     * Start ballerina resource.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     */
     public static void startResource(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
         ballerinaASTModelBuilder.startResource();
     }
 
-    public static void endOfResource(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object>
-            parameters) {
-        ballerinaASTModelBuilder.endOfResource((String) parameters.get(Constant.RESOURCE_NAME),
-                (Integer) parameters.get(Constant.RESOURCE_ANNOTATION_COUNT));
+    /**
+     * End of ballerina resource.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               parameters needed to end ballerina resource
+     */
+    public static void endOfResource(BallerinaASTModelBuilder ballerinaASTModelBuilder,
+            Map<Property, Object> parameters) {
+        ballerinaASTModelBuilder.endOfResource((String) parameters.get(Property.RESOURCE_NAME),
+                (Integer) parameters.get(Property.RESOURCE_ANNOTATION_COUNT));
     }
 
+    /**
+     * Start the body of ballerina resource.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     */
     public static void startCallableBody(BallerinaASTModelBuilder ballerinaASTModelBuilder) {
         ballerinaASTModelBuilder.startCallableBody();
     }

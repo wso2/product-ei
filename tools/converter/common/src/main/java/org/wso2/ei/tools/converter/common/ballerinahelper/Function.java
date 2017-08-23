@@ -20,37 +20,57 @@ package org.wso2.ei.tools.converter.common.ballerinahelper;
 
 import org.wso2.ei.tools.converter.common.builder.BallerinaASTModelBuilder;
 import org.wso2.ei.tools.converter.common.util.Constant;
+import org.wso2.ei.tools.converter.common.util.Property;
 
 import java.util.Map;
 
 /**
- * Represents a ballerina function
+ * Represents a ballerina function.
  */
 public class Function {
 
-    public static void callFunction(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
-        ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.FUNCTION_NAME));
+    /**
+     * Call a ballerina function.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               function name and outbound message
+     */
+    public static void callFunction(BallerinaASTModelBuilder ballerinaASTModelBuilder,
+            Map<Property, String> parameters) {
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.FUNCTION_NAME));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createNameReference(null, (String) parameters.get(Constant.OUTBOUND_MSG));
+        ballerinaASTModelBuilder.createNameReference(null, parameters.get(Property.OUTBOUND_MSG));
         ballerinaASTModelBuilder.createSimpleVarRefExpr();
         ballerinaASTModelBuilder.endExprList(1);
         ballerinaASTModelBuilder.createFunctionInvocation(true);
     }
 
-    //Function will have only message type as an argument
+    /**
+     * Start ballerina function creation; Function will have only message type as an argument for now.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               parameters needed for function creation
+     */
     public static void startFunction(BallerinaASTModelBuilder ballerinaASTModelBuilder,
-            Map<String, Object> parameters) {
+            Map<Property, String> parameters) {
         ballerinaASTModelBuilder.startFunction();
         ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
-        ballerinaASTModelBuilder.addParameter(0, false, (String) parameters.get(Constant.OUTBOUND_MSG));
+        ballerinaASTModelBuilder.addParameter(0, false, parameters.get(Property.OUTBOUND_MSG));
         ballerinaASTModelBuilder.startCallableBody();
     }
 
-    public static void endFunction(BallerinaASTModelBuilder ballerinaASTModelBuilder, Map<String, Object> parameters) {
+    /**
+     * End of ballerina function creation.
+     *
+     * @param ballerinaASTModelBuilder High level API to build ballerina model
+     * @param parameters               parameters needed for function creation
+     */
+    public static void endFunction(BallerinaASTModelBuilder ballerinaASTModelBuilder,
+            Map<Property, String> parameters) {
         ballerinaASTModelBuilder.endCallableBody();
         ballerinaASTModelBuilder.endOfFunction(
-                (String) parameters.get(Constant.FUNCTION_NAME)); //Function name will be the same as sequence name
+                parameters.get(Property.FUNCTION_NAME)); //Function name will be the same as sequence name
     }
 
 }

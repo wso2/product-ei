@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Keep Synapse jms property names against ballerina jms property keys
+ * Keep Synapse jms property names against ballerina jms property keys.
  */
 public enum JMSPropertyMapper {
 
@@ -32,14 +32,14 @@ public enum JMSPropertyMapper {
     CONNECTION_FACTORY("transport.jms.ConnectionFactoryJNDIName", "connectionFactoryName"),
     DESTINATION_TYPE("transport.jms.DestinationType", "connectionFactoryType");
 
+    private String propertyName; //synapse jms property name
+    private String ballerinaKey; // ballerina jms key
+    private static final Map<String, String> ENUM_MAP; //Keep ballerina keys against matching synapse jms properties
+
     JMSPropertyMapper(String propertyName, String ballerinaKey) {
         this.propertyName = propertyName;
         this.ballerinaKey = ballerinaKey;
     }
-
-    private String propertyName;
-    private String ballerinaKey;
-    private static final Map<String, String> ENUM_MAP;
 
     public String getPropertyName() {
         return propertyName;
