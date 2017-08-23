@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<endpoint xmlns="http://ws.apache.org/ns/synapse" name="ds_endpoint">
-    <address uri="http://publishingwebservices.aaa.com/axis/services/GISServer" statistics="enable"/>
-</endpoint>
