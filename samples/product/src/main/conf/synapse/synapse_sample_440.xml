@@ -35,7 +35,7 @@
          </endpoint>
          <inSequence>
             <log>
-              <property name="JSON-Request" expression="json-eval($.)"/>
+              <property name="JSON-Request" expression="json-eval($)"/>
             </log>
             <xslt key="in_transform"/>
             <header name="Action" scope="default" value="urn:getQuote"/>

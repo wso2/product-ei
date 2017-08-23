@@ -30,7 +30,7 @@
 
     <sequence xmlns="http://ws.apache.org/ns/synapse" name="loganddrop">
         <log level="custom">
-            <property xmlns:ns="http://org.apache.synapse/xsd" name="[loganddrop]REPLY-JSON" expression="json-eval($.)"></property>
+            <property xmlns:ns="http://org.apache.synapse/xsd" name="[loganddrop]REPLY-JSON" expression="json-eval($)"></property>
         </log>
         <drop></drop>
     </sequence>
@@ -81,7 +81,7 @@
         <target>
             <inSequence>
                 <log level="custom">
-                    <property name="[testcallout]REQUEST-JSON" expression="json-eval($.)"/>
+                    <property name="[testcallout]REQUEST-JSON" expression="json-eval($)"/>
                 </log>
                 <callout serviceURL="http://localhost:8280/services/jsonproducer"
                          action="urn:mediate">
@@ -93,7 +93,7 @@
                             xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
                 </callout>
                 <log level="custom">
-                    <property name="[testcallout]REPLY-JSON" expression="json-eval($.)"/>
+                    <property name="[testcallout]REPLY-JSON" expression="json-eval($)"/>
                 </log>
                 <respond/>
             </inSequence>

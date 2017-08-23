@@ -32,7 +32,7 @@
             <property name="messageType" value="application/json" scope="axis2"/>
             <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
             <log>
-               <property name="JSON-Payload" expression="json-eval($.)"/>
+               <property name="JSON-Payload" expression="json-eval($)"/>
             </log>
             <send/>
          </outSequence>
@@ -51,7 +51,7 @@
                <property name="messageType" value="application/json" scope="axis2"/>
                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
                <log>
-                   <property name="JSON-Payload" expression="json-eval($.)"/>
+                   <property name="JSON-Payload" expression="json-eval($)"/>
                </log>
                <send/>
            </outSequence>
@@ -70,7 +70,7 @@
                <property name="messageType" value="application/json" scope="axis2"/>
                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
                <log>
-                   <property name="JSON-Payload" expression="json-eval($.)"/>
+                   <property name="JSON-Payload" expression="json-eval($)"/>
                </log>
                <send/>
            </outSequence>
@@ -89,7 +89,7 @@
                <property name="messageType" value="application/json" scope="axis2"/>
                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
                <log>
-                   <property name="JSON-Payload" expression="json-eval($.)"/>
+                   <property name="JSON-Payload" expression="json-eval($)"/>
                </log>
                <send/>
            </outSequence>
