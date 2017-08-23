@@ -1,0 +1,23 @@
+<api xmlns="http://ws.apache.org/ns/synapse" context="/cachingEnabledApi" name="caching_enabled_api">
+    <resource methods="GET">
+        <inSequence>
+            <log level="full">
+                <property name="Caching_Enabled_API" value="INCOMING"/>
+            </log>
+            <cache collector="false"
+                   hashGenerator="org.wso2.carbon.mediator.cache.digest.DOMHASHGenerator"
+                   scope="per-host" timeout="20">
+                <implementation maxSize="100" type="memory"/>
+            </cache>
+            <send>
+                <endpoint>
+                    <http uri-template="http://localhost:8480"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <cache collector="true" scope="per-host"/>
+            <send/>
+        </outSequence>
+    </resource>
+</api>
