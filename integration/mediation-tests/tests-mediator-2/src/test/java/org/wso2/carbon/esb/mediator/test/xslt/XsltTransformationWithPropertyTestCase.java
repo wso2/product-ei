@@ -31,7 +31,6 @@ public class XsltTransformationWithPropertyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xslt/xslt_transformation_with_property_synapse.xml");
     }
 
 
@@ -41,14 +40,12 @@ public class XsltTransformationWithPropertyTestCase extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+                getProxyServiceURLHttp("xsltTransformPropertyTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("WSO2"));
-        assertTrue(response.toString().contains("Price"));
-        assertTrue(response.toString().contains("37.50"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("WSO2"), "Response does not contain the key word: WSO2");
+        assertTrue(response.toString().contains("Price"), "Response does not contain the key word: Price");
+        assertTrue(response.toString().contains("37.50"), "Response does not contain the key word: 37.50");
 
     }
 
