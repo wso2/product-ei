@@ -1,0 +1,11 @@
+<api xmlns="http://ws.apache.org/ns/synapse" context="/xsltEmptySoapBodyWithSourceXPath"
+     name="xsltEmptySoapBodyWithSourceXPath">
+    <resource methods="GET">
+        <inSequence>
+            <xslt key="xsltSimpleEnvelope" source="/"/>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

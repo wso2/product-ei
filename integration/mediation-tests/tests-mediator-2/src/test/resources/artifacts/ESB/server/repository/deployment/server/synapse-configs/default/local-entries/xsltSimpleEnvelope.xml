@@ -1,0 +1,16 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xsltSimpleEnvelope">
+    <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+        <xsl:template match="/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <Address xmlns="http://ws.apache.org/ns/synapse">
+                        <FirstName>Hello</FirstName>
+                        <LastName>World</LastName>
+                    </Address>
+                </soapenv:Body>
+            </soapenv:Envelope>
+
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>
