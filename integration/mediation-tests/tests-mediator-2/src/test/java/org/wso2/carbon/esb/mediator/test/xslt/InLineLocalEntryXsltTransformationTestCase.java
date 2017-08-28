@@ -31,7 +31,6 @@ public class InLineLocalEntryXsltTransformationTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xslt/xslt_in_line_local_entry_synapse.xml");
     }
 
 
@@ -41,12 +40,10 @@ public class InLineLocalEntryXsltTransformationTestCase extends ESBIntegrationTe
         OMElement response;
 
         response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+                getProxyServiceURLHttp("xsltLocalEntryTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("IBM"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("IBM"), "Response does not contain the key word: IBM");
 
     }
 
