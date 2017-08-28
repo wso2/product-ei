@@ -39,16 +39,12 @@ public class ESBJAVA2006RetryOnSOAPFaultTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "<property name=\"RETRY_ON_SOAPFAULT\" value=\"false\"/>")
     public void testRetryOnSOAPFaultWithInOutFalse() throws Exception {
 
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "processor" + File.separator +
-                                          "forwarding" + File.separator + "Retry_On_SOAPFault_In_Out.xml");
-
         AxisServiceClient serviceClient = new AxisServiceClient();
         serviceClient.fireAndForget(clearCountRequest(), getBackEndServiceUrl(), "clearRequestCount");
         OMElement requestCount = serviceClient.sendReceive(getCountRequest(), getBackEndServiceUrl(), "getRequestCount");
         Assert.assertEquals(requestCount.getFirstElement().getText(), "0", "Request Cunt not clear");
 
-        serviceClient.sendRobust(getThrowAxisFaultRequest(), getMainSequenceURL(), "urn:throwAxisFault");
+        serviceClient.sendRobust(getThrowAxisFaultRequest(), getProxyServiceURLHttp("messageProcessorRetryOnSOAPFaultFalseTestProxy"), "urn:throwAxisFault");
         Thread.sleep(5000);
         requestCount = serviceClient.sendReceive(getCountRequest(), getBackEndServiceUrl(), "getRequestCount");
         Assert.assertEquals(requestCount.getFirstElement().getText(), "1", "Request Count mismatched. Sent more than one request");
@@ -60,16 +56,12 @@ public class ESBJAVA2006RetryOnSOAPFaultTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "<property name=\"RETRY_ON_SOAPFAULT\" value=\"true\"/>", enabled=false)
     public void testRetryOnSOAPFaultWithInOutTrue() throws Exception {
 
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "processor" + File.separator +
-                                          "forwarding" + File.separator + "Retry_On_SOAPFault_true_In_Out.xml");
-
         AxisServiceClient serviceClient = new AxisServiceClient();
         serviceClient.fireAndForget(clearCountRequest(), getBackEndServiceUrl(), "clearRequestCount");
         OMElement requestCount = serviceClient.sendReceive(getCountRequest(), getBackEndServiceUrl(), "getRequestCount");
         Assert.assertEquals(requestCount.getFirstElement().getText(), "0", "Request Cunt not clear");
 
-        serviceClient.sendRobust(getThrowAxisFaultRequest(), getMainSequenceURL(), "throwAxisFault");
+        serviceClient.sendRobust(getThrowAxisFaultRequest(), getProxyServiceURLHttp("messageProcessorRetryOnSOAPFaultTrueTestProxy"), "throwAxisFault");
         Thread.sleep(5000);
         requestCount = serviceClient.sendReceive(getCountRequest(), getBackEndServiceUrl(), "getRequestCount");
         Assert.assertEquals(requestCount.getFirstElement().getText(), "5", "Request Count mismatched. Not sent all request");
