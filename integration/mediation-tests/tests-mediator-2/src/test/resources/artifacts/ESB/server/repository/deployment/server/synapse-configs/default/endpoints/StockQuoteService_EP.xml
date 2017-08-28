@@ -1,0 +1,8 @@
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteServiceEp">
+    <address uri="http://localhost:9500/">
+        <suspendOnFailure>
+            <errorCodes>-1</errorCodes>
+            <progressionFactor>1.0</progressionFactor>
+        </suspendOnFailure>
+    </address>
+</endpoint>
