@@ -75,7 +75,7 @@ public class MessageProcessorPersistenceTestCase extends ESBIntegrationTest {
         // Get configuration after restart
         String afterConfig = synapseConfigAdminClient.getConfiguration();
 
-        Assert.assertTrue(afterConfig.contains("MyStore"), "Synapse Configuration doesn't contain message-store after restart");
+        Assert.assertTrue(afterConfig.contains("storeForTestMessagePersistenceAfterRestart"), "Synapse Configuration doesn't contain message-store after restart");
         Assert.assertTrue(afterConfig.contains("SamplingProcessor"), "Synapse Configuration doesn't contain message-processor after restart");
 
 

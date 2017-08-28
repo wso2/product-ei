@@ -1,0 +1,9 @@
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="SOAPFaultSample">
+        <address uri="http://localhost:9003/services/SOAPFaultSample">
+            <suspendOnFailure>
+                <errorCodes>-1</errorCodes>
+                <progressionFactor>1.0</progressionFactor>
+            </suspendOnFailure>
+        </address>
+</endpoint>
+

@@ -1,0 +1,10 @@
+<messageProcessor xmlns="http://ws.apache.org/ns/synapse"
+        class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+        name="processorForTestForwardingWithInMemoryStore" messageStore="storeForTestForwardingWithInMemoryStore">
+    <parameter name="max.delivery.drop">Disabled</parameter>
+    <parameter name="client.retry.interval">4000</parameter>
+    <parameter name="max.delivery.attempts">1</parameter>
+    <parameter name="interval">4000</parameter>
+    <parameter name="throttle">false</parameter>
+    <parameter name="is.active">true</parameter>
+</messageProcessor>
