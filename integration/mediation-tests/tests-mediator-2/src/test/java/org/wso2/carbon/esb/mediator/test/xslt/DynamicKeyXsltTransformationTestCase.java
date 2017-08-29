@@ -70,19 +70,19 @@ public class DynamicKeyXsltTransformationTestCase extends ESBIntegrationTest {
                                                  "Contains dynamic sequence request entry");
 
         resourceAdminServiceClient.addResource(
-                "/_system/config/localEntries/request_transformation.txt", "text/plain", "text files",
+                "/_system/config/localEntries/request_transformation_DynamicKeyXsltTransformationTestCase.txt", "text/plain", "text files",
                 new DataHandler("Dynamic Sequence request transformation".getBytes(), "application/text"));
-        propertiesAdminServiceClient.setProperty("/_system/config/localEntries/request_transformation.txt",
-                                                 "resourceName", "request_transform.xslt");
+        propertiesAdminServiceClient.setProperty("/_system/config/localEntries/request_transformation_DynamicKeyXsltTransformationTestCase.txt",
+                                                 "resourceName", "xsltTransformRequest");
 
         resourceAdminServiceClient.deleteResource("/_system/governance/localEntries");
         resourceAdminServiceClient.addCollection("/_system/governance/", "localEntries", "",
                                                  "Contains dynamic sequence response entry");
         resourceAdminServiceClient.addResource(
-                "/_system/governance/localEntries/response_transformation_back.txt", "text/plain", "text files",
+                "/_system/governance/localEntries/response_transformation_back_DynamicKeyXsltTransformationTestCase.txt", "text/plain", "text files",
                 new DataHandler("Dynamic Sequence response transformation".getBytes(), "application/text"));
-        propertiesAdminServiceClient.setProperty("/_system/governance/localEntries/response_transformation_back.txt",
-                                                 "resourceName", "response_transform.xslt");
+        propertiesAdminServiceClient.setProperty("/_system/governance/localEntries/response_transformation_back_DynamicKeyXsltTransformationTestCase.txt",
+                                                 "resourceName", "xsltTransformResponse");
 
         Thread.sleep(1000);
     }

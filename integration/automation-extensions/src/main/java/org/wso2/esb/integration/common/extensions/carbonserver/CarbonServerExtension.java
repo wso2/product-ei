@@ -52,8 +52,8 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                                 + File.separator + "ESB" + File.separator + "server";
                         String repository = carbonHome + File.separator + "repository";
                         File deploymentSource = new File(repository + File.separator + "deployment");
-                        File confSource = new File(repository + File.separator + "conf");
-                        File libDirectorySource = new File(carbonHome + File.separator + File.separator + "lib");
+                        File confSource = new File(carbonHome + File.separator + "conf");
+                        File libDirectorySource = new File(carbonHome + File.separator + "lib");
                         File dropinsDirectorySource = new File(carbonHome + File.separator + "dropins");
                         File deploymentDestination = new File(
                                 this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
