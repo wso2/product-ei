@@ -1,0 +1,16 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="messageProcessorInMemoryStoreTestProxy"
+       transports="http,https"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+
+            <property name="target.endpoint" value="StockQuoteServiceEp"/>
+
+            <store messageStore="storeForTestForwardingWithInMemoryStore"/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>

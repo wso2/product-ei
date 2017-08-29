@@ -24,12 +24,12 @@
             <log level="full"/>
             <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
             <property name="OUT_ONLY" value="true"/>
-            <store messageStore="MyStore"/>
+            <store messageStore="storeForTestMessagePersistenceAfterRestart"/>
         </in>
         <description>The main sequence for the message mediation</description>
     </sequence>
-    <messageStore name="MyStore"/>
-    <messageProcessor class="org.apache.synapse.message.processor.impl.sampler.SamplingProcessor" name="SamplingProcessor" messageStore="MyStore">
+    <messageStore name="storeForTestMessagePersistenceAfterRestart"/>
+    <messageProcessor class="org.apache.synapse.message.processor.impl.sampler.SamplingProcessor" name="SamplingProcessor" messageStore="storeForTestMessagePersistenceAfterRestart">
         <parameter name="interval">20000</parameter>
         <parameter name="sequence">send_seq</parameter>
     </messageProcessor>
