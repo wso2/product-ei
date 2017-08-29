@@ -34,7 +34,6 @@ public class DynamicKeyXsltTransformationTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception {
         super.init();
         uploadResourcesToRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xslt/xslt_dynamic_key_synapse.xml");
     }
 
     @Test(groups = {"wso2.esb"},
@@ -43,12 +42,10 @@ public class DynamicKeyXsltTransformationTestCase extends ESBIntegrationTest {
     public void xsltTransformationFromDynamicKey() throws Exception {
         OMElement response;
         response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+                getProxyServiceURLHttp("xsltDynamicKeySequenceTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("IBM"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("IBM"), "Response does not contain the key word: IBM");
 
     }
 

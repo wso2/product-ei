@@ -1,0 +1,21 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="xsltDynamicKeySequenceTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <sequence key="xsltMediatorTestInSequence"/>
+        </inSequence>
+        <outSequence>
+            <sequence key="xsltMediatorTestOutSequence"/>
+        </outSequence>
+        <faultSequence>
+            <makefault version="soap11">
+                <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <property name="RESPONSE" value="true"/>
+            <header name="To" expression="get-property('ReplyTo')"/>
+            <send/>
+        </faultSequence>
+    </target>
+</proxy>
