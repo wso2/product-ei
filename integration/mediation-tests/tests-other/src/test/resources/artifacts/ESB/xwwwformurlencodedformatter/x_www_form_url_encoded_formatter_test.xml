@@ -15,7 +15,7 @@
                 <log>
                     <property xmlns:ns="http://org.apache.synapse/xsd"
                               name="JSON-Payload ************* "
-                              expression="json-eval($.)"/>
+                              expression="json-eval($)"/>
                 </log>
                 <log level="custom">
                     <property name="after" value="JSON *********"/>
@@ -23,7 +23,7 @@
                 <log>
                     <property xmlns:ns="http://org.apache.synapse/xsd"
                               name="JSON-Payload ****** "
-                              expression="json-eval($.)"/>
+                              expression="json-eval($)"/>
                 </log>
                 <property name="messageType"
                           value="application/x-www-form-urlencoded"
