@@ -36,7 +36,7 @@ public class ServerManager {
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
-    private static Logger log = Logger.getLogger(ServerManager.class);
+    private static final Logger log = Logger.getLogger(ServerManager.class);
 
     /**
      * Broker startup script name.

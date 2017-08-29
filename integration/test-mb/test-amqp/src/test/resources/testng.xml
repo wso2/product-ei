@@ -25,6 +25,7 @@
         <classes>
             <class name="org.wso2.ei.mb.test.amqp.QueueTestCase"/>
             <class name="org.wso2.ei.mb.test.amqp.AcknowledgementsTestCase"/>
+            <class name="org.wso2.ei.mb.test.amqp.TopicBasicsTestCase"/>
         </classes>
     </test>
 </suite>

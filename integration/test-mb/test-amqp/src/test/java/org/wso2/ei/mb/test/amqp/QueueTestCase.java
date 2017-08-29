@@ -25,11 +25,9 @@ import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
-import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
-import org.wso2.ei.mb.test.utils.ServerManager;
+import test.java.org.wso2.ei.mb.test.amqp.BrokerTest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
@@ -38,7 +36,7 @@ import javax.naming.NamingException;
 /**
  * Test cases for basic queue related scenarios.
  */
-public class QueueTestCase {
+public class QueueTestCase extends BrokerTest {
 
     /**
      * The logger used in logging information, warnings, errors and etc.
@@ -46,17 +44,7 @@ public class QueueTestCase {
     private static Logger log = Logger.getLogger(QueueTestCase.class);
 
     /**
-     * Initiate new server manager instance.
-     */
-    private ServerManager serverManager = new ServerManager();
-
-    /**
-     * initiate configuration reader instance
-     */
-    private ConfigurationReader configurationReader;
-
-    /**
-     * Delay for multiple message test cases
+     * Delay for multiple message test cases.
      */
     private static final Long PUBLISHER_DELAY = 50L;
 
@@ -64,31 +52,12 @@ public class QueueTestCase {
      * Initialise test environment.
      */
     @BeforeClass
-    public void init() {
-
-        String archiveFilePath = System.getProperty("carbon.zip");
-
-        // Create file instance for given path.
-        File distributionArchive = new File(archiveFilePath);
-
-        // Verify if given archive path is a file and not a directory before proceed.
-        if (distributionArchive.exists() && !distributionArchive.isDirectory()) {
-            try {
-                String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
-
-                // load client configs to map
-                configurationReader = new ConfigurationReader();
-
-                // Start Enterprise Integrator broker instance
-                serverManager.startServer(tempCarbonHome);
-            } catch (IOException e) {
-                log.error("IO exception occured when trying to initialize server environment", e);
-            }
-        }
+    public void init() throws Exception {
+        super.init();
     }
 
     /**
-     * Test basic queue test scenario
+     * Test basic queue test scenario.
      * 1. Add queue subscriber to the broker.
      * 2. Add queue publisher to the broker.
      * 3. Publish 5 messages to the queue.
@@ -110,14 +79,14 @@ public class QueueTestCase {
 
         try {
             // Start JMS queue subscriber.
-            queueReceiver = new QueueReceiver("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+            queueReceiver = new QueueReceiver("QueueTestSendReceiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
                     configurationReader);
             queueReceiver.registerSubscriber();
 
             TimeUnit.SECONDS.sleep(1L);
 
             // Start JMS queue publisher.
-            queueSender = new QueueSender("testQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+            queueSender = new QueueSender("QueueTestSendReceiveQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
                     configurationReader);
             queueSender.sendMessages(sendMessageCount, "text message");
 
@@ -142,7 +111,7 @@ public class QueueTestCase {
     }
 
     /**
-     * 1. Create 2 consumers for simple queue
+     * 1. Create 2 consumers for simple queue.
      * 2. Publish 3000 message to queue
      * 3. Total messages received by both consumers should be 3000 messages.
      *
@@ -258,9 +227,7 @@ public class QueueTestCase {
      * Clean up after test case.
      */
     @AfterClass
-    public void cleanup() throws IOException {
-
-        // Stop server instance and clean up.
-        serverManager.stopServer();
+    public void clean() throws IOException {
+        super.cleanup();
     }
 }
