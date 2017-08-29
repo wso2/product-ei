@@ -18,7 +18,8 @@
 
 package org.wso2.ei.mb.test.client;
 
-import org.wso2.ei.mb.test.utils.ConfigurationConstants;
+import org.wso2.ei.mb.test.utils.ClientConstants;
+import org.wso2.ei.mb.test.utils.ClientUtils;
 import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
 
@@ -40,11 +41,7 @@ import javax.naming.NamingException;
  */
 public class QueueReceiver {
 
-    private static final String initialConnectionFactory = "org.wso2.andes.jndi.PropertiesFileInitialContextFactory";
-    private static final String connectionFactoryNamePrefix = "connectionfactory.";
-    private static final String connectionFactoryName = "andesConnectionfactory";
-
-    private QueueMessageListener messageListener;
+    private QueueMessageListener messageListener = null;
     private MessageConsumer consumer;
     private QueueSession queueSession;
     private QueueConnection queueConnection;
@@ -68,14 +65,15 @@ public class QueueReceiver {
         // map of config key and config value
         Map<String, String> clientConfigPropertiesMap = configurationReader.getClientConfigProperties();
         Properties properties = new Properties();
-        properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
-        properties.put(connectionFactoryNamePrefix + connectionFactoryName,
-                getTCPConnectionURL(clientConfigPropertiesMap));
-        properties.put("queue." + queueName, queueName);
+        properties.put(Context.INITIAL_CONTEXT_FACTORY, ClientConstants.FILE_INITIAL_CONNECTION_FACTORY);
+        properties.put(ClientConstants.CONNECTION_FACTORY_NAME_PREFIX + ClientConstants.ANDES_CONNECTION_FACTORY_NAME,
+                ClientUtils.getTCPConnectionURL(clientConfigPropertiesMap));
+        properties.put(ClientConstants.QUEUE_NAME_PREFIX + queueName, queueName);
         InitialContext ctx = new InitialContext(properties);
 
         // Lookup connection factory
-        QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx.lookup(connectionFactoryName);
+        QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx
+                .lookup(ClientConstants.ANDES_CONNECTION_FACTORY_NAME);
         queueConnection = connFactory.createQueueConnection();
         queueConnection.start();
         queueSession = queueConnection.createQueueSession(false, acknowledgeMode.getType());
@@ -146,30 +144,5 @@ public class QueueReceiver {
         this.maximumMessageCount = maximumMessageCount;
     }
 
-    /**
-     * Provide connection URL based on defined parameters.
-     *
-     * @param clientConfigPropertiesMap client connection config properties map
-     * @return connection URL
-     */
-    private String getTCPConnectionURL(Map<String, String> clientConfigPropertiesMap) {
-        // amqp://{username}:{password}@carbon/carbon?brokerlist='tcp://{hostname}:{port}'
-
-        return new StringBuffer()
-                .append("amqp://").append(clientConfigPropertiesMap.get(
-                        ConfigurationConstants.DEFAULT_USERNAME_PROPERTY)).append(":")
-                .append(clientConfigPropertiesMap.get(
-                        ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY))
-                .append("@").append(clientConfigPropertiesMap.get(
-                        ConfigurationConstants.CARBON_CLIENT_ID_PROPERTY))
-                .append("/").append(clientConfigPropertiesMap.get(
-                        ConfigurationConstants.CARBON_VIRTUAL_HOSTNAME_PROPERTY))
-                .append("?brokerlist='tcp://").append(clientConfigPropertiesMap.get(
-                        ConfigurationConstants.CARBON_DEFAULT_HOSTNAME_PROPERTY))
-                .append(":")
-                .append(clientConfigPropertiesMap.get(
-                        ConfigurationConstants.CARBON_DEFAULT_PORT_PROPERTY))
-                .append("'").toString();
-    }
 
 }
