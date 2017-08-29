@@ -36,7 +36,7 @@
     <!--
        Product Version
     -->
-    <Version>3.6.0</Version>
+    <Version>@product.version@</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
