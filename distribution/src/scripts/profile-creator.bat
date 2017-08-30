@@ -19,7 +19,7 @@ REM Profile creator tool for EI
 REM ---------------------------------------------------------------------------
 
 set DIR=%~dp0
-set DISTRIBUTION=wso2ei-@product.version@
+set for %%a in ("%~p0\..") do set DISTRIBUTION=%%~nxa
 REM get the desired profile
 echo ***********************************************************************************
 echo This tool will erase all the files which are not required for the selected profile.
