@@ -22,7 +22,8 @@
 
 
 DIR="$(dirname "${BASH_SOURCE[0]}")"
-DISTRIBUTION="wso2ei-@product.version@"
+PARENTDIR="${PWD%/*}"
+DISTRIBUTION="$(basename "$PARENTDIR")"
 #get the desired profile
 echo "*************************************************************************************"
 echo "This tool will erase all the files which are not required for the selected profile "
@@ -216,7 +217,7 @@ fi
 
 echo "Preparing a profile distribution archive."
 cd ${DIR}/../../
-zip -r ${DISTRIBUTION}${PROFILE}.zip ${DISTRIBUTION}/
+zip -r ${DISTRIBUTION}${PROFILE}.zip ${DISTRIBUTION}/ -x *profile-creator*
 
 echo "Profile creation completed successfully."
 exit 0
