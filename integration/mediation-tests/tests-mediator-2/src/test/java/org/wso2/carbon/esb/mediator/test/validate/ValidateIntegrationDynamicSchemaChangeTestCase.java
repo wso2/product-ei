@@ -58,7 +58,6 @@ public class ValidateIntegrationDynamicSchemaChangeTestCase extends ESBIntegrati
      * Now change the schema (now validation should happen according to the new schema)
      * Check whether the validation happens accordingly
      * <p/>
-     * Test artifacts: /synapseconfig/filters/validate/synapse1.xml , /synapseconfig/filters/validate/schema1.xml , /synapseconfig/filters/validate/schema1a.xml
      *
      * @throws Exception
      */
@@ -71,10 +70,6 @@ public class ValidateIntegrationDynamicSchemaChangeTestCase extends ESBIntegrati
         resourceAdminServiceClient.addResource("/_system/config/filters/schema1", "application/xml", "First Schema", new DataHandler(url));
         //Work - Schema 1
         Thread.sleep(1000);
-
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "synapseconfig" + File.separator + "filters" + File.separator
-                                          + "validate" + File.separator + "synapse1.xml");
 
         try {
             axis2Client.sendSimpleStockQuoteRequest(
