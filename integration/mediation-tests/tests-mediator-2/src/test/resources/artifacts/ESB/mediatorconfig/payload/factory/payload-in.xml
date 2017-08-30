@@ -1,3 +1,0 @@
-<ns:getSimpleQuote xmlns:ns="http://services.samples">
-    <ns:symbol>IBM</ns:symbol>
-</ns:getSimpleQuote>
