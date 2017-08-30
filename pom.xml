@@ -1262,7 +1262,7 @@
         <carbon.identity-user-ws.version>5.1.3</carbon.identity-user-ws.version>
 
         <!-- Carbon Rule version -->
-        <carbon.rule.version>4.4.1</carbon.rule.version>
+        <carbon.rule.version>4.4.4</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
         <carbon-dataservice-hosting.feature.imp.version>4.4.15</carbon-dataservice-hosting.feature.imp.version>
