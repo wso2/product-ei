@@ -1,4 +1,4 @@
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="sendMediatorWithBuildMessageFalseTestProxy">
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sendMediatorWithBuildMessageFalseTestProxy" transports="http,https">
     <target>
         <inSequence>
             <log level="full"/>

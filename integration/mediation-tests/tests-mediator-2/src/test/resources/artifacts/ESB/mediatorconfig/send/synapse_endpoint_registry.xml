@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry"/>
-   <proxy name="testGovRegistry" startOnLoad="true" trace="disable">
+   <proxy name="testGovRegistry" startOnLoad="true" trace="disable" transports="http">
       <target>
          <inSequence>
             <log level="full"/>
@@ -14,7 +14,7 @@
          </outSequence>
       </target>
    </proxy>
-   <proxy name="testConfRegistry" startOnLoad="true" trace="disable">
+   <proxy name="testConfRegistry" startOnLoad="true" trace="disable" transports="http">
       <target>
          <inSequence>
             <log level="full"/>
@@ -27,7 +27,7 @@
          </outSequence>
       </target>
    </proxy>
-   <proxy name="testLocalRegistry" startOnLoad="true" trace="disable">
+   <proxy name="testLocalRegistry" startOnLoad="true" trace="disable" transports="http">
       <target>
          <inSequence>
             <log level="full"/>

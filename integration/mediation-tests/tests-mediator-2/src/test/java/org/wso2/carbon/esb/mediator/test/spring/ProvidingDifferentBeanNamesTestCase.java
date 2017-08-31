@@ -40,20 +40,12 @@ import static org.testng.Assert.fail;
 
 public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
 
-    private static final String SIMPLE_BEAN_JAR = "org.wso2.carbon.test.simplebean.jar";
-    private static final String JAR_LOCATION = "jar";
-
     private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getESBResourceLocation() + File.separator + JAR_LOCATION + File.separator + SIMPLE_BEAN_JAR));
-        serverConfigurationManager.restartGracefully();
-
-        super.init();
         uploadResourcesToConfigRegistry();
         loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
     }
@@ -81,10 +73,6 @@ public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
         clearUploadedResource();
         Thread.sleep(5000);
         super.cleanup();
-        Thread.sleep(30000);//wait till the main sequence get deleted before restarting.
-        serverConfigurationManager.removeFromComponentLib(SIMPLE_BEAN_JAR);
-        serverConfigurationManager.restartGracefully();
-
         serverConfigurationManager = null;
     }
 

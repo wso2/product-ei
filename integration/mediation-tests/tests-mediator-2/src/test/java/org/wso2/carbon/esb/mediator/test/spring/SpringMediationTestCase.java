@@ -43,8 +43,6 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.fail;
 
 public class SpringMediationTestCase extends ESBIntegrationTest {
-    private final String SIMPLE_BEAN_JAR = "org.wso2.carbon.test.simplebean.jar";
-    private final String JAR_LOCATION = "/artifacts/ESB/jar";
 
     private ServerConfigurationManager serverConfigurationManager;
 
@@ -52,13 +50,7 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        clearUploadedResource();
         serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + SIMPLE_BEAN_JAR).toURI()));
-        serverConfigurationManager.restartGracefully();
-
-        super.init();
         uploadResourcesToConfigRegistry();
 
     }
@@ -71,9 +63,6 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
             Thread.sleep(5000);
         } finally {
             super.cleanup();
-            serverConfigurationManager.removeFromComponentLib(SIMPLE_BEAN_JAR);
-            serverConfigurationManager.restartGracefully();
-
             serverConfigurationManager = null;
         }
     }

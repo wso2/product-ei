@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<endpoint xmlns="http://ws.apache.org/ns/synapse" name="RSMeansEndpoint">
-    <address uri="http://10.100.0.117:9083/wso2/services/RSMeansService/"/>
-</endpoint>
