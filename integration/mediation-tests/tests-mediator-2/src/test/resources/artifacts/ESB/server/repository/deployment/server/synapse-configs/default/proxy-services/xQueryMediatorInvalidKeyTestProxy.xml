@@ -1,4 +1,4 @@
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryMediatorInvalidKeyTestProxy" startOnLoad="true">
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryMediatorInvalidKeyTestProxy" startOnLoad="true" transports="http,https">
     <target>
         <inSequence>
             <xquery key="xquery-key">

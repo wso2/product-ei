@@ -64,7 +64,7 @@ public class IterateEndpointsTest extends ESBIntegrationTest {
 	@Test(groups = "wso2.esb", description = "Tests for https endpoint")
 	public void testHTTPS() throws Exception {
         String response = client.getMultipleResponse(
-                getProxyServiceURLHttp("iterateWithHttpsEndPointTestProxy"), "WSO2", 2);
+                getProxyServiceURLHttps("iterateWithHttpsEndPointTestProxy"), "WSO2", 2);
         Assert.assertNotNull(response);
 		OMElement envelope = client.toOMElement(response);
 		OMElement soapBody = envelope.getFirstElement();
