@@ -1,4 +1,4 @@
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryMediatorIntegrationTestProxy">
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryMediatorIntegrationTestProxy" transports="http,https">
     <target>
         <inSequence>
             <property name="body" expression="$body/child::*[position()=1]"/>

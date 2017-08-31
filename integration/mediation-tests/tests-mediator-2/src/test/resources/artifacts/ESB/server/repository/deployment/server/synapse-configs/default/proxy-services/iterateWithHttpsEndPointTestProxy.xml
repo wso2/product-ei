@@ -1,4 +1,4 @@
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithHttpsEndPointTestProxy" transports="http"
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithHttpsEndPointTestProxy" transports="http,https"
        startOnLoad="true" trace="disable">
     <target>
         <inSequence>
