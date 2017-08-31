@@ -208,7 +208,12 @@ then
     for BUNDLE in $DEFAULT_BUNDLES; do
         IFS=',' read -a bundleArray <<< "$BUNDLE"
         JAR=${bundleArray[0]}_${bundleArray[1]}.jar
+        search_dir=${DIR}/../wso2/components/plugins
+        file_count=$(find $search_dir -name $JAR | wc -l)
+        if [[ $file_count -gt 0 ]]
+        then
         cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
+        fi
         done
 
     rm -r ${DIR}/../wso2/components/plugins
