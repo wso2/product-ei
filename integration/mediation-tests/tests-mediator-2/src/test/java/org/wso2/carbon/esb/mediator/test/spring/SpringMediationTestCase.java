@@ -50,7 +50,6 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        clearUploadedResource();
         serverConfigurationManager = new ServerConfigurationManager(context);
         uploadResourcesToConfigRegistry();
 
