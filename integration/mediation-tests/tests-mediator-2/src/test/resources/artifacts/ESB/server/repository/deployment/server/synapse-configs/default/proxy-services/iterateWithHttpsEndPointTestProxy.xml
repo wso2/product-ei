@@ -1,4 +1,4 @@
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithHttpsEndPointTestProxy" transports="http,https"
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithHttpsEndPointTestProxy" transports="https"
        startOnLoad="true" trace="disable">
     <target>
         <inSequence>
@@ -8,7 +8,7 @@
                     <sequence>
                         <send>
                             <endpoint>
-                                <address uri="https://localhost:8443/services/StockQuoteProxy"/>
+                                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
                             </endpoint>
                         </send>
                     </sequence>
