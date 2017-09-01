@@ -5,7 +5,7 @@
     <log level="full"/>
     <xslt xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
           xmlns:ns="http://org.apache.synapse/xsd"
-          key="{get-property('registry','conf:localEntries/request_transformation.txt/@resourceName')}"/>
+          key="{get-property('registry','conf:localEntries/request_transformation_DynamicKeyXsltTransformationTestCase.txt/@resourceName')}"/>
     <log level="custom">
         <property name="text" value="---------Transformed Request Message------------"/>
     </log>
