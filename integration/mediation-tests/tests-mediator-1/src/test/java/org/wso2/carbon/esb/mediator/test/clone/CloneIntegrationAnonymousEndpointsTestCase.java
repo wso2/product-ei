@@ -45,7 +45,7 @@ public class CloneIntegrationAnonymousEndpointsTestCase extends ESBIntegrationTe
     @BeforeClass()
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_unknown_endpoints.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_unknown_endpoints.xml");
         client = new CloneClient();
         axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server2 = new SampleAxis2Server("test_axis2_server_9002.xml");

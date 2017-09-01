@@ -47,7 +47,7 @@ public class InSequenceIntegrationTestCase extends ESBIntegrationTest {
      */
     @Test(groups = "wso2.esb", enabled = false)
     public void inSequenceLogTest() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/in/synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/in/synapse.xml");
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
 
         // TODO: Use log viewer to read logs that gets recorded - halted due to Log mediator problem
@@ -67,7 +67,7 @@ public class InSequenceIntegrationTestCase extends ESBIntegrationTest {
     /*https://wso2.org/jira/browse/ESBJAVA-1695*/
     @Test(groups = "wso2.esb")
     public void inSequenceSample15Test() throws Exception {
-        loadSampleESBConfigurationIfNotExists(15);
+        loadSampleESBConfiguration(15);
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
 
         Assert.assertTrue(response.toString().contains("MSFT Company"), "'MSFT Company' String not found !");

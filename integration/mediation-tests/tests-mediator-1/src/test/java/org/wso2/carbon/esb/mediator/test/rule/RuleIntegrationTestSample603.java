@@ -38,7 +38,7 @@ public class RuleIntegrationTestSample603 extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config603/synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config603/synapse.xml");
     }
 
     @Test(groups = "wso2.esb",

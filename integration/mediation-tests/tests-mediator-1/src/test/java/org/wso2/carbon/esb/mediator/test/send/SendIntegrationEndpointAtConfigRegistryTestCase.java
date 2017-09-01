@@ -42,7 +42,7 @@ public class SendIntegrationEndpointAtConfigRegistryTestCase extends ESBIntegrat
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName(), context.getContextTenant().getContextUser().getPassword());
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/synapseconfig/send_mediator/synapse_config.xml");
     }
 

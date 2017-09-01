@@ -29,7 +29,7 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 import org.wso2.esb.integration.common.clients.logging.LoggingAdminClient;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.activation.DataHandler;
 import javax.xml.namespace.QName;
@@ -41,7 +41,7 @@ import java.rmi.RemoteException;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
-public class Sample354TestCase extends ESBIntegrationTest {
+public class Sample354TestCase extends ESBSampleIntegrationTest {
 
     private final String JRUBY_JAR = "jruby-complete-1.3.0.jar";
     private final String JRUBY_JAR_LOCATION = "/artifacts/ESB/jar/";

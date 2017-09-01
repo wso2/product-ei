@@ -29,13 +29,13 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
-public class Sample653TestCase extends ESBIntegrationTest {
+public class Sample653TestCase extends ESBSampleIntegrationTest {
 
     private ServerConfigurationManager serverManager = null;
 

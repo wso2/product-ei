@@ -31,7 +31,7 @@ public class CallMediatorInNestedFilterSwitchScenario2TestCase extends ESBIntegr
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call/synapse8.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call/synapse8.xml");
     }
 
     @Test(groups = {"wso2.esb"})

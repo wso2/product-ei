@@ -23,14 +23,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.LoadbalanceFailoverClient;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
 /**
  * Sample 52: Using Load Balancing Endpoints to Handle Peak Loads
  */
-public class Sample52TestCase extends ESBIntegrationTest {
+public class Sample52TestCase extends ESBSampleIntegrationTest {
 
     private SampleAxis2Server axis2Server1;
     private SampleAxis2Server axis2Server2;

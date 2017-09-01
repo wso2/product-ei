@@ -31,7 +31,7 @@ public class CallMediatorInFaultSeqTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call/synapse15.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call/synapse15.xml");
     }
 
     @Test(groups = {"wso2.esb"})

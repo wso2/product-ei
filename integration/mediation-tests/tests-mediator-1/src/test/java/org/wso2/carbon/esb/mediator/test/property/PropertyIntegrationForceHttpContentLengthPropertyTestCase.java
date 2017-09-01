@@ -57,7 +57,7 @@ public class PropertyIntegrationForceHttpContentLengthPropertyTestCase
     public void testWithEnableFORCE_HTTP_CONTENT_LENGTHAndCOPY_CONTENT_LENGTH_FROM_INCOMINGTest()
             throws Exception {
 
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/EnableFORCE_HTTP_CONTENT_LENGTH.xml");
 
         wireServer.start();
@@ -97,7 +97,7 @@ public class PropertyIntegrationForceHttpContentLengthPropertyTestCase
     public void testWithDisableFORCE_HTTP_CONTENT_LENGTHAndCOPY_CONTENT_LENGTH_FROM_INCOMINGTest
             () throws Exception {
 
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/DisableFORCE_HTTP_CONTENT_LENGTH.xml");
 
         wireServer.start();

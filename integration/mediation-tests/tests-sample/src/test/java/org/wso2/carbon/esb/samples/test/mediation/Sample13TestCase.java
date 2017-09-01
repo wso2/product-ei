@@ -24,12 +24,12 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.ConnectionData;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.TCPMonListener;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 /**
  * Sample 13: Dual Channel Invocation Through Synapse
  */
-public class Sample13TestCase extends ESBIntegrationTest {
+public class Sample13TestCase extends ESBSampleIntegrationTest {
 
     private TCPMonListener listener1;
     private TCPMonListener listener2;

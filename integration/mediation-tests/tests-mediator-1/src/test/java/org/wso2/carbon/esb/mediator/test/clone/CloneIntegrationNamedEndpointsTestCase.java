@@ -46,7 +46,7 @@ public class CloneIntegrationNamedEndpointsTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         client = new CloneClient();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_named_endpoints.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_named_endpoints.xml");
         axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server2 = new SampleAxis2Server("test_axis2_server_9002.xml");
 

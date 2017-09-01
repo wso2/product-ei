@@ -31,7 +31,7 @@ public class Soap11FaultStringExpressionTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap11_fault_string_expression_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap11_fault_string_expression_synapse.xml");
     }
 
 

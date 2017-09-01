@@ -31,7 +31,7 @@ public class TranportCleanupOnFaultTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/callout/TranportCleanupOnFaultTest.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/TranportCleanupOnFaultTest.xml");
     }
 
     @Test(groups = { "wso2.esb" })

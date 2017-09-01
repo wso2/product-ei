@@ -36,10 +36,6 @@ public class ProxyServiceHttpToHttpsServiceTestCase extends ESBIntegrationTest {
         super.init();
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/proxyservice/http_to_https_proxy.xml");
-        updateESBConfiguration(AXIOMUtil.stringToOM(
-                esbUtils.loadResource("/artifacts/ESB/proxyconfig/proxy/proxyservice/http_to_https_proxy.xml")
-                        .toString().replace("HTTPS_PROXY_URL", getProxyServiceURLHttps("StockQuoteProxyHttps"))));
-
     }
 
     @Test(groups = "wso2.esb", description = "proxy service http calling https proxy service as the endpoint")

@@ -53,7 +53,7 @@ public class CloneIntegrationSequenceTestCase extends ESBIntegrationTest {
         resourceAdminServiceClient.addResource("/_system/config/sequences/clone/cloneLogAndSendSequence",
                                                "application/vnd.wso2.sequence", "configuration",
                                                setEndpoints(new DataHandler(url)));
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_sequence.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_sequence.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Tests SEQUENCES from  the governance registry and configuration registry")

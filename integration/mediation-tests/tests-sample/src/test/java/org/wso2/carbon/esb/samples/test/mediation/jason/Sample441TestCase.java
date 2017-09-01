@@ -21,13 +21,13 @@ import org.json.JSONObject;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.JSONClient;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class Sample441TestCase extends ESBIntegrationTest {
+public class Sample441TestCase extends ESBSampleIntegrationTest {
 
     private String JSONRequest = "{\"symbol\":\"WSO2\", \"ID\":\"StockQuote\"}";
 

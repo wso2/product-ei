@@ -39,7 +39,7 @@ public class MTOMEnableDisableSendMediatorTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/send/mtom_enable_disable_config.xml");
     }
 

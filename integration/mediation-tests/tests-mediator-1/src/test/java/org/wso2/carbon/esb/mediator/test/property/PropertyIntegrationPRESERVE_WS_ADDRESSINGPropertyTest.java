@@ -39,7 +39,7 @@ public class PropertyIntegrationPRESERVE_WS_ADDRESSINGPropertyTest extends ESBIn
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/PRESERVE_WS_ADDRESSING.xml");
         wireServer = new WireMonitorServer(8991);
 

@@ -32,14 +32,14 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.FileManager;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
 import java.io.File;
 
-public class Sample252TestCase extends ESBIntegrationTest {
+public class Sample252TestCase extends ESBSampleIntegrationTest {
 
     private LogViewerClient logViewerClient = null;
 

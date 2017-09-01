@@ -35,7 +35,7 @@ public class InvokeOnErrorSequenceFromSwitchIntegrationTestCase extends ESBInteg
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/onerror_sequence_within_switch_config.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/onerror_sequence_within_switch_config.xml");
     }
 
 

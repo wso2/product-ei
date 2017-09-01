@@ -31,7 +31,7 @@ public class ESBJAVA4689ErrorHandlingOnPublishEventMediator extends ESBIntegrati
     @BeforeClass(alwaysRun = true)
     public void deployArtifact() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/publishevent/synapseConfig.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/publishevent/synapseConfig.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Test whether fault sequence is hit when on error in publish event" +

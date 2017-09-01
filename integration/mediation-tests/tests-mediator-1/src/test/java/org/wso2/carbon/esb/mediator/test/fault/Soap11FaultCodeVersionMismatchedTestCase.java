@@ -30,7 +30,7 @@ public class Soap11FaultCodeVersionMismatchedTestCase extends ESBIntegrationTest
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap11_fault_code_VersionMismatch_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap11_fault_code_VersionMismatch_synapse.xml");
     }
 
 

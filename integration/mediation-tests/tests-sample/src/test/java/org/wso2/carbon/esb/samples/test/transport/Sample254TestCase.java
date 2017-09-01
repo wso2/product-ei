@@ -28,7 +28,7 @@ import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -38,7 +38,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Sample 254: Using the File System as Transport Medium (VFS)
  */
-public class Sample254TestCase extends ESBIntegrationTest {
+public class Sample254TestCase extends ESBSampleIntegrationTest {
     private ServerConfigurationManager serverManager;
     private String pathToVfsDir;
     private File outFolder;

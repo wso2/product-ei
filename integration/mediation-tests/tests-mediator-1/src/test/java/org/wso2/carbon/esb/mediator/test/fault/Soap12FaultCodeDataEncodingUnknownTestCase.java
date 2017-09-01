@@ -30,7 +30,7 @@ public class Soap12FaultCodeDataEncodingUnknownTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap12_fault_code_DataEncodingUnknown_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap12_fault_code_DataEncodingUnknown_synapse.xml");
     }
 
 

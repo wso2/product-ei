@@ -50,7 +50,7 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/throttle/ConcurrencyAndRequestBasedThrottlingConcurrency.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/ConcurrencyAndRequestBasedThrottlingConcurrency.xml");
 
 
         list = Collections.synchronizedList(new ArrayList());

@@ -38,7 +38,7 @@ public class PropertyIntegrationXPathTrpPropertyTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/property/XPATHTRP.xml");
         logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
 

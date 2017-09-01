@@ -25,7 +25,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 
 import javax.mail.*;
@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 
-public class Sample256TestCase extends ESBIntegrationTest {
+public class Sample256TestCase extends ESBSampleIntegrationTest {
 
 //    private String SMTP_HOST = "smtp.gmail.com";
 //    private static String GMAIL_USER_NAME = "test.automation.dummy";

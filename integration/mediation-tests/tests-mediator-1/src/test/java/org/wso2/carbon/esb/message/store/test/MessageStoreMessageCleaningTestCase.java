@@ -63,7 +63,7 @@ public class MessageStoreMessageCleaningTestCase extends ESBIntegrationTest {
 		                  "Message store should be initially empty");
 		// refer within a sequence through a store mediator, mediate messages
 		// and verify the messages are stored correctly in the store.
-		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/messageStore/sample_700.xml");
+		loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/messageStore/sample_700.xml");
 		for (int i = 0; i < 5; i++) {
 			axis2Client.sendSimpleQuoteRequest(getMainSequenceURL(), null, "WSO2");
 		}

@@ -30,7 +30,7 @@ public class Soap12FaultCodeVersionMismatchedTestCase extends ESBIntegrationTest
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap12_fault_code_VersionMismatch_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap12_fault_code_VersionMismatch_synapse.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Creating SOAP1.2 fault code VersionMismatched")

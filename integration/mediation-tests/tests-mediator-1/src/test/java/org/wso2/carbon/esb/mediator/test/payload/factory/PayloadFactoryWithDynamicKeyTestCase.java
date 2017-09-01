@@ -26,7 +26,7 @@ public class PayloadFactoryWithDynamicKeyTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/payload_factory_dynamic_key.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/payload_factory_dynamic_key.xml");
     }
 
 

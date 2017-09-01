@@ -62,7 +62,7 @@ public class MessageProcessorPersistenceTestCase extends ESBIntegrationTest {
 
         // Configuration which contains a message store and a message processor  - did this way to stop dropping XML tags.
 
-        loadESBConfigurationFromClasspathIfNotExists(separator + "artifacts" + separator + "ESB" + separator
+        loadESBConfigurationFromClasspath(separator + "artifacts" + separator + "ESB" + separator
                                           + "messageProcessorConfig" + separator + "Message_Processor_Persistence_After_Restart_Synapse.xml");
 
         // Waits until the config get sets

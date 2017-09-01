@@ -51,7 +51,7 @@ public class CallMediatorLoadBalanceFailoverTest extends ESBIntegrationTest {
         axis2Server2.deployService(SampleAxis2Server.LB_SERVICE_2);
         axis2Server2.start();
 
-        loadESBConfigurationFromClasspathIfNotExists("artifacts/ESB/mediatorconfig/call/loadbalancecalltestproxy.xml");
+        loadESBConfigurationFromClasspath("artifacts/ESB/mediatorconfig/call/loadbalancecalltestproxy.xml");
 
         //Test weather all the axis2 servers are up and running
         OMElement response = axis2Client.sendSimpleStockQuoteRequest

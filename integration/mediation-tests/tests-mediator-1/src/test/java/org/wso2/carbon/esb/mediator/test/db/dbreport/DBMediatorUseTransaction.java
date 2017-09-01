@@ -74,7 +74,7 @@ public class DBMediatorUseTransaction extends ESBIntegrationTest {
         super.init();
         updatedSynapseContent = updateSynapseConfiguration();
         handlingMysqlDB();
-        updateESBConfigurationIfNotExists(updatedSynapseContent);
+        updateESBConfiguration(updatedSynapseContent);
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -130,7 +130,7 @@ public class DBMediatorUseTransaction extends ESBIntegrationTest {
         }
         super.cleanup();
         super.init();
-        loadSampleESBConfigurationIfNotExists(0);
+        loadSampleESBConfiguration(0);
         serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
         serverConfigurationManager.restartGracefully();
 

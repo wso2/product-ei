@@ -23,7 +23,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.namespace.QName;
 
@@ -32,7 +32,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Sample 56: Using a WSDL Endpoint as the Target Endpoint
  */
-public class Sample56TestCase extends ESBIntegrationTest {
+public class Sample56TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {

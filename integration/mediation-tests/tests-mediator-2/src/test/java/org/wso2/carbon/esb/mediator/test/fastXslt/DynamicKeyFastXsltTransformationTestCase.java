@@ -36,7 +36,7 @@ public class DynamicKeyFastXsltTransformationTestCase extends ESBIntegrationTest
     public void uploadSynapseConfig() throws Exception {
         super.init();
         uploadResourcesToRegistry();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fast_xslt/fast_xslt_dynamic_key_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fast_xslt/fast_xslt_dynamic_key_synapse.xml");
     }
 
     @Test(groups = {"wso2.esb"},

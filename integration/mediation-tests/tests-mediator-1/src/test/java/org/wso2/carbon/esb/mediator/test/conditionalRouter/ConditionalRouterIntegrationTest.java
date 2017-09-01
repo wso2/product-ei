@@ -120,7 +120,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
     @SetEnvironment(executionEnvironments = { ExecutionEnvironment.PLATFORM, ExecutionEnvironment.PLATFORM })
     @Test(groups = { "wso2.esb" })
     public void conditionalRouterMediatorWithMultiRoutesTest() throws Exception {
-        loadSampleESBConfigurationIfNotExists(157);
+        loadSampleESBConfiguration(157);
         StockQuoteClient client1 = new StockQuoteClient();
         StockQuoteClient client2 = new StockQuoteClient();
         StockQuoteClient client3 = new StockQuoteClient();
@@ -161,7 +161,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
     @Test(groups = { "wso2.esb" })
     public void conditionalRouterMediatorWithBreakRouteTrueTest() throws Exception {
 
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse3.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse3.xml");
         esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, "cnd1_seq");
         esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, "cnd2_seq");
         StockQuoteClient client = new StockQuoteClient();
@@ -191,7 +191,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
     public void conditionalRouterMediatorWithBreakRouteFalseTest() throws Exception {
         esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "cnd1_seq");
         esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "cnd2_seq");
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse3.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse3.xml");
         StockQuoteClient client = new StockQuoteClient();
 
         client.addHttpHeader("foo", "bar");
@@ -233,7 +233,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
         }
         sequenceAdminServiceClient.addDynamicSequence("conf:filters/dynamic_seq1", setEndpoints(omElement));
         //load it to esb
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse4.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse4.xml");
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(mainSeqUrl, toUrl, "WSO2");
 
@@ -253,7 +253,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
      */
     @Test(groups = { "wso2.esb" })
     public void conditionalRouterMediatorWithManyRoutesTest() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse5.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse5.xml");
         StockQuoteClient client = new StockQuoteClient();
         // Note: toUrl is set to null -
         OMElement response = client.sendSimpleStockQuoteRequest(
@@ -274,7 +274,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
     @Test(groups = { "wso2.esb" },
           enabled = false)
     public void conditionalRouterMediatorWithEqualUrlTest() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse6.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse6.xml");
         StockQuoteClient client = new StockQuoteClient();
 
         OMElement response = null;
@@ -300,7 +300,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
     @Test(groups = { "wso2.esb" },
           enabled = false)
     public void conditionalRouterMediatorWithEqualHeaderTest() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse6.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/conditional_router/synapse6.xml");
         StockQuoteClient client = new StockQuoteClient();
 
         client.addHttpHeader("foo", "bar");

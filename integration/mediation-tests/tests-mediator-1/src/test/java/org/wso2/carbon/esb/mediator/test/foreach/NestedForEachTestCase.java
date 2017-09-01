@@ -110,7 +110,7 @@ public class NestedForEachTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Transforming a Message Using a Nested ForEach Construct with Iterate/Aggregate Sending Payload to backend")
     public void testNestedForEachMediatorWithIterate() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists(
+        loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/nested_foreach_iterate.xml");
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());

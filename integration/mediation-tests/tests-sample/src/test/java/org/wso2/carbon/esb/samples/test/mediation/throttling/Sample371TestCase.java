@@ -21,13 +21,13 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-public class Sample371TestCase extends ESBIntegrationTest {
+public class Sample371TestCase extends ESBSampleIntegrationTest {
 
     private static final int THROTTLE_MAX_MSG_COUNT = 4;
 

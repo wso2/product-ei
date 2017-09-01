@@ -47,7 +47,7 @@ public class CallTemplateWithValuesAndExpressionTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call_template/synapse_expressions.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call_template/synapse_expressions.xml");
 
     }
 

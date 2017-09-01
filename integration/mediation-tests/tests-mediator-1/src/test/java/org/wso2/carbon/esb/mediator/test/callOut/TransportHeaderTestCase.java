@@ -40,7 +40,7 @@ public class TransportHeaderTestCase extends ESBIntegrationTest {
 		super.init();
 		wireServer = new WireMonitorServer(8991);
 		wireServer.start();
-		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/callout/transport_headers.xml");
+		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/transport_headers.xml");
 	}
 
 	@Test(groups = "wso2.esb", description = "Transport header is set in request for soap 1.1")

@@ -124,12 +124,6 @@
         </classes>
     </test>
 
-    <test name="Xml payload and json Content Type Test Case" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.json.ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestCase" />
-        </classes>
-    </test>
-
 	<test name="Duplicate SOAP Action Header Test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.mediators.callout.CARBON15119DuplicateSOAPActionHeader" />
@@ -190,12 +184,6 @@
         </classes>
     </test>
 
-    <test name="content-type application/json GET request test" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.json.ESBJAVA4270TestCase"></class>
-        </classes>
-    </test>
-
     <test name="ut-scenario-401-on-wrong-credentials-test" preserve-order="true" verbose="2">
         <classes><class name="org.wso2.carbon.esb.security.policy.UTResponseCode401UTauthFailure"></class></classes>
     </test>
@@ -206,13 +194,6 @@
             <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport"/>
         </classes>
     </test>
-
-    <test name="Staxon JSON formatter escape auto primitive test" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.json.ESBJAVA4781EscapeAutoPrimitiveTestCase"/>
-        </classes>
-    </test>
-
 
 	<test name="Access HTTP SC after Callout mediator test">
 		<classes>

@@ -33,7 +33,7 @@ public class TestFaultSequenceCalled extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/callout/FaultSeq.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/FaultSeq.xml");
 
     }
 

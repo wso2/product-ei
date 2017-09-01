@@ -202,11 +202,6 @@ public abstract class ESBIntegrationTest {
 		updateESBConfiguration(synapseSample);
 	}
 
-    protected void loadSampleESBConfigurationIfNotExists(int sampleNo) throws Exception {
-        OMElement synapseSample = esbUtils.loadESBSampleConfiguration(sampleNo);
-        updateESBConfigurationIfNotExists(synapseSample);
-    }
-
     protected OMElement loadSampleESBConfigurationWithoutApply(int sampleNo) throws Exception {
         return esbUtils.loadESBSampleConfiguration(sampleNo);
     }
@@ -218,14 +213,6 @@ public abstract class ESBIntegrationTest {
 		updateESBConfiguration(synapseConfig);
 
 	}
-
-    protected void loadESBConfigurationFromClasspathIfNotExists(String relativeFilePath) throws Exception {
-        relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
-
-        OMElement synapseConfig = esbUtils.loadResource(relativeFilePath);
-        updateESBConfigurationIfNotExists(synapseConfig);
-
-    }
 
     protected void deleteLibrary(String fullQualifiedName)
             throws MediationLibraryAdminServiceException, RemoteException {
@@ -263,35 +250,6 @@ public abstract class ESBIntegrationTest {
 			}
 		}
 	}
-
-    protected void updateESBConfigurationIfNotExists(OMElement synapseConfig) throws Exception {
-
-        if (synapseConfiguration == null) {
-            synapseConfiguration = synapseConfig;
-        } else {
-            Iterator<OMElement> itr = synapseConfig.cloneOMElement().getChildElements();
-            while (itr.hasNext()) {
-                synapseConfiguration.addChild(itr.next());
-            }
-        }
-        esbUtils.updateESBConfigurationIfNotExists(setEndpoints(synapseConfig), contextUrls.getBackEndUrl(), sessionCookie);
-
-        if (context.getProductGroup().isClusterEnabled()) {
-            long deploymentDelay = Long.parseLong(context.getConfigurationValue("//deploymentDelay"));
-            Thread.sleep(deploymentDelay);
-            Iterator<OMElement> proxies = synapseConfig.getChildrenWithLocalName("proxy");
-            while (proxies.hasNext()) {
-                String proxy = proxies.next().getAttributeValue(new QName("name"));
-
-                Assert.assertTrue(isProxyWSDlExist(getProxyServiceURLHttp(proxy), deploymentDelay)
-                        , "Deployment Synchronizing failed in workers");
-                Assert.assertTrue(isProxyWSDlExist(getProxyServiceURLHttp(proxy), deploymentDelay)
-                        , "Deployment Synchronizing failed in workers");
-                Assert.assertTrue(isProxyWSDlExist(getProxyServiceURLHttp(proxy), deploymentDelay)
-                        , "Deployment Synchronizing failed in workers");
-            }
-        }
-    }
 
 	protected void addProxyService(OMElement proxyConfig) throws Exception {
 		String proxyName = proxyConfig.getAttributeValue(new QName("name"));
@@ -401,6 +359,23 @@ public abstract class ESBIntegrationTest {
 			proxyServicesList.remove(proxyServiceName);
 		}
 	}
+
+    /**
+     * Deletes an api with the given name.
+     *
+     * @param api name of the api to be delete
+     * @throws Exception if an exception occurs while deleting the API or checking its existence
+     */
+    protected void deleteApi(String api) throws Exception {
+        if (esbUtils.isApiExist(contextUrls.getBackEndUrl(), sessionCookie, api)) {
+            esbUtils.deleteApi(contextUrls.getBackEndUrl(), sessionCookie, api);
+            Assert.assertTrue(esbUtils.isApiUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, api),
+                    "Api: " + api + " Deletion failed or time out");
+        }
+        if (apiList != null && apiList.contains(api)) {
+            apiList.remove(api);
+        }
+    }
 
 	protected void deleteSequence(String sequenceName)
 			throws SequenceEditorException, RemoteException {

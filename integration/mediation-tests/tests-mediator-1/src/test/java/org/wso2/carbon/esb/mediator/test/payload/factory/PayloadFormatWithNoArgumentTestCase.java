@@ -38,7 +38,7 @@ public class PayloadFormatWithNoArgumentTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         // applying changes to esb - source view
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/payloadmediatype/" +
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/payloadmediatype/" +
                 "no_arguments.xml");
     }
 

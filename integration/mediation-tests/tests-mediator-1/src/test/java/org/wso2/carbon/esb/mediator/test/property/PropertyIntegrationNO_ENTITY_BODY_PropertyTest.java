@@ -45,7 +45,7 @@ public class PropertyIntegrationNO_ENTITY_BODY_PropertyTest extends ESBIntegrati
         super.init();
         OMElement config = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/property/NO_ENTITY_BODY.xml");
         config = AXIOMUtil.stringToOM(config.toString().replace("http://localhost:8280/services/", getProxyServiceURLHttp("")));
-        updateESBConfigurationIfNotExists(config);
+        updateESBConfiguration(config);
         client = new HttpClientUtil();
     }
 

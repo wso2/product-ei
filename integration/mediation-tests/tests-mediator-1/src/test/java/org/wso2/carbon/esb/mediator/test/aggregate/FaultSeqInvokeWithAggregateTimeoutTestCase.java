@@ -45,7 +45,7 @@ public class FaultSeqInvokeWithAggregateTimeoutTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB"
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
                 + File.separator + "mediatorconfig" + File.separator + "aggregate" + File.separator
                 + "OnCompleteWithTimeoutTest.xml");
     }

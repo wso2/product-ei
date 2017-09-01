@@ -31,7 +31,7 @@ public class OutIntegrationWithoutChildElementTestCase extends ESBIntegrationTes
     @BeforeClass
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/out/out_without_children.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/out/out_without_children.xml");
     }
 
 

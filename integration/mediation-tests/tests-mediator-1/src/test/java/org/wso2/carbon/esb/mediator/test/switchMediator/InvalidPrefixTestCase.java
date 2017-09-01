@@ -30,7 +30,7 @@ public class InvalidPrefixTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/invalid_prefix.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/invalid_prefix.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "SwitchMediator:Negative Case 2: Invalid prefix")

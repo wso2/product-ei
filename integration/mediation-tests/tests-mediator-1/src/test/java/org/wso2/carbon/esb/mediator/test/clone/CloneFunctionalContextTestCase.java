@@ -42,7 +42,7 @@ public class CloneFunctionalContextTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_functional_context.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_functional_context.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Tests SEQUENCES from  the governance registry and configuration registry")

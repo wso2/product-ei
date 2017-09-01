@@ -1,0 +1,30 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="MaxOpenConnectionsTest" transports="https,http"
+       statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <endpoint>
+            <address format="soap11" statistics="enable" trace="disable"
+                     uri="http://localhost:9000/services/SimpleStockQuoteService">
+                <timeout>
+                    <duration>120000</duration>
+                </timeout>
+                <markForSuspension>
+                    <retriesBeforeSuspension>3</retriesBeforeSuspension>
+                    <retryDelay>2</retryDelay>
+                </markForSuspension>
+                <suspendOnFailure>
+                    <errorCodes>101509,101503,101507,101508</errorCodes>
+                    <initialDuration>1000</initialDuration>
+                    <progressionFactor>2</progressionFactor>
+                    <maximumDuration>64000</maximumDuration>
+                </suspendOnFailure>
+                <retryConfig>
+                    <disabledErrorCodes>101504, 101505, 101500</disabledErrorCodes>
+                </retryConfig>
+            </address>
+        </endpoint>
+    </target>
+    <description></description>
+</proxy>

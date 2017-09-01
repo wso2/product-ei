@@ -30,7 +30,7 @@ public class CallMediatorFaultHandlingTests extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployService() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call/faultHandlingTests.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call/faultHandlingTests.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Check whether Fault sequence is properly working for Call mediator: " +

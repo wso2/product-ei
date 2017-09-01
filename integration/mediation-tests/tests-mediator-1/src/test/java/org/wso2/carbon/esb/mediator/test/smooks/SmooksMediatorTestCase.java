@@ -60,7 +60,7 @@ public class SmooksMediatorTestCase extends ESBIntegrationTest {
             if (isProxyDeployed) {
                 deleteProxyService(proxyName);
             }
-            loadSampleESBConfigurationIfNotExists(0);
+            loadSampleESBConfiguration(0);
 
         } finally {
             serverConfigurationManager.restoreToLastConfiguration();
@@ -81,7 +81,7 @@ public class SmooksMediatorTestCase extends ESBIntegrationTest {
     public void testSmookConfigFromLocalEntry() throws Exception {
         final int port = 8201;
         final int messageCount = 5;
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/vfsTransport/vfs_test_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/vfsTransport/vfs_test_synapse.xml");
         addVFSProxySmookConfigFromLocalEntry(port);
         MultiMessageReceiver multiMessageReceiver = new MultiMessageReceiver(port);
         multiMessageReceiver.startServer();
@@ -124,7 +124,7 @@ public class SmooksMediatorTestCase extends ESBIntegrationTest {
     public void testSmookConfigFromConfigRegistry() throws Exception {
         final int messageCount = 5;
         final int port = 7896;
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/vfsTransport/vfs_test_smook_config_at_registry.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/vfsTransport/vfs_test_smook_config_at_registry.xml");
         uploadResourcesToConfigRegistry();
         addVFSProxySmookConfigFromConfigRegistry(port);
         MultiMessageReceiver multiMessageReceiver = new MultiMessageReceiver(port);
@@ -169,7 +169,7 @@ public class SmooksMediatorTestCase extends ESBIntegrationTest {
         final String orderId = "332";
         final String targetFileLocation = SmooksMediatorXMLtoXMLTransformTestCase.class.getResource(COMMON_FILE_LOCATION).getPath() + "test" + File.separator + "xmlOut";
         final String[] orderItems = {"Pen", "Book", "Bottle", "Note Book", "Pencil", "Chocolate", "Bun", "Banana", "Hat", "Toffee"};
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/vfsTransport/vfs_xml_to_xml.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/vfsTransport/vfs_xml_to_xml.xml");
         setSmooksSampleConfigFileLocations(targetFileLocation);
         uploadXMLTransformationResourcesToConfigRegistry();
         addVFSProxyXMLtoXMLTransformation();

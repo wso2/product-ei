@@ -32,7 +32,7 @@ public class FuncCallWithoutParamsTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config9/synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config9/synapse.xml");
 
     }
 

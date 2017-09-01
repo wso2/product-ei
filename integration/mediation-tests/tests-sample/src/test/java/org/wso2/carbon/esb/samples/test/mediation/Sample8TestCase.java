@@ -22,7 +22,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import javax.xml.namespace.QName;
@@ -34,7 +34,7 @@ import static org.testng.Assert.*;
 /**
  * Sample 8: Introduction to Static and Dynamic Registry Resources and Using XSLT Transformations
  */
-public class Sample8TestCase extends ESBIntegrationTest {
+public class Sample8TestCase extends ESBSampleIntegrationTest {
     private String oldSynapseConfig;
 
     @BeforeClass(alwaysRun = true)

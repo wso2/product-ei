@@ -118,7 +118,7 @@ public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test nested foreach constructs with property mediator in flow")
     public void testNestedForEachPropertiesWithID() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists(
+        loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/nested_foreach_property_mediator.xml");
 
         LogViewerClient logViewer =

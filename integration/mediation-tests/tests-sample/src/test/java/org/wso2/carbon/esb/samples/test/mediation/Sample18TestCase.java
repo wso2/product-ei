@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +37,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Sample 18: Transforming a Message Using ForEachMediator
  */
-public class Sample18TestCase extends ESBIntegrationTest {
+public class Sample18TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {

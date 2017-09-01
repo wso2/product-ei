@@ -24,12 +24,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.ConnectionData;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.TCPMonListener;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 /**
  * Sample 50: POX to SOAP conversion
  */
-public class Sample50TestCase extends ESBIntegrationTest {
+public class Sample50TestCase extends ESBSampleIntegrationTest {
     private TCPMonListener listener;
 
     @BeforeClass(alwaysRun = true)

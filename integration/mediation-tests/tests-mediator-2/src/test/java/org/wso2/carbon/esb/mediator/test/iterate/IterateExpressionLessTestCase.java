@@ -46,7 +46,7 @@ public class IterateExpressionLessTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "Testing when there is no iterate expression is specified")
     public void testIterateExpressionLessSequenceAdding() throws Exception {
         try {
-            loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/iterate/iterator_expressionLess.xml");
+            loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterator_expressionLess.xml");
             Assert.fail("This Configuration can not be saved successfully"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertTrue(message.getMessage().contains(ESBTestConstant.ERROR_ADDING_SEQUENCE)

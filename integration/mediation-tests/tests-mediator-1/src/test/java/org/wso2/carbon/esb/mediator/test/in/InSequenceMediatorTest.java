@@ -36,7 +36,7 @@ public class InSequenceMediatorTest extends ESBIntegrationTest {
 
         super.init();
 
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/in/synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/in/synapse.xml");
 
     }
 

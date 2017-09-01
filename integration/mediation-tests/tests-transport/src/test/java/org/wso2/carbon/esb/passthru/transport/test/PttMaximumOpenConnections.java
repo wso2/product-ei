@@ -64,8 +64,6 @@ public class PttMaximumOpenConnections extends ESBIntegrationTest {
         serverConfigurationManagerAxis2.applyConfiguration(axis2File);
 
         super.init();
-
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/MaxOpenConnections/max_open_connections.xml");
         maxOpenConnectionClients = new MaximumOpenConnectionsClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
     }

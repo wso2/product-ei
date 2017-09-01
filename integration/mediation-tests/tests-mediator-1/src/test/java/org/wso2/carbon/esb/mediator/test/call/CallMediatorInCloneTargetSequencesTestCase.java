@@ -31,7 +31,7 @@ public class CallMediatorInCloneTargetSequencesTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call/synapse14.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call/synapse14.xml");
     }
 
     @Test(groups = {"wso2.esb"})

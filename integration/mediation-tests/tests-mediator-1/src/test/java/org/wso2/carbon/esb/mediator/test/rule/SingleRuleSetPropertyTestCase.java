@@ -36,7 +36,7 @@ public class SingleRuleSetPropertyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config_single_rule/synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config_single_rule/synapse.xml");
 
     }
 

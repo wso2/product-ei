@@ -49,7 +49,7 @@ public class ESBJAVA4792AggregateTimeoutTestCase extends ESBIntegrationTest {
         axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server1.deployService("LBServiceWithSleep");
         axis2Server1.start();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/aggregate/aggregateConfig.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/aggregate/aggregateConfig.xml");
     }
 
 

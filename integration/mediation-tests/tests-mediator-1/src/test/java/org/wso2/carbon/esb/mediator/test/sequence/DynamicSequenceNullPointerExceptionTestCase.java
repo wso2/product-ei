@@ -40,7 +40,7 @@ public class DynamicSequenceNullPointerExceptionTestCase extends ESBIntegrationT
     public void setEnvironment() throws Exception{
         super.init();
         String filePath="/artifacts/ESB/mediatorconfig/sequence/synapse_proxy.xml" ;
-        loadESBConfigurationFromClasspathIfNotExists(filePath);
+        loadESBConfigurationFromClasspath(filePath);
     }
     /*
         create a http header with name "Sequence" and value "correctsequence" and send a request. The

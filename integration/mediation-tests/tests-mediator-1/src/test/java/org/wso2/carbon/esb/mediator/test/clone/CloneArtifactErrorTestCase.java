@@ -20,7 +20,7 @@ public class CloneArtifactErrorTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/patch_automation/CloneArtifactTestCase.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/patch_automation/CloneArtifactTestCase.xml");
     }
 
     /**

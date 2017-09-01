@@ -40,7 +40,7 @@ public class SendMediatorEndpointFromRegistryTestCase extends ESBIntegrationTest
         resourceAdminServiceStub = new ResourceAdminServiceClient
                 (contextUrls.getBackEndUrl(), getSessionCookie());
         uploadResourcesToRegistry();
-        loadESBConfigurationFromClasspathIfNotExists
+        loadESBConfigurationFromClasspath
                 ("/artifacts/ESB/mediatorconfig/send/synapse_endpoint_registry.xml");
     }
 

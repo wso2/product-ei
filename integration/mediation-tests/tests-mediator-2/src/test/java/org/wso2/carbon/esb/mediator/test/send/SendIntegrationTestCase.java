@@ -75,7 +75,7 @@ public class SendIntegrationTestCase extends ESBIntegrationTest {
         axis2Server3.start();
 
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "sendMediatorConfig" + File.separator + "synapse.xml");
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "sendMediatorConfig" + File.separator + "synapse.xml");
 
         lbClient = new LoadbalanceFailoverClient();
 

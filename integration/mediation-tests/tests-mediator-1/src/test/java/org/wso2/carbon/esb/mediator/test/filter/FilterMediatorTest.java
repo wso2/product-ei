@@ -51,7 +51,7 @@ public class FilterMediatorTest extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"})
     public void filterMediatorWithSourceAndRegexTest() throws Exception {
 
-        loadSampleESBConfigurationIfNotExists(1);
+        loadSampleESBConfiguration(1);
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuote"), null, "WSO2");
 

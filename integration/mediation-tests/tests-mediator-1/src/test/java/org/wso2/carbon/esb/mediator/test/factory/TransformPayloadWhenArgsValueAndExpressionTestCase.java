@@ -39,7 +39,7 @@ public class TransformPayloadWhenArgsValueAndExpressionTestCase extends ESBInteg
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/value_expression_arg_payload_factory_synapse.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/value_expression_arg_payload_factory_synapse.xml");
     }
 
 

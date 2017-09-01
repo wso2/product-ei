@@ -46,7 +46,7 @@ public class ESBJAVA4469CallMediatorWithOutOnlyTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call/ESBJAVA4469.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call/ESBJAVA4469.xml");
         messageBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                              "xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
                              "   <soapenv:Header/>\n" +

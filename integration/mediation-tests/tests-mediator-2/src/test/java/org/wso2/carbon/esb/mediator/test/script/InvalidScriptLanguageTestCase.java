@@ -47,7 +47,7 @@ public class InvalidScriptLanguageTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Give an invalid scripting language name (jh instead of js) . it throws an Exception")
     public void testSequenceJSMediatorWithInvalidScriptLanguage() throws Exception {
         try {
-            loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config66/synapse.xml");
+            loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config66/synapse.xml");
             Assert.fail("This Configuration can not be saved successfully due to invalid Script language");
         } catch (AxisFault expected) {
             assertTrue((expected.getMessage().contains(ESBTestConstant.ERROR_ADDING_SEQUENCE) || expected.getMessage().contains(ESBTestConstant.UNABLE_TO_SAVE_SEQUENCE))

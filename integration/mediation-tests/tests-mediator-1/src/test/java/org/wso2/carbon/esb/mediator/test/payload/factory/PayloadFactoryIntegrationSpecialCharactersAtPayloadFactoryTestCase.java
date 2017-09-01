@@ -38,7 +38,7 @@ public class PayloadFactoryIntegrationSpecialCharactersAtPayloadFactoryTestCase 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/special_chractors_at_payload_factory.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/special_chractors_at_payload_factory.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Test for containing special characters at payload factory")

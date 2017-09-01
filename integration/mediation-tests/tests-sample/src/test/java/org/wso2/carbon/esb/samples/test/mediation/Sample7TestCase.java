@@ -21,7 +21,7 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import static org.testng.Assert.assertEquals;
@@ -30,7 +30,7 @@ import static org.testng.Assert.fail;
 /**
  * Sample 7: Using Schema Validation and the Usage of Local Registry for Storing Configuration Metadata
  */
-public class Sample7TestCase extends ESBIntegrationTest {
+public class Sample7TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {

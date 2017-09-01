@@ -39,7 +39,7 @@ public class CloneIntegrationEndpointsTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb",
           description = "Tests http address")
     public void testHTTP() throws Exception {
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_http.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_http.xml");
         OMElement response = axis2Client
                 .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CloneIntegrationEndpointsTestProxy1"), null,
                         "WSO2");
@@ -53,7 +53,7 @@ public class CloneIntegrationEndpointsTestCase extends ESBIntegrationTest {
         String sqn = FileManager.readFile(
                 getESBResourceLocation() + File.separator + "mediatorconfig" + File.separator + "clone" + File.separator
                         + "clone_https_sequence.xml");
-        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_https.xml");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_https.xml");
 
         sqn = sqn.replace("httpsEndpoint", getProxyServiceURLHttps("StockQuoteProxy"));
         addSequence(AXIOMUtil.stringToOM(sqn));

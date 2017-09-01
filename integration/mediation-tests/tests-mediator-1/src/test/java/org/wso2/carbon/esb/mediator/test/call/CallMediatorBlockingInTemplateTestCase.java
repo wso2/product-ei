@@ -36,7 +36,7 @@ public class CallMediatorBlockingInTemplateTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspathIfNotExists(
+        loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
                         + File.separator + "call" + File.separator + "CallMediatorBlockingInTemplateTest.xml");
     }
