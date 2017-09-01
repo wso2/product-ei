@@ -46,7 +46,6 @@ public class IterateContinueParentTest extends ESBIntegrationTest {
 	
 	@Test(groups = "wso2.esb", description = "Tests with continue parent=false", enabled = false)
 	public void testContinueParentFalse() throws Exception {
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_continue_parent_false.xml");
         axis2Client.sendMultipleQuoteRequest(
                 getProxyServiceURLHttp("iterateWithContinueParentFalseTestProxy"), null,
                 "WSO2", 2);

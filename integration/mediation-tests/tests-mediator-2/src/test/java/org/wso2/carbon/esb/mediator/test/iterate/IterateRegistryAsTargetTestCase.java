@@ -79,7 +79,6 @@ public class IterateRegistryAsTargetTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests for sequence from configuration registry")
     public void testConfigurationSequence() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_target_configuration.xml");
         URL url =
                 new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/iterate/iterateLogAndSendSequence.xml");
         resourceAdminServiceClient.addResource("/_system/config/sequences/iterate/iterateLogAndSendSequence",
