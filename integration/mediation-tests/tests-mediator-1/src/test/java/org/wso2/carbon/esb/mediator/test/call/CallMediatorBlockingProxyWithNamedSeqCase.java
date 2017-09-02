@@ -36,7 +36,7 @@ public class CallMediatorBlockingProxyWithNamedSeqCase extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
                         + File.separator + "call" + File.separator + "synapse19.xml");
     }

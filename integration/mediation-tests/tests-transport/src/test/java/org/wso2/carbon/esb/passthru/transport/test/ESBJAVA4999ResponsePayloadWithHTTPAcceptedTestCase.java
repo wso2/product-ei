@@ -44,8 +44,9 @@ public class ESBJAVA4999ResponsePayloadWithHTTPAcceptedTestCase extends ESBInteg
      */
     @BeforeClass(alwaysRun = true)
     public void deployAPI() throws Exception {
+
         super.init();
-        verifyAPIExistence("payload-with-202");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA-4999.xml");
     }
 
     /**

@@ -16,7 +16,7 @@ public class ValidateIntegrationDynamicSchemaKeyTestCase extends
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts"
+        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts"
                 + File.separator + "ESB" + File.separator + "synapseconfig"
                 + File.separator + "filters" + File.separator + "validate"
                 + File.separator + "synapse_config.xml");

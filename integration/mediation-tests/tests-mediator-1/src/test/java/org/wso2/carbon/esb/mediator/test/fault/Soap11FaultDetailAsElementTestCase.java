@@ -35,7 +35,7 @@ public class Soap11FaultDetailAsElementTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap11_fault_detail_as_element_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap11_fault_detail_as_element_synapse.xml");
     }
 
 

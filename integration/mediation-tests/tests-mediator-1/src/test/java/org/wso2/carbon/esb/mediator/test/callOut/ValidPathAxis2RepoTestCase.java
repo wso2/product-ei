@@ -80,7 +80,7 @@ public class ValidPathAxis2RepoTestCase extends ESBIntegrationTest {
             }
         }
 
-        updateESBConfiguration(lineItem);
+        updateESBConfigurationIfNotExists(lineItem);
     }
     //TODO
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})

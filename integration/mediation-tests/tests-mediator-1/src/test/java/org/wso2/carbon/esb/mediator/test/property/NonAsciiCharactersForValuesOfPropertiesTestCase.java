@@ -39,7 +39,7 @@ public class NonAsciiCharactersForValuesOfPropertiesTestCase extends ESBIntegrat
 	public void testNonAsciiCharactersInProperties() throws Exception {
 		String filePath =
 		                  "/artifacts/ESB/synapseconfig/patchAutomation/non_ascii_value_properties_synapse_.xml";
-		loadESBConfigurationFromClasspath(filePath);
+		loadESBConfigurationFromClasspathIfNotExists(filePath);
 	}
 
 	@AfterClass(alwaysRun = true)

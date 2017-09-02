@@ -56,7 +56,7 @@ public class ClassMediationWithLoadOfPropertiesTestCase extends ESBIntegrationTe
         serverConfigurationManager.restartGracefully();
 
         super.init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/class/class_mediation_with_twenty_properties.xml");
     }
 

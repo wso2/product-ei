@@ -35,7 +35,7 @@ public class FastXSLTTransformFileFromLocalFileUsingSample8TestCase extends ESBI
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fast_xslt/synapse_fast_xslt_sample_8.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fast_xslt/synapse_fast_xslt_sample_8.xml");
 
     }
 

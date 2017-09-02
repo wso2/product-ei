@@ -30,7 +30,7 @@ public class Soap12FaultWithAttributeResponseTrueTestCase extends ESBIntegration
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap12_fault_set_response_true_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap12_fault_set_response_true_synapse.xml");
     }
 
 

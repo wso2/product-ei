@@ -45,7 +45,7 @@ public class ForEachSequentialExecutionTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach inline sequence to sequentially transform payload")
     public void testSequentialExecution() throws Exception {
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_simple.xml");
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());

@@ -52,7 +52,7 @@ public class PropertyPersistenceAddingTestCase extends ESBIntegrationTest{
         serverConfigurationManager.restartGracefully();
 
         super.init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/class/class_property_persistence_three_properties.xml");
     }
 
@@ -88,13 +88,13 @@ public class PropertyPersistenceAddingTestCase extends ESBIntegrationTest{
         serverConfigurationManager.removeFromComponentLib(CLASS_JAR_THREE_PROPERTIES);
         serverConfigurationManager.copyToComponentLib(
                 new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FIVE_PROPERTIES).toURI()));
-        loadSampleESBConfiguration(0);
+        loadSampleESBConfigurationIfNotExists(0);
         /* waiting for the new config file to be written to the disk */
         Thread.sleep(10000);
         serverConfigurationManager.restartGracefully();
 
         super.init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
 
         response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "IBM");

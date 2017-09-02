@@ -33,7 +33,7 @@ public class CallTemplateIntegrationParamsWithValuesTestCase extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call_template/synapse_param_with_values.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call_template/synapse_param_with_values.xml");
     }
 
     @Test(groups = { "wso2.esb" },

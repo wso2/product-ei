@@ -39,7 +39,7 @@ public class CallMediatorBlockingSecurityTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
                         + File.separator + "call" + File.separator + "CallMediatorBlockingSecurity.xml");
         verifyProxyServiceExistence("callMediatorBlockingEndpointSecurityProxy");

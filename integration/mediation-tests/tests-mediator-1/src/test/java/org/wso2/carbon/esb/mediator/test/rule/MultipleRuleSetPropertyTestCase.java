@@ -37,7 +37,7 @@ public class MultipleRuleSetPropertyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config_multiple_rule/synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config_multiple_rule/synapse.xml");
 
     }
 

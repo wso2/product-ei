@@ -35,7 +35,7 @@ public class TransformPayloadWhenArgsExpressionTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/expression_arg_payload_factory_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/expression_arg_payload_factory_synapse.xml");
     }
 
 

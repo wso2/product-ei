@@ -103,7 +103,7 @@ greater than 1000 will remain with the count of one */
         mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300,'MNO')");
 
         File synapseFile = new File(getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/synapse_dbReport.xml").getPath());
-        updateESBConfiguration(updateSynapseConfiguration(synapseFile));
+        updateESBConfigurationIfNotExists(updateSynapseConfiguration(synapseFile));
 
         int numOfPrice, numOfPriceGreaterThan;
         numOfPrice = getRecordCount("SELECT price from company WHERE price < 1000 ");
@@ -134,7 +134,7 @@ the 'name' "WSO2".
         mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
 
         File synapseFile = new File(getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/synapse_sample_361.xml").getPath());
-        updateESBConfiguration(updateSynapseConfiguration(synapseFile));
+        updateESBConfigurationIfNotExists(updateSynapseConfiguration(synapseFile));
         OMElement response;
         String priceMessageContent;
 
@@ -159,7 +159,7 @@ the 'name' "WSO2".
         }
         super.cleanup();
         super.init();
-        loadSampleESBConfiguration(0);
+        loadSampleESBConfigurationIfNotExists(0);
         serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
         serverConfigurationManager.restartGracefully();
     }

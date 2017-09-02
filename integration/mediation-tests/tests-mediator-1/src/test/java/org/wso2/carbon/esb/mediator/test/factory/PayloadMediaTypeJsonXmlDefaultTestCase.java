@@ -42,7 +42,7 @@ public class PayloadMediaTypeJsonXmlDefaultTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         // applying changes to esb - source view
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/payloadmediatype/" +
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/payloadmediatype/" +
                 "media_type_xml_json_default.xml");
         serviceURL = this.getProxyServiceURLHttp("Dummy");
     }

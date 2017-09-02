@@ -39,7 +39,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_single_request.xml");
         verifyProxyServiceExistence("foreachLargeMessageTestProxy");
         symbol = FixedSizeSymbolGenerator.generateMessageMB(1);

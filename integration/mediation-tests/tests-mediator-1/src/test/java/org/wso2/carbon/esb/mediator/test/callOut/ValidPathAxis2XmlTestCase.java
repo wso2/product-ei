@@ -51,7 +51,7 @@ public class ValidPathAxis2XmlTestCase extends ESBIntegrationTest {
         OMElement configuration = (OMElement) xPath.selectSingleNode(lineItem);
         //replacing the path
         configuration.getAttribute(new QName("axis2xml")).setAttributeValue(axis2XmlPath);
-        updateESBConfiguration(lineItem);
+        updateESBConfigurationIfNotExists(lineItem);
 
     }
 

@@ -89,7 +89,7 @@ public class JsonFormat_IncomingJson_ArgsJsonExpression_WithStream_TestCase exte
     @Test(groups = {"wso2.esb"}, description = "With Stream B&F, json format, json evaluators, incoming json, outgoing json ")
     public void incomingJsontransformJsonPayloadByArgsJsonExpressions() throws Exception {
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonExpressiosns.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonExpressiosns.xml");
         postRequestWithJsonPayload(JSON_PAYLOAD,JSON_TYPE);
         assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
 
@@ -99,7 +99,7 @@ public class JsonFormat_IncomingJson_ArgsJsonExpression_WithStream_TestCase exte
     @Test(groups = {"wso2.esb"}, description = "With Stream B&F, xml format, json evaluators, incoming json, outgoing xml ")
     public void incomingJsontransformXmlPayloadByArgsJsonExpressions() throws Exception {
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/xmlFormat_JsonExpressiosns.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/xmlFormat_JsonExpressiosns.xml");
         postRequestWithJsonPayload(JSON_PAYLOAD,JSON_TYPE);
         assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
     }
@@ -108,7 +108,7 @@ public class JsonFormat_IncomingJson_ArgsJsonExpression_WithStream_TestCase exte
     @Test(groups = {"wso2.esb"}, description = "With Stream B&F, json format, json evaluators, incoming json, outgoing json ")
     public void incomingJsontransformJsonPayloadByArgsJsonXmlExpressionsValues() throws Exception {
 
-        loadESBConfigurationFromClasspath("artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonXmlExpressions_values.xml");
+        loadESBConfigurationFromClasspathIfNotExists("artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonXmlExpressions_values.xml");
         postRequestWithJsonPayload(JSON_PAYLOAD,JSON_TYPE);
         assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
         assertTrue(responsePayload.contains("MSFT"), "Symbol MSFT not found in response message");
@@ -120,7 +120,7 @@ public class JsonFormat_IncomingJson_ArgsJsonExpression_WithStream_TestCase exte
     @Test(groups = {"wso2.esb"}, description = "With Stream B&F, json format, json evaluators, incoming json, outgoing json ")
     public void incomingXmltransformJsonPayloadByArgsJsonXmlExpressionsValues() throws Exception {
 
-        loadESBConfigurationFromClasspath("artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonXmlExpressions_values.xml");
+        loadESBConfigurationFromClasspathIfNotExists("artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonXmlExpressions_values.xml");
         postRequestWithJsonPayload(XML_PAYLOAD,XML_TYPE);
         assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
         assertTrue(responsePayload.contains("MSFT"), "Symbol MSFT not found in response message");

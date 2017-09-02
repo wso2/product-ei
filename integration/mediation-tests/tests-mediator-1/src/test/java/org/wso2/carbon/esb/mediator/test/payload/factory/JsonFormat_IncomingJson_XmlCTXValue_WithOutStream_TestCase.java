@@ -37,7 +37,7 @@ public class JsonFormat_IncomingJson_XmlCTXValue_WithOutStream_TestCase extends 
 	@BeforeClass(alwaysRun = true)
 	public void uploadSynapseConfig() throws Exception {
 		super.init();
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_XmlExpressions_CTX.xml");
+		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_XmlExpressions_CTX.xml");
 	}
 
 

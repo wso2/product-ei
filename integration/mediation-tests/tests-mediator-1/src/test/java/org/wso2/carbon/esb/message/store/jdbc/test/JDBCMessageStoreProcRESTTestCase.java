@@ -109,7 +109,7 @@ public class JDBCMessageStoreProcRESTTestCase extends ESBIntegrationTest{
     @Test(groups = {"wso2.esb"}, description = "JDBC Message store support for RESTful services." )
     public void testJMSMessageStoreAndProcessor() throws Exception {
         OMElement synapse = esbUtils.loadResource("/artifacts/ESB/jdbc/JDBCMessageStoreREST.xml");
-        updateESBConfiguration(synapse);
+        updateESBConfigurationIfNotExists(synapse);
 
         HttpResponse response = httpClient.doPost(url, headers, payload, "application/json");
         assertEquals(response.getStatusLine().getStatusCode(), 202);
@@ -142,7 +142,7 @@ public class JDBCMessageStoreProcRESTTestCase extends ESBIntegrationTest{
 
         super.cleanup();
         super.init();
-        loadSampleESBConfiguration(0);
+        loadSampleESBConfigurationIfNotExists(0);
         serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
         serverConfigurationManager.restartGracefully();
     }

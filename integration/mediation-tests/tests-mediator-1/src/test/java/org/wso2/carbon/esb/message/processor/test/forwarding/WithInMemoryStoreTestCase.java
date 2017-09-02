@@ -21,7 +21,7 @@ public class WithInMemoryStoreTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath(separator + "artifacts" + separator + "ESB" + separator
+        loadESBConfigurationFromClasspathIfNotExists(separator + "artifacts" + separator + "ESB" + separator
                                           + "synapseconfig" + separator + "processor" + separator +
                                           "forwarding" + separator + "InMemoryStoreSynapse1.xml");
 

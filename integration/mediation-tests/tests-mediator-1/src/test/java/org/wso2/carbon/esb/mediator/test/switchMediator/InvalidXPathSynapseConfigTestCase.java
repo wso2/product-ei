@@ -39,7 +39,7 @@ public class InvalidXPathSynapseConfigTestCase extends ESBIntegrationTest {
         String filePath = "/artifacts/ESB/synapseconfig/filters/switchMediator/Invalid_xpath.xml";
         try {
 
-            loadESBConfigurationFromClasspath(filePath);
+            loadESBConfigurationFromClasspathIfNotExists(filePath);
             fail("Synapse configuration get saved successfully. This Configuration should not be saved");
         } catch (AxisFault expected) {
             assertTrue("Error Message mismatched.not contain message 'Error while updating the Synapse configuration'", expected.getReason()

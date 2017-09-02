@@ -36,12 +36,18 @@ import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
  * Test the SOAP version conversion to client version after a format switching inside sequences.
  */
 public class ESBJAVA1994SOAPFormatSwitchingTestcase extends ESBIntegrationTest {
+    private ServerConfigurationManager serverConfigurationManager;
+    private SampleAxis2Server axis2Server1 = null;
     private AxisOperationClient operationClient;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        verifyProxyServiceExistence("EchoServiceTestProxy");
+        serverConfigurationManager = new ServerConfigurationManager(
+                new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
+        super.init();
+        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/httpproxy/httpProxySwitchingSoap12.xml");
+
     }
 
     @Test(groups = "wso2.esb",
@@ -50,7 +56,7 @@ public class ESBJAVA1994SOAPFormatSwitchingTestcase extends ESBIntegrationTest {
     public void testSendingSoap12AfterSoap11Request() throws Exception {
         operationClient = new AxisOperationClient();
         OMElement response = operationClient
-                .send(getProxyServiceURLHttp("EchoServiceTestProxy"), null, createEchoRequestBody(), "urn:mediate");
+                .send(getProxyServiceURLHttp("EchoTest"), null, createEchoRequestBody(), "urn:mediate");
         Assert.assertTrue(response.getNamespace().getNamespaceURI().toString()
                         .contains("http://schemas.xmlsoap.org/soap/envelope/"),
                 "SOAP format conversion " + "after format switching failed");
