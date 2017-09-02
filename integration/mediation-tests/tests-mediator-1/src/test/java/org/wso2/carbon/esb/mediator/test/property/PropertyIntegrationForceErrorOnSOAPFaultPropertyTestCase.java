@@ -37,7 +37,7 @@ public class PropertyIntegrationForceErrorOnSOAPFaultPropertyTestCase extends
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
+        loadESBConfigurationFromClasspathIfNotExists
                 ("/artifacts/ESB/mediatorconfig/property/FORCE_ERROR_ON_SOAP_FAULT.xml");
     }
 

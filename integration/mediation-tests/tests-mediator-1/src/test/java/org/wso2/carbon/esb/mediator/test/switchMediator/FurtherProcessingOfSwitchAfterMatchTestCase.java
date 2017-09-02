@@ -29,7 +29,7 @@ public class FurtherProcessingOfSwitchAfterMatchTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/further_processing_of_switch_after_match.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/further_processing_of_switch_after_match.xml");
     }
 
 

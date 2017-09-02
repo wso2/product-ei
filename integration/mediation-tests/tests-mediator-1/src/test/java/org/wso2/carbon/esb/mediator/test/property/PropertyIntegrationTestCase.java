@@ -33,7 +33,7 @@ public class PropertyIntegrationTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "propertyMediatorConfig" + File.separator + "synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "propertyMediatorConfig" + File.separator + "synapse.xml");
     }
 
     @AfterClass(alwaysRun = true)

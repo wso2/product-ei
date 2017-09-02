@@ -33,7 +33,7 @@ public class InboundOutboundPolicySecurityTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/InboundOutboundSecurityTest.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/callout/InboundOutboundSecurityTest.xml");
     }
 
     @Test(groups = {"wso2.esb"})

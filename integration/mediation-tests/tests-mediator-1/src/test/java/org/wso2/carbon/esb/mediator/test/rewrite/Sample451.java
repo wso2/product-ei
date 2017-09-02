@@ -33,7 +33,7 @@ public class Sample451 extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/synapse_sample451.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/rewrite/synapse_sample451.xml");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})

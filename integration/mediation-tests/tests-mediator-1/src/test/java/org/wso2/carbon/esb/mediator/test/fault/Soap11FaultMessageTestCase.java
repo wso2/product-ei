@@ -36,7 +36,7 @@ public class Soap11FaultMessageTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap11_fault_response_validate_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap11_fault_response_validate_synapse.xml");
 
     }
 

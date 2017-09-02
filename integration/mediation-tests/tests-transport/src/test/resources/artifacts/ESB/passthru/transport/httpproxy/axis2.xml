@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
   ~
-  ~ WSO2 Inc. licenses this file to you under the Apache License,
-  ~ Version 2.0 (the "License"); you may not use this file except
-  ~ in compliance with the License.
-  ~ You may obtain a copy of the License at
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
   ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~    http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~ Unless required by applicable law or agreed to in writing,
-  ~ software distributed under the License is distributed on an
-  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  ~ KIND, either express or implied. See the License for the
-  ~ specific language governing permissions and limitations
-  ~ under the License.
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
   -->
 
 <axisconfig name="AxisJava2.0">
@@ -54,16 +54,12 @@
     <!--the directory in which .aar services are deployed inside axis2 repository-->
     <parameter name="ServicesDirectory">axis2services</parameter>
 
-    <!--If turned on with use the Accept header of the request to determine the contentType of the
-    response-->
-    <parameter name="httpContentNegotiation">true</parameter>
-
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">WSO2 EI 6.1.1</parameter>
-    <parameter name="server" locked="true">WSO2 EI 6.1.1</parameter>
+    <parameter name="userAgent" locked="true">WSO2 ESB 5.0.0</parameter>
+    <parameter name="server" locked="true">WSO2 ESB 5.0.0</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
@@ -77,7 +73,7 @@
     <parameter name="DrillDownToRootCauseForFaultReason" locked="false">false</parameter>
 
     <!-- Set the flag to true if you want to enable transport level session management -->
-    <parameter name="manageTransportSession">true</parameter>
+    <parameter name="manageTransportSession" locked="false">true</parameter>
 
     <!-- This will give out the timout of the configuration contexts, in milliseconds -->
     <parameter name="ConfigContextTimeoutInterval" locked="false">30000</parameter>
@@ -90,8 +86,6 @@
     <parameter name="SynapseConfig.ResolveRoot" locked="false">.</parameter>
     <!-- Synapse Server name parameter -->
     <parameter name="SynapseConfig.ServerName" locked="false">localhost</parameter>
-    <!-- Returns 401 for UT secured scenario with incorrect/missing credentials -->
-    <parameter name="enableBasicAuth" locked="false">true</parameter>
 
     <!-- To override repository/services you need to uncomment following parameter and value -->
     <!-- SHOULD be absolute file path. -->
@@ -118,7 +112,7 @@
     <!-- ================================================= -->
 
     <!-- Deployer for the dataservice. -->
-    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>-->
+    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.DBDeployer"/>-->
 
     <!-- Axis1 deployer for Axis2 -->
     <!--<deployer extension="wsdd" class="org.wso2.carbon.axis1services.Axis1Deployer" directory="axis1services"/>-->
@@ -173,7 +167,7 @@
 
         <!--JSON Message Formatters-->
         <messageFormatter contentType="application/json"
-                          class="org.wso2.carbon.integrator.core.json.JsonStreamFormatter"/>
+                          class="org.apache.synapse.commons.json.JsonStreamFormatter"/>
         <!--messageFormatter contentType="application/x-www-form-urlencoded"
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
         <!--messageFormatter contentType="multipart/form-data"
@@ -213,7 +207,7 @@
 
         <!--JSON Message Builders-->
         <messageBuilder contentType="application/json"
-                        class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder"/>
+                        class="org.apache.synapse.commons.json.JsonStreamBuilder"/>
         <!--messageBuilder contentType="application/xml"
                         class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
         <!--messageBuilder contentType="application/x-www-form-urlencoded"
@@ -252,7 +246,6 @@
     <transportReceiver name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener">
         <parameter name="port" locked="false">8243</parameter>
         <parameter name="non-blocking" locked="false">true</parameter>
-        <parameter name="HttpsProtocols">TLSv1,TLSv1.1,TLSv1.2</parameter>
         <!--parameter name="bind-address" locked="false">hostname or IP address</parameter-->
         <!--parameter name="WSDLEPRPrefix" locked="false">https://apachehost:port/somepath</parameter-->
         <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
@@ -277,65 +270,56 @@
 
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
 
-    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>
+    <!--<transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>-->
 
     <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
     <!-- configure any optional POP3/IMAP properties
     check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more details-->
     <!--</transportReceiver>-->
 
-    <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment (e.g. ActiveMQ) -->
+    <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment (e.g. ActiveMQ)
     <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
+        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
+		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-
-        <parameter name="propertyIntegrationAxis2PropertiesTestCase" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-            <parameter name="transport.jms.ConcurrentConsumers" locked="false">50</parameter>
-            <parameter name="transport.jms.MaxConcurrentConsumers" locked="false">200</parameter>
+        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
-    </transportReceiver>
+    </transportReceiver>-->
 
     <!--Uncomment this and configure as appropriate for JMS transport support with Apache Qpid -->
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
@@ -345,21 +329,21 @@
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
@@ -401,14 +385,6 @@
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
 
-    <!--<transportSender name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpSender">-->
-        <!--<parameter name="non-blocking" locked="false">true</parameter>-->
-        <!--&lt;!&ndash;<parameter name="warnOnHTTP500" locked="false">*</parameter>&ndash;&gt;-->
-        <!--&lt;!&ndash;parameter name="http.proxyHost" locked="false">localhost</parameter&ndash;&gt;-->
-        <!--&lt;!&ndash;<parameter name="http.proxyPort" locked="false">3128</parameter>&ndash;&gt;-->
-        <!--&lt;!&ndash;<parameter name="http.nonProxyHosts" locked="false">localhost|moon|sun</parameter>&ndash;&gt;-->
-    <!--</transportSender>-->
-
     <transportSender name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpSender">
         <parameter name="non-blocking" locked="false">true</parameter>
         <!--<parameter name="warnOnHTTP500" locked="false">*</parameter>-->
@@ -443,10 +419,10 @@
     <!--Uncomment this local transport to use local transport in mediation flow-->
     <!--<transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>-->
 
-    <!-- uncomment this and configure to use connection pools for sending messages-->
-    <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/>
+    <!-- uncomment this and configure to use connection pools for sending messages>
+      <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
 
-    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
+    <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
 
     <!-- Uncomment and configure the SMTP server information
     check com.sun.mail.smtp package documentation for descriptions of properties
@@ -475,21 +451,6 @@
 
     <!--<transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>-->
 
-    <!--<transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
-        <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
-        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
-    </transportSender>-->
-
-    <!--<transportSender name="wss" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
-        <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
-        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
-        <parameter name="ws.trust.store" locked="false">
-            <ws.trust.store.location>repository/resources/security/client-truststore.jks</ws.trust.store.location>
-            <ws.trust.store.Password>wso2carbon</ws.trust.store.Password>
-        </parameter>
-    </transportSender>-->
-
-
     <!-- ================================================= -->
     <!--             Global Engaged Modules                -->
     <!-- ================================================= -->
@@ -508,10 +469,6 @@
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
                 enable="false">
-
-        <!-- Parameter to differentiate clustering mode, Default value will be "nonWorkerManager" in which
-         case the all nodes of the cluster run schedule tasks-->
-        <parameter name="clusteringPattern">nonWorkerManager</parameter>
 
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
@@ -621,7 +578,7 @@
         -->
         <groupManagement enable="false">
             <applicationDomain name="wso2.esb.domain"
-                               description="EI group"
+                               description="ESB group"
                                agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent"
                                subDomain="worker"
                                port="2222"/>
@@ -633,7 +590,7 @@
     <!-- ================================================= -->
 
     <!--
-        Uncomment and configure the following section to enable transactions support
+        Uncomment and configure the following section to enable transactions support 
     -->
     <!--<transaction timeout="30000">
         <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
@@ -663,8 +620,6 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
-                <handler name="JSONMessageHandler"
-                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="CarbonContextConfigurator"
                      class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
@@ -687,13 +642,12 @@
         </phase>
         <phase name="Security"/>
         <phase name="PreDispatch">
-            <!--Uncomment following handler to enable logging in EI log UI-->
+            <!--Uncomment following handler to enable logging in ESB log UI-->
             <!--<handler name="TenantDomainSetter"-->
             <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
         </phase>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
-            <handler name="JSONMessageHandler" class="org.apache.axis2.json.gson.JSONMessageHandler" />
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
@@ -760,8 +714,6 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
-                <handler name="JSONMessageHandler"
-                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">

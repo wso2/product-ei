@@ -44,7 +44,7 @@ public class PropertyIntegrationRESTURLPostFixTestCase extends ESBIntegrationTes
         super.init();
         OMElement config = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/property/REST_URL_postfix.xml");
         config = AXIOMUtil.stringToOM(config.toString().replace("http://localhost:8280/services/", getProxyServiceURLHttp("")));
-        updateESBConfiguration(config);
+        updateESBConfigurationIfNotExists(config);
         client= new HttpClientUtil();
     }
 

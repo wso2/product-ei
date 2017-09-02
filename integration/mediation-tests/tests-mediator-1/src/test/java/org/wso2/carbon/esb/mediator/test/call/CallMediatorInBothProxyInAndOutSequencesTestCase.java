@@ -31,7 +31,7 @@ public class CallMediatorInBothProxyInAndOutSequencesTestCase extends ESBIntegra
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/call/synapse2.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/call/synapse2.xml");
     }
 
     @Test(groups = {"wso2.esb"})

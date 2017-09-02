@@ -46,7 +46,7 @@ public class PayloadFactoryLiteralArgumentTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
+        loadESBConfigurationFromClasspathIfNotExists("artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
                 + File.separator + "payload" + File.separator + "factory" + File.separator + "literal_argument_payload_factory.xml");
     }
 

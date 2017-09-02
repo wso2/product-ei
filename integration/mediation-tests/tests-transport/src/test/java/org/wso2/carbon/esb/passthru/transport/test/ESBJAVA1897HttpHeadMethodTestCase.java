@@ -40,7 +40,7 @@ import static org.testng.Assert.assertTrue;
  *
  */
 public class ESBJAVA1897HttpHeadMethodTestCase extends  ESBIntegrationTest{
-    private static final String SERVICE_NAME = "RestServiceTestProxy";
+    private static final String SERVICE_NAME = "RestServiceProxy";
     private SampleAxis2Server axis2Server1 = null;
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -55,12 +55,20 @@ public class ESBJAVA1897HttpHeadMethodTestCase extends  ESBIntegrationTest{
     		axis2Server1.deployService(ESBTestConstant.STUDENT_REST_SERVICE);
 //    	}
         super.init();
-        verifyProxyServiceExistence("RestServiceTestProxy");
+        // load the proxy config
+        String relativePath = "artifacts" + File.separator + "ESB" +
+                File.separator + "synapseconfig" + File.separator + "rest" +
+                File.separator + "rest-service-proxy.xml";
+        ESBTestCaseUtils util = new ESBTestCaseUtils();
+        relativePath = relativePath.replaceAll("[\\\\/]", File.separator);
+        OMElement proxyConfig = util.loadResource(relativePath);
+        addProxyService(proxyConfig);
         
     }
 
     @Test(groups = "wso2.esb", description = "test to verify that the HTTP HEAD method works with PTT.")
 	public void testHttpHeadMethod() throws Exception {
+    	Thread.sleep(5000);
     	String restURL = (getProxyServiceURLHttp(SERVICE_NAME)) + "/students";
     	DefaultHttpClient httpclient = new DefaultHttpClient();
     	HttpHead httpHead = new HttpHead(restURL);

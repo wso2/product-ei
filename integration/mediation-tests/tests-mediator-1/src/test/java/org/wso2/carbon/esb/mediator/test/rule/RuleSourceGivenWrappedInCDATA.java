@@ -36,7 +36,7 @@ public class RuleSourceGivenWrappedInCDATA extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config_rule_s3/synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config_rule_s3/synapse.xml");
 
     }
 

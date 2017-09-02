@@ -25,7 +25,7 @@ public class ESBJAVA2615TestCase  extends ESBIntegrationTest {
         super.init();
         server = new ProtocolViolationServer();
         server.runServer();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/proxyconfig/proxy/protocolViolationProxy/synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/proxyconfig/proxy/protocolViolationProxy/synapse.xml");
     }
     
     @Test(groups = {"wso2.esb"}, description = "Creating Protocol Violation test",enabled=true)

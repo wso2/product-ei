@@ -44,7 +44,7 @@ public class testInfiniteLoopingWithCallMediatorTestCase extends ESBIntegrationT
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/foreach/"
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/foreach/"
                 + "foreach_test_message_flow_with_call.xml");
     }
 

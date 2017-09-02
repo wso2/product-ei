@@ -44,7 +44,7 @@ public class RouterMediatorEndpointsTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests different types of endpoints")
     public void testEndpoints() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_endpoint_test.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/router/router_endpoint_test.xml");
         URL url =  new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/router/router_endpoint.xml");
         endPointAdminClient.addDynamicEndPoint("gov:/myEndpoint/routerEndpoint", setEndpoints(new DataHandler(url)));
 

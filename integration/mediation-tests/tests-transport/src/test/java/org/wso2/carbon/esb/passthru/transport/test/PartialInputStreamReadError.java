@@ -57,13 +57,12 @@ public class PartialInputStreamReadError extends ESBIntegrationTest {
         super.init();
         input = FileUtils.readFileToString(new File(getESBResourceLocation() + "/passthru/transport/inputESBJAVA4616.xml"),
                 "ISO-8859-1");
-        verifyProxyServiceExistence("ProcessPO2TestProxy");
-        verifyProxyServiceExistence("ProcessPOTestProxy");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA-4616.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Testing with a inSequence with Log Mediator")
     public void testPartialReadErrorWithLogMediator() throws Exception {
-        URL endpoint = new URL(getProxyServiceURLHttp("ProcessPO2TestProxy"));
+        URL endpoint = new URL(getProxyServiceURLHttp("ProcessPO2"));
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", "application/xml");
         HttpResponse httpResponse = doPost(endpoint, input, header);
@@ -72,7 +71,7 @@ public class PartialInputStreamReadError extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Testing with a inSequence with Conditional statement")
     public void testPartialReadErrorWithSequenceMediator() throws Exception {
-        URL endpoint = new URL(getProxyServiceURLHttp("ProcessPOTestProxy"));
+        URL endpoint = new URL(getProxyServiceURLHttp("ProcessPO"));
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", "application/xml");
         HttpResponse httpResponse = doPost(endpoint, input, header);

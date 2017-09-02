@@ -28,7 +28,7 @@ public class MultipleOutMediatorsTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/out/multiple_out_mediators_config.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/out/multiple_out_mediators_config.xml");
     }
 
     /*https://wso2.org/jira/browse/STRATOS-2257*/

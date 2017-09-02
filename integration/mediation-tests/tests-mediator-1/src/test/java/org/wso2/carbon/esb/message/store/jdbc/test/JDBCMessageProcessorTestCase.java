@@ -87,7 +87,7 @@ public class JDBCMessageProcessorTestCase extends ESBIntegrationTest {
     public void testJDBCMessageStoreAndProcessor() throws Exception {
 
         OMElement synapse = esbUtils.loadResource("/artifacts/ESB/jdbc/jdbc_message_store_and_processor_service.xml");
-        updateESBConfiguration(synapse);
+        updateESBConfigurationIfNotExists(synapse);
 
         AxisServiceClient client = new AxisServiceClient();
         for (int i = 0; i < 5; i++) {
@@ -117,7 +117,7 @@ public class JDBCMessageProcessorTestCase extends ESBIntegrationTest {
 
         super.cleanup();
         super.init();
-        loadSampleESBConfiguration(0);
+        loadSampleESBConfigurationIfNotExists(0);
         serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
         serverConfigurationManager.restartGracefully();
     }

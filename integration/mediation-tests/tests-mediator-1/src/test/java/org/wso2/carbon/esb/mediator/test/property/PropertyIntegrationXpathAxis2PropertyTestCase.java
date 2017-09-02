@@ -40,7 +40,7 @@ public class PropertyIntegrationXpathAxis2PropertyTestCase extends ESBIntegratio
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspath
+        loadESBConfigurationFromClasspathIfNotExists
                 ("/artifacts/ESB/mediatorconfig/property/XPATHAXIS2.xml");
         logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
 

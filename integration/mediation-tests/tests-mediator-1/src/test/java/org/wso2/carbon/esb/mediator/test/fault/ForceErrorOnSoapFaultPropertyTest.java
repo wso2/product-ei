@@ -33,7 +33,7 @@ import static org.testng.Assert.assertEquals;
 public class ForceErrorOnSoapFaultPropertyTest extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true) public void uploadSynapseConfig() throws Exception {
 		super.init();
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/force_error_soap_fault.xml");
+		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/force_error_soap_fault.xml");
 	}
 
 	@Test(groups = {

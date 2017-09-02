@@ -40,7 +40,7 @@ public class WithOutRuleSetPropertyTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb",
           description = "scenario without rules")
     public void testSequenceWithOutRuleSet() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config_without_rule/synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config_without_rule/synapse.xml");
         try {
 
             axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");

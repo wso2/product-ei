@@ -44,10 +44,9 @@ public class ESBJAVA4468ContentTypeCharsetInResponseTestCase extends ESBIntegrat
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+
         super.init();
-        verifyProxyServiceExistence("contentTypeCharsetTestProxy1");
-        verifyProxyServiceExistence("contentTypeCharsetTestProxy2");
-        verifyProxyServiceExistence("contentTypeCharsetTestProxy3");
+        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4468.xml");
         messagePayload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                          "xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
                          "   <soapenv:Header/>\n" +
@@ -70,7 +69,7 @@ public class ESBJAVA4468ContentTypeCharsetInResponseTestCase extends ESBIntegrat
         headers.put("Content-Type", "text/xml;charset=UTF-8");
         headers.put("SOAPAction", "urn:getQuote");
 
-        HttpResponse response = HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp("contentTypeCharsetTestProxy1"))
+        HttpResponse response = HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp("contentTypeCharsetProxy1"))
                 , messagePayload, headers);
         Assert.assertNotNull(response, "Response is null");
         Assert.assertTrue(response.getData().contains("WSO2 Company"), "Response not as expected " + response);
@@ -92,7 +91,7 @@ public class ESBJAVA4468ContentTypeCharsetInResponseTestCase extends ESBIntegrat
         headers.put("Content-Type", "text/xml;charset=UTF-8");
         headers.put("SOAPAction", "urn:getQuote");
 
-        HttpResponse response = HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp("contentTypeCharsetTestProxy2"))
+        HttpResponse response = HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp("contentTypeCharsetProxy2"))
                 , messagePayload, headers);
         Assert.assertNotNull(response, "Response is null");
         Assert.assertTrue(response.getData().contains("WSO2 Company"), "Response not as expected " + response);
@@ -114,7 +113,7 @@ public class ESBJAVA4468ContentTypeCharsetInResponseTestCase extends ESBIntegrat
         headers.put("Content-Type", "text/xml;charset=UTF-8");
         headers.put("SOAPAction", "urn:getQuote");
 
-        HttpResponse response = HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp("contentTypeCharsetTestProxy3"))
+        HttpResponse response = HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp("contentTypeCharsetProxy3"))
                 , messagePayload, headers);
         Assert.assertNotNull(response, "Response is null");
         Assert.assertTrue(response.getData().contains("WSO2 Company"), "Response not as expected " + response);
