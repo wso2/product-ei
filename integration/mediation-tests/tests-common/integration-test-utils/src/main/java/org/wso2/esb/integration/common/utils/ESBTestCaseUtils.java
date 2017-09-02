@@ -233,7 +233,8 @@ public class ESBTestCaseUtils {
 			OMElement localEntry = localEntries.next();
 			String le = localEntry.getAttributeValue(new QName(KEY));
 			if (ArrayUtils.contains(localEntryAdminServiceClient.getEntryNames(), le)) {
-				Assert.fail("Localentry already exist " + le + ". Use different name");
+				Assert.assertTrue(localEntryAdminServiceClient.deleteLocalEntry(le), le + " Local Entry deletion failed");
+				Assert.assertTrue(isLocalEntryUnDeployed(backendURL, sessionCookie, le), le + " Local Entry undeployment failed");
 			}
             Assert.assertTrue(localEntryAdminServiceClient.addLocalEntry(localEntry), " Local Entry addition failed");
             Assert.assertTrue(isLocalEntryDeployed(backendURL, sessionCookie, le), " Local Entry deployment failed");
@@ -245,7 +246,8 @@ public class ESBTestCaseUtils {
 			OMElement endpoint = endpoints.next();
 			String ep = endpoint.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(endPointAdminClient.getEndpointNames(), ep)) {
-				Assert.fail("Endpoint already exist " + ep + ". Use different name");
+				Assert.assertTrue(endPointAdminClient.deleteEndpoint(ep), ep + " Endpoint deletion failed");
+				Assert.assertTrue(isEndpointUnDeployed(backendURL, sessionCookie, ep), ep + " Endpoint undeployment failed");
 			}
             Assert.assertTrue(endPointAdminClient.addEndPoint(endpoint)," Endpoint addition failed");
             Assert.assertTrue(isEndpointDeployed(backendURL, sessionCookie, ep), " Endpoint deployment failed");
@@ -261,7 +263,8 @@ public class ESBTestCaseUtils {
 				sequenceAdminClient.updateSequence(sequence);
 			} else {
 				if (isSequenceExist) {
-					Assert.fail("Sequence already exist " + sqn + ". Use different name");
+					sequenceAdminClient.deleteSequence(sqn);
+					Assert.assertTrue(isSequenceUnDeployed(backendURL, sessionCookie, sqn), sqn + " Sequence undeployment failed");
 				}
 				sequenceAdminClient.addSequence(sequence);
                 Assert.assertTrue(isSequenceDeployed(backendURL, sessionCookie, sqn), " Sequence deployment failed");
@@ -274,7 +277,8 @@ public class ESBTestCaseUtils {
 			OMElement proxy = proxies.next();
 			String proxyName = proxy.getAttributeValue(new QName(NAME));
 			if (adminServiceService.isServiceExists(proxyName)) {
-				Assert.fail("Proxy service already exist " + proxyName + ". Use different name");
+				proxyAdmin.deleteProxy(proxyName);
+				Assert.assertTrue(isProxyUnDeployed(backendURL, sessionCookie, proxyName), proxyName + " Undeployment failed");
 			}
 			proxyAdmin.addProxyService(proxy);
             Assert.assertTrue(isProxyDeployed(backendURL, sessionCookie, proxyName), proxyName + " deployment failed");
@@ -286,7 +290,8 @@ public class ESBTestCaseUtils {
 			OMElement messageStore = messageStores.next();
 			String mStore = messageStore.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(messageStoreAdminClient.getMessageStores(), mStore)) {
-				Assert.fail("Message Store already exist " + mStore + ". Use different name");
+				messageStoreAdminClient.deleteMessageStore(mStore);
+				Assert.assertTrue(isMessageStoreUnDeployed(backendURL, sessionCookie, mStore), mStore + " Message Store undeployment failed");
 			}
 			messageStoreAdminClient.addMessageStore(messageStore);
             Assert.assertTrue(isMessageStoreDeployed(backendURL, sessionCookie, mStore), " Message Store deployment " +
@@ -299,7 +304,9 @@ public class ESBTestCaseUtils {
 			OMElement messageProcessor = messageProcessors.next();
 			String mProcessor = messageProcessor.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(messageProcessorClient.getMessageProcessorNames(), mProcessor)) {
-				Assert.fail("Message Processor already exist " + mProcessor + ". Use different name");
+				messageProcessorClient.deleteMessageProcessor(mProcessor);
+				Assert.assertTrue(isMessageProcessorUnDeployed(backendURL, sessionCookie, mProcessor)
+						, mProcessor + " Message Processor undeployment failed");
 			}
 			messageProcessorClient.addMessageProcessor(messageProcessor);
             Assert.assertTrue(isMessageProcessorDeployed(backendURL, sessionCookie, mProcessor), " Message Processor " +
@@ -315,7 +322,9 @@ public class ESBTestCaseUtils {
 			String templateName = template.getAttributeValue(new QName(NAME));
 			if (template.getFirstChildWithName(new QName(template.getNamespace().getNamespaceURI(), SEQUENCE)) != null) {
 				if (ArrayUtils.contains(sequenceTemplateAdminServiceClient.getSequenceTemplates(), templateName)) {
-					Assert.fail("Sequence Template already exist " + templateName + ". Use different name");
+					sequenceTemplateAdminServiceClient.deleteTemplate(templateName);
+					Assert.assertTrue(isSequenceTemplateUnDeployed(backendURL, sessionCookie, templateName)
+							, templateName + " Sequence Template undeployment failed");
 				}
 				sequenceTemplateAdminServiceClient.addSequenceTemplate(template);
                 Assert.assertTrue(isSequenceTemplateDeployed(backendURL, sessionCookie, templateName), " Sequence " +
@@ -325,7 +334,9 @@ public class ESBTestCaseUtils {
 			} else {
 
 				if (ArrayUtils.contains(endpointTemplateAdminServiceClient.getEndpointTemplates(), templateName)) {
-					Assert.fail("Endpoint Template already exist " + templateName + ". Use different name");
+					endpointTemplateAdminServiceClient.deleteEndpointTemplate(templateName);
+					Assert.assertTrue(isEndpointTemplateUnDeployed(backendURL, sessionCookie, templateName)
+							, templateName + " Endpoint Template undeployment failed");
 				}
 				endpointTemplateAdminServiceClient.addEndpointTemplate(template);
                 Assert.assertTrue(isEndpointTemplateDeployed(backendURL, sessionCookie, templateName), " Endpoint " +
@@ -341,7 +352,9 @@ public class ESBTestCaseUtils {
 			OMElement api = apiElements.next();
 			String apiName = api.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(apiAdminClient.getApiNames(), apiName)) {
-				Assert.fail("API already exist " + apiName + ". Use different name");
+				apiAdminClient.deleteApi(apiName);
+				Assert.assertTrue(isApiUnDeployed(backendURL, sessionCookie, apiName)
+						, apiName + " Api undeployment failed");
 			}
 			apiAdminClient.add(api);
             Assert.assertTrue(isApiDeployed(backendURL, sessionCookie, apiName), " Api deployment failed");
@@ -353,7 +366,9 @@ public class ESBTestCaseUtils {
 			OMElement executor = priorityExecutorList.next();
 			String executorName = executor.getAttributeValue(new QName(NAME));
 			if (ArrayUtils.contains(priorityMediationAdminClient.getExecutorList(), executorName)) {
-				Assert.fail("Priority Executor already exist " + executorName + ". Use different name");
+				priorityMediationAdminClient.remove(executorName);
+				Assert.assertTrue(isPriorityExecutorUnDeployed(backendURL, sessionCookie, executorName)
+						, executorName + " Priority Executor undeployment failed");
 			}
 			priorityMediationAdminClient.addPriorityMediator(executorName, executor);
             Assert.assertTrue(isPriorityExecutorDeployed(backendURL, sessionCookie, executorName), " Priority " +
@@ -380,7 +395,186 @@ public class ESBTestCaseUtils {
 
 	}
 
-	/**
+    /**
+     * load synapse configuration from OMElement and fail if a configuration exists with the same name.
+     *
+     * @param synapseConfig synapse configuration
+     * @param backendURL    server backEnd url
+     * @param sessionCookie session Cookie
+     * @throws java.rmi.RemoteException
+     * @throws javax.xml.stream.XMLStreamException
+     * @throws javax.servlet.ServletException
+     */
+    public void updateESBConfigurationIfNotExists(OMElement synapseConfig, String backendURL,
+            String sessionCookie)
+            throws Exception {
+        ProxyServiceAdminClient proxyAdmin = new ProxyServiceAdminClient(backendURL, sessionCookie);
+        EndPointAdminClient endPointAdminClient = new EndPointAdminClient(backendURL, sessionCookie);
+        SequenceAdminServiceClient sequenceAdminClient = new SequenceAdminServiceClient(backendURL, sessionCookie);
+        LocalEntriesAdminClient localEntryAdminServiceClient = new LocalEntriesAdminClient(backendURL, sessionCookie);
+        MessageProcessorClient messageProcessorClient = new MessageProcessorClient(backendURL, sessionCookie);
+        MessageStoreAdminClient messageStoreAdminClient = new MessageStoreAdminClient(backendURL, sessionCookie);
+        ServiceAdminClient adminServiceService = new ServiceAdminClient(backendURL, sessionCookie);
+        EndpointTemplateAdminServiceClient endpointTemplateAdminServiceClient = new EndpointTemplateAdminServiceClient(backendURL, sessionCookie);
+        SequenceTemplateAdminServiceClient sequenceTemplateAdminServiceClient = new SequenceTemplateAdminServiceClient(backendURL, sessionCookie);
+        RestApiAdminClient apiAdminClient = new RestApiAdminClient(backendURL, sessionCookie);
+        PriorityMediationAdminClient priorityMediationAdminClient = new PriorityMediationAdminClient(backendURL, sessionCookie);
+        TaskAdminClient taskAdminClient = new TaskAdminClient(backendURL, sessionCookie);
+
+        Iterator<OMElement> localEntries = synapseConfig.getChildrenWithLocalName(LOCAL_ENTRY);
+        while (localEntries.hasNext()) {
+            OMElement localEntry = localEntries.next();
+            String le = localEntry.getAttributeValue(new QName(KEY));
+            if (ArrayUtils.contains(localEntryAdminServiceClient.getEntryNames(), le)) {
+                Assert.fail("Localentry already exist " + le + ". Use different name");
+            }
+            Assert.assertTrue(localEntryAdminServiceClient.addLocalEntry(localEntry), " Local Entry addition failed");
+            Assert.assertTrue(isLocalEntryDeployed(backendURL, sessionCookie, le), " Local Entry deployment failed");
+            log.info(le + " LocalEntry Uploaded");
+        }
+
+        Iterator<OMElement> endpoints = synapseConfig.getChildrenWithLocalName(ENDPOINT);
+        while (endpoints.hasNext()) {
+            OMElement endpoint = endpoints.next();
+            String ep = endpoint.getAttributeValue(new QName(NAME));
+            if (ArrayUtils.contains(endPointAdminClient.getEndpointNames(), ep)) {
+                Assert.fail("Endpoint already exist " + ep + ". Use different name");
+            }
+            Assert.assertTrue(endPointAdminClient.addEndPoint(endpoint)," Endpoint addition failed");
+            Assert.assertTrue(isEndpointDeployed(backendURL, sessionCookie, ep), " Endpoint deployment failed");
+            log.info(ep + " Endpoint Uploaded");
+        }
+
+        Iterator<OMElement> sequences = synapseConfig.getChildrenWithLocalName(SEQUENCE);
+        while (sequences.hasNext()) {
+            OMElement sequence = sequences.next();
+            String sqn = sequence.getAttributeValue(new QName(NAME));
+            boolean isSequenceExist = ArrayUtils.contains(sequenceAdminClient.getSequences(), sqn);
+            if (("main".equalsIgnoreCase(sqn) || "fault".equalsIgnoreCase(sqn)) && isSequenceExist) {
+                sequenceAdminClient.updateSequence(sequence);
+            } else {
+                if (isSequenceExist) {
+                    Assert.fail("Sequence already exist " + sqn + ". Use different name");
+                }
+                sequenceAdminClient.addSequence(sequence);
+                Assert.assertTrue(isSequenceDeployed(backendURL, sessionCookie, sqn), " Sequence deployment failed");
+            }
+            log.info(sqn + " Sequence Uploaded");
+        }
+
+        Iterator<OMElement> proxies = synapseConfig.getChildrenWithLocalName(PROXY);
+        while (proxies.hasNext()) {
+            OMElement proxy = proxies.next();
+            String proxyName = proxy.getAttributeValue(new QName(NAME));
+            if (adminServiceService.isServiceExists(proxyName)) {
+                Assert.fail("Proxy service already exist " + proxyName + ". Use different name");
+            }
+            proxyAdmin.addProxyService(proxy);
+            Assert.assertTrue(isProxyDeployed(backendURL, sessionCookie, proxyName), proxyName + " deployment failed");
+            log.info(proxyName + " Proxy Uploaded");
+        }
+
+        Iterator<OMElement> messageStores = synapseConfig.getChildrenWithLocalName(MESSAGE_STORE);
+        while (messageStores.hasNext()) {
+            OMElement messageStore = messageStores.next();
+            String mStore = messageStore.getAttributeValue(new QName(NAME));
+            if (ArrayUtils.contains(messageStoreAdminClient.getMessageStores(), mStore)) {
+                Assert.fail("Message Store already exist " + mStore + ". Use different name");
+            }
+            messageStoreAdminClient.addMessageStore(messageStore);
+            Assert.assertTrue(isMessageStoreDeployed(backendURL, sessionCookie, mStore), " Message Store deployment " +
+                                                                                         "failed");
+            log.info(mStore + " Message Store Uploaded");
+        }
+
+        Iterator<OMElement> messageProcessors = synapseConfig.getChildrenWithLocalName(MESSAGE_PROCESSOR);
+        while (messageProcessors.hasNext()) {
+            OMElement messageProcessor = messageProcessors.next();
+            String mProcessor = messageProcessor.getAttributeValue(new QName(NAME));
+            if (ArrayUtils.contains(messageProcessorClient.getMessageProcessorNames(), mProcessor)) {
+                Assert.fail("Message Processor already exist " + mProcessor + ". Use different name");
+            }
+            messageProcessorClient.addMessageProcessor(messageProcessor);
+            Assert.assertTrue(isMessageProcessorDeployed(backendURL, sessionCookie, mProcessor), " Message Processor " +
+                                                                                                 " deployment" +
+                                                                                                 " failed");
+            log.info(mProcessor + " Message Processor Uploaded");
+        }
+
+
+        Iterator<OMElement> templates = synapseConfig.getChildrenWithLocalName(TEMPLATE);
+        while (templates.hasNext()) {
+            OMElement template = templates.next();
+            String templateName = template.getAttributeValue(new QName(NAME));
+            if (template.getFirstChildWithName(new QName(template.getNamespace().getNamespaceURI(), SEQUENCE)) != null) {
+                if (ArrayUtils.contains(sequenceTemplateAdminServiceClient.getSequenceTemplates(), templateName)) {
+                    Assert.fail("Sequence Template already exist " + templateName + ". Use different name");
+                }
+                sequenceTemplateAdminServiceClient.addSequenceTemplate(template);
+                Assert.assertTrue(isSequenceTemplateDeployed(backendURL, sessionCookie, templateName), " Sequence " +
+                                                                                                       " Template " +
+                                                                                                       " deployment "
+                                                                                                       + " failed");
+            } else {
+
+                if (ArrayUtils.contains(endpointTemplateAdminServiceClient.getEndpointTemplates(), templateName)) {
+                    Assert.fail("Endpoint Template already exist " + templateName + ". Use different name");
+                }
+                endpointTemplateAdminServiceClient.addEndpointTemplate(template);
+                Assert.assertTrue(isEndpointTemplateDeployed(backendURL, sessionCookie, templateName), " Endpoint " +
+                                                                                                       " Template " +
+                                                                                                       " deployment "
+                                                                                                       + " failed");
+            }
+            log.info(templateName + " Template Uploaded");
+        }
+
+        Iterator<OMElement> apiElements = synapseConfig.getChildrenWithLocalName(API);
+        while (apiElements.hasNext()) {
+            OMElement api = apiElements.next();
+            String apiName = api.getAttributeValue(new QName(NAME));
+            if (ArrayUtils.contains(apiAdminClient.getApiNames(), apiName)) {
+                Assert.fail("API already exist " + apiName + ". Use different name");
+            }
+            apiAdminClient.add(api);
+            Assert.assertTrue(isApiDeployed(backendURL, sessionCookie, apiName), " Api deployment failed");
+            log.info(apiName + " API Uploaded");
+        }
+
+        Iterator<OMElement> priorityExecutorList = synapseConfig.getChildrenWithLocalName(PRIORITY_EXECUTOR);
+        while (priorityExecutorList.hasNext()) {
+            OMElement executor = priorityExecutorList.next();
+            String executorName = executor.getAttributeValue(new QName(NAME));
+            if (ArrayUtils.contains(priorityMediationAdminClient.getExecutorList(), executorName)) {
+                Assert.fail("Priority Executor already exist " + executorName + ". Use different name");
+            }
+            priorityMediationAdminClient.addPriorityMediator(executorName, executor);
+            Assert.assertTrue(isPriorityExecutorDeployed(backendURL, sessionCookie, executorName), " Priority " +
+                                                                                                   "Executor failed");
+            log.info(executorName + " Priority Executor Uploaded");
+        }
+
+        Iterator<OMElement> taskList = synapseConfig.getChildrenWithLocalName(TASK);
+        while (taskList.hasNext()) {
+            OMElement task = taskList.next();
+            String taskName = task.getAttributeValue(new QName(NAME));
+            if (taskAdminClient.getScheduleTaskList().contains(taskName)) {
+                taskAdminClient.updateTask(task);
+                continue;
+            }
+            taskAdminClient.addTask(task);
+            Assert.assertTrue(isScheduleTaskDeployed(backendURL, sessionCookie, taskName), " Task deployment failed");
+            log.info(taskName + " Task Uploaded");
+        }
+
+        Thread.sleep(1000);
+        verifySynapseDeployment(synapseConfig, backendURL, sessionCookie);
+        log.info("Synapse configuration  Deployed");
+
+    }
+
+
+    /**
 	 * @param backEndUrl
 	 * @param sessionCookie
 	 * @param proxyConfig

@@ -30,7 +30,7 @@ public class Soap12FaultCodeMustUnderstandTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap12_fault_code_MustUnderstand_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap12_fault_code_MustUnderstand_synapse.xml");
     }
 
 

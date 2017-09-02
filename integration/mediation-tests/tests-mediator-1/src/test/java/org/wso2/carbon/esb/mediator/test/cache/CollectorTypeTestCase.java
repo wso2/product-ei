@@ -43,7 +43,7 @@ public class CollectorTypeTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/cache/CollectorTypeCacheMediator.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/cache/CollectorTypeCacheMediator.xml");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})

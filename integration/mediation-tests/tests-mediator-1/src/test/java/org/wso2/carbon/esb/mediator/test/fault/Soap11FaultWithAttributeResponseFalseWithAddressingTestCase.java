@@ -30,7 +30,7 @@ public class Soap11FaultWithAttributeResponseFalseWithAddressingTestCase extends
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fault/soap11_fault_set_response_attribute_false_with_addressing_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fault/soap11_fault_set_response_attribute_false_with_addressing_synapse.xml");
     }
 
 

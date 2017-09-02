@@ -44,7 +44,7 @@ public class RouterMediatorBreakRouterPropertyTestCase extends ESBIntegrationTes
     //since router mediator is removed from UI
     @Test(groups = "wso2.esb", description = "Tests with breakRouter=false", enabled = false)
     public void testBreakRouterFalse() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_breakRouter_false_test.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/router/router_breakRouter_false_test.xml");
         OMElement response =
                 axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         Assert.assertTrue(response==null,"Response should be null");

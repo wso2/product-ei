@@ -39,7 +39,7 @@ public class JsonFormat_IncomingJson_StartsWithSpaceTestCase extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void setup() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "payload"
                         + File.separator + "factory" + File.separator + "jsonFormat_JsonStartsWithSpace.xml");
     }

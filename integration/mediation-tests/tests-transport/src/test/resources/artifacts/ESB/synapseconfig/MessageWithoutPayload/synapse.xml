@@ -4,7 +4,7 @@
         <parameter name="cachableDuration">15000</parameter>
     </registry>
     <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="TestProxy" startOnLoad="true" trace="disable" transports="https http">
+    <proxy name="TestProxy" startOnLoad="true" trace="disable" transports="https http">
         <target>
             <inSequence>
                 <property name="FORCE_POST_PUT_NOBODY" scope="axis2"

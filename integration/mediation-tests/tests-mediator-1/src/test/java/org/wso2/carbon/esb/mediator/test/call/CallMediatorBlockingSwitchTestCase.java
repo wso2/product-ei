@@ -36,7 +36,7 @@ public class CallMediatorBlockingSwitchTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "call" + File.separator + "CallMediatorBlockingSwitchTest.xml");
+        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "call" + File.separator + "CallMediatorBlockingSwitchTest.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Call the endpoint with blocking external calls according to the switch case")

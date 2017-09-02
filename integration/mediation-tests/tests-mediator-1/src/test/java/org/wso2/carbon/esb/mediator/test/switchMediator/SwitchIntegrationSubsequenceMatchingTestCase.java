@@ -40,7 +40,7 @@ public class SwitchIntegrationSubsequenceMatchingTestCase extends ESBIntegration
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/switch_conf/switch_mediator_subsequence_matching.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/switch_conf/switch_mediator_subsequence_matching.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Using switch mediator matching the part of the input at regex")

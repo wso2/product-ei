@@ -66,7 +66,7 @@ public class ValidateJSONSchemaTestCase extends ESBIntegrationTest {
         resourceAdminServiceClient.addResource("/_system/config/largeJsonSchema.json",
                 "application/json", "JSON Schema", new DataHandler(url));
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/validate/jsonSchemaValidateConfig.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/validate/jsonSchemaValidateConfig.xml");
         httpHeaders.put("Content-Type", "application/json");
 
     }

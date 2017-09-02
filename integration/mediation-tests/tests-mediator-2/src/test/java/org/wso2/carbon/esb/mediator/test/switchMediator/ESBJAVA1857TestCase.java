@@ -21,7 +21,7 @@ public class ESBJAVA1857TestCase extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() throws Exception {
 		super.init();
-		loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/ESBJAVA_1857_switch_case_synapse.xml");
+		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/ESBJAVA_1857_switch_case_synapse.xml");
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "ESBJAVA1857 SwitchMediator:Negative Case 2: Invalid prefix")

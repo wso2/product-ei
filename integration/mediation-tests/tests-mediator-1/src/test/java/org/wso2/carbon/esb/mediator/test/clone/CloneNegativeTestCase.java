@@ -38,7 +38,7 @@ public class CloneNegativeTestCase extends ESBIntegrationTest {
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_unmaching_aggregate.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_unmaching_aggregate.xml");
         axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server2 = new SampleAxis2Server("test_axis2_server_9002.xml");
 

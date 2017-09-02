@@ -68,7 +68,7 @@ public class JsonFormat_IncomingJson_CTXJsonValues_WithStream_TestCase extends E
 	@Test(groups = {"wso2.esb"}, description = "With Stream B&F, json value, json evaluators, incoming json, outgoing json " , enabled = false)
 	public void incomingJsontransformJsonPayloadByJsonTypeProperties() throws Exception {
 
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonExpressions_CTX.xml");
+		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_JsonExpressions_CTX.xml");
 		postRequestWithJsonPayload(JSON_PAYLOAD,JSON_TYPE);
 		assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
 
@@ -78,7 +78,7 @@ public class JsonFormat_IncomingJson_CTXJsonValues_WithStream_TestCase extends E
 	@Test(groups = {"wso2.esb"}, description = "With Stream B&F, xml format, json value, incoming json, outgoing xml ", enabled = false)
 	public void incomingJsontransformXmlPayloadByJsonTypeProperties() throws Exception {
 
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/xmlFormat_JsonExpressions_CTX.xml");
+		loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/xmlFormat_JsonExpressions_CTX.xml");
 		postRequestWithJsonPayload(JSON_PAYLOAD,JSON_TYPE);
 		assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
 	}

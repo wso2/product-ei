@@ -43,7 +43,7 @@ public class RouterMediatorSequenceTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests different kinds of sequences in target")
     public void testSequences() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/router/router_sequence_test.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/router/router_sequence_test.xml");
         URL url =
                 new URL("file:///" + getESBResourceLocation() +"/mediatorconfig/router/router_sequence.xml");
         resourceAdminServiceClient.addResource("/_system/governance/sequences/router/routerSequence",

@@ -38,7 +38,7 @@ public class PropertyIntegrationXPathExtensionTestCase extends ESBIntegrationTes
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath
+        loadESBConfigurationFromClasspathIfNotExists
                 ("/artifacts/ESB/mediatorconfig/property/XPATHEXTENSION.xml");
         logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
     }

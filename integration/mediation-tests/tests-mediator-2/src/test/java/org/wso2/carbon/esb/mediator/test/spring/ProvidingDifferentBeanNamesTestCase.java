@@ -47,7 +47,7 @@ public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(context);
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE

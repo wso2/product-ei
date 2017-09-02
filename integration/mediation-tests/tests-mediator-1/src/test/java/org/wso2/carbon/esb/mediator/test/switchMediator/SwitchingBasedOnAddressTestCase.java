@@ -35,7 +35,7 @@ public class SwitchingBasedOnAddressTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/switching_based_on_address_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/switching_based_on_address_synapse.xml");
 
     }
 

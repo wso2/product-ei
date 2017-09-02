@@ -37,7 +37,7 @@ public class FormatPayloadWithOMTypeArgsExpressionTestCase extends ESBIntegratio
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/om_arg_payload_factory_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/om_arg_payload_factory_synapse.xml");
     }
 
 

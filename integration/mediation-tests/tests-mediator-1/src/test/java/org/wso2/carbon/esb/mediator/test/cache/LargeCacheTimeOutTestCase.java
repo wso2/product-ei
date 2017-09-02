@@ -38,7 +38,7 @@ public class LargeCacheTimeOutTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/cache/LargeCacheTimeOut.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/cache/LargeCacheTimeOut.xml");
     }
 
     /**
