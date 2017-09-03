@@ -77,7 +77,7 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
         String lastPrice;
         String symbol;
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
 
         response = axis2Client.sendSimpleStockQuoteRequest
                 (getMainSequenceURL(), null, "IBM");
@@ -127,7 +127,7 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
                                                             "-Added Simple bean into lib -referring to an invalid spring xml")
     public void uploadSequenceHavingInvalidSpringXMLTest() throws Exception {
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation_invalid_spring_bean.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation_invalid_spring_bean.xml");
         try {
             axis2Client.sendSimpleStockQuoteRequest
                     (getMainSequenceURL(), null, "WSO2");
@@ -145,7 +145,7 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
                                                             "- referring to an non existing spring xml")
     public void uploadSequenceHavingNonExistingSpringXMLResourceTest() throws Exception {
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation_springBean_resource_not_exist.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation_springBean_resource_not_exist.xml");
         try {
             axis2Client.sendSimpleStockQuoteRequest
                     (getMainSequenceURL(), null, "WSO2");
@@ -164,7 +164,7 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
                                                             "-Added Simple bean into lib " +
                                                             "-Different bean ids in spring xml")
     public void providingNonExistingBeanNamesTest() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation_different_bean_id.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation_different_bean_id.xml");
         try {
             axis2Client.sendSimpleStockQuoteRequest
                     (getMainSequenceURL(), null, "IBM");
@@ -179,7 +179,7 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
 })
     @Test(groups = {"wso2.esb", "localOnly"}, description = "Spring Mediator -Added Simple bean into lib")
     public void springBeanMediationTest() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
                 (getMainSequenceURL(), null, "IBM");
 

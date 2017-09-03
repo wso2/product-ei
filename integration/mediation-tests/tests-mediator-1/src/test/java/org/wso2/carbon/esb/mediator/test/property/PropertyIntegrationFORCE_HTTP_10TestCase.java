@@ -55,7 +55,7 @@ public class PropertyIntegrationFORCE_HTTP_10TestCase extends ESBIntegrationTest
                                              "scenario")
     public void testWithForceHTTP10EnabledFalseTest() throws Exception {
 
-        loadESBConfigurationFromClasspath
+        loadESBConfigurationFromClasspathIfNotExists
                 ("/artifacts/ESB/mediatorconfig/property/FORCE_HTTP_1.0_DISABLED.xml");
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
@@ -74,7 +74,7 @@ public class PropertyIntegrationFORCE_HTTP_10TestCase extends ESBIntegrationTest
             , dependsOnMethods = "testWithForceHTTP10EnabledFalseTest")
     public void testWithForceHTTP10EnabledTrueTest() throws Exception {
 
-        loadESBConfigurationFromClasspath
+        loadESBConfigurationFromClasspathIfNotExists
                 ("/artifacts/ESB/mediatorconfig/property/FORCE_HTTP_1.0_ENABLED.xml");
 
         tcpMonListener.clear();

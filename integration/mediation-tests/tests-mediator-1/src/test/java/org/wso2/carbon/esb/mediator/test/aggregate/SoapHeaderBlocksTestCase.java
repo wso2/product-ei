@@ -43,7 +43,7 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
                 + File.separator + "car" + File.separator + carFileNameWithExtension)));
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/requestWithSoapHeaderBlockConfig/synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/requestWithSoapHeaderBlockConfig/synapse.xml");
         TimeUnit.SECONDS.sleep(5);
     }
 

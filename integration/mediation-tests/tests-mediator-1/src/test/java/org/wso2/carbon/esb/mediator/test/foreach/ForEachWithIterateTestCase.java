@@ -46,7 +46,7 @@ public class ForEachWithIterateTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach inline sequence to transform payload, passed to endpoint using iterate and aggregate mediators")
     public void testForEachInlineSequenceWithIterateEndpoint() throws Exception {
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_simple.xml");
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -88,7 +88,7 @@ public class ForEachWithIterateTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test foreach sequence ref to transform payload, passed to endpoint using iterate and aggregate mediators")
     public void testForEachSequenceRefWithIterateEndpoint() throws Exception {
-        loadESBConfigurationFromClasspath(
+        loadESBConfigurationFromClasspathIfNotExists(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_simple_sequenceref.xml");
         LogViewerClient logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());

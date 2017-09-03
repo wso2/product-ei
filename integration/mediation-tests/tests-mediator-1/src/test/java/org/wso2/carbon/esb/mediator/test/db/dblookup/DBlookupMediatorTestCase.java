@@ -111,7 +111,7 @@ public class DBlookupMediatorTestCase extends ESBIntegrationTest {
                 getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_multiple_results_test.xml");
         String s = FileUtils.readFileToString(new File(url.toURI()));
         s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
+        updateESBConfigurationIfNotExists(AXIOMUtil.stringToOM(s));
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
 
@@ -129,7 +129,7 @@ public class DBlookupMediatorTestCase extends ESBIntegrationTest {
                 getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_multiple_SQL_statements.xml");
         String s = FileUtils.readFileToString(new File(url.toURI()));
         s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
+        updateESBConfigurationIfNotExists(AXIOMUtil.stringToOM(s));
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
@@ -145,7 +145,7 @@ public class DBlookupMediatorTestCase extends ESBIntegrationTest {
                 getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360.xml");
         String s = FileUtils.readFileToString(new File(url.toURI()));
         s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
+        updateESBConfigurationIfNotExists(AXIOMUtil.stringToOM(s));
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
@@ -164,7 +164,7 @@ public class DBlookupMediatorTestCase extends ESBIntegrationTest {
                 getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_stored_function_test.xml");
         String s = FileUtils.readFileToString(new File(url.toURI()));
         s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
+        updateESBConfigurationIfNotExists(AXIOMUtil.stringToOM(s));
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
 
@@ -186,7 +186,7 @@ public class DBlookupMediatorTestCase extends ESBIntegrationTest {
                 getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_stored_procedure.xml");
         String s = FileUtils.readFileToString(new File(url.toURI()));
         s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
+        updateESBConfigurationIfNotExists(AXIOMUtil.stringToOM(s));
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
 
@@ -204,7 +204,7 @@ public class DBlookupMediatorTestCase extends ESBIntegrationTest {
         mySqlDatabaseManager = null;
         super.cleanup();
         super.init();
-        loadSampleESBConfiguration(0);
+        loadSampleESBConfigurationIfNotExists(0);
         serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
         serverConfigurationManager.restartGracefully();
         serverConfigurationManager = null;

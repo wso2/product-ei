@@ -202,6 +202,11 @@ public abstract class ESBIntegrationTest {
 		updateESBConfiguration(synapseSample);
 	}
 
+    protected void loadSampleESBConfigurationIfNotExists(int sampleNo) throws Exception {
+        OMElement synapseSample = esbUtils.loadESBSampleConfiguration(sampleNo);
+        updateESBConfigurationIfNotExists(synapseSample);
+    }
+
     protected OMElement loadSampleESBConfigurationWithoutApply(int sampleNo) throws Exception {
         return esbUtils.loadESBSampleConfiguration(sampleNo);
     }
@@ -213,6 +218,15 @@ public abstract class ESBIntegrationTest {
 		updateESBConfiguration(synapseConfig);
 
 	}
+
+    protected void loadESBConfigurationFromClasspathIfNotExists(String relativeFilePath) throws Exception {
+        relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+
+        OMElement synapseConfig = esbUtils.loadResource(relativeFilePath);
+        updateESBConfigurationIfNotExists(synapseConfig);
+
+    }
+
     protected void deleteLibrary(String fullQualifiedName)
             throws MediationLibraryAdminServiceException, RemoteException {
         esbUtils.deleteLibrary(contextUrls.getBackEndUrl(),sessionCookie,fullQualifiedName);
@@ -249,6 +263,35 @@ public abstract class ESBIntegrationTest {
 			}
 		}
 	}
+
+    protected void updateESBConfigurationIfNotExists(OMElement synapseConfig) throws Exception {
+
+        if (synapseConfiguration == null) {
+            synapseConfiguration = synapseConfig;
+        } else {
+            Iterator<OMElement> itr = synapseConfig.cloneOMElement().getChildElements();
+            while (itr.hasNext()) {
+                synapseConfiguration.addChild(itr.next());
+            }
+        }
+        esbUtils.updateESBConfigurationIfNotExists(setEndpoints(synapseConfig), contextUrls.getBackEndUrl(), sessionCookie);
+
+        if (context.getProductGroup().isClusterEnabled()) {
+            long deploymentDelay = Long.parseLong(context.getConfigurationValue("//deploymentDelay"));
+            Thread.sleep(deploymentDelay);
+            Iterator<OMElement> proxies = synapseConfig.getChildrenWithLocalName("proxy");
+            while (proxies.hasNext()) {
+                String proxy = proxies.next().getAttributeValue(new QName("name"));
+
+                Assert.assertTrue(isProxyWSDlExist(getProxyServiceURLHttp(proxy), deploymentDelay)
+                        , "Deployment Synchronizing failed in workers");
+                Assert.assertTrue(isProxyWSDlExist(getProxyServiceURLHttp(proxy), deploymentDelay)
+                        , "Deployment Synchronizing failed in workers");
+                Assert.assertTrue(isProxyWSDlExist(getProxyServiceURLHttp(proxy), deploymentDelay)
+                        , "Deployment Synchronizing failed in workers");
+            }
+        }
+    }
 
 	protected void addProxyService(OMElement proxyConfig) throws Exception {
 		String proxyName = proxyConfig.getAttributeValue(new QName("name"));

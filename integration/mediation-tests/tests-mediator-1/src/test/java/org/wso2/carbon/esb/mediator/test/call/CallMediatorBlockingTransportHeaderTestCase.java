@@ -42,7 +42,7 @@ public class CallMediatorBlockingTransportHeaderTestCase extends ESBIntegrationT
         init();
         wireServer = new WireMonitorServer(8991);
         wireServer.start();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "call" + File.separator + "CallMediatorBlockingTransportHeader.xml");
+        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "call" + File.separator + "CallMediatorBlockingTransportHeader.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Transport header is set in request for soap 1.1")

@@ -33,7 +33,7 @@ public class TransformPayloadWhenNoArgsTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/no_arg_payload_factory_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/no_arg_payload_factory_synapse.xml");
     }
 
 

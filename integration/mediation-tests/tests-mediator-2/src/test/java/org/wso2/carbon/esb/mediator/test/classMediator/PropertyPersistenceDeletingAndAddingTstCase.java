@@ -50,7 +50,7 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
         serverConfigurationManager.restartGracefully();
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
@@ -87,13 +87,13 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
         serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
         serverConfigurationManager.copyToComponentLib
                 (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FOUR_PROPERTIES).toURI()));
-        loadSampleESBConfiguration(0);
+        loadSampleESBConfigurationIfNotExists(0);
         /* waiting for the new config file to be written to the disk */
         Thread.sleep(10000);
         serverConfigurationManager.restartGracefully();
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_four_properties.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/class/class_property_persistence_four_properties.xml");
 
         response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "IBM");
 

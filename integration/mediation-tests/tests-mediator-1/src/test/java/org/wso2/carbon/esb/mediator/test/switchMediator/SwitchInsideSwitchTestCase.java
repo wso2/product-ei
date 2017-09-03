@@ -30,7 +30,7 @@ public class SwitchInsideSwitchTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/switch_inside_switch_config.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/switch_inside_switch_config.xml");
     }
 
 

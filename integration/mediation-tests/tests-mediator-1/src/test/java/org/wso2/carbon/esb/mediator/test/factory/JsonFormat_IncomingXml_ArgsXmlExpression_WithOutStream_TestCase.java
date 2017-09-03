@@ -35,7 +35,7 @@ public class JsonFormat_IncomingXml_ArgsXmlExpression_WithOutStream_TestCase ext
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_XmlExpressiosns.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_XmlExpressiosns.xml");
     }
 
 

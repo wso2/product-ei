@@ -22,7 +22,7 @@
         <parameter name="cachableDuration">15000</parameter>
     </registry>
     <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="ProcessPO2TestProxy" startOnLoad="true" transports="https http">
+    <proxy name="ProcessPO2" startOnLoad="true" transports="https http">
         <description/>
         <target>
             <inSequence>
@@ -39,7 +39,7 @@
         </target>
         <parameter name="ApplicationXMLBuilder.allowDTD">true</parameter>
     </proxy>
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="ProcessPOTestProxy" startOnLoad="true" transports="https http">
+    <proxy name="ProcessPO" startOnLoad="true" transports="https http">
         <description/>
         <target>
             <inSequence>

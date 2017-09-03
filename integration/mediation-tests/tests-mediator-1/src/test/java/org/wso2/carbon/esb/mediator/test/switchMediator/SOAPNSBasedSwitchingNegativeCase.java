@@ -32,7 +32,7 @@ public class SOAPNSBasedSwitchingNegativeCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/SOAP11_SOAP12_XPath_nagative_case.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/SOAP11_SOAP12_XPath_nagative_case.xml");
     }
 
     @AfterClass(alwaysRun = true)

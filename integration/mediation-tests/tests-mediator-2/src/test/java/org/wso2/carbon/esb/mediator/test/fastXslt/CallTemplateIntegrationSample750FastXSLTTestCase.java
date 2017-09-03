@@ -16,7 +16,7 @@ public class CallTemplateIntegrationSample750FastXSLTTestCase extends ESBIntegra
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception, IOException {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/fast_xslt/calltemplate_integration_fastxslt_sample750_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/fast_xslt/calltemplate_integration_fastxslt_sample750_synapse.xml");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Stereotyping Fast XSLT Transformations with Templates :Test using sample 750")

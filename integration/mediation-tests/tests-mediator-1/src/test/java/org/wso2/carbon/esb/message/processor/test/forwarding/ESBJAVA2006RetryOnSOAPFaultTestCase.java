@@ -34,7 +34,7 @@ public class ESBJAVA2006RetryOnSOAPFaultTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "<property name=\"RETRY_ON_SOAPFAULT\" value=\"false\"/>")
     public void testRetryOnSOAPFaultWithInOutFalse() throws Exception {
 
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
+        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB" + File.separator
                                           + "synapseconfig" + File.separator + "processor" + File.separator +
                                           "forwarding" + File.separator + "Retry_On_SOAPFault_In_Out.xml");
 
@@ -54,7 +54,7 @@ public class ESBJAVA2006RetryOnSOAPFaultTestCase extends ESBIntegrationTest {
     //@Test(groups = "wso2.esb", description = "<property name=\"RETRY_ON_SOAPFAULT\" value=\"true\"/>")
     public void testRetryOnSOAPFaultWithInOutTrue() throws Exception {
 
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
+        loadESBConfigurationFromClasspathIfNotExists(File.separator + "artifacts" + File.separator + "ESB" + File.separator
                                           + "synapseconfig" + File.separator + "processor" + File.separator +
                                           "forwarding" + File.separator + "Retry_On_SOAPFault_true_In_Out.xml");
 

@@ -35,36 +35,60 @@ public class ContentTypeCharsetTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(ContentTypeCharsetTestCase.class);
 
+
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init();
-        verifyProxyServiceExistence("echoProxy");
-        verifyProxyServiceExistence("FooProxy");
-    }
 
-    @Test(groups = { "wso2.esb" },
-          description = "Test for charset value proprty in the header response")
+        super.init();
+        try {
+            deleteProxyService("echoProxy");
+        } catch (Exception e) {
+            //ignored
+        }
+        try {
+            deleteProxyService("FooProxy");
+        } catch (Exception e) {
+            //ignored
+        }
+        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/nhttp_transport"
+                + "/content_type_charset_synapse.xml");
+  }
+
+    @Test(groups = { "wso2.esb" }, description = "Test for charset value proprty in the header response")
     public void testReturnContentType() throws Exception {
 
         String contentType = "application/xml;charset=UTF-8";
+
         String charset = "charset";
+
         SimpleHttpClient httpClient = new SimpleHttpClient();
+
         Map<String, String> headers = new HashMap<String, String>();
+
         headers.put("content-type", contentType);
+
         HttpResponse response = httpClient.doGet(getProxyServiceURLHttp("FooProxy"), headers);
+
         String contentTypeData = response.getEntity().getContentType().getValue();
+
         Assert.assertTrue(contentTypeData.contains(charset));
 
         if (contentTypeData.contains(charset)) {
+
             String[] pairs = contentTypeData.split(";");
+
             for (String pair : pairs) {
+
                 if (pair.contains(charset)) {
+
                     String[] charsetDetails = pair.split("=");
+
                     Assert.assertTrue(!charsetDetails[1].equals(""));
+
                 }
             }
         }
-    }
+     }
 
     @AfterClass(alwaysRun = true)
     public void stop() throws Exception {

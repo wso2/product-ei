@@ -48,7 +48,7 @@ public class CloneSOAPActionTestCase extends ESBIntegrationTest {
 	public void setEnvironment() throws Exception {
 		init();
 		axisServiceClient = new AxisServiceClient();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/clone_SOAP_Action.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/clone/clone_SOAP_Action.xml");
 		axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
 		axis2Server2 = new SampleAxis2Server("test_axis2_server_9002.xml");
 

@@ -22,7 +22,7 @@
         <parameter name="cachableDuration">15000</parameter>
     </registry>
     <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="ConsumeAndDiscardTestProxy" startOnLoad="true" trace="disable" transports="http https">
+    <proxy name="TestProxy" startOnLoad="true" trace="disable" transports="http https">
         <description/>
         <target>
             <endpoint>
@@ -87,7 +87,7 @@
         </out>
         <description>The main sequence for the message mediation</description>
     </sequence>
-    <sequence xmlns="http://ws.apache.org/ns/synapse" name="BoTestSeq" trace="disable">
+    <sequence name="BoTest" trace="disable">
         <payloadFactory media-type="xml">
             <format>
                 <foo>

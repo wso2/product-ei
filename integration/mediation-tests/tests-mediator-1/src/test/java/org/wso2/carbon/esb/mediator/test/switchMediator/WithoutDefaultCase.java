@@ -35,7 +35,7 @@ public class WithoutDefaultCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void beforeClass() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/filters/switchMediator/basic_and_without_default_case_synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/filters/switchMediator/basic_and_without_default_case_synapse.xml");
     }
 
     @AfterClass(alwaysRun = true)

@@ -33,7 +33,7 @@ public class XpathCallWithoutNSTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config10/synapse.xml");
+        loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/synapseconfig/config10/synapse.xml");
     }
 
     @Test(expectedExceptions = AxisFault.class, groups = {"wso2.esb"}, description = "Sample 750 Call Template Test")
