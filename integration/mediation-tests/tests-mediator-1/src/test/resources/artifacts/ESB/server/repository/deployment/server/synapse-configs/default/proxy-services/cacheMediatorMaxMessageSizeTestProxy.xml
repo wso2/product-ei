@@ -1,14 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
-    <sequence name="fault">
-        <log level="full">
-            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
-            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
-            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
-        </log>
-        <drop/>
-    </sequence>
-    <sequence name="main" trace="disable">
-        <in>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="cacheMediatorMaxMessageSizeTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
             <cache collector="false" maxMessageSize="1000" timeout="20">
                 <protocol type="HTTP">
                     <methods>POST</methods>
@@ -23,10 +17,10 @@
                     <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
                 </endpoint>
             </send>
-        </in>
-        <out>
+        </inSequence>
+        <outSequence>
             <cache collector="true" />
             <send />
-        </out>
-    </sequence>
-</definitions>
+        </outSequence>
+    </target>
+</proxy>

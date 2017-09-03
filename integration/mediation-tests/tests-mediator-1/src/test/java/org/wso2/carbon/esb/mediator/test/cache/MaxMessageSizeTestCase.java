@@ -36,10 +36,6 @@ public class MaxMessageSizeTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"
-                        + File.separator + "cache" + File.separator + "MaxMessage.xml");
-
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -47,10 +43,12 @@ public class MaxMessageSizeTestCase extends ESBIntegrationTest {
     public void testSmallMessageSize() throws AxisFault, XPathExpressionException, InterruptedException {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("cacheMediatorMaxMessageSizeTestProxy"), "", "IBM");
         String firstResponse = response.getFirstElement().toString();
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("cacheMediatorMaxMessageSizeTestProxy"), "", "IBM");
 
         if (!firstResponse.equalsIgnoreCase(response.getFirstElement().toString())) {
             assertTrue(true, "The size of messages sent is greater than 1000");
