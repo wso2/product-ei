@@ -44,6 +44,12 @@
         </classes>
     </test>
 
+    <test name="JMS-securevault-test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.jms.securevault.test.JMSTransportSecureVaultTest"/>
+        </classes>
+    </test>
+
     <test name="JMS-transport-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.jms.transport.test.*"/>
