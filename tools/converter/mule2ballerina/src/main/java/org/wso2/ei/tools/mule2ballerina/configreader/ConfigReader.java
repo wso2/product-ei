@@ -144,8 +144,8 @@ public class ConfigReader {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
                 Comment comment = new Comment();
-                comment.setComment(" //TODO: Functionality provided by " + mElementName + " should be handled "
-                        + "manually here");
+                comment.setComment(
+                        " //TODO: Functionality provided by " + mElementName + " should be handled " + "manually here");
                 DataCarrierDTO dataCarrierDTO = populateDataCarrier(comment);
                 comment.buildTree(dataCarrierDTO);
             }
@@ -229,14 +229,14 @@ public class ConfigReader {
                             field.set(finalObject, attribute.getValue());
                         }
                     } catch (NoSuchFieldException ex) {
-                        logger.warn(" Property for the mapped mule attribute cannot be found in the relevant class "
-                                , ex);
+                        logger.warn(" Property for the mapped mule attribute cannot be found in the relevant class ",
+                                ex);
                     } catch (IllegalAccessException ex) {
                         logger.error("IllegalAccessException thrown when setting properties in super class", ex);
                     }
                 } catch (IllegalAccessException e) {
                     logger.error("IllegalAccessException thrown when setting properties in created intermediate "
-                             + " object ", e);
+                            + " object ", e);
                 }
             });
 

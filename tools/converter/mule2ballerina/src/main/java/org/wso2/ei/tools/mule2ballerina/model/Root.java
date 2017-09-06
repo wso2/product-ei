@@ -68,6 +68,7 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Add global configuration to the list.
+     *
      * @param globalConfiguration
      */
     public void addGlobalConfiguration(GlobalConfiguration globalConfiguration) {
@@ -81,6 +82,7 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Add private flow to private flow list.
+     *
      * @param privateFlow private flow
      */
     public void addToPrivateFlowStack(Flow privateFlow) {
@@ -89,7 +91,8 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Maintain global configuration map to keep configurations against it's name.
-     * @param name global configuration name
+     *
+     * @param name          global configuration name
      * @param configuration global configuration
      */
     public void addGlobalConfigurationMap(String name, GlobalConfiguration configuration) {
@@ -98,7 +101,8 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Keep sub flows against their name.
-     * @param name sub flow name
+     *
+     * @param name    sub flow name
      * @param subFlow sub flow
      */
     public void addSubFlow(String name, SubFlow subFlow) {
@@ -111,7 +115,8 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Maintain private flow map.
-     * @param name private flow name
+     *
+     * @param name        private flow name
      * @param privateFlow private flow
      */
     public void addPrivateFlow(String name, Flow privateFlow) {
@@ -123,6 +128,7 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Maintain scope stack.
+     *
      * @param scopeProcessor mule scope
      */
     public void addToScopeStack(Scope scopeProcessor) {
@@ -131,6 +137,7 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Add async task to async list.
+     *
      * @param task async task
      */
     public void addAsynchronousTask(AsynchronousTask task) {
@@ -171,6 +178,7 @@ public class Root extends BaseObject implements Visitable {
 
     /**
      * Visit Root object.
+     *
      * @param visitor Visitor object
      */
     @Override

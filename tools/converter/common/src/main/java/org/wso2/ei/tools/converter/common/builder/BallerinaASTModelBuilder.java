@@ -82,6 +82,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Check whether action statement is ready to be processed.
+     *
      * @return a boolean expressing processingActionInvocationStmt
      */
     public boolean isProcessingActionInvocationStmt() {
@@ -90,7 +91,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Set whether action statement needs to be processed or not
-     * @param  processingActionInvocationStmt boolean to set the processing to true or false
+     *
+     * @param processingActionInvocationStmt boolean to set the processing to true or false
      */
     public void setProcessingActionInvocationStmt(boolean processingActionInvocationStmt) {
         this.processingActionInvocationStmt = processingActionInvocationStmt;
@@ -98,7 +100,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Add import statement.
-     * @param pkgPath package path
+     *
+     * @param pkgPath   package path
      * @param asPkgName package name
      */
     public void addImportPackage(String pkgPath, String asPkgName) {
@@ -107,8 +110,9 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create an annotation.
-     * @param pkgName     name of the package
-     * @param name        functionality name you want to use
+     *
+     * @param pkgName name of the package
+     * @param name    functionality name you want to use
      */
     public void createAnnotationAttachment(String pkgName, String name) {
         modelBuilder.startAnnotationAttachment();
@@ -118,7 +122,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create annotation attributes - literal type.
-     * @param key attribute name
+     *
+     * @param key         attribute name
      * @param actualvalue attribute value
      */
     public void createAnnotationAttributeValue(String key, String actualvalue) {
@@ -131,7 +136,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create annotation with array type attributes.
-     * @param key attribute name
+     *
+     * @param key          attribute name
      * @param actualValues attribute values
      */
     public void createAnnotationAttributeArrayType(String key, String[] actualValues) {
@@ -171,7 +177,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * End of ballerina service.
-     * @param serviceName service name
+     *
+     * @param serviceName     service name
      * @param protocolPkgName protocol package name
      */
     public void endOfService(String serviceName, String protocolPkgName) {
@@ -181,7 +188,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * End of ballerina resource.
-     * @param resourceName resource name
+     *
+     * @param resourceName    resource name
      * @param annotationCount annotation count of the resource
      */
     public void endOfResource(String resourceName, int annotationCount) {
@@ -197,6 +205,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * End of ballerina function.
+     *
      * @param functionName function name
      */
     public void endOfFunction(String functionName) {
@@ -273,6 +282,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create a ballerina variable.
+     *
      * @param varName       name of the variable
      * @param exprAvailable expression availability
      */
@@ -305,6 +315,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Mark end of expression list.
+     *
      * @param noOfArguments number of arguments
      */
     public void endExprList(int noOfArguments) {
@@ -323,6 +334,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create a string literal.
+     *
      * @param stringLiteral string literal
      */
     public void createStringLiteral(String stringLiteral) {
@@ -331,6 +343,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create an integer literal.
+     *
      * @param intLiteral integer value
      */
     public void createIntegerLiteral(String intLiteral) {
@@ -339,6 +352,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Will be used when calling a function.
+     *
      * @param argsAvailable arguments available or not
      */
     public void createFunctionInvocation(boolean argsAvailable) {
@@ -354,6 +368,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Initialize ballerina connector.
+     *
      * @param argsAvailable arguments available or not.
      */
     public void initializeConnector(boolean argsAvailable) {
@@ -373,6 +388,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * This will be called to mark the end of varaible reference list.
+     *
      * @param noArguments number of arguments
      */
     public void endVariableRefList(int noArguments) {
@@ -381,7 +397,8 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Call connector action.
-     * @param actionName action name
+     *
+     * @param actionName    action name
      * @param argsAvailable whether arguments available or not
      */
     public void createAction(String actionName, boolean argsAvailable) {
@@ -402,6 +419,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Return BallerinaFile object that represent the ballerina file.
+     *
      * @return BallerinaFile
      */
     public BallerinaFile buildBallerinaFile() {
@@ -411,6 +429,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Get ballerina package map.
+     *
      * @return ballerinaPackageMap
      */
     public Map<String, String> getBallerinaPackageMap() {
@@ -419,6 +438,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Add a comment.
+     *
      * @param comment comment in string format
      */
     public void addComment(String comment) {
@@ -427,6 +447,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Invoke ballerina native function.
+     *
      * @param argsAvailable arguments availability
      */
     public void addFunctionInvocationStatement(boolean argsAvailable) {
@@ -435,6 +456,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Call ballerina worker.
+     *
      * @param workerName worker name
      */
     public void createWorkerInvocationStmt(String workerName) {
@@ -451,6 +473,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create worker definition.
+     *
      * @param workerName worker name
      */
     public void createWorkerDefinition(String workerName) {
@@ -459,6 +482,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Create worker reply statement.
+     *
      * @param defaultWorkerName default name of the worker
      */
     public void exitWorkerReply(String defaultWorkerName) {
@@ -467,6 +491,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Exit worker declaration.
+     *
      * @param workerName worker name
      */
     public void exitWorkerDeclaration(String workerName) {
@@ -526,6 +551,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Invoke ballerina function.
+     *
      * @param argsAvailable argument availability
      */
     public void addFunctionInvocationExpression(boolean argsAvailable) {
