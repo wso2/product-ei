@@ -1232,7 +1232,7 @@
         <synapse.version>2.1.7-wso2v19-SNAPSHOT</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v5</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v6</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
