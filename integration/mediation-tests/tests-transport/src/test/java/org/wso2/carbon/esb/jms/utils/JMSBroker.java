@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.esb.jms.utils;
 
+import org.apache.activemq.broker.BrokerPlugin;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.commons.logging.Log;
@@ -36,6 +37,8 @@ import java.util.List;
  * Since the above mentioned class doesn't allow creation of multiple JMS broker controllers, this class is
  * implemented temporary to serve that purpose.
  * Jira issue: https://wso2.org/jira/browse/TA-1009
+ * The JMSBrokerController class does not also allow setting plugins for the broker, and thus a method has been
+ * introduced here to set plugins before starting the broker.
  */
 public class JMSBroker {
     private static final Log log = LogFactory.getLog(JMSBroker.class);
@@ -91,20 +94,8 @@ public class JMSBroker {
      */
     public boolean start() {
         try {
-            log.info("JMSServerController: Preparing to start JMS Broker: " + serverName);
-            broker = new BrokerService();
-            // configure the broker
-
-            broker.setBrokerName(serverName);
-            log.info(broker.getBrokerDataDirectory());
-            broker.setDataDirectory(System.getProperty(FrameworkConstants.CARBON_HOME) +
-                    File.separator + broker.getBrokerDataDirectory());
-            broker.setTransportConnectors(transportConnectors);
-            broker.setPersistent(true);
-
-            broker.start();
-            setBrokerStatus(true);
-            log.info("JMSServerController: Broker is Successfully started. continuing tests");
+            setInitialConfigurations();
+            startBroker();
             return true;
         } catch (Exception e) {
             log.error("JMSServerController: There was an error starting JMS broker: " + serverName, e);
@@ -150,5 +141,50 @@ public class JMSBroker {
      */
     private void setBrokerStatus(boolean status) {
         isBrokerStarted = status;
+    }
+
+    /**
+     * Starting ActiveMQ embedded broker after specifying plugins.
+     *
+     * @param brokerPlugins the array of BrokerPlugins to be set
+     * @return whether or not the broker was stated successfully
+     */
+    public boolean startWithPlugins(BrokerPlugin[] brokerPlugins) {
+        try {
+            setInitialConfigurations();
+            broker.setPlugins(brokerPlugins);
+            startBroker();
+            return true;
+        } catch (Exception e) {
+            log.error("JMSServerController: There was an error starting JMS broker: " + serverName, e);
+            return false;
+        }
+    }
+
+    /**
+     * Helper method to set initial broker configurations.
+     *
+     * @throws Exception if there is an error setting TransportConnectors
+     */
+    private void setInitialConfigurations() throws Exception {
+        log.info("JMSServerController: Preparing to start JMS Broker: " + serverName);
+        broker = new BrokerService();
+        broker.setBrokerName(serverName);
+        log.info(broker.getBrokerDataDirectory());
+        broker.setDataDirectory(System.getProperty(FrameworkConstants.CARBON_HOME) + File.separator
+                + broker.getBrokerDataDirectory());
+        broker.setTransportConnectors(transportConnectors);
+        broker.setPersistent(true);
+    }
+
+    /**
+     * Private method to start the broker.
+     *
+     * @throws Exception if there is an error starting the broker
+     */
+    private void startBroker() throws Exception {
+        broker.start();
+        setBrokerStatus(true);
+        log.info("JMSServerController: Broker is successfully started. continuing tests");
     }
 }
