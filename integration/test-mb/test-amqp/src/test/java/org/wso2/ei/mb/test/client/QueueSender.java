@@ -18,6 +18,7 @@
 
 package org.wso2.ei.mb.test.client;
 
+import org.wso2.ei.mb.test.utils.ClientConstants;
 import org.wso2.ei.mb.test.utils.ConfigurationConstants;
 import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
@@ -40,11 +41,6 @@ import javax.naming.NamingException;
  */
 public class QueueSender {
 
-    private static final String initialConnectionFactory = "org.wso2.andes.jndi.PropertiesFileInitialContextFactory";
-    private static final String connectionFactoryNamePrefix = "connectionfactory.";
-    private static final String queueNamePrefix = "queue.";
-    private static final String connectionFactoryName = "andesConnectionfactory";
-
     private QueueConnection queueConnection;
     private QueueSession queueSession;
     private javax.jms.QueueSender queueSender;
@@ -65,13 +61,14 @@ public class QueueSender {
         // map of config key and config value
         Map<String, String> clientConfigPropertiesMap = configurationReader.getClientConfigProperties();
         Properties properties = new Properties();
-        properties.put(Context.INITIAL_CONTEXT_FACTORY, initialConnectionFactory);
-        properties.put(connectionFactoryNamePrefix + connectionFactoryName,
+        properties.put(Context.INITIAL_CONTEXT_FACTORY, ClientConstants.FILE_INITIAL_CONNECTION_FACTORY);
+        properties.put(ClientConstants.CONNECTION_FACTORY_NAME_PREFIX + ClientConstants.ANDES_CONNECTION_FACTORY_NAME,
                 getTCPConnectionURL(clientConfigPropertiesMap));
-        properties.put(queueNamePrefix + queueName, queueName);
+        properties.put(ClientConstants.QUEUE_NAME_PREFIX + queueName, queueName);
         InitialContext ctx = new InitialContext(properties);
         // Lookup connection factory
-        QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx.lookup(connectionFactoryName);
+        QueueConnectionFactory connFactory = (QueueConnectionFactory) ctx
+                .lookup(ClientConstants.ANDES_CONNECTION_FACTORY_NAME);
         queueConnection = connFactory.createQueueConnection();
         queueConnection.start();
         queueSession = queueConnection.createQueueSession(false, acknowledgeMode.getType());
