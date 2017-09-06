@@ -154,7 +154,8 @@ public class MuleToBalConvertExecutor {
 
     /**
      * Generate ballerina file
-     * @param xmlParser ConfigReader to parse mule config
+     *
+     * @param xmlParser   ConfigReader to parse mule config
      * @param inputStream InputStream of mule config
      * @param destination Path to save generated ballerina code
      * @throws IOException
@@ -179,8 +180,9 @@ public class MuleToBalConvertExecutor {
 
     /**
      * Interate through each mule config to generate ballerina code
-     * @param innerDirectory inner directory of extracted mule zip
-     * @param source folder containing mule zip
+     *
+     * @param innerDirectory             inner directory of extracted mule zip
+     * @param source                     folder containing mule zip
      * @param generatedBalSourceLocation Ballerina source location
      */
     private static void iterateMuleFiles(File innerDirectory, File source, String generatedBalSourceLocation) {
