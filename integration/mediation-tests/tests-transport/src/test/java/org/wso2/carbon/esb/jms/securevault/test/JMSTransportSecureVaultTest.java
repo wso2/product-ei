@@ -154,7 +154,7 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
             List<AuthenticationUser> users = new ArrayList<AuthenticationUser>();
             users.add(new AuthenticationUser("system", "manager", "users,admins"));
             simpleAuthenticationPlugin.setUsers(users);
-            boolean isBrokerStarted = activeMQBroker.setPluginsAndStart(new BrokerPlugin[]{simpleAuthenticationPlugin});
+            boolean isBrokerStarted = activeMQBroker.startWithPlugins(new BrokerPlugin[]{simpleAuthenticationPlugin});
             Assert.assertTrue(isBrokerStarted, "ActiveMQ broker is not started");
             OMElement payload = axis2Client.createPlaceOrderRequest(100.0, 7500, "JMS");
             axis2Client.sendRobust(getProxyServiceURLHttp(PROXY_NAME), null, "placeOrder", payload);

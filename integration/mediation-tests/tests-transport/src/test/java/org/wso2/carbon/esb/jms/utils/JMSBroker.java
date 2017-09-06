@@ -144,12 +144,12 @@ public class JMSBroker {
     }
 
     /**
-     * Starting ActiveMQ embedded broke after specifying plugins.
+     * Starting ActiveMQ embedded broker after specifying plugins.
      *
      * @param brokerPlugins the array of BrokerPlugins to be set
      * @return whether or not the broker was stated successfully
      */
-    public boolean setPluginsAndStart(BrokerPlugin[] brokerPlugins) {
+    public boolean startWithPlugins(BrokerPlugin[] brokerPlugins) {
         try {
             setInitialConfigurations();
             broker.setPlugins(brokerPlugins);
