@@ -30,7 +30,7 @@ import java.util.Stack;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * {@code Root} This is the root of the intermediate object stack
+ * {@code Root} This is the root of the intermediate object model.
  */
 public class Root extends BaseObject implements Visitable {
 
@@ -66,6 +66,11 @@ public class Root extends BaseObject implements Visitable {
         return flowList;
     }
 
+    /**
+     * Add global configuration to the list.
+     *
+     * @param globalConfiguration
+     */
     public void addGlobalConfiguration(GlobalConfiguration globalConfiguration) {
         this.globalConfigurations.add(globalConfiguration);
     }
@@ -75,14 +80,31 @@ public class Root extends BaseObject implements Visitable {
         this.flowList.add(flow);
     }
 
+    /**
+     * Add private flow to private flow list.
+     *
+     * @param privateFlow private flow
+     */
     public void addToPrivateFlowStack(Flow privateFlow) {
         this.privateFlowList.add(privateFlow);
     }
 
+    /**
+     * Maintain global configuration map to keep configurations against it's name.
+     *
+     * @param name          global configuration name
+     * @param configuration global configuration
+     */
     public void addGlobalConfigurationMap(String name, GlobalConfiguration configuration) {
         configMap.put(name, configuration);
     }
 
+    /**
+     * Keep sub flows against their name.
+     *
+     * @param name    sub flow name
+     * @param subFlow sub flow
+     */
     public void addSubFlow(String name, SubFlow subFlow) {
         SubFlow subFlowRef = subFlowMap.get(name);
         if (subFlowRef == null) {
@@ -91,6 +113,12 @@ public class Root extends BaseObject implements Visitable {
         subFlowStack.add(subFlow);
     }
 
+    /**
+     * Maintain private flow map.
+     *
+     * @param name        private flow name
+     * @param privateFlow private flow
+     */
     public void addPrivateFlow(String name, Flow privateFlow) {
         Flow privateFlowRef = privateFlowMap.get(name);
         if (privateFlowRef == null) {
@@ -98,10 +126,20 @@ public class Root extends BaseObject implements Visitable {
         }
     }
 
+    /**
+     * Maintain scope stack.
+     *
+     * @param scopeProcessor mule scope
+     */
     public void addToScopeStack(Scope scopeProcessor) {
         scopeStack.add(scopeProcessor);
     }
 
+    /**
+     * Add async task to async list.
+     *
+     * @param task async task
+     */
     public void addAsynchronousTask(AsynchronousTask task) {
         asyncTaskList.add(task);
     }
@@ -138,6 +176,11 @@ public class Root extends BaseObject implements Visitable {
         return scopeStack;
     }
 
+    /**
+     * Visit Root object.
+     *
+     * @param visitor Visitor object
+     */
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

@@ -77,7 +77,7 @@ public class ConfigReader {
     /**
      * Process XML as a stream of events
      *
-     * @param inputStream
+     * @param inputStream Inputstream of the mule configuration file
      */
     public void readXML(InputStream inputStream) {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -116,7 +116,7 @@ public class ConfigReader {
      * Given a mule configuration file get it's inputstream
      *
      * @param file Mule configuration file
-     * @return input stream
+     * @return input stream inputstream of mule config file
      */
     public InputStream getInputStream(File file) {
         FileInputStream fileInputStream = null;
@@ -144,8 +144,8 @@ public class ConfigReader {
             if (!Constant.MULE_TAG.equals(mElementName)) {
                 unIdentifiedElements.add(mElementName);
                 Comment comment = new Comment();
-                comment.setComment(" //TODO: Functionality provided by " + mElementName + " should be handled "
-                        + "manually here");
+                comment.setComment(
+                        " //TODO: Functionality provided by " + mElementName + " should be handled " + "manually here");
                 DataCarrierDTO dataCarrierDTO = populateDataCarrier(comment);
                 comment.buildTree(dataCarrierDTO);
             }
@@ -156,7 +156,7 @@ public class ConfigReader {
      * Get mule element's name with the prefix in string format
      *
      * @param muleElement represents a mule tag
-     * @return
+     * @return mule element name in string format
      */
     private String getElementName(StartElement muleElement) {
         QName qName = (muleElement != null ? muleElement.getName() : null);
@@ -167,7 +167,7 @@ public class ConfigReader {
      * Get  mule attribute name with the prefix in string format
      *
      * @param attribute mule attribute
-     * @return
+     * @return mule attribute name in string format
      */
     private String getAttributeName(Attribute attribute) {
         QName qName = (attribute != null ? attribute.getName() : null);
@@ -179,7 +179,7 @@ public class ConfigReader {
      * to it
      *
      * @param qName valid identifier for mule element or attribute
-     * @return
+     * @return mule element or attribute name with prefix as a string
      */
     private String getElementOrAttributeName(QName qName) {
         String prefix = (qName != null ? qName.getPrefix() : "");
@@ -229,14 +229,14 @@ public class ConfigReader {
                             field.set(finalObject, attribute.getValue());
                         }
                     } catch (NoSuchFieldException ex) {
-                        logger.warn(" Property for the mapped mule attribute cannot be found in the relevant class "
-                                , ex);
+                        logger.warn(" Property for the mapped mule attribute cannot be found in the relevant class ",
+                                ex);
                     } catch (IllegalAccessException ex) {
                         logger.error("IllegalAccessException thrown when setting properties in super class", ex);
                     }
                 } catch (IllegalAccessException e) {
                     logger.error("IllegalAccessException thrown when setting properties in created intermediate "
-                             + " object ", e);
+                            + " object ", e);
                 }
             });
 
@@ -256,7 +256,7 @@ public class ConfigReader {
     /**
      * DB queries are represented as CDATA. After setting the query only database object should be added to the tree
      *
-     * @param characters
+     * @param characters CDATA value
      */
     private void populateCData(Characters characters) {
         String data = characters.getData();
@@ -297,7 +297,7 @@ public class ConfigReader {
      * place in the intermediate stack
      *
      * @param baseObject represents any intermediate object
-     * @return
+     * @return DataCarrierDTO object
      */
     private DataCarrierDTO populateDataCarrier(BaseObject baseObject) {
         DataCarrierDTO dataCarrierDTO = new DataCarrierDTO();
@@ -312,7 +312,7 @@ public class ConfigReader {
     /**
      * Get the root of the intermediate stack that holds all the intermediate objects
      *
-     * @return
+     * @return root of intermediate object model
      */
     public Root getRootObj() {
         return rootObj;
@@ -325,7 +325,7 @@ public class ConfigReader {
     /**
      * Get unidentified elements as a list of strings
      *
-     * @return
+     * @return unidentified element list
      */
     public List<String> getUnIdentifiedElements() {
         return unIdentifiedElements;

@@ -39,7 +39,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * {@code MuleToBalConvertExecutor} This is the main execution point
+ * {@code MuleToBalConvertExecutor} This is the main execution point.
+ * Will be used by mule-to-bal.sh
+ * Usage >> "./mule-to-bal.sh (mule-config-file) (destination)
+ *           ./mule-to-bal.sh (folder containing multiple mule configs) (destination)
+ *           ./mule-to-bal.sh -z (mule-zip-file) (destination)
+ *           ./mule-to-bal.sh -z (folder containing multiple mule zip files) (destination)"
  */
 public class MuleToBalConvertExecutor {
 
@@ -96,7 +101,7 @@ public class MuleToBalConvertExecutor {
                     }
                 }
             }
-        } else {
+        } else { //One mule config or a folder containing multiple mule configs
             File source = new File(args[0]);
             Path sourcePath = source.toPath().toAbsolutePath();
             logger.info("Mule configs are in this location: " + sourcePath.toString());
@@ -147,6 +152,14 @@ public class MuleToBalConvertExecutor {
         }
     }
 
+    /**
+     * Generate ballerina file
+     *
+     * @param xmlParser   ConfigReader to parse mule config
+     * @param inputStream InputStream of mule config
+     * @param destination Path to save generated ballerina code
+     * @throws IOException
+     */
     private static void createBalFile(ConfigReader xmlParser, InputStream inputStream, String destination)
             throws IOException {
         xmlParser.readXML(inputStream);
@@ -165,6 +178,13 @@ public class MuleToBalConvertExecutor {
         sourceGenerator.generate(ballerinaFile, destination);
     }
 
+    /**
+     * Interate through each mule config to generate ballerina code
+     *
+     * @param innerDirectory             inner directory of extracted mule zip
+     * @param source                     folder containing mule zip
+     * @param generatedBalSourceLocation Ballerina source location
+     */
     private static void iterateMuleFiles(File innerDirectory, File source, String generatedBalSourceLocation) {
 
         if (logger.isDebugEnabled()) {
