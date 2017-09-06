@@ -60,11 +60,13 @@ public class BallerinaASTModelBuilder {
     private BLangModelBuilder modelBuilder;
     private Map<String, String> ballerinaPackageMap = new HashMap<String, String>();
 
+    /**
+     * Create an object of ballerina model that needs to be filled out from converter information and keep a map with
+     * native ballerina package against it's name reference as this is needed for import statements.
+     */
     public BallerinaASTModelBuilder() {
-
         GlobalScope globalScope = BLangPrograms.populateGlobalScope();
         NativeScope nativeScope = BLangPrograms.populateNativeScope();
-
         programScope = new BLangProgram(globalScope, nativeScope);
         bLangPackage = new BLangPackage(".", PACKAGE_REPOSITORY, programScope);
         BLangPackage.PackageBuilder packageBuilder = new BLangPackage.PackageBuilder(bLangPackage);
@@ -78,21 +80,33 @@ public class BallerinaASTModelBuilder {
         }
     }
 
+    /**
+     * Check whether action statement is ready to be processed.
+     * @return a boolean expressing processingActionInvocationStmt
+     */
     public boolean isProcessingActionInvocationStmt() {
         return processingActionInvocationStmt;
     }
 
+    /**
+     * Set whether action statement needs to be processed or not
+     * @param  processingActionInvocationStmt boolean to set the processing to true or false
+     */
     public void setProcessingActionInvocationStmt(boolean processingActionInvocationStmt) {
         this.processingActionInvocationStmt = processingActionInvocationStmt;
     }
 
+    /**
+     * Add import statement.
+     * @param pkgPath package path
+     * @param asPkgName package name
+     */
     public void addImportPackage(String pkgPath, String asPkgName) {
         modelBuilder.addImportPackage(null, null, pkgPath, asPkgName);
     }
 
     /**
-     *
-     *
+     * Create an annotation.
      * @param pkgName     name of the package
      * @param name        functionality name you want to use
      */
@@ -103,9 +117,9 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     * Create annotation attributes - literal type
-     * @param key
-     * @param actualvalue
+     * Create annotation attributes - literal type.
+     * @param key attribute name
+     * @param actualvalue attribute value
      */
     public void createAnnotationAttributeValue(String key, String actualvalue) {
         if (key != null && actualvalue != null) {
@@ -116,9 +130,9 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     * Create annotation with array type attributes
-     * @param key
-     * @param actualValues
+     * Create annotation with array type attributes.
+     * @param key attribute name
+     * @param actualValues attribute values
      */
     public void createAnnotationAttributeArrayType(String key, String[] actualValues) {
         if (key != null && actualValues != null) {
@@ -133,7 +147,7 @@ public class BallerinaASTModelBuilder {
 
     /**
      * Adds an annotation. For an attachment to be added first it needs to be created using
-     * 'createAnnotationAttachment' method
+     * 'createAnnotationAttachment' method.
      *
      * @param attributesCount is never used in ballerina side, even though it expects a value
      */
@@ -141,33 +155,56 @@ public class BallerinaASTModelBuilder {
         modelBuilder.addAnnotationAttachment(null, null, nameReferenceStack.pop(), attributesCount);
     }
 
+    /**
+     * Start ballerina service.
+     */
     public void startService() {
         modelBuilder.startServiceDef();
     }
 
+    /**
+     * Start ballerina resource.
+     */
     public void startResource() {
         modelBuilder.startResourceDef();
     }
 
+    /**
+     * End of ballerina service.
+     * @param serviceName service name
+     * @param protocolPkgName protocol package name
+     */
     public void endOfService(String serviceName, String protocolPkgName) {
         modelBuilder.createService(null, null, serviceName, protocolPkgName);
 
     }
 
+    /**
+     * End of ballerina resource.
+     * @param resourceName resource name
+     * @param annotationCount annotation count of the resource
+     */
     public void endOfResource(String resourceName, int annotationCount) {
         modelBuilder.addResource(null, null, resourceName, annotationCount);
     }
 
+    /**
+     * Start ballerina function.
+     */
     public void startFunction() {
         modelBuilder.startFunctionDef();
     }
 
+    /**
+     * End of ballerina function.
+     * @param functionName function name
+     */
     public void endOfFunction(String functionName) {
         modelBuilder.addFunction(null, null, functionName, false, false); //isNative is false
     }
 
     /**
-     * Add built in ref types
+     * Add built in ref types.
      *
      * @param builtInRefTypeName built in type
      */
@@ -176,6 +213,9 @@ public class BallerinaASTModelBuilder {
         typeNameStack.push(simpleTypeName);
     }
 
+    /**
+     * Will be used when creating connectors.
+     */
     public void createRefereceTypeName() {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         SimpleTypeName typeName = new SimpleTypeName(nameReference.getName(), nameReference.getPackageName(),
@@ -185,7 +225,7 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     * Create a function parameter
+     * Create a function parameter.
      *
      * @param annotationCount        number of annotations - this is required in case of PathParam or QueryParam
      *                               annotations
@@ -196,27 +236,43 @@ public class BallerinaASTModelBuilder {
         modelBuilder.addParam(null, null, typeNameStack.pop(), paramName, annotationCount, processingReturnParams);
     }
 
+    /**
+     * Start the body of a ballerina resource or a function.
+     */
     public void startCallableBody() {
         modelBuilder.startCallableUnitBody();
     }
 
+    /**
+     * End the body of a ballerina resource or a function.
+     */
     public void endCallableBody() {
         modelBuilder.endCallableUnitBody(null);
     }
 
+    /**
+     * Start of ballerina map.
+     */
     public void startMapStructLiteral() {
         modelBuilder.startMapStructLiteral();
     }
 
+    /**
+     * Add ballerina map.
+     */
     public void createMapStructLiteral() {
         modelBuilder.createMapStructLiteral(null, null);
     }
 
+    /**
+     * Add key value pairs to ballerina map.
+     */
     public void addMapStructKeyValue() {
         modelBuilder.addKeyValueExpr(null, null);
     }
 
     /**
+     * Create a ballerina variable.
      * @param varName       name of the variable
      * @param exprAvailable expression availability
      */
@@ -227,7 +283,7 @@ public class BallerinaASTModelBuilder {
     }
 
     /**
-     * Create a name reference
+     * Create a name reference. This will be used to call ballerina connector functions, native functions etc..
      *
      * @param pkgName package name
      * @param name    functionality name you want to use
@@ -240,14 +296,24 @@ public class BallerinaASTModelBuilder {
         nameReferenceStack.push(nameReference);
     }
 
+    /**
+     * Start the expression list.
+     */
     public void startExprList() {
         modelBuilder.startExprList();
     }
 
+    /**
+     * Mark end of expression list.
+     * @param noOfArguments number of arguments
+     */
     public void endExprList(int noOfArguments) {
         modelBuilder.endExprList(noOfArguments);
     }
 
+    /**
+     * Needs to be used when creating variable references.
+     */
     public void createSimpleVarRefExpr() {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         modelBuilder.resolvePackageFromNameReference(nameReference);
@@ -255,27 +321,41 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createSimpleVarRefExpr(null, nameReference.getWhiteSpaceDescriptor(), nameReference);
     }
 
+    /**
+     * Create a string literal.
+     * @param stringLiteral string literal
+     */
     public void createStringLiteral(String stringLiteral) {
         modelBuilder.createStringLiteral(null, null, stringLiteral);
     }
 
+    /**
+     * Create an integer literal.
+     * @param intLiteral integer value
+     */
     public void createIntegerLiteral(String intLiteral) {
         modelBuilder.createIntegerLiteral(null, null, intLiteral);
     }
 
-    public void createBackTickExpression(String content) {
-        //TODO : update to match with new Ballerina changes
-        //modelBuilder.createBacktickExpr(null, null, content);
-    }
-
+    /**
+     * Will be used when calling a function.
+     * @param argsAvailable arguments available or not
+     */
     public void createFunctionInvocation(boolean argsAvailable) {
         modelBuilder.createFunctionInvocationStmt(null, null, argsAvailable);
     }
 
+    /**
+     * Create reply statement.
+     */
     public void createReplyStatement() {
         modelBuilder.createReplyStmt(null, null);
     }
 
+    /**
+     * Initialize ballerina connector.
+     * @param argsAvailable arguments available or not.
+     */
     public void initializeConnector(boolean argsAvailable) {
         BLangModelBuilder.NameReference nameReference = nameReferenceStack.pop();
         SimpleTypeName connectorTypeName = new SimpleTypeName(nameReference.getName(), nameReference.getPackageName(),
@@ -284,14 +364,26 @@ public class BallerinaASTModelBuilder {
         modelBuilder.createConnectorInitExpr(null, null, connectorTypeName, argsAvailable);
     }
 
+    /**
+     * Use reference of a variable.
+     */
     public void createVariableRefList() {
         modelBuilder.startVarRefList();
     }
 
+    /**
+     * This will be called to mark the end of varaible reference list.
+     * @param noArguments number of arguments
+     */
     public void endVariableRefList(int noArguments) {
         modelBuilder.endVarRefList(noArguments);
     }
 
+    /**
+     * Call connector action.
+     * @param actionName action name
+     * @param argsAvailable whether arguments available or not
+     */
     public void createAction(String actionName, boolean argsAvailable) {
         if (processingActionInvocationStmt) {
             modelBuilder.createActionInvocationStmt(null, null);
@@ -301,82 +393,141 @@ public class BallerinaASTModelBuilder {
         }
     }
 
+    /**
+     * This will called after calling connector action to assign the return value to a reference variable.
+     */
     public void createAssignmentStatement() {
         modelBuilder.createAssignmentStmt(null, null, false);
     }
 
+    /**
+     * Return BallerinaFile object that represent the ballerina file.
+     * @return BallerinaFile
+     */
     public BallerinaFile buildBallerinaFile() {
         BallerinaFile bFile = modelBuilder.build();
         return bFile;
     }
 
+    /**
+     * Get ballerina package map.
+     * @return ballerinaPackageMap
+     */
     public Map<String, String> getBallerinaPackageMap() {
         return ballerinaPackageMap;
     }
 
+    /**
+     * Add a comment.
+     * @param comment comment in string format
+     */
     public void addComment(String comment) {
         modelBuilder.addCommentStmt(null, null, comment);
     }
 
+    /**
+     * Invoke ballerina native function.
+     * @param argsAvailable arguments availability
+     */
     public void addFunctionInvocationStatement(boolean argsAvailable) {
         modelBuilder.createFunctionInvocationStmt(null, null, argsAvailable);
     }
 
+    /**
+     * Call ballerina worker.
+     * @param workerName worker name
+     */
     public void createWorkerInvocationStmt(String workerName) {
         modelBuilder.createWorkerInvocationStmt(workerName, null, null);
     }
 
+    /**
+     * Enter ballerina worker declaration.
+     */
     public void enterWorkerDeclaration() {
         modelBuilder.startWorkerUnit();
         modelBuilder.startCallableUnitBody();
     }
 
+    /**
+     * Create worker definition.
+     * @param workerName worker name
+     */
     public void createWorkerDefinition(String workerName) {
         modelBuilder.createWorkerDefinition(null, workerName);
     }
 
+    /**
+     * Create worker reply statement.
+     * @param defaultWorkerName default name of the worker
+     */
     public void exitWorkerReply(String defaultWorkerName) {
         modelBuilder.createWorkerReplyStmt(defaultWorkerName, null, null);
     }
 
+    /**
+     * Exit worker declaration.
+     * @param workerName worker name
+     */
     public void exitWorkerDeclaration(String workerName) {
         modelBuilder.endCallableUnitBody(null);
         modelBuilder.createWorker(null, null, workerName);
     }
 
+    /**
+     * Enter ballerina if statement.
+     */
     public void enterIfStatement() {
         modelBuilder.startIfElseStmt();
         modelBuilder.startIfClause();
     }
 
+    /**
+     * Exit ballerina if clause.
+     */
     public void exitIfClause() {
         modelBuilder.addIfClause(null, null);
     }
 
+    /**
+     * Enter 'else if' clause.
+     */
     public void enterElseIfClause() {
         modelBuilder.startElseIfClause();
     }
 
+    /**
+     * Exit 'else if' clause.
+     */
     public void exitElseIfClause() {
         modelBuilder.addElseIfClause(null, null);
     }
 
+    /**
+     * Enter else clause.
+     */
     public void enterElseClause() {
         modelBuilder.startElseClause();
     }
 
+    /**
+     * Exit else clause.
+     */
     public void exitElseClause() {
         modelBuilder.addElseClause(null, null);
     }
 
+    /**
+     * End of if else. This will be used after else's exit.
+     */
     public void exitIfElseStatement() {
         modelBuilder.addIfElseStmt(null);
     }
 
-    public void createXMLLiteral(String xmlLiteral) {
-        modelBuilder.createXMLTextLiteral(null, null, xmlLiteral);
-    }
-
+    /**
+     * Invoke ballerina function.
+     * @param argsAvailable argument availability
+     */
     public void addFunctionInvocationExpression(boolean argsAvailable) {
         modelBuilder.addFunctionInvocationExpr(null, null, argsAvailable);
     }

@@ -101,23 +101,7 @@ public class TreeVisitor implements Visitor {
         for (Flow flow : root.getFlowList()) {
             flow.accept(this);
         }
-      /*  //Visit each private flow to create functions. (Private flows are treated as functions.)
-        for (Flow privateFlow : root.getPrivateFlowList()) {
-            ballerinaASTModelBuilder.startFunction();
-            ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_MESSAGE); //type of the parameter
-           *//*Set the new message variable to 'outboundMsg' since all the other elements inside function will use this
-            as their message reference *//*
-            outboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
-            ballerinaASTModelBuilder.addParameter(0, false, outboundMsg);
-            ballerinaASTModelBuilder.startCallableBody();
-            for (Processor processor : privateFlow.getFlowProcessors()) {
-                processor.accept(this);
-            }
-            ballerinaASTModelBuilder.endCallableBody();
-            ballerinaASTModelBuilder
-                    .endOfFunction(privateFlow.getName()); //Function name will be the same as private flow name
-        }*/
-
+        //Visit each private flow to create functions. (Private flows are treated as functions.)
         for (Flow privateFlow : root.getPrivateFlowList()) {
             outboundMsg = Constant.BLANG_DEFAULT_VAR_MSG + ++parameterCounter;
             Map<Property, String> functionParas = new EnumMap<Property, String>(Property.class);
@@ -149,11 +133,6 @@ public class TreeVisitor implements Visitor {
             i++;
             //If end of flow
             if (flowSize == i) {
-              /*  ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
-                ballerinaASTModelBuilder.createSimpleVarRefExpr();
-                ballerinaASTModelBuilder.createReplyStatement();
-                ballerinaASTModelBuilder.endCallableBody();*/
-
                 Map<Property, String> parameters = new EnumMap<Property, String>(Property.class);
                 parameters.put(Property.OUTBOUND_MSG, outboundMsg);
                 BallerinaProgramHelper.createReply(ballerinaASTModelBuilder, parameters);
@@ -230,59 +209,6 @@ public class TreeVisitor implements Visitor {
                 (payload.getValue().substring(1, payload.getValue().length() - 1)) :
                 payload.getValue());
 
-        /*if (payload.getMimeType() != null) {
-            MimeType mimeType = MimeType.get(payload.getMimeType());
-
-            switch (mimeType) {
-            case XML:
-                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_XML); //type of the variable
-                *//*Backtick expression is not longer supported in Ballerina.  Improvements may come in a future
-                * release*//*
-                // ballerinaASTAPI.createBackTickExpression(Constant.BACKTICK + payload.getValue() + Constant.BACKTICK);
-                ballerinaASTModelBuilder.addComment("//TODO: Change the double quotes to back tick. ");
-                ballerinaASTModelBuilder.createXMLLiteral(payloadValue);
-                payloadVariableName = Constant.BLANG_VAR_XML_PAYLOAD + ++variableCounter;
-                ballerinaASTModelBuilder.createVariable(payloadVariableName, true); //name of the variable
-                ballerinaASTModelBuilder
-                        .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_XML_PAYLOAD);
-                break;
-
-            *//*
-            IMPORTANT: For Json variables, you have to manually remove the quotation surrounding the json value
-             *//*
-            case JSON:
-                ballerinaASTModelBuilder.addComment(Constant.BLANG_COMMENT_JSON);
-                ballerinaASTModelBuilder.addTypes(Constant.BLANG_TYPE_JSON); //type of the variable
-                ballerinaASTModelBuilder.createStringLiteral(payloadValue);
-                payloadVariableName = Constant.BLANG_VAR_JSON_PAYLOAD + ++variableCounter;
-                ballerinaASTModelBuilder.createVariable(payloadVariableName, true); //name of the variable
-                ballerinaASTModelBuilder
-                        .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_JSON_PAYLOAD);
-                break;
-
-            default:
-                payloadVariableName = createVariableOfTypeString(payloadValue, Constant.BLANG_VAR_STRING_PAYLOAD, true,
-                        true);
-                ballerinaASTModelBuilder
-                        .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
-                break;
-            }
-        } else {
-            payloadVariableName = createVariableOfTypeString(payloadValue, Constant.BLANG_VAR_STRING_PAYLOAD, true,
-                    true);
-            ballerinaASTModelBuilder
-                    .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);
-        }
-
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.createNameReference(null, payloadVariableName);
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.endExprList(2);
-        ballerinaASTModelBuilder.createFunctionInvocation(true);*/
-
         Map<Property, String> parameters = new EnumMap<Property, String>(Property.class);
         if (payload.getMimeType() != null) {
             MimeType mimeType = MimeType.get(payload.getMimeType());
@@ -304,11 +230,6 @@ public class TreeVisitor implements Visitor {
                 break;
 
             default:
-               /* payloadVariableName = createVariableOfTypeString(payloadValue, Constant.BLANG_VAR_STRING_PAYLOAD,
-               true,
-                        true);
-                ballerinaASTModelBuilder
-                        .createNameReference(Constant.BLANG_PKG_MESSAGES, Constant.BLANG_SET_STRING_PAYLOAD);*/
                 break;
             }
         } /*else {
@@ -334,14 +255,7 @@ public class TreeVisitor implements Visitor {
         /*If the service is not yet created, start creating service definition*/
         if (serviceTrack.get(listenerConfig.getName()) == null) {
             Service.startService(ballerinaASTModelBuilder);
-
             /*Create annotations belong to the service definition*/
-           /* ballerinaASTModelBuilder
-                    .createAnnotationAttachment(Constant.BLANG_HTTP, Constant.BLANG_CONFIG, Constant.BLANG_BASEPATH,
-                            listenerConfig.getBasePath());
-            ballerinaASTModelBuilder.addAnnotationAttachment(1); //attributesCount is never used
-            serviceTrack.put(listenerConfig.getName(), true);*/
-
             Map<Property, String> serviceAnnotations = new EnumMap<Property, String>(Property.class);
             serviceAnnotations.put(Property.BASEPATH_VALUE, listenerConfig.getBasePath());
             Annotation.createServiceAnnotation(ballerinaASTModelBuilder, serviceAnnotations);
@@ -451,23 +365,6 @@ public class TreeVisitor implements Visitor {
         logger.info("----HttpRequest");
         GlobalConfiguration globalConfiguration = mRoot.getConfigMap().get(request.getConfigName());
         globalConfiguration.accept(this);
-
-      /*  ballerinaASTModelBuilder.createVariableRefList();
-        ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
-        // ballerinaASTAPI.createVariableRefExpr();
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.endVariableRefList(1);
-        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
-        ballerinaASTModelBuilder.startExprList();
-        ballerinaASTModelBuilder.createNameReference(null, connectorVarName);
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.createStringLiteral(request.getPath());
-        ballerinaASTModelBuilder.createNameReference(null, inboundMsg);
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.endVariableRefList(3);
-        ballerinaASTModelBuilder.createAction(Constant.BLANG_CLIENT_CONNECTOR_GET_ACTION, true);
-        ballerinaASTModelBuilder.createAssignmentStatement();*/
-
         Map<Property, String> connectorParameters = new EnumMap<Property, String>(Property.class);
         connectorParameters.put(Property.INBOUND_MSG, inboundMsg);
         connectorParameters.put(Property.OUTBOUND_MSG, outboundMsg);
@@ -485,31 +382,6 @@ public class TreeVisitor implements Visitor {
     public void visit(HttpRequestConfig requestConfig) {
         logger.info("----HttpRequestConfig");
         BallerinaProgramHelper.addImport(ballerinaASTModelBuilder, Constant.BLANG_HTTP, importTracker);
-
-       /* *//*Create reference type variable LHS*//*
-        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
-        ballerinaASTModelBuilder.createRefereceTypeName();
-        *//*Create an object out of above created ref type and initialize it with values*//*
-        ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
-        ballerinaASTModelBuilder.startExprList();
-
-        String protocol = (Constant.HTTPS.equalsIgnoreCase(requestConfig.getProtocol()) ?
-                Constant.HTTPS_PROTOCOL :
-                Constant.HTTP_PROTOCOL);
-        String strUrl = "";
-        if (!Constant.DEFAULT_PORT.equals(requestConfig.getPort())) {
-            strUrl = protocol + requestConfig.getHost() + ":" + requestConfig.getPort() +
-                    requestConfig.getBasePath();
-        } else {
-            strUrl = protocol + requestConfig.getHost() + requestConfig.getBasePath();
-        }
-
-        ballerinaASTModelBuilder.createStringLiteral(strUrl);
-        ballerinaASTModelBuilder.endExprList(1); // no of arguments
-        ballerinaASTModelBuilder.initializeConnector(true); //arguments available
-        connectorVarName = Constant.BLANG_VAR_CONNECT + ++variableCounter;
-        ballerinaASTModelBuilder.createVariable(connectorVarName, true);*/
-
         String protocol = (Constant.HTTPS.equalsIgnoreCase(requestConfig.getProtocol()) ?
                 Constant.HTTPS_PROTOCOL :
                 Constant.HTTP_PROTOCOL);
@@ -673,16 +545,6 @@ public class TreeVisitor implements Visitor {
         if (mRoot.getPrivateFlowMap() != null && !mRoot.getPrivateFlowMap().isEmpty()) {
             Flow privateFlow = mRoot.getPrivateFlowMap().get(flowReference.getName());
             if (privateFlow != null) {
-                /*ballerinaASTAPI.addComment(
-                        "//Calling the function that has the processors belong to " + flowReference.getName());*/
-               /* ballerinaASTModelBuilder.createNameReference(null, flowReference.getName());
-                ballerinaASTModelBuilder.createSimpleVarRefExpr();
-                ballerinaASTModelBuilder.startExprList();
-                ballerinaASTModelBuilder.createNameReference(null, outboundMsg);
-                ballerinaASTModelBuilder.createSimpleVarRefExpr();
-                ballerinaASTModelBuilder.endExprList(1);
-                ballerinaASTModelBuilder.createFunctionInvocation(true);*/
-
                 Map<Property, String> functionParas = new EnumMap<Property, String>(Property.class);
                 functionParas.put(Property.OUTBOUND_MSG, outboundMsg);
                 functionParas.put(Property.FUNCTION_NAME, flowReference.getName());
