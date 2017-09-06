@@ -23,9 +23,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
-
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.MultiMessageReceiver;
 
@@ -38,7 +36,6 @@ import static org.testng.Assert.assertTrue;
 
 public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
     /**
      * Message count is depend on the edi.txt file
      */
@@ -50,7 +47,6 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(context);
         addVFSProxy();
     }
 
@@ -150,8 +146,6 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
         } finally {
             super.cleanup();
             Thread.sleep(3000);
-            serverConfigurationManager = null;
-
         }
     }
 }

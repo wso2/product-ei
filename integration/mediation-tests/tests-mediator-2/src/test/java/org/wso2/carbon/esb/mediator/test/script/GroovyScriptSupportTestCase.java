@@ -23,30 +23,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.JSONClient;
 
 import javax.xml.namespace.QName;
-import java.io.File;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 public class GroovyScriptSupportTestCase extends ESBIntegrationTest {
-
-    private ServerConfigurationManager serverManager;
     private JSONClient jsonclient;
 
     @BeforeClass(alwaysRun = true)
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
 })
     public void setEnvironment() throws Exception {
-        super.init();
-        serverManager = new ServerConfigurationManager(context);
-        serverManager.applyConfiguration(new File(FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"+ File.separator +"ESB"
-                + File.separator + "synapseconfig" + File.separator + "groovy" + File.separator + "axis2.xml"));
         super.init();
         jsonclient = new JSONClient();
     }
@@ -86,14 +77,7 @@ public class GroovyScriptSupportTestCase extends ESBIntegrationTest {
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
 })
     public void destroy() throws Exception {
-        try {
-            super.cleanup();
-            Thread.sleep(5000);
-        } finally {
-            serverManager.restoreToLastConfiguration();
-            serverManager = null;
-        }
-
+        super.cleanup();
     }
 
 }

@@ -128,7 +128,6 @@ public class PropertyPersistenceAddingTestCase extends ESBIntegrationTest{
     public void destroy() throws Exception{
         super.cleanup();
         serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
-        serverConfigurationManager.restartGracefully();
         serverConfigurationManager=null;
     }
 }
