@@ -38,7 +38,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * Class containing util functions
+ * Class containing util functions.
  */
 public class Utils {
 
@@ -61,10 +61,10 @@ public class Utils {
     }
 
     /**
-     * Given a source get the destination path
+     * Given a source get the destination path.
      *
-     * @param source
-     * @param destination
+     * @param source      source file
+     * @param destination destination to save generated code
      * @param isExtract   whether this is an extraction or a generation of bal source
      * @return
      */
@@ -287,7 +287,7 @@ public class Utils {
      * Given a file get it's extension
      *
      * @param file
-     * @return
+     * @return file extension as a string
      */
     public static String getFileExtension(File file) {
         String fileName = file.getName();
