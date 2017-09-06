@@ -1229,16 +1229,16 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v17-SNAPSHOT</synapse.version>
+        <synapse.version>2.1.7-wso2v19-SNAPSHOT</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v3</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v5</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.21-SNAPSHOT</carbon.mediation.version>
+        <carbon.mediation.version>4.6.23-SNAPSHOT</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.16</carbon.kernel.version>
@@ -1248,8 +1248,8 @@
         <carbon.commons.version>4.5.10</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.7.3</carbon.deployment.version>
-        <carbon-deployment.feature.imp.version>4.7.3</carbon-deployment.feature.imp.version>
+        <carbon.deployment.version>4.7.5</carbon.deployment.version>
+        <carbon-deployment.feature.imp.version>4.7.5</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
         <carbon.registry.version>4.6.0</carbon.registry.version>
@@ -1262,10 +1262,10 @@
         <carbon.identity-user-ws.version>5.1.3</carbon.identity-user-ws.version>
 
         <!-- Carbon Rule version -->
-        <carbon.rule.version>4.4.1</carbon.rule.version>
+        <carbon.rule.version>4.4.4</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.13</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.15</carbon-dataservice-hosting.feature.imp.version>
 
         <!-- Analytic Commons version-->
         <carbon.analytics.common.version>5.1.3</carbon.analytics.common.version>
@@ -1367,7 +1367,7 @@
         <ibatis-core.version>3.0</ibatis-core.version>
         <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
         <jersey-client.version>1.8</jersey-client.version>
-        <cipher.tool.version>1.0.0-wso2v4</cipher.tool.version>
+        <cipher.tool.version>1.0.0-wso2v6</cipher.tool.version>
         <commons.io.version>2.2</commons.io.version>
         <commons-httpclient.version>3.1.0.wso2v2</commons-httpclient.version>
 

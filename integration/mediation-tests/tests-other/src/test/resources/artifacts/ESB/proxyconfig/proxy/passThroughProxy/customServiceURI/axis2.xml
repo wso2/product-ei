@@ -390,7 +390,7 @@
         </parameter>
     </transportReceiver-->
 
-    <!--Uncomment this and configure as appropriate for JMS transport support with WSO2 MB 2.x.x -->
+    <!--Uncomment this and configure as appropriate for JMS transport support with WSO2 EI Broker Profile -->
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>

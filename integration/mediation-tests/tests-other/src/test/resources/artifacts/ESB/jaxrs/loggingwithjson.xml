@@ -20,7 +20,7 @@
                   </log>
                   <property name="HTTP_METHOD" value="POST" scope="axis2" type="STRING"/>
                   <log>
-                     <property name="JSON-RequestPayload" expression="json-eval($.)"/>
+                     <property name="JSON-RequestPayload" expression="json-eval($)"/>
                   </log>
                   <send>
                      <endpoint>

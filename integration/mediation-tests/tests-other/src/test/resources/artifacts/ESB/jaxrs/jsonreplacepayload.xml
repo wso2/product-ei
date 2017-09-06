@@ -45,7 +45,7 @@
          <outSequence>
 
              <log>
-                 <property name="JSON-Payload" expression="json-eval($.)"/>
+                 <property name="JSON-Payload" expression="json-eval($)"/>
              </log>
 
              <log level="full"/>

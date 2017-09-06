@@ -52,18 +52,6 @@ public class ConcurrencyAndRequestThrottleTestClient implements Runnable {
             OMElement response = axis2Client.sendSimpleStockQuoteRequest(proxyServiceURL, null, "WSO2");
             if(response.toString().contains("WSO2")){
                 list.add("Access Granted");
-
-                try{
-//                    since one request is already sent; "throttleMaxMagCount" th request will be Denied
-                    for (int i = 0; i < throttleMaxMsgCount; i++) {
-                        axis2Client.sendSimpleStockQuoteRequest(proxyServiceURL, null, "WSO2");
-                    }
-                }catch (Exception e){
-                    if(e.getMessage().contains("**Access Denied**")){
-                    requestThrottleCounter.increment();
-                    }
-
-                }
             }
         } catch (Exception e) {
             if(e.getMessage().contains("**Access Denied**")){

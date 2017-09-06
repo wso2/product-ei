@@ -52,10 +52,7 @@ public class ProxyServiceEndPointThroughURLTestCase extends ESBIntegrationTest {
         String symbol = response.getFirstElement().
                 getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
         assertEquals(symbol, "WSO2", "Fault: value 'symbol' mismatched");
-    }
 
-    @Test(groups = "wso2.esb", description = "VerifyLogs")
-    public void testVerifyLogs() throws Exception {
         LogViewerClient logViewerClient = new LogViewerClient(context.getContextUrls().getBackEndUrl(),
                 getSessionCookie());
         assertNotNull(logViewerClient.getRemoteLogs("INFO", "getQuote", "", ""),

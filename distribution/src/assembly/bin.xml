@@ -1357,6 +1357,16 @@
         </fileSet>
 
         <fileSet>
+            <directory>src/scripts/</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/bin
+            </outputDirectory>
+            <includes>
+                <include>**/carbondump.bat</include>
+                <include>**/carbondump.sh</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
             <directory>src/analytics/samples/publishers</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/samples/
             </outputDirectory>

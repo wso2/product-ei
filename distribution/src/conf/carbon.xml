@@ -76,7 +76,6 @@
         <Role>EnterpriseIntegrator</Role>
         <Role>EnterpriseServiceBus</Role>
         <Role>DataServicesServer</Role>
-        <Role>ApplicationServer</Role>
     </ServerRoles>
 
     <!-- uncommnet this line to subscribe to a bam instance automatically -->

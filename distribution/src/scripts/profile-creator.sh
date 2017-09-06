@@ -22,7 +22,8 @@
 
 
 DIR="$(dirname "${BASH_SOURCE[0]}")"
-DISTRIBUTION="wso2ei-@product.version@"
+PARENTDIR="${PWD%/*}"
+DISTRIBUTION="$(basename "$PARENTDIR")"
 #get the desired profile
 echo "*************************************************************************************"
 echo "This tool will erase all the files which are not required for the selected profile "
@@ -207,7 +208,12 @@ then
     for BUNDLE in $DEFAULT_BUNDLES; do
         IFS=',' read -a bundleArray <<< "$BUNDLE"
         JAR=${bundleArray[0]}_${bundleArray[1]}.jar
+        search_dir=${DIR}/../wso2/components/plugins
+        file_count=$(find $search_dir -name $JAR | wc -l)
+        if [[ $file_count -gt 0 ]]
+        then
         cp ${DIR}/../wso2/components/plugins/${JAR} ${DIR}/../wso2/components/tmp_plugins
+        fi
         done
 
     rm -r ${DIR}/../wso2/components/plugins
@@ -216,7 +222,7 @@ fi
 
 echo "Preparing a profile distribution archive."
 cd ${DIR}/../../
-zip -r ${DISTRIBUTION}${PROFILE}.zip ${DISTRIBUTION}/
+zip -r ${DISTRIBUTION}${PROFILE}.zip ${DISTRIBUTION}/ -x *profile-creator*
 
 echo "Profile creation completed successfully."
 exit 0
