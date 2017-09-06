@@ -40,12 +40,9 @@ import static org.testng.Assert.fail;
 
 public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
-
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(context);
         uploadResourcesToConfigRegistry();
         loadESBConfigurationFromClasspathIfNotExists("/artifacts/ESB/mediatorconfig/spring/spring_mediation.xml");
     }
@@ -71,9 +68,7 @@ public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         clearUploadedResource();
-        Thread.sleep(5000);
         super.cleanup();
-        serverConfigurationManager = null;
     }
 
 

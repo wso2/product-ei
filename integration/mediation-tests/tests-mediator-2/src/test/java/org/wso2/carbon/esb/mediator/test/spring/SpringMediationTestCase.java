@@ -44,15 +44,10 @@ import static org.testng.Assert.fail;
 
 public class SpringMediationTestCase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
-
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(context);
         uploadResourcesToConfigRegistry();
-
     }
 
     @AfterClass(alwaysRun = true)
@@ -60,10 +55,8 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
         try {
             deleteSequence("main");
             clearUploadedResource();
-            Thread.sleep(5000);
         } finally {
             super.cleanup();
-            serverConfigurationManager = null;
         }
     }
 

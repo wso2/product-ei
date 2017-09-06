@@ -1,24 +1,22 @@
 package org.wso2.carbon.esb.mediator.test.spring;
 
-import java.io.File;
-
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.apache.axis2.AxisFault;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import javax.activation.DataHandler;
+import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
+import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+
+import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
+import javax.activation.DataHandler;
 
 /**
  * Related to https://wso2.org/jira/browse/ESBJAVA-3291
@@ -34,14 +32,11 @@ public class ESBJAVA3291TestCase extends ESBIntegrationTest {
  
 	private LogViewerClient logViewerClient;
 
-	private ServerConfigurationManager serverConfigurationManager;
-
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 
 		super.init();
 		clearUploadedResource();
-		serverConfigurationManager = new ServerConfigurationManager(context);
 		uploadResourcesToConfigRegistry();
 		loadESBConfigurationFromClasspathIfNotExists(SPRING_XML_LOCATION + File.separator + "spring_mediation_error.xml");
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -53,10 +48,8 @@ public class ESBJAVA3291TestCase extends ESBIntegrationTest {
 		try {
 			deleteSequence("main");
 			clearUploadedResource();
-			Thread.sleep(5000);
 		} finally {
             super.cleanup();
-			serverConfigurationManager = null;
 		}
 	}
 

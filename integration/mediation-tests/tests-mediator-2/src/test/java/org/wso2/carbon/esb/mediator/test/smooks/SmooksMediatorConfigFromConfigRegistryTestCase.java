@@ -22,26 +22,22 @@ import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
-
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.MultiMessageReceiver;
 
-
-import javax.activation.DataHandler;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import javax.activation.DataHandler;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
     private ResourceAdminServiceClient resourceAdminServiceStub;
     private final int PORT = 8201;
     private boolean isProxyDeployed = false;
@@ -110,8 +106,6 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
             super.cleanup();
             Thread.sleep(3000);
             resourceAdminServiceStub = null;
-            serverConfigurationManager = null;
-
         }
 
     }
