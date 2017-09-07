@@ -28,12 +28,12 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import java.io.File;
 import javax.xml.xpath.XPathExpressionException;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 
 /**
  * Includes tests for the cache mediator
- *
+ * <p>
  * Currently tests the maxMessageSize and maxSize parameters in the cache mediator.
  */
 public class CacheTestCase extends ESBIntegrationTest {
@@ -50,16 +50,16 @@ public class CacheTestCase extends ESBIntegrationTest {
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = {"wso2.esb"}, description = "Test maxMessageSize value is smaller than the message size")
     public void testSmallMessageSize() throws AxisFault, XPathExpressionException, InterruptedException {
+        String apiName = "maxMessage";
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "IBM");
         String firstResponse = response.getFirstElement().toString();
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "IBM");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "IBM");
 
-        if (!firstResponse.equalsIgnoreCase(response.getFirstElement().toString())) {
-            assertTrue(true, "The size of messages received is greater than 1000");
-        }
+        assertNotEquals(firstResponse, response.getFirstElement().toString(),
+                        "The size of messages received is greater than 1000");
     }
 
     @AfterClass(alwaysRun = true)
@@ -68,38 +68,33 @@ public class CacheTestCase extends ESBIntegrationTest {
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = {"wso2.esb"}, description = "Tests whether maxSize value evicts the new messages")
+    @Test(groups = {"wso2.esb"}, description = "Tests whether maxSize value evicts the older messages")
     public void testMaxSize() throws AxisFault, XPathExpressionException, InterruptedException {
+        String apiName = "maxSize";
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "ABCD");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "ABCD");
         String responseABCD1 = response.getFirstElement().toString();
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "ABC");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "ABC");
         String responseABC1 = response.getFirstElement().toString();
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "AB");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "AB");
         String responseAB1 = response.getFirstElement().toString();
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "AB");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "AB");
         String responseAB2 = response.getFirstElement().toString();
 
-        if (responseAB1.equalsIgnoreCase(responseAB2)) {
-            assertTrue(true, "The response AB is cached");
-        }
+        assertEquals(responseAB1, responseAB2, "The response for AB is cached");
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "ABC");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "ABC");
         String responseABC2 = response.getFirstElement().toString();
 
-        if (responseABC1.equalsIgnoreCase(responseABC2)) {
-            assertTrue(true, "The response ABC is cached");
-        }
+        assertEquals(responseABC1, responseABC2, "The response for ABC is cached");
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("maxMessageOrSize"), "", "ABCD");
+        response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "ABCD");
         String responseABCD2 = response.getFirstElement().toString();
 
-        if (!responseABCD1.equalsIgnoreCase(responseABCD2)) {
-            assertTrue(true, "The response ABCD has been evicted");
-        }
+        assertNotEquals(responseABCD1, responseABCD2, "The response for ABCD has been evicted");
     }
 }

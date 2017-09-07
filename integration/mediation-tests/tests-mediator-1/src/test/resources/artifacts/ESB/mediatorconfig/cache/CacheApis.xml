@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
     <!--
   ~  Copyright (c) 2017, WSO2 Inc. (http://wso2.com) All Rights Reserved.
   ~
@@ -18,33 +19,58 @@
   -->
     <sequence name="fault">
         <log level="full">
-            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence"/>
-            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
-            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+            <property name="MESSAGE" value="Executing default &quot;fault&quot; sequence" />
+            <property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
+            <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
         </log>
-        <drop/>
+        <drop />
     </sequence>
     <sequence name="main">
         <in>
             <!-- Log all messages passing through -->
-            <log level="full"/>
+            <log level="full" />
             <!-- ensure that the default configuration only sends if it is one of samples -->
             <!-- Otherwise Synapse would be an open proxy by default (BAD!)               -->
             <filter regex="http://localhost:9000.*" source="get-property('To')">
                 <!-- Send the messages where they have been sent (i.e. implicit "To" EPR) -->
-                <send/>
+                <send />
             </filter>
         </in>
         <out>
-            <send/>
+            <send />
         </out>
         <description>The main sequence for the message mediation</description>
     </sequence>
 
-    <api context="/maxMessageOrSize" name="max_message_or_size_api">
+    <api context="/maxMessage" name="max_message_api">
         <resource methods="POST">
             <inSequence>
                 <cache collector="false" maxMessageSize="1000" timeout="20">
+                    <protocol type="HTTP">
+                        <methods>POST</methods>
+                        <headersToExcludeInHash />
+                        <responseCodes>2[0-9][0-9]</responseCodes>
+                        <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                    </protocol>
+                    <implementation maxSize="100" />
+                </cache>
+                <send>
+                    <endpoint name="inlined">
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <cache collector="true" />
+                <send />
+            </outSequence>
+        </resource>
+    </api>
+
+    <api context="/maxSize" name="max_size_api">
+        <resource methods="POST">
+            <inSequence>
+                <cache collector="false" maxMessageSize="10000" timeout="20">
                     <protocol type="HTTP">
                         <methods>POST</methods>
                         <headersToExcludeInHash />
@@ -65,5 +91,4 @@
             </outSequence>
         </resource>
     </api>
-
 </definitions>

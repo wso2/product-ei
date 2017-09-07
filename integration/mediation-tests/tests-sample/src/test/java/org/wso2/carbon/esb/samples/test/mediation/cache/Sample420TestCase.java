@@ -28,8 +28,9 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertNotEquals;
 
 public class Sample420TestCase extends ESBIntegrationTest {
 
@@ -55,9 +56,7 @@ public class Sample420TestCase extends ESBIntegrationTest {
 
             response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");
 
-            if (!firstResponse.equalsIgnoreCase(response.getFirstElement().toString())) {
-                assertFalse(false, "Caching is less than 20 seconds");
-            }
+            assertEquals(firstResponse, response.getFirstElement().toString(), "Caching is less than 20 seconds");
 
             Thread.sleep(2000);
             timeDiff = System.currentTimeMillis() - currTime;
@@ -65,11 +64,7 @@ public class Sample420TestCase extends ESBIntegrationTest {
 
         response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");
 
-        if (!firstResponse.equalsIgnoreCase(response.getFirstElement().toString())) {
-            assertTrue(true, "Caching is more than 20 seconds");
-        }
-
-
+        assertNotEquals(firstResponse, response.getFirstElement().toString());
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -82,9 +77,7 @@ public class Sample420TestCase extends ESBIntegrationTest {
 
         response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");
 
-        if (firstResponse.equalsIgnoreCase(response.getFirstElement().toString())) {
-            assertTrue(true, "Caching is less than 20 seconds");
-        }
+        assertEquals(firstResponse, response.getFirstElement().toString());
     }
 
     @AfterClass(alwaysRun = true)
