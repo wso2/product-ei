@@ -67,8 +67,8 @@ public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

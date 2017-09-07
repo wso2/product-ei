@@ -68,8 +68,8 @@ public class ScriptWithIncludeOptionTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

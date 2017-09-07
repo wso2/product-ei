@@ -32,7 +32,7 @@
             </send>
         </in>
         <out>
-            <class name="org.wso2.carbon.test.mediator.SimpleClassMediator">
+            <class name="org.wso2.integration.test.mediator.SimpleClassMediator">
                 <property name="percentageChange" value="-1.5"/>
                 <property name="bonusFor" value="5"/>
                 <property name="earnings" value="-9"/>
