@@ -144,7 +144,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2ei-${project.version}/wso2/business-process/repository/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
@@ -165,7 +165,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2ei-${project.version}/wso2/business-process/repository/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
