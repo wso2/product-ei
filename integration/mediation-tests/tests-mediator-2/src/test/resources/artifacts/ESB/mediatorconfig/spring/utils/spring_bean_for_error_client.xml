@@ -22,7 +22,7 @@
 
 <beans>
 
-    <bean id="springtest" class="org.wso2.carbon.test.mediator.errorMediator.ErrorMediator" singleton="false">
+    <bean id="springerrortest" class="org.wso2.carbon.test.mediator.errorMediator.ErrorMediator" singleton="false">
         <property name="userName"><value>"esb user"</value></property>
         <property name="email"><value>"usr@wso2.org"</value></property>
     </bean>

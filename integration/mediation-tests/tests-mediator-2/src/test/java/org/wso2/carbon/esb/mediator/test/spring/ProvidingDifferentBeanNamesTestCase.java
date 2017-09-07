@@ -59,7 +59,7 @@ public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
                     (getMainSequenceURL(), null, "IBM");
             fail("This request must failed since it use non existing bean");
         } catch (AxisFault axisFault) {
-            assertEquals(axisFault.getMessage(), "No bean named 'springtest' is defined", "Fault: Error message mismatched");
+            assertEquals(axisFault.getMessage(), "No bean named 'springinvadidbeantest' is defined", "Fault: Error message mismatched");
         }
 
     }
@@ -83,7 +83,7 @@ public class ProvidingDifferentBeanNamesTestCase extends ESBIntegrationTest {
                                                "Contains spring bean config files");
 
         resourceAdminServiceStub.addResource(
-                "/_system/config/spring/springbean.xml", "application/xml", "spring bean config files",
+                "/_system/config/spring/springbeandifferent.xml", "application/xml", "spring bean config files",
                 new DataHandler(new URL("file:///" + getESBResourceLocation() + File.separator +
                                         "mediatorconfig" + File.separator + "spring" + File.separator
                                         + "utils" + File.separator + "different_bean_names.xml")));

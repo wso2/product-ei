@@ -15,7 +15,7 @@
         <in>
             <spring:spring
                 xmlns:spring="http://ws.apache.org/ns/synapse"
-                bean="springtest" key="conf:/spring/spring_bean_for_error_client.xml"/>
+                bean="springerrortest" key="conf:/spring/spring_bean_for_error_client.xml"/>
             <send>
                 <endpoint>
                     <address statistics="disable" trace="disable" uri="http://localhost:9000/services/SimpleStockQuoteService">
