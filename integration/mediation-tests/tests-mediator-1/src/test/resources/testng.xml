@@ -105,6 +105,7 @@
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorOutOnlyTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorProxyWithNamedSeqCase"/>
            <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA4469CallMediatorWithOutOnlyTestCase"/>
+           <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5216CallMediatorPerAPILogTest"/>
 
 <!--            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
                 <methods>
