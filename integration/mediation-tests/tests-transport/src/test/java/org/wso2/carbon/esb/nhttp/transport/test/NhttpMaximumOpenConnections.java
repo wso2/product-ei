@@ -70,8 +70,6 @@ public class NhttpMaximumOpenConnections extends ESBIntegrationTest {
 
         super.init();
 
-        deleteProxyService("MaxOpenConnectionsTest");
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/MaxOpenConnections/max_open_connections.xml");
         list = Collections.synchronizedList(new ArrayList());
         maxOpenConnectionClients = new MaximumOpenConnectionsClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
