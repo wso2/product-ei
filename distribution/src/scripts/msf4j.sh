@@ -21,6 +21,7 @@
 #
 #   CARBON_HOME   Home of WSO2 Carbon installation. If not set I will  try
 #                   to figure it out.
+#   RUNTIME_HOME  Home of WSO2 Carbon Runtime. .
 #
 #   JAVA_HOME       Must point at your Java Development Kit installation.
 #
@@ -67,15 +68,22 @@ while [ -h "$PRG" ]; do
 done
 
 # Get standard environment variables
-PRGDIR=`dirname "$PRG"`
+TEMPCURDIR=`dirname "$PRG"`
+
+# Only set RUNTIME_HOME if not already set
+[ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$TEMPCURDIR/../wso2/msf4j/" ; pwd`
 
 # Only set CARBON_HOME if not already set
-[ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
+[ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$TEMPCURDIR/../" ; pwd`
+
+# Only set RUNTIME if not already set
+[ -z "$RUNTIME" ] && RUNTIME=${RUNTIME_HOME##*/}
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin; then
   [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
   [ -n "$CARBON_HOME" ] && CARBON_HOME=`cygpath --unix "$CARBON_HOME"`
+  [ -n "$RUNTIME_HOME" ] && RUNTIME_HOME=`cygpath --unix "$RUNTIME_HOME"`
 fi
 
 # For OS400
@@ -125,8 +133,8 @@ if [ -z "$JAVA_HOME" ]; then
   exit 1
 fi
 
-if [ -e "$CARBON_HOME/carbon.pid" ]; then
-  PID=`cat "$CARBON_HOME"/carbon.pid`
+if [ -e "$RUNTIME_HOME/runtime.pid" ]; then
+  PID=`cat "$RUNTIME_HOME"/runtime.pid`
 fi
 
 # ----- Process the input command ----------------------------------------------
@@ -167,7 +175,7 @@ if [ "$CMD" = "--debug" ]; then
   JAVA_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=$PORT"
   echo "Please start the remote debugging client to continue..."
 elif [ "$CMD" = "start" ]; then
-  if [ -e "$CARBON_HOME/carbon.pid" ]; then
+  if [ -e "$RUNTIME_HOME/runtime.pid" ]; then
     if  ps -p $PID > /dev/null ; then
       echo "Process is already running"
       exit 0
@@ -175,17 +183,17 @@ elif [ "$CMD" = "start" ]; then
   fi
   export CARBON_HOME=$CARBON_HOME
 # using nohup bash to avoid erros in solaris OS.TODO
-  nohup bash $CARBON_HOME/bin/carbon.sh $args > /dev/null 2>&1 &
+  nohup bash $RUNTIME_HOME/bin/carbon.sh $args > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "stop" ]; then
   export CARBON_HOME=$CARBON_HOME
-  kill -term `cat $CARBON_HOME/carbon.pid`
+  kill -term `cat $RUNTIME_HOME/runtime.pid`
   exit 0
 elif [ "$CMD" = "restart" ]; then
   export CARBON_HOME=$CARBON_HOME
-  kill -term `cat $CARBON_HOME/carbon.pid`
+  kill -term `cat $RUNTIME_HOME/runtime.pid`
   process_status=0
-  pid=`cat $CARBON_HOME/carbon.pid`
+  pid=`cat $RUNTIME_HOME/runtime.pid`
   while [ "$process_status" -eq "0" ]
   do
         sleep 1;
@@ -194,7 +202,7 @@ elif [ "$CMD" = "restart" ]; then
   done
 
 # using nohup bash to avoid erros in solaris OS.TODO
-  nohup bash $CARBON_HOME/bin/carbon.sh $args > /dev/null 2>&1 &
+  nohup bash $RUNTIME_HOME/bin/carbon.sh $args > /dev/null 2>&1 &
   exit 0
 elif [ "$CMD" = "test" ]; then
     JAVACMD="exec "$JAVACMD""
@@ -238,6 +246,7 @@ done
 if $cygwin; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
   CARBON_HOME=`cygpath --absolute --windows "$CARBON_HOME"`
+  RUNTIME_HOME=`cygpath --absolute --windows "$RUNTIME_HOME"`
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
   JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
   CARBON_CLASSPATH=`cygpath --path --windows "$CARBON_CLASSPATH"`
@@ -248,8 +257,9 @@ fi
 
 echo JAVA_HOME environment variable is set to $JAVA_HOME
 echo CARBON_HOME environment variable is set to $CARBON_HOME
+echo RUNTIME_HOME environment variable is set to $RUNTIME_HOME
 
-cd "$CARBON_HOME"
+cd "$RUNTIME_HOME"
 
 START_EXIT_STATUS=121
 status=$START_EXIT_STATUS
@@ -263,7 +273,7 @@ do
     -Xbootclasspath/a:"$CARBON_XBOOTCLASSPATH" \
     -Xms256m -Xmx1024m \
     -XX:+HeapDumpOnOutOfMemoryError \
-    -XX:HeapDumpPath="$CARBON_HOME/logs/heap-dump.hprof" \
+    -XX:HeapDumpPath="$RUNTIME_HOME/logs/heap-dump.hprof" \
     $JAVA_OPTS \
     -classpath "$CARBON_CLASSPATH" \
     -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
@@ -271,7 +281,9 @@ do
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
     -Dcarbon.home="$CARBON_HOME" \
-    -Djava.util.logging.config.file="$CARBON_HOME/bin/bootstrap/logging.properties" \
+    -Dwso2.runtime.path="$RUNTIME_HOME" \
+    -Dwso2.runtime="$RUNTIME" \
+    -Djava.util.logging.config.file="$RUNTIME_HOME/bin/bootstrap/logging.properties" \
     -Djava.security.egd=file:/dev/./urandom \
     -Dfile.encoding=UTF8 \
     -Druntime=msf4j \

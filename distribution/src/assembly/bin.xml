@@ -46,9 +46,9 @@
                 <include>**/*.sh</include>
                 <include>**/native/*</include>
             </includes>
-            <excludes>
-                <exclude>**/carbon.sh</exclude>
-            </excludes>
+            <!--<excludes>-->
+            <!--<exclude>**/carbon.sh</exclude>-->
+            <!--</excludes>-->
             <fileMode>755</fileMode>
         </fileSet>
         <fileSet>
@@ -93,17 +93,17 @@
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
-        <!--<file>
-            <source>target/WSO2Carbon/conf/deployment.yaml</source>
-            <outputDirectory>conf/</outputDirectory>
+        <file>
+            <source>src/conf/msf4j/deployment.yaml</source>
+            <outputDirectory>conf/msf4j/</outputDirectory>
             <fileMode>644</fileMode>
             <filtered>true</filtered>
-        </file>-->
-        <!--<file>
-            <source>target/WSO2Carbon/bin/kernel-version.txt</source>
-            <outputDirectory>bin/</outputDirectory>
-            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/conf/broker/deployment.yaml</source>
+            <outputDirectory>conf/broker/</outputDirectory>
             <fileMode>644</fileMode>
-        </file>-->
+            <filtered>true</filtered>
+        </file>
     </files>
 </assembly>
