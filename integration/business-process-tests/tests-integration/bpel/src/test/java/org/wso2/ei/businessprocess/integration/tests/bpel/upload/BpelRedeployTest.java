@@ -52,14 +52,14 @@ public class BpelRedeployTest extends BPSMasterTest {
         requestSender = new RequestSender();
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests redeploy bpel", priority = 0)
-    public void testUplpad() throws Exception {
+    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests redeploy bpel")
+    public void testUpload() throws Exception {
         setEnvironment();
         uploadBpelForTest("HelloWorld2");
         requestSender.waitForProcessDeployment(backEndUrl + "HelloService");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests redeploy bpel", priority = 1)
+    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests redeploy bpel", dependsOnMethods = {"testUpload"})
     public void testRedeploy() throws Exception {
         Thread.sleep(5000);
         uploadBpelForTest("HelloWorld2");

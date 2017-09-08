@@ -157,7 +157,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
         copyFile(sourceMessage, destinationMessage);
 
         //Below is encrypted value of "user1:pass" using local wso2carbon.jks TODO if security settings change, will need to change below value as well. Otherwise this test will fail
-        String encryptedPass = "cnBsi3uKrBqV4/jhhY0l51FGy8SlbU5gZm3vRzO+cVhB8wVUmNpgAKm2W7VrwmboJDwKqu7MeQ7En9HHezOtxzDa8MhKEd4u3S2TCZD25uN07wY5eRluvOSNbDQrLR0zN4P0ShmrQrgDbcKdFX/gLQJVshbpfdr5wr95IbfqFTqEV8ygHdg9U3GOGBVzOvLSQBeC2EITgDu96XlvDQT6IRRC1nmptPam+VflRPunreXJkzMIBUhoYt8XOl7gSGtnhdvElj/P4cANt9Cb3pQj5CFW3lEEFXR5nBvTBybmT7KOJjMGRfibf5GOilQSGDFa6fEiXLah8kS/XLnq5pT8ng\\=\\=";
+        String encryptedPass = "biWozilZLK6Dpxrxv4vWYCs8bUb/BGt58lqF2hajizDlu4/faCLRWiSSxfNqNy36KikM8spwB3z/HRdSa3hEnCmccZLayLgbN8zLigSUXYFNtNy3ppgWbCp4sm1GCuZDin0gWcW1UKRbKn+05f9CAY8jZbs27z0Mj2ULR7GAIJjasv7uJy+of7dcyhCa9Y4/rkP7bxbkrBSJOtgR0XxKfvKWm+FPM2zSrRf7wiGbrVNpBOSvNT0nmIZr6LVTMNFHKFLjVN3si3MhgWO3LrU8GF+rqy+i+J/hiOTvZschtfADpUxPipCpygT1LcFpbRyvRYwJ9/yg1dxiVXTLPTzWgw==";
         String fileUri = "vfs:ftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + inputFolderName;
         String moveAfterProcess = "vfs:ftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + outputFolderName;
 
