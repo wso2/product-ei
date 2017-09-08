@@ -71,8 +71,8 @@ public class CustomIntegrationWithJSStoredInRegistryTestCase extends ESBIntegrat
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

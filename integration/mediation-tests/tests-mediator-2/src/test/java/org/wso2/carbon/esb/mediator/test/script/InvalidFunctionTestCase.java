@@ -51,8 +51,8 @@ public class InvalidFunctionTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
     private void uploadResourcesToConfigRegistry() throws Exception {
