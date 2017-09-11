@@ -25,7 +25,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.clients.logging.LoggingAdminClient;
-import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuoteClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 
@@ -48,7 +47,7 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Tests level log")
     public void testSendingToDefinedEndpoint() throws Exception {
 
-        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.logLevel.DEBUG.name(), true, false);
+        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.LogLevel.DEBUG.name(), true, false);
         logViewer.clearLogs();
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
                                                                      null, "WSO2");

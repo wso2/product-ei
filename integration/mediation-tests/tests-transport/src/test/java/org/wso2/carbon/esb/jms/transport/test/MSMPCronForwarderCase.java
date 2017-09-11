@@ -19,7 +19,6 @@
 package org.wso2.carbon.esb.jms.transport.test;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.util.AXIOMUtil;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,7 +33,6 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.services.jaxrs.customersample.CustomerConfig;
 
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +64,7 @@ public class MSMPCronForwarderCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Test Cron Forwarding of message processor")
     public void testMessageProcessorCronForwader() throws Exception {
-        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.logLevel.DEBUG.name(), true, false);
+        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.LogLevel.DEBUG.name(), true, false);
 
         OMElement synapse = esbUtils.loadResource("/artifacts/ESB/jms/transport/MSMP_CRON_WITH_FORWARDER.xml");
         updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
@@ -115,7 +113,7 @@ public class MSMPCronForwarderCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         //undo logger change
-        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.logLevel.INFO.name(), true, false);
+        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.LogLevel.INFO.name(), true, false);
         tomcatServerManager.stop();
         super.cleanup();
     }

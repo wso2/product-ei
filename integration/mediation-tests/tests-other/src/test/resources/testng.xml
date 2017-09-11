@@ -99,6 +99,11 @@
         </packages>
     </test>
 
+    <test name="logging-tests" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.logging"/>
+        </packages>
+    </test>
 
 </suite>
 
