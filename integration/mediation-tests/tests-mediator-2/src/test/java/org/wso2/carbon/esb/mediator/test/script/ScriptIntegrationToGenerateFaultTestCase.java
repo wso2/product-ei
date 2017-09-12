@@ -44,7 +44,6 @@ public class ScriptIntegrationToGenerateFaultTestCase extends ESBIntegrationTest
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/script_mediator/synapse_generate_fault.xml");
     }
 
     //check the fault response using "MSFT" as input .
@@ -53,12 +52,13 @@ public class ScriptIntegrationToGenerateFaultTestCase extends ESBIntegrationTest
     public void testGenerateFaults1() throws XMLStreamException {
         try {
 
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "MSFT");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("scriptMediatorInFaultSequenceTestProxy"), null,
+                    "MSFT");
 
             Assert.fail("Request must throw a AxisFault");
 
         } catch (AxisFault e) {
-
 
             SOAPFaultDetail faultDetail = e.getFaultDetailElement();
             assertNotNull(faultDetail, "Fault response message null");
@@ -84,7 +84,9 @@ public class ScriptIntegrationToGenerateFaultTestCase extends ESBIntegrationTest
     public void testGenerateFaults2() throws XMLStreamException {
         try {
 
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "SUN");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("scriptMediatorInFaultSequenceTestProxy"), null,
+                    "SUN");
             Assert.fail("Request must throw a AxisFault");
 
         } catch (AxisFault e) {
@@ -108,8 +110,8 @@ public class ScriptIntegrationToGenerateFaultTestCase extends ESBIntegrationTest
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

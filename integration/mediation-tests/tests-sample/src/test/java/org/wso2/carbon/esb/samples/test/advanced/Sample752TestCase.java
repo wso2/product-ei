@@ -28,7 +28,7 @@ import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
 import org.wso2.carbon.esb.samples.test.advanced.util.EndpointTestUtils;
 import org.wso2.esb.integration.common.clients.endpoint.EndPointAdminClient;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.LoadbalanceFailoverClient;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
@@ -43,7 +43,7 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
-public class Sample752TestCase extends ESBIntegrationTest {
+public class Sample752TestCase extends ESBSampleIntegrationTest {
 
     private final String ENDPOINT_NAME = "lbEpTest";
     private EndPointAdminClient endPointAdminClient;

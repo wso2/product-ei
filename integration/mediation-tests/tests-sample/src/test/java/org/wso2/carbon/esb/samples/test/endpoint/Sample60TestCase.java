@@ -26,13 +26,13 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.ConnectionData;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.TCPMonListener;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
 /**
  * Sample 60: Routing a Message to a Static List of Recipients
  */
-public class Sample60TestCase extends ESBIntegrationTest {
+public class Sample60TestCase extends ESBSampleIntegrationTest {
 
     private SampleAxis2Server axis2Server1;
     private SampleAxis2Server axis2Server2;

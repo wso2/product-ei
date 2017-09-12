@@ -40,8 +40,6 @@ public class PropertyIntegrationNO_KEEPALIVE_PropertyTest extends ESBIntegration
     public void setEnvironment() throws Exception {
         super.init();
         wireServer = new WireMonitorServer(8990);
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/NO_KEEPALIVE.xml");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -50,7 +48,8 @@ public class PropertyIntegrationNO_KEEPALIVE_PropertyTest extends ESBIntegration
 
         wireServer.start();
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("Axis2ProxyService"),null,"WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("propertyNoKeepAliveTestProxy"),null,"WSO2");
         } catch (Exception e) {
           //ignore since wire message is captured
         }

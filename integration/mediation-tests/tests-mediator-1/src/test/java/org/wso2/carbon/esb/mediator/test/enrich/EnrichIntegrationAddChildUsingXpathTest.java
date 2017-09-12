@@ -39,18 +39,19 @@ public class EnrichIntegrationAddChildUsingXpathTest extends ESBIntegrationTest 
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich_mediator/add_child_using_xpath_synapse.xml");
-
+        verifyProxyServiceExistence("enrichAddChildUsingXPathTestProxy");
     }
 
-    @Test(groups = "wso2.esb", description = "Tests-Add child to body using xpath")
+    @Test(groups = "wso2.esb",
+          description = "Tests-Add child to body using xpath")
     public void testAddChildToBodyUsingXpath() throws AxisFault, XMLStreamException {
         OMElement response;
-        response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("enrichSample3"), null, "IBM");
+        response = axis2Client
+                .sendCustomQuoteRequest(getProxyServiceURLHttp("enrichAddChildUsingXPathTestProxy"), null, "IBM");
         assertNotNull(response, "Response is null");
-        assertEquals(response.getFirstElement().getFirstChildWithName
-                (new QName("http://services.samples/xsd", "symbol")).getText(),
-                     "IBM", "Tag does not match");
+        assertEquals(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "symbol"))
+                        .getText(), "IBM", "Tag does not match");
     }
 
     @AfterClass(alwaysRun = true)

@@ -22,11 +22,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.tasks.TaskAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import java.util.List;
 
-public class Sample300TestCase extends ESBIntegrationTest {
+public class Sample300TestCase extends ESBSampleIntegrationTest {
 
     private String taskName = "CheckPrice";
     private TaskAdminClient taskAdminClient = null;

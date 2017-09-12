@@ -52,12 +52,11 @@ public class ESBJAVA4907SwaggerGenerationTestCase extends ESBIntegrationTest {
                 (new File(getClass().getResource(RELATIVE_RESOURCE_PATH + JAR_FILE_NAME).toURI()));
         serverConfigurationManager.restartGracefully();
         super.init();
-        loadESBConfigurationFromClasspath(RELATIVE_RESOURCE_PATH + "StockQuoteApi.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Test API definition request is served correctly")
     public void apiDefinitionRequestTest() throws Exception {
-        String restURL = getMainSequenceURL() + "StockQuoteAPI?swagger.json";
+        String restURL = getMainSequenceURL() + "swaggerGenerationTestApi?swagger.json";
         SimpleHttpClient httpClient = new SimpleHttpClient();
         HttpResponse response = httpClient.doGet(restURL, null);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -65,7 +64,7 @@ public class ESBJAVA4907SwaggerGenerationTestCase extends ESBIntegrationTest {
 
         log.info("Swagger Definition Response : " + baos.toString());
         Assert.assertTrue("Swagger definition did not contained in the response", baos.toString()
-                .contains("API Definition of StockQuoteAPI"));
+                .contains("API Definition of swaggerGenerationTestApi"));
     }
 
     @AfterClass(alwaysRun = true)

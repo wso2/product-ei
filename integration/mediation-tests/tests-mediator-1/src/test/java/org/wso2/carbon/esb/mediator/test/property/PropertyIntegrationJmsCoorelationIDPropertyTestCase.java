@@ -49,16 +49,12 @@ import static org.testng.Assert.assertNotNull;
  */
 
 public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBIntegrationTest {
-
-    private ActiveMQServer activeMQServer
-            = new ActiveMQServer();
     private MessageConsumer consumer;
     private Connection connection;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        activeMQServer.startJMSBrokerAndConfigureESB();
         context = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
     }
 
@@ -72,9 +68,9 @@ public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBInte
             if (connection != null) {
                 connection.close();
             }
-            super.cleanup();
+
         } finally {
-            activeMQServer.stopJMSBrokerRevertESBConfiguration();
+            super.cleanup();
         }
     }
 
@@ -84,14 +80,9 @@ public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBInte
 
         super.init();
 
-        OMElement synapse = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/property" +
-                                                  "/JMS_COORELATION_ID.xml");
-
-        updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
-
         AxisServiceClient client = new AxisServiceClient();
         client.sendRobust(Utils.getStockQuoteRequest("JMS"), getProxyServiceURLHttp
-                ("SimpleStockQuoteService"), "getQuote");
+                ("propertyJmsCorrelationIdTestProxy"), "getQuote");
 
         Thread.sleep(5000);
 
@@ -103,8 +94,8 @@ public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBInte
                 .getBrokerConfiguration().getProviderURL());
 
         //Specify queue propertyname as queue.jndiname
-        String queueName = "SimpleStockQuoteService";
-        props.setProperty("queue.SimpleStockQuoteService", queueName);
+        String queueName = "testAddingJMSCoorelationID";
+        props.setProperty("queue.testAddingJMSCoorelationID", queueName);
 
         Context ctx = new InitialContext(props);
         ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("ConnectionFactory");
@@ -114,7 +105,7 @@ public class PropertyIntegrationJmsCoorelationIDPropertyTestCase extends ESBInte
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        Destination destination = (Destination) ctx.lookup("SimpleStockQuoteService");
+        Destination destination = (Destination) ctx.lookup(queueName);
 
         consumer = session.createConsumer(destination);
         Message message = consumer.receive(5000);

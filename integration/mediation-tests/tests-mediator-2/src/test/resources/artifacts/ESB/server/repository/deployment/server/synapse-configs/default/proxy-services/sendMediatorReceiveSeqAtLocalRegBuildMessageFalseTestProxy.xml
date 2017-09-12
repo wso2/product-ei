@@ -1,0 +1,12 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sendMediatorReceiveSeqAtLocalRegBuildMessageFalseTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <send receive="local:/sequence_conf/test_sequence_build_message_local.xml" buildmessage="false">
+                <endpoint key ="conf:/endpoints/registry_endpoint.xml"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <drop/>
+        </outSequence>
+    </target>
+</proxy>

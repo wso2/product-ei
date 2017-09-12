@@ -19,6 +19,7 @@ package org.wso2.carbon.esb.mediator.test.call;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -38,15 +39,18 @@ public class CallMediatorBlockingInboundOutboundPolicySecurityTestCase extends E
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "call" + File.separator + "CallMediatorBlockingInboundOutboundSecurity.xml");
+        verifyProxyServiceExistence("callMediatorBlockingInboundPolicyProxy");
+        verifyLocalEntryExistence("sec_policy_3");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Call the inbound & outbound security endpoint with blocking external calls")
+    @Test(groups = { "wso2.esb" },
+          description = "Call the inbound & outbound security endpoint with blocking external calls")
     public void CallMediatorBlockingInboundOutboundPolicySecurityTest() throws AxisFault, XPathExpressionException {
-        log.info("BlockingInboundOutboundPolicySecurityTest getMainSequenceURL : " + getMainSequenceURL());
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(""), "", "WSO2");
-        boolean ResponseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
-        assertTrue(ResponseContainsWSO2);
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("callMediatorBlockingInboundPolicyProxy"), "",
+                        "WSO2");
+        boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
+        assertTrue(responseContainsWSO2);
     }
 
     @AfterClass(alwaysRun = true)

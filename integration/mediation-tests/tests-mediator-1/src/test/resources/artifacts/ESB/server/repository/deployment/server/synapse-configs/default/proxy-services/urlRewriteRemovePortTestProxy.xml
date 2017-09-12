@@ -1,0 +1,26 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="urlRewriteRemovePortTestProxy" transports="https,http" statistics="disable" trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="https.port" value="9002" scope="default"/>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <action type="remove" fragment="port"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <rewrite>
+                <rewriterule>
+                    <action value="9000" type="append" fragment="port"/>
+                </rewriterule>
+            </rewrite>
+            <log level="full"/>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+    <description></description>
+</proxy>

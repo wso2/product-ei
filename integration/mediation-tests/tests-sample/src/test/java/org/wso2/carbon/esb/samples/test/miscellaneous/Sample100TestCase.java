@@ -21,7 +21,7 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -35,7 +35,7 @@ import static org.testng.Assert.assertNotNull;
  * https://wso2.org/jira/browse/ESBJAVA-3451
  * Unlimited strength policy files for the JDK have to be installed for this test case to succeed
  */
-public class Sample100TestCase extends ESBIntegrationTest {
+public class Sample100TestCase extends ESBSampleIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();

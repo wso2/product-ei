@@ -31,7 +31,6 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
-
 public class ConcurrencyThrottlingTestCase extends ESBIntegrationTest {
 
     private final int CONCURRENT_CLIENTS = 7;
@@ -48,9 +47,7 @@ public class ConcurrencyThrottlingTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/concurrencyTest.xml");
-
+        verifyProxyServiceExistence("throttlingMxConcurrentAccessTestProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyThrottleTestClients = new ConcurrencyThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
@@ -77,11 +74,11 @@ public class ConcurrencyThrottlingTestCase extends ESBIntegrationTest {
             }
         }
 
-        assertEquals(grantedRequests, AS_POLICY_ACCESS_GRANTED, "MaximumConcurrentAccess: Concurrent throttle policy failure");
+        assertEquals(grantedRequests, AS_POLICY_ACCESS_GRANTED,
+                "MaximumConcurrentAccess: Concurrent throttle policy failure");
         assertEquals(deniedRequests, AS_POLICY_ACCESS_DENIED, "Fault: Concurrent throttle policy failure");
 
     }
-
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
@@ -92,16 +89,15 @@ public class ConcurrencyThrottlingTestCase extends ESBIntegrationTest {
         super.cleanup();
     }
 
-
     private void initClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
-            concurrencyThrottleTestClients[i] = new ConcurrencyThrottleTestClient(getMainSequenceURL(), list, clientsDone);
+            concurrencyThrottleTestClients[i] = new ConcurrencyThrottleTestClient(
+                    getProxyServiceURLHttp("throttlingMxConcurrentAccessTestProxy"), list, clientsDone);
         }
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
             clients[i] = new Thread(concurrencyThrottleTestClients[i]);
         }
     }
-
 
     private void startClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {

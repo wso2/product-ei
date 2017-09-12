@@ -56,9 +56,9 @@
 			&lt;/Response&gt;
 			);</script>
 	</sequence>
-	<sequence name="fault" trace="disable">
+	<sequence name="switchFault" trace="disable">
 		<log level="full">
-			<property name="MESSAGE" value="Executing 'fault' sequence" />
+			<property name="MESSAGE" value="Executing 'swithcFault' sequence" />
 			<property name="ERROR_CODE" expression="get-property('ERROR_CODE')" />
 			<property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')" />
 			<property name="GUID" expression="$trp:GUID" />
@@ -102,10 +102,10 @@
 		<out>
 			<switch xmlns:ns="http://org.apache.synapse/xsd" source="$axis2:HTTP_SC">
 				<case regex="202">
-					<sequence key="fault" />
+					<sequence key="switchFault" />
 				</case>
 				<case regex="503">
-					<sequence key="fault" />
+					<sequence key="switchFault" />
 				</case>
 				<default>
 					<send />

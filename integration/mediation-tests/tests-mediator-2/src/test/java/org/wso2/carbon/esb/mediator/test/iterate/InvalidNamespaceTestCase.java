@@ -45,10 +45,10 @@ public class InvalidNamespaceTestCase extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"}, description = "Testing invalid namespace for 'attachPath' field")
     public void testInvalidNameSpaceForAttachPath() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/invalid_name_space_attachpath.xml");
-        OMElement response;
         try {
-            response =axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, "WSO2",5);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithInvalidNameSpaceForAttachPathTestProxy"),
+                    null, "WSO2",5);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertEquals(message.getReason(), ESBTestConstant.READ_TIME_OUT,
@@ -64,9 +64,10 @@ public class InvalidNamespaceTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Testing invalid namespace for 'iterate expression' field")
     public void testInvalidNameSpaceForIterateExpression() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/invalid_namespace_iterateexpression.xml");
          try {
-            OMElement response = axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, "WSO2", 5);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp("iterateWithInvalidNameSpaceForExpressionTestProxy"),
+                    null, "WSO2", 5);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertEquals(message.getReason(),ESBTestConstant.READ_TIME_OUT,
@@ -82,9 +83,11 @@ public class InvalidNamespaceTestCase extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"}, description = "Testing valid expression which mismatch the original message in 'iterate expression' field")
     public void testValidIterateExpressionMismatchOriginalMessage() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/valid_iterate_exp_mismatch_original_message.xml");
         try {
-            OMElement response = axis2Client.sendMultipleQuoteRequest(getMainSequenceURL(), null, "WSO2", 10);
+            axis2Client.sendMultipleQuoteRequest(
+                    getProxyServiceURLHttp(
+                            "iterateWithValidIterateExpressionMismatchToOriginalMessageTestProxy"),
+                    null, "WSO2", 10);
             Assert.fail("This Request must throw AxisFault"); // This will execute when the exception is not thrown as expected
         } catch (AxisFault message) {
             assertEquals(message.getReason(),ESBTestConstant.READ_TIME_OUT,

@@ -44,14 +44,15 @@ public class CustomIntegrationWithJSStoredInRegistryTestCase extends ESBIntegrat
         super.init();
         enableDebugLogging();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config46/synapse.xml");
     }
 
 
     @Test(groups = "wso2.esb", description = "custom mediator with JS and store it in registry and invoke it with the given 'key'")
     public void testJSMediatorWithTheGivenKey() throws Exception {
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorJSStoredInRegistryTestProxy"), null,
+                "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -70,8 +71,8 @@ public class CustomIntegrationWithJSStoredInRegistryTestCase extends ESBIntegrat
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

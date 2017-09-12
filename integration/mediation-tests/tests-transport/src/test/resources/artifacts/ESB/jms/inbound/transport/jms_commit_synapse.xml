@@ -1,6 +1,6 @@
 <inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
                  name="TestJMSQueue"
-                 sequence="requestHandlerSeq"
+                 sequence="jmsInboundEndpointTransactionRequestHandlerSequence"
                  onError="inFault"
                  protocol="jms"
                  suspend="false">

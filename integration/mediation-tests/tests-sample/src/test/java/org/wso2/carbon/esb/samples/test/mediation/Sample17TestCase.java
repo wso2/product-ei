@@ -21,7 +21,7 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import static org.testng.Assert.assertTrue;
@@ -29,7 +29,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Sample 17: Transforming / Replacing Message Content with PayloadFactory Mediator
  */
-public class Sample17TestCase extends ESBIntegrationTest {
+public class Sample17TestCase extends ESBSampleIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();

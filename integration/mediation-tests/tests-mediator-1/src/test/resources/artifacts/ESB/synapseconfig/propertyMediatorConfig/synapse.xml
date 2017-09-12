@@ -350,7 +350,7 @@
                     <property xmlns:wsa="http://www.w3.org/2005/08/addressing" name="header" expression="$header/wsa:To"/>
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="StockQuote_9000_EP"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -398,7 +398,7 @@
                     <property name="ctx" expression="$ctx:RESPONSE"/>
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="StockQuote_9000_EP"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -416,7 +416,7 @@
                     <property name="ctx-Out-Only" expression="$ctx:OUT-ONLY"/>
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="StockQuote_9000_EP"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -436,7 +436,7 @@
                     <property name="remote-address" expression="get-property('axis2','REMOTE_ADDR')" />
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="StockQuote_9000_EP"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -453,7 +453,7 @@
                     <property name="server-ip" expression="get-property('SERVER_IP')"/>
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint key="StockQuote_9000_EP"/>
                 </send>
             </inSequence>
             <outSequence>
@@ -471,12 +471,6 @@
         </log>
         <drop/>
     </sequence>
-
-    <endpoint name="Axis2EP">
-        <address uri="http://localhost:9000/services/SimpleStockQuoteService">
-            <enableAddressing/>
-        </address>
-    </endpoint>
 
 
 </definitions>

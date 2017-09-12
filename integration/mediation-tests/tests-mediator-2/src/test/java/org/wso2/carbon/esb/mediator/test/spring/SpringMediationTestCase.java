@@ -23,44 +23,30 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
-
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.test.utils.common.FileManager;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
+import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import javax.activation.DataHandler;
-import javax.xml.namespace.QName;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import javax.activation.DataHandler;
+import javax.xml.namespace.QName;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.fail;
 
 public class SpringMediationTestCase extends ESBIntegrationTest {
-    private final String SIMPLE_BEAN_JAR = "org.wso2.carbon.test.simplebean.jar";
-    private final String JAR_LOCATION = "/artifacts/ESB/jar";
-
-    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-
-        super.init();
-        clearUploadedResource();
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + SIMPLE_BEAN_JAR).toURI()));
-        serverConfigurationManager.restartGracefully();
-
         super.init();
         uploadResourcesToConfigRegistry();
-
     }
 
     @AfterClass(alwaysRun = true)
@@ -68,13 +54,8 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
         try {
             deleteSequence("main");
             clearUploadedResource();
-            Thread.sleep(5000);
         } finally {
             super.cleanup();
-            serverConfigurationManager.removeFromComponentLib(SIMPLE_BEAN_JAR);
-            serverConfigurationManager.restartGracefully();
-
-            serverConfigurationManager = null;
         }
     }
 

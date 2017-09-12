@@ -34,31 +34,36 @@ public class TranportCleanupOnFaultTest extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/TranportCleanupOnFaultTest.xml");
     }
 
-    @Test(groups = {"wso2.esb"})
-    public void tranportCleanupOnFaultTest() throws AxisFault {
+    @Test(groups = { "wso2.esb" })
+    public void transportCleanupOnFaultTest() throws AxisFault {
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "SUN");
+            axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CalloutTransportCleanupTestProxy"), "", "SUN");
         } catch (AxisFault axisFault) {
             log.info("Fault message received");
         }
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "SUN");
+            axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CalloutTransportCleanupTestProxy"), "", "SUN");
         } catch (AxisFault axisFault) {
             log.info("Fault message received");
         }
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "SUN");
+            axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CalloutTransportCleanupTestProxy"), "", "SUN");
         } catch (AxisFault axisFault) {
             log.info("Fault message received");
         }
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "SUN");
+            axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CalloutTransportCleanupTestProxy"), "", "SUN");
         } catch (AxisFault axisFault) {
             log.info("Fault message received");
         }
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "", "IBM");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CalloutTransportCleanupTestProxy"), "", "IBM");
         boolean ResponseContainsIBM = response.getFirstElement().toString().contains("IBM");
         assertTrue(ResponseContainsIBM);
     }

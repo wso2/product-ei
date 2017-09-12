@@ -98,10 +98,6 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 		ftpServerManager.startFtpServer();
 
 		super.init();
-		loadESBConfigurationFromClasspath(File.separator + "artifacts"
-				+ File.separator + "ESB" + File.separator + "synapseconfig"
-				+ File.separator + "inboundEndpoint" + File.separator
-				+ "inboundFile.xml");
 
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
 				getSessionCookie());

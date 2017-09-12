@@ -52,31 +52,30 @@ public class ESBJAVA4936SwaggerGenerationJsonYamlTestCase extends ESBIntegration
                 (new File(getClass().getResource(RELATIVE_RESOURCE_PATH + JAR_FILE_NAME).toURI()));
         serverConfigurationManager.restartGracefully();
         super.init();
-        loadESBConfigurationFromClasspath(RELATIVE_RESOURCE_PATH + "StockQuoteApi.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Test API definition for JSON is generated correctly")
     public void jsonDefinitionTest() throws Exception {
-        String restURL = getMainSequenceURL() + "StockQuoteAPI?swagger.json";
+        String restURL = getMainSequenceURL() + "swaggerGenerationTestApi?swagger.json";
         SimpleHttpClient httpClient = new SimpleHttpClient();
         HttpResponse response = httpClient.doGet(restURL, null);
         String payload = httpClient.getResponsePayload(response);
 
         log.info("JSON Definition Response : " + payload);
         Assert.assertTrue("Swagger JSON definition did not contained in the response", payload
-                .contains("API Definition of StockQuoteAPI"));
+                .contains("API Definition of swaggerGenerationTestApi"));
     }
 
     @Test(groups = "wso2.esb", description = "Test API definition for Yaml is generated correctly")
     public void yamlDefinitionTest() throws Exception {
-        String restURL = getMainSequenceURL() + "StockQuoteAPI?swagger.json";
+        String restURL = getMainSequenceURL() + "swaggerGenerationTestApi?swagger.json";
         SimpleHttpClient httpClient = new SimpleHttpClient();
         HttpResponse response = httpClient.doGet(restURL, null);
         String payload = httpClient.getResponsePayload(response);
 
         log.info("Yaml Definition Response : " + payload);
         Assert.assertTrue("Swagger Yaml definition did not contained in the response", payload
-                .contains("API Definition of StockQuoteAPI"));
+                .contains("API Definition of swaggerGenerationTestApi"));
     }
 
     @AfterClass(alwaysRun = true)

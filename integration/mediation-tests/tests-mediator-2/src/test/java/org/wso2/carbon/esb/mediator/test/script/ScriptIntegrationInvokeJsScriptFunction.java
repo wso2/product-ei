@@ -39,8 +39,6 @@ public class ScriptIntegrationInvokeJsScriptFunction extends ESBIntegrationTest 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/script_mediator/jsfromEntry_config.xml";
-        loadESBConfigurationFromClasspath(filePath);
         uploadResourcesToConfigRegistry();
         LoggingAdminClient loggingAdminClient = new LoggingAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
         loggingAdminClient.updateLoggerData("org.apache.synapse", "debug", true, false);
@@ -51,7 +49,9 @@ public class ScriptIntegrationInvokeJsScriptFunction extends ESBIntegrationTest 
     public void testInvokeJs() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "IBM");
+        response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorJSFromEntryTestProxy"), null,
+                "IBM");
 
         assertNotNull(response, "Response message null");
         assertNotNull(response.getQName().getLocalPart(), "Fault response null localpart");

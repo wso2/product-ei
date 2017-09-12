@@ -1,0 +1,18 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sendMediatorWithLogAfterwardsTestProxy"
+       transports="http https"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+            <log level="full"/>
+        </inSequence>
+        <outSequence>
+            <send/>
+            <log level="full"/>
+        </outSequence>
+    </target>
+</proxy>

@@ -42,17 +42,13 @@ public class RegistryEntryXsltTransformationTestCase extends ESBIntegrationTest 
           description = "Do XSLT transformation  by selecting the xslt file from config registry.")
     public void xsltTransformationFromConfigRegistry() throws Exception {
         OMElement response;
-        String filePath = "/artifacts/ESB/mediatorconfig/xslt/xslt_from_config_registry_local_entry_synapse.xml";
         uploadResourcesToConfigRegistry();
 
-        loadESBConfigurationFromClasspath(filePath);
         response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+                getProxyServiceURLHttp("xsltInConfRegistryTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("IBM"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("IBM"), "Response does not contain the key word: IBM");
 
     }
 
@@ -60,16 +56,13 @@ public class RegistryEntryXsltTransformationTestCase extends ESBIntegrationTest 
           description = "Do XSLT transformation by selecting the xslt file from governance registry.y")
     public void xsltTransformationFromGovernanceRegistry() throws Exception {
         OMElement response;
-        String filePath = "/artifacts/ESB/mediatorconfig/xslt/xslt_from_governance_registry_local_entry_synapse.xml";
         uploadResourcesToGovernanceRegistry();
-        loadESBConfigurationFromClasspath(filePath);
         response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+                getProxyServiceURLHttp("xsltInGovRegistryTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("IBM"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("IBM"), "Response does not contain the key word: IBM");
+
 
     }
 

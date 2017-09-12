@@ -39,7 +39,7 @@ public class CallMediatorAPIWithNamedSeqCase extends ESBIntegrationTest {
     public void callMediatorAPIWithNamedSeqCase() throws IOException {
 
         OMElement response =
-                        axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("/testCallApi"), null, "WSO2");
+                        axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL("testCallApi"), null, "WSO2");
         boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
         assertTrue(responseContainsWSO2);
     }

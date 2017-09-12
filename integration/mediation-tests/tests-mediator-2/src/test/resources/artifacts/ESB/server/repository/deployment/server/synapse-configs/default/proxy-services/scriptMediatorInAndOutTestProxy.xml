@@ -1,0 +1,31 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorInAndOutTestProxy" transports="https http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <script language="js">var symbol = mc.getPayloadXML()..*::Code.toString();
+                mc.setPayloadXML(
+                &lt;m:getQuote xmlns:m="http://services.samples"&gt;
+                &lt;m:request&gt;
+                &lt;m:symbol&gt;{symbol}&lt;/m:symbol&gt;
+                &lt;/m:request&gt;
+                &lt;/m:getQuote&gt;);
+            </script>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <script language="js">var symbol = mc.getPayloadXML()..*::symbol.toString();
+                var price = mc.getPayloadXML()..*::last.toString();
+                mc.setPayloadXML(
+                &lt;m:CheckPriceResponse xmlns:m="http://services.samples/xsd"&gt;
+                &lt;m:Code&gt;{symbol}&lt;/m:Code&gt;
+                &lt;m:Price&gt;{price}&lt;/m:Price&gt;
+                &lt;/m:CheckPriceResponse&gt;);
+            </script>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

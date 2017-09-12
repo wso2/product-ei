@@ -53,13 +53,14 @@ public class IterateRegistryAsTargetTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests for sequence from governors registry ")
     public void testGovernersSequence() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_target_govenerce.xml");
         URL url =
                 new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/iterate/iterateLogAndSendSequence.xml");
         resourceAdminServiceClient.addResource("/_system/governance/sequences/iterate/iterateLogAndSendSequence",
                                                "application/vnd.wso2.sequence", "configuration",
                                                setEndpoints(new DataHandler(url)));
-        String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithTargetGovernanceTestProxy"), "WSO2",
+                2);
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();
@@ -78,13 +79,14 @@ public class IterateRegistryAsTargetTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests for sequence from configuration registry")
     public void testConfigurationSequence() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_target_configuration.xml");
         URL url =
                 new URL("file:///" + getESBResourceLocation() + "/mediatorconfig/iterate/iterateLogAndSendSequence.xml");
         resourceAdminServiceClient.addResource("/_system/config/sequences/iterate/iterateLogAndSendSequence",
                                                "application/vnd.wso2.sequence", "configuration",
                                                setEndpoints(new DataHandler(url)));
-        String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithTargetConfigurationTestProxy"), "WSO2",
+                2);
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();

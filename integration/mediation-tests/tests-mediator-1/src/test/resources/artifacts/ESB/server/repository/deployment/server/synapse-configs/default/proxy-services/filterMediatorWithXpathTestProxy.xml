@@ -1,0 +1,27 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="filterMediatorWithXpathTestProxy"
+       transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <filter xmlns:m0="http://services.samples"  xpath="//m0:getQuote/m0:request/m0:symbol">
+                <then>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                    <drop/>
+                </then>
+                <else>
+                    <log>
+                        <property name="message" value="****Filter condition Not Satisfied, filterMediatorXpathTest failed******"/>
+                    </log>
+                    <drop/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

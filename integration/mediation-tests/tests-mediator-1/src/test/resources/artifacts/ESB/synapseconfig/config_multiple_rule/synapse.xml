@@ -1,7 +1,12 @@
 <!-- Simple rule based routing  of messages - same as filter mediator -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <sequence name="main">
-        <in>
+    <proxy name="MultipleRuleSetPropertyTestProxy"
+           transports="http,https"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+    <target>
+        <inSequence>
             <rule xmlns="http://wso2.org/carbon/rules">
                 <source>soapBody</source>
                 <target action="replace" resultXpath="//accept/child::text()">$accept</target>
@@ -46,31 +51,62 @@
                 <case regex="ibmEndPoint">
                     <call>
                         <endpoint>
-                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService">
+                                <suspendOnFailure>
+                                    <errorCodes>-1</errorCodes>
+                                    <initialDuration>0</initialDuration>
+                                    <progressionFactor>1</progressionFactor>
+                                    <maximumDuration>0</maximumDuration>
+                                </suspendOnFailure>
+                            </address>
                         </endpoint>
                     </call>
                     <respond/>
                 </case>
                 <case regex="sunEndPoint">
-                    <sequence key="nonExistentService"/>
+                    <sequence key="nonExistentService1"/>
                 </case>
                 <case regex="mfstEndPoint">
-                    <sequence key="nonExistentService"/>
+                    <sequence key="nonExistentService2"/>
                 </case>
             </switch>
 
             <drop/>
-        </in>
-    </sequence>
+        </inSequence>
+    </target>
+    </proxy>
 
-    <sequence name="nonExistentService" onError="myFaultHandler">
+    <sequence name="nonExistentService1" onError="myFaultHandler">
         <call>
             <endpoint>
-                <address uri="http://localhost:8480/services/nonExistentServiceProxy"/>
+                <address uri="http://localhost:8480/services/nonExistentServiceProxy">
+                    <suspendOnFailure>
+                        <errorCodes>-1</errorCodes>
+                        <initialDuration>0</initialDuration>
+                        <progressionFactor>1</progressionFactor>
+                        <maximumDuration>0</maximumDuration>
+                    </suspendOnFailure>
+                </address>
             </endpoint>
         </call>
         <respond/>
     </sequence>
+    <sequence name="nonExistentService2" onError="myFaultHandler">
+        <call>
+            <endpoint>
+                <address uri="http://localhost:8480/services/nonExistentServiceProxy">
+                    <suspendOnFailure>
+                        <errorCodes>-1</errorCodes>
+                        <initialDuration>0</initialDuration>
+                        <progressionFactor>1</progressionFactor>
+                        <maximumDuration>0</maximumDuration>
+                    </suspendOnFailure>
+                </address>
+            </endpoint>
+        </call>
+        <respond/>
+    </sequence>
+
     <sequence name="myFaultHandler">
         <makefault>
             <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
@@ -105,7 +141,7 @@
                         &lt;/soap:Envelope&gt;"/>
                     </args>
                 </payloadFactory>
-                <property name="messageType" value="text/plain" scope="axis2"/>
+                <property name="messageType" value="text/xml" scope="axis2"/>
                 <log/>
                 <respond/>
             </inSequence>

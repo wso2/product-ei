@@ -33,8 +33,7 @@ public class EnrichIntegrationSourceXpathAsChildTargetXpath extends ESBIntegrati
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String filePath = "/artifacts/ESB/synapseconfig/core/synapse_sourcexpath_targetxpath.xml";
-        loadESBConfigurationFromClasspath(filePath);
+        verifyProxyServiceExistence("enrichSourceXpathAsChildTargetXpathTestProxy");
     }
 
     // Test whether 'name' element contains the child element 'symbol'
@@ -44,7 +43,7 @@ public class EnrichIntegrationSourceXpathAsChildTargetXpath extends ESBIntegrati
     public void testEnrichMediator() throws Exception {
         OMElement response;
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample"), null,
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSourceXpathAsChildTargetXpathTestProxy"), null,
                                                            "WSO2");
 
         assertNotNull(response, "Response message null");

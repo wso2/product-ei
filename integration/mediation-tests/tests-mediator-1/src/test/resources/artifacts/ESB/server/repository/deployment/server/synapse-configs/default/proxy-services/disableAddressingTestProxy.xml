@@ -1,0 +1,18 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="disableAddressingTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="disableAddressingForOutMessages" value="false" scope="axis2"/>
+            <log level="full" />
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full" />
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

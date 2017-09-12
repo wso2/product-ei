@@ -33,11 +33,11 @@ import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
-public class Sample705TestCase extends ESBIntegrationTest {
+public class Sample705TestCase extends ESBSampleIntegrationTest {
 
     private SampleAxis2Server axis2Server1 = null;
     private SampleAxis2Server axis2Server2 = null;

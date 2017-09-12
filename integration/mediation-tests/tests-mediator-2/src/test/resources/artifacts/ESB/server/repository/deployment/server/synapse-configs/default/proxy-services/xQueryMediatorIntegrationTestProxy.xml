@@ -1,0 +1,28 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="xQueryMediatorIntegrationTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property name="body" expression="$body/child::*[position()=1]"/>
+            <xquery key="xquery-key">
+                <variable name="payload" type="ELEMENT"/>
+            </xquery>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <out>
+                <xquery key="xquery/xquery_res.xq">
+                    <variable xmlns:m0="http://services.samples" xmlns:ax21="http://services.samples/xsd"
+                              name="code" type="STRING"
+                              expression="self::node()//m0:return/ax21:symbol/child::text()"/>
+                    <variable xmlns:m0="http://services.samples" xmlns:ax21="http://services.samples/xsd"
+                              name="price" type="DOUBLE"
+                              expression="self::node()//m0:return/ax21:last/child::text()"/>
+                </xquery>
+                <send/>
+            </out>
+        </outSequence>
+    </target>
+</proxy>

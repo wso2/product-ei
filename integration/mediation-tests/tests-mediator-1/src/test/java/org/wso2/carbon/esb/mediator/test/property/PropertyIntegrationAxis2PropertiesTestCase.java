@@ -19,84 +19,62 @@
 package org.wso2.carbon.esb.mediator.test.property;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.carbon.utils.FileUtil;
-import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
-import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
-import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
+import java.lang.management.ManagementFactory;
+import java.util.HashMap;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.nio.file.Files;
-import java.util.HashMap;
 
 import static org.testng.Assert.assertTrue;
 
 /**
  * This class tests the functionality of ConcurrentConsumers and MaxConcurrentConsumers properties
+ * Axis2 configuration in axis2.xml
+ * <parameter name="propertyIntegrationAxis2PropertiesTestCase" locked="false">
+ *      <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+ *      <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+ *      <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+ *      <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+ *      <parameter name="transport.jms.ConcurrentConsumers" locked="false">50</parameter>
+ *      <parameter name="transport.jms.MaxConcurrentConsumers" locked="false">200</parameter>
+ * </parameter>
  */
 
 public class PropertyIntegrationAxis2PropertiesTestCase extends ESBIntegrationTest {
 
     private ServerConfigurationManager serverManager = null;
-    private ActiveMQServer activeMqServer
-            = new ActiveMQServer();
 
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        activeMqServer.startJMSBrokerAndConfigureESB();
         context = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
         serverManager = new ServerConfigurationManager(context);
     }
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-        String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        String confDir = carbonHome + File.separator + "repository" + File.separator + "conf"
-                + File.separator;
-        File configTemp = new File(confDir + "axis2" + File.separator + "property_axis2_server.xml");
-        FileUtils.deleteQuietly(configTemp);
-        activeMqServer.stopJMSBrokerRevertESBConfiguration();
         super.init();
         super.cleanup();
-        serverManager.restoreToLastConfiguration();
     }
 
 
     @Test(groups = {"wso2.esb"}, description = "Send messages using  ConcurrentConsumers " +
                                                "and MaxConcurrentConsumers Axis2 level properties")
     public void maxConcurrentConsumersTest() throws Exception {
-
-        String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        String confDir = carbonHome + File.separator + "repository" + File.separator + "conf"
-                + File.separator;
-
-        //enabling jms transport with ActiveMQ
-        File originalConfig = new File(TestConfigurationProvider.getResourceLocation()
-                + File.separator + "artifacts" + File.separator
-                + "AXIS2" + File.separator + "config" +
-                File.separator + "property_axis2_server.xml");
-        File destDir = new File(confDir + "axis2" + File.separator);
-        FileUtils.copyFileToDirectory(originalConfig,destDir);
-
         serverManager.restartGracefully();
 
         super.init();  // after restart the server instance initialization
@@ -147,11 +125,6 @@ public class PropertyIntegrationAxis2PropertiesTestCase extends ESBIntegrationTe
                 sender.disconnect();
             }
         }
-
-        OMElement synapse = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/property/" +
-                                                  "ConcurrentConsumers.xml");
-        updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
-
 
         int afterThreadCount = (Integer) mBeanServerConnection.getAttribute(
                 new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME), "ThreadCount");

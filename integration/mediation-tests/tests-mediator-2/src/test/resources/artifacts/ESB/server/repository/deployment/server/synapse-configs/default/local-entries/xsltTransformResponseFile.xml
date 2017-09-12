@@ -1,0 +1,1 @@
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="xsltTransformResponseFile" src="file:samples/service-bus/resources/transform/transform_back.xslt"/>

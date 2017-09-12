@@ -41,14 +41,15 @@ public class ScriptWithIncludeOptionTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config54/synapse.xml");
     }
 
 
     @Test(groups = "wso2.esb", description = "Invoke a script which uses another script with 'include' option")
     public void testInvokeAScriptWhichUsesAnother() throws Exception {
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorWithIncludeOptionTestProxy"), null,
+                "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -67,8 +68,8 @@ public class ScriptWithIncludeOptionTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

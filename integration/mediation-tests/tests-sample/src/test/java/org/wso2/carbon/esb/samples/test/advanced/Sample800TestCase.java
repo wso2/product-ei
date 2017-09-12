@@ -25,11 +25,11 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import static org.testng.Assert.assertTrue;
 
-public class Sample800TestCase extends ESBIntegrationTest {
+public class Sample800TestCase extends ESBSampleIntegrationTest {
 
     private final String contentType ="application/text";
     private String responsePayload;

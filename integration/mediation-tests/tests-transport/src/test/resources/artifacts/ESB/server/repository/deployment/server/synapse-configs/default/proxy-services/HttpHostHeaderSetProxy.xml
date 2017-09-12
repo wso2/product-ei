@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="HttpHostHeaderSetProxy" transports="http https">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property name="request_host" value="safse"/>
+            </log>
+            <property name="REQUEST_HOST_HEADER" value="www.example.com" scope="axis2"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:8480/services/HttpHostHeaderTestProxy"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

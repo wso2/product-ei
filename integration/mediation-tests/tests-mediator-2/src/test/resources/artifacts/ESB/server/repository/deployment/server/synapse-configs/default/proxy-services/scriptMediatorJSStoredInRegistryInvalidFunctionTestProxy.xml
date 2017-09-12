@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorJSStoredInRegistryInvalidFunctionTestProxy" transports="http">
+    <target>
+        <inSequence>
+            <script language="js" key="conf:/script_js/stockquoteTransform.js" function="transformRequestService"/>
+            <!--there is no such a function called transformRequestService in "stockquoteTransform.js"-->
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <script language="js" key="stockQuoteJsScript" function="transformResponse"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

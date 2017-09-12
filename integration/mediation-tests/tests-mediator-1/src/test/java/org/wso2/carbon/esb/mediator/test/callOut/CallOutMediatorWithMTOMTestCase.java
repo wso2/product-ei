@@ -1,6 +1,10 @@
 package org.wso2.carbon.esb.mediator.test.callOut;
 
-import org.apache.axiom.om.*;
+import org.apache.axiom.om.OMAbstractFactory;
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMNamespace;
+import org.apache.axiom.om.OMText;
 import org.apache.axis2.Constants;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.axis2.client.Options;
@@ -12,50 +16,35 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
-import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
+import java.io.File;
+import java.io.IOException;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import java.io.*;
 
 public class CallOutMediatorWithMTOMTestCase extends ESBIntegrationTest {
     private final String MTOM_SERVICE = "MTOMSwASampleService";
     private SampleAxis2Server axis2Server;
-    private String relativeFilePath = "/artifacts/ESB/mediatorconfig/callout/CallOutMediatorWithMTOMTest.xml";
 
-        @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-
-//        if (FrameworkFactory.getFrameworkProperties(
-//                ProductConstant.ESB_SERVER_NAME).getEnvironmentSettings().is_builderEnabled()) {
-            axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
-            axis2Server.start();
-            axis2Server.deployService(MTOM_SERVICE);
-            loadESBConfigurationFromClasspath(relativeFilePath);
-
-//        } else {
-//            builder = new EnvironmentBuilder().as(ProductConstant.ADMIN_USER_ID);
-//            appServer = builder.build().getAs();
-//            int deploymentDelay = builder.getFrameworkSettings().getEnvironmentVariables().getDeploymentDelay();
-//            String serviceFilePath = ProductConstant.getResourceLocations(ProductConstant.AXIS2_SERVER_NAME)
-//                                     + File.separator + "aar" + File.separator + MTOM_SERVICE + ".aar";
-//            ServiceDeploymentUtil deployer = new ServiceDeploymentUtil();
-//            deployer.deployArrService(appServer.getBackEndUrl(), appServer.getSessionCookie()
-//                    , MTOM_SERVICE, serviceFilePath, deploymentDelay);
-//            updateESBConfiguration(replaceEndpoints(relativeFilePath, MTOM_SERVICE, "9001"));
-//        }
-
+        axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
+        axis2Server.start();
+        axis2Server.deployService(MTOM_SERVICE);
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, "CallOutMediatorWithMTOMProxy");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "callOutMediatorWithMTOMTest")
+    @Test(groups = { "wso2.esb" },
+          description = "callOutMediatorWithMTOMTest")
     public void callOutMediatorWithMTOMTest() throws IOException {
-        String targetEPR = getMainSequenceURL();
-        String fileName = FrameworkPathUtil.getSystemResourceLocation() +
-                          "artifacts" + File.separator + "ESB"
-                          + File.separator + "mtom" + File.separator + "asf-logo.gif";
+        String targetEPR = getProxyServiceURLHttp("CallOutMediatorWithMTOMProxy");
+        String fileName =
+                FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB" + File.separator
+                        + "mtom" + File.separator + "asf-logo.gif";
         sendUsingMTOM(fileName, targetEPR);
     }
 
@@ -63,12 +52,7 @@ public class CallOutMediatorWithMTOMTestCase extends ESBIntegrationTest {
     public void close() throws Exception {
         if (axis2Server != null && axis2Server.isStarted()) {
             axis2Server.stop();
-
-//        } else {
-//            ServiceDeploymentUtil deployer = new ServiceDeploymentUtil();
-//            deployer.unDeployArrService(appServer.getBackEndUrl(), appServer.getSessionCookie()
-//                    , MTOM_SERVICE, 30000);
-       }
+        }
         super.cleanup();
     }
 
@@ -94,7 +78,7 @@ public class CallOutMediatorWithMTOMTestCase extends ESBIntegrationTest {
         options.setCallTransportCleanup(true);
         serviceClient.setOptions(options);
         OMElement response = serviceClient.sendReceive(payload);
-        Assert.assertTrue(response.toString().contains("<m:testMTOM xmlns:m=\"http://services.samples/xsd\">" +
-                                                       "<m:test1>testMTOM</m:test1></m:testMTOM>"));
+        Assert.assertTrue(response.toString().contains(
+                "<m:testMTOM xmlns:m=\"http://services.samples/xsd\">" + "<m:test1>testMTOM</m:test1></m:testMTOM>"));
     }
 }

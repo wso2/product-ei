@@ -51,8 +51,6 @@ public class JsonResponseWithCacheTestCase extends ESBIntegrationTest {
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + "/mediatorconfig/cache/" +
                 "axis2.xml"));
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/cache/"
-                + "CacheMediatorforJasonResponse.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Test cache mediator with  Json response having a single element array", enabled = false)
@@ -62,11 +60,11 @@ public class JsonResponseWithCacheTestCase extends ESBIntegrationTest {
         requestHeader.put("Content-type", "application/json");
 
         //will not be a cache hit
-        HttpRequestUtil.doGet((getApiInvocationURL("jsonTest") + "/backend"), requestHeader);
+        HttpRequestUtil.doGet((getApiInvocationURL("cachingEnabledApi") + "/singleElementArrayBackend"), requestHeader);
 
         //will be a cache hit
         HttpResponse response = HttpRequestUtil.
-                doGet((getApiInvocationURL("jsonTest") + "/backend"), requestHeader);
+                doGet((getApiInvocationURL("cachingEnabledApi") + "/singleElementArrayBackend"), requestHeader);
 
         //check if [] are preserved in response
         Assert.assertTrue(response.getData().contains("[ \"water\" ]"), "Expected response was not"

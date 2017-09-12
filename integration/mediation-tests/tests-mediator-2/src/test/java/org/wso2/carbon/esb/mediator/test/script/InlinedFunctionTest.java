@@ -33,16 +33,14 @@ public class InlinedFunctionTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment()  throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/script_mediator/synapse.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Tests level log")
     public void testInlineFunction()throws Exception{
         OMElement response;
-        response=axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "wso2");
+        response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorJSInlineTestProxy"),
+                null, "wso2");
         assertNotNull(response, "Response message null");
         assertEquals(response.getFirstElement().getLocalName().toString(),
                      "Code","Local Name does not match");

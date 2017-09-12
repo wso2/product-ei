@@ -31,7 +31,6 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
-
 public class ConcurrencyThrottlingMaxAccessOneTest extends ESBIntegrationTest {
 
     private final int CONCURRENT_CLIENTS = 5;
@@ -44,14 +43,11 @@ public class ConcurrencyThrottlingMaxAccessOneTest extends ESBIntegrationTest {
     private int grantedRequests;
     private int deniedRequests;
 
-
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
 
         super.init();
-
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/throttle/concurrencyTestMaxConcurrentAccessOne.xml");
-
+        verifyProxyServiceExistence("throttlingMaxAccessOneProxy");
         list = Collections.synchronizedList(new ArrayList());
         concurrencyThrottleTestClients = new ConcurrencyThrottleTestClient[CONCURRENT_CLIENTS];
         clients = new Thread[CONCURRENT_CLIENTS];
@@ -63,7 +59,7 @@ public class ConcurrencyThrottlingMaxAccessOneTest extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb",
           description = "Concurrency throttling - limit the number of concurrent requests to one",
-          timeOut = 1000 * 60 *2)
+          timeOut = 1000 * 60 * 2)
     public void testPolicyWithConcurrentAccessSetToOne() throws InterruptedException {
         startClients();
         while (clientsDone.getCount() < CONCURRENT_CLIENTS) {
@@ -83,7 +79,6 @@ public class ConcurrencyThrottlingMaxAccessOneTest extends ESBIntegrationTest {
 
     }
 
-
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         concurrencyThrottleTestClients = null;
@@ -93,16 +88,15 @@ public class ConcurrencyThrottlingMaxAccessOneTest extends ESBIntegrationTest {
         super.cleanup();
     }
 
-
     private void initClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
-            concurrencyThrottleTestClients[i] = new ConcurrencyThrottleTestClient(getMainSequenceURL(), list, clientsDone);
+            concurrencyThrottleTestClients[i] = new ConcurrencyThrottleTestClient(
+                    getProxyServiceURLHttp("throttlingMaxAccessOneProxy"), list, clientsDone);
         }
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {
             clients[i] = new Thread(concurrencyThrottleTestClients[i]);
         }
     }
-
 
     private void startClients() {
         for (int i = 0; i < CONCURRENT_CLIENTS; i++) {

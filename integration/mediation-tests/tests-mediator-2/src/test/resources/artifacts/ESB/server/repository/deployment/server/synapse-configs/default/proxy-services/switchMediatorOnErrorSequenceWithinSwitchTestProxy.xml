@@ -1,0 +1,43 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="switchMediatorOnErrorSequenceWithinSwitchTestProxy"
+       transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
+    <target>
+        <inSequence>
+            <switch xmlns:ns="http://org.apache.synapse/xsd"
+                    xmlns:ns3="http://org.apache.synapse/xsd"
+                    xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                <case regex="IBM">
+                    <property name="symbol" value="Great stock - IBM" scope="default"/>
+                    <send>
+                        <endpoint>
+                            <address uri="http://invaliduri:9000"/>
+                        </endpoint>
+                    </send>
+                </case>
+                <case regex="MSFT">
+                    <property name="symbol" value="Are you sure? - MSFT"
+                              scope="default"/>
+                    <send>
+                        <endpoint>
+                            <address uri="http://invaliduri:9000"/>
+                        </endpoint>
+                    </send>
+                </case>
+            </switch>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence>
+            <makefault version="soap11">
+                <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                      value="soap11Env:VersionMismatch"/>
+                <reason value="InvokeOnErrorSequenceFromSwitchIntegrationTestCase"/>
+            </makefault>
+            <property name="RESPONSE" value="true"/>
+            <header name="To" action="remove"/>
+            <log level="full"/>
+            <send/>
+        </faultSequence>
+    </target>
+    <description/>
+</proxy>

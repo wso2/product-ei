@@ -34,7 +34,6 @@ public class XQueryCustomVariableAsLong extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/xquery_variable_type_long_synapse101.xml");
     }
 
 
@@ -44,7 +43,7 @@ public class XQueryCustomVariableAsLong extends ESBIntegrationTest {
         OMElement response;
         RequestUtil getQuoteCustomRequest = new RequestUtil();
         response = getQuoteCustomRequest.sendReceive(
-                getProxyServiceURLHttp("StockQuoteProxy"),
+                getProxyServiceURLHttp("xQueryCustomVariableAsLongTestProxy"),
                 "WSO2");
         assertNotNull(response, "Response message null");
         assertEquals(response.getFirstElement().getFirstChildWithName(

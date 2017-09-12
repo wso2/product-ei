@@ -23,7 +23,7 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -33,7 +33,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class CallTemplateIntegrationSample750TestCase extends ESBIntegrationTest {
+public class CallTemplateIntegrationSample750TestCase extends ESBSampleIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception, IOException {
         super.init();

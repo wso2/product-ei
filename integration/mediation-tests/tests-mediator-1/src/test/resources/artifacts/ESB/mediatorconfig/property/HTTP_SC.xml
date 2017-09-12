@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="Axis2ProxyService"
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="HTTP_SCTestProxy"
            transports="https http"
            startOnLoad="true"
            trace="disable">
@@ -11,7 +11,9 @@
                     <property name="HTTP_SC" expression="$axis2:HTTP_SC"/>
                 </log>
                 <send>
-                    <endpoint key="Axis2EP"/>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
                 </send>
             </inSequence>
             <outSequence>

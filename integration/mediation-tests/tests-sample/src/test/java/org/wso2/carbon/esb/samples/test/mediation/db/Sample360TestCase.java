@@ -27,13 +27,13 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.SqlDataSourceUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class Sample360TestCase extends ESBIntegrationTest {
+public class Sample360TestCase extends ESBSampleIntegrationTest {
 
     private SqlDataSourceUtil sqlDataSourceUtil = null;
 

@@ -32,8 +32,8 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-
 public class MultipleRuleSetPropertyTestCase extends ESBIntegrationTest {
+
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
@@ -42,57 +42,44 @@ public class MultipleRuleSetPropertyTestCase extends ESBIntegrationTest {
     }
 
     @Test(groups = "wso2.esb",
-            description = "scenario with multiple rules- Invoke IBM rule")
+          description = "scenario with multiple rules- Invoke IBM rule")
     public void testInvokeIBMRule() throws AxisFault {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "http://localhost:9000/services/SimpleStockQuoteService", "IBM");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("MultipleRuleSetPropertyTestProxy"),
+                "http://localhost:9000/services/SimpleStockQuoteService", "IBM");
 
-        String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
-                .getText();
+        String lastPrice = response.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "last")).getText();
         assertNotNull(lastPrice, "Fault: response message 'last' price null");
 
-        String symbol = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "symbol"))
-                .getText();
+        String symbol = response.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
         assertEquals(symbol, "IBM", "Fault: value 'symbol' mismatched");
 
     }
 
-
     @Test(groups = "wso2.esb",
-            description = "scenario with multiple rules- Invoke SUN rule ")
+          description = "scenario with multiple rules- Invoke SUN rule ")
     public void testInvokeSUNRule() throws Exception {
-        try {
-            // If the endpoint suspended from the previous request then need to wait until the endpoint is active
-            Thread.sleep(35000);
-            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "http://localhost:9000/services/SimpleStockQuoteService", "SUN");
-            assertTrue(response.toString().contains("WRONG_RULE"), "Fault: value 'responseText' mismatched");
-        } catch (AxisFault axisFault) {
-            throw axisFault;
-        }
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("MultipleRuleSetPropertyTestProxy"),
+                "http://localhost:9000/services/SimpleStockQuoteService", "SUN");
+        assertTrue(response.toString().contains("WRONG_RULE"), "Fault: value 'responseText' mismatched");
     }
 
-
     @Test(groups = "wso2.esb",
-            description = "scenario with multiple rules- Invoke MFST rule ")
+          description = "scenario with multiple rules- Invoke MFST rule ")
     public void testInvokeMSFTRule() throws Exception {
-        try {
-            // If the endpoint suspended from the previous request then need to wait until the endpoint is active
-            Thread.sleep(35000);
-            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "http://localhost:9000/services/SimpleStockQuoteService", "MFST");
-            assertTrue(response.toString().contains("WRONG_RULE"), "Fault: value 'responseText' mismatched");
-        } catch (AxisFault axisFault) {
-            throw axisFault;
-        }
 
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("MultipleRuleSetPropertyTestProxy"),
+                "http://localhost:9000/services/SimpleStockQuoteService", "MFST");
+        assertTrue(response.toString().contains("WRONG_RULE"), "Fault: value 'responseText' mismatched");
     }
 
-
     @Test(groups = "wso2.esb",
-            description = "scenario with multiple rules- Invoke an invalid rule ")
+          description = "scenario with multiple rules- Invoke an invalid rule ")
     public void testInvokeInvalidRule() throws Exception {
-        // If the endpoint suspended from the previous request then need to wait until the endpoint is active
-        Thread.sleep(35000);
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), "http://localhost:9000/services/SimpleStockQuoteService", "Invalid");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("MultipleRuleSetPropertyTestProxy"),
+                    "http://localhost:9000/services/SimpleStockQuoteService", "Invalid");
             fail();
         } catch (AxisFault axisFault) {
             assertEquals(axisFault.getMessage(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL,
@@ -100,7 +87,6 @@ public class MultipleRuleSetPropertyTestCase extends ESBIntegrationTest {
         }
 
     }
-
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {

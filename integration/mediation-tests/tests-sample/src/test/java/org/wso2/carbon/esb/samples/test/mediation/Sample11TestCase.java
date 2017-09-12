@@ -28,7 +28,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import java.nio.file.Paths;
  * Sample 11: Using a Full Registry-Based Configuration and Sharing a Configuration Between
  * Multiple Instances
  */
-public class Sample11TestCase extends ESBIntegrationTest {
+public class Sample11TestCase extends ESBSampleIntegrationTest {
 
     private String oldSynapseConfig;
 

@@ -34,8 +34,6 @@ public class XpathCallWithoutNSTest extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config10/synapse.xml");
-
-
     }
 
     @Test(expectedExceptions = AxisFault.class, groups = {"wso2.esb"}, description = "Sample 750 Call Template Test")
@@ -46,7 +44,6 @@ public class XpathCallWithoutNSTest extends ESBIntegrationTest {
         Assert.assertTrue(response.toString().contains("CheckPriceResponse"));
         Assert.assertTrue(response.toString().contains("Price"));
         Assert.assertTrue(response.toString().contains("Code"));
-
     }
 
     @AfterClass(alwaysRun = true)

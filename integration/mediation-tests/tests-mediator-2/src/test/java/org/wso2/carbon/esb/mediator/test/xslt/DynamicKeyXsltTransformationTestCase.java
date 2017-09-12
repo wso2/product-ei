@@ -34,7 +34,6 @@ public class DynamicKeyXsltTransformationTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception {
         super.init();
         uploadResourcesToRegistry();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xslt/xslt_dynamic_key_synapse.xml");
     }
 
     @Test(groups = {"wso2.esb"},
@@ -43,12 +42,10 @@ public class DynamicKeyXsltTransformationTestCase extends ESBIntegrationTest {
     public void xsltTransformationFromDynamicKey() throws Exception {
         OMElement response;
         response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+                getProxyServiceURLHttp("xsltDynamicKeySequenceTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("IBM"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("IBM"), "Response does not contain the key word: IBM");
 
     }
 
@@ -73,19 +70,19 @@ public class DynamicKeyXsltTransformationTestCase extends ESBIntegrationTest {
                                                  "Contains dynamic sequence request entry");
 
         resourceAdminServiceClient.addResource(
-                "/_system/config/localEntries/request_transformation.txt", "text/plain", "text files",
+                "/_system/config/localEntries/request_transformation_DynamicKeyXsltTransformationTestCase.txt", "text/plain", "text files",
                 new DataHandler("Dynamic Sequence request transformation".getBytes(), "application/text"));
-        propertiesAdminServiceClient.setProperty("/_system/config/localEntries/request_transformation.txt",
-                                                 "resourceName", "request_transform.xslt");
+        propertiesAdminServiceClient.setProperty("/_system/config/localEntries/request_transformation_DynamicKeyXsltTransformationTestCase.txt",
+                                                 "resourceName", "xsltTransformRequest");
 
         resourceAdminServiceClient.deleteResource("/_system/governance/localEntries");
         resourceAdminServiceClient.addCollection("/_system/governance/", "localEntries", "",
                                                  "Contains dynamic sequence response entry");
         resourceAdminServiceClient.addResource(
-                "/_system/governance/localEntries/response_transformation_back.txt", "text/plain", "text files",
+                "/_system/governance/localEntries/response_transformation_back_DynamicKeyXsltTransformationTestCase.txt", "text/plain", "text files",
                 new DataHandler("Dynamic Sequence response transformation".getBytes(), "application/text"));
-        propertiesAdminServiceClient.setProperty("/_system/governance/localEntries/response_transformation_back.txt",
-                                                 "resourceName", "response_transform.xslt");
+        propertiesAdminServiceClient.setProperty("/_system/governance/localEntries/response_transformation_back_DynamicKeyXsltTransformationTestCase.txt",
+                                                 "resourceName", "xsltTransformResponse");
 
         Thread.sleep(1000);
     }

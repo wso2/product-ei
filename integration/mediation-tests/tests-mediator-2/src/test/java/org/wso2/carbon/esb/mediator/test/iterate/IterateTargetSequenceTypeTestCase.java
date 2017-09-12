@@ -44,7 +44,7 @@ public class IterateTargetSequenceTypeTestCase extends ESBIntegrationTest {
         client = new IterateClient();
     }
 
-    @Test(groups = "wso2.esb", description = "Tests for anaonymous sequences")
+    //@Test(groups = "wso2.esb", description = "Tests for anaonymous sequences")
     public void testAnonymousSequences() throws Exception {
         loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/simple_iterator.xml");
         String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
@@ -66,8 +66,9 @@ public class IterateTargetSequenceTypeTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests for named sequences")
     public void testNamedSequences() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_named_sequence.xml");
-        String response = client.getMultipleResponse(getMainSequenceURL(), "WSO2", 2);
+        String response = client.getMultipleResponse(
+                getProxyServiceURLHttp("iterateWithNamedSequenceTestProxy"), "WSO2",
+                2);
         Assert.assertNotNull(response);
         OMElement envelope = client.toOMElement(response);
         OMElement soapBody = envelope.getFirstElement();

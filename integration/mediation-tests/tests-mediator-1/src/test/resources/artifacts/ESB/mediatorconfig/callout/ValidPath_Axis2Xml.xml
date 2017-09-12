@@ -20,30 +20,37 @@
 
 <!-- Simple callout  mediator -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="CalloutMediatorAxis2RepoPathTestProxy"
+           transports="https http"
+           startOnLoad="true"
+           trace="disable">
+        <description/>
+        <target>
+            <inSequence>
+                <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService"
+                         action="urn:getQuote">
 
-    <sequence name="main">
-        <callout serviceURL="http://localhost:9000/services/SimpleStockQuoteService"
-                 action="urn:getQuote">
-
-            <configuration axis2xml="another path"/>
-
-
-            <source xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
-                    xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
-                    xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
-
-
-            <target xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
-                    xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
-                    xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                    <configuration axis2xml="another path"/>
 
 
-        </callout>
-        <property name="RESPONSE" value="true"/>
-        <header name="To" action="remove"/>
-        <send/>
-        <drop/>
-    </sequence>
+                    <source xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+
+
+                    <target xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                            xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                            xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+
+
+                </callout>
+                <property name="RESPONSE" value="true"/>
+                <header name="To" action="remove"/>
+                <send/>
+                <drop/>
+            </inSequence>
+        </target>
+    </proxy>
 
 </definitions>
 

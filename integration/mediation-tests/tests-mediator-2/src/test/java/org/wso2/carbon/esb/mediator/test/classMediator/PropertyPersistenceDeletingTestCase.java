@@ -127,7 +127,6 @@ public class PropertyPersistenceDeletingTestCase extends ESBIntegrationTest{
     public void destroy() throws Exception{
         super.cleanup();
         serverConfigurationManager.removeFromComponentLib(CLASS_JAR_THREE_PROPERTIES);
-        serverConfigurationManager.restartGracefully();
         serverConfigurationManager=null;
     }
 }

@@ -52,7 +52,7 @@ public class ForEachWithIterateTestCase extends ESBIntegrationTest {
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
-        String response = client.getMultipleCustomResponse(getMainSequenceURL(), "IBM", 2);
+        String response = client.getMultipleCustomResponse(getProxyServiceURLHttp("foreachSequentialExecutionTestProxy"), "IBM", 2);
         Assert.assertNotNull(response);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();

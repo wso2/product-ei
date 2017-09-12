@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="StockQuote_SOAP11_9000_EP">
+   <address uri="http://localhost:9000/services/SimpleStockQuoteService" format="soap11"/>
+</endpoint>

@@ -39,14 +39,14 @@ public class EnrichIntegrationAddSourceAsSiblingInBodyTest extends ESBIntegratio
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich/add_source_as_sibling_in_body.xml");
+        verifyProxyServiceExistence("enrichAddSourceAsSiblingInBodyTestProxy");
 
     }
 
     @Test(groups = "wso2.esb", description = "Tests-Adding a source as a sibling of message body")
     public void testAddSourceAsSiblingInBody() throws AxisFault, XMLStreamException {
 
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample6"), null,"WSO2");
+        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddSourceAsSiblingInBodyTestProxy"), null,"WSO2");
         assertNotNull(response,"Response is null");
         OMElement sibling = (OMElement) response.getNextOMSibling();
         assertEquals(sibling.getFirstElement().getFirstChildWithName

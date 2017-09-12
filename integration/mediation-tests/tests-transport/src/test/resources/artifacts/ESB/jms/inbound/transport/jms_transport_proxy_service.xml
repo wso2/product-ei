@@ -24,16 +24,5 @@
         </out>
         <description>The main sequence for the message mediation</description>
     </sequence>
-    <sequence name="requestHandlerSeq" onError="inFault">
-        <log category="INFO" level="full" separator=",">
-            <property name="test" value="requestHandlerSequence"/>
-        </log>
-    </sequence>
-    <sequence name="inFault">
-        <log category="INFO" level="full" separator=",">
-            <property name="fault" value="Inside the Fault sequence"/>
-        </log>
-    </sequence>
-
 
 </definitions>

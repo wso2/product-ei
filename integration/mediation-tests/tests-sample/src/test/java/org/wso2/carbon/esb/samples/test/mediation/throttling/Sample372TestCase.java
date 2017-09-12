@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.samples.test.mediation.throttling.utils.ConcurrencyAndRequestThrottleTestClient;
 import org.wso2.carbon.esb.samples.test.mediation.throttling.utils.ThrottleTestCounter;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +32,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class Sample372TestCase extends ESBIntegrationTest {
+public class Sample372TestCase extends ESBSampleIntegrationTest {
 
     private final int CONCURRENT_CLIENTS = 10;
     private final int AS_POLICY_ACCESS_GRANTED = 0;

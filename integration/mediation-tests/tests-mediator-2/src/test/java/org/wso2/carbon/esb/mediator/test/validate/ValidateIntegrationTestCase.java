@@ -52,11 +52,10 @@ public class ValidateIntegrationTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Specify a dynamic key as schema key")
     public void TestWithDynamicKey() throws Exception {
-        super.loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/dynamickey.xml");
-
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
-                    , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("validateMediatorInvalidDynamicKeyTestProxy"),
+                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             fail("Test failed to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {
             assertEquals(axisFault.getMessage(), "Invalid custom quote request");
@@ -69,10 +68,10 @@ public class ValidateIntegrationTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Static key for schema key")
     public void TestWithStaticKey() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/staticKey.xml");
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
-                    , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(
+                    getProxyServiceURLHttp("validateMediatorStaticKeyTestProxy"),
+                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             fail("Test failed to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {
             assertEquals(axisFault.getMessage(), "Invalid custom quote request");
@@ -85,10 +84,9 @@ public class ValidateIntegrationTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Verify whether validate mediator supports defining external schema definitions like WSDL resources for proxy service")
     public void TestWithProxy() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/validate_with_proxy.xml");
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("validateProxy2")
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("validateMediatorTestProxy")
                     , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             fail("Test failed to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {
@@ -101,9 +99,8 @@ public class ValidateIntegrationTestCase extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"}, description = "Test validate mediator without secure processing feature ")
     public void validateWithSecureProcessingfalse() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/validate_secure_false.xml");
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("validateMediatorSecureFalseTestProxy")
                     , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             fail("Test failed to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {
@@ -114,10 +111,9 @@ public class ValidateIntegrationTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Test validate mediator with secure processing feature")
     public void validateWithSecureProcessingTrue() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/validate_secure_true.xml");
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("validateMediatorSecureTrueTestProxy")
                     , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             fail("Test failed to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {
@@ -130,10 +126,9 @@ public class ValidateIntegrationTestCase extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb"}, description = "Add additional resources to validate mediator to check whether message is processed accurately")
     public void testWithResources() throws Exception {
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/validatemediator/validate_with_resources.xml");
 
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL()
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("validateMediatorWithResourcesTestProxy")
                     , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
             fail("Test failed to invoke on-fail sequence of mediators");
         } catch (AxisFault axisFault) {

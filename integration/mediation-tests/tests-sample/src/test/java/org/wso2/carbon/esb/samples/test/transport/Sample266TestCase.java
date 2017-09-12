@@ -29,7 +29,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.TCPClient;
 
 import java.io.File;
@@ -37,7 +37,7 @@ import java.io.File;
 /**
  * Sample 266: Switching from TCP to HTTP/S
  */
-public class Sample266TestCase extends ESBIntegrationTest {
+public class Sample266TestCase extends ESBSampleIntegrationTest {
 
     private ServerConfigurationManager serverManager;
     private LogViewerClient logViewerClient;

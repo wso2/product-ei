@@ -30,7 +30,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.UDPClient;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import java.io.File;
 /**
  * Sample 267: Switching from UDP to HTTP/S
  */
-public class Sample267TestCase extends ESBIntegrationTest {
+public class Sample267TestCase extends ESBSampleIntegrationTest {
 
     private ServerConfigurationManager serverManager;
 

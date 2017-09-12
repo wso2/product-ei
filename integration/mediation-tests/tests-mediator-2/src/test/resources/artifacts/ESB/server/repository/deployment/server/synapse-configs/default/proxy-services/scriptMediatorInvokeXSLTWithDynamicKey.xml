@@ -1,0 +1,18 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="scriptMediatorInvokeXSLTWithDynamicKey" transports="http">
+    <target>
+        <inSequence>
+            <property name="symbol" value="conf:/script_xslt/transform.xslt"/>
+            <xslt xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd"
+                  key="{get-property('symbol')}"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <xslt key="conf:/script_xslt/transform_back.xslt"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

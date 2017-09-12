@@ -1,0 +1,37 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="routerMultipleTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <router>
+                <route expression="//m0:getQuote/m0:request/m0:symbol" match="WSO2" xmlns:m0="http://services.samples">
+                    <target>
+                        <sequence>
+                            <send>
+                                <endpoint>
+                                    <address uri="http://localhost:9001/services/SimpleStockQuoteService" />
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </route>
+                <route expression="//m0:getQuote/m0:request/m0:symbol" match="IBM" xmlns:m0="http://services.samples">
+                    <target>
+                        <sequence>
+                            <send>
+                                <endpoint>
+                                    <address uri="http://localhost:9002/services/SimpleStockQuoteService" />
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </route>
+            </router>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

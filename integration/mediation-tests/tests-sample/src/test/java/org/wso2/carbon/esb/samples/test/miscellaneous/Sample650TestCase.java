@@ -31,14 +31,14 @@ import org.wso2.esb.integration.common.clients.endpoint.EndPointAdminClient;
 import org.wso2.esb.integration.common.clients.localentry.LocalEntriesAdminClient;
 import org.wso2.esb.integration.common.clients.sequences.SequenceAdminServiceClient;
 import org.wso2.esb.integration.common.clients.tasks.TaskAdminClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 
 import java.io.File;
 
 import static org.testng.Assert.assertTrue;
 
-public class Sample650TestCase extends ESBIntegrationTest {
+public class Sample650TestCase extends ESBSampleIntegrationTest {
 
     private EndPointAdminClient endPointAdminClient;
     private LocalEntriesAdminClient localEntriesAdminClient;

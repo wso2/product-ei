@@ -67,7 +67,7 @@ public class JsonFormat_IncomingJson_StartsWithSpaceTestCase extends ESBIntegrat
     private String postJSONPayload(String payload) throws Exception {
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
-        String url = getMainSequenceURL() + "esbjava4433";
+        String url = getMainSequenceURL() + "startsWithSpaceTest";
         HttpResponse httpResponse = httpClient.doPost(url, null, payload, "application/json");
         return httpClient.getResponsePayload(httpResponse);
     }

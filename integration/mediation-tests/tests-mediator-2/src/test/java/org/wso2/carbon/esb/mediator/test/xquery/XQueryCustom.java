@@ -32,7 +32,6 @@ public class XQueryCustom extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xquery/synapse101.xml");
     }
 
 
@@ -43,8 +42,7 @@ public class XQueryCustom extends ESBIntegrationTest {
         RequestUtil getQuoteCustomRequest = new RequestUtil();
 
         response = getQuoteCustomRequest.sendReceive(
-                getProxyServiceURLHttp("StockQuoteProxy"),
-                "IBM");
+                getProxyServiceURLHttp("xQueryMediatorTransformationTestProxy"), "IBM");
         assertNotNull(response, "Response message null");
         assertTrue(response.toString().contains("IBM"));
 

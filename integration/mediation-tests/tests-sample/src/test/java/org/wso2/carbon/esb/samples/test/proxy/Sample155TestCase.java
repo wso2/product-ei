@@ -25,13 +25,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.ConnectionData;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.TCPMonListener;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 /**
  * Sample 155: Dual Channel Invocation on Both Client Side and Server Side of Synapse with
  * Proxy Services
  */
-public class Sample155TestCase extends ESBIntegrationTest {
+public class Sample155TestCase extends ESBSampleIntegrationTest {
 
     private TCPMonListener listener1;
     private TCPMonListener listener2;

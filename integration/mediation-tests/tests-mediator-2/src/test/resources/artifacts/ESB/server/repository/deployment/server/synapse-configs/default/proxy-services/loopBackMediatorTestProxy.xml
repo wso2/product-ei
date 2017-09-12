@@ -1,0 +1,41 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="loopBackMediatorTestProxy" transports="http">
+    <target>
+        <inSequence>
+            <payloadFactory>
+                <format>
+                    <m:messageBeforeLoopBack xmlns:m="http://services.samples">
+                        <m:messageBeforeLoopBackSymbol>
+                            <m:symbolBeforeLoopBack>$1</m:symbolBeforeLoopBack>
+                        </m:messageBeforeLoopBackSymbol>
+                    </m:messageBeforeLoopBack>
+                </format>
+                <args>
+                    <arg xmlns:m0="http://services.samples"
+                         evaluator="xml"
+                         expression="//m0:symbol/text()"/>
+                </args>
+            </payloadFactory>
+
+            <loopback/>
+
+            <payloadFactory>
+                <format>
+                    <m:messageAfterLoopBack xmlns:m="http://services.samples">
+                        <m:messageAfterLoopBackSymbol>
+                            <m:symbolAfterLoopBack>$1</m:symbolAfterLoopBack>
+                        </m:messageAfterLoopBackSymbol>
+                    </m:messageAfterLoopBack>
+                </format>
+                <args>
+                    <arg xmlns:m0="http://services.samples"
+                         evaluator="xml"
+                         expression="//m0:symbolBeforeLoopBack/text()"/>
+                </args>
+            </payloadFactory>
+            <loopback/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

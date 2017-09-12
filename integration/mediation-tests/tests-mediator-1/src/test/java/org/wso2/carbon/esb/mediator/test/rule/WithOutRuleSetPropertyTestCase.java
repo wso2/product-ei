@@ -17,7 +17,6 @@
 */
 package org.wso2.carbon.esb.mediator.test.rule;
 
-import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -27,8 +26,6 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 public class WithOutRuleSetPropertyTestCase extends ESBIntegrationTest {
 

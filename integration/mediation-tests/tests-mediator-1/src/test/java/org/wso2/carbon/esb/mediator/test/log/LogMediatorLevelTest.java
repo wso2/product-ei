@@ -40,7 +40,9 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
         super.init();
         logAdmin = new LoggingAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/log_mediator/synapse.xml");
+        verifyProxyServiceExistence("logMediatorLevelTestProxy");
+        verifySequenceExistence("logCategoryTestSequence");
+
 
     }
 
@@ -50,7 +52,7 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
 
         logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.logLevel.DEBUG.name(), true, false);
         logViewer.clearLogs();
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("logMediatorLevelTestProxy"),
                                                                      null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
         log.info(response);
@@ -65,7 +67,7 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Tests System Logs")
     public void testSystemLogs() throws Exception {
         int beforeCount = logViewer.getAllSystemLogs().length;
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("logMediatorLevelTestProxy"),
                                                                      null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
         log.info(response);

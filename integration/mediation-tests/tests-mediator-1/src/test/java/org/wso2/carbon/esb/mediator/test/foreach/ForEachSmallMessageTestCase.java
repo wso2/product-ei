@@ -39,8 +39,7 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/mediatorconfig/foreach/foreach_single_request.xml");
+        verifyProxyServiceExistence("foreachSmallMessageTestProxy");
         symbol = FixedSizeSymbolGenerator.generateMessageKB(5);
         logViewer =
                 new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -53,7 +52,7 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
 
         OMElement response = null;
         for (int i = 0; i < 20; i++) {
-            response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(),
+            response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("foreachSmallMessageTestProxy"),
                     null, "IBM" + symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("IBM"), "Incorrect symbol in response");
@@ -85,7 +84,7 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
         OMElement response = null;
         for (int i = 0; i < 100; i++) {
             response =
-                    axis2Client.sendCustomQuoteRequest(getMainSequenceURL(),
+                    axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("foreachSmallMessageTestProxy"),
                             null, "MSFT" + symbol);
             Assert.assertNotNull(response);
             Assert.assertTrue(response.toString().contains("MSFT"), "Incorrect symbol in response. Could not find symbol MSFT ..");

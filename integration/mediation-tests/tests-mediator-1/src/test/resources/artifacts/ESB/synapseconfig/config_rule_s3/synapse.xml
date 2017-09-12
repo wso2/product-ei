@@ -49,7 +49,14 @@
                 <case regex="ibmEndPoint">
                     <send>
                         <endpoint>
-                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService">
+                                <suspendOnFailure>
+                                    <errorCodes>-1</errorCodes>
+                                    <initialDuration>0</initialDuration>
+                                    <progressionFactor>1</progressionFactor>
+                                    <maximumDuration>0</maximumDuration>
+                                </suspendOnFailure>
+                            </address>
                         </endpoint>
                     </send>
                 </case>
@@ -74,7 +81,14 @@
 
         <send>
             <endpoint>
-                <address uri="http://localhost:9009/services/NonExistentStockQuoteService"/>
+                <address uri="http://localhost:9009/services/NonExistentStockQuoteService">
+                    <suspendOnFailure>
+                        <errorCodes>-1</errorCodes>
+                        <initialDuration>0</initialDuration>
+                        <progressionFactor>1</progressionFactor>
+                        <maximumDuration>0</maximumDuration>
+                    </suspendOnFailure>
+                </address>
             </endpoint>
         </send>
         <drop/>

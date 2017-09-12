@@ -30,18 +30,15 @@ public class XQueryIntegrationTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadSampleESBConfiguration(390);
     }
 
     //use SimpleURLRegistry
-    @Test(groups = {"wso2.esb"}, description = "Sample 390:  Introduction to the XQuery mediator", enabled = false)
+    @Test(groups = {"wso2.esb"}, description = "Introduction to the XQuery mediator", enabled = false)
     public void testXQueryTransformation() throws AxisFault {
         OMElement response;
 
-        response = axis2Client.sendCustomQuoteRequest(
-                null,
-                getProxyServiceURLHttp("StockQuoteProxy"),
-                "IBM");
+        response = axis2Client.sendCustomQuoteRequest(null,
+                getProxyServiceURLHttp("xQueryMediatorIntegrationTestProxy"), "IBM");
         assertTrue(response.toString().contains("IBM"));
 
 

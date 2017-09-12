@@ -37,12 +37,14 @@ public class DynamicEndpointTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToRegistry();
-        loadESBConfigurationFromClasspath("artifacts/ESB/mediatorconfig/callout/DynamicEndpointTest.xml");
+        esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie,
+                "DynamicEndpointWithCallMediatorProxy");
     }
 
-    @Test(groups = {"wso2.esb"})
+    @Test(groups = { "wso2.esb" })
     public void dynamicEndpointTest() throws AxisFault, XPathExpressionException {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(""), "", "IBM");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("DynamicEndpointWithCallMediatorProxy"), "", "IBM");
         boolean ResponseContainsIBM = response.getFirstElement().toString().contains("IBM");
         assertTrue(ResponseContainsIBM);
     }
@@ -57,20 +59,18 @@ public class DynamicEndpointTestCase extends ESBIntegrationTest {
     }
 
     private void uploadResourcesToRegistry() throws Exception {
-        ResourceAdminServiceClient resourceAdminServiceStub =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        ResourceAdminServiceClient resourceAdminServiceStub = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), getSessionCookie());
 
-        resourceAdminServiceStub.addResource(
-                "/_system/config/SimpleStockQuoteServiceEndpoint", "application/xml", "Endpoint Configuration",
-                setEndpoints(new DataHandler(new URL("file:///" + getESBResourceLocation() +
-                                                     "/endpoint/addressEndpointConfig/addressEP_Test.xml"))));
+        resourceAdminServiceStub.addResource("/_system/config/SimpleStockQuoteServiceEndpoint", "application/xml",
+                "Endpoint Configuration", setEndpoints(new DataHandler(new URL("file:///" + getESBResourceLocation()
+                        + "/endpoint/addressEndpointConfig/addressEP_Test.xml"))));
         Thread.sleep(3000);
     }
 
     private void clearRegistry() throws Exception {
-        new ResourceAdminServiceClient(contextUrls.getBackEndUrl(),
-                getSessionCookie()).deleteResource("/_system/config/SimpleStockQuoteServiceEndpoint");
-        Thread.sleep(3000);
+        new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie())
+                .deleteResource("/_system/config/SimpleStockQuoteServiceEndpoint");
     }
 
 }

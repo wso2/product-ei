@@ -38,9 +38,9 @@ public class PropertyWithinSequenceTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/propertyWithinIterateConfig/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorPropertyTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorPropertyTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
         no_of_requests = 15;
         aggregatedRequestClient.setNoOfIterations(no_of_requests);

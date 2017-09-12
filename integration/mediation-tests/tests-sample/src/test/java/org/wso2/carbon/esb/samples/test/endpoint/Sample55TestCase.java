@@ -23,7 +23,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.LoadBalanceSessionFullClient;
 import org.wso2.esb.integration.common.utils.clients.ResponseData;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * Sample 55: Session Affinity Load Balancing between Failover Endpoints
  */
-public class Sample55TestCase extends ESBIntegrationTest {
+public class Sample55TestCase extends ESBSampleIntegrationTest {
 
     private SampleAxis2Server axis2Server1;
     private SampleAxis2Server axis2Server2;

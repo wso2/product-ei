@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithMultipleElementsTestProxy" transports="http" startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:ser="http://services.samples" id="iterator" expression="//ser:getQuotes/ser:getQuote">
+                <target to="http://localhost:9000/services/SimpleStockQuoteService" soapAction="urn:getQuote">
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                    </endpoint>
+                </target>
+            </iterate>
+            <drop/>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesForIterateTests"/>
+        </outSequence>
+    </target>
+</proxy>

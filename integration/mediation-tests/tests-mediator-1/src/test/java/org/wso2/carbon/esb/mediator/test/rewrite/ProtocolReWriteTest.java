@@ -34,7 +34,7 @@ public class ProtocolReWriteTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/rewrite/protocol_rewrite_synapse.xml");
+        verifyProxyServiceExistence("urlRewriteReplaceProtocolTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Conditional URL Rewriting",
@@ -43,7 +43,7 @@ public class ProtocolReWriteTest extends ESBIntegrationTest {
         OMElement response;
 
         response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("urlRewriteProxy"),
+                getProxyServiceURLHttp("urlRewriteReplaceProtocolTestProxy"),
                 addUrl,
                 "IBM");
         assertTrue(response.toString().contains("IBM"));

@@ -19,25 +19,18 @@ package org.wso2.carbon.esb.mediator.test.smooks;
 
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
-import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-
-import javax.activation.DataHandler;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import javax.activation.DataHandler;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 public class SmooksMediatorXMLtoXMLTransformTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
     private ResourceAdminServiceClient resourceAdminServiceStub;
     private final String COMMON_FILE_LOCATION = getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "vfsTransport" + File.separator).getPath();
     private final String ORDER_ID = "332";
@@ -51,9 +44,6 @@ public class SmooksMediatorXMLtoXMLTransformTestCase extends ESBIntegrationTest 
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/vfsTransport/vfs_xml_to_xml.xml");
         resourceAdminServiceStub = new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName()
 , context.getContextTenant().getContextUser().getPassword());
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(COMMON_FILE_LOCATION + "axis2.xml"));
-        super.init();
         setSmooksSampleConfigFileLocations();
         uploadResourcesToConfigRegistry();
         addVFSProxy();
@@ -137,10 +127,7 @@ public class SmooksMediatorXMLtoXMLTransformTestCase extends ESBIntegrationTest 
             resourceAdminServiceStub.deleteResource("/_system/config/smooks");
         } finally {
             super.cleanup();
-            serverConfigurationManager.restoreToLastConfiguration();
             resourceAdminServiceStub = null;
-            serverConfigurationManager = null;
-
         }
 
     }

@@ -40,9 +40,9 @@ public class SpecifyMaxMessageCountAsExpressionTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config20/synapse.xml");
+        verifyProxyServiceExistence("aggregateMediatorBothMinMaxTestProxy");
         aggregatedRequestClient = new AggregatedRequestClient();
-        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorTestProxy"));
+        aggregatedRequestClient.setProxyServiceUrl(getProxyServiceURLHttp("aggregateMediatorBothMinMaxTestProxy"));
         aggregatedRequestClient.setSymbol("IBM");
 
     }

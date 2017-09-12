@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
@@ -40,7 +40,7 @@ import java.io.File;
 import java.util.Hashtable;
 
 // this class is disabled
-public class Sample263TestCase extends ESBIntegrationTest {
+public class Sample263TestCase extends ESBSampleIntegrationTest {
 
 //    private ServerConfigurationManager serverManager = null;
 //

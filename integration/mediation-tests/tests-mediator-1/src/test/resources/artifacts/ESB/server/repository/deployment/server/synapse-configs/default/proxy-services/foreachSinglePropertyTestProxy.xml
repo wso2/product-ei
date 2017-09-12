@@ -1,0 +1,46 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="foreachSinglePropertyTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <foreach xmlns:ns="http://org.apache.synapse/xsd"
+                     xmlns:m0="http://services.samples"
+                     expression="//m0:getQuote/m0:request">
+                <sequence>
+                    <log level="custom">
+                        <property name="fe_originalpayload"
+                                  expression="get-property('FOREACH_ORIGINAL_MESSAGE')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="fe_count" expression="get-property('FOREACH_COUNTER')"/>
+                    </log>
+                    <log level="custom">
+                        <property name="fe_group"
+                                  expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                    </log>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <m0:symbol>$1_$2</m0:symbol>
+                        </format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group"/>
+                            <arg evaluator="xml" expression="//m0:code"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <log level="custom">
+                <property name="in_originalpayload"
+                          expression="get-property('FOREACH_ORIGINAL_MESSAGE')"/>
+            </log>
+            <log level="custom">
+                <property name="in_count" expression="get-property('FOREACH_COUNTER')"/>
+            </log>
+            <log level="custom">
+                <property name="in_group"
+                          expression="get-property('FOREACH_ORIGINAL_MESSAGE')//m0:group" xmlns:m0="http://services.samples" />
+            </log>
+        </inSequence>
+        <outSequence/>
+
+    </target>
+</proxy>

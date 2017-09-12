@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="iterateWithSOAPActionTestProxy" transports="http"
+       startOnLoad="true" trace="disable">
+    <target>
+        <inSequence>
+            <iterate id="iterator" expression="//m0:getQuote/m0:request"
+                     preservePayload="true" attachPath="//m0:getQuote" xmlns:m0="http://services.samples">
+                <target to="http://localhost:9000/services/SimpleStockQuoteService" soapAction="m0:getQuote">
+                    <sequence>
+                        <send>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <sequence key="aggregateMessagesForIterateTests"/>
+        </outSequence>
+    </target>
+</proxy>

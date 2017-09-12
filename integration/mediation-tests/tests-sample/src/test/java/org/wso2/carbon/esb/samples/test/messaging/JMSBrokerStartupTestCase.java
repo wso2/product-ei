@@ -21,10 +21,10 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
-public class JMSBrokerStartupTestCase extends ESBIntegrationTest {
+public class JMSBrokerStartupTestCase extends ESBSampleIntegrationTest {
 
     private ActiveMQServer activeMQServer
             = new ActiveMQServer();

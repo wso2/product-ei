@@ -1,0 +1,33 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="ConRoutingWithContinueAfterFalseProxy"
+       transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="full">
+                <property name="STAGE" value="starting conditional  router"/>
+            </log>
+            <conditionalRouter continueAfter="false">
+                <conditionalRoute breakRoute="false">
+                    <condition>
+                        <!-- url means To address -->
+                        <match type="url" regex=".*SimpleStockQuoteService.*"/>
+                    </condition>
+                    <target sequence="cnd_seq5"/>
+                </conditionalRoute>
+            </conditionalRouter>
+
+            <!--  Rest of the In-sequence from here will not execute -->
+            <log level="custom">
+                <property name="STAGE" value="end conditional  router"/>
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

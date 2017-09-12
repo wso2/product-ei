@@ -1,0 +1,6 @@
+<messageProcessor xmlns="http://ws.apache.org/ns/synapse" class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                  name="processorForTestRetryOnSOAPFaultTrue"
+                  messageStore="storeForTestRetryOnSOAPFaultTrue">
+    <parameter name="max.delivery.attempts">5</parameter>
+    <parameter name="interval">100</parameter>
+</messageProcessor>

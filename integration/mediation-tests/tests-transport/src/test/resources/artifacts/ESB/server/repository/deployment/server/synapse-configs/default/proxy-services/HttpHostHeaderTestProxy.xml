@@ -1,0 +1,28 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="HttpHostHeaderTestProxy" transports="http https">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property name="request_host" expression="$trp:Host"/>
+            </log>
+            <filter source="$trp:Host" regex="www.example.com">
+                <then>
+                    <send>
+                        <endpoint>
+                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                        </endpoint>
+                    </send>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="ERROR" value="At least one of the filters didn't match"/>
+                    </log>
+                    <drop/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence>
+            <header name="To" action="remove"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -22,7 +22,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import static org.testng.Assert.fail;
@@ -30,7 +30,7 @@ import static org.testng.Assert.fail;
 /**
  * Sample 5: Creating SOAP Fault Messages and Changing the Direction of a Message
  */
-public class Sample5TestCase extends ESBIntegrationTest {
+public class Sample5TestCase extends ESBSampleIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {

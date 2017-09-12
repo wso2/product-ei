@@ -31,7 +31,6 @@ public class XsltTransformationFromUrlTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/xslt/xslt_from_url_synapse.xml");
     }
 
 
@@ -40,13 +39,10 @@ public class XsltTransformationFromUrlTestCase extends ESBIntegrationTest {
     public void xsltTransformationFromUrl() throws AxisFault {
         OMElement response;
 
-        response = axis2Client.sendCustomQuoteRequest(
-                getMainSequenceURL(),
-                null,
-                "IBM");
+        response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("xsltInUrlTestProxy"), null, "IBM");
         assertNotNull(response, "Response message null");
-        assertTrue(response.toString().contains("Code"));
-        assertTrue(response.toString().contains("IBM"));
+        assertTrue(response.toString().contains("Code"), "Response does not contain the key word: Code");
+        assertTrue(response.toString().contains("IBM"), "Response does not contain the key word: IBM");
 
     }
 

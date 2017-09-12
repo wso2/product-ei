@@ -39,7 +39,7 @@ public class EnrichIntegrationAddPropertyAsChildInBodyTest extends ESBIntegratio
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/enrich_mediator/synapse.xml");
+        verifyProxyServiceExistence("enrichAddPropertyAsChildInBodyTestProxy");
 
     }
 
@@ -49,7 +49,7 @@ public class EnrichIntegrationAddPropertyAsChildInBodyTest extends ESBIntegratio
         String payload="<m:getQuote xmlns:m=\"http://services.samples\">" +
                        "</m:getQuote>";
         OMElement payloadOM= AXIOMUtil.stringToOM(payload);
-        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichSample3"),null,payloadOM);
+        response=axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enrichAddPropertyAsChildInBodyTestProxy"),null,payloadOM);
         assertNotNull(response,"Response is null");
         assertEquals(response.getFirstElement().getFirstChildWithName
                 (new QName("http://services.samples/xsd", "symbol")).getText(),

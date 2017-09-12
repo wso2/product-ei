@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="esbjava4433"
+     context="/esbjava4433">
+   <resource methods="POST">
+      <inSequence>
+         <payloadFactory media-type="json">
+            <format>$1</format>
+            <args>
+               <arg evaluator="json" expression="$."/>
+            </args>
+         </payloadFactory>
+         <respond/>
+      </inSequence>
+   </resource>
+</api>

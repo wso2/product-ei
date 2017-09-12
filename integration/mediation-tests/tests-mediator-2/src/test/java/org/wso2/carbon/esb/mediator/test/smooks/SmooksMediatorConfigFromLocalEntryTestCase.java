@@ -23,9 +23,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
-
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.MultiMessageReceiver;
 
 import java.io.File;
@@ -37,7 +36,6 @@ import static org.testng.Assert.assertTrue;
 
 public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
     /**
      * Message count is depend on the edi.txt file
      */
@@ -49,16 +47,13 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/vfsTransport/vfs_test_synapse.xml");
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getClass().getResource(COMMON_FILE_LOCATION + File.separator + "axis2.xml").getPath()));
-        super.init();
         addVFSProxy();
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
 })
-    @Test(groups = {"wso2.esb", "local only"}, description = "Testing Smooks configuration from local entry", enabled = false)
+    @Test(groups = {"wso2.esb", "local only"}, description = "Testing Smooks configuration from local entry"
+            , enabled = false)
     public void testSmookConfigFromLocalEntry() throws Exception {
         MultiMessageReceiver multiMessageReceiver = new MultiMessageReceiver(PORT);
         multiMessageReceiver.startServer();
@@ -93,7 +88,10 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
     }
 
     private void addVFSProxy() throws Exception {
-        addProxyService(AXIOMUtil.stringToOM("<proxy xmlns=\"http://ws.apache.org/ns/synapse\" name=\"StockQuoteProxy\" transports=\"vfs\">\n" +
+
+        addProxyService(AXIOMUtil.stringToOM("<proxy xmlns=\"http://ws.apache.org/ns/synapse\" "
+                                             + "name=\"smooksMediatorAtConfigRegTestProxy\" "
+                                             + "transports=\"vfs\">\n" +
                                              "        <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" +
                                              "        <!--CHANGE-->\n" +
                                              "        <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(COMMON_FILE_LOCATION).getPath() + "test" + File.separator + "in" + File.separator + "</parameter>\n" +
@@ -109,11 +107,11 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
                                              "        <parameter name=\"Operation\">urn:placeOrder</parameter>\n" +
                                              "        <target>\n" +
                                              "            <inSequence>\n" +
-                                             "                <smooks config-key=\"smooks-key\">\n" +
+                                             "                <smooks config-key=\"smooksKey\">\n" +
                                              "                    <input type=\"text\"/>\n" +
                                              "                    <output type=\"xml\"/>\n" +
                                              "                </smooks>\n" +
-                                             "                <xslt key=\"transform-xslt-key\"/>\n" +
+                                             "                <xslt key=\"smooksXsltTransform\"/>\n" +
                                              "                <log level=\"full\"/>\n" +
                                              "                <!--<property name=\"ContentType\" value=\"text/xml\" scope=\"axis2-client\"/>-->\n" +
                                              "                <!--<property name=\"messageType\" value=\"text/xml\" scope=\"axis2\"/>-->\n" +
@@ -148,9 +146,6 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
         } finally {
             super.cleanup();
             Thread.sleep(3000);
-            serverConfigurationManager.restoreToLastConfiguration();
-            serverConfigurationManager = null;
-
         }
     }
 }

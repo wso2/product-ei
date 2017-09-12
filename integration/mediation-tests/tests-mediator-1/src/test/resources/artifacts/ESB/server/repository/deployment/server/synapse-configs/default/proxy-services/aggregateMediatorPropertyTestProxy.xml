@@ -1,0 +1,62 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="aggregateMediatorPropertyTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="counter" value="0" scope="operation"/>
+            <iterate xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:m0="http://services.samples" id="iterate1" preservePayload="true" attachPath="//m0:getQuotes" expression="//m0:getQuotes/m0:getQuote" sequential="true">
+                <target>
+                    <sequence>
+
+                        <log level="full">
+
+                            <property name="target1" value="************After 1st Iterate before 2nd Iterate*************"/>
+                        </log>
+                        <iterate id="iterate2" preservePayload="true" attachPath="//m0:getQuote" expression="//m0:getQuotes/m0:getQuote/m0:request">
+                            <target sequence="anon">
+                                <sequence>
+                                    <property name="counter" expression="get-property('operation','counter')+1" scope="operation"/>
+                                    <log level="full">
+                                        <property name="printingCount" expression="get-property('operation','counter')"/>
+                                    </log>
+                                    <payloadFactory>
+                                        <format>
+                                            <m0:getQuote>
+                                                <m0:request>
+                                                    <m0:symbol>WSO2 $1</m0:symbol>
+                                                </m0:request>
+                                            </m0:getQuote>
+                                        </format>
+                                        <args>
+                                            <arg expression="get-property('operation','counter')"/>
+                                        </args>
+                                    </payloadFactory>
+                                    <log level="full" category="DEBUG">
+                                        <property name="target1" value="************after payload factory*************"/>
+                                    </log>
+                                    <send>
+                                        <endpoint>
+                                            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                                        </endpoint>
+                                    </send>
+                                </sequence>
+                            </target>
+                        </iterate>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <aggregate id="iterate2">
+                <completeCondition>
+                    <messageCount min="-1" max="-1"/>
+                </completeCondition>
+                <onComplete xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:m0="http://services.samples" expression="//m0:getQuoteResponse">
+                    <log level="custom">
+                        <property name="messageLog" value="*****Aggregating*****"/>
+                    </log>
+                    <send/>
+                </onComplete>
+            </aggregate>
+        </outSequence>
+    </target>
+</proxy>

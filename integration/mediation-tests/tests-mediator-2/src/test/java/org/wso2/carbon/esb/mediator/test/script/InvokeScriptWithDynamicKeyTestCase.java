@@ -40,7 +40,6 @@ public class InvokeScriptWithDynamicKeyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/config55/synapse.xml");
         uploadResourcesToConfigRegistry();
 
     }
@@ -48,8 +47,9 @@ public class InvokeScriptWithDynamicKeyTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Invoke a script with 'Dynamic' key type.")
     public void testInvokeAScriptWithDynamicKey() throws Exception {
 
-
-        OMElement response = axis2Client.sendCustomQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("scriptMediatorInvokeXSLTWithDynamicKey"), null,
+                "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
@@ -66,8 +66,8 @@ public class InvokeScriptWithDynamicKeyTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        clearUploadedResource();
         super.cleanup();
+        clearUploadedResource();
     }
 
 

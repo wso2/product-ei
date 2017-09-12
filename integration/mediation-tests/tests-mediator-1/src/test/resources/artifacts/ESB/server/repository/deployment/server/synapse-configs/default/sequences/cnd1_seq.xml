@@ -1,0 +1,5 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="cnd1_seq">
+    <log level="custom">
+        <property name="MSG_FLOW" value="Condition (I) Satisfied"/>
+    </log>
+</sequence>

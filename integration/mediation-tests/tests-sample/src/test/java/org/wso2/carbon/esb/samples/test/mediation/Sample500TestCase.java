@@ -22,11 +22,11 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 
 import static org.testng.Assert.assertTrue;
 
-public class Sample500TestCase extends ESBIntegrationTest {
+public class Sample500TestCase extends ESBSampleIntegrationTest {
 
     private String proxyServiceName = "StockQuoteProxy";
 

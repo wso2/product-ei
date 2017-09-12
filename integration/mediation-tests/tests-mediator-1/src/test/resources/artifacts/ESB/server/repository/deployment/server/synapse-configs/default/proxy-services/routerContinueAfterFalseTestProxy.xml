@@ -1,0 +1,27 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="routerContinueAfterFalseTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <router continueAfter="false">
+                <route expression="//m0:getQuote/m0:request" xmlns:m0="http://services.samples">
+                    <target>
+                        <sequence>
+                            <drop />
+                        </sequence>
+                    </target>
+                </route>
+            </router>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

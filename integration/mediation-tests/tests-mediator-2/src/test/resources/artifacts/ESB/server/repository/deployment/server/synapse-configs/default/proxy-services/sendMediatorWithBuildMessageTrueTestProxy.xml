@@ -1,0 +1,13 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="sendMediatorWithBuildMessageTrueTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <send buildmessage="true">
+                <endpoint key ="conf:/endpoints/registry_endpoint.xml"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
