@@ -43,6 +43,7 @@ org.wso2.carbon.security.mgt_
 org.wso2.carbon.sequences.common_
 org.wso2.carbon.sequences_
 org.wso2.carbon.task_
+org.apache.synapse_
 synapse-commons_
 synapse-core_
 synapse-extensions_

@@ -12,6 +12,6 @@
 -*.tenant*
 -*.stratos*
 -*.eventing*
--*transports*
 -org.wso2.carbon.mediation.statistics*
 -*startup*
+-*metrics*

@@ -46,8 +46,8 @@
                         <carbon.zip>
                             ${basedir}/../../../distribution/target/wso2ei-${product.ei.version}.zip
                         </carbon.zip>
-                        <instr.file>${basedir}/src/test/resources/instrumentation.txt</instr.file>
-                        <filters.file>${basedir}/src/test/resources/filters.txt</filters.file>
+                        <instr.file>${basedir}/../coverage-report/instrumentation.txt</instr.file>
+                        <filters.file>${basedir}/../coverage-report/filters.txt</filters.file>
                     </systemProperties>
                     <workingDirectory>${basedir}/target</workingDirectory>
                 </configuration>
