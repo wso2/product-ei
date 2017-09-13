@@ -22,6 +22,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -31,10 +32,9 @@ import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.utils.ServerConstants;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class DefaultRequestContentTypeTestCase extends ESBIntegrationTest {
                                                                      TestUserMode.SUPER_TENANT_ADMIN));
 
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        String confDir = carbonHome + File.separator + "repository" + File.separator + "conf" + File.separator;
+        String confDir = carbonHome + File.separator + "conf" + File.separator;
         File originalConfig = new File(getESBResourceLocation() + File.separator + "synapseconfig" + File.separator +
                 "nhttp_transport" + File.separator + "default_content_type_axis2.xml");
         File destDir = new File(confDir + "axis2" + File.separator);
@@ -73,6 +73,8 @@ public class DefaultRequestContentTypeTestCase extends ESBIntegrationTest {
             HttpUriRequest request = new HttpPut(url);
             DefaultHttpClient client = new DefaultHttpClient();
 
+            ((HttpPut)request).setEntity(new StringEntity("<request/>"));
+
             HttpResponse response = client.execute(request);
             Assert.assertNotNull(response);
             Assert.assertTrue(getResponse(response).toString().contains("WSO2"));
@@ -85,7 +87,7 @@ public class DefaultRequestContentTypeTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void stop() throws Exception {
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        String confDir = carbonHome + File.separator + "repository" + File.separator + "conf" + File.separator;
+        String confDir = carbonHome + File.separator + "conf" + File.separator;
         File configTemp = new File(confDir + "axis2" + File.separator + "default_content_type_axis2.xml");
         FileUtils.deleteQuietly(configTemp);
         cleanup();

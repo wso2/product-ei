@@ -23,26 +23,15 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.File;
-
-public class OCSPCertificateValidationTestCase extends ESBIntegrationTest{
+public class OCSPCertificateValidationTestCase extends ESBIntegrationTest {
 
     private SimpleHttpClient httpClient;
-    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
-        super.init();
-        AutomationContext autoCtx = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
-        serverConfigurationManager = new ServerConfigurationManager(autoCtx);
-        serverConfigurationManager.applyConfiguration(
-                new File(getClass().getResource("/artifacts/ESB/nhttp/transport/axis2.xml").getPath()));
         super.init();
         httpClient = new SimpleHttpClient();
         loadESBConfigurationFromClasspath("/artifacts/ESB/nhttp/transport/certificatevalidation/simple_proxy.xml");
@@ -63,11 +52,6 @@ public class OCSPCertificateValidationTestCase extends ESBIntegrationTest{
 
     @AfterClass(alwaysRun = true)
     private void destroy() throws Exception {
-        try {
-            super.cleanup();
-        } finally {
-            serverConfigurationManager.restoreToLastConfiguration();
-            serverConfigurationManager = null;
-        }
+        super.cleanup();
     }
 }

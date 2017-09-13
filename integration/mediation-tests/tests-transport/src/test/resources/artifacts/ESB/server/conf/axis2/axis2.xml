@@ -277,14 +277,21 @@
 
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
 
+    <transportReceiver name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportListener">
+        <parameter name="transport.tcp.port">8290</parameter>
+        <parameter name="transport.tcp.contentType">application/soap+xml</parameter>
+        <!--parameter name="transport.tcp.contentType">text/xml</parameter-->
+    </transportReceiver>
+
     <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>
 
-    <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
+    <transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">
         <!-- configure any optional POP3/IMAP properties
         check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more details-->
-    <!--</transportReceiver>-->
+    </transportReceiver>
 
-    <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment (e.g. ActiveMQ)
+    <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment
+    (e.g. ActiveMQ)-->
     <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
         	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
@@ -306,7 +313,7 @@
         	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
 		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
-    </transportReceiver>-->
+    </transportReceiver>
 
     <!--Uncomment this and configure as appropriate for JMS transport support with Apache Qpid -->
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
@@ -421,27 +428,50 @@
             <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
     </transportSender>
 
-    <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
+    <!--<transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>-->
 
     <!--Uncomment this local transport to use local transport in mediation flow-->
-    <!--<transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>-->
+    <transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>
 
-   <!-- uncomment this and configure to use connection pools for sending messages>
-     <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
+    <transportSender name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportSender"/>
+
+   <!-- uncomment this and configure to use connection pools for sending messages>-->
+     <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender">
+        <parameter name="myQueueConnectionFactory2" locked="false">
+            <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+            <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61626</parameter>
+            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+            <parameter name="transport.jms.Destination" locked="false">dynamicQueues/StaleConnectionTest</parameter>
+            <parameter name="transport.jms.DestinationType" locked="false">queue</parameter>
+            <parameter name="transport.jms.CacheLevel" locked="false">connection</parameter>
+        </parameter>
+    </transportSender>
 
     <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
 
     <!-- Uncomment and configure the SMTP server information
-    check com.sun.mail.smtp package documentation for descriptions of properties
+    check com.sun.mail.smtp package documentation for descriptions of properties-->
     <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
         <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
         <parameter name="mail.smtp.port">587</parameter>
         <parameter name="mail.smtp.starttls.enable">true</parameter>
         <parameter name="mail.smtp.auth">true</parameter>
-        <parameter name="mail.smtp.user">synapse.demo.0</parameter>
-        <parameter name="mail.smtp.password">mailpassword</parameter>
-        <parameter name="mail.smtp.from">synapse.demo.0@gmail.com</parameter>
-    </transportSender>-->
+        <parameter name="mail.smtp.user">synapse.demo.1</parameter>
+        <parameter name="mail.smtp.password">mailpassword1</parameter>
+        <parameter name="mail.smtp.from">synapse.demo.1@gmail.com</parameter>
+        <parameter name="transport.mail.SMTPBccAddresses">test.automation.dummy.esb@gmail.com</parameter>
+    </transportSender>
+
+    <transportSender name="mailtoWSO2" class="org.apache.axis2.transport.mail.MailTransportSender">
+        <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
+        <parameter name="mail.smtp.port">587</parameter>
+        <parameter name="mail.smtp.starttls.enable">true</parameter>
+        <parameter name="mail.smtp.auth">true</parameter>
+        <parameter name="mail.smtp.user">synapse.demo.1</parameter>
+        <parameter name="mail.smtp.password">mailpassword1</parameter>
+        <parameter name="mail.smtp.from">synapse.demo.1@gmail.com</parameter>
+    </transportSender>
 
     <!--Uncomment this for FIX transport support
     <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>

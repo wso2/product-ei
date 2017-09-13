@@ -29,32 +29,14 @@ import org.wso2.carbon.utils.CarbonUtils;
 
 public class VFSHidePasswordLogESBJAVA3419 extends ESBIntegrationTest {
 
-	private ServerConfigurationManager serverConfigurationManager;
-
 	@BeforeClass(alwaysRun = true)
 	public void init() throws Exception {
-		super.init();
-
-		serverConfigurationManager = new ServerConfigurationManager(
-				new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-		serverConfigurationManager.applyConfiguration(new File(getClass()
-				.getResource(
-						File.separator + "artifacts" + File.separator + "ESB"
-								+ File.separator + "synapseconfig"
-								+ File.separator + "vfsTransport"
-								+ File.separator + "axis2.xml").getPath()));
 		super.init();
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void restoreServerConfiguration() throws Exception {
-		try {
-			super.cleanup();
-		} finally {
-			Thread.sleep(3000);
-			serverConfigurationManager.restoreToLastConfiguration();
-			serverConfigurationManager = null;
-		}
+		super.cleanup();
 	}
 
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
