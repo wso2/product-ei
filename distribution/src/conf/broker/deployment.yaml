@@ -1,0 +1,41 @@
+wso2.securevault:
+  secretRepository:
+    type: org.wso2.carbon.secvault.repository.DefaultSecretRepository
+    parameters:
+      privateKeyAlias: wso2carbon
+      keystoreLocation: ../../resources/security/securevault.jks
+      secretPropertiesFile: ../../conf/broker/secrets.properties
+  masterKeyReader:
+    type: org.wso2.carbon.secvault.reader.DefaultMasterKeyReader
+    parameters:
+      masterKeyReaderFile: ../../conf/broker/master-keys.yaml
+
+# Data Sources Configuration
+wso2.datasources:
+    # datasources
+  dataSources:
+  - name: WSO2_MB_STORE_DB
+    description: The datasource used for message broker
+      # JNDI mapping of a data source
+    jndiConfig:
+        # JNDI name
+        # THIS IS A MANDATORY FIELD
+      name: jdbc/WSO2MBStoreDB
+        # JNDI Reference Flag
+      useJndiReference: true
+      # data source definition
+    definition:
+        # data source type
+        # THIS IS A MANDATORY FIELD
+      type: RDBMS
+        # data source configuration
+      configuration:
+        jdbcUrl: 'jdbc:h2:./database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 50
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
