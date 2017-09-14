@@ -19,11 +19,21 @@
 # Profile creator tool for EI
 #-------------------------------------------------------------------------
 
+PRG="$0"
 
+while [ -h "$PRG" ]; do
+	  ls=`ls -ld "$PRG"`
+	  link=`expr "$ls" : '.*-> \(.*\)$'`
+	  if expr "$link" : '.*/.*' > /dev/null; then
+		 PRG="$link"
+	  else
+		 PRG=`dirname "$PRG"`/"$link"
+	  fi
+done
 
-DIR="$(dirname "${BASH_SOURCE[0]}")"
-PARENTDIR="${PWD%/*}"
-DISTRIBUTION="$(basename "$PARENTDIR")"
+# Get standard environment variables
+DIR=`dirname "$PRG"`
+DISTRIBUTION="wso2ei-@product.version@"
 #get the desired profile
 echo "*************************************************************************************"
 echo "This tool will erase all the files which are not required for the selected profile "
