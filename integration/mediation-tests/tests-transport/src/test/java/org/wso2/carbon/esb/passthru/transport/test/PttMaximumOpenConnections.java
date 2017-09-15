@@ -54,14 +54,7 @@ public class PttMaximumOpenConnections extends ESBIntegrationTest {
                 "ESB" +separator + "synapseconfig" + separator + "MaxOpenConnections" + separator
                          + "passthru-http.properties";
         File propFile = new File(pttFile);
-        serverConfigurationManagerProp.applyConfigurationWithoutRestart(propFile);
-
-        serverConfigurationManagerAxis2 = new ServerConfigurationManager(context);
-        String pttAxis2xml = /*ProductConstant.getResourceLocations(ProductConstant.ESB_SERVER_NAME)*/FrameworkPathUtil.getSystemResourceLocation()  + "artifacts" + separator +
-                "ESB" +separator + "synapseconfig" + separator + "MaxOpenConnections" + separator + "ptt" +
-                             separator + "axis2.xml";
-        File axis2File = new File(pttAxis2xml);
-        serverConfigurationManagerAxis2.applyConfiguration(axis2File);
+        serverConfigurationManagerProp.applyConfiguration(propFile);
 
         super.init();
         maxOpenConnectionClients = new MaximumOpenConnectionsClient[CONCURRENT_CLIENTS];
@@ -86,7 +79,6 @@ public class PttMaximumOpenConnections extends ESBIntegrationTest {
             aliveCount++;
         }
 
-//	System.out.println("COUNT: " + MaximumOpenConnectionsClient.getDeniedRequests());
         assertTrue(MaximumOpenConnectionsClient.getDeniedRequests() >= 1, "(Pass Thru) No Connections Rejected by max_open_connection limit - max_open_connections limit will not be exact.");
     }
 
@@ -122,10 +114,8 @@ public class PttMaximumOpenConnections extends ESBIntegrationTest {
         try {
             super.cleanup();
         } finally {
-            serverConfigurationManagerProp.restoreToLastConfiguration(false);
+            serverConfigurationManagerProp.restoreToLastConfiguration();
             serverConfigurationManagerProp = null;
-            serverConfigurationManagerAxis2.restoreToLastConfiguration();
-            serverConfigurationManagerAxis2 = null;
         }
     }
 }

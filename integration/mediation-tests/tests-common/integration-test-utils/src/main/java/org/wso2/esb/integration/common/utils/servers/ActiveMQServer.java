@@ -34,62 +34,19 @@ import static org.testng.Assert.assertTrue;
 public class ActiveMQServer extends ESBIntegrationTest {
 
     private JMSBrokerController activeMqBroker;
-    private ServerConfigurationManager serverManager = null;
-
-    private final String ACTIVEMQ_BROKER = "activemq-broker-5.9.1.jar";
-    private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
-    private final String GERONIMO_JMS = "geronimo-jms_1.1_spec-1.1.1.jar";
-    private final String HAWTBUF = "hawtbuf-1.9.jar";
-    private final String ACTIVEMQ_CLIENT = "activemq-client-5.9.1.jar";
 
     public void startJMSBrokerAndConfigureESB() throws Exception {
         context = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
-        serverManager = new ServerConfigurationManager(context);
 
         activeMqBroker = new JMSBrokerController("localhost", getJMSBrokerConfiguration());
         if (!JMSBrokerController.isBrokerStarted()) {
             Assert.assertTrue(activeMqBroker.start(), "JMS Broker(ActiveMQ) stating failed");
         }
-
-        //coppingAxisServiceClient  dependency jms jar files to component/lib
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB" + File.separator + "jar" + File.separator + ACTIVEMQ_BROKER));
-
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + GERONIMO_J2EE_MANAGEMENT));
-
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + GERONIMO_JMS));
-
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + HAWTBUF));
-
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + ACTIVEMQ_CLIENT));
-
-        //enabling jms transport with ActiveMQ
-        serverManager.applyConfiguration(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                                                                                           + File.separator + "jms" + File.separator + "transport"
-                                                                                                                           + File.separator + "axis2config" + File.separator
-                                                                                                                           + "activemq" + File.separator + "axis2.xml"));
     }
 
     public void stopJMSBrokerRevertESBConfiguration() throws Exception {
-        try {
-            //reverting the changes done to esb sever
-            Thread.sleep(10000); //let server to clear the artifact undeployment
-            if (serverManager != null) {
-                serverManager.removeFromComponentLib(ACTIVEMQ_BROKER);
-                serverManager.removeFromComponentLib(GERONIMO_J2EE_MANAGEMENT);
-                serverManager.removeFromComponentLib(GERONIMO_JMS);
-                serverManager.removeFromComponentLib(HAWTBUF);
-                serverManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
-                serverManager.restoreToLastConfiguration();
-            }
-
-        } finally {
-            if (activeMqBroker != null) {
-               assertTrue(activeMqBroker.stop(), "JMS Broker(ActiveMQ) Stopping failed");
-            }
+        if (activeMqBroker != null) {
+            assertTrue(activeMqBroker.stop(), "JMS Broker(ActiveMQ) Stopping failed");
         }
     }
 

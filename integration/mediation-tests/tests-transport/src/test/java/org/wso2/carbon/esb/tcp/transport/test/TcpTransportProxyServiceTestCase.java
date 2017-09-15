@@ -33,18 +33,11 @@ import org.wso2.carbon.esb.tcp.transport.test.util.TcpClient;
 import java.io.File;
 
 public class TcpTransportProxyServiceTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        //parsing the super admin context to restart the server
-        serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-                                                               + "tcp" + File.separator + "transport" + File.separator + "axis2.xml"));
-        super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/tcp/transport/tcpProxy.xml");
-
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
@@ -66,6 +59,5 @@ public class TcpTransportProxyServiceTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        serverConfigurationManager.restoreToLastConfiguration();
     }
 }

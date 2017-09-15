@@ -34,20 +34,8 @@ import java.io.File;
 public class HL7InboundPreprocessorTest extends ESBIntegrationTest {
     private LogViewerClient logViewerClient = null;
 
-    private final String CLASS_JAR="sample-hl7-preprocessor-1.0-SNAPSHOT.jar";
-    private final String JAR_LOCATION= "/artifacts/ESB/hl7/inbound/transport";
-
-    private ServerConfigurationManager serverConfigurationManager;
-
-
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init();
-        serverConfigurationManager=new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR).toURI()));
-        serverConfigurationManager.restartGracefully();
-
         super.init();
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
@@ -75,9 +63,6 @@ public class HL7InboundPreprocessorTest extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        serverConfigurationManager.removeFromComponentLib(CLASS_JAR);
-        serverConfigurationManager.restartGracefully();
-        serverConfigurationManager=null;
     }
 
     private OMElement addEndpoint0() throws Exception {

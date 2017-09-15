@@ -21,7 +21,7 @@
         <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
     <proxy xmlns="http://ws.apache.org/ns/synapse" name="SecondProxy"
-           transports="https http" startOnLoad="true" trace="disable">
+           transports="local" startOnLoad="true" trace="disable">
         <target>
             <endpoint name="ep2">
                 <address uri="local://services/StockQuoteProxy"/>
@@ -41,8 +41,7 @@
         </target>
         <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
-    <proxy xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteProxy"
-           startOnLoad="true">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteProxy" transports="local" startOnLoad="true">
         <target>
             <endpoint name="ep3">
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
