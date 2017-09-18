@@ -24,36 +24,15 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
  * 
  */
 public class HL7TestCase extends ESBIntegrationTest {
-	private ServerConfigurationManager serverConfigurationManager;
-//	private FeatureManagementAdminServiceClient featureClient;
-
-	private static String featureRepoLocation = "C:\\Downloads\\p2-repo\\p2-repo"; // fix
-																				   // this
-	private static String featureRepoName = "carbon 4.1.3 repo";
-	private static String hl7Vesrion = "4.1.3";
-	private static String hl7FeatureID = "org.wso2.carbon.transports.hl7";
 
 	@BeforeClass(alwaysRun = true)
 	public void init() throws Exception {
 		super.init();
-		serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-		serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation()  +File.separator +"hl7Transport" + File.separator +"axis2.xml"));
-		super.init();
-		/*featureClient = new FeatureManagementAdminServiceClient(getSessionCookie(), contextUrls.getBackEndUrl());
-		featureClient.addRepository(featureRepoLocation, featureRepoName);
-		featureClient.installFeature(hl7FeatureID, hl7Vesrion);*/
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void restoreServerConfiguration() throws Exception {
-		try {
-			super.cleanup();
-		} finally {
-			Thread.sleep(3000);
-			serverConfigurationManager.restoreToLastConfiguration();
-			serverConfigurationManager = null;
-		}
-
+		super.cleanup();
 	}
 
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })

@@ -47,7 +47,7 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 
 	@BeforeClass(alwaysRun = true)
 	protected void init() throws Exception {
-		activeMQServer.startJMSBrokerAndConfigureESB();
+		activeMQServer.startJMSBroker();
 		super.init();
 		serverConfigurationManager =
 				new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
@@ -110,7 +110,7 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 	@AfterClass(alwaysRun = true)
 	public void destroy() throws Exception {
 		super.cleanup();
-		activeMQServer.stopJMSBrokerRevertESBConfiguration();
+		activeMQServer.stopJMSBroker();
 	}
 
 	private OMElement addEndpoint1() throws Exception {

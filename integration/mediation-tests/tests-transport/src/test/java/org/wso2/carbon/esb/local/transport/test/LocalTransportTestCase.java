@@ -36,32 +36,9 @@ import static org.testng.Assert.assertEquals;
  */
 public class LocalTransportTestCase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager configurationManagerAxis2;
-    private ServerConfigurationManager configurationManagerCarbon;
-
     @BeforeClass(alwaysRun = true)
     public void deployProxyServices() throws Exception {
         super.init();
-
-        configurationManagerAxis2 =
-                new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        configurationManagerCarbon =
-                new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-
-        File customAxisConfigAxis2 = new File(getESBResourceLocation() + File.separator +
-                "local" + File.separator + "axis2.xml");
-
-        // enable non-blocking transport axis2 configuration
-        configurationManagerAxis2.applyConfigurationWithoutRestart(customAxisConfigAxis2);
-
-        File customAxisConfigCarbon = new File(getESBResourceLocation() + File.separator +
-                "local" + File.separator + "carbon.xml");
-
-        // restart the server with the changes done to carbon.xml & axis2.xml
-        configurationManagerCarbon.applyConfiguration(customAxisConfigCarbon);
-
-        super.init();
-
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator +
                 "ESB" + File.separator + "local" + File.separator + "local-transport.xml");
 
@@ -70,8 +47,6 @@ public class LocalTransportTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void unDeployProxyServices() throws Exception {
         super.cleanup();
-        configurationManagerAxis2.restoreToLastConfiguration(false);
-        configurationManagerCarbon.restoreToLastConfiguration();
     }
 
     @Test(groups = {"wso2.esb"}, description = "testing local transport scenario")

@@ -44,19 +44,9 @@ import static org.testng.Assert.assertTrue;
 public class SendMailWithSecondaryAccountThroughESBTestCase extends ESBIntegrationTest {
 
 
-    private ServerConfigurationManager serverConfigurationManager;
-
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(context);
-
-        serverConfigurationManager.applyConfiguration(
-                new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" +
-                         File.separator + "ESB" + File.separator + "mailTransport" + File.separator +
-                         "mailTransportSender" + File.separator + "secondaryAccount" + File.separator + "axis2.xml"));
-
-        //Need to restart the server after restart with configuration changes.
         super.reloadSessionCookie();
 
         loadESBConfigurationFromClasspath(
@@ -90,13 +80,7 @@ public class SendMailWithSecondaryAccountThroughESBTestCase extends ESBIntegrati
 
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {
-        try {
-            super.cleanup();
-        } finally {
-            if (serverConfigurationManager != null) {
-                serverConfigurationManager.restoreToLastConfiguration();
-            }
-        }
+        super.cleanup();
     }
 
 }

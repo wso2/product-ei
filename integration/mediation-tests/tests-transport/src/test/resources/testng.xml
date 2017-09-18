@@ -17,6 +17,7 @@
 
     <test name="passthru-Transport-Test" preserve-order="true" verbose="2">
         <classes>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.CheckAuthHeaderOrderTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ContentTypeCharsetTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA1897HttpHeadMethodTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA1994SOAPFormatSwitchingTestcase"/>
@@ -70,30 +71,6 @@
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTestCase"/>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundDispatchTestCase"/>
-        </classes>
-    </test>
-
-    <test name="nhttp-Transport-Test" preserve-order="true" verbose="2">
-        <classes>
-            <!--The following test cases would change the server configuration when starting the test case,-->
-            <!--and restore the same once it's done-->
-            <!--If your test case needs to explicitly change the server configuration, add it here-->
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.DefaultRequestContentTypeTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.ResponseAfterNttpEnabledTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.NhttpMaximumOpenConnections"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.ConfiguringNhttpAccessLogLocationTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.ContentTypeCharsetTestCase"/>
-
-            <!--The SetNhttpAxis2Transport class would set the nhttp axis2 transport and restart the ESB-->
-            <!--The test cases that follow it would not change any server configurations-->
-            <!--RemoveNhttpAxis2Transport would restore the ESBs default transport-->
-            <!--If your test case doesn't need to change the server configuration, add it here-->
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.MessageWithoutContentTypeTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.OCSPCertificateValidationTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.RetrieveBackendWsdlTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.SetHostHttpHeaderTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.CheckAuthHeaderOrderTestCase"/>
-            <class name="org.wso2.carbon.esb.nhttp.transport.test.MultipartFormdataMIMEBoundaryTestCase"/>
         </classes>
     </test>
 
@@ -178,5 +155,24 @@
             <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
         </packages>
     </test>
+
+    <test name="nhttp-Transport-Test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.NhttpBaseTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.DefaultRequestContentTypeTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.ResponseAfterNttpEnabledTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.NhttpMaximumOpenConnections"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.ConfiguringNhttpAccessLogLocationTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.ContentTypeCharsetTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.MessageWithoutContentTypeTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.OCSPCertificateValidationTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.RetrieveBackendWsdlTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.SetHostHttpHeaderTestCase"/>
+            <class name="org.wso2.carbon.esb.nhttp.transport.test.MultipartFormdataMIMEBoundaryTestCase"/>
+        </classes>
+    </test>
+
+    <!-- Tests should not be added beyond this point since all those will run with the nhttp transport enabled
+    unlike the default axis2.xml-->
 </suite>
 

@@ -52,25 +52,31 @@ public class ActiveMQServer extends ESBIntegrationTest {
         }
 
         //coppingAxisServiceClient  dependency jms jar files to component/lib
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB" + File.separator + "jar" + File.separator + ACTIVEMQ_BROKER));
+        serverManager.copyToComponentLib(new File(
+                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "jar" + File.separator + ACTIVEMQ_BROKER));
 
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + GERONIMO_J2EE_MANAGEMENT));
+        serverManager.copyToComponentLib(new File(
+                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "jar" + File.separator + GERONIMO_J2EE_MANAGEMENT));
 
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + GERONIMO_JMS));
+        serverManager.copyToComponentLib(new File(
+                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "jar" + File.separator + GERONIMO_JMS));
 
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + HAWTBUF));
+        serverManager.copyToComponentLib(new File(
+                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "jar" + File.separator + HAWTBUF));
 
-        serverManager.copyToComponentLib(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                  + File.separator + "jar" + File.separator + ACTIVEMQ_CLIENT));
+        serverManager.copyToComponentLib(new File(
+                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "jar" + File.separator + ACTIVEMQ_CLIENT));
 
         //enabling jms transport with ActiveMQ
-        serverManager.applyConfiguration(new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                                                                                                                           + File.separator + "jms" + File.separator + "transport"
-                                                                                                                           + File.separator + "axis2config" + File.separator
-                                                                                                                           + "activemq" + File.separator + "axis2.xml"));
+        serverManager.applyConfiguration(new File(
+                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "jms" + File.separator + "transport" + File.separator + "axis2config" + File.separator
+                + "activemq" + File.separator + "axis2.xml"));
     }
 
     public void stopJMSBrokerRevertESBConfiguration() throws Exception {
@@ -85,11 +91,25 @@ public class ActiveMQServer extends ESBIntegrationTest {
                 serverManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
                 serverManager.restoreToLastConfiguration();
             }
-
         } finally {
             if (activeMqBroker != null) {
-               assertTrue(activeMqBroker.stop(), "JMS Broker(ActiveMQ) Stopping failed");
+                assertTrue(activeMqBroker.stop(), "JMS Broker(ActiveMQ) Stopping failed");
             }
+        }
+    }
+
+    public void startJMSBroker() throws Exception {
+        context = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
+
+        activeMqBroker = new JMSBrokerController("localhost", getJMSBrokerConfiguration());
+        if (!JMSBrokerController.isBrokerStarted()) {
+            Assert.assertTrue(activeMqBroker.start(), "JMS Broker(ActiveMQ) stating failed");
+        }
+    }
+
+    public void stopJMSBroker() throws Exception {
+        if (activeMqBroker != null) {
+            assertTrue(activeMqBroker.stop(), "JMS Broker(ActiveMQ) Stopping failed");
         }
     }
 

@@ -47,7 +47,7 @@ public class ESBJAVA5094SetOperationContextWithInboundEndpointTestCase extends E
 
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
-        activeMQServer.startJMSBrokerAndConfigureESB();
+        activeMQServer.startJMSBroker();
         super.init();
         sqlDataSourceUtilLookup = new SqlDataSourceUtil(getSessionCookie(), contextUrls.getBackEndUrl());
 
@@ -135,7 +135,7 @@ public class ESBJAVA5094SetOperationContextWithInboundEndpointTestCase extends E
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBrokerRevertESBConfiguration();
+        activeMQServer.stopJMSBroker();
     }
 
     /**
