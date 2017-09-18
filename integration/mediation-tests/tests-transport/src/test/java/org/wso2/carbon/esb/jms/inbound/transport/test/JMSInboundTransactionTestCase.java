@@ -44,7 +44,7 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 	@BeforeClass(alwaysRun = true)
 	protected void init() throws Exception {
 
-		activeMQServer.startJMSBrokerAndConfigureESB();
+		activeMQServer.startJMSBroker();
 		super.init();
 
 		OMElement synapse =
@@ -139,7 +139,7 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 	public void destroy() throws Exception {
 		super.cleanup();
 		Thread.sleep(3000);
-		activeMQServer.stopJMSBrokerRevertESBConfiguration();
+		activeMQServer.stopJMSBroker();
 
 	}
 

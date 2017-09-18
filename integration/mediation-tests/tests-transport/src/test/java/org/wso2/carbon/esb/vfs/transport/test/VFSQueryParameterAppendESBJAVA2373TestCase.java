@@ -37,29 +37,17 @@ import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import java.io.File;
 
 public class VFSQueryParameterAppendESBJAVA2373TestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-
-        serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverConfigurationManager.applyConfiguration(new File(getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "vfsTransport" + File.separator + "axis2.xml").getPath()));
-        super.init();
-
         File outfolder = new File(getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "vfsTransport" + File.separator).getPath() + "test" + File.separator + "out" + File.separator);
         outfolder.mkdirs();
     }
 
     @AfterClass(alwaysRun = true)
     public void restoreServerConfiguration() throws Exception {
-        try {
-            super.cleanup();
-        } finally {
-            Thread.sleep(3000);
-            serverConfigurationManager.restoreToLastConfiguration();
-            serverConfigurationManager = null;
-        }
+        super.cleanup();
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})

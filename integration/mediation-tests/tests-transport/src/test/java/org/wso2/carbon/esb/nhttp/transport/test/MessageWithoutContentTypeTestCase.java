@@ -28,16 +28,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
-import org.wso2.carbon.base.CarbonBaseUtils;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
-
-import static java.io.File.separator;
 
 /**
  * To ensure that the body of the message is not get dropped when,
@@ -48,15 +42,9 @@ import static java.io.File.separator;
 public class MessageWithoutContentTypeTestCase extends ESBIntegrationTest {
 
     private static final Log log = LogFactory.getLog(MessageWithoutContentTypeTestCase.class);
-    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
-        super.init();
-        AutomationContext autoCtx = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
-        serverConfigurationManager = new ServerConfigurationManager(autoCtx);
-        serverConfigurationManager.applyConfiguration(
-                new File(getClass().getResource("/artifacts/ESB/nhttp/transport/axis2.xml").getPath()));
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/messagewithoutcontent/synapse.xml");
     }
@@ -111,11 +99,6 @@ public class MessageWithoutContentTypeTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-        try {
-            super.cleanup();
-        } finally {
-            serverConfigurationManager.restoreToLastConfiguration();
-            serverConfigurationManager = null;
-        }
+        super.cleanup();
     }
 }

@@ -24,27 +24,17 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ContentTypeCharsetTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        serverManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverManager.applyConfiguration(new File(getClass().getResource
-                ("/artifacts/ESB/nhttp/transport/contenttypecharset/axis2.xml").getPath()));
-        super.init();
-
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/nhttp_transport"
                                           + "/content_type_charset_synapse.xml");
     }
@@ -75,13 +65,6 @@ public class ContentTypeCharsetTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void stop() throws Exception {
-        try {
-            cleanup();
-        } finally {
-            Thread.sleep(3000);
-            serverManager.restoreToLastConfiguration();
-            serverManager=null;
-        }
-
+        cleanup();
     }
 }

@@ -53,9 +53,6 @@ public class POXOverServletTransportTestCase extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-                                                               + "synapseconfig" + File.separator + "servletTransport" + File.separator + "pox_servlet_transport_axis2.xml"));
-        super.init();
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
                                           + File.separator + "synapseconfig" + File.separator + "servletTransport" + File.separator + "soap_2_pox.xml");
         httpServer = new SimpleHttpServer(8098, new Properties());
@@ -87,12 +84,7 @@ public class POXOverServletTransportTestCase extends ESBIntegrationTest {
         } catch (IOException e) {
             log.warn("Error while shutting down the HTTP server", e);
         }
-        try {
-            super.cleanup();
-        } finally {
-            Thread.sleep(3000);
-            serverConfigurationManager.restoreToLastConfiguration();
-        }
+        super.cleanup();
 
 
     }

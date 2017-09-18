@@ -33,26 +33,15 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import java.io.File;
 
 public class GenericInboundTransportTestCase extends ESBIntegrationTest {
-	private LogViewerClient logViewerClient = null;
-    //TODO: Add this jar to correct location
-	private final String CLASS_JAR = "org.wso2.carbon.inbound.endpoint.test-1.0.jar";
-	private final String JAR_LOCATION = "/artifacts/ESB/jar";
-	private InboundAdminClient inboundAdminClient;
-	private ServerConfigurationManager serverConfigurationManager;
+
+    private LogViewerClient logViewerClient;
 
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 
 		init();
-		serverConfigurationManager = new ServerConfigurationManager(context);
-		serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator +
-																					  CLASS_JAR).toURI()));
-		OMElement synapse =
-				esbUtils.loadResource("/artifacts/ESB/generic/inbound/transport/generic_inbound_transport_config.xml");
-		updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
-		serverConfigurationManager.restartGracefully();
-
-		init();
+		loadESBConfigurationFromClasspath(
+				"/artifacts/ESB/generic/inbound/transport/generic_inbound_transport_config.xml");
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
 	}
@@ -118,10 +107,6 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 	@AfterClass(alwaysRun = true)
 	public void destroy() throws Exception {
 		super.cleanup();
-		serverConfigurationManager.removeFromComponentLib(CLASS_JAR);
-		serverConfigurationManager.restartGracefully();
-
-		serverConfigurationManager = null;
 	}
 
 	private OMElement addEndpoint1() throws Exception {
