@@ -53,6 +53,16 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
     private static final String PASSWORD_FILE = "password-tmp";
     private static final String SYNAPSE_CONFIG_FILE = "JMSSecureVaultTestProxy.xml";
     private static final String PROXY_NAME = "JMSSecureVaultTestProxy";
+    private static final String JAR_DIR = "/artifacts/ESB/jar/";
+
+    private static final String ACTIVEMQ_BROKER = "activemq-broker-5.9.1.jar";
+    private static final String ACTIVEMQ_CLIENT = "activemq-client-5.9.1.jar";
+    private static final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
+    private static final String GERONIMO_JMS = "geronimo-jms_1.1_spec-1.1.1.jar";
+    private static final String HAWTBUF = "hawtbuf-1.9.jar";
+    private static final String ACTIVEMQ_KAHADB_STORE = "activemq-kahadb-store-5.9.1.jar";
+    private static final String SLF4J_API = "slf4j-api-1.7.13.jar";
+    private static final String ACTIVEIO_CORE = "activeio-core-3.1.4.jar";
 
     /**
      * The embedded broker instance used for the test.
@@ -103,6 +113,21 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
         targetFile = new File(targetFileLocation);
         serverConfigurationManager.applyConfigurationWithoutRestart(srcFile, targetFile, false);
 
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + ACTIVEMQ_BROKER)
+                .getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + ACTIVEMQ_CLIENT)
+                .getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR
+                + GERONIMO_J2EE_MANAGEMENT).getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + GERONIMO_JMS)
+                .getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + HAWTBUF).getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + ACTIVEMQ_KAHADB_STORE)
+                .getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + SLF4J_API).getPath()));
+        serverConfigurationManager.copyToComponentLib(new File(getClass().getResource(JAR_DIR + ACTIVEIO_CORE)
+                .getPath()));
+
         serverConfigurationManager.restartGracefully();
         super.init();
         loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File.separator +
@@ -146,6 +171,14 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
             super.cleanup();
             activeMQBroker.stop();
         } finally {
+            serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_BROKER);
+            serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
+            serverConfigurationManager.removeFromComponentLib(GERONIMO_J2EE_MANAGEMENT);
+            serverConfigurationManager.removeFromComponentLib(GERONIMO_JMS);
+            serverConfigurationManager.removeFromComponentLib(HAWTBUF);
+            serverConfigurationManager.removeFromComponentLib(ACTIVEMQ_KAHADB_STORE);
+            serverConfigurationManager.removeFromComponentLib(SLF4J_API);
+            serverConfigurationManager.removeFromComponentLib(ACTIVEIO_CORE);
             serverConfigurationManager.restoreToLastConfiguration();
             serverConfigurationManager = null;
         }

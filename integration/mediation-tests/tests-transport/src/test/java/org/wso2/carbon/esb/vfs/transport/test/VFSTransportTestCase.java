@@ -45,6 +45,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class VFSTransportTestCase extends ESBIntegrationTest {
 
+    private ServerConfigurationManager serverConfigurationManager;
     private String pathToVfsDir;
 
     @BeforeClass(alwaysRun = true)
@@ -53,6 +54,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         pathToVfsDir = getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" +
                                               File.separator + "synapseconfig" + File.separator +
                                               "vfsTransport" + File.separator).getPath();
+
+        serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
+        serverConfigurationManager.applyConfiguration(new File(pathToVfsDir + File.separator + "axis2.xml"));
+        super.init();
 
         File rootFolder = new File(pathToVfsDir + "test" + File.separator);
         File outFolder = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator);
@@ -74,7 +79,13 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void restoreServerConfiguration() throws Exception {
-        super.cleanup();
+        try {
+            super.cleanup();
+        } finally {
+            Thread.sleep(3000);
+            serverConfigurationManager.restoreToLastConfiguration();
+            serverConfigurationManager = null;
+        }
     }
 
     @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE }) @Test(groups = {

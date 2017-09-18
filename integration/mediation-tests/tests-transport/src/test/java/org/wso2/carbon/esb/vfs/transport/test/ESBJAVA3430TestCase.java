@@ -25,6 +25,7 @@ public class ESBJAVA3430TestCase extends ESBIntegrationTest {
 	private String FTPPassword;
 	private File FTPFolder;
 	private File inputFolder;
+	private ServerConfigurationManager serverConfigurationManager;
 	private LogViewerClient logViewerClient;
 	private String pathToFtpDir;
 
@@ -66,12 +67,23 @@ public class ESBJAVA3430TestCase extends ESBIntegrationTest {
 		ftpServerManager.startFtpServer();
 
 		super.init();
+		// replace the axis2.xml enabled vfs transfer and restart the ESB server
+		// gracefully
+		serverConfigurationManager = new ServerConfigurationManager(context);
+		serverConfigurationManager.applyConfiguration(new File(getClass()
+				.getResource(
+						File.separator + "artifacts" + File.separator + "ESB"
+								+ File.separator + "synapseconfig"
+								+ File.separator + "vfsTransport"
+								+ File.separator + "axis2.xml").getPath()));
+		super.init();
 		loadESBConfigurationFromClasspath(File.separator + "artifacts"
 				+ File.separator + "ESB" + File.separator + "synapseconfig"
 				+ File.separator + "vfsTransport" + File.separator
 				+ "vfs_null_check.xml");
 
-		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
+				getSessionCookie());
 
 	}
 
@@ -80,8 +92,11 @@ public class ESBJAVA3430TestCase extends ESBIntegrationTest {
 		try {
 			super.cleanup();
 		} finally {
+			Thread.sleep(3000);
 			ftpServerManager.stop();
 			log.info("FTP Server stopped successfully");
+			serverConfigurationManager.restoreToLastConfiguration();
+
 		}
 
 	}

@@ -22,8 +22,13 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.automation.engine.context.AutomationContext;
+import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
+
+import java.io.File;
 
 import static org.testng.Assert.assertTrue;
 
@@ -32,9 +37,15 @@ import static org.testng.Assert.assertTrue;
  * be set both with port or without port.
  */
 public class SetHostHttpHeaderTestCase extends ESBIntegrationTest {
+    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+        super.init();
+        AutomationContext autoCtx = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
+        serverConfigurationManager = new ServerConfigurationManager(autoCtx);
+        serverConfigurationManager.applyConfiguration(
+                new File(getClass().getResource("/artifacts/ESB/nhttp/transport/axis2.xml").getPath()));
         super.init();
     }
 
@@ -64,7 +75,12 @@ public class SetHostHttpHeaderTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-        super.cleanup();
+        try {
+            super.cleanup();
+        } finally {
+            serverConfigurationManager.restoreToLastConfiguration(true);
+            serverConfigurationManager = null;
+        }
     }
 }
 
