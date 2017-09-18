@@ -23,8 +23,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.automation.engine.context.AutomationContext;
+import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.test.utils.http.client.HttpClientUtil;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+
+import java.io.File;
 
 
 public class RetrieveBackendWsdlTestCase extends ESBIntegrationTest {
@@ -32,10 +37,16 @@ public class RetrieveBackendWsdlTestCase extends ESBIntegrationTest {
 
     private HttpClientUtil httpClientUtil;
     private String backendWSDLUrl;
+    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
 
+        super.init();
+        AutomationContext autoCtx = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
+        serverConfigurationManager = new ServerConfigurationManager(autoCtx);
+        serverConfigurationManager.applyConfiguration(
+                new File(getClass().getResource("/artifacts/ESB/nhttp/transport/axis2.xml").getPath()));
         super.init();
         httpClientUtil = new HttpClientUtil();
         backendWSDLUrl=getProxyServiceURLHttp("retrieveBackendServiceTestProxy")  +"?wsdl";
@@ -60,6 +71,13 @@ public class RetrieveBackendWsdlTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void cleanup() throws Exception {
-        super.cleanup();
+        try {
+            super.cleanup();
+            httpClientUtil = null;
+            backendWSDLUrl = null;
+        } finally {
+            serverConfigurationManager.restoreToLastConfiguration();
+            serverConfigurationManager = null;
+        }
     }
 }

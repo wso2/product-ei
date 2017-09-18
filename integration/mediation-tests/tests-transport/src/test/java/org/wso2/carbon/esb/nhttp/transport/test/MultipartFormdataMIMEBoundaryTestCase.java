@@ -35,7 +35,7 @@ import java.io.File;
  * when converting JSON payload to multipart/form-data
  * (https://github.com/wso2/product-ei/issues/780)
  */
-public class MultipartFormdataMIMEBoundaryTestCase extends ESBIntegrationTest {
+public class MultipartFormdataMIMEBoundaryTestCase extends ESBIntegrationTest  {
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {

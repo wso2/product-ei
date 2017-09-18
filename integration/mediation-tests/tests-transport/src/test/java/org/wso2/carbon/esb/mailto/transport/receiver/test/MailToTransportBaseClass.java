@@ -23,6 +23,10 @@ import org.testng.annotations.BeforeTest;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.esb.integration.common.utils.MailToTransportUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
+
+import java.io.File;
 
 /**
  * This class is for replace axis2.xml to enable mail transport and restart after that to apply
@@ -30,14 +34,24 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
  */
 public class MailToTransportBaseClass extends ESBIntegrationTest {
 
+    private ServerConfigurationManager serverConfigurationManager;
+
     @BeforeTest(alwaysRun = true)
     public void setUp() throws Exception {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
+        serverConfigurationManager = new ServerConfigurationManager(context);
+        serverConfigurationManager.applyConfiguration(
+                new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" +
+                         File.separator + "ESB" + File.separator + "mailTransport" + File.separator +
+                         "mailTransportReceiver" + File.separator + "axis2.xml"));
         MailToTransportUtil.readXMLforEmailCredentials();
 
     }
 
     @AfterTest(alwaysRun = true)
     public void cleanUp() throws Exception {
+        if (serverConfigurationManager != null) {
+            serverConfigurationManager.restoreToLastConfiguration();
+        }
     }
 }

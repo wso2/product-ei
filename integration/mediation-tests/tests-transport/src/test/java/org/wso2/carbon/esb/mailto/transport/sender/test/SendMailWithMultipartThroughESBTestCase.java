@@ -43,9 +43,19 @@ import static org.testng.Assert.assertTrue;
  */
 public class SendMailWithMultipartThroughESBTestCase extends ESBIntegrationTest {
 
+    private ServerConfigurationManager serverConfigurationManager;
+
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
         super.init();
+        serverConfigurationManager = new ServerConfigurationManager(context);
+
+        serverConfigurationManager.applyConfiguration(
+                new File(TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" +
+                         File.separator + "ESB" + File.separator + "mailTransport" + File.separator +
+                         "mailTransportSender" + File.separator + "multipart" + File.separator + "axis2.xml"));
+
+        //Need to restart the server after restart with configuration changes.
         super.reloadSessionCookie();
 
         loadESBConfigurationFromClasspath(
@@ -79,6 +89,12 @@ public class SendMailWithMultipartThroughESBTestCase extends ESBIntegrationTest 
 
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {
-        super.cleanup();
+        try {
+            super.cleanup();
+        } finally {
+            if (serverConfigurationManager != null) {
+                serverConfigurationManager.restoreToLastConfiguration();
+            }
+        }
     }
 }
