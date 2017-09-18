@@ -29,6 +29,7 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.servers.WireMonitorServer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,82 +47,54 @@ import java.util.Properties;
  * character encoding.
  */
 public class ESBJAVA4940CharacterEncodingRemovalTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
-    private LogViewerClient logViewer;
 
     @BeforeClass
     public void init() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(
-                new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        // Apply nhttp configuration
-        serverConfigurationManager.applyConfigurationWithoutRestart(
-                Paths.get(getESBResourceLocation(), "nhttp", "transport", "ESBJAVA4940", "axis2.xml").toFile());
-
-        // Enable wire logs
-        String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        File log4jProperties = Paths.get(carbonHome, "conf", "log4j.properties").toFile();
-        applyProperty(log4jProperties, "log4j.logger.org.apache.synapse.transport.http.wire", "DEBUG");
-        serverConfigurationManager.restartGracefully();
-        super.init();
-
         loadESBConfigurationFromClasspath("/artifacts/ESB/nhttp/transport/ESBJAVA4940/synapseConfig.xml");
-
-        logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
-
-    @Test(groups = "wso2.esb",
-          description = "Test charset encoding removal when SetEncoding is true",
-          enabled = true)
+    @Test(groups = "wso2.esb", description = "Test charset encoding removal when SetEncoding is true")
     public void testRemoveCharsetSetEncodingPropertyTrue() throws Exception {
-        Assert.assertTrue(isCharsetEncodingPresent(getProxyServiceURLHttp("ESBJAVA4940SetEncodingTrue")),
-                "Charset Encoding is not present in the request sent");
+        Assert.assertTrue(isCharsetEncodingPresent("ESBJAVA4940SetEncodingTrue", 8995),
+                          "Charset Encoding is not present in the request sent");
+
     }
 
-    @Test(groups = "wso2.esb",
-          description = "Test charset encoding removal when SetEncoding is false",
-          enabled = true,
-          dependsOnMethods = "testRemoveCharsetSetEncodingPropertyTrue")
+    @Test(groups = "wso2.esb", description = "Test charset encoding removal when SetEncoding is false")
     public void testRemoveCharsetSetEncodingPropertyFalse() throws Exception {
-        Assert.assertFalse(isCharsetEncodingPresent("ESBJAVA4940SetEncodingFalse"),
-                "Charset Encoding is present in the request sent");
+        Assert.assertFalse(isCharsetEncodingPresent("ESBJAVA4940SetEncodingFalse", 8996),
+                           "Charset Encoding is present in the request sent");
     }
 
-    private boolean isCharsetEncodingPresent(String proxyURL) throws Exception {
-        logViewer.clearLogs();
+    /**
+     * Sends a request to the wire monitor server via the given proxy service URL and checks if transport headers
+     * contain the value 'charset=UTF-8'.
+     *
+     * @param proxyURL         the proxy service to send the request
+     * @param portOfWireServer port on which the wire server should be started
+     * @return true if the request received byt the wire monitor contains "charset=UTF-8"
+     * @throws Exception if an error occurs while sending the request
+     */
+    private boolean isCharsetEncodingPresent(String proxyURL, int portOfWireServer) throws Exception {
+
+        //Start wire monitor
+        WireMonitorServer wireMonitorServer;
+        wireMonitorServer = new WireMonitorServer(portOfWireServer);
+        wireMonitorServer.start();
+
         String payload = "{\"sampleJson\" : \"sampleValue\"}";
         Map<String, String> requestHeader = new HashMap<>();
         requestHeader.put("Content-Type", "application/json");
-        try {
-            HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(proxyURL)), payload, requestHeader);
-            Thread.sleep(30000);
-        } catch (Exception e) {
-            //Ignored
-            log.error(e);
-        }
+        HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(proxyURL)), payload, requestHeader);
 
-        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        for (LogEvent log : logs) {
-            if (log.getMessage().contains("Content-Type: application/json; charset=UTF-8")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void applyProperty(File srcFile, String key, String value) throws Exception {
-        File destinationFile = new File(srcFile.getName());
-        Properties properties = new Properties();
-        properties.load(new FileInputStream(srcFile));
-        properties.setProperty(key, value);
-        properties.store(new FileOutputStream(destinationFile), null);
-        serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
+        //checks for the availability of "charset=UTF-8" in the request captured by the wire monitor
+        String capturedMessage = wireMonitorServer.getCapturedMessage();
+        return capturedMessage.contains("charset=UTF-8");
     }
 
     @AfterClass
     public void cleanUp() throws Exception {
         super.cleanup();
-        serverConfigurationManager.restoreToLastConfiguration();
     }
 }

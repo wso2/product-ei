@@ -50,7 +50,7 @@ public class ESBJAVA3340QueryParamHttpEndpointTestCase extends ESBIntegrationTes
         logViewerClient.clearLogs();
 
         try {
-            HttpRequestUtil.sendGetRequest(getApiInvocationURL("test") + requestString, null);
+            HttpRequestUtil.sendGetRequest(getApiInvocationURL("passParamsToEPTest") + requestString, null);
         } catch (Exception timeout) {
             //a timeout is expected
         }

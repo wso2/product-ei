@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <api name="Test" context="/test">
+    <api name="passParamsToEPTestApi" context="/passParamsToEPTest">
         <resource methods="GET" uri-template="/context?queryParam={+query}">
             <inSequence>
                 <send>

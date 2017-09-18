@@ -32,15 +32,8 @@ import java.io.File;
 
 public class ESBJAVA4781EscapeAutoPrimitiveTestCase extends ESBIntegrationTest {
 
-  private ServerConfigurationManager serverConfigurationManager;
-
   @BeforeClass(alwaysRun = true)
   public void setEnvironment() throws Exception {
-    super.init();
-    serverConfigurationManager =
-            new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-    serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-            + "json" + File.separator + "autoprimitive" + File.separator + "synapse.properties"));
     super.init();
     loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
             + File.separator + "json" + File.separator + "autoprimitive" + File.separator
@@ -65,7 +58,6 @@ public class ESBJAVA4781EscapeAutoPrimitiveTestCase extends ESBIntegrationTest {
   @AfterClass(alwaysRun = true)
   public void destroy() throws Exception {
     super.cleanup();
-    serverConfigurationManager.restoreToLastConfiguration();
   }
 
 }

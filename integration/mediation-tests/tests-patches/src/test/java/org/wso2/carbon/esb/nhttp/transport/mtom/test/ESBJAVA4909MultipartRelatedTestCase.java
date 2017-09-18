@@ -31,7 +31,6 @@ import java.io.IOException;
  * Test case check whether attachment is received by the client
  */
 public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverManager;
     private final String MTOM_SERVICE = "MTOMSwASampleService";
     private SampleAxis2Server axis2Server;
     private String relativeFilePath = "/artifacts/ESB/nhttp/transport/mtom/ESBJAVA4909MultipartRelatedTest.xml";
@@ -39,10 +38,6 @@ public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init();
-        serverManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverManager.applyConfiguration(new File(getClass().getResource
-                ("/artifacts/ESB/nhttp/transport/mtom/axis2.xml").getPath()));
         super.init();
         axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server.start();
@@ -62,16 +57,10 @@ public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
 
-        try {
-            if (axis2Server != null && axis2Server.isStarted()) {
-                axis2Server.stop();
-            }
-            super.cleanup();
-        } finally {
-            Thread.sleep(3000);
-            serverManager.restoreToLastConfiguration();
-            serverManager = null;
+        if (axis2Server != null && axis2Server.isStarted()) {
+            axis2Server.stop();
         }
+        super.cleanup();
     }
 
     public void sendUsingMTOM(String fileName, String targetEPR) throws IOException {

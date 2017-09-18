@@ -188,13 +188,6 @@
         <classes><class name="org.wso2.carbon.esb.security.policy.UTResponseCode401UTauthFailure"></class></classes>
     </test>
 
-
-    <test name="JSON empty Array NHTTP transport Test Case" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport"/>
-        </classes>
-    </test>
-
 	<test name="Access HTTP SC after Callout mediator test">
 		<classes>
 			<class
@@ -254,11 +247,6 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4760ContentLengthHeaderTest"/>
         </classes>
     </test>
-    <test name="ESBJAVA4909" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.nhttp.transport.mtom.test.ESBJAVA4909MultipartRelatedTestCase"/>
-        </classes>
-    </test>
     <test name="ESBJAVA_4913" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.mediators.clone.ESBJAVA4913HandleExceptionTest"/>
@@ -267,11 +255,6 @@
     <test name="ESBJAVA_4931_PreserveContentTypeHeaderCharSetTestCase" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4931PreserveContentTypeHeaderCharSetTestCase"/>
-        </classes>
-    </test>
-    <test name="ESBJAVA_4940" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4940CharacterEncodingRemovalTestCase"/>
         </classes>
     </test>
     <test name="ESBJAVA_3770_DropLargePayloadsPreventESBFromOOMTestCase" preserve-order="true" verbose="2">
@@ -296,5 +279,16 @@
             <class name="org.wso2.carbon.esb.mediators.header.ESBJAVA5098_WSAddressingSupportTest"/>
         </classes>
     </test>
+
+    <test name="NHTTP-Transport-Tests" preserve-order="true" verbose="2">
+    <classes>
+        <class name="org.wso2.carbon.esb.nhttp.transport.NhttpBaseTestCase"/>
+        <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4940CharacterEncodingRemovalTestCase"/>
+        <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport"/>
+        <class name="org.wso2.carbon.esb.nhttp.transport.mtom.test.ESBJAVA4909MultipartRelatedTestCase"/>
+        <!-- If there are any test cases which need server restarts with new configurations, they should not be added
+         here but in a separate test block-->
+    </classes>
+</test>
 </suite>
 

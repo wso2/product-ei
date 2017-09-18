@@ -35,22 +35,9 @@ import java.io.File;
  * is routed correctly to the HttpGetProcessor.
  */
 public class ESBJAVA4907SwaggerGenerationTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
-    private final String FULL_RESOURCE_PATH = getESBResourceLocation() + File.separator + "restapi" +
-            File.separator + "apidefinition" + File.separator;
-    private final String RELATIVE_RESOURCE_PATH = "/artifacts/ESB/" + "restapi" +
-            File.separator + "apidefinition" + File.separator;
-    private final String JAR_FILE_NAME = "org.wso2.appcloud.api.swagger-3.0.0.jar";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init();
-        serverConfigurationManager =
-                new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverConfigurationManager.applyConfigurationWithoutRestart(new File(FULL_RESOURCE_PATH + "carbon.xml"));
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(RELATIVE_RESOURCE_PATH + JAR_FILE_NAME).toURI()));
-        serverConfigurationManager.restartGracefully();
         super.init();
     }
 
@@ -70,8 +57,5 @@ public class ESBJAVA4907SwaggerGenerationTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        serverConfigurationManager.removeFromComponentLib(RELATIVE_RESOURCE_PATH + JAR_FILE_NAME);
-        serverConfigurationManager.restoreToLastConfiguration();
-        serverConfigurationManager = null;
     }
 }
