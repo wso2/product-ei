@@ -146,7 +146,8 @@ public class ServerManager {
                 }
             }
 
-            String catPidCommand = "cat " + carbonHome + File.separator + "carbon.pid";
+            String catPidCommand = "cat " + carbonHome + File.separator + "wso2" + File.separator + "broker"
+                    + File.separator + "runtime.pid";
             String pid = executeCommand(catPidCommand);
 
             log.info("Server instance pid : " + pid);
