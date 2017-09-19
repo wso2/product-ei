@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="SequenceBreakdownSampleProxy" startOnLoad="true" transports="http https">
+        <description/>
+        <target inSequence="StockQuoteSeq"/>
+    </proxy>
+    <sequence name="StockQuoteSeq" onError="StockQuoteErrorSeq">
+        <log level="custom">
+            <property name="Sequence" value="StockQuoteSeq"/>
+            <property name="Description" value="Request recieved"/>
+        </log>
+        <sequence key="CallStockQuoteSeq"/>
+        <sequence key="TransformAndRespondSeq"/>
+    </sequence>
+    <sequence name="StockQuoteErrorSeq">
+        <log level="custom">
+            <property name="Description" value="Error occurred in StockQuoteErrorSeq"/>
+            <property name="Status" value="ERROR"/>
+        </log>
+    </sequence>
+    <sequence name="TransformAndRespondSeq" onError="TransformAndRespondErrorSeq">
+        <log level="custom">
+            <property name="Sequence" value="TransformAndRespondSeq"/>
+            <property name="Description" value="Response is ready to be transformed"/>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <Information xmlns="">
+                    <Name>$1</Name>
+                    <Last>$2</Last>
+                    <High>$3</High>
+                    <Low>$4</Low>
+                </Information>
+            </format>
+            <args>
+                <arg evaluator="json" expression="$.name"/>
+                <arg evaluator="json" expression="$.last"/>
+                <arg evaluator="json" expression="$.low"/>
+                <arg evaluator="json" expression="$.high"/>
+            </args>
+        </payloadFactory>
+        <log level="custom">
+            <property name="Sequence" value="TransformAndRespondSeq"/>
+            <property name="Description" value="Responding back to the client with the transformed response"/>
+        </log>
+        <respond/>
+    </sequence>
+    <sequence name="TransformAndRespondErrorSeq">
+        <log level="custom">
+            <property name="Description" value="Error occurred in TransformAndRespondSeq"/>
+            <property name="Status" value="ERROR"/>
+        </log>
+    </sequence>
+    <sequence name="CallStockQuoteErrorSeq">
+        <log level="custom">
+            <property name="Description" value="Error occurred in CallStockQuoteSeq"/>
+            <property name="Status" value="ERROR"/>
+        </log>
+    </sequence>
+    <sequence name="CallStockQuoteSeq" onError="CallStockQuoteErrorSeq">
+        <switch source="//symbol" xmlns:ns="http://org.apache.synapse/xsd">
+            <case regex="IBM">
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Calling IBM endpoint"/>
+                </log>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="GET" uri-template="http://localhost:9090/stockquote/IBM"/>
+                    </endpoint>
+                </call>
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Response received from IBM endpoint"/>
+                </log>
+            </case>
+            <case regex="GOOG">
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Calling GOOG endpoint"/>
+                </log>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="GET" uri-template="http://localhost:9090/stockquote/GOOG"/>
+                    </endpoint>
+                </call>
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Response received from GOOG endpoint"/>
+                </log>
+            </case>
+            <case regex="AMZN">
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Calling AMZN endpoint"/>
+                </log>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="GET" uri-template="http://localhost:9090/stockquote/AMZN"/>
+                    </endpoint>
+                </call>
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Response received from AMZN endpoint"/>
+                </log>
+            </case>
+            <default>
+                <log level="custom">
+                    <property name="Sequence" value="CallStockQuoteSeq"/>
+                    <property name="Description" value="Invalid Symbol"/>
+                    <property name="Status" value="ERROR"/>
+                </log>
+                <drop/>
+            </default>
+        </switch>
+    </sequence>
+</definitions>
