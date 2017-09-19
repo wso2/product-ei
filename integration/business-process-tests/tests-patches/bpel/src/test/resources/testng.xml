@@ -5,7 +5,7 @@
 
     <test name="BPELTests" preserve-order="true" parallel="false">
         <packages>
-            <package name="org.wso2.bps.integration.tests.patches.bpel"/>
+            <package name="org.wso2.ei.businessprocess.integration.tests.patches.bpel"/>
         </packages>
     </test>
 
