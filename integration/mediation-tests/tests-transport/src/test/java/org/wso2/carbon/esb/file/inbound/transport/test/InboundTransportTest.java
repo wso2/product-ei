@@ -19,6 +19,7 @@ package org.wso2.carbon.esb.file.inbound.transport.test;
 
 import java.io.File;
 import java.io.IOException;
+
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
@@ -34,421 +35,382 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 public class InboundTransportTest extends ESBIntegrationTest {
 
-	private LogViewerClient logViewerClient;
-	private File inboundFileListeningFolder;
-	private String pathToFtpDir;
+    private LogViewerClient logViewerClient;
+    private File inboundFileListeningFolder;
+    private String pathToFtpDir;
 
-	@BeforeClass(alwaysRun = true)
-	public void setEnvironment() throws Exception {
+    @BeforeClass(alwaysRun = true)
+    public void setEnvironment() throws Exception {
+        pathToFtpDir = getClass().getResource(
+                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
+                        + File.separator + "vfsTransport" + File.separator).getPath();
 
-		pathToFtpDir = getClass().getResource(
-				File.separator + "artifacts" + File.separator + "ESB"
-						+ File.separator + "synapseconfig" + File.separator
-						+ "vfsTransport" + File.separator).getPath();
+        inboundFileListeningFolder = new File(pathToFtpDir + File.separator + "inboundFileListeningFolder");
 
-		inboundFileListeningFolder = new File(pathToFtpDir + File.separator
-				+ "inboundFileListeningFolder");
+        // create inboundFileListeningFolder if not exists
+        if (inboundFileListeningFolder.exists()) {
+            FileUtils.deleteDirectory(inboundFileListeningFolder);
+        }
+        Assert.assertTrue(inboundFileListeningFolder.mkdir(), "inboundFileListeningFolder not created");
 
-		// create inboundFileListeningFolder if not exists
-		if (inboundFileListeningFolder.exists()) {
-			FileUtils.deleteDirectory(inboundFileListeningFolder);
-		}
-		Assert.assertTrue(inboundFileListeningFolder.mkdir(), "inboundFileListeningFolder not created");
+        super.init();
+        logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
+    }
 
-		super.init();
-		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
-				getSessionCookie());
+    @AfterClass(alwaysRun = true)
+    public void destroy() throws Exception {
+        super.cleanup();
+    }
 
-	}
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = "wso2.esb",
+          description = "Inbound endpoint Reading file with Contect type XML Test Case")
+    public void testInboundEnpointReadFile_ContentType_XML() throws Exception {
+        logViewerClient.clearLogs();
+        // To check the file getting is read
+        boolean isFileRead = false;
 
-	@AfterClass(alwaysRun = true)
-	public void destroy() throws Exception {
-		super.cleanup();
-	}
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + "ContentType");
+        File targetFile = new File(targetFolder + File.separator + "test.xml");
+        addInboundEndpoint(addEndpoint1(targetFolder.getAbsolutePath()));
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = "wso2.esb", description = "Inbound endpoint Reading file with Contect type XML Test Case")
-	public void testInboundEnpointReadFile_ContentType_XML() throws Exception {
-		logViewerClient.clearLogs();
-		// To check the file getting is read
-		boolean isFileRead = false;
+        FileUtils.copyFile(sourceFile, targetFile);
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(inboundFileListeningFolder + File.separator + "ContentType");
-		File targetFile = new File(targetFolder + File.separator + "test.xml");
-		addInboundEndpoint(addEndpoint1(targetFolder.getAbsolutePath()));
+        for (int i = 0; i < 10; i++) {
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-		FileUtils.copyFile(sourceFile, targetFile);
+            for (LogEvent logEvent : logs) {
+                String message = logEvent.getMessage();
+                if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
+                    isFileRead = true;
+                }
+            }
+            if (isFileRead) {
+                break;
+            }
+            Thread.sleep(1000);
+        }
+        Assert.assertTrue(isFileRead, "The XML file is not getting read");
+    }
 
-		for (int i = 0; i < 10; i++) {
-			LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+    @Test(groups = "wso2.esb",
+          dependsOnMethods = "testInboundEnpointReadFile_ContentType_XML",
+          description = "Inbound endpoint Delete file after reading Test Case")
+    public void testInboundEnpointDeleteFileAfterProcess() throws Exception {
 
-			for (LogEvent logEvent : logs) {
-				String message = logEvent.getMessage();
-				if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-					isFileRead = true;
-				}
-			}
+        File sourceFile = new File(
+                inboundFileListeningFolder + File.separator + "ContentType" + File.separator + "test.xml");
+        Assert.assertFalse(sourceFile.exists(), "The file is not deleted after the read");
+    }
 
-			if(isFileRead) {
-				break;
-			}
-			Thread.sleep(1000);
-		}
-		Assert.assertTrue(isFileRead, "The XML file is not getting read");
-	}
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = { "wso2.esb" },
+          dependsOnMethods = "testInboundEnpointDeleteFileAfterProcess",
+          description = "Inbound Endpoint invalid interval Test case")
+    public void testInboundEndpointPollInterval_NonInteger() throws Exception {
+        logViewerClient.clearLogs();
+        boolean errorMessage = false;
+        addInboundEndpoint(addEndpoint3());
+        for (int i = 0; i < 10; i++) {
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-	@Test(groups = "wso2.esb", dependsOnMethods = "testInboundEnpointReadFile_ContentType_XML", description = "Inbound endpoint Delete file after reading Test Case")
-	public void testInboundEnpointDeleteFileAfterProcess() throws Exception {
+            for (LogEvent logEvent : logs) {
+                String message = logEvent.getMessage();
+                if (message.contains("Invalid numeric value for interval")) {
+                    errorMessage = true;
+                }
+            }
 
-		File sourceFile = new File(inboundFileListeningFolder + File.separator + "ContentType"
-				+ File.separator + "test.xml");
-		Assert.assertFalse(sourceFile.exists(),
-				"The file is not deleted after the read");
-	}
+            if (errorMessage) {
+                break;
+            }
+            Thread.sleep(1000);
+        }
+        Assert.assertTrue(errorMessage, "The Error message not found in the log");
+    }
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEnpointDeleteFileAfterProcess", description = "Inbound Endpoint invalid interval Test case")
-	public void testInboundEndpointPollInterval_NonInteger() throws Exception {
-		logViewerClient.clearLogs();
-		boolean errorMessage = false;
-		addInboundEndpoint(addEndpoint3());
-		for (int i = 0; i < 10; i++) {
-			LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = { "wso2.esb" },
+          dependsOnMethods = "testInboundEndpointPollInterval_NonInteger",
+          description = "Inbound Endpoint invalid File URI Test case")
+    public void testInboundEndpointInvalidFileUri() throws Exception {
 
-			for (LogEvent logEvent : logs) {
-				String message = logEvent.getMessage();
-				if (message.contains("Invalid numeric value for interval")) {
-					errorMessage = true;
-				}
-			}
+        addInboundEndpoint(addEndpoint4());
 
-			if(errorMessage) {
-				break;
-			}
-			Thread.sleep(1000);
-		}
-		Assert.assertTrue(errorMessage, "The Error message not found in the log");
-	}
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + "uri");
+        File targetFile = new File(targetFolder + File.separator + "test.xml");
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            Thread.sleep(2000);
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEndpointPollInterval_NonInteger", description = "Inbound Endpoint invalid File URI Test case")
-	public void testInboundEndpointInvalidFileUri() throws Exception {
+            Assert.assertTrue(targetFile.exists(), "Invalid file processed");
+        } finally {
+            deleteFile(targetFile);
+            deleteFile(targetFolder);
+        }
+    }
 
-		addInboundEndpoint(addEndpoint4());
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = { "wso2.esb" },
+          dependsOnMethods = "testInboundEndpointInvalidFileUri",
+          description = "Inbound Endpoint File name with special chars URI Test case")
+    public void testInboundEndpointFileName_SpecialChars() throws Exception {
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(inboundFileListeningFolder + File.separator + "uri");
-		File targetFile = new File(targetFolder + File.separator + "test.xml");
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
+        addInboundEndpoint(addEndpoint5());
+        boolean fileProcessed = false;
 
-			Assert.assertTrue(targetFile.exists(), "Invalid file processed");
-		} finally {
-			deleteFile(targetFile);
-			deleteFile(targetFolder);
-		}
-	}
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + "spcChar");
+        File targetFile = new File(targetFolder + File.separator + "test123@wso2_xml.xml");
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            for (int i = 0; i < 10; i++) {
+                if (!targetFile.exists()) {
+                    fileProcessed = true;
+                    break;
+                }
+                Thread.sleep(1000);
+            }
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEndpointInvalidFileUri", description = "Inbound Endpoint File name with special chars URI Test case")
-	public void testInboundEndpointFileName_SpecialChars() throws Exception {
+            Assert.assertTrue(fileProcessed, "File not processed");
+        } finally {
+            deleteFile(targetFile);
+            deleteFile(targetFolder);
+        }
+    }
 
-		addInboundEndpoint(addEndpoint5());
-		boolean fileProcessed = false;
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = { "wso2.esb" },
+          dependsOnMethods = "testInboundEndpointFileName_SpecialChars",
+          description = "Inbound Endpoint Content type invalid Test case")
+    public void testInboundEndpointContentTypeInvalid() throws Exception {
+        logViewerClient.clearLogs();
+        addInboundEndpoint(addEndpoint6());
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(inboundFileListeningFolder + File.separator
-				+ "spcChar");
-		File targetFile = new File(targetFolder + File.separator
-				+ "test123@wso2_xml.xml");
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			for(int i =0; i <10 ; i ++) {
-				if(!targetFile.exists()){
-					fileProcessed = true;
-					break;
-				}
-				Thread.sleep(1000);
-			}
+        // To check the file getting is read
+        boolean isFileRead = false;
 
-			Assert.assertTrue(fileProcessed, "File not processed");
-		} finally {
-			deleteFile(targetFile);
-			deleteFile(targetFolder);
-		}
-	}
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
+        File targetFile = new File(targetFolder + File.separator + "invalidContentType.xml");
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            for (int i = 0; i < 10; i++) {
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEndpointFileName_SpecialChars", description = "Inbound Endpoint Content type invalid Test case")
-	public void testInboundEndpointContentTypeInvalid() throws Exception {
-		logViewerClient.clearLogs();
-		addInboundEndpoint(addEndpoint6());
+                LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-		// To check the file getting is read
-		boolean isFileRead = false;
+                for (LogEvent logEvent : logs) {
+                    String message = logEvent.getMessage();
+                    if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
+                        isFileRead = true;
+                    }
+                }
+                if (isFileRead) {
+                    break;
+                }
+                Thread.sleep(1000);
+            }
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
-		File targetFile = new File(targetFolder + File.separator
-				+ "invalidContentType.xml");
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			for(int i =0; i <10; i++) {
+            Assert.assertTrue(isFileRead, "The XML file is not getting read");
 
-				LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+            Assert.assertTrue(!targetFile.exists(), "file not deleted after processed");
+        } finally {
+            deleteFile(targetFile);
+        }
+    }
 
-				for (LogEvent logEvent : logs) {
-					String message = logEvent.getMessage();
-					if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-						isFileRead = true;
-					}
-				}
-				if(isFileRead) {
-					break;
-				}
-				Thread.sleep(1000);
-			}
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = { "wso2.esb" },
+          dependsOnMethods = "testInboundEndpointContentTypeInvalid",
+          description = "Inbound Endpoint Content type not specified Test case")
+    public void testInboundEndpointContentTypeNotSpecified() throws Exception {
 
-			Assert.assertTrue(isFileRead, "The XML file is not getting read");
+        addInboundEndpoint(addEndpoint7());
+        boolean fileProcessed = false;
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
+        File targetFile = new File(targetFolder + File.separator + "in.xml");
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            for (int i = 0; i < 10; i++) {
+                if (!targetFile.exists()) {
+                    fileProcessed = true;
+                    break;
+                }
+                Thread.sleep(1000);
+            }
 
-			Assert.assertTrue(!targetFile.exists(), "file not deleted after processed");
-		} finally {
-			deleteFile(targetFile);
-		}
-	}
+            Assert.assertTrue(fileProcessed, "File not processed");
+        } finally {
+            deleteFile(targetFile);
+        }
+    }
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEndpointContentTypeInvalid", description = "Inbound Endpoint Content type not specified Test case")
-	public void testInboundEndpointContentTypeNotSpecified() throws Exception {
+    @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+    @Test(groups = { "wso2.esb" },
+          dependsOnMethods = "testInboundEndpointContentTypeNotSpecified",
+          description = "Inbound Endpoint move after process Test case")
+    public void testInboundEndpointMoveAfterProcess() throws Exception {
 
-		addInboundEndpoint(addEndpoint7());
-		boolean fileProcessed = false;
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
-		File targetFile = new File(targetFolder + File.separator + "in.xml");
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			for(int i =0; i <10 ; i ++) {
-				if(!targetFile.exists()){
-					fileProcessed = true;
-					break;
-				}
-				Thread.sleep(1000);
-			}
+        addInboundEndpoint(addEndpoint8());
+        boolean fileProcessed = false;
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + "move");
+        File targetFile = new File(targetFolder + File.separator + "test.xml");
+        File processedFolder = new File(inboundFileListeningFolder + File.separator + "processed");
+        if (processedFolder.exists()) {
+            processedFolder.delete();
+        } else {
+            processedFolder.mkdir();
+        }
 
-			Assert.assertTrue(fileProcessed, "File not processed");
-		} finally {
-			deleteFile(targetFile);
-		}
-	}
+        File processedFile = new File(processedFolder + File.separator + "test.xml");
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEndpointContentTypeNotSpecified", description = "Inbound Endpoint move after process Test case")
-	public void testInboundEndpointMoveAfterProcess() throws Exception {
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            for (int i = 0; i < 10; i++) {
+                if (!targetFile.exists()) {
+                    fileProcessed = true;
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+            // input file should be moved to processed directory after
+            // processing the input file
+            Assert.assertTrue(processedFile.exists(), "Input file is not moved after processing the file");
+            Assert.assertTrue(fileProcessed, "Input file is exist after processing the input file");
+        } finally {
+            deleteFile(targetFolder);
+            deleteFile(processedFile);
+            deleteFile(processedFolder);
+        }
+    }
 
-		addInboundEndpoint(addEndpoint8());
-		boolean fileProcessed = false;
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(inboundFileListeningFolder + File.separator
-				+ "move");
-		File targetFile = new File(targetFolder + File.separator + "test.xml");
-		File processedFolder = new File(inboundFileListeningFolder + File.separator
-				+ "processed");
-		if (processedFolder.exists()) {
-			processedFolder.delete();
-		} else {
-			processedFolder.mkdir();
-		}
+    private OMElement addEndpoint1(String fileUri) throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile1\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">DELETE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + fileUri + "</parameter>\n"
+                        + " </parameters>\n" + "</inboundEndpoint>\n");
 
-		File processedFile = new File(processedFolder + File.separator
-				+ "test.xml");
+        return synapseConfig;
+    }
 
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			for(int i =0; i <10 ; i ++) {
-				if(!targetFile.exists()){
-					fileProcessed = true;
-					break;
-				}
-				Thread.sleep(1000);
-			}
-			// input file should be moved to processed directory after
-			// processing the input file
-			Assert.assertTrue(processedFile.exists(),
-					"Input file is not moved after processing the file");
-			Assert.assertTrue(fileProcessed,
-					"Input file is exist after processing the input file");
-		} finally {
-			deleteFile(targetFolder);
-			deleteFile(processedFile);
-			deleteFile(processedFolder);
-		}
-	}
+    private OMElement addEndpoint3() throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile3\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1.1</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + inboundFileListeningFolder
+                        + File.separator + "interval" + "</parameter>\n" + " </parameters>\n" + "</inboundEndpoint>\n");
 
-	private OMElement addEndpoint1(String fileUri) throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil.stringToOM(
-				"<inboundEndpoint name=\"testFile1\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">DELETE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://" + fileUri + "</parameter>\n"
-						+ " </parameters>\n" + "</inboundEndpoint>\n");
+        return synapseConfig;
+    }
 
-		return synapseConfig;
-	}
+    private OMElement addEndpoint4() throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile4\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + inboundFileListeningFolder
+                        + File.separator + "uri" + File.separator + "fail" + "</parameter>\n" + " </parameters>\n"
+                        + "</inboundEndpoint>\n");
 
-	private OMElement addEndpoint3() throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile3\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1.1</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "interval"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+        return synapseConfig;
+    }
 
-		return synapseConfig;
-	}
+    private OMElement addEndpoint5() throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile5\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + inboundFileListeningFolder
+                        + File.separator + "spcChar" + "</parameter>\n" + " </parameters>\n" + "</inboundEndpoint>\n");
 
-	private OMElement addEndpoint4() throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile4\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "uri"
-						+ File.separator
-						+ "fail"
-						+ "</parameter>\n"
-						+ " </parameters>\n" + "</inboundEndpoint>\n");
+        return synapseConfig;
+    }
 
-		return synapseConfig;
-	}
+    private OMElement addEndpoint6() throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile6\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ContentType\">invalid</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + inboundFileListeningFolder
+                        + File.separator + "in" + "</parameter>\n" + " </parameters>\n" + "</inboundEndpoint>\n");
 
-	private OMElement addEndpoint5() throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile5\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "spcChar"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+        return synapseConfig;
+    }
 
-		return synapseConfig;
-	}
+    private OMElement addEndpoint7() throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile7\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + inboundFileListeningFolder
+                        + File.separator + "in" + "</parameter>\n" + " </parameters>\n" + "</inboundEndpoint>\n");
 
-	private OMElement addEndpoint6() throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile6\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">invalid</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "in"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+        return synapseConfig;
+    }
 
-		return synapseConfig;
-	}
+    private OMElement addEndpoint8() throws Exception {
+        OMElement synapseConfig = null;
+        synapseConfig = AXIOMUtil.stringToOM(
+                "<inboundEndpoint name=\"testFile8\" onError=\"inFault\" protocol=\"file\"\n"
+                        + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                        + " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                        + " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
+                        + "<parameter name=\"transport.vfs.MoveAfterProcess\">file://" + inboundFileListeningFolder
+                        + File.separator + "processed" + "</parameter>"
+                        + " <parameter name=\"transport.vfs.FileURI\">file://" + inboundFileListeningFolder
+                        + File.separator + "move" + "</parameter>\n" + " </parameters>\n" + "</inboundEndpoint>\n");
 
-	private OMElement addEndpoint7() throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile7\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "in"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+        return synapseConfig;
+    }
 
-		return synapseConfig;
-	}
-
-	private OMElement addEndpoint8() throws Exception {
-		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile8\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
-						+ "<parameter name=\"transport.vfs.MoveAfterProcess\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "processed"
-						+ "</parameter>"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ inboundFileListeningFolder
-						+ File.separator
-						+ "move"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
-
-		return synapseConfig;
-	}
-
-	private boolean deleteFile(File file) throws IOException {
-		return file.exists() && file.delete();
-	}
+    private boolean deleteFile(File file) throws IOException {
+        return file.exists() && file.delete();
+    }
 }
