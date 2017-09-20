@@ -35,7 +35,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 public class InboundTransportTest extends ESBIntegrationTest {
 
 	private LogViewerClient logViewerClient;
-	private File InboundFileFolder;
+	private File inboundFileListeningFolder;
 	private String pathToFtpDir;
 
 	@BeforeClass(alwaysRun = true)
@@ -46,14 +46,14 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ File.separator + "synapseconfig" + File.separator
 						+ "vfsTransport" + File.separator).getPath();
 
-		InboundFileFolder = new File(pathToFtpDir + File.separator
-				+ "InboundFileFolder");
+		inboundFileListeningFolder = new File(pathToFtpDir + File.separator
+				+ "inboundFileListeningFolder");
 
-		// create InboundFileFolder if not exists
-		if (InboundFileFolder.exists()) {
-			FileUtils.deleteDirectory(InboundFileFolder);
+		// create inboundFileListeningFolder if not exists
+		if (inboundFileListeningFolder.exists()) {
+			FileUtils.deleteDirectory(inboundFileListeningFolder);
 		}
-		Assert.assertTrue(InboundFileFolder.mkdir(), "InboundFileFolder not created");
+		Assert.assertTrue(inboundFileListeningFolder.mkdir(), "inboundFileListeningFolder not created");
 
 
 		super.init();
@@ -70,38 +70,39 @@ public class InboundTransportTest extends ESBIntegrationTest {
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	@Test(groups = "wso2.esb", description = "Inbound endpoint Reading file with Contect type XML Test Case")
 	public void testInboundEnpointReadFile_ContentType_XML() throws Exception {
-
-		addInboundEndpoint(addEndpoint1());
+		logViewerClient.clearLogs();
 		// To check the file getting is read
 		boolean isFileRead = false;
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator + "in");
+		File targetFolder = new File(inboundFileListeningFolder + File.separator + "ContentType");
 		File targetFile = new File(targetFolder + File.separator + "test.xml");
+		addInboundEndpoint(addEndpoint1(targetFolder.getAbsolutePath()));
 
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
-		} finally {
-			deleteFile(targetFile);
-		}
+		FileUtils.copyFile(sourceFile, targetFile);
 
-		LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+		for (int i = 0; i < 10; i++) {
+			LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-		for (LogEvent logEvent : logs) {
-			String message = logEvent.getMessage();
-			if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-				isFileRead = true;
+			for (LogEvent logEvent : logs) {
+				String message = logEvent.getMessage();
+				if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
+					isFileRead = true;
+				}
 			}
-		}
 
+			if(isFileRead) {
+				break;
+			}
+			Thread.sleep(1000);
+		}
 		Assert.assertTrue(isFileRead, "The XML file is not getting read");
 	}
 
 	@Test(groups = "wso2.esb", dependsOnMethods = "testInboundEnpointReadFile_ContentType_XML", description = "Inbound endpoint Delete file after reading Test Case")
 	public void testInboundEnpointDeleteFileAfterProcess() throws Exception {
 
-		File sourceFile = new File(InboundFileFolder + File.separator + "in"
+		File sourceFile = new File(inboundFileListeningFolder + File.separator + "ContentType"
 				+ File.separator + "test.xml");
 		Assert.assertFalse(sourceFile.exists(),
 				"The file is not deleted after the read");
@@ -110,22 +111,25 @@ public class InboundTransportTest extends ESBIntegrationTest {
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEnpointDeleteFileAfterProcess", description = "Inbound Endpoint invalid interval Test case")
 	public void testInboundEndpointPollInterval_NonInteger() throws Exception {
-
+		logViewerClient.clearLogs();
+		boolean errorMessage = false;
 		addInboundEndpoint(addEndpoint3());
+		for (int i = 0; i < 10; i++) {
+			LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator
-				+ "interval");
-		File targetFile = new File(targetFolder + File.separator + "test.xml");
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
+			for (LogEvent logEvent : logs) {
+				String message = logEvent.getMessage();
+				if (message.contains("Invalid numeric value for interval")) {
+					errorMessage = true;
+				}
+			}
 
-			Assert.assertTrue(targetFile.exists());
-		} finally {
-			deleteFile(targetFile);
-			deleteFile(targetFolder);
+			if(errorMessage) {
+				break;
+			}
+			Thread.sleep(1000);
 		}
+		Assert.assertTrue(errorMessage, "The Error message not found in the log");
 	}
 
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
@@ -135,13 +139,13 @@ public class InboundTransportTest extends ESBIntegrationTest {
 		addInboundEndpoint(addEndpoint4());
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator + "uri");
+		File targetFolder = new File(inboundFileListeningFolder + File.separator + "uri");
 		File targetFile = new File(targetFolder + File.separator + "test.xml");
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
 			Thread.sleep(2000);
 
-			Assert.assertTrue(targetFile.exists());
+			Assert.assertTrue(targetFile.exists(), "Invalid file processed");
 		} finally {
 			deleteFile(targetFile);
 			deleteFile(targetFolder);
@@ -153,17 +157,24 @@ public class InboundTransportTest extends ESBIntegrationTest {
 	public void testInboundEndpointFileName_SpecialChars() throws Exception {
 
 		addInboundEndpoint(addEndpoint5());
+		boolean fileProcessed = false;
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator
+		File targetFolder = new File(inboundFileListeningFolder + File.separator
 				+ "spcChar");
 		File targetFile = new File(targetFolder + File.separator
 				+ "test123@wso2_xml.xml");
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
+			for(int i =0; i <10 ; i ++) {
+				if(!targetFile.exists()){
+					fileProcessed = true;
+					break;
+				}
+				Thread.sleep(1000);
+			}
 
-			Assert.assertTrue(!targetFile.exists());
+			Assert.assertTrue(fileProcessed, "File not processed");
 		} finally {
 			deleteFile(targetFile);
 			deleteFile(targetFolder);
@@ -173,32 +184,37 @@ public class InboundTransportTest extends ESBIntegrationTest {
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	@Test(groups = { "wso2.esb" }, dependsOnMethods = "testInboundEndpointFileName_SpecialChars", description = "Inbound Endpoint Content type invalid Test case")
 	public void testInboundEndpointContentTypeInvalid() throws Exception {
-
+		logViewerClient.clearLogs();
 		addInboundEndpoint(addEndpoint6());
 
 		// To check the file getting is read
 		boolean isFileRead = false;
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator + "in");
+		File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
 		File targetFile = new File(targetFolder + File.separator
 				+ "invalidContentType.xml");
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
+			for(int i =0; i <10; i++) {
 
-			LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+				LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-			for (LogEvent logEvent : logs) {
-				String message = logEvent.getMessage();
-				if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-					isFileRead = true;
+				for (LogEvent logEvent : logs) {
+					String message = logEvent.getMessage();
+					if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
+						isFileRead = true;
+					}
 				}
+				if(isFileRead) {
+					break;
+				}
+				Thread.sleep(1000);
 			}
 
 			Assert.assertTrue(isFileRead, "The XML file is not getting read");
 
-			Assert.assertTrue(!targetFile.exists());
+			Assert.assertTrue(!targetFile.exists(), "file not deleted after processed");
 		} finally {
 			deleteFile(targetFile);
 		}
@@ -209,15 +225,21 @@ public class InboundTransportTest extends ESBIntegrationTest {
 	public void testInboundEndpointContentTypeNotSpecified() throws Exception {
 
 		addInboundEndpoint(addEndpoint7());
-
+		boolean fileProcessed = false;
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator + "in");
+		File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
 		File targetFile = new File(targetFolder + File.separator + "in.xml");
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
+			for(int i =0; i <10 ; i ++) {
+				if(!targetFile.exists()){
+					fileProcessed = true;
+					break;
+				}
+				Thread.sleep(1000);
+			}
 
-			Assert.assertTrue(!targetFile.exists());
+			Assert.assertTrue(fileProcessed, "File not processed");
 		} finally {
 			deleteFile(targetFile);
 		}
@@ -228,12 +250,12 @@ public class InboundTransportTest extends ESBIntegrationTest {
 	public void testInboundEndpointMoveAfterProcess() throws Exception {
 
 		addInboundEndpoint(addEndpoint8());
-
+		boolean fileProcessed = false;
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFolder = new File(InboundFileFolder + File.separator
+		File targetFolder = new File(inboundFileListeningFolder + File.separator
 				+ "move");
 		File targetFile = new File(targetFolder + File.separator + "test.xml");
-		File processedFolder = new File(InboundFileFolder + File.separator
+		File processedFolder = new File(inboundFileListeningFolder + File.separator
 				+ "processed");
 		if (processedFolder.exists()) {
 			processedFolder.delete();
@@ -246,12 +268,18 @@ public class InboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
+			for(int i =0; i <10 ; i ++) {
+				if(!targetFile.exists()){
+					fileProcessed = true;
+					break;
+				}
+				Thread.sleep(1000);
+			}
 			// input file should be moved to processed directory after
 			// processing the input file
 			Assert.assertTrue(processedFile.exists(),
 					"Input file is not moved after processing the file");
-			Assert.assertFalse(targetFile.exists(),
+			Assert.assertTrue(fileProcessed,
 					"Input file is exist after processing the input file");
 		} finally {
 			deleteFile(targetFolder);
@@ -260,25 +288,19 @@ public class InboundTransportTest extends ESBIntegrationTest {
 		}
 	}
 
-	private OMElement addEndpoint1() throws Exception {
+	private OMElement addEndpoint1(String fileUri) throws Exception {
 		OMElement synapseConfig = null;
-		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFile1\" onError=\"inFault\" protocol=\"file\"\n"
+		synapseConfig = AXIOMUtil.stringToOM(
+				"<inboundEndpoint name=\"testFile1\" onError=\"inFault\" protocol=\"file\"\n"
 						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
+						+ " <parameters>\n" + " <parameter name=\"interval\">1000</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
-						+ File.separator
-						+ "in"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">DELETE</parameter>\n"
+						+ " <parameter name=\"transport.vfs.FileURI\">file://" + fileUri + "</parameter>\n"
+						+ " </parameters>\n" + "</inboundEndpoint>\n");
 
 		return synapseConfig;
 	}
@@ -296,7 +318,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "interval"
 						+ "</parameter>\n"
@@ -319,7 +341,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "uri"
 						+ File.separator
@@ -343,7 +365,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "spcChar"
 						+ "</parameter>\n"
@@ -366,7 +388,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "in"
 						+ "</parameter>\n"
@@ -388,7 +410,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "in"
 						+ "</parameter>\n"
@@ -411,12 +433,12 @@ public class InboundTransportTest extends ESBIntegrationTest {
 						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
 						+ "<parameter name=\"transport.vfs.MoveAfterProcess\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "processed"
 						+ "</parameter>"
 						+ " <parameter name=\"transport.vfs.FileURI\">file://"
-						+ InboundFileFolder
+						+ inboundFileListeningFolder
 						+ File.separator
 						+ "move"
 						+ "</parameter>\n"
