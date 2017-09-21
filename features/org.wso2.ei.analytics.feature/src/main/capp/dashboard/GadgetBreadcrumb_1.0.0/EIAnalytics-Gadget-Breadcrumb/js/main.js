@@ -10,7 +10,7 @@ $(function() {
     if ('message' === pageName){
         $('.breadcrumb li:first-child()').remove();
         $('.breadcrumb').append('<li><a class="back"href="">'+
-            +'<i class="icon fw fw-redo fw-flip-horizontal"></i> Back</a></li>')
+            '<i class="icon fw fw-redo fw-flip-horizontal"></i> Back</a></li>')
     } else {
         $("#homeLink").attr("href", baseUrl);
     }
@@ -27,7 +27,7 @@ $(function() {
         var ol = $(".breadcrumb");
         var li = $('<li/>');
         var a = $('<a/>');
-        
+
         if (['message','mediator'].indexOf(text) > -1){
             li.addClass("text-muted truncate hidden");
             li.append(text);
@@ -47,7 +47,6 @@ $(function() {
 
     $(".breadcrumb").on('click', 'a', function(e) {
         e.preventDefault();
-
         if ($(this).hasClass('back')){
             parent.window.history.back();
         } else {
