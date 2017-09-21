@@ -27,7 +27,7 @@
 
             <enrich>
                 <source type="property" property="body"/>
-                <target xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd"
+                <target type="custom" xmlns:ns="http://services.samples" xmlns:ax21="http://services.samples/xsd"
                         action="replace" xpath="//ns:getQuoteResponse/ns:return"/>
             </enrich>
 

@@ -3,7 +3,7 @@
         <inSequence>
             <log level="full" />
             <enrich>
-                <source clone="true" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest/m0:Code/text()" />
+                <source type="custom" clone="true" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest/m0:Code/text()" />
                 <target type="property" property="symbol"/>
             </enrich>
             <enrich>
@@ -19,12 +19,12 @@
             <log level="full" />
             <enrich>
                 <source type="property" property="body"/>
-                <target xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
+                <target type="custom" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
             </enrich>
             <log level="full" />
             <enrich>
                 <source type="property" property="symbol"/>
-                <target xmlns:m="http://services.samples"
+                <target type="custom" xmlns:m="http://services.samples"
                         xpath="//m:getQuote/m:request/m:symbol"/>
             </enrich>
             <log level="full"/>

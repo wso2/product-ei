@@ -14,13 +14,13 @@
                             </m:request>
                         </m:getQuote>
                     </source>
-                    <target xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
+                    <target type="custom" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
                 </enrich>
                 <log level="full" />
                 <property name="symbol" value="WSO2"/>
                 <enrich>
-                    <source  clone="true"  xpath="get-property('symbol')"/>
-                    <target xmlns:m0="http://services.samples"
+                    <source type="custom" clone="true"  xpath="get-property('symbol')"/>
+                    <target type="custom" xmlns:m0="http://services.samples"
                             xpath="//m0:getQuote/m0:request/m0:symbol/text()"/>
 
                 </enrich>

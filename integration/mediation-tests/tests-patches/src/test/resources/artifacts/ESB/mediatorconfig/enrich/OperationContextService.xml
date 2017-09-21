@@ -30,10 +30,11 @@
                     <args/>
                 </payloadFactory>
                 <enrich>
-                    <source xmlns:ns="http://org.apache.synapse/xsd"
+                    <source type="custom"
+                            xmlns:ns="http://org.apache.synapse/xsd"
                             clone="true"
                             xpath="$body/*[1]"/>
-                    <target action="child" xpath="get-property('operation', 'ContentMgs')"/>
+                    <target type="custom" action="child" xpath="get-property('operation', 'ContentMgs')"/>
                 </enrich>
                 <payloadFactory media-type="xml">
                     <format>

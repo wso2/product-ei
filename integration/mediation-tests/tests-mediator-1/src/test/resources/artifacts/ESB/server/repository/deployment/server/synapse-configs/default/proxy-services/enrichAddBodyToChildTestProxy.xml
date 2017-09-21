@@ -12,7 +12,7 @@
             <log level="full" />
             <enrich>
                 <source type="body" clone="true"/>
-                <target xmlns:ns="http://services.samples" action="child" xpath="//ns:getQuoteResponse/ns:return" />
+                <target type="custom" xmlns:ns="http://services.samples" action="child" xpath="//ns:getQuoteResponse/ns:return" />
             </enrich>
             <send />
         </outSequence>
