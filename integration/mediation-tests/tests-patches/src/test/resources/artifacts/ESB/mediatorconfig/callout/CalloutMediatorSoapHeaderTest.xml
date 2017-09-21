@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="TestCallout"
+    <proxy name="TestCalloutSoapHeader"
            transports="https http"
            startOnLoad="true"
            trace="disable">

@@ -3,7 +3,7 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <proxy name="TestCallout"
+    <proxy name="TestCalloutHTTP_SC"
            transports="https http"
            startOnLoad="true"
            trace="disable">

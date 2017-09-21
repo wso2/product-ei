@@ -55,7 +55,7 @@ public class ESBJAVA_4239_HTTP_SC_HandlingTests extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test whether response HTTP status code getting correctly after callout " +
                                              "mediator successfully execute")
     public void testHttpStatusCodeGettingSuccessfully() throws Exception {
-        String endpoint = getProxyServiceURLHttp("TestCallout");
+        String endpoint = getProxyServiceURLHttp("TestCalloutHTTP_SC");
         String soapRequest = TestConfigurationProvider.getResourceLocation() + "artifacts" + File.separator +
                              "ESB" + File.separator + "mediatorconfig" + File.separator + "callout" +
                              File.separator + "SOAPRequestWithHeader.xml";
