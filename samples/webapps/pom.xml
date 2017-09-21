@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-webapp-samples</artifactId>
-    <version>6.1.1-update5</version>
+    <version>6.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Web App Samples</name>
     <url>http://wso2.org/projects/appserver/java</url>
@@ -164,8 +164,4 @@
         <samples.version.maven.surefire.report.plugin>2.7.1</samples.version.maven.surefire.report.plugin>
         <samples.version.maven.checkstyle.plugin>2.15</samples.version.maven.checkstyle.plugin>
     </properties>
-
-  <scm>
-    <tag>v6.1.1-update5</tag>
-  </scm>
 </project>
