@@ -25,8 +25,8 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 import java.io.File;
@@ -44,10 +44,7 @@ public class JmsToBackendWithInboundEndpointTestCase extends ESBIntegrationTest 
         activeMQServer.startJMSBroker();
         super.init();
 
-        OMElement esbSynapseConfig = esbUtils.loadResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "jms" + File.separator +
-                        "inbound" + File.separator + "transport" + File.separator + "jmsQueueToHttpInboundSynapse.xml");
-        updateESBConfiguration(esbSynapseConfig);
+        verifySequenceExistence("jmsQueueToHttpWithInboundEPSendInSequence");
 
         //Add inbound endpoint configuration
         OMElement inboundEpConfig = esbUtils.loadResource(
@@ -71,23 +68,13 @@ public class JmsToBackendWithInboundEndpointTestCase extends ESBIntegrationTest 
         sendMessage();
 
         //check for the log
-        boolean assertValue = false;
-        long startTime = System.currentTimeMillis();
-        LogEvent[] systemLogs;
-        while (!assertValue && (System.currentTimeMillis() - startTime) < 10000) {
-            systemLogs = logViewerClient.getAllRemoteSystemLogs();
-            if (systemLogs != null) {
-                for (LogEvent logEvent : systemLogs) {
-                    if (logEvent.getMessage().contains("** testJmsQueueToHttpWithInboundEndpoint RESPONSE **")) {
-                        assertValue = true;
-                        break;
-                    }
-                }
-            }
-        }
+        boolean assertValue = Utils.assertIfSystemLogContains(logViewerClient,
+                                                              "** testJmsQueueToHttpWithInboundEndpoint RESPONSE **");
 
         Assert.assertTrue(assertValue, "HTTP backend response did not receive with the inbound endpoint.");
     }
+
+
 
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {

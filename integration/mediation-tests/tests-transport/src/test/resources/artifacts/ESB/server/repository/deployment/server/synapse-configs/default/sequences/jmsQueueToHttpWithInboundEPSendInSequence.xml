@@ -14,23 +14,21 @@
   ~ limitations under the License.
   -->
 
-<definitions xmlns="http://ws.apache.org/ns/synapse">
-    <sequence name="jmsQueueToHttpWithInboundEPSendInSequence">
-        <log level="full">
-            <property name="REQUEST" value="**REQUEST**"/>
-        </log>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="jmsQueueToHttpWithInboundEPSendInSequence">
+    <log level="full">
+        <property name="REQUEST" value="**REQUEST**"/>
+    </log>
 
-        <header name="Action" value="urn:getQuote"/>
-             
-        <call>
-            <endpoint>
-                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-            </endpoint>
-        </call>
+    <header name="Action" value="urn:getQuote"/>
+         
+    <call>
+        <endpoint>
+            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+        </endpoint>
+    </call>
 
-        <log level="full">
-            <property name="RESPONSE" value="** testJmsQueueToHttpWithInboundEndpoint RESPONSE **"/>
-        </log>
-        <drop/>
-    </sequence>
-</definitions>
+    <log level="full">
+        <property name="RESPONSE" value="** testJmsQueueToHttpWithInboundEndpoint RESPONSE **"/>
+    </log>
+    <drop/>
+</sequence>
