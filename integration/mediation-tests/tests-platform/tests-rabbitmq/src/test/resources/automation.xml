@@ -86,7 +86,8 @@
 
     <!-- RabbitMQ Broker configurations -->
     <rabbitmq>
-        <rabbitmqhome></rabbitmqhome>
+        <host>DOCKER_HOST</host>
+        <port>5672</port>
     </rabbitmq>
 
     <security>

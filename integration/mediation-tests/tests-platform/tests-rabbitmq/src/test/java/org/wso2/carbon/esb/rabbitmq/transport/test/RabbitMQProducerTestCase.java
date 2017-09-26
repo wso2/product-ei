@@ -22,6 +22,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQServerInstance;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
@@ -38,10 +39,11 @@ public class RabbitMQProducerTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath("/artifacts/ESB/rabbitmq/transport/rabbitmq_endpoint_proxy.xml");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Test ESB as a RabbitMQ Consumer ")
+    @Test(groups = { "wso2.esb" },
+          description = "Test ESB as a RabbitMQ Consumer ")
     public void testRabbitMQProducer() throws Exception {
         AxisServiceClient client = new AxisServiceClient();
-        RabbitMQConsumerClient consumer = new RabbitMQConsumerClient("localhost");
+        RabbitMQConsumerClient consumer = new RabbitMQConsumerClient(RabbitMQServerInstance.getHost());
 
         try {
             consumer.declareAndConnect("exchange1", "queue1");
@@ -53,7 +55,8 @@ public class RabbitMQProducerTestCase extends ESBIntegrationTest {
         int beforeMessageCount = messages.size();
 
         for (int i = 0; i < 5; i++) {
-            client.sendRobust(Utils.getStockQuoteRequest("RMQ"), getProxyServiceURLHttp("RabbitMQProducerProxy"), "getQuote");
+            client.sendRobust(Utils.getStockQuoteRequest("RMQ"), getProxyServiceURLHttp("RabbitMQProducerProxy"),
+                    "getQuote");
         }
         Thread.sleep(10000);
 
@@ -65,19 +68,20 @@ public class RabbitMQProducerTestCase extends ESBIntegrationTest {
         } else {
             Assert.assertEquals(afterMessagesCount - beforeMessageCount, 5, "Messages not received at RabbitMQBroker");
             for (int i = beforeMessageCount; i < afterMessagesCount; i++) {
-                Assert.assertNotNull(messages.get(i), "Message not found. message sent by proxy service not reached to the destination Queue");
-                Assert.assertTrue(messages.get(i).contains("<ns:getQuote xmlns:ns=\"http://services.samples\"><" +
-                        "ns:request><ns:symbol>RMQ</ns:symbol></ns:request></ns:getQuote>")
-                        , "Message mismatched");
+                Assert.assertNotNull(messages.get(i),
+                        "Message not found. message sent by proxy service not reached to the destination Queue");
+                Assert.assertTrue(messages.get(i).contains("<ns:getQuote xmlns:ns=\"http://services.samples\"><"
+                        + "ns:request><ns:symbol>RMQ</ns:symbol></ns:request></ns:getQuote>"), "Message mismatched");
             }
         }
         consumer.disconnect();
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Test ESB as a RabbitMQ Consumer with large messages ~10KB ")
+    @Test(groups = { "wso2.esb" },
+          description = "Test ESB as a RabbitMQ Consumer with large messages ~10KB ")
     public void testRabbitMQProducerLargeMessages() throws Exception {
         AxisServiceClient client = new AxisServiceClient();
-        RabbitMQConsumerClient consumer = new RabbitMQConsumerClient("localhost");
+        RabbitMQConsumerClient consumer = new RabbitMQConsumerClient(RabbitMQServerInstance.getHost());
 
         try {
             consumer.declareAndConnect("exchange1", "queue1");
@@ -103,10 +107,11 @@ public class RabbitMQProducerTestCase extends ESBIntegrationTest {
         } else {
             Assert.assertEquals(afterMessagesCount - beforeMessageCount, 5, "Messages not received at RabbitMQBroker");
             for (int i = beforeMessageCount; i < afterMessagesCount; i++) {
-                Assert.assertNotNull(messages.get(i), "Message not found. message sent by proxy service not reached to the destination Queue");
-                Assert.assertTrue(messages.get(i).contains("<ns:getQuote xmlns:ns=\"http://services.samples\"><" +
-                        "ns:request><ns:symbol>" + symbol + "</ns:symbol></ns:request></ns:getQuote>")
-                        , "Message mismatched");
+                Assert.assertNotNull(messages.get(i),
+                        "Message not found. message sent by proxy service not reached to the destination Queue");
+                Assert.assertTrue(messages.get(i).contains(
+                        "<ns:getQuote xmlns:ns=\"http://services.samples\"><" + "ns:request><ns:symbol>" + symbol
+                                + "</ns:symbol></ns:request></ns:getQuote>"), "Message mismatched");
             }
         }
         consumer.disconnect();
