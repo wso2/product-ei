@@ -1,50 +1,48 @@
 /*
-*  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-*
-*  WSO2 Inc. licenses this file to you under the Apache License,
-*  Version 2.0 (the "License"); you may not use this file except
-*  in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+ */
 
-package org.wso2.carbon.esb.jms.transport.test;
+package org.wso2.carbon.esb.jms.inbound.transport.test;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
-import org.apache.axis2.AxisFault;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.inbound.endpoint.InboundAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
-import javax.xml.stream.XMLStreamException;
 import java.rmi.RemoteException;
+import javax.xml.stream.XMLStreamException;
 
 /**
+ * Test whether JMS properties are propagated through inbound endpoints. 
  * https://wso2.org/jira/browse/ESBJAVA-4702
  */
 public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
     private InboundAdminClient inboundAdminClient;
     private LogViewerClient logViewerClient;
+    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     /**
      * This method initializes an activeMQ server and adds relevant synapse configs to the ESB instance
@@ -53,9 +51,12 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
      */
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
+        activeMQServer.startJMSBroker();
         super.init();
-        OMElement synapse = esbUtils.loadResource("artifacts/ESB/jms/transport/ESBJAVA4702synapseconfig.xml");
-        updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
+
+        verifyProxyServiceExistence("jmsHeaderInboundEpTestProxy");
+        verifySequenceExistence("jmsHeaderInboundEpTestLogSequence");
+
         inboundAdminClient = new InboundAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         addInboundEndpoint(addEndpoint());
     }
@@ -73,7 +74,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
             throws RemoteException, XMLStreamException, LogViewerLogViewerException, InterruptedException {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewerClient.clearLogs();
-        axis2Client.sendRobust(getProxyServiceURLHttp("JMSProxy"), null, null, AXIOMUtil.stringToOM("<body/>"));
+        axis2Client.sendRobust(getProxyServiceURLHttp("jmsHeaderInboundEpTestProxy"), null, null, AXIOMUtil.stringToOM("<body/>"));
         Thread.sleep(5000);
         boolean isHeaderSet = false;
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
@@ -89,6 +90,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
+        activeMQServer.stopJMSBroker();
     }
 
     /**
@@ -101,7 +103,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
         OMElement synapseConfig = null;
         synapseConfig = AXIOMUtil.stringToOM("<inboundEndpoint xmlns=\"http://ws.apache.org/ns/synapse\"\n" +
                 "                 name=\"JMSIE\"\n" +
-                "                 sequence=\"LogSequence\"\n" +
+                "                 sequence=\"jmsHeaderInboundEpTestLogSequence\"\n" +
                 "                 onError=\"inFault\"\n" +
                 "                 protocol=\"jms\"\n" +
                 "                 suspend=\"false\">\n" +
