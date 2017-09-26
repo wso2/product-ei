@@ -21,9 +21,13 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.rmi.RemoteException;
 
 public class Utils {
     public static OMElement getSimpleQuoteRequest(String symbol) {
@@ -117,5 +121,33 @@ public class Utils {
         } catch (Exception e) {
             System.out.println("Error killing the process which uses the port " + port);
         }
+    }
+
+    /**
+     * Check if the system log contains the expected string. The search will be done for maximum 10 seconds.
+     *
+     * @param logViewerClient log viewer used for test
+     * @param expected        expected string
+     * @return true if a match found, false otherwise
+     * @throws RemoteException             due to a logviewer error
+     * @throws LogViewerLogViewerException due to a logviewer error
+     */
+    public static boolean assertIfSystemLogContains(LogViewerClient logViewerClient, String expected)
+            throws RemoteException, LogViewerLogViewerException {
+        boolean matchFounf = false;
+        long startTime = System.currentTimeMillis();
+        LogEvent[] systemLogs;
+        while (!matchFounf && (System.currentTimeMillis() - startTime) < 10000) {
+            systemLogs = logViewerClient.getAllRemoteSystemLogs();
+            if (systemLogs != null) {
+                for (LogEvent logEvent : systemLogs) {
+                    if (logEvent.getMessage().contains(expected)) {
+                        matchFounf = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return matchFounf;
     }
 }
