@@ -21,12 +21,14 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQServerInstance;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.rabbitmqclient.RabbitMQProducerClient;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class RabbitMQJSONConsumerTestCase extends ESBIntegrationTest {
 
@@ -41,8 +43,9 @@ public class RabbitMQJSONConsumerTestCase extends ESBIntegrationTest {
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
-    private void initRabbitMQBroker() {
-        sender = new RabbitMQProducerClient("localhost", 5672, "guest", "guest");
+    private void initRabbitMQBroker() throws URISyntaxException {
+        sender = new RabbitMQProducerClient(RabbitMQServerInstance.getHost(), RabbitMQServerInstance.getPort(), "guest",
+                "guest");
         try {
             sender.declareAndConnect("exchange2", "queue2");
         } catch (IOException e) {
@@ -50,7 +53,8 @@ public class RabbitMQJSONConsumerTestCase extends ESBIntegrationTest {
         }
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Test ESB as a RabbitMQ consumer for JSON messages ")
+    @Test(groups = { "wso2.esb" },
+          description = "Test ESB as a RabbitMQ consumer for JSON messages ")
     public void testRabbitMQJSONConsumer() throws Exception {
         int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
