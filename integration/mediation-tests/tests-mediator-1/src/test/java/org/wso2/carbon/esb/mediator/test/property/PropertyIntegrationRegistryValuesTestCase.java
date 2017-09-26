@@ -6,6 +6,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.registry.PropertiesAdminServiceClient;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
@@ -19,12 +21,28 @@ import static org.testng.Assert.assertTrue;
 
 public class PropertyIntegrationRegistryValuesTestCase extends ESBIntegrationTest{
 
+    private static LogViewerClient logViewer;
+
     @BeforeClass(alwaysRun = true)
-    public void uploadSynapseConfig() throws Exception {
+    public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToRegistry();
-        loadESBConfigurationFromClasspath(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "propertyMediatorConfig" + File.separator + "registry_tests_config.xml");
+        logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
+    }
+
+    public boolean isPropertySet(String proxy, String matchStr) throws Exception{
+        boolean isSet = false;
+        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(proxy), null, "Random Symbol");
+        LogEvent[] logs = logViewer.getAllSystemLogs();
+        int afterLogSize = logs.length;
+        for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
+            if (logs[i].getMessage().contains(matchStr)) {
+                isSet = true;
+                break;
+            }
+        }
+        return isSet;
     }
 
     private void uploadResourcesToRegistry() throws Exception {
@@ -59,16 +77,12 @@ public class PropertyIntegrationRegistryValuesTestCase extends ESBIntegrationTes
 
     @Test(groups = "wso2.esb", description = "Set value from config registry (default scope)")
     public void testConfVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("conf_registry_test"), null, "WSO2");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("WSO2 Company"));
-
+        assertTrue(isPropertySet("propertyConfRegistryTestProxy", "symbol = Config Reg Test String"), "Property Not Set!");
     }
 
     @Test(groups = "wso2.esb", description = "Set value from goverance registry (default scope)")
     public void testGovVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("gov_registry_test"), null, "WSO2");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("WSO2 Company"));
-
+        assertTrue(isPropertySet("propertyGovRegistryTestProxy", "symbol = Gov Reg Test String"), "Property Not Set!");
     }
 
     private void clearRegistry() throws Exception {

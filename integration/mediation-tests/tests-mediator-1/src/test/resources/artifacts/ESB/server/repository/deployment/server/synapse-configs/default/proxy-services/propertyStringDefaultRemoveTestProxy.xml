@@ -1,0 +1,32 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyStringDefaultRemoveTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                <default>
+                    <property xmlns="http://ws.apache.org/ns/synapse" name="StringVal" value="WSO2 Lanka"  scope="default" type="STRING" />
+                </default>
+            </switch>
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:StringVal" />
+            </log>
+
+            <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                <default>
+                    <property xmlns="http://ws.apache.org/ns/synapse" name="StringVal" action="remove"  scope="default" />
+                </default>
+            </switch>
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:StringVal" />
+            </log>
+
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

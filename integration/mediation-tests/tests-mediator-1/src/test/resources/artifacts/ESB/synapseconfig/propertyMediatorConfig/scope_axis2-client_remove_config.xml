@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <proxy name="integerVal_axis2-client_scope_remove" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="IntVal" value="123"  scope="axis2-client" type="INTEGER" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:IntVal" />
+                </log>
+
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="IntVal" action="remove"  scope="axis2-client"/>
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:IntVal" />
+                </log>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="stringVal_axis2-client_scope_remove" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="StringVal" value="WSO2 Lanka"  scope="axis2-client" type="STRING" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:StringVal" />
+                </log>
+
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="StringVal" action="remove"  scope="axis2-client" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:StringVal" />
+                </log>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="floatVal_axis2-client_scope_remove" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="FloatVal" value="123.123"  scope="axis2-client" type="FLOAT" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:FloatVal" />
+                </log>
+
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="FloatVal" action="remove"  scope="axis2-client" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:FloatVal" />
+                </log>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="longVal_axis2-client_scope_remove" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" value="123123123"  scope="axis2-client" type="LONG" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:LongVal" />
+                </log>
+
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" action="remove"  scope="axis2-client" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:LongVal" />
+                </log>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="shortVal_axis2-client_scope_remove" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="ShortVal" value="12"  scope="axis2-client" type="SHORT" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:ShortVal" />
+                </log>
+
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="ShortVal" action="remove"  scope="axis2-client" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:ShortVal" />
+                </log>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+
+    <proxy name="omVal_axis2-client_scope_remove" transports="http,https">
+        <target>
+            <inSequence>
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="OMVal" scope="axis2-client" type="LONG">
+                            <xmll222 xmlns="">OMMMMM</xmll222>
+                        </property>
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:OMVal" />
+                </log>
+
+                <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
+                    <default>
+                        <property xmlns="http://ws.apache.org/ns/synapse" name="OMVal" action="remove" scope="axis2-client" />
+                    </default>
+                </switch>
+                <log level="custom">
+                    <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$axis2:OMVal" />
+                </log>
+
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+    </proxy>
+</definitions>

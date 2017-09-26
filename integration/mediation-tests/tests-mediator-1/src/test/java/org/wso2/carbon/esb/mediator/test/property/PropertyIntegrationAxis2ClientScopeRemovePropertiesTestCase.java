@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.mediator.test.property;
 
 import org.apache.axiom.om.OMElement;
+import org.apache.synapse.MessageContext;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -31,7 +32,7 @@ import java.io.File;
 
 import static org.testng.Assert.assertTrue;
 
-public class PropertyIntegrationOperationScopeTestCase extends ESBIntegrationTest{
+public class PropertyIntegrationAxis2ClientScopeRemovePropertiesTestCase extends ESBIntegrationTest{
 
     private static LogViewerClient logViewer;
 
@@ -48,7 +49,7 @@ public class PropertyIntegrationOperationScopeTestCase extends ESBIntegrationTes
         LogEvent[] logs = logViewer.getAllSystemLogs();
         int afterLogSize = logs.length;
         for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
-            if (logs[i].getMessage().contains(matchStr)) {
+            if (logs[i].getMessage().contains("symbol = null") && logs[i+1].getMessage().contains(matchStr)) {
                 isSet = true;
                 break;
             }
@@ -56,34 +57,34 @@ public class PropertyIntegrationOperationScopeTestCase extends ESBIntegrationTes
         return isSet;
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Double (operation scope)")
-    public void testDoubleVal() throws Exception {
-        assertTrue(isPropertySet("propertyDoubleOperationTestProxy", "symbol = 123123.123123"), "Property Not Set!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Integer (operation scope)")
+    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Integer (axis2-client scope)")
     public void testIntVal() throws Exception {
-        assertTrue(isPropertySet("propertyIntOperationTestProxy", "symbol = 123"), "Property Not Set!");
+        assertTrue(isPropertySet("propertyIntAxis2ClientRemoveTestProxy", "symbol = 123"), "Property Not Either Set or Removed!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type String (operation scope)")
+    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type String (axis2-client scope)")
     public void testStringVal() throws Exception {
-        assertTrue(isPropertySet("propertyStringOperationTestProxy", "symbol = WSO2 Lanka"), "Property Not Set!");
+        assertTrue(isPropertySet("propertyStringAxis2ClientRemoveTestProxy", "symbol = WSO2 Lanka"), "Property Not Either Set or Removed!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Boolean (operation scope)")
-    public void testBooleanVal() throws Exception {
-        assertTrue(isPropertySet("propertyBooleanOperationTestProxy", "symbol = true"), "Property Not Set!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Float (operation scope)")
+    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Float (axis2-client scope)")
     public void testFloatVal() throws Exception {
-        assertTrue(isPropertySet("propertyFloatOperationTestProxy", "symbol = 123.123"), "Property Not Set!");
+        assertTrue(isPropertySet("propertyFloatAxis2ClientRemoveTestProxy", "symbol = 123.123"), "Property Not Either Set or Removed!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Short (operation scope)")
+    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Long (axis2-client scope)")
+    public void testLongVal() throws Exception {
+        assertTrue(isPropertySet("propertyLongAxis2ClientRemoveTestProxy", "symbol = 123123123"), "Property Not Either Set or Removed!");
+    }
+
+    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Short (axis2-client scope)")
     public void testShortVal() throws Exception {
-        assertTrue(isPropertySet("propertyShortOperationTestProxy", "symbol = 12"), "Property Not Set!");
+        assertTrue(isPropertySet("propertyShortAxis2ClientRemoveTestProxy", "symbol = 12"), "Property Not Either Set or Removed!");
+    }
+
+    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type OM (axis2-client scope)")
+    public void testOMVal() throws Exception {
+        assertTrue(isPropertySet("propertyOMAxis2ClientRemoveTestProxy", "symbol = OMMMMM"), "Property Not Either Set or Removed!");
     }
 
     @AfterClass(alwaysRun = true)

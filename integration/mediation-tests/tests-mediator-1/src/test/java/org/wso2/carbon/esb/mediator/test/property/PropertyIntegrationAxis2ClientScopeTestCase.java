@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -22,59 +22,68 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;
 import java.io.File;
 
+import static org.testng.Assert.assertTrue;
+
 public class PropertyIntegrationAxis2ClientScopeTestCase extends ESBIntegrationTest{
+
+    private static LogViewerClient logViewer;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "propertyMediatorConfig" + File.separator + "scope_axis2-client_config.xml");
+        logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
+    }
+
+    public boolean isPropertySet(String proxy, String matchStr) throws Exception{
+        boolean isSet = false;
+        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(proxy), null, "Random Symbol");
+        LogEvent[] logs = logViewer.getAllSystemLogs();
+        int afterLogSize = logs.length;
+        for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
+            if (logs[i].getMessage().contains(matchStr)) {
+                isSet = true;
+                break;
+            }
+        }
+        return isSet;
     }
 
     @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Double (axis2-client scope)")
     public void testDoubleVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("doubleVal_axis2-client_scope"), null, "123123.123123");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("123123.123123 Company"));
-
+        assertTrue(isPropertySet("propertyDoubleAxis2ClientTestProxy", "symbol = 123123.123123"), "Property Not Set!");
     }
 
     @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Integer (axis2-client scope)")
     public void testIntVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("integerVal_axis2-client_scope"), null, "123");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("123 Company"));
-
+        assertTrue(isPropertySet("propertyIntAxis2ClientTestProxy", "symbol = 123"), "Property Not Set!");
     }
 
     @Test(groups = "wso2.esb", description = "Set action as \"value\" and type String (axis2-client scope)")
     public void testStringVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("stringVal_axis2-client_scope"), null, "WSO2");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("WSO2 Company"));
-
+        assertTrue(isPropertySet("propertyStringAxis2ClientTestProxy", "symbol = WSO2"), "Property Not Set!");
     }
 
     @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Boolean (axis2-client scope)")
     public void testBooleanVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("booleanVal_axis2-client_scope"), null, "TRUE");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("TRUE Company"));
-
+        assertTrue(isPropertySet("propertyBooleanAxis2ClientTestProxy", "symbol = true"), "Property Not Set!");
     }
 
     @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Float (axis2-client scope)")
     public void testFloatVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("floatVal_axis2-client_scope"), null, "123.123");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("123.123 Company"));
-
+        assertTrue(isPropertySet("propertyFloatAxis2ClientTestProxy", "symbol = 123.123"), "Property Not Set!");
     }
 
     @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Short (axis2-client scope)")
     public void testShortVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("shortVal_axis2-client_scope"), null, "12");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("12 Company"));
-
+        assertTrue(isPropertySet("propertyShortAxis2ClientTestProxy", "symbol = 12"), "Property Not Set!");
     }
 
     @AfterClass(alwaysRun = true)
