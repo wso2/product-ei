@@ -28,6 +28,9 @@
         <store messageStore="JDBC"/>
     </sequence>
     <sequence name="secondSeq">
+
+        <header name="Action" value="urn:placeOrder"/>
+
         <call>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
