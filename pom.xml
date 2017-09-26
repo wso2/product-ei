@@ -1160,9 +1160,9 @@
                 <version>${orbit.fasterxml.jackson.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
+                <groupId>org.wso2.orbit.com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>${fasterxml.jackson.version}</version>
+                <version>${orbit.fasterxml.jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
@@ -1209,6 +1209,33 @@
                 <artifactId>h2</artifactId>
                 <version>${h2.db.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!--Elasticsearch Transport Client Dependencies-->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>x-pack-transport</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>org.wso2.carbon.das.messageflow.data.publisher</artifactId>
+                <version>${carbon.mediation.version}</version>
+            </dependency>
+            <!--Log4j-2 dependencies for the Transport Client-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -1425,7 +1452,7 @@
         <cipher.tool.version>1.0.0-wso2v6</cipher.tool.version>
         <commons.io.version>2.2</commons.io.version>
         <commons-httpclient.version>3.1.0.wso2v2</commons-httpclient.version>
-        <netty.version>4.1.7.Final</netty.version>
+        <netty.version>4.1.11.Final</netty.version>
 
         <!-- auto Framework versions -->
         <automation.framework.version>4.4.3</automation.framework.version>
@@ -1437,8 +1464,16 @@
         <activemq.version>5.9.1</activemq.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
-        <orbit.fasterxml.jackson.version>2.2.3.wso2v1</orbit.fasterxml.jackson.version>
-        <fasterxml.jackson.version>2.2.3</fasterxml.jackson.version>
+        <orbit.fasterxml.jackson.version>2.6.1.wso2v1</orbit.fasterxml.jackson.version>
+
+        <!--ei.analytics.elk version-->
+        <analytics.elk.version>1.0</analytics.elk.version>
+
+        <!-- Elasticsearch Version -->
+        <elasticsearch.version>5.4.3</elasticsearch.version>
+
+        <!-- Log4j2 Version -->
+        <log4j2.version>2.8.2</log4j2.version>
 
         <!-- Maven Plugin Version -->
         <maven.build.helper.plugin.version>1.8</maven.build.helper.plugin.version>
@@ -1482,6 +1517,17 @@
                 <updatePolicy>daily</updatePolicy>
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
+        </pluginRepository>
+        <!--For Elasticsearch dependencies-->
+        <pluginRepository>
+            <id>elasticsearch-releases</id>
+            <url>https://artifacts.elastic.co/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
 
