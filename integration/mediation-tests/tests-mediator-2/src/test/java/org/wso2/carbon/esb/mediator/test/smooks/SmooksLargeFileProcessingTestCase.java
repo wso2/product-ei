@@ -15,6 +15,7 @@
 *specific language governing permissions and limitations
 *under the License.
 */
+
 package org.wso2.carbon.esb.mediator.test.smooks;
 
 import org.apache.axiom.om.util.AXIOMUtil;
@@ -24,85 +25,36 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
+import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import javax.activation.DataHandler;
 
-public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTest {
+/**
+ * This test case is for verifying the functionality of processing relatively large files(>16K TCP buffer size) with
+ * smooks mediator
+ */
+public class SmooksLargeFileProcessingTestCase extends ESBIntegrationTest {
+
+    private ResourceAdminServiceClient resourceAdminServiceClient;
     private boolean isProxyDeployed = false;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+
         super.init();
+        resourceAdminServiceClient = new ResourceAdminServiceClient
+                (contextUrls.getBackEndUrl(), context.getContextTenant().getContextUser().getUserName()
+, context.getContextTenant().getContextUser().getPassword());
+
+        uploadResourcesToConfigRegistry();
         addSmooksProxy();
-    }
-
-    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE })
-    @Test(groups = {"wso2.esb"}, description = "Transform from a Smook mediator config from a local entry")
-    public void testSendingToSmooks() throws Exception {
-        String smooksResourceDir = getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath();
-        Path source = Paths.get(smooksResourceDir, "edi.txt");
-        Path destination = Paths.get(smooksResourceDir + "test", "in", "edi.txt");
-        Files.createDirectories(Paths.get(smooksResourceDir, "test", "in"));
-        Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
-        /*
-         * The polling interval of the VFS proxy is 1000 ms. Therefore 2000ms waiting time was added to provide
-         * enough time for the processing
-         */
-        Thread.sleep(2000);
-
-        Path outPutFilePath = Paths.get(smooksResourceDir, "test", "out", "config-localentry-test-out.xml");
-        Assert.assertTrue(Files.exists(outPutFilePath), "output file has not been created, there could be an issue "
-                + "in picking up smooks configuration as a local entry");
-        String smooksOut = new String(
-                Files.readAllBytes(outPutFilePath));
-        Assert.assertTrue(smooksOut.contains(
-                "<?xml version='1.0' encoding='UTF-8'?>"
-                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">"
-                        + "<soapenv:Body>"
-                        + "<orders>\n\t"
-                        + "<header>\n\t\t"
-                        + "<batch-id>1200</batch-id>\n\t\t"
-                        + "<date>2008-01-01</date>\n\t</header>\n\t"
-                        + "<order>\n\t\t"
-                        + "<price>50.00</price>\n\t\t"
-                        + "<quantity>500</quantity>\n\t\t"
-                        + "<symbol>IBM</symbol>\n\t\t"
-                        + "<comment>REF 10053</comment>\n\t"
-                        + "</order>\n"
-                        + "</orders>"
-                        + "</soapenv:Body>"
-                        + "</soapenv:Envelope>"), "Transformation may not have happened as expected");
-
-    }
-
-    private void addSmooksProxy() throws Exception {
-        addProxyService(AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<proxy xmlns=\"http://ws.apache.org/ns/synapse\" name=\"SmooksProxy\" transports=\"vfs\" "
-                + "startOnLoad=\"true\">\n"
-                + "    <target>\n" + "    <inSequence>\n" + "    <log level=\"full\"/>\n"
-                + "    <smooks config-key=\"smooksKey\">\n" + "        <input type=\"text\"/>\n"
-                + "        <output type=\"xml\"/>\n" + "    </smooks>\n"
-                + "    <property name=\"OUT_ONLY\" value=\"true\"/>\n" + "    <send>\n"
-                + "        <endpoint name=\"FileEpr\">\n" + "            <address uri=\"vfs:file://" + getClass()
-                .getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "out"
-                + File.separator + "config-localentry-test-out" + ".xml\" format=\"soap11\"/>\n"
-                + "        </endpoint>\n" + "    </send>\n" + "    <log level=\"full\"/>\n" + "    </inSequence>\n"
-                + "    </target>\n" + "    <parameter name=\"transport.PollInterval\">1</parameter>\n"
-                + "    <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "in"
-                + File.separator + "</parameter>\n"
-                + "    <parameter name=\"transport.vfs.FileNamePattern\">.*\\.txt</parameter>\n"
-                + "    <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" + "</proxy>"));
-        isProxyDeployed = true;
     }
 
     @AfterClass(alwaysRun = true)
@@ -111,9 +63,69 @@ public class SmooksMediatorConfigFromLocalEntryTestCase extends ESBIntegrationTe
             if (isProxyDeployed) {
                 deleteProxyService("SmooksProxy");
             }
+            resourceAdminServiceClient.deleteResource("/_system/config/smooks_config.xml");
         } finally {
             super.cleanup();
+            resourceAdminServiceClient = null;
         }
     }
+
+    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
+})
+    @Test(groups = {"wso2.esb"}, description = "Sending a Large File To Smooks Mediator")
+    public void testSendingToSmooks() throws Exception {
+        String smooksResourceDir = getClass().getResource(
+                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
+                        + File.separator + "smooks" + File.separator).getPath();
+        Path source = Paths.get(smooksResourceDir, "person.csv");
+        Path destination = Paths.get(smooksResourceDir + "test", "in", "person.csv");
+
+        Files.createDirectories(Paths.get(smooksResourceDir, "test", "in"));
+        Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+        /*
+         * The polling interval of the VFS proxy is 1000 ms. Therefore 2000ms waiting time was added to provide
+         * enough time for the processing
+         */
+        Thread.sleep(2000);
+
+        String smooksOut = new String(Files.readAllBytes(Paths.get(smooksResourceDir, "test", "out", "Out.xml")));
+        Assert.assertTrue(smooksOut.contains(
+                "<csv-record number=\"160\"><firstname>Andun</firstname><lastname>Sameera</lastname>"
+                        + "<gender>Male</gender><age>4</age><country>SriLanka</country></csv-record>"), "Large file "
+                + "transformation may not have completed as expected");
+
+    }
+
+    private void uploadResourcesToConfigRegistry() throws Exception {
+        resourceAdminServiceClient.addResource(
+                "/_system/config/smooks_config.xml", "application/xml", "xml files",
+                new DataHandler(new URL("file:///" + getClass().getResource(
+                        "/artifacts/ESB/synapseconfig/smooks/smooks_config.xml").getPath())));
+    }
+
+    private void addSmooksProxy() throws Exception {
+
+        addProxyService(AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<proxy xmlns=\"http://ws.apache.org/ns/synapse\" name=\"SmooksProxy\" transports=\"vfs\" "
+                + "startOnLoad=\"true\">\n"
+                + "    <target>\n" + "    <inSequence>\n" + "    <log level=\"full\"/>\n"
+                + "    <smooks config-key=\"conf:/smooks_config.xml\">\n" + "        <input type=\"text\"/>\n"
+                + "        <output type=\"xml\"/>\n" + "    </smooks>\n"
+                + "    <property name=\"OUT_ONLY\" value=\"true\"/>\n" + "    <send>\n"
+                + "        <endpoint name=\"FileEpr\">\n" + "            <address uri=\"vfs:file://" + getClass()
+                .getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
+                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "out"
+                + File.separator + "Out.xml\" format=\"soap11\"/>\n" + "        </endpoint>\n" + "    </send>\n"
+                + "    <log level=\"full\"/>\n" + "    </inSequence>\n" + "    </target>\n"
+                + "    <parameter name=\"transport.PollInterval\">1</parameter>\n"
+                + "    <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(
+                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
+                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "in"
+                + File.separator + "</parameter>\n"
+                + "    <parameter name=\"transport.vfs.FileNamePattern\">.*\\.csv</parameter>\n"
+                + "    <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" + "</proxy>"));
+        isProxyDeployed = true;
+    }
+
 }
 
