@@ -17,39 +17,39 @@
         </packages>
     </test>
 
-    <test name="RabbitMQ-Transport-Connection-Recovery-Test" preserve-order="true" verbose="2">
-        <packages>
-            <!--Add independent tests to a different package. Recovery tests are added to a different package
-            since it involves server stopping and restarting and cannot be handled with
-            RabbitMQBrokerStartup testcase alone-->
-            <package name="org.wso2.carbon.esb.rabbitmq.transport.recovery.test"/>
-        </packages>
-    </test>
+    <!--<test name="RabbitMQ-Transport-Connection-Recovery-Test" preserve-order="true" verbose="2">-->
+        <!--<packages>-->
+            <!--&lt;!&ndash;Add independent tests to a different package. Recovery tests are added to a different package-->
+            <!--since it involves server stopping and restarting and cannot be handled with-->
+            <!--RabbitMQBrokerStartup testcase alone&ndash;&gt;-->
+            <!--<package name="org.wso2.carbon.esb.rabbitmq.transport.recovery.test"/>-->
+        <!--</packages>-->
+    <!--</test>-->
 
-    <test name="RabbitMQ-message-store-test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.rabbitmq.message.store.jira"/>
-        </packages>
-    </test>
+    <!--<test name="RabbitMQ-message-store-test" preserve-order="true" verbose="2">-->
+        <!--<packages>-->
+            <!--<package name="org.wso2.carbon.esb.rabbitmq.message.store.jira"/>-->
+        <!--</packages>-->
+    <!--</test>-->
 
 
-    <test name="RabbitMQ-Transport-Qos-test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.rabbitmq.qos.jira"/>
-        </packages>
-    </test>
+    <!--<test name="RabbitMQ-Transport-Qos-test" preserve-order="true" verbose="2">-->
+        <!--<packages>-->
+            <!--<package name="org.wso2.carbon.esb.rabbitmq.qos.jira"/>-->
+        <!--</packages>-->
+    <!--</test>-->
 
-    <test name="RabbitMQ-Transport-multiple-listner" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.rabbitmq.multiple.listner"/>
-        </packages>
-    </test>
+    <!--<test name="RabbitMQ-Transport-multiple-listner" preserve-order="true" verbose="2">-->
+        <!--<packages>-->
+            <!--<package name="org.wso2.carbon.esb.rabbitmq.multiple.listner"/>-->
+        <!--</packages>-->
+    <!--</test>-->
 
-    <test name="RabbitMQ-Transport-securevault-test" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.rabbitmq.securevault.TestRabbitMQSecureVaultSupport"/>
-        </classes>
-    </test>
+    <!--<test name="RabbitMQ-Transport-securevault-test" preserve-order="true" verbose="2">-->
+        <!--<classes>-->
+            <!--<class name="org.wso2.carbon.esb.rabbitmq.securevault.TestRabbitMQSecureVaultSupport"/>-->
+        <!--</classes>-->
+    <!--</test>-->
 
 </suite>
 
