@@ -17,24 +17,6 @@
   -->
 
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <api name="DeviceIDAPI"
-         context="/deviceid">
-        <resource methods="POST" uri-template="/">
-            <inSequence>
-                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
-                <log level="full"/>
-                <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
-                <property name="messageType"
-                          value="application/json"
-                          scope="axis2"
-                          type="STRING"/>
-                <log level="full">
-                    <property name="received" value="true"/>
-                </log>
-                <respond/>
-            </inSequence>
-        </resource>
-    </api>
     <proxy name="RabbitMQJSONProxy"
            transports="rabbitmq"
            startOnLoad="true"
@@ -42,22 +24,14 @@
         <description/>
         <target>
             <inSequence>
-                <property name="OUT_ONLY" value="true"/>
                 <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
-                <send>
-                    <endpoint>
-                        <http method="post" uri-template="http://localhost:8480/deviceid/"/>
-                    </endpoint>
-                </send>
+                <log level="full">
+                    <property name="received" value="true"/>
+                </log>
             </inSequence>
         </target>
         <parameter name="rabbitmq.message.content.type">application/json</parameter>
-        <parameter name="rabbitmq.queue.name">queue2</parameter>
-        <parameter name="rabbitmq.message.headers"/>
+        <parameter name="rabbitmq.queue.name">consumer_json</parameter>
         <parameter name="rabbitmq.connection.factory">AMQPConnectionFactory</parameter>
-        <parameter name="rabbitmq.exchange.name">exchange2</parameter>
-        <parameter name="rabbitmq.queue.routing.key">queue2</parameter>
-        <parameter name="rabbitmq.queue.durable">true</parameter>
-        <parameter name="rabbitmq.queue.auto.delete">false</parameter>
     </proxy>
 </definitions>

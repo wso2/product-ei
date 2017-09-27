@@ -28,6 +28,7 @@ import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
 import org.wso2.esb.integration.common.utils.clients.rabbitmqclient.RabbitMQConsumerClient;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class RabbitMQProducerTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/rabbitmq/transport/rabbitmq_endpoint_proxy.xml");
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator
+                                          + "ESB" + File.separator + "rabbitmq" + File.separator +
+                                          "transport" + File.separator + "rabbitmq_endpoint_proxy.xml");
     }
 
     @Test(groups = { "wso2.esb" },
@@ -58,6 +61,7 @@ public class RabbitMQProducerTestCase extends ESBIntegrationTest {
             client.sendRobust(Utils.getStockQuoteRequest("RMQ"), getProxyServiceURLHttp("RabbitMQProducerProxy"),
                     "getQuote");
         }
+        //wait for the log to get updated
         Thread.sleep(10000);
 
         messages = consumer.popAllMessages();

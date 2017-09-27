@@ -369,10 +369,10 @@
     <!--Uncomment this and configure as appropriate for RabbitMQ transport support-->
     <transportReceiver name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
         <parameter name="AMQPConnectionFactory" locked="false">
-            <parameter name="rabbitmq.server.host.name" locked="false">192.168.99.100</parameter>
+            <parameter name="rabbitmq.server.host.name" locked="false">localhost</parameter>
             <parameter name="rabbitmq.server.port" locked="false">5672</parameter>
-            <parameter name="rabbitmq.server.user.name" locked="false"></parameter>
-            <parameter name="rabbitmq.server.password" locked="false"></parameter>
+            <parameter name="rabbitmq.server.user.name" locked="false">guest</parameter>
+            <parameter name="rabbitmq.server.password" locked="false">guest</parameter>
             <parameter name="rabbitmq.connection.retry.interval" locked="false">10000</parameter>
             <parameter name="rabbitmq.connection.retry.count" locked="false">5</parameter>
         </parameter>
