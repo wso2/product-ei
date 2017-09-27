@@ -18,11 +18,16 @@
 
 package org.wso2.esb.integration.common.utils.servers;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * This class can be used to capture wire messages
  */
 public class WireMonitorServer {
-    private static final int TIMEOUT_VALUE = 60000;
+
+    private static Log log = LogFactory.getLog(WireMonitorServer.class);
+    private static final int TIMEOUT_VALUE = 30000;
     boolean isFinished = false;
     String response;
     int port;
@@ -54,6 +59,13 @@ public class WireMonitorServer {
             // If wire monitor is not responding than 2min this will continue
             if (System.currentTimeMillis() > (time + TIMEOUT_VALUE)) {
                 break;
+            }
+            try {
+                //wait to avoid busy waiting
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                //ignore
+                log.warn("InterruptedException while waiting", e);
             }
         }
         return response;
