@@ -92,7 +92,6 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
         StringReader customerData = new StringReader(createCustomerData);
         StringWriter postResponseData = new StringWriter();
         URL postRestURL = new URL((getApiInvocationURL(CUSTOMER_API_CONTEXT)) + RESOURCE_CONTEXT);
-        System.out.println();
         HttpURLConnectionClient.sendPostRequest(customerData, postRestURL, postResponseData, "application/xml");
         assertTrue(postResponseData.toString().contains(customerName),
                 "response doesn't contain the expected output but contains: " + postResponseData.toString());
