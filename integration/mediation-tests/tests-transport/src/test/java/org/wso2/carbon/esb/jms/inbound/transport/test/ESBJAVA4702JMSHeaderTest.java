@@ -84,7 +84,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
                 isHeaderSet = true;
             }
         }
-        Assert.assertTrue(isHeaderSet);
+        Assert.assertTrue(isHeaderSet, "Log for transport header is not present in carbon log");
     }
 
     @AfterClass(alwaysRun = true)
