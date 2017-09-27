@@ -143,7 +143,7 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("HttpEndPointProxy")
                 , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         Assert.assertNotNull(response);
-        Assert.assertTrue(response.toString().contains("WSO2 Company"));
+        Assert.assertTrue(response.toString().contains("WSO2 Company"),"Contains unexpected output: " +response.toString() );
     }
 
     @Test(groups = {"wso2.esb"}, description = "Sending a Message to HTTP Endpoint with invalid URI", priority = 3)
@@ -155,7 +155,7 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
             OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("InvalidHttpEndPointProxy"),
                     getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         } catch (Exception e) {
-            Assert.assertTrue(e instanceof AxisFault);
+            Assert.assertTrue(e instanceof AxisFault,"Did not throw expected error condition for invalid endpoint.");
         }
     }
 
@@ -166,7 +166,7 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
             OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("MissingVariableEndPointProxy"),
                     getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         } catch (Exception e) {
-            Assert.assertTrue(e instanceof AxisFault);
+            Assert.assertTrue(e instanceof AxisFault,"Did not throw expected error condition for invalid endpoint.");
         }
     }
 
