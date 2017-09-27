@@ -1,0 +1,6 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="transactionTestFaultSeq">
+    <log>
+        <property name="Message" value="Fault Sequence of Transaction Mediator Test" />
+    </log>
+    <transaction action="rollback" />
+</sequence>

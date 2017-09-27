@@ -1,0 +1,32 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="transactionTestMainSeq" onError="transactionTestFaultSeq">
+    <log>
+        <property name="Message" value="Start Commit Transaction" />
+    </log>
+    <transaction action="new" />
+    <dbreport useTransaction="true">
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TestDB1</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql>delete from PERSON1 where name = ?</sql>
+            <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+        </statement>
+    </dbreport>
+    <dbreport useTransaction="true">
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TestDB1</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql>INSERT into PERSON2 (id, name) values (2, ?);</sql>
+            <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+        </statement>
+    </dbreport>
+    <transaction action="commit" />
+    <log>
+        <property name="Message" value="Finish Commit Transaction" />
+    </log>
+</sequence>
