@@ -290,6 +290,12 @@
         </packages>
     </test-->
 
+    <test name="MSMP-Testcases" preserve-order="true" verbose="2">
+        <classes>
+            <!--TODO Uncomment following test case after wso2-synapse 2.1.7-wso2v22 upgrade
+            <class name="org.wso2.carbon.esb.message.processor.test.MessageProcessorSOAPHeadersTestcase"/-->
+        </classes>
+    </test>
 
 </suite>
 
