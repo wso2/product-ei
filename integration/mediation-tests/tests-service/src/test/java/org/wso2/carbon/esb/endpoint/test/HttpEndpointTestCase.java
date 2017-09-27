@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2013, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005-2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -58,6 +58,7 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
     private static final String customerId = "8fa3fc1b-f63c-4b21-8aff-3ac684c74d97";
     private static final String customerName = "John";
     private static final String updateCustomerName = "Emma";
+    private static final String getCustomerResponse = "<getCustomerResponse xmlns=\"http://ws.apache.org/ns/synapse\"><id>8fa3fc1b-f63c-4b21-8aff-3ac684c74d97</id><name>John</name></getCustomerResponse>";
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -103,8 +104,7 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
 
         String getRestURI = getApiInvocationURL(CUSTOMER_API_CONTEXT) + RESOURCE_CONTEXT + "/" + customerId;
         HttpResponse getResponseData = HttpURLConnectionClient.sendGetRequest(getRestURI, null);
-        assertTrue(getResponseData.getData().contains(
-                "<getCustomerResponse xmlns=\"http://ws.apache.org/ns/synapse\"><id>8fa3fc1b-f63c-4b21-8aff-3ac684c74d97</id><name>John</name></getCustomerResponse>"),
+        assertTrue(getResponseData.getData().contains(getCustomerResponse),
                 "Unexpected output received:" + getResponseData.toString());
 
     }
