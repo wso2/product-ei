@@ -33,11 +33,11 @@
     <!--</test>-->
 
 
-    <!--<test name="RabbitMQ-Transport-Qos-test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.rabbitmq.qos.jira"/>-->
-        <!--</packages>-->
-    <!--</test>-->
+    <test name="RabbitMQ-Transport-Qos-test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.rabbitmq.qos.jira"/>
+        </packages>
+    </test>
 
     <!--<test name="RabbitMQ-Transport-multiple-listner" preserve-order="true" verbose="2">-->
         <!--<packages>-->
