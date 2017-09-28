@@ -59,7 +59,7 @@ public class JMSInboundBrokerShutdownTestCase extends ESBIntegrationTest {
                         + "                 protocol=\"jms\"\n"
                         + "                 suspend=\"false\">\n"
                         + "    <parameters>\n"
-                        + "        <parameter name=\"interval\">5000</parameter>\n"
+                        + "        <parameter name=\"interval\">1000</parameter>\n"
                         + "        <parameter name=\"transport.jms.Destination\">brokershutdownqueue</parameter>\n"
                         + "        <parameter name=\"transport.jms.CacheLevel\">0</parameter>\n"
                         + "        <parameter name=\"transport.jms"
@@ -84,8 +84,7 @@ public class JMSInboundBrokerShutdownTestCase extends ESBIntegrationTest {
         Assert.assertTrue(assertAffected, "ESB server not affected by broker shutdown.");
 
         //Test behaviour when the server restarts after the broker shuts down
-        boolean affected = false;
-        boolean serverStarted = false;
+        boolean expectedErrorOccurred = false;
         boolean assertSuccessfulStart = false;
         String logMessage;
         serverConfigurationManager.restartGracefully();
@@ -93,7 +92,7 @@ public class JMSInboundBrokerShutdownTestCase extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         long startTime = System.currentTimeMillis();
         LogEvent[] remoteSystemLogs;
-        while (!serverStarted && (System.currentTimeMillis() - startTime) < 20000) {
+        while (!expectedErrorOccurred && (System.currentTimeMillis() - startTime) < 50000) {
             remoteSystemLogs  = logViewerClient.getAllRemoteSystemLogs();
             if (remoteSystemLogs != null) {
                 for (LogEvent logEvent : remoteSystemLogs) {
@@ -103,15 +102,14 @@ public class JMSInboundBrokerShutdownTestCase extends ESBIntegrationTest {
                      */
                     logMessage = logEvent.getMessage();
                     if (logMessage.contains(expectedErrorMessage)) {
-                        affected = true;
+                        expectedErrorOccurred = true;
                     }
+                    /*
+                    Since the logs are in reversed order, the start up is considered successful only if the error is
+                    already logged.
+                     */
                     if (logMessage.contains("WSO2 Carbon started")) {
-                        /*
-                        Since the logs are in reversed order, the start up is considered successful only if the error is
-                        already logged.
-                         */
-                        assertSuccessfulStart = affected;
-                        serverStarted = true;
+                        assertSuccessfulStart = expectedErrorOccurred;
                         break;
                     }
                 }
