@@ -121,7 +121,7 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                 serverManager.stopServer();
             }
         } catch (Exception e) {
-            handleException("Fail to stop carbon server ", e);
+            log.error("Fail to stop carbon server ", e);
         }
     }
 
