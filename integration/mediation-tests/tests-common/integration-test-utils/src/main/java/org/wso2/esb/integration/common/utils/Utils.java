@@ -21,6 +21,8 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageConsumer;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
@@ -122,6 +124,28 @@ public class Utils {
         } catch (Exception e) {
             System.out.println("Error killing the process which uses the port " + port);
         }
+    }
+
+    /**
+     * Check if the given queue does not contain any messages
+     *
+     * @param queueName queue to be checked
+     * @return true in queue is empty, false otherwise
+     * @throws Exception if error while checking
+     */
+    public static boolean isQueueEmpty(String queueName) throws Exception {
+
+        String poppedMessage;
+        JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(
+                JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
+        try {
+            consumer.connect(queueName);
+            poppedMessage = consumer.popMessage();
+        } finally {
+            consumer.disconnect();
+        }
+
+        return poppedMessage == null;
     }
 
     /**
