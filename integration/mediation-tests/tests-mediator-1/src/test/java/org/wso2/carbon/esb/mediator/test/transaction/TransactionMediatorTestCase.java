@@ -29,9 +29,9 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import java.net.URL;
 
 /**
- * Test the actions of Transaction Mediator including commit, rollback, etc.
+ * Test the actions of Transaction Mediator including new, commit, rollback, fault-if-no-tx, use-existing-or-new, etc.
  * <p>
- * Perform different transactions and test for final id of the database entries in two tables
+ * Perform different transactions and test for final indexes of the database entries
  */
 public class TransactionMediatorTestCase extends ESBIntegrationTest {
     private static final String API_URL = "http://localhost:8480/transaction-test/";
@@ -40,14 +40,21 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
     private static final String ROLLBACK_CONTEXT = "rollback";
     private static final String TEST_CONTEXT = "test";
     private static final String CLEANUP_CONTEXT = "cleanup";
+    private static final String FAULT_NOTX_CONTEXT = "fault-if-no-tx";
+    private static final String USE_EXISTING_NEW_CONTEXT = "use-existing-or-new";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         HttpRequestUtil.doPost(new URL(API_URL + INIT_CONTEXT), "");
     }
 
+    /**
+     * Test for creating a new transaction with new and commit actions
+     *
+     * @throws Exception
+     */
     @Test(groups = "wso2.esb", description = "Test commit transaction")
-    public void testCommitTransaction() throws Exception {
+    public void commitTransactionTest() throws Exception {
 
         String expectedOutput = "<response><table1/><table2>2</table2></response>";
 
@@ -57,16 +64,62 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
         Assert.assertEquals(httpResponse.getData(), expectedOutput, "Commit transaction fails in transaction mediator");
     }
 
-    @Test(groups = "wso2.esb", description = "Test rollback transaction")
-    public void testRollbackTransaction() throws Exception {
+    /**
+     * Test for identifying no transaction with fault-if-no-tx action
+     *
+     * @throws Exception
+     */
+    @Test(groups = "wso2.esb", description = "Test fault-if-no-tx transaction")
+    public void faultIfNoTxTransactionTest() throws Exception {
 
-        String expectedOutput = "<response><table1/><table2>1</table2></response>";
+        String expectedOutput = "<response><message>No Transactions</message></response>";
 
-        HttpRequestUtil.doPost(new URL(API_URL + ROLLBACK_CONTEXT), "");
-        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Bob"), "");
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(API_URL + FAULT_NOTX_CONTEXT), "");
 
         Assert.assertEquals(httpResponse.getData(), expectedOutput,
-                            "Rollback transaction fails in transaction mediator");
+                            "Fault-if-no-tx transaction fails in transaction mediator");
+    }
+
+    /**
+     * Test for use-existing-or-new for creating a new transaction
+     *
+     * @throws Exception
+     */
+    @Test(groups = "wso2.esb", description = "Test use-existing-or-new action for creating new transaction")
+    public void createNewTransactionTest() throws Exception {
+
+        String expectedOutput = "<response><table1>3</table1><table2>3</table2></response>";
+
+        HttpRequestUtil.doPost(new URL(API_URL + USE_EXISTING_NEW_CONTEXT + "?testEntry=Anne&entryId=3"), "");
+        HttpResponse httpResponse = HttpRequestUtil
+                .doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Anne"), "");
+
+        Assert.assertEquals(httpResponse.getData(), expectedOutput,
+                            "Use-existing-or-new action fails for creating new transaction in transaction mediator");
+    }
+
+    /**
+     * Test for use-existing-or-new action for using an existing transaction
+     *
+     * @throws Exception
+     */
+    @Test(groups = "wso2.esb", description = "Test use-existing-or-new action for using an existing transaction")
+    public void useExistingTransactionTest() throws Exception {
+
+        String expectedOutputForNick = "<response><table1>4</table1><table2>4</table2></response>";
+        String expectedOutputForJohn = "<response><table1>5</table1><table2>5</table2></response>";
+
+        HttpRequestUtil.doPost(new URL(API_URL + USE_EXISTING_NEW_CONTEXT + "?testEntry=John&entryId=5"), "");
+        HttpResponse httpResponseForNick = HttpRequestUtil
+                .doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Nick"), "");
+        HttpResponse httpResponseForJohn = HttpRequestUtil
+                .doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=John"), "");
+
+        boolean satisfyEntryNick = httpResponseForNick.getData().equals(expectedOutputForNick);
+        boolean satisfyEntryJohn = httpResponseForJohn.getData().equals(expectedOutputForJohn);
+
+        Assert.assertTrue(satisfyEntryJohn & satisfyEntryNick,
+                          "Use-existing-or-new action fails for using an existing transaction in transaction mediator");
     }
 
     @AfterClass(alwaysRun = true)

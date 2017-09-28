@@ -1,4 +1,6 @@
-<sequence xmlns="http://ws.apache.org/ns/synapse" name="transactionTestMainSeq" onError="transactionTestFaultSeq">
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="transactionTestTransaction1Seq"
+          onError="transactionTestFaultSeq">
+    <!-- This transaction executes new and commit actions -->
     <log>
         <property name="Message" value="Start Commit Transaction" />
     </log>

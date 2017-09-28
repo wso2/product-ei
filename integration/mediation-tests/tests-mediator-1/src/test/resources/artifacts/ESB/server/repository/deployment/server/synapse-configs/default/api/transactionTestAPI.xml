@@ -20,19 +20,64 @@
     </resource>
     <resource methods="POST" uri-template="/commit">
         <inSequence>
-            <property name="TEST_ENTRY" value="Alice" scope="default" type="STRING"/>
-            <sequence key="transactionTestMainSeq" />
+            <property name="TEST_ENTRY" value="Alice" scope="default" type="STRING" />
+            <sequence key="transactionTestTransaction1Seq" />
         </inSequence>
     </resource>
     <resource methods="POST" uri-template="/rollback">
         <inSequence>
-            <property name="TEST_ENTRY" value="Bob" scope="default" type="STRING"/>
-            <sequence key="transactionTestMainSeq" />
+            <property name="TEST_ENTRY" value="Bob" scope="default" type="STRING" />
+            <sequence key="transactionTestTransaction1Seq" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/fault-if-no-tx">
+        <inSequence>
+            <transaction action="fault-if-no-tx" />
+            <log>
+                <property name="Message" value="No transactions are executed !!" />
+            </log>
+        </inSequence>
+        <faultSequence>
+            <log>
+                <property name="Message" value="Fault Sequence for no transactions in Transaction Mediator Test" />
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <response xmlns="">
+                        <message>No Transactions</message>
+                    </response>
+                </format>
+            </payloadFactory>
+            <respond />
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/use-existing-or-new?testEntry={testVal}&amp;entryId={id}">
+        <inSequence>
+            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" expression="$url:entryId" scope="default" type="INTEGER" />
+            <filter regex="John" source="get-property('TEST_ENTRY')">
+                <then>
+                    <transaction action="new" />
+                    <dbreport>
+                        <connection>
+                            <pool>
+                                <dsName>jdbc/WSO2TestDB1</dsName>
+                            </pool>
+                        </connection>
+                        <statement>
+                            <sql><![CDATA[INSERT INTO PERSON1(id, name) values(4,'Nick');
+                    INSERT INTO PERSON2(id, name) values(4, 'Nick');]]></sql>
+                        </statement>
+                    </dbreport>
+                </then>
+                <else />
+            </filter>
+            <sequence key="transactionTestTransaction2Seq" />
         </inSequence>
     </resource>
     <resource methods="POST" uri-template="/test?testEntry={testVal}">
         <inSequence>
-            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING"/>
+            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING" />
             <dblookup>
                 <connection>
                     <pool>
