@@ -19,75 +19,78 @@ import javax.xml.namespace.QName;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class PropertyIntegrationRegistryValuesTestCase extends ESBIntegrationTest{
+/**
+ * This test case tests the setting of properties
+ * from the registries
+ */
+public class PropertyIntegrationRegistryValuesTestCase extends ESBIntegrationTest {
 
-    private static LogViewerClient logViewer;
+    private static final String CONF_PATH = "/_system/config/custom";
+    private static final String GOV_PATH = "/_system/governance/custom";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToRegistry();
-        logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
     }
 
-    public boolean isPropertySet(String proxy, String matchStr) throws Exception{
-        boolean isSet = false;
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(proxy), null, "Random Symbol");
-        LogEvent[] logs = logViewer.getAllSystemLogs();
-        int afterLogSize = logs.length;
-        for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
-            if (logs[i].getMessage().contains(matchStr)) {
-                isSet = true;
-                break;
-            }
-        }
-        return isSet;
-    }
-
+    /**
+     * This method uploads the resources to the registry
+     * @throws Exception
+     */
     private void uploadResourcesToRegistry() throws Exception {
-        ResourceAdminServiceClient resourceAdminServiceClient =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        PropertiesAdminServiceClient propertiesAdminServiceClient =
-                new PropertiesAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        ResourceAdminServiceClient resourceAdminServiceClient = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), getSessionCookie());
+        PropertiesAdminServiceClient propertiesAdminServiceClient = new PropertiesAdminServiceClient(
+                contextUrls.getBackEndUrl(), getSessionCookie());
 
         resourceAdminServiceClient.deleteResource("/_system/config/custom");
         resourceAdminServiceClient.deleteResource("/_system/governance/custom");
 
-        resourceAdminServiceClient.addCollection("/_system/config/custom", "test", "",
-                "Contains property mediator test resources");
+        resourceAdminServiceClient
+                .addCollection(CONF_PATH, "test", "", "Contains property mediator test resources");
 
-        resourceAdminServiceClient.addCollection("/_system/governance/custom", "test", "",
-                "Contains property mediator test resources");
+        resourceAdminServiceClient
+                .addCollection(GOV_PATH, "test", "", "Contains property mediator test resources");
 
-        resourceAdminServiceClient.addResource(
-                "/_system/config/custom/test/property_mediator_test.txt", "text/plain", "text files",
-                new DataHandler("Property mediator test resources".getBytes(), "application/text"));
-        propertiesAdminServiceClient.setProperty("/_system/config/custom/test/property_mediator_test.txt",
-                "resourceName", "Config Reg Test String");
+        resourceAdminServiceClient
+                .addResource(CONF_PATH+"/test/property_mediator_test.txt", "text/plain", "text files",
+                        new DataHandler("Property mediator test resources".getBytes(), "application/text"));
+        propertiesAdminServiceClient
+                .setProperty(CONF_PATH+"/test/property_mediator_test.txt", "resourceName",
+                        "Config Reg Test String");
 
-        resourceAdminServiceClient.addResource(
-                "/_system/governance/custom/test/property_mediator_test.txt", "text/plain", "text files",
-                new DataHandler("Property mediator test resources".getBytes(), "application/text"));
-        propertiesAdminServiceClient.setProperty("/_system/governance/custom/test/property_mediator_test.txt",
-                "resourceName", "Gov Reg Test String");
+        resourceAdminServiceClient
+                .addResource(GOV_PATH+"/test/property_mediator_test.txt", "text/plain", "text files",
+                        new DataHandler("Property mediator test resources".getBytes(), "application/text"));
+        propertiesAdminServiceClient
+                .setProperty(GOV_PATH+"/test/property_mediator_test.txt", "resourceName",
+                        "Gov Reg Test String");
 
         Thread.sleep(1000);
     }
 
-    @Test(groups = "wso2.esb", description = "Set value from config registry (default scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set value from config registry (default scope)")
     public void testConfVal() throws Exception {
-        assertTrue(isPropertySet("propertyConfRegistryTestProxy", "symbol = Config Reg Test String"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyConfRegistryTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Config Reg Test String"),
+                "Property Not Set");
     }
 
-    @Test(groups = "wso2.esb", description = "Set value from goverance registry (default scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set value from goverance registry (default scope)")
     public void testGovVal() throws Exception {
-        assertTrue(isPropertySet("propertyGovRegistryTestProxy", "symbol = Gov Reg Test String"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyGovRegistryTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Gov Reg Test String"),
+                "Property Not Set");
     }
 
     private void clearRegistry() throws Exception {
-        ResourceAdminServiceClient resourceAdminServiceClient =
-                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        ResourceAdminServiceClient resourceAdminServiceClient = new ResourceAdminServiceClient(
+                contextUrls.getBackEndUrl(), getSessionCookie());
 
         resourceAdminServiceClient.deleteResource("/_system/config/custom/test");
 

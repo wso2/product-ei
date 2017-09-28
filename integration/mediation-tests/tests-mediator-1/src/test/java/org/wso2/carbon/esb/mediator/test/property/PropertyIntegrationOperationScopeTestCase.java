@@ -31,59 +31,69 @@ import java.io.File;
 
 import static org.testng.Assert.assertTrue;
 
-public class PropertyIntegrationOperationScopeTestCase extends ESBIntegrationTest{
-
-    private static LogViewerClient logViewer;
+/**
+ * This test case tests whether the setting of properties
+ * in the Operation scope is working fine.
+ */
+public class PropertyIntegrationOperationScopeTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
     }
 
-    public boolean isPropertySet(String proxy, String matchStr) throws Exception{
-        boolean isSet = false;
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(proxy), null, "Random Symbol");
-        LogEvent[] logs = logViewer.getAllSystemLogs();
-        int afterLogSize = logs.length;
-        for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
-            if (logs[i].getMessage().contains(matchStr)) {
-                isSet = true;
-                break;
-            }
-        }
-        return isSet;
-    }
-
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Double (operation scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Double (operation scope)")
     public void testDoubleVal() throws Exception {
-        assertTrue(isPropertySet("propertyDoubleOperationTestProxy", "symbol = 123123.123123"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyDoubleOperationTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("123123.123123"),
+                "Double Property Not Set in the Operation scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Integer (operation scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Integer (operation scope)")
     public void testIntVal() throws Exception {
-        assertTrue(isPropertySet("propertyIntOperationTestProxy", "symbol = 123"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyIntOperationTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("123"),
+                "Integer Property Not Set in the Operation scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type String (operation scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type String (operation scope)")
     public void testStringVal() throws Exception {
-        assertTrue(isPropertySet("propertyStringOperationTestProxy", "symbol = WSO2 Lanka"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyStringOperationTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("WSO2 Lanka"),
+                "Sting Property Not Set in the Operation scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Boolean (operation scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Boolean (operation scope)")
     public void testBooleanVal() throws Exception {
-        assertTrue(isPropertySet("propertyBooleanOperationTestProxy", "symbol = true"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyBooleanOperationTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("true"),
+                "Boolean Property Not Set in the Operation scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Float (operation scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Float (operation scope)")
     public void testFloatVal() throws Exception {
-        assertTrue(isPropertySet("propertyFloatOperationTestProxy", "symbol = 123.123"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyFloatOperationTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("123.123"),
+                "Float Property Not Set in the Operation scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Short (operation scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Short (operation scope)")
     public void testShortVal() throws Exception {
-        assertTrue(isPropertySet("propertyShortOperationTestProxy", "symbol = 12"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyShortOperationTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("12"),
+                "Short Property Not Set in the Operation scope!");
     }
 
     @AfterClass(alwaysRun = true)

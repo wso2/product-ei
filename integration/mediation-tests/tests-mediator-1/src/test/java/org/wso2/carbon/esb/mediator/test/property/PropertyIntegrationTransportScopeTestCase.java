@@ -31,59 +31,70 @@ import java.io.File;
 
 import static org.testng.Assert.assertTrue;
 
-public class PropertyIntegrationTransportScopeTestCase extends ESBIntegrationTest{
+/**
+ * This test case tests whether the setting of properties
+ * in the Transport scope is working fine.
+ */
 
-    private static LogViewerClient logViewer;
+public class PropertyIntegrationTransportScopeTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
     }
 
-    public boolean isPropertySet(String proxy, String matchStr) throws Exception{
-        boolean isSet = false;
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(proxy), null, "Random Symbol");
-        LogEvent[] logs = logViewer.getAllSystemLogs();
-        int afterLogSize = logs.length;
-        for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
-            if (logs[i].getMessage().contains(matchStr)) {
-                isSet = true;
-                break;
-            }
-        }
-        return isSet;
-    }
-
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Double (transport scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Double (transport scope)")
     public void testDoubleVal() throws Exception {
-        assertTrue(isPropertySet("propertyDoubleTransportTestProxy", "symbol = 123123.123123"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyDoubleTransportTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("123123.123123"),
+                "Double Property Not Set in the Transport scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Integer (transport scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Integer (transport scope)")
     public void testIntVal() throws Exception {
-        assertTrue(isPropertySet("propertyIntTransportTestProxy", "symbol = 123"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyIntTransportTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("123"),
+                "Integer Property Not Set in the Transport scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type String (transport scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type String (transport scope)")
     public void testStringVal() throws Exception {
-        assertTrue(isPropertySet("propertyStringTransportTestProxy", "symbol = WSO2 Lanka"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyStringTransportTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("WSO2 Lanka"),
+                "String Property Not Set in the Transport scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Boolean (transport scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Boolean (transport scope)")
     public void testBooleanVal() throws Exception {
-        assertTrue(isPropertySet("propertyBooleanTransportTestProxy", "symbol = true"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyBooleanTransportTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("true"),
+                "Boolean Property Not Set in the Transport scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Float (transport scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Float (transport scope)")
     public void testFloatVal() throws Exception {
-        assertTrue(isPropertySet("propertyFloatTransportTestProxy", "symbol = 123.123"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyFloatTransportTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("123.123"),
+                "Float Property Not Set in the Transport scope!");
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Short (transport scope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Short (transport scope)")
     public void testShortVal() throws Exception {
-        assertTrue(isPropertySet("propertyShortTransportTestProxy", "symbol = 12"), "Property Not Set!");
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyShortTransportTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("12"),
+                "Short Property Not Set in the Transport scope!");
     }
 
     @AfterClass(alwaysRun = true)

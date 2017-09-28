@@ -27,53 +27,82 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import javax.xml.namespace.QName;
 import java.io.File;
 
-public class PropertyIntegrationDefaultScopeTestCase extends ESBIntegrationTest{
+/**
+ * This test case tests whether the setting of properties
+ * in the default scope is working fine.
+ */
+
+public class PropertyIntegrationDefaultScopeTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Double (defaultscope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Double (defaultscope)")
     public void testDoubleVal() throws Exception {
-        verifyProxyServiceExistence("propertyDoubleDefaultTestProxy");
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyDoubleDefaultTestProxy"), null, "123123.123123");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("123123.123123 Company"));
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyDoubleDefaultTestProxy"), null,
+                        "123123.123123");
+        Assert.assertTrue(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name"))
+                        .toString().contains("123123.123123 Company"), "Double Property not set in the Default scope!");
 
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Integer (defaultscope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Integer (defaultscope)")
     public void testIntVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyIntDefaultTestProxy"), null, "123");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("123 Company"));
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyIntDefaultTestProxy"), null, "123");
+        Assert.assertTrue(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name"))
+                        .toString().contains("123 Company"), "Integer Property not set in the Default scope!");
 
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type String (defaultscope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type String (defaultscope)")
     public void testStringVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyStringDefaultTestProxy"), null, "WSO2");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("WSO2 Company"));
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyStringDefaultTestProxy"), null, "WSO2");
+        Assert.assertTrue(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name"))
+                        .toString().contains("WSO2 Company"), "String Property not set in the Default scope!");
 
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Boolean (defaultscope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Boolean (defaultscope)")
     public void testBooleanVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyBooleanDefaultTestProxy"), null, "TRUE");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("TRUE Company"));
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyBooleanDefaultTestProxy"), null, "TRUE");
+        Assert.assertTrue(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name"))
+                        .toString().contains("TRUE Company"), "Boolean Property not set in the Default scope!");
 
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Float (defaultscope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Float (defaultscope)")
     public void testFloatVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyFloatDefaultTestProxy"), null, "123.123");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("123.123 Company"));
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyFloatDefaultTestProxy"), null, "123.123");
+        Assert.assertTrue(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name"))
+                        .toString().contains("123.123 Company"), "Float Property not set in the Default scope!");
 
     }
 
-    @Test(groups = "wso2.esb", description = "Set action as \"value\" and type Short (defaultscope)")
+    @Test(groups = "wso2.esb",
+          description = "Set action as \"value\" and type Short (defaultscope)")
     public void testShortVal() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyShortDefaultTestProxy"), null, "12");
-        Assert.assertTrue(response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name")).toString().contains("12 Company"));
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyShortDefaultTestProxy"), null, "12");
+        Assert.assertTrue(
+                response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "name"))
+                        .toString().contains("12 Company"), "Short Property not set in the Default scope!");
 
     }
 

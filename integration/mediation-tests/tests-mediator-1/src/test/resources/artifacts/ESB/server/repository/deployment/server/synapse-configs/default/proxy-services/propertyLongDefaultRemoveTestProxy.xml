@@ -1,32 +1,22 @@
 <proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyLongDefaultRemoveTestProxy" transports="http,https">
     <target>
         <inSequence>
-            <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
-                <default>
-                    <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" value="123123123"  scope="default" type="LONG" />
-                </default>
-            </switch>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" value="123123123"  scope="default" type="LONG" />
             <log level="custom">
                 <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:LongVal" />
             </log>
 
-            <switch xmlns:m0="http://services.samples" source="//m0:getQuote/m0:request/m0:symbol">
-                <default>
-                    <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" action="remove"  scope="default" />
-                </default>
-            </switch>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" action="remove"  scope="default" />
             <log level="custom">
                 <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:LongVal" />
             </log>
 
-            <send>
-                <endpoint>
-                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
-                </endpoint>
-            </send>
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:symbol xmlns:m="http://services.samples">Property Set and Removed</m:symbol>
+                </format>
+            </payloadFactory>
+            <respond />
         </inSequence>
-        <outSequence>
-            <send/>
-        </outSequence>
     </target>
 </proxy>

@@ -32,7 +32,12 @@ import java.io.File;
 
 import static org.testng.Assert.assertTrue;
 
-public class PropertyIntegrationAxis2ScopeRemovePropertiesTestCase extends ESBIntegrationTest{
+/**
+ * This test case tests whether the removing of properties
+ * in the Axis2 scope is working fine.
+ */
+
+public class PropertyIntegrationAxis2ScopeRemovePropertiesTestCase extends ESBIntegrationTest {
 
     private static LogViewerClient logViewer;
 
@@ -42,49 +47,95 @@ public class PropertyIntegrationAxis2ScopeRemovePropertiesTestCase extends ESBIn
         logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
     }
 
-    public boolean isPropertySet(String proxy, String matchStr) throws Exception{
+
+    @Test(groups = "wso2.esb",
+          description = "Remove action as \"value\" and type Integer (axis2 scope)")
+    public void testIntVal() throws Exception {
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyIntAxis2RemoveTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Property Set and Removed"),
+                "Proxy Invocation Failed!");
+        assertTrue(isMatchFound("symbol = 123"),
+                "Integer Property Not Either Set or Removed in the Axis2 scope!!");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Remove action as \"value\" and type String (axis2 scope)")
+    public void testStringVal() throws Exception {
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyStringAxis2RemoveTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Property Set and Removed"),
+                "Proxy Invocation Failed!");
+        assertTrue(isMatchFound("symbol = WSO2 Lanka"),
+                "String Property Not Either Set or Removed in the Axis2 scope!!");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Remove action as \"value\" and type Float (axis2 scope)")
+    public void testFloatVal() throws Exception {
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyFloatAxis2RemoveTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Property Set and Removed"),
+                "Proxy Invocation Failed!");
+        assertTrue(isMatchFound("symbol = 123.123"),
+                "Float Property Not Either Set or Removed in the Axis2 scope!!");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Remove action as \"value\" and type Long (axis2 scope)")
+    public void testLongVal() throws Exception {
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyLongAxis2RemoveTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Property Set and Removed"),
+                "Proxy Invocation Failed!");
+        assertTrue(isMatchFound("symbol = 123"),
+                "Long Property Not Either Set or Removed in the Axis2 scope!!");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Remove action as \"value\" and type Short (axis2 scope)")
+    public void testShortVal() throws Exception {
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyShortAxis2RemoveTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Property Set and Removed"),
+                "Proxy Invocation Failed!");
+        assertTrue(isMatchFound("symbol = 12"),
+                "Short Property Not Either Set or Removed in the Axis2 scope!!");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Remove action as \"value\" and type OM (axis2 scope)")
+    public void testOMVal() throws Exception {
+        logViewer.clearLogs();
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("propertyOMAxis2RemoveTestProxy"), null, "Random Symbol");
+        assertTrue(response.toString().contains("Property Set and Removed"),
+                "Proxy Invocation Failed!");
+        assertTrue(isMatchFound("symbol = OMMMMM"),
+                "OM Property Not Either Set or Removed in the Axis2 scope!!");
+    }
+
+    private boolean isMatchFound(String matchStr) throws Exception {
         boolean isSet = false;
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp(proxy), null, "Random Symbol");
         LogEvent[] logs = logViewer.getAllSystemLogs();
-        int afterLogSize = logs.length;
-        for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
-            if (logs[i].getMessage().contains("symbol = null") && logs[i+1].getMessage().contains(matchStr)) {
-                isSet = true;
+        int size = logs.length;
+        for (int i = size-1; i >= 0; i--) {
+            if (logs[i].getMessage().contains(matchStr)) {
+                for (int j = i; j >= 0; j--) {
+                    if (logs[j].getMessage().contains("symbol = null")) {
+                        isSet = true;
+                        break;
+                    }
+                }
                 break;
             }
         }
         return isSet;
-    }
-
-    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Integer (axis2 scope)")
-    public void testIntVal() throws Exception {
-        assertTrue(isPropertySet("propertyIntAxis2RemoveTestProxy", "symbol = 123"), "Property Not Either Set or Removed!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type String (axis2 scope)")
-    public void testStringVal() throws Exception {
-        assertTrue(isPropertySet("propertyStringAxis2RemoveTestProxy", "symbol = WSO2 Lanka"), "Property Not Either Set or Removed!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Float (axis2 scope)")
-    public void testFloatVal() throws Exception {
-        assertTrue(isPropertySet("propertyFloatAxis2RemoveTestProxy", "symbol = 123.123"), "Property Not Either Set or Removed!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Long (axis2 scope)")
-    public void testLongVal() throws Exception {
-        assertTrue(isPropertySet("propertyLongAxis2RemoveTestProxy", "symbol = 123"), "Property Not Either Set or Removed!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type Short (axis2 scope)")
-    public void testShortVal() throws Exception {
-        assertTrue(isPropertySet("propertyShortAxis2RemoveTestProxy", "symbol = 12"), "Property Not Either Set or Removed!");
-    }
-
-    @Test(groups = "wso2.esb", description = "Remove action as \"value\" and type OM (axis2 scope)")
-    public void testOMVal() throws Exception {
-        assertTrue(isPropertySet("propertyOMAxis2RemoveTestProxy", "symbol = OMMMMM"), "Property Not Either Set or Removed!");
     }
 
     @AfterClass(alwaysRun = true)
