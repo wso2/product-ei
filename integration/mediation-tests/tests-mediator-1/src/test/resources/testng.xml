@@ -106,6 +106,8 @@
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorProxyWithNamedSeqCase"/>
            <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA4469CallMediatorWithOutOnlyTestCase"/>
            <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5216CallMediatorPerAPILogTest"/>
+            <!--This has been commented out until carbon kernel going to release with axis2 version 1.6.1-wso2v23.-->
+            <!--<class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5217NoDefaultContentTypeTestCase"/>-->
 
 <!--            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
                 <methods>
