@@ -1,0 +1,73 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="CustomerServiceAPI" context="/customerService">
+    <resource methods="POST" url-mapping="/customer">
+        <inSequence>
+            <property name="uri.var.port" value="8480"/>
+            <property name="uri.var.servicePath" value="customers"/>
+            <log level="custom">
+                <property name="Creating new customer..." value="true"/>
+            </log>
+            <send>
+                <endpoint name="AddCustomerEP">
+                    <http method="POST" uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </resource>
+    <resource methods="GET" uri-template="/customer/{id}">
+        <inSequence>
+            <property name="uri.var.port" value="8480"/>
+            <property name="uri.var.servicePath" value="customers"/>
+            <log level="custom">
+                <property name="Get customer for given customer Id...." value="true"/>
+            </log>
+            <send>
+                <endpoint name="GetCustomerEP">
+                    <http method="GET" uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.id}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </resource>
+    <resource methods="GET" uri-template="/customer/encoded/{id}">
+        <inSequence>
+            <property name="uri.var.port" value="8480"/>
+            <property name="uri.var.servicePath" value="customers"/>
+            <property name="uri.var.servicePath" value="http://localhost:8480/customers%2F8fa3fc1b-f63c-4b21-8aff-3ac684c74d97"/>
+            <log level="custom">
+                <property name="Get customer for given customer Id encoded...." value="true"/>
+            </log>
+            <send>
+                <endpoint name="GetCustomerEP">
+                    <http method="GET" uri-template="legacy-encoding:{uri.var.servicePath}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </resource>
+    <resource methods="DELETE" uri-template="/customer/{id}">
+        <inSequence>
+            <property name="uri.var.port" value="8480"/>
+            <property name="uri.var.servicePath" value="customers"/>
+            <log level="custom">
+                <property name="Remove customer for given customer Id..." value="true"/>
+            </log>
+            <send>
+                <endpoint name="DeleteCustomerEP">
+                    <http method="DELETE" uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.id}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </resource>
+    <resource methods="PUT" url-mapping="/customer">
+        <inSequence>
+            <property name="uri.var.port" value="8480"/>
+            <property name="uri.var.servicePath" value="customers"/>
+            <log level="custom">
+                <property name="Update customer name for customer Id..." value="true"/>
+            </log>
+            <send>
+                <endpoint name="UpdateCustomerEP">
+                    <http method="PUT" uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </resource>
+</api>

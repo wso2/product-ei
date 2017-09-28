@@ -1,0 +1,56 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="CustomerBackendAPI" context="/customers">
+    <resource methods="POST PUT" uri-template="/">
+        <inSequence>
+            <filter xmlns:m0="http://services.samples" xpath="//createCustomer">
+                <payloadFactory media-type="xml">
+                    <format>
+                        <createCustomerResponse>
+                            <id>$1</id>
+                            <name>$2</name>
+                        </createCustomerResponse>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="//createCustomer/id"/>
+                        <arg evaluator="xml" expression="//createCustomer/name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </filter>
+        </inSequence>
+    </resource>
+    <resource methods="GET" uri-template="/{id}">
+        <inSequence>
+            <property name="customerId" expression="get-property('uri.var.id')"/>
+            <filter source="$ctx:customerId" regex="8fa3fc1b-f63c-4b21-8aff-3ac684c74d97">
+                <payloadFactory media-type="xml">
+                    <format>
+                        <getCustomerResponse>
+                            <id>$1</id>
+                            <name>John</name>
+                        </getCustomerResponse>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('uri.var.id')"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </filter>
+        </inSequence>
+    </resource>
+    <resource methods="DELETE" uri-template="/{id}">
+        <inSequence>
+            <property name="customerId" expression="get-property('uri.var.id')"/>
+            <filter source="$ctx:customerId" regex="8fa3fc1b-f63c-4b21-8aff-3ac684c74d97">
+                <payloadFactory media-type="xml">
+                    <format>
+                        <deleteCustomerResponse>
+                            <return/>
+                        </deleteCustomerResponse>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </filter>
+        </inSequence>
+    </resource>
+</api>

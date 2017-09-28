@@ -1,0 +1,44 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="IterateDynamicProxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <property name="response" scope="default">
+                <m:response xmlns:m="test"/>
+            </property>
+            <iterate preservePayload="true"
+                     attachPath="//request/terms"
+                     expression="//request/terms/term">
+                <target>
+                    <sequence>
+                        <property name="uri.var.tname" expression="//request/terms/term/text()"/>
+                        <send>
+                            <endpoint>
+                                <http method="post"
+                                      uri-template="http://localhost:8480/services/{uri.var.tname}"/>
+                            </endpoint>
+                        </send>
+                    </sequence>
+                </target>
+            </iterate>
+        </inSequence>
+        <outSequence>
+            <aggregate>
+                <completeCondition>
+                    <messageCount min="-1" max="-1"/>
+                </completeCondition>
+                <onComplete xmlns:m0="test"
+                            expression="//m0:response"
+                            enclosingElementProperty="response">
+                    <log level="full"/>
+                    <property name="messageType" value="application/json" scope="axis2"/>
+                    <send/>
+                </onComplete>
+            </aggregate>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>
