@@ -43,6 +43,11 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
     private static final String FAULT_NOTX_CONTEXT = "fault-if-no-tx";
     private static final String USE_EXISTING_NEW_CONTEXT = "use-existing-or-new";
 
+    /**
+     * Initialize database by creating necessary tables and entries for following tests
+     *
+     * @throws Exception
+     */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         HttpRequestUtil.doPost(new URL(API_URL + INIT_CONTEXT), "");
@@ -62,6 +67,24 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
         HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Alice"), "");
 
         Assert.assertEquals(httpResponse.getData(), expectedOutput, "Commit transaction fails in transaction mediator");
+    }
+
+    /**
+     * Test for transaction rollback
+     *
+     * @throws Exception
+     */
+    @Test(enabled = false, groups = "wso2.esb", description = "Test rollback transaction")
+    public void rollbackTransactionTest() throws Exception {
+
+        String expectedOutput = "<response><table1>2</table1><table2>1</table2></response>";
+
+        HttpRequestUtil.doPost(new URL(API_URL + ROLLBACK_CONTEXT), "");
+        HttpResponse httpResponse = HttpRequestUtil
+                .doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Bob"), "");
+
+        Assert.assertEquals(httpResponse.getData(), expectedOutput,
+                            "Rollback transaction fails in transaction mediator");
     }
 
     /**
@@ -122,6 +145,11 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
                           "Use-existing-or-new action fails for using an existing transaction in transaction mediator");
     }
 
+    /**
+     * Remove tables from the database
+     *
+     * @throws Exception
+     */
     @AfterClass(alwaysRun = true)
     public void cleanup() throws Exception {
         HttpRequestUtil.doPost(new URL(API_URL + CLEANUP_CONTEXT), "");

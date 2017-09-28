@@ -23,7 +23,8 @@
             </pool>
         </connection>
         <statement>
-            <sql>INSERT into PERSON2 (id, name) values (2, ?);</sql>
+            <sql>INSERT into PERSON2 (id, name) values (?, ?);</sql>
+            <parameter expression="get-property('TEST_ENTRY_ID')" type="INTEGER" />
             <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
         </statement>
     </dbreport>

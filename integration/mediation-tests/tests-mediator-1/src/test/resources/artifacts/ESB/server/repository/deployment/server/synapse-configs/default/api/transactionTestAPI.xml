@@ -21,12 +21,21 @@
     <resource methods="POST" uri-template="/commit">
         <inSequence>
             <property name="TEST_ENTRY" value="Alice" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" value="2" scope="default" type="INTEGER" />
             <sequence key="transactionTestTransaction1Seq" />
         </inSequence>
     </resource>
     <resource methods="POST" uri-template="/rollback">
         <inSequence>
             <property name="TEST_ENTRY" value="Bob" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" value="1" scope="default" type="INTEGER" />
+            <sequence key="transactionTestTransaction1Seq" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/suspend">
+        <inSequence>
+            <property name="TEST_ENTRY" value="Bob" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" value="1" scope="default" type="INTEGER" />
             <sequence key="transactionTestTransaction1Seq" />
         </inSequence>
     </resource>
