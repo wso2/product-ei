@@ -33,20 +33,13 @@ import java.io.File;
 
 
 public class ESBJAVA_4572TestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
     private final SimpleHttpClient httpClient = new SimpleHttpClient();
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-                                                               + "json" + File.separator + "synapse.properties"));
-        super.init();
         loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File.separator +
                                           "json" + File.separator + "TestApi.xml");
-
-
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.ALL})
@@ -70,6 +63,5 @@ public class ESBJAVA_4572TestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        serverConfigurationManager.restoreToLastConfiguration();
     }
 }

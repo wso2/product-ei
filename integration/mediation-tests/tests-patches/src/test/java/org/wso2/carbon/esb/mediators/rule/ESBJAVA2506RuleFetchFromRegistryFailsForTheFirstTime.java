@@ -23,36 +23,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import javax.activation.DataHandler;
-import java.io.File;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
 public class ESBJAVA2506RuleFetchFromRegistryFailsForTheFirstTime extends ESBIntegrationTest {
-
-    String carFileName = "esb-artifacts-rule-mediator-car_1.0.0.car";
 
     @BeforeClass(alwaysRun = true)
     protected void uploadCarFileTest() throws Exception {
         super.init();
-        uploadCapp(carFileName
-                , new DataHandler(new URL("file:" + File.separator + File.separator
-                + getESBResourceLocation() + File.separator + "car"
-                + File.separator + carFileName)));
-        TimeUnit.SECONDS.sleep(20);
-        log.info(carFileName + " uploaded successfully");
     }
 
-    @Test(groups = "wso2.esb", enabled = true, description = "Test whether proxy which has Rule " +
+    @Test(groups = "wso2.esb", description = "Test whether proxy which has Rule " +
             "mediator which fetch custom rules from registry in sequence get deployed through capp")
     public void testRuleMediatorProxyDeployed() throws Exception {
-        Thread.sleep(6000);
         org.testng.Assert.assertTrue(
-                esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), getSessionCookie(),
-                        "proxyService2")
-                , "ERROR - ProxyServiceDeployer ProxyService Deployment from the file : " +
-                        "esb-artifacts-rule-mediator-car_1.0.0.car/" +
-                        "proxyService2_1.0.0/proxyService2-1.0.0.xml : Failed");
+                esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), getSessionCookie(), "proxyService2"),
+                                         "ERROR - ProxyServiceDeployer ProxyService Deployment from the file : "
+                                         + "esb-artifacts-rule-mediator-car_1.0.0.car/proxyService2_1.0.0/proxyService2-1.0.0.xml "
+                                         + ": Failed");
     }
 
     @AfterTest(alwaysRun = true)

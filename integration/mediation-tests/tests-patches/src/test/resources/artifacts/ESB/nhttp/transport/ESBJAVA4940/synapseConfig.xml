@@ -28,12 +28,14 @@
         <target>
             <inSequence>
                 <property name="setCharacterEncoding" value="false" scope="axis2"/>
-                <call>
+                <!--Chunking is only disabled because the request is sent to the wire monitor which expects the header
+                content-length. It has no relation to the scenario that is being tested.-->
+                <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
+                <send>
                     <endpoint>
-                        <http method="POST"
-                              uri-template="https://localhost:8443/response"/>
+                        <address uri="http://localhost:8996/services/SimpleStockQuoteService"/>
                     </endpoint>
-                </call>
+                </send>
             </inSequence>
             <outSequence>
                 <send/>
@@ -48,35 +50,18 @@
         <target>
             <inSequence>
                 <property name="setCharacterEncoding" value="true" scope="axis2"/>
-                <call>
+                <!--Chunking is only disabled because the request is sent to the wire monitor which expects the header
+                content-length. It has no relation to the scenario that is being tested.-->
+                <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
+                <send>
                     <endpoint>
-                        <http method="POST"
-                              uri-template="https://localhost:8443/response"/>
+                        <address uri="http://localhost:8995/services/SimpleStockQuoteService"/>
                     </endpoint>
-                </call>
+                </send>
             </inSequence>
             <outSequence>
                 <send/>
             </outSequence>
         </target>
     </proxy>
-    <api xmlns="http://ws.apache.org/ns/synapse"
-         name="Response_API"
-         context="/response">
-        <resource methods="POST GET" url-mapping="/*">
-            <inSequence>
-                <payloadFactory media-type="xml">
-                    <format>
-                        <response xmlns="">
-                            <value>Received Request</value>
-                        </response>
-                    </format>
-                    <args/>
-                </payloadFactory>
-                <property name="RESPONSE" value="true" scope="default" type="STRING"/>
-                <header name="To" action="remove"/>
-                <send/>
-            </inSequence>
-        </resource>
-    </api>
 </definitions>

@@ -22,48 +22,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import javax.activation.DataHandler;
-import java.io.File;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
 public class ESBJAVA3546CAppProxyOnLoadTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     protected void uploadCarFileTest() throws Exception {
-        String carFileStartOnLoadTrue = "esb-artifacts-car_1.0.0.car";
-        String carFileStartOnLoadFalse = "inactive_proxy_1.0.0.car";
-
         super.init();
-        uploadCapp(carFileStartOnLoadTrue
-                , new DataHandler(new URL("file:" + File.separator + File.separator
-                                          + getESBResourceLocation() + File.separator + "car" +
-                                          File.separator + carFileStartOnLoadTrue)));
-        log.info(carFileStartOnLoadTrue + " car file uploaded");
-
-        uploadCapp(carFileStartOnLoadFalse
-                , new DataHandler(new URL("file:" + File.separator + File.separator
-                                          + getESBResourceLocation() + File.separator + "car" +
-                                          File.separator + carFileStartOnLoadFalse)));
-        log.info(carFileStartOnLoadFalse + " car file uploaded");
-
-        //Sleep allowing artifacts to be deployed
-        log.info("Waiting 60 seconds to deploy artifacts");
-        TimeUnit.SECONDS.sleep(60);
     }
 
-    @Test(groups = {"wso2.esb"}, description = "proxy service with startOnLoad=true deployed " +
-                                               "from car file")
+    @Test(groups = {"wso2.esb"}, description = "proxy service with startOnLoad=true deployed from car file")
     public void startOnLoadTrueProxyTest() throws Exception {
         boolean trueResponseReceived = false;
 
         try {
             axis2Client.sendSimpleStockQuoteRequest(
-                    "http://127.0.0.1:8480/services/samplePassThroughProxy",
-                    null,
-                    "IBM");
+                    "http://127.0.0.1:8480/services/samplePassThroughProxy", null, "IBM");
 
-            //Response received successfully - deployed service is active as expected
             trueResponseReceived = true;
         } catch (AxisFault axisFault) {
             log.error("Service Invocation Failed > " + axisFault.getMessage());

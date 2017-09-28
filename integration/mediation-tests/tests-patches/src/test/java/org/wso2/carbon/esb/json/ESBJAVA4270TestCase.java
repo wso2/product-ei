@@ -31,18 +31,13 @@ import static org.testng.Assert.assertEquals;
 
 public class ESBJAVA4270TestCase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
     private final Map<String, String> headers = new HashMap<String, String>(1);
     private final SimpleHttpClient httpClient = new SimpleHttpClient();
     private static String url = "http://localhost:8480/stockquote/view?Name=MSFT";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator +
-                "nhttp" + File.separator + "transport" + File.separator + "rest" + File.separator + "axis2.xml"));
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
+        super.init();
         loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File.separator +
                 "json" + File.separator + "stock-quote-json.xml");
     }
@@ -52,7 +47,6 @@ public class ESBJAVA4270TestCase extends ESBIntegrationTest {
     public void getRequestContentTypeJSONTest() throws Exception {
         headers.put("Content-Type", "application/json");
         HttpResponse response = httpClient.doGet(url, headers);
-        Thread.sleep(2000);
         assertEquals(response.getStatusLine().getStatusCode(), 200);
 
     }
@@ -62,7 +56,6 @@ public class ESBJAVA4270TestCase extends ESBIntegrationTest {
     public void getRequestContentTypeXMLTest() throws Exception {
         headers.put("Content-Type", "application/xml");
         HttpResponse response = httpClient.doGet(url, headers);
-        Thread.sleep(2000);
         assertEquals(response.getStatusLine().getStatusCode(), 200);
 
     }
@@ -70,7 +63,5 @@ public class ESBJAVA4270TestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        serverConfigurationManager.restoreToLastConfiguration();
-        serverConfigurationManager = null;
     }
 }

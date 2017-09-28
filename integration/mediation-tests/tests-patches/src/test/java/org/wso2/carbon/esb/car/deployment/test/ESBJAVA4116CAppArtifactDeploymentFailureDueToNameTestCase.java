@@ -23,34 +23,20 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import javax.activation.DataHandler;
-import java.io.File;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
 public class ESBJAVA4116CAppArtifactDeploymentFailureDueToNameTestCase extends ESBIntegrationTest {
-
-    String carFileName = "car-deployment-test.car";
 
     @BeforeClass(alwaysRun = true)
     protected void uploadCarFileTest() throws Exception {
         super.init();
-        uploadCapp(carFileName
-                , new DataHandler(new URL("file:" + File.separator + File.separator +
-                getESBResourceLocation() + File.separator + "car" +
-                File.separator + carFileName)));
-        TimeUnit.SECONDS.sleep(5);
-        log.info(carFileName + " uploaded successfully");
     }
 
-    @Test(groups = "wso2.esb", enabled = true, description = "Test whether capp deployment fails " +
-            "if sequence artifact name consist of *main* as a substring")
+    @Test(groups = "wso2.esb", description = "Test whether capp deployment fails "
+                                             + "if sequence artifact name consist of *main* as a substring")
     public void testSequenceDeployed() throws Exception {
-        Thread.sleep(6000);
         org.testng.Assert.assertTrue(
                 esbUtils.isSequenceDeployed(contextUrls.getBackEndUrl(), getSessionCookie(),
-                        "MySequenceDomain")
-                , "ERROR - CappAxis2Deployer Error while deploying carbon application");
+                                            "MySequenceDomain"),
+                                            "ERROR - CappAxis2Deployer Error while deploying carbon application");
     }
 
 

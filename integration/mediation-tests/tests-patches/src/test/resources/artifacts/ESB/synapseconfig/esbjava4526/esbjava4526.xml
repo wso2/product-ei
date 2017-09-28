@@ -119,7 +119,7 @@
         </log>
         <respond/>
     </sequence>
-    <api name="testApi" context="/test">
+    <api name="faultSequenceExecutionOrderTestApi" context="/faultSequenceExecutionOrderTest">
         <resource methods="POST GET"
                   inSequence="a"
                   outSequence="d"

@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -50,7 +50,7 @@ public class ESBJAVA3340QueryParamHttpEndpointTestCase extends ESBIntegrationTes
         logViewerClient.clearLogs();
 
         try {
-            HttpRequestUtil.sendGetRequest(getApiInvocationURL("test") + requestString, null);
+            HttpRequestUtil.sendGetRequest(getApiInvocationURL("passParamsToEPTest") + requestString, null);
         } catch (Exception timeout) {
             //a timeout is expected
         }

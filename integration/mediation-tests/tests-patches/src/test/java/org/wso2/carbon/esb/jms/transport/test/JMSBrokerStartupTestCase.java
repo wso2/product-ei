@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -31,12 +31,12 @@ public class JMSBrokerStartupTestCase extends ESBIntegrationTest {
     @BeforeTest(alwaysRun = true)
     public void startJMSBrokerAndConfigureESB() throws Exception {
         super.init();
-        activeMQServer.startJMSBrokerAndConfigureESB();
+        activeMQServer.startJMSBroker();
     }
 
     @AfterTest(alwaysRun = true)
     public void close() throws Exception {
-        activeMQServer.stopJMSBrokerRevertESBConfiguration();
+        activeMQServer.stopJMSBroker();
     }
 }
 
