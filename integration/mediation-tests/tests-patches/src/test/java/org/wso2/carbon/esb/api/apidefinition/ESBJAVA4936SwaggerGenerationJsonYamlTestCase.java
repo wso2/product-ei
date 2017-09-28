@@ -34,23 +34,9 @@ import java.io.File;
  * both JSON and Yaml formats.
  */
 public class ESBJAVA4936SwaggerGenerationJsonYamlTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
-    private final String FULL_RESOURCE_PATH = getESBResourceLocation() + File.separator + "restapi" +
-            File.separator + "apidefinition" + File.separator;
-    private final String RELATIVE_RESOURCE_PATH = File.separator + "artifacts" + File.separator + "ESB" + File
-            .separator + "restapi" + File.separator + "apidefinition" + File.separator + "swaggergeneration" + File
-            .separator;
-    private final String JAR_FILE_NAME = "snakeyaml_1.16.0.wso2v1.jar";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init();
-        serverConfigurationManager =
-                new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverConfigurationManager.applyConfigurationWithoutRestart(new File(FULL_RESOURCE_PATH + "carbon.xml"));
-        serverConfigurationManager.copyToComponentDropins
-                (new File(getClass().getResource(RELATIVE_RESOURCE_PATH + JAR_FILE_NAME).toURI()));
-        serverConfigurationManager.restartGracefully();
         super.init();
     }
 
@@ -81,8 +67,5 @@ public class ESBJAVA4936SwaggerGenerationJsonYamlTestCase extends ESBIntegration
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        serverConfigurationManager.removeFromComponentLib(RELATIVE_RESOURCE_PATH + JAR_FILE_NAME);
-        serverConfigurationManager.restoreToLastConfiguration();
-        serverConfigurationManager = null;
     }
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.carbon.esb.nhttp.transport.mtom.test;
 
 import org.apache.axiom.om.OMAbstractFactory;
@@ -31,7 +49,6 @@ import java.io.IOException;
  * Test case check whether attachment is received by the client
  */
 public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverManager;
     private final String MTOM_SERVICE = "MTOMSwASampleService";
     private SampleAxis2Server axis2Server;
     private String relativeFilePath = "/artifacts/ESB/nhttp/transport/mtom/ESBJAVA4909MultipartRelatedTest.xml";
@@ -39,10 +56,6 @@ public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        super.init();
-        serverManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverManager.applyConfiguration(new File(getClass().getResource
-                ("/artifacts/ESB/nhttp/transport/mtom/axis2.xml").getPath()));
         super.init();
         axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server.start();
@@ -62,16 +75,10 @@ public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
 
-        try {
-            if (axis2Server != null && axis2Server.isStarted()) {
-                axis2Server.stop();
-            }
-            super.cleanup();
-        } finally {
-            Thread.sleep(3000);
-            serverManager.restoreToLastConfiguration();
-            serverManager = null;
+        if (axis2Server != null && axis2Server.isStarted()) {
+            axis2Server.stop();
         }
+        super.cleanup();
     }
 
     public void sendUsingMTOM(String fileName, String targetEPR) throws IOException {

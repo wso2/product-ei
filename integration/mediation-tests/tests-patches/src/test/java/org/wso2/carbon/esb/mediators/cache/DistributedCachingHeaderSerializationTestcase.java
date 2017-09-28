@@ -41,16 +41,10 @@ import java.util.Map;
  */
 public class DistributedCachingHeaderSerializationTestcase extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
     private LogViewerClient logViewerClient = null;
 
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
-        super.init();
-        AutomationContext autoCtx = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
-        serverConfigurationManager = new ServerConfigurationManager(autoCtx);
-        serverConfigurationManager.applyConfiguration(
-                new File(getClass().getResource("/artifacts/ESB/mediatorconfig/cache/axis2.xml").getPath()));
         super.init();
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
                 + File.separator + "mediatorconfig" + File.separator + "cache"
@@ -102,8 +96,6 @@ public class DistributedCachingHeaderSerializationTestcase extends ESBIntegratio
         try {
             super.cleanup();
         } finally {
-            serverConfigurationManager.restoreToLastConfiguration();
-            serverConfigurationManager = null;
             logViewerClient = null;
         }
     }

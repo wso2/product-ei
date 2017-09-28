@@ -21,12 +21,14 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQServerInstance;
+import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQTestUtils;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.rabbitmqclient.RabbitMQProducerClient;
 
-import java.io.IOException;
+import java.io.File;
 
 /**
  * Test RabbitMQ receiver with different content-types and with content type service parameter
@@ -34,38 +36,28 @@ import java.io.IOException;
 public class RabbitMQContentTypeTestCase extends ESBIntegrationTest {
 
     private LogViewerClient logViewer;
+    private RabbitMQProducerClient sender;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/rabbitmq/transport/rabbitmq_consumer_proxy.xml");
+        sender = RabbitMQServerInstance.createProducerWithDeclaration("exchange2", "simple_consumer_test");
+        //The consumer proxy cannot be pre-deployed since the queue declaration(which is done in 'initRabbitMQBroker')
+        // must happen before deployment.
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator
+                                          + "ESB" + File.separator + "rabbitmq" + File.separator +
+                                          "transport" + File.separator + "rabbitmq_consumer_proxy.xml");
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Test RabbitMQ consumer with no content type")
+    @Test(groups = { "wso2.esb" }, description = "Test RabbitMQ consumer with no content type")
     public void testContentTypeEmpty() throws Exception {
         int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
-
-        RabbitMQProducerClient sender = new RabbitMQProducerClient("localhost", 5672, "guest", "guest");
-
-        try {
-            sender.declareAndConnect("exchange2", "queue2");
-            String message =
-                    "<ser:placeOrder xmlns:ser=\"http://services.samples\">\n" +
-                            "<ser:order>\n" +
-                            "<ser:price>100</ser:price>\n" +
-                            "<ser:quantity>2000</ser:quantity>\n" +
-                            "<ser:symbol>RMQ</ser:symbol>\n" +
-                            "</ser:order>\n" +
-                            "</ser:placeOrder>";
-            sender.sendMessage(message, null);
-        } catch (IOException e) {
-            Assert.fail("Could not connect to RabbitMQ broker");
-        } finally {
-            sender.disconnect();
-        }
-
-        Thread.sleep(20000);
+        String message = "<ser:placeOrder xmlns:ser=\"http://services.samples\">\n" + "<ser:order>\n"
+                         + "<ser:price>100</ser:price>\n" + "<ser:quantity>2000</ser:quantity>\n"
+                         + "<ser:symbol>RMQ</ser:symbol>\n" + "</ser:order>\n" + "</ser:placeOrder>";
+        sender.sendMessage(message, null);
+        RabbitMQTestUtils.waitForLogToGetUpdated();
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
@@ -73,12 +65,12 @@ public class RabbitMQContentTypeTestCase extends ESBIntegrationTest {
         int count = 0;
 
         for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
-            if (message.contains("Unable to determine content type for message")
-                    && message.contains("setting to text/plain")) {
+            String logMessage = logs[i].getMessage();
+            if (logMessage.contains("Unable to determine content type for message")
+                && logMessage.contains("setting to text/plain")) {
                 setDefaultContentType = true;
             }
-            if (message.contains("received = true")) {
+            if (logMessage.contains("received = true")) {
                 count++;
             }
         }
@@ -89,7 +81,7 @@ public class RabbitMQContentTypeTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void end() throws Exception {
+        sender.disconnect();
         super.cleanup();
-        logViewer = null;
     }
 }

@@ -17,7 +17,7 @@
   ~ under the License.
 -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-   <api xmlns="http://ws.apache.org/ns/synapse" name="TestApi" context="/test">
+   <api xmlns="http://ws.apache.org/ns/synapse" name="testJsonEmptyArrayApi" context="/testJsonEmptyArray">
       <resource methods="GET" url-mapping="/testapi1">
          <inSequence>
             <property name="ContentType" value="application/json" scope="axis2"/>

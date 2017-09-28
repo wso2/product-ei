@@ -43,8 +43,6 @@ public class ESBJAVA4883SynapseHandlerBlockingCallTestCase extends ESBIntegratio
     public void init() throws Exception {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        serverConfigurationManager.copyToComponentLib(new File(getESBResourceLocation() + File.separator + "jar" +
-                File.separator + "SynapseLogHandler-1.0.0.jar"));
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator + "passthru" +
                 File.separator + "transport" + File.separator + "ESBJAVA4883" + File.separator + "synapse-handlers.xml"));
         super.init();

@@ -60,7 +60,7 @@ public class FaultSequenceExecutionOrderTestCase extends ESBIntegrationTest {
         SimpleHttpClient httpClient = new SimpleHttpClient();
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", contentType);
-        httpClient.doPost(getMainSequenceURL() + "test", headers, "", contentType);
+        httpClient.doPost(getMainSequenceURL() + "faultSequenceExecutionOrderTest", headers, "", contentType);
         LogEvent[] logs = logViewer.getAllSystemLogs();
         boolean isImmediateOnly = false, isSuperSequecefalutExecuted = false;
         for (LogEvent logEvent : logs) {

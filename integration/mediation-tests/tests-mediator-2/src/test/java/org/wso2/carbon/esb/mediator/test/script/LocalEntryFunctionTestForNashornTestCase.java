@@ -36,7 +36,7 @@ public class LocalEntryFunctionTestForNashornTestCase extends ESBIntegrationTest
         super.init();
     }
 
-    @Test(groups = "wso2.esb", description = "Tests changing payload with inline script")
+    @Test(groups = "wso2.esb", description = "Tests changing payload with script referred by local entry")
     public void testInlineFunction() throws Exception {
         OMElement response;
         response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp

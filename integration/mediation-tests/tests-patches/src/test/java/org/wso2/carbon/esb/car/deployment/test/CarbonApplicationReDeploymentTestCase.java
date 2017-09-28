@@ -41,7 +41,7 @@ public class CarbonApplicationReDeploymentTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "test proxy service re-deployment from car file")
     public void carReDeploymentTest() throws Exception {
         String proxyName = "samplePassThroughProxy";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             log.info("######################  Iteration : " + (i + 1));
             deployCar();
 
@@ -67,8 +67,7 @@ public class CarbonApplicationReDeploymentTestCase extends ESBIntegrationTest {
     }
 
     @AfterClass(alwaysRun = true)
-    public void deleteCarFileAndArtifactUnDeploymentTest() throws Exception {
-        TimeUnit.SECONDS.sleep(5);
+    public void cleanupEnvironment() throws Exception {
         super.cleanup();
     }
 }

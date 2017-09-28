@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2015.year, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*  Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *  WSO2 Inc. licenses this file to you under the Apache License,
 *  Version 2.0 (the "License"); you may not use this file except
@@ -42,11 +42,8 @@ public class ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport extends ESBIntegrati
         serverConfigurationManager =
                 new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-                + "nhttp" + File.separator + "transport" +
-                File.separator + "json" + File.separator + "axis2.xml"));
-        serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-                + "nhttp" + File.separator + "transport" +
-                File.separator + "json" + File.separator + "synapse.properties"));
+                                                               + "nhttp" + File.separator + "transport" +
+                                                               File.separator + "json" + File.separator + "synapse.properties"));
         super.init();
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
                 + File.separator + "nhttp" + File.separator + "transport"
@@ -57,23 +54,27 @@ public class ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport extends ESBIntegrati
     @Test(groups = "wso2.esb", description = "check whether Backend JSON payload is missing Json empty array elements " +
             "after flowing through NHTTP transport in response path back to client")
     public void testJSONEmptyArrayMissingNHTTPTransport() throws Exception {
-        HttpResponse response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("test/testapi1"), null);
+        HttpResponse response = HttpRequestUtil.sendGetRequest(
+                getApiInvocationURL("testJsonEmptyArray/testapi1"), null);
         Assert.assertTrue("Backend JSON payload is missing [] in Json empty array units after flowing through NHTTP transport"
                 + "in response path back to client", response.getData()
                 .contains("\"zeroElementArrayField\": []"));
 
-        response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("test/testapi2"), null);
+        response = HttpRequestUtil.sendGetRequest(
+                getApiInvocationURL("testJsonEmptyArray/testapi2"), null);
         Assert.assertTrue(
                 "All number fields are not treated equally by Auto primitive function after flowing through NHTTP transport"
                         + "in response path back to client", response.getData().replaceAll("\\s", "").contains(
                         "[{\"numField1\":\"1\"},{\"numField2\":\"2\"},{\"numField3\":\"3\"},{\"numField4\":\"4\"}]"));
 
-        response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("test/testapi3"), null);
+        response = HttpRequestUtil.sendGetRequest(
+                getApiInvocationURL("testJsonEmptyArray/testapi3"), null);
         Assert.assertTrue("Backend JSON payload is missing [] in Json single element array units after flowing through NHTTP transport"
                 + "in response path back to client", response.getData().replaceAll("\\s", "")
                 .contains("\"singleElementArrayField\":[{\"numField1\":\"1\"}]"));
 
-        response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("test/testapi4"), null);
+        response = HttpRequestUtil.sendGetRequest(
+                getApiInvocationURL("testJsonEmptyArray/testapi4"), null);
         Assert.assertTrue("Backend JSON payload is missing [] in Json multiple element array units after flowing through NHTTP transport"
                 + "in response path back to client", response.getData().replaceAll("\\s", "")
                 .contains("\"multipleElementArrayField\":[{\"numField1\":\"1\"},{\"numField2\":\"2\"},"

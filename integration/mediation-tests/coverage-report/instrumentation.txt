@@ -51,3 +51,4 @@ synapse-fix-transport_
 synapse-nhttp-transport_
 synapse-tasks_
 synapse-vfs-transport_
+org.wso2.carbon.mediator.transform_
