@@ -28,19 +28,10 @@
                 <log level="full">
                 <property name="received" value="true"/>
                 </log>
-                <property name="OUT_ONLY" value="true"/>
                 <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
-                <send>
-                    <endpoint>
-                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-                    </endpoint>
-                </send>
             </inSequence>
         </target>
-        <outSequence>
-            <drop/>
-        </outSequence>
-        <parameter name="rabbitmq.queue.name">queue2</parameter>
+        <parameter name="rabbitmq.queue.name">simple_consumer_test</parameter>
         <parameter name="rabbitmq.connection.factory">AMQPConnectionFactory</parameter>
         <description/>
     </proxy>

@@ -21,14 +21,19 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQServerInstance;
+import org.wso2.carbon.esb.rabbitmq.utils.RabbitMQTestUtils;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.rabbitmqclient.RabbitMQProducerClient;
 import org.wso2.esb.integration.common.utils.common.FixedSizeSymbolGenerator;
 
-import java.io.IOException;
+import java.io.File;
 
+/**
+ * RabbitMQConsumerTestCase tests EI as a rabbitmq consumer for small messages as well as large messages.
+ */
 public class RabbitMQConsumerTestCase extends ESBIntegrationTest {
 
     private LogViewerClient logViewer;
@@ -37,78 +42,61 @@ public class RabbitMQConsumerTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        initRabbitMQBroker();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/rabbitmq/transport/rabbitmq_consumer_proxy.xml");
+        sender = RabbitMQServerInstance.createProducerWithDeclaration("exchange2", "simple_consumer_test");
+        //The consumer proxy cannot be pre-deployed since the queue declaration(which is done in 'initRabbitMQBroker')
+        // must happen before deployment.
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator
+                                          + "ESB" + File.separator + "rabbitmq" + File.separator +
+                                          "transport" + File.separator + "rabbitmq_consumer_proxy.xml");
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
-    private void initRabbitMQBroker() {
-        sender = new RabbitMQProducerClient("localhost", 5672, "guest", "guest");
-        try {
-            sender.declareAndConnect("exchange2", "queue2");
-        } catch (IOException e) {
-            Assert.fail("Could not connect to RabbitMQ broker");
-        }
-    }
-
-    @Test(groups = {"wso2.esb"}, description = "Test ESB as a RabbitMQ Consumer ")
+    @Test(groups = { "wso2.esb" }, description = "Test ESB as a RabbitMQ Consumer ")
     public void testRabbitMQConsumer() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
-        try {
-            String message =
-                    "<ser:placeOrder xmlns:ser=\"http://services.samples\">\n" +
-                            "<ser:order>\n" +
-                            "<ser:price>100</ser:price>\n" +
-                            "<ser:quantity>2000</ser:quantity>\n" +
-                            "<ser:symbol>RMQ</ser:symbol>\n" +
-                            "</ser:order>\n" +
-                            "</ser:placeOrder>";
-            for (int i = 0; i < 200; i++) {
-                sender.sendMessage(message, "text/plain");
-            }
-        } catch (IOException e) {
-            Assert.fail("Could not connect to RabbitMQ broker");
+        String message = "<ser:placeOrder xmlns:ser=\"http://services.samples\">\n" + "<ser:order>\n"
+                + "<ser:price>100</ser:price>\n" + "<ser:quantity>2000</ser:quantity>\n"
+                + "<ser:symbol>RMQ</ser:symbol>\n" + "</ser:order>\n" + "</ser:placeOrder>";
+        for (int i = 0; i < 200; i++) {
+            sender.sendMessage(message, "text/plain");
         }
 
-        Thread.sleep(20000);
+        RabbitMQTestUtils.waitForLogToGetUpdated();
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
         int count = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
-            if (message.contains("received = true")) {
+        for (LogEvent logEvent : logs) {
+            if (logEvent == null) {
+                continue;
+            }
+            String logMessage = logEvent.getMessage();
+            if (logMessage.contains("received = true")) {
                 count++;
             }
         }
-
         Assert.assertEquals(count, 200, "All messages are not received from queue");
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Test ESB as a RabbitMQ Consumer with large messages ~10KB")
+    @Test(groups = { "wso2.esb" }, description = "Test ESB as a RabbitMQ Consumer with large messages ~10KB")
     public void testRabbitMQConsumerLargeMessage() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
-        try {
-            String message = FixedSizeSymbolGenerator.generateMessageKB(10);
-            for (int i = 0; i < 200; i++) {
-                sender.sendMessage(message, "text/plain");
-            }
-        } catch (IOException e) {
-            Assert.fail("Could not connect to RabbitMQ broker");
+        String message = FixedSizeSymbolGenerator.generateMessageKB(10);
+        for (int i = 0; i < 200; i++) {
+            sender.sendMessage(message, "text/plain");
         }
 
+        // Wait for the log to get updated
         Thread.sleep(20000);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
         int count = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
-            if (message.contains("received = true")) {
+        for (LogEvent logEvent : logs) {
+            String logMessage = logEvent.getMessage();
+            if (logMessage.contains("received = true")) {
                 count++;
             }
         }
