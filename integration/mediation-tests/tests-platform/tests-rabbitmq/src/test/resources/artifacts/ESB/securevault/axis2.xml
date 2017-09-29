@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><!--
-  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
-  ~  WSO2 Inc. licenses this file to you under the Apache License,
-  ~  Version 2.0 (the "License"); you may not use this file except
-  ~  in compliance with the License.
-  ~  You may obtain a copy of the License at
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
   ~
-  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~  Unless required by applicable law or agreed to in writing,
-  ~  software distributed under the License is distributed on an
-  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  ~  KIND, either express or implied.  See the License for the
-  ~  specific language governing permissions and limitations
-  ~  under the License.
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
   --><axisconfig xmlns:svns="http://org.wso2.securevault/configuration" name="AxisJava2.0">
-    
+
     <!-- ================================================= -->
     <!--                  Parameters                       -->
     <!-- ================================================= -->
@@ -51,17 +51,21 @@
     <!--the directory in which .aar services are deployed inside axis2 repository-->
     <parameter name="ServicesDirectory">axis2services</parameter>
 
+    <!--If turned on with use the Accept header of the request to determine the contentType of the
+    response-->
+    <parameter name="httpContentNegotiation">true</parameter>
+
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter locked="true" name="userAgent">WSO2 ESB 4.9.0</parameter>
-    <parameter locked="true" name="server">WSO2 ESB 4.9.0</parameter>
+    <parameter locked="true" name="userAgent">WSO2 EI 6.2.0</parameter>
+    <parameter locked="true" name="server">WSO2 EI 6.2.0</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
     <parameter locked="false" name="sendStacktraceDetailsWithFaults">false</parameter>
-    
+
     <!-- If there aren't any information available to find out the fault reason, we set the -->
     <!-- message of the exception as the faultreason/Reason. But when a fault is thrown from -->
     <!-- a service or some where, it will be wrapped by different levels. Due to this the -->
@@ -70,7 +74,7 @@
     <parameter locked="false" name="DrillDownToRootCauseForFaultReason">false</parameter>
 
     <!-- Set the flag to true if you want to enable transport level session management -->
-    <parameter locked="false" name="manageTransportSession">true</parameter>
+    <parameter name="manageTransportSession">true</parameter>
 
     <!-- This will give out the timout of the configuration contexts, in milliseconds -->
     <parameter locked="false" name="ConfigContextTimeoutInterval">30000</parameter>
@@ -83,6 +87,8 @@
     <parameter locked="false" name="SynapseConfig.ResolveRoot">.</parameter>
     <!-- Synapse Server name parameter -->
     <parameter locked="false" name="SynapseConfig.ServerName">localhost</parameter>
+    <!-- Returns 401 for UT secured scenario with incorrect/missing credentials -->
+    <parameter locked="false" name="enableBasicAuth">true</parameter>
 
     <!-- To override repository/services you need to uncomment following parameter and value -->
     <!-- SHOULD be absolute file path. -->
@@ -109,7 +115,7 @@
     <!-- ================================================= -->
 
     <!-- Deployer for the dataservice. -->
-    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.DBDeployer"/>-->
+    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>-->
 
     <!-- Axis1 deployer for Axis2 -->
     <!--<deployer extension="wsdd" class="org.wso2.carbon.axis1services.Axis1Deployer" directory="axis1services"/>-->
@@ -154,7 +160,7 @@
         <messageFormatter class="org.apache.axis2.format.PlainTextFormatter" contentType="text/plain"/>
 
         <!--JSON Message Formatters-->
-        <messageFormatter class="org.apache.synapse.commons.json.JsonStreamFormatter" contentType="application/json"/>
+        <messageFormatter class="org.wso2.carbon.integrator.core.json.JsonStreamFormatter" contentType="application/json"/>
         <!--messageFormatter contentType="application/x-www-form-urlencoded"
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
         <!--messageFormatter contentType="multipart/form-data"
@@ -167,7 +173,7 @@
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
         <!--messageFormatter contentType="text/xml"
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-	    <!--messageFormatter contentType="x-application/hessian"
+        <!--messageFormatter contentType="x-application/hessian"
                          class="org.apache.synapse.format.hessian.HessianMessageFormatter"/-->
         <!--messageFormatter contentType=""
                          class="org.apache.synapse.format.hessian.HessianMessageFormatter"/-->
@@ -189,8 +195,8 @@
         <messageBuilder class="org.apache.axis2.format.PlainTextBuilder" contentType="text/plain"/>
 
         <!--JSON Message Builders-->
-        <messageBuilder class="org.apache.synapse.commons.json.JsonStreamBuilder" contentType="application/json"/>
-	    <!--messageBuilder contentType="application/xml"
+        <messageBuilder class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder" contentType="application/json"/>
+        <!--messageBuilder contentType="application/xml"
                         class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
         <!--messageBuilder contentType="application/x-www-form-urlencoded"
                         class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
@@ -216,7 +222,7 @@
     <!--             Transport Ins (Listeners)             -->
     <!-- ================================================= -->
 
-     <transportReceiver class="org.apache.synapse.transport.passthru.PassThroughHttpListener" name="http">
+    <transportReceiver class="org.apache.synapse.transport.passthru.PassThroughHttpListener" name="http">
         <parameter locked="false" name="port">8280</parameter>
         <parameter locked="false" name="non-blocking">true</parameter>
         <!--parameter name="bind-address" locked="false">hostname or IP address</parameter-->
@@ -225,7 +231,7 @@
         <!--<parameter name="priorityConfigFile" locked="false">location of priority configuration file</parameter>-->
     </transportReceiver>
 
-     <transportReceiver class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener" name="https">
+    <transportReceiver class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener" name="https">
         <parameter locked="false" name="port">8243</parameter>
         <parameter locked="false" name="non-blocking">true</parameter>
         <parameter name="HttpsProtocols">TLSv1,TLSv1.1,TLSv1.2</parameter>
@@ -256,8 +262,8 @@
     <!--<transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>-->
 
     <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
-        <!-- configure any optional POP3/IMAP properties
-        check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more details-->
+    <!-- configure any optional POP3/IMAP properties
+    check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more details-->
     <!--</transportReceiver>-->
 
     <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment (e.g. ActiveMQ)
@@ -288,21 +294,21 @@
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
@@ -312,21 +318,21 @@
     <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
             <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
+            <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
@@ -335,7 +341,7 @@
     <!--Uncomment this for FIX transport support
     <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
     -->
-    
+
     <!--transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"/-->
 
     <!-- SAP Transport Listeners -->
@@ -347,22 +353,22 @@
         <parameter locked="false" name="AMQPConnectionFactory">
             <parameter locked="false" name="rabbitmq.server.host.name">localhost</parameter>
             <parameter locked="false" name="rabbitmq.server.port">5672</parameter>
-            <parameter locked="false" name="rabbitmq.server.user.name">esb</parameter>
+            <parameter locked="false" name="rabbitmq.server.user.name">guest</parameter>>
             <parameter locked="false" name="rabbitmq.server.password" svns:secretAlias="Server.rabbit.password">password</parameter>
             <parameter locked="false" name="rabbitmq.connection.retry.interval">10000</parameter>
             <parameter locked="false" name="rabbitmq.connection.retry.count">5</parameter>
         </parameter>
     </transportReceiver>
 
-   <!-- <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
-        <parameter locked="false" name="mqttConFactory">
-            <parameter locked="false" name="mqtt.server.host.name">localhost</parameter>
-            <parameter name="mqtt.connection.factory">mqttConFactory</parameter>
-            <parameter locked="false" name="mqtt.server.port">1883</parameter>
-            <parameter locked="false" name="mqtt.client.id">client-id-1234</parameter>
-            <parameter locked="false" name="mqtt.topic.name">esb.test</parameter>
-        </parameter>
-    </transportReceiver>-->
+    <!-- <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
+         <parameter locked="false" name="mqttConFactory">
+             <parameter locked="false" name="mqtt.server.host.name">localhost</parameter>
+             <parameter name="mqtt.connection.factory">mqttConFactory</parameter>
+             <parameter locked="false" name="mqtt.server.port">1883</parameter>
+             <parameter locked="false" name="mqtt.client.id">client-id-1234</parameter>
+             <parameter locked="false" name="mqtt.topic.name">esb.test</parameter>
+         </parameter>
+     </transportReceiver>-->
 
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
@@ -394,7 +400,7 @@
             </TrustStore>
         </parameter>
         <!--<parameter name="HostnameVerifier">DefaultAndLocalhost</parameter>-->
-            <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
+        <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
     </transportSender>
 
     <transportSender class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender" name="local"/>
@@ -402,8 +408,8 @@
     <!--Uncomment this local transport to use local transport in mediation flow-->
     <!--<transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>-->
 
-   <!-- uncomment this and configure to use connection pools for sending messages>
-     <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
+    <!-- uncomment this and configure to use connection pools for sending messages>
+      <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
 
     <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
 
@@ -422,7 +428,7 @@
     <!--Uncomment this for FIX transport support
     <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>
     -->
-    
+
     <!--transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"/-->
 
     <!-- SAP Transport Senders -->
@@ -431,17 +437,30 @@
 
     <!-- Uncomment this and configure to use RabbitMQ connection pools for sending messages-->
     <transportSender class="org.apache.axis2.transport.rabbitmq.RabbitMQSender" name="rabbitmq">
-	<parameter locked="false" name="AMQPConnectionFactorySender">
+        <parameter locked="false" name="AMQPConnectionFactorySender">
             <parameter locked="false" name="rabbitmq.server.host.name">localhost</parameter>
             <parameter locked="false" name="rabbitmq.server.port">5672</parameter>
-            <parameter locked="false" name="rabbitmq.server.user.name">esb</parameter>
+            <parameter locked="false" name="rabbitmq.server.user.name">guest</parameter>
             <parameter locked="false" name="rabbitmq.server.password" svns:secretAlias="Server.rabbit.password.sender">password</parameter>
-            <parameter locked="false" name="rabbitmq.connection.retry.interval">10000</parameter>
-            <parameter locked="false" name="rabbitmq.connection.retry.count">5</parameter>
         </parameter>
     </transportSender>
 
     <!--<transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>-->
+
+    <!--<transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
+        <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
+        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
+    </transportSender>-->
+
+    <!--<transportSender name="wss" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
+        <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
+        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
+        <parameter name="ws.trust.store" locked="false">
+            <ws.trust.store.location>repository/resources/security/client-truststore.jks</ws.trust.store.location>
+            <ws.trust.store.Password>wso2carbon</ws.trust.store.Password>
+        </parameter>
+    </transportSender>-->
+
 
     <!-- ================================================= -->
     <!--             Global Engaged Modules                -->
@@ -460,6 +479,10 @@
      getting this node to join the cluster.
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent" enable="false">
+
+        <!-- Parameter to differentiate clustering mode, Default value will be "nonWorkerManager" in which
+         case the all nodes of the cluster run schedule tasks-->
+        <parameter name="clusteringPattern">nonWorkerManager</parameter>
 
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
@@ -542,13 +565,13 @@
         <parameter name="properties">
             <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
             <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
- 	    <!-- Manger Setup with Port Mapping-->
-	    <!--property name="port.mapping.8280" value="9764"/>
-            <property name="port.mapping.8243" value="9444"/>
-            <property name="subDomain" value="mgt"/-->
+            <!-- Manger Setup with Port Mapping-->
+            <!--property name="port.mapping.8280" value="9764"/>
+                <property name="port.mapping.8243" value="9444"/>
+                <property name="subDomain" value="mgt"/-->
 
-	    <!-- Worker Setup-->
-	    <!--property name="subDomain" value="worker"/-->
+            <!-- Worker Setup-->
+            <!--property name="subDomain" value="worker"/-->
         </parameter>
 
         <!--
@@ -568,7 +591,7 @@
         can be defined in this section.
         -->
         <groupManagement enable="false">
-            <applicationDomain agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent" description="ESB group" name="wso2.esb.domain" port="2222" subDomain="worker"/>
+            <applicationDomain agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent" description="EI group" name="wso2.esb.domain" port="2222" subDomain="worker"/>
         </groupManagement>
     </clustering>
 
@@ -577,7 +600,7 @@
     <!-- ================================================= -->
 
     <!--
-        Uncomment and configure the following section to enable transactions support 
+        Uncomment and configure the following section to enable transactions support
     -->
     <!--<transaction timeout="30000">
         <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
@@ -600,14 +623,15 @@
            NOTE: This should be the very first phase in this flow
         -->
         <phase name="MsgInObservation">
-	    <handler class="org.apache.synapse.transport.passthru.util.TraceMessageBuilderDispatchHandler" name="TraceMessageBuilderDispatchHandler"/>
-	</phase>
+            <handler class="org.apache.synapse.transport.passthru.util.TraceMessageBuilderDispatchHandler" name="TraceMessageBuilderDispatchHandler"/>
+        </phase>
         <phase name="Validation"/>
         <phase name="Transport">
-            <handler class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher" name="RequestURIBasedDispatcher">
+            <handler class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler" name="IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler class="org.apache.axis2.json.gson.JSONMessageHandler" name="JSONMessageHandler"/>
             </handler>
-   	        <handler class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator" name="CarbonContextConfigurator"/>
+            <handler class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator" name="CarbonContextConfigurator"/>
             <handler class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler" name="RelaySecuirtyMessageBuilderDispatchandler"/>
             <handler class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher" name="SOAPActionBasedDispatcher">
                 <order phase="Transport"/>
@@ -624,12 +648,13 @@
         </phase>
         <phase name="Security"/>
         <phase name="PreDispatch">
-            <!--Uncomment following handler to enable logging in ESB log UI-->
+            <!--Uncomment following handler to enable logging in EI log UI-->
             <!--<handler name="TenantDomainSetter"-->
-                     <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
+            <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
         </phase>
         <phase class="org.apache.axis2.engine.DispatchPhase" name="Dispatch">
-            <handler class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher" name="RequestURIBasedDispatcher"/>
+            <handler class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler" name="IntegratorStatefulHandler"/>
+            <handler class="org.apache.axis2.json.gson.JSONMessageHandler" name="JSONMessageHandler"/>
             <handler class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher" name="SOAPActionBasedDispatcher"/>
             <handler class="org.apache.axis2.dispatchers.RequestURIOperationDispatcher" name="RequestURIOperationDispatcher"/>
             <handler class="org.apache.axis2.dispatchers.SOAPMessageBodyBasedDispatcher" name="SOAPMessageBodyBasedDispatcher"/>
@@ -660,8 +685,8 @@
         <!--these phase will run irrespective of the service-->
         <phase name="PolicyDetermination"/>
         <phase name="PTSecurityOutPhase">
-		<handler class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler" name="RelaySecuirtyMessageBuilderDispatchandler"/>
-	    </phase>
+            <handler class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler" name="RelaySecuirtyMessageBuilderDispatchandler"/>
+        </phase>
         <phase name="MessageOut"/>
         <phase name="Security"/>
 
@@ -686,8 +711,9 @@
         <phase name="MsgInObservation"/>
         <phase name="Validation"/>
         <phase name="Transport">
-            <handler class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher" name="RequestURIBasedDispatcher">
+            <handler class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler" name="IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler class="org.apache.axis2.json.gson.JSONMessageHandler" name="JSONMessageHandler"/>
             </handler>
             <handler class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher" name="SOAPActionBasedDispatcher">
                 <order phase="Transport"/>
@@ -701,7 +727,7 @@
         <phase name="Security"/>
         <phase name="PreDispatch"/>
         <phase class="org.apache.axis2.engine.DispatchPhase" name="Dispatch">
-            <handler class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher" name="RequestURIBasedDispatcher"/>
+            <handler class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler" name="IntegratorStatefulHandler"/>
             <handler class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher" name="SOAPActionBasedDispatcher"/>
             <handler class="org.apache.axis2.dispatchers.RequestURIOperationDispatcher" name="RequestURIOperationDispatcher"/>
             <handler class="org.apache.axis2.dispatchers.SOAPMessageBodyBasedDispatcher" name="SOAPMessageBodyBasedDispatcher"/>
@@ -726,7 +752,7 @@
         <phase name="PolicyDetermination"/>
         <phase name="MessageOut"/>
         <phase name="Security"/>
-	<phase name="Transport"/>
+        <phase name="Transport"/>
         <!--
            The MsgOutObservation phase is used to observe messages just before the
            responses are sent out. In this phase, we could do some things such as SOAP message
