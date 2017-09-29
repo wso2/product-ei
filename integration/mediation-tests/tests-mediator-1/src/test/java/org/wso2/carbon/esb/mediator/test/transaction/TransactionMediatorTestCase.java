@@ -36,12 +36,15 @@ import java.net.URL;
 public class TransactionMediatorTestCase extends ESBIntegrationTest {
     private static final String API_URL = "http://localhost:8480/transaction-test/";
     private static final String INIT_CONTEXT = "init";
+    private static final String NEW_CONTEXT = "new";
     private static final String COMMIT_CONTEXT = "commit";
     private static final String ROLLBACK_CONTEXT = "rollback";
     private static final String TEST_CONTEXT = "test";
     private static final String CLEANUP_CONTEXT = "cleanup";
     private static final String FAULT_NOTX_CONTEXT = "fault-if-no-tx";
     private static final String USE_EXISTING_NEW_CONTEXT = "use-existing-or-new";
+    private static final String SUSPEND_RESUME_CONTEXT = "suspend-resume";
+    private static final String SUSPEND_CONTEXT = "suspend";
 
     /**
      * Initialize database by creating necessary tables and entries for following tests
@@ -143,6 +146,63 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
 
         Assert.assertTrue(satisfyEntryJohn & satisfyEntryNick,
                           "Use-existing-or-new action fails for using an existing transaction in transaction mediator");
+    }
+
+    /**
+     * Test for new transaction creation without commit action
+     *
+     * @throws Exception
+     */
+    @Test(enabled = false, groups = "wso2.esb", description = "Test new action without commit transaction")
+    public void newActionTest() throws Exception {
+
+        String expectedOutput = "<response><table1/><table2/></response>";
+
+        HttpRequestUtil.doPost(new URL(API_URL + NEW_CONTEXT), "");
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Max"), "");
+
+        Assert.assertEquals(httpResponse.getData(), expectedOutput,
+                            "New action without commit transaction fails in transaction mediator");
+    }
+
+    /**
+     * Test for suspend action of a transaction (suspend action has not been implemented though it is mentioned in WSO2
+     * docs. https://docs.wso2.com/display/EI620/Transaction+Mediator)
+     *
+     * @throws Exception
+     */
+    @Test(enabled = false, groups = "wso2.esb", description = "Test suspend action without commit transaction")
+    public void suspendActionTest() throws Exception {
+
+        String expectedOutput = "<response><table1/><table2/></response>";
+
+        HttpRequestUtil.doPost(new URL(API_URL + SUSPEND_CONTEXT), "");
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(API_URL + TEST_CONTEXT + "?testEntry=Mike"), "");
+
+        Assert.assertEquals(httpResponse.getData(), expectedOutput,
+                            "Suspend action fails in transaction mediator");
+    }
+
+    /**
+     * Test for suspend and resume actions of a transaction (suspend and resume actiona have not been implemented though
+     * it is mentioned in WSO2 docs. https://docs.wso2.com/display/EI620/Transaction+Mediator)
+     *
+     * @throws Exception
+     */
+    @Test(enabled = false, groups = "wso2.esb", description = "Test suspend and resume actions  transaction")
+    public void suspendResumeActionTest() throws Exception {
+
+        String expectedSuspendActionOutput = "<response1><response><table1/><table2/></response></response1>";
+        String expectedResumeActionOutput =
+                "<response2><response><table1>8</table1><table2>8</table2></response></response2>";
+
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(API_URL + SUSPEND_RESUME_CONTEXT), "");
+
+        boolean satisfySuspendAction = httpResponse.getData().contains(expectedSuspendActionOutput);
+        boolean satisfyResumeAction = httpResponse.getData().contains(expectedResumeActionOutput);
+
+        Assert.assertEquals(satisfySuspendAction & satisfyResumeAction,
+                            "Suspend and resume actions fail in transaction mediator");
     }
 
     /**

@@ -18,6 +18,22 @@
             </dbreport>
         </inSequence>
     </resource>
+    <resource methods="POST" uri-template="/new">
+        <inSequence>
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[INSERT INTO PERSON1(id, name) values (6, 'Max');
+                    INSERT INTO PERSON2(id, name) values(6, 'Max');]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
     <resource methods="POST" uri-template="/commit">
         <inSequence>
             <property name="TEST_ENTRY" value="Alice" scope="default" type="STRING" />
@@ -34,9 +50,69 @@
     </resource>
     <resource methods="POST" uri-template="/suspend">
         <inSequence>
-            <property name="TEST_ENTRY" value="Bob" scope="default" type="STRING" />
-            <property name="TEST_ENTRY_ID" value="1" scope="default" type="INTEGER" />
-            <sequence key="transactionTestTransaction1Seq" />
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[INSERT INTO PERSON1(id, name) values (7, 'Mike');
+                    INSERT INTO PERSON2(id, name) values(7, 'Mike');]]></sql>
+                </statement>
+            </dbreport>
+            <transaction action="suspend" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/suspend-resume">
+        <inSequence>
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[INSERT INTO PERSON1(id, name) values (8, 'Hope');
+                    INSERT INTO PERSON2(id, name) values(8, 'Hope');]]></sql>
+                </statement>
+            </dbreport>
+            <transaction action="suspend" />
+            <call>
+                <endpoint>
+                    <http method="post" uri-template="http://localhost:8480/transaction-test/test?testEntry=Hope" />
+                </endpoint>
+            </call>
+            <log>
+                <property name="envelope1" expression="$env" />
+            </log>
+            <transaction action="resume" />
+            <transaction action="commit" />
+            <call>
+                <endpoint>
+                    <http method="post" uri-template="http://localhost:8480/transaction-test/test?testEntry=Hope" />
+                </endpoint>
+            </call>
+            <log>
+                <property name="envelope2" expression="$env" />
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <responses xmlns="">
+                        <response1>$1</response1>
+                        <response2>$2</response2>
+                    </responses>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('envelope1')"
+                         literal="false" />
+                    <arg evaluator="xml" expression="get-property('envelope2')"
+                         literal="false" />
+                </args>
+            </payloadFactory>
+            <respond />
         </inSequence>
     </resource>
     <resource methods="POST" uri-template="/fault-if-no-tx">
