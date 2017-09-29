@@ -22,10 +22,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import static org.testng.Assert.assertNotNull;
 import static org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil.doPost;
 
 /**
@@ -33,9 +38,13 @@ import static org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil.
  */
 public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
 
+    private LogViewerClient logViewerClient;
+
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
+        logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+
     }
 
     @Test(groups = {"wso2.esb"}, description = "Sending a JSON message Via REST and manipulate with NashornJS")
@@ -53,6 +62,79 @@ public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
         Assert.assertTrue((response.getData().contains("California")), "Response does not contain "
                 + "the keyword \"California\". Response: " + response.getData());
 
+    }
+
+    @Test(groups = {"wso2.esb"}, description = "Serialize JSON payload with NashornJS")
+    public void testSerializingJson() throws Exception {
+
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/json");
+        String payload = "{\n" + "\"name\": \"John Doe\",\n" + "\"dob\": \"1990-03-19\",\n" + "\"ssn\": "
+                + "\"234-23" + "-525\",\n" + "\"address\": \"California\",\n" + "\"phone\": \"8770586755\",\n"
+                + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
+                + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
+                + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsStringify")), payload,
+                httpHeaders);
+        boolean propertySet;
+        assertNotNull(response, "Response message null");
+        propertySet = isPropertyContainedInLog("JSON_TEXT = {\"name\":\"John Doe\",\"address\":\"California\","
+                + "\"dob\":\"1990-03-19\"}");
+        Assert.assertTrue(propertySet, " The serialized json payload is not set as a property ");
+
+    }
+
+    @Test(groups = {"wso2.esb"}, description = "Parsing serialized JSON payload with NashornJS")
+    public void testParsingSerializedJson() throws Exception {
+
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/json");
+        String payload = "{\n" + "\"name\": \"John Doe\",\n" + "\"dob\": \"1990-03-19\",\n" + "\"ssn\": "
+                + "\"234-23" + "-525\",\n" + "\"address\": \"California\",\n" + "\"phone\": \"8770586755\",\n"
+                + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
+                + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
+                + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsParse")), payload,
+                httpHeaders);
+        Assert.assertTrue((response.getData().contains("California")), "Response does not contain "
+                + "the keyword \"California\". Response: " + response.getData());
+
+    }
+
+    @Test(groups = {"wso2.esb"}, description = "Handling null JSON objects with NashornJS")
+    public void testHandlingNullJsonObjects() throws Exception {
+
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/json");
+        String payload = "{\n" + "\"name\": \"John Doe\",\n" + "\"dob\": \"1990-03-19\",\n" + "\"ssn\": "
+                + "\"234-23" + "-525\",\n" + "\"address\": \"California\",\n" + "\"phone\": \"8770586755\",\n"
+                + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
+                + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
+                + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsHandlingNullJsonObject")), payload,
+                httpHeaders);
+        Assert.assertTrue((response.getData().contains("{}")), "Response does not contain "
+                + "the keyword \"{}\". Response: " + response.getData());
+
+    }
+
+    /**
+     * This method check whether given property contains in the logs.
+     * 
+     * @param property required property which needs to be validate if exists or not.
+     * @return A Boolean
+     */
+    private boolean isPropertyContainedInLog(String property) throws LogViewerLogViewerException, RemoteException {
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+        boolean containsProperty = false;
+        for (LogEvent logEvent : logs) {
+            String message = logEvent.getMessage();
+            if (message.contains(property)) {
+                containsProperty = true;
+                break;
+            }
+        }
+        return containsProperty;
     }
 
     @AfterClass(alwaysRun = true)
