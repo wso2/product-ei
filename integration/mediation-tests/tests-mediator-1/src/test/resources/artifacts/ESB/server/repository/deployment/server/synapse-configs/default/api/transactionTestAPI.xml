@@ -1,0 +1,222 @@
+<api xmlns="http://ws.apache.org/ns/synapse" context="/transaction-test" name="transactionTestAPI">
+    <resource methods="POST" uri-template="/init">
+        <inSequence>
+            <dbreport>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[DROP TABLE IF EXISTS PERSON1;
+                    CREATE TABLE PERSON1(id int primary key, name varchar(255));
+                    INSERT INTO PERSON1(id, name) values(1,'Alice'), (2, 'Bob');
+                    DROP TABLE IF EXISTS PERSON2;
+                    CREATE TABLE PERSON2(id int primary key, name varchar(255));
+                    INSERT INTO PERSON2(id, name) values(1, 'Bob');]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/new">
+        <inSequence>
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[INSERT INTO PERSON1(id, name) values (6, 'Max');
+                    INSERT INTO PERSON2(id, name) values(6, 'Max');]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/commit">
+        <inSequence>
+            <property name="TEST_ENTRY" value="Alice" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" value="2" scope="default" type="INTEGER" />
+            <sequence key="transactionTestTransaction1Seq" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/rollback">
+        <inSequence>
+            <property name="TEST_ENTRY" value="Bob" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" value="1" scope="default" type="INTEGER" />
+            <sequence key="transactionTestTransaction1Seq" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/suspend">
+        <inSequence>
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[INSERT INTO PERSON1(id, name) values (7, 'Mike');
+                    INSERT INTO PERSON2(id, name) values(7, 'Mike');]]></sql>
+                </statement>
+            </dbreport>
+            <transaction action="suspend" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/suspend-resume">
+        <inSequence>
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[INSERT INTO PERSON1(id, name) values (8, 'Hope');
+                    INSERT INTO PERSON2(id, name) values(8, 'Hope');]]></sql>
+                </statement>
+            </dbreport>
+            <transaction action="suspend" />
+            <call>
+                <endpoint>
+                    <http method="post" uri-template="http://localhost:8480/transaction-test/test?testEntry=Hope" />
+                </endpoint>
+            </call>
+            <log>
+                <property name="envelope1" expression="$env" />
+            </log>
+            <transaction action="resume" />
+            <transaction action="commit" />
+            <call>
+                <endpoint>
+                    <http method="post" uri-template="http://localhost:8480/transaction-test/test?testEntry=Hope" />
+                </endpoint>
+            </call>
+            <log>
+                <property name="envelope2" expression="$env" />
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <responses xmlns="">
+                        <response1>$1</response1>
+                        <response2>$2</response2>
+                    </responses>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('envelope1')"
+                         literal="false" />
+                    <arg evaluator="xml" expression="get-property('envelope2')"
+                         literal="false" />
+                </args>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/fault-if-no-tx">
+        <inSequence>
+            <transaction action="fault-if-no-tx" />
+            <log>
+                <property name="Message" value="No transactions are executed !!" />
+            </log>
+        </inSequence>
+        <faultSequence>
+            <log>
+                <property name="Message" value="Fault Sequence for no transactions in Transaction Mediator Test" />
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <response xmlns="">
+                        <message>No Transactions</message>
+                    </response>
+                </format>
+            </payloadFactory>
+            <respond />
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/use-existing-or-new?testEntry={testVal}&amp;entryId={id}">
+        <inSequence>
+            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING" />
+            <property name="TEST_ENTRY_ID" expression="$url:entryId" scope="default" type="INTEGER" />
+            <filter regex="John" source="get-property('TEST_ENTRY')">
+                <then>
+                    <transaction action="new" />
+                    <dbreport>
+                        <connection>
+                            <pool>
+                                <dsName>jdbc/WSO2TestDB1</dsName>
+                            </pool>
+                        </connection>
+                        <statement>
+                            <sql><![CDATA[INSERT INTO PERSON1(id, name) values(4,'Nick');
+                    INSERT INTO PERSON2(id, name) values(4, 'Nick');]]></sql>
+                        </statement>
+                    </dbreport>
+                </then>
+                <else />
+            </filter>
+            <sequence key="transactionTestTransaction2Seq" />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/test?testEntry={testVal}">
+        <inSequence>
+            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING" />
+            <dblookup>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[select * from PERSON1 where name = ?]]></sql>
+                    <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+                    <result name="id_tb1" column="id" />
+                </statement>
+            </dblookup>
+            <dblookup>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[select * from PERSON2 where name = ?]]></sql>
+                    <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+                    <result name="id_tb2" column="id" />
+                </statement>
+            </dblookup>
+            <payloadFactory media-type="xml">
+                <format>
+                    <response xmlns="">
+                        <table1>$1</table1>
+                        <table2>$2</table2>
+                    </response>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id_tb1')"
+                         literal="false" />
+                    <arg evaluator="xml" expression="get-property('id_tb2')"
+                         literal="false" />
+                </args>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/cleanup">
+        <inSequence>
+            <dbreport>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[DROP TABLE IF EXISTS PERSON1;
+                    DROP TABLE IF EXISTS PERSON2;]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
+</api>

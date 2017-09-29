@@ -1,0 +1,36 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="transactionTestTransaction2Seq"
+          onError="transactionTestFaultSeq">
+    <!-- This transaction executes use-existing-or-new and commit actions -->
+    <log>
+        <property name="Message" value="Start Commit Transaction" />
+    </log>
+    <transaction action="use-existing-or-new" />
+    <dbreport useTransaction="true">
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TestDB1</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql>INSERT into PERSON1 (id, name) values (?, ?);</sql>
+            <parameter expression="get-property('TEST_ENTRY_ID')" type="INTEGER" />
+            <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+        </statement>
+    </dbreport>
+    <dbreport useTransaction="true">
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TestDB1</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql>INSERT into PERSON2 (id, name) values (?, ?);</sql>
+            <parameter expression="get-property('TEST_ENTRY_ID')" type="INTEGER" />
+            <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+        </statement>
+    </dbreport>
+    <transaction action="commit" />
+    <log>
+        <property name="Message" value="Finish Commit Transaction" />
+    </log>
+</sequence>
