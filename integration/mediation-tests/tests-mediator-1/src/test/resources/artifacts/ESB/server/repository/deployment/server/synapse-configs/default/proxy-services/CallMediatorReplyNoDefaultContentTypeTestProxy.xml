@@ -1,0 +1,12 @@
+<proxy name="CallMediatorReplyNoDefaultContentTypeTestProxy"
+       startOnLoad="true" trace="disable" transports="http https">
+<description/>
+<target>
+    <inSequence>
+        <log level="custom">
+            <property expression="get-property('transport','Content-Type')" name="Default_ContentType_Test_ContentType"/>
+        </log>
+        <drop/>
+    </inSequence>
+</target>
+</proxy>

@@ -1,0 +1,17 @@
+<proxy name="CallMediatorNoDefaultContentTypeTestProxy" startOnLoad="true"
+       trace="disable" transports="http https">
+    <description/>
+    <target>
+        <inSequence>
+            <property action="remove" name="Content-Type" scope="transport"/>
+            <property name="NoDefaultContentType" scope="axis2" value="true"/>
+            <call blocking="true">
+                <endpoint>
+                    <http uri-template="http://localhost:8480/services/CallMediatorReplyNoDefaultContentTypeTestProxy"/>
+                </endpoint>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+    </target>
+</proxy>
