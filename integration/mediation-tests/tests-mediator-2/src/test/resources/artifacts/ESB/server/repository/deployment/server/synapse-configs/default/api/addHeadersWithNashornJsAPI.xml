@@ -16,7 +16,7 @@
   ~ under the License.
   -->
 
-<api xmlns="http://ws.apache.org/ns/synapse" context="/addHeadersWithNashornJs" name="addHeadersWithNashornJs">
+<api xmlns="http://ws.apache.org/ns/synapse" context="/addHeadersWithNashornJsAPI" name="addHeadersWithNashornJsAPI">
     <resource methods="POST">
         <inSequence>
             <script language="nashornJs"><![CDATA[

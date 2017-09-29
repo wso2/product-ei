@@ -16,7 +16,7 @@
   ~ under the License.
   -->
 
-<api xmlns="http://ws.apache.org/ns/synapse" context="/nashornJsStringify" name="nashornJsStringify">
+<api xmlns="http://ws.apache.org/ns/synapse" context="/nashornJsParseAPI" name="nashornJsParseAPI">
     <resource methods="POST">
         <inSequence>
             <script language="nashornJs"><![CDATA[
@@ -26,21 +26,18 @@
 				dob : ""
 			  };
 
-		var payload = mc.getPayloadJSON();
+		var payloadText = mc.getPayloadText();
+		var parsedPayload = JSON.parse(payloadText);
 
-		var name = payload.name;
-		var dob = payload.dob;
-		var address = payload.address;
+		var name = parsedPayload.name;
+		var dob = parsedPayload.dob;
+		var address = parsedPayload.address;
 
 		doctor.name = name;
 		doctor.dob = dob;
 		doctor.address = address;
-		
-		var jsonText = JSON.stringify(doctor);
-		mc.setJsonText(mc, jsonText);
-		var rettrivedJsonText = mc.getJsonText();
+
 		mc.setPayloadJSON(doctor);
-		mc.setProperty("json", rettrivedJsonText);
 
 	   ]]></script>
             <log level="custom">
