@@ -1,0 +1,24 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyOMOperationRemoveTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="OMVal" scope="operation" type="OM">
+                <xmll222 xmlns="">OMMMMM</xmll222>
+            </property>
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('operation', 'OMVal')" />
+            </log>
+
+            <property xmlns="http://ws.apache.org/ns/synapse" name="OMVal" action="remove" scope="operation" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('operation', 'OMVal')" />
+            </log>
+
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:symbol xmlns:m="http://services.samples">Property Set and Removed</m:symbol>
+                </format>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </target>
+</proxy>

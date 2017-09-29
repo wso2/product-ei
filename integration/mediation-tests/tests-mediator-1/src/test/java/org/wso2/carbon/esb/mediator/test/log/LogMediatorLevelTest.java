@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright 2005, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -61,6 +61,7 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
         LogEvent[] getLogsTrace = logViewer.getLogs("TRACE", "LogMediator", "", "");
         LogEvent[] getLogsInfo = logViewer.getLogs("INFO", "LogMediator", "", "");
 
+        logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.LogLevel.INFO.name(), true, false);
     }
 
     @Test(groups = "wso2.esb", description = "Tests System Logs")

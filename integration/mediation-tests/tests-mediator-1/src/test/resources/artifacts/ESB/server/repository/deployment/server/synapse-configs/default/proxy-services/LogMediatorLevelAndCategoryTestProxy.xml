@@ -1,0 +1,48 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="LogMediatorLevelAndCategoryTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+<description/>
+<target>
+    <inSequence>
+        <log level="custom" category="TRACE">
+            <property name="trace_custom" value="*****LOGGING IN TRACE CATEGORY - CUSTOM LEVEL*****"/>
+        </log>
+        <log level="custom" category="DEBUG">
+            <property name="debug_custom" value="*****LOGGING IN DEBUG CATEGORY - CUSTOM LEVEL*****"/>
+        </log>
+        <log level="custom" category="INFO">
+            <property name="info_custom" value="*****LOGGING IN INFO CATEGORY - CUSTOM LEVEL*****"/>
+        </log>
+        <log level="custom" category="WARN">
+            <property name="warn_custom" value="*****LOGGING IN WARN CATEGORY - CUSTOM LEVEL*****"/>
+        </log>
+        <log level="custom" category="ERROR">
+            <property name="error_custom" value="*****LOGGING IN ERROR CATEGORY - CUSTOM LEVEL*****"/>
+        </log>
+        <log level="custom" category="FATAL">
+            <property name="fatal_custom" value="*****LOGGING IN FATAL CATEGORY - CUSTOM LEVEL*****"/>
+        </log>
+        <log level="full">
+            <property name="level_full" value="*****LOGGING AT FULL LEVEL*****"/>
+        </log>
+        <log level="headers">
+            <property name="level_header" value="*****LOGGING AT HEADER LEVEL*****"/>
+        </log>
+        <log level="simple">
+            <property name="level_simple" value="*****LOGGING AT SIMPLE LEVEL*****"/>
+        </log>
+        <log level="custom">
+            <property name="level_custom" value="*****LOGGING AT CUSTOM LEVEL*****"/>
+        </log>
+        <send>
+            <endpoint>
+                <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+        </send>
+    </inSequence>
+    <outSequence>
+        <send/>
+    </outSequence>
+</target>
+</proxy>

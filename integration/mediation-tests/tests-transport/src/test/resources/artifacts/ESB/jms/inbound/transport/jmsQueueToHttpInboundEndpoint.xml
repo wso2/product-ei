@@ -33,4 +33,4 @@
         <parameter name="transport.jms.SubscriptionDurable">false</parameter>
         <parameter name="transport.jms.SharedSubscription">false</parameter>
     </parameters>
-</inboundEndpoint>"
+</inboundEndpoint>

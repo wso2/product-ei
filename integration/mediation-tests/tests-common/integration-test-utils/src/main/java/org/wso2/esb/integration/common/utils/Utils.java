@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -21,6 +21,8 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageConsumer;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
@@ -28,6 +30,7 @@ import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
     public static OMElement getSimpleQuoteRequest(String symbol) {
@@ -124,6 +127,28 @@ public class Utils {
     }
 
     /**
+     * Check if the given queue does not contain any messages
+     *
+     * @param queueName queue to be checked
+     * @return true in queue is empty, false otherwise
+     * @throws Exception if error while checking
+     */
+    public static boolean isQueueEmpty(String queueName) throws Exception {
+
+        String poppedMessage;
+        JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(
+                JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
+        try {
+            consumer.connect(queueName);
+            poppedMessage = consumer.popMessage();
+        } finally {
+            consumer.disconnect();
+        }
+
+        return poppedMessage == null;
+    }
+
+    /**
      * Check if the system log contains the expected string. The search will be done for maximum 10 seconds.
      *
      * @param logViewerClient log viewer used for test
@@ -149,5 +174,29 @@ public class Utils {
             }
         }
         return matchFounf;
+    }
+
+    /**
+     * Check for the existence of the given log message. The polling will happen in one second intervals.
+     *
+     * @param logViewerClient log viewer used for test
+     * @param expected        expected log string
+     * @param timeout         max time to do polling
+     * @return true if the log is found with given timeout, false otherwise
+     * @throws InterruptedException        if interrupted while sleeping
+     * @throws RemoteException             due to a logviewer error
+     * @throws LogViewerLogViewerException due to a logviewer error
+     */
+    public static boolean checkForLog(LogViewerClient logViewerClient, String expected, int timeout) throws
+            InterruptedException, RemoteException, LogViewerLogViewerException {
+        boolean logExists = false;
+        for (int i = 0; i < timeout; i++) {
+            TimeUnit.SECONDS.sleep(1);
+            if (Utils.assertIfSystemLogContains(logViewerClient, expected)) {
+                logExists = true;
+                break;
+            }
+        }
+        return logExists;
     }
 }

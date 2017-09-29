@@ -1,0 +1,30 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyBooleanDefaultTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="BooleanVal" value="TRUE"  scope="default" type="BOOLEAN" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:BooleanVal" />
+            </log>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <filter xpath="$ctx:BooleanVal">
+                <then>
+                    <send/>
+                </then>
+                <else>
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <m:Msg xmlns:m="http://services.samples/xsd">Property not set!!!</m:Msg>
+                        </format>
+                    </payloadFactory>
+                    <send />
+                </else>
+            </filter>
+        </outSequence>
+    </target>
+</proxy>
