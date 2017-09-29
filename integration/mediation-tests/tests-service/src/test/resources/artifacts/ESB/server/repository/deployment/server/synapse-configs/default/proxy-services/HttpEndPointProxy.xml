@@ -1,0 +1,23 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="HttpEndPointProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="uri.var.port" value="9000"/>
+            <property name="uri.var.servicePath" value="services"/>
+            <property name="uri.var.serviceName" value="SimpleStockQuoteService"/>
+            <send>
+                <endpoint name="HTTPEndpointEP">
+                    <http method="POST"
+                          uri-template="http://localhost:{uri.var.port}/{uri.var.servicePath}/{uri.var.serviceName}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

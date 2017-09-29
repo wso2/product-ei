@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="InvalidHttpEndPointProxy"
+       transports="http https"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <send>
+                <endpoint name="InvalidEndpointEP">
+                    <http method="POST"
+                          uri-template="http://localhost:9010/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

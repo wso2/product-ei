@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -33,7 +33,6 @@ import org.wso2.esb.integration.common.clients.endpoint.EndPointAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -55,6 +54,7 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
     private EndPointAdminClient endPointAdminClient;
     private  static final String CUSTOMER_API_CONTEXT = "customerService";
     private static final String RESOURCE_CONTEXT = "/customer";
+    private static final String RESOURCE_ENCODED_CONTEXT = "/customer/encoded/";
     private static final String customerId = "8fa3fc1b-f63c-4b21-8aff-3ac684c74d97";
     private static final String customerName = "John";
     private static final String updateCustomerName = "Emma";
@@ -63,9 +63,11 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "endpoint" + File.separator
-                        + "httpEndpointConfig" + File.separator + "synapse.xml");
+        verifyProxyServiceExistence("InvalidHttpEndPointProxy");
+        verifyProxyServiceExistence("HttpEndPointProxy");
+        verifyProxyServiceExistence("MissingVariableEndPointProxy");
+        verifyAPIExistence("CustomerServiceAPI");
+        verifyAPIExistence("CustomerBackendAPI");
 
         endPointAdminClient = new EndPointAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
     }
@@ -136,6 +138,14 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
                 "No wrapped response received");
     }
 
+    @Test(groups = {"wso2.esb"}, description = "Test usage of legacy-encoding property for encoded URL: RESTful", priority = 10)
+    public void testLegacyEncodingProperty() throws Exception {
+
+        String getEncodedRestURI = getApiInvocationURL(CUSTOMER_API_CONTEXT) + RESOURCE_ENCODED_CONTEXT + customerId;
+        HttpResponse getResponseData = HttpURLConnectionClient.sendGetRequest(getEncodedRestURI, null);
+        assertTrue(getResponseData.getData().contains(getCustomerResponse),
+                "Unexpected output received for encoded URL:" + getResponseData.toString());
+    }
     @Test(groups = {"wso2.esb"}, description = "HTTP endpoint POST test: SOAP", priority = 2)
     public void testSendingToHttpEndpoint()
             throws Exception {

@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="OrderThreeProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:response xmlns:m="test">Hello, From Service Three</m:response>
+                </format>
+                <args/>
+            </payloadFactory>
+            <property name="messageType"
+                      value="application/xml"
+                      scope="axis2"
+                      type="STRING"/>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>
