@@ -33,6 +33,7 @@ import static org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil.
  */
 public class AddHeadersUsingNashornJsTestCase extends ESBIntegrationTest {
 
+    private static final String ADD_HEADER_API = "addHeadersWithNashornJsAPI";
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
@@ -46,8 +47,9 @@ public class AddHeadersUsingNashornJsTestCase extends ESBIntegrationTest {
         String payload = "<m:CheckPriceResponse xmlns:m=\"http://services.samples/xsd\">\n"
                 + "<m:stringHead>STRING</m:stringHead>\n" + "    <m:domHead>DOM</m:domHead>\n"
                 + "<m:omHead>OM</m:omHead>\n" + "</m:CheckPriceResponse>";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("addHeadersWithNashornJs")), payload, httpHeaders);
-        Assert.assertTrue((response.getData().contains("STRING")), "Response does not contain " + "the keyword "
+        HttpResponse response = doPost(new URL(getApiInvocationURL(ADD_HEADER_API)), payload,
+                httpHeaders);
+        Assert.assertTrue((response.getData().contains("STRING")), "Response does not contain the keyword "
                 + "\"STRING\". Response: " + response.getData());
     }
 
@@ -59,8 +61,9 @@ public class AddHeadersUsingNashornJsTestCase extends ESBIntegrationTest {
         String payload = "<m:CheckPriceResponse xmlns:m=\"http://services.samples/xsd\">\n"
                 + "<m:stringHead>STRING</m:stringHead>\n" + "    <m:domHead>DOM</m:domHead>\n"
                 + "<m:omHead>OM</m:omHead>\n" + "</m:CheckPriceResponse>";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("addHeadersWithNashornJs")), payload, httpHeaders);
-        Assert.assertTrue((response.getData().contains("DOM")), "Response does not contain " + "the keyword \"DOM\". "
+        HttpResponse response = doPost(new URL(getApiInvocationURL(ADD_HEADER_API)), payload,
+                httpHeaders);
+        Assert.assertTrue((response.getData().contains("DOM")), "Response does not contain the keyword \"DOM\". "
                 + "Response: " + response.getData());
 
     }
@@ -73,8 +76,9 @@ public class AddHeadersUsingNashornJsTestCase extends ESBIntegrationTest {
         String payload = "<m:CheckPriceResponse xmlns:m=\"http://services.samples/xsd\">\n"
                 + "<m:stringHead>STRING</m:stringHead>\n" + "    <m:domHead>DOM</m:domHead>\n"
                 + "<m:omHead>OM</m:omHead>\n" + "</m:CheckPriceResponse>";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("addHeadersWithNashornJs")), payload, httpHeaders);
-        Assert.assertTrue((response.getData().contains("OM")), "Response does not contain " + "the keyword \"OM\". "
+        HttpResponse response = doPost(new URL(getApiInvocationURL(ADD_HEADER_API)), payload,
+                httpHeaders);
+        Assert.assertTrue((response.getData().contains("OM")), "Response does not contain the keyword \"OM\". "
                 + "Response: " + response.getData());
 
     }

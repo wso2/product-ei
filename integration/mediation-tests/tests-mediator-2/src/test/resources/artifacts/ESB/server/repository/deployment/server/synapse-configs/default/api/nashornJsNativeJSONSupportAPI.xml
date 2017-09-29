@@ -16,22 +16,27 @@
   ~ under the License.
   -->
 
-<api xmlns="http://ws.apache.org/ns/synapse" context="/nashornJsHandlingNullJsonObject" name="nashornJsHandlingNullJsonObject">
+<api xmlns="http://ws.apache.org/ns/synapse" context="/nashornJsNativeJSONSupportAPI" name="nashornJsNativeJSONSupportAPI">
     <resource methods="POST">
         <inSequence>
             <script language="nashornJs"><![CDATA[
+		var doctor = {
+				name : "",
+				address : "",
+				dob : ""
+			  };
 
-		mc.setJsonText(mc, null);
+		payload = mc.getPayloadJSON();
 
-		var jsonText = mc.getJsonText();
-		var parsedJsonText = JSON.parse(jsonText);
-		mc.setJsonObject(mc, parsedJsonText);
+		name = payload.name;
+		dob = payload.dob;
+		address = payload.address;
 
-		var retrivedJsonObject = mc.jsonObject(mc);
-		mc.setProperty("json", retrivedJsonObject);
+		doctor.name = name;
+		doctor.dob = dob;
+		doctor.address = address;
 
-		var jsonproperty = mc.getProperty("json");
-		mc.setPayloadJSON(jsonproperty);
+		mc.setPayloadJSON(doctor);
 
 	   ]]></script>
             <respond/>

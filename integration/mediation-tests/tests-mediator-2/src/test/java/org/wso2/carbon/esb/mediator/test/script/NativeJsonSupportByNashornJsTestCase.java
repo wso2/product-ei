@@ -57,7 +57,7 @@ public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
                 + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
                 + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
                 + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsNativeJSONSupport")), payload,
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsNativeJSONSupportAPI")), payload,
                 httpHeaders);
         Assert.assertTrue((response.getData().contains("California")), "Response does not contain "
                 + "the keyword \"California\". Response: " + response.getData());
@@ -74,7 +74,7 @@ public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
                 + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
                 + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
                 + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsStringify")), payload,
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsStringifyAPI")), payload,
                 httpHeaders);
         boolean propertySet;
         assertNotNull(response, "Response message null");
@@ -94,7 +94,7 @@ public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
                 + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
                 + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
                 + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsParse")), payload,
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsParseAPI")), payload,
                 httpHeaders);
         Assert.assertTrue((response.getData().contains("California")), "Response does not contain "
                 + "the keyword \"California\". Response: " + response.getData());
@@ -111,7 +111,7 @@ public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
                 + "\"email\":" + " \"johndoe@gmail.com\",\n" + "\"doctor\": \"thomas collins\",\n" + "\"hospital\": "
                 + "\"grand oak " + "community hospital\",\n" + "\"cardNo\": \"7844481124110331\",\n"
                 + "\"appointment_date\": " + "\"2017-04-02\"\n" + "}";
-        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsHandlingNullJsonObject")), payload,
+        HttpResponse response = doPost(new URL(getApiInvocationURL("nashornJsHandlingNullJsonObjectAPI")), payload,
                 httpHeaders);
         Assert.assertTrue((response.getData().contains("{}")), "Response does not contain "
                 + "the keyword \"{}\". Response: " + response.getData());
