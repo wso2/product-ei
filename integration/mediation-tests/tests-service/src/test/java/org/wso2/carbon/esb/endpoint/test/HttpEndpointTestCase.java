@@ -25,7 +25,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.carbon.automation.test.utils.http.client.HttpURLConnectionClient;
 import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
@@ -155,16 +154,18 @@ public class HttpEndpointTestCase extends ESBIntegrationTest {
         Assert.assertTrue(response.toString().contains("WSO2 Company"),"Contains unexpected output: " +response.toString() );
     }
 
-    @Test(groups = {"wso2.esb"}, description = "Sending a Message to HTTP Endpoint with invalid URI", priority = 3)
-    public void testSendingToInvalidHttpEndpoint()
-            throws IOException, EndpointAdminEndpointAdminException,
-            LoginAuthenticationExceptionException,
-            XMLStreamException {
+    @Test(groups = { "wso2.esb" },
+          description = "Sending a Message to HTTP Endpoint with invalid URI",
+          priority = 3)
+    public void testSendingToInvalidHttpEndpoint() throws Exception {
         try {
-            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("InvalidHttpEndPointProxy"),
-                    getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
-        } catch (Exception e) {
-            Assert.assertTrue(e instanceof AxisFault,"Did not throw expected error condition for invalid endpoint.");
+            OMElement response = axis2Client
+                    .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("InvalidHttpEndPointProxy"),
+                            getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
+            Assert.fail("Expected exception was not thrown");
+        } catch (AxisFault e) {
+            Assert.assertTrue(e.getMessage().contains("Error connecting to the back end"),
+                    "Did not throw expected error condition for invalid endpoint.");
         }
     }
 
