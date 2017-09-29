@@ -45,11 +45,11 @@
         <!--</packages>-->
     <!--</test>-->
 
-    <!--<test name="RabbitMQ-Transport-securevault-test" preserve-order="true" verbose="2">-->
-        <!--<classes>-->
-            <!--<class name="org.wso2.carbon.esb.rabbitmq.securevault.TestRabbitMQSecureVaultSupport"/>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <test name="RabbitMQ-Transport-securevault-test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.rabbitmq.securevault.TestRabbitMQSecureVaultSupport"/>
+        </classes>
+    </test>
 
 </suite>
 

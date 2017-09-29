@@ -18,7 +18,7 @@
   -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
     <proxy xmlns="http://ws.apache.org/ns/synapse"
-           name="RabbitMQListenSendProxy"
+           name="RabbitMQSecureVaultProxy"
            transports="rabbitmq"
            startOnLoad="true"
            trace="disable">
@@ -29,7 +29,8 @@
              <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
              <send>
                 <endpoint>
-                   <address uri="rabbitmq:/AMQPProducerSample?rabbitmq.connection.factory=AMQPConnectionFactorySender&amp;rabbitmq.server.host.name=localhost&amp;rabbitmq.server.port=5672&amp;rabbitmq.queue.name=queueResult&amp;rabbitmq.exchange.name=exchange"/>
+                   <address
+                           uri="rabbitmq:/AMQPProducerSample?rabbitmq.connection.factory=AMQPConnectionFactorySender&amp;rabbitmq.server.host.name=localhost&amp;rabbitmq.server.port=5672&amp;rabbitmq.queue.name=resultQueueSecureVault&amp;rabbitmq.exchange.name=exchange"/>
                 </endpoint>
              </send>
           </inSequence>
@@ -37,8 +38,8 @@
              <send/>
           </outSequence>
        </target>
-       <parameter name="rabbitmq.queue.name">queueRx</parameter>
+       <parameter name="rabbitmq.queue.name">queueSecureVault</parameter>
        <parameter name="rabbitmq.connection.factory">AMQPConnectionFactory</parameter>
-       <parameter name="rabbitmq.exchange.name">exchangeRx</parameter>
+       <parameter name="rabbitmq.exchange.name">exchangeSecureVault</parameter>
     </proxy>
 </definitions>
