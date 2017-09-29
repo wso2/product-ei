@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyStringOperationTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="StringVal" value="WSO2 Lanka"  scope="operation" type="STRING" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="get-property('operation', 'StringVal')" />
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:symbol xmlns:m="http://services.samples">$1</m:symbol>
+                </format>
+                <args>
+                    <arg xmlns:m0="http://services.samples" expression="get-property('operation', 'StringVal')"/>
+                </args>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </target>
+</proxy>

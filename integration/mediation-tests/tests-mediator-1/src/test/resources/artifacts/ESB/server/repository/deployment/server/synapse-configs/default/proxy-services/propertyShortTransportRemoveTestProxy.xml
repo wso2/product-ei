@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyShortTransportRemoveTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="ShortVal" value="12"  scope="transport" type="SHORT" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$trp:ShortVal" />
+            </log>
+
+            <property xmlns="http://ws.apache.org/ns/synapse" name="ShortVal" action="remove"  scope="transport" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$trp:ShortVal" />
+            </log>
+
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:symbol xmlns:m="http://services.samples">Property Set and Removed</m:symbol>
+                </format>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </target>
+</proxy>

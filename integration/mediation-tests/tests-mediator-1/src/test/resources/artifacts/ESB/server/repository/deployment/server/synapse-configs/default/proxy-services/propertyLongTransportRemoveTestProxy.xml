@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyLongTransportRemoveTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" value="123123123"  scope="transport" type="LONG" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$trp:LongVal" />
+            </log>
+
+            <property xmlns="http://ws.apache.org/ns/synapse" name="LongVal" action="remove"  scope="transport" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$trp:LongVal" />
+            </log>
+
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:symbol xmlns:m="http://services.samples">Property Set and Removed</m:symbol>
+                </format>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </target>
+</proxy>

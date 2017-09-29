@@ -1,0 +1,22 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="propertyIntDefaultRemoveTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <property xmlns="http://ws.apache.org/ns/synapse" name="IntVal" value="123"  scope="default" type="INTEGER" />
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:IntVal" />
+            </log>
+
+            <property xmlns="http://ws.apache.org/ns/synapse" name="IntVal" action="remove"  scope="default"/>
+            <log level="custom">
+                <property xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" name="symbol" expression="$ctx:IntVal" />
+            </log>
+
+            <payloadFactory media-type="xml">
+                <format>
+                    <m:symbol xmlns:m="http://services.samples">Property Set and Removed</m:symbol>
+                </format>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </target>
+</proxy>
