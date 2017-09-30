@@ -32,6 +32,7 @@
                     INSERT INTO PERSON2(id, name) values(6, 'Max');]]></sql>
                 </statement>
             </dbreport>
+            <transaction action="rollback" />
         </inSequence>
     </resource>
     <resource methods="POST" uri-template="/commit">
