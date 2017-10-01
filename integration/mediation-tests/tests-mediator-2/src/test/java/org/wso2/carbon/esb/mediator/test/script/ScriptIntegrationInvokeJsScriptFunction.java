@@ -40,8 +40,6 @@ public class ScriptIntegrationInvokeJsScriptFunction extends ESBIntegrationTest 
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        LoggingAdminClient loggingAdminClient = new LoggingAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        loggingAdminClient.updateLoggerData("org.apache.synapse", "debug", true, false);
 
     }
 
