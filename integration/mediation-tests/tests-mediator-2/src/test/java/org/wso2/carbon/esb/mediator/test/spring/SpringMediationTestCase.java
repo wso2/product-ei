@@ -52,7 +52,6 @@ public class SpringMediationTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         try {
-            deleteSequence("main");
             clearUploadedResource();
         } finally {
             super.cleanup();
