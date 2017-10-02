@@ -5,8 +5,8 @@
         </inSequence>
         <outSequence>
             <enrich>
-                <source clone="true" xpath="//orders/order/*"/>
-                <target xpath="//order/."/>
+                <source type="custom" clone="true" xpath="//orders/order/*"/>
+                <target type="custom" xpath="//order/."/>
             </enrich>
             <log level="full"/>
             <send/>

@@ -14,11 +14,11 @@
 
             <enrich>
 
-                <source  xpath="//ns:getQuoteResponse/ns:return/ax21:symbol"
+                <source  type="custom" xpath="//ns:getQuoteResponse/ns:return/ax21:symbol"
                          xmlns:ns="http://services.samples"
                          xmlns:ax21="http://services.samples/xsd" />
 
-                <target xmlns:ns="http://services.samples"
+                <target type="custom" xmlns:ns="http://services.samples"
                         xmlns:ax21="http://services.samples/xsd"
                         action="child"
                         xpath="//ns:getQuoteResponse/ns:return/ax21:name/text()"  />

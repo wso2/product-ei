@@ -24,7 +24,7 @@
                             <urn:password>bar</urn:password>
                         </urn:AuthInf>
                     </source>
-                    <target xmlns:urn="urn:FOOBAR_WS"
+                    <target type="custom" xmlns:urn="urn:FOOBAR_WS"
                             xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                             xpath="/soapenv:Envelope/soapenv:Header/urn:AuthInf"/>
                 </enrich>

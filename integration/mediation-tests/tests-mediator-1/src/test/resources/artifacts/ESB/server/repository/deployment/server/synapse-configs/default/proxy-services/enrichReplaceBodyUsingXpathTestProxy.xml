@@ -30,7 +30,7 @@
             <log level="full" />
             <enrich>
                 <source type="property" property="symbol"/>
-                <target xmlns:m="http://services.samples" action="replace"
+                <target type="custom" xmlns:m="http://services.samples" action="replace"
                         xpath="//m:getQuote/m:request/m:symbol/text()"/>
             </enrich>
 

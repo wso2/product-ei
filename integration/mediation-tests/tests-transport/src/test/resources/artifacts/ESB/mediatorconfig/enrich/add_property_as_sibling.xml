@@ -31,7 +31,7 @@
                 </enrich>
                 <enrich>
                     <source type="property" property="test"/>
-                    <target xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"
+                    <target type="custom" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"
                             action="sibling" xpath="//ns:getQuoteResponse/ns:return/ax21:change"/>
                 </enrich>
 

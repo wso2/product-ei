@@ -4,7 +4,7 @@
             <log level="full" />
             <enrich>
                 <source type="inline" clone="true" key="conf:/required/registry_configs.xml"/>
-                <target xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
+                <target type="custom" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
             </enrich>
             <log level="full" />
             <send />

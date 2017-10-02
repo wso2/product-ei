@@ -14,12 +14,12 @@
                             </m:request>
                         </m:getQuote>
                     </source>
-                    <target xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
+                    <target type="custom" xmlns:m0="http://services.samples" xpath="//m0:CheckPriceRequest" />
                 </enrich>
                 <log level="full" />
                 <enrich>
                     <source type="inline"  key="symbol"/>
-                        <target xmlns:m0="http://services.samples"
+                    <target type="custom" xmlns:m0="http://services.samples"
                                 xpath="//m0:getQuote/m0:request/m0:symbol/text()"/>
 
                 </enrich>

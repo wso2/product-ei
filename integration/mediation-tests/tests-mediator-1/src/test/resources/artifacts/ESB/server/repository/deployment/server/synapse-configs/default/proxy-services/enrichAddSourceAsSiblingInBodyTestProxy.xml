@@ -45,7 +45,7 @@
 
             <enrich>
                 <source type="property" property="symbol"/>
-                <target xmlns:ns="http://services.samples"
+                <target type="custom" xmlns:ns="http://services.samples"
                         action="replace" xpath="//ns:getQuoteResponse3/ns:return/ns:test/text()"/>
             </enrich>
 
