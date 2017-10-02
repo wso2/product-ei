@@ -52,6 +52,7 @@ public class SetRemovePropertiesWithNashornJsTestCase extends ESBIntegrationTest
 
         boolean propertySet;
         boolean propertyRemoved;
+        logViewerClient.clearLogs();
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp
                 ("setRemovePropertiesWithNashornJsTestProxy"), null, "inlineTest");
         assertNotNull(response, "Response message null");
@@ -66,6 +67,7 @@ public class SetRemovePropertiesWithNashornJsTestCase extends ESBIntegrationTest
 
         boolean propertySet;
         boolean propertyRemoved;
+        logViewerClient.clearLogs();
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp
                 ("setRemovePropertiesWithNashornJsTestProxy"), null, "inlineTest");
         assertNotNull(response, "Response message null");
@@ -80,6 +82,7 @@ public class SetRemovePropertiesWithNashornJsTestCase extends ESBIntegrationTest
 
         boolean propertySet;
         boolean propertyRemoved;
+        logViewerClient.clearLogs();
         OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp
                 ("setRemovePropertiesWithNashornJsTestProxy"), null, "inlineTest");
         assertNotNull(response, "Response message null");

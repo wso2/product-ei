@@ -66,7 +66,7 @@ public class NativeJsonSupportByNashornJsTestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Serialize JSON payload with NashornJS")
     public void testSerializingJson() throws Exception {
-
+        logViewerClient.clearLogs();
         Map<String, String> httpHeaders = new HashMap<>();
         httpHeaders.put("Content-Type", "application/json");
         String payload = "{\n" + "\"name\": \"John Doe\",\n" + "\"dob\": \"1990-03-19\",\n" + "\"ssn\": "
