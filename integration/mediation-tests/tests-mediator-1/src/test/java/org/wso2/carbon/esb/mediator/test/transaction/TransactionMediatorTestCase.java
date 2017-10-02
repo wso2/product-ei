@@ -77,7 +77,7 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(enabled = false, groups = "wso2.esb", description = "Test rollback transaction")
+    @Test(groups = "wso2.esb", description = "Test rollback transaction")
     public void rollbackTransactionTest() throws Exception {
 
         String expectedOutput = "<response><table1>2</table1><table2>1</table2></response>";
@@ -153,7 +153,7 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(enabled = false, groups = "wso2.esb", description = "Test new action without commit transaction")
+    @Test(groups = "wso2.esb", description = "Test new action without commit transaction")
     public void newActionTest() throws Exception {
 
         String expectedOutput = "<response><table1/><table2/></response>";
