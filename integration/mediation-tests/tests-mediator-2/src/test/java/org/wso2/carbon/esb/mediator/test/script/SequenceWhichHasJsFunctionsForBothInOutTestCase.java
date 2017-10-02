@@ -34,7 +34,6 @@ public class SequenceWhichHasJsFunctionsForBothInOutTestCase extends ESBIntegrat
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        enableDebugLogging();
     }
 
     @Test(groups = "wso2.esb", description = "Invoke a sequence which has inlined js functions for both 'in' and 'outMediator' flows")
@@ -62,9 +61,4 @@ public class SequenceWhichHasJsFunctionsForBothInOutTestCase extends ESBIntegrat
         super.cleanup();
     }
 
-
-    private void enableDebugLogging() throws Exception {
-        LoggingAdminClient logAdminClient = new LoggingAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        logAdminClient.updateLoggerData("org.apache.synapse", "DEBUG", true, false);
-    }
  }
