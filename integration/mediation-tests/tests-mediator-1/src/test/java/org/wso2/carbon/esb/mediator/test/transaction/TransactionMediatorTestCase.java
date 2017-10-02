@@ -111,7 +111,7 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(enabled = false, groups = "wso2.esb", description = "Test use-existing-or-new action for creating new transaction")
+    @Test(groups = "wso2.esb", description = "Test use-existing-or-new action for creating new transaction")
     public void createNewTransactionTest() throws Exception {
 
         String expectedOutput = "<response><table1>3</table1><table2>3</table2></response>";
