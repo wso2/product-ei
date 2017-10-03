@@ -312,6 +312,11 @@
                 <artifactId>json-path-assert</artifactId>
                 <version>${com.jayway.jsonpath.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -439,6 +444,7 @@
         <testng.version>6.9.10</testng.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
         <commons.configuration.version>1.10</commons.configuration.version>
+        <commons.io.version>2.2</commons.io.version>
         <andes.version>4.0.0-SNAPSHOT</andes.version>
         <synapse.core.version>2.1.7-wso2v16</synapse.core.version>
         <com.jayway.jsonpath.version>0.8.0</com.jayway.jsonpath.version>
