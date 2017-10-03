@@ -406,17 +406,17 @@ public class CarbonServerManager {
      * @param scriptName - Name of the startup script
      * @throws IOException - throws if shell script edit fails
      */
-    private void insertJacocoAgentToShellScript(String scriptName)
-            throws IOException {
+    private void insertJacocoAgentToShellScript(String scriptName) throws IOException {
 
         scriptName = "integrator";
         String jacocoAgentFile = CodeCoverageUtils.getJacocoAgentJarLocation();
         coverageDumpFilePath = FrameworkPathUtil.getCoverageDumpFilePath();
-        CodeCoverageUtils.insertStringToFile(Paths.get(carbonHome, "bin", scriptName + ".sh").toFile(), Paths.get(carbonHome, "wso2", "tmp", scriptName + ".sh").toFile(),
-                "-Dwso2.server.standalone=true",
-                "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
-                        ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":") + " \\");
-        
+        CodeCoverageUtils.insertStringToFile(Paths.get(carbonHome, "bin", scriptName + ".sh").toFile(),
+                Paths.get(carbonHome, "wso2", "tmp", scriptName + ".sh").toFile(), "-Dwso2.server.standalone=true",
+                "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" + ",append=true,includes="
+                        + CodeCoverageUtils.getInclusionJarsPattern(":") + ",excludes=" + CodeCoverageUtils
+                        .getExclusionJarsPattern(":") + " \\");
+
     }
 
 
@@ -426,18 +426,16 @@ public class CarbonServerManager {
      * @param scriptName - Name of the startup script
      * @throws IOException - throws if shell script edit fails
      */
-    private void insertJacocoAgentToBatScript(String scriptName)
-            throws IOException {
+    private void insertJacocoAgentToBatScript(String scriptName) throws IOException {
 
         String jacocoAgentFile = CodeCoverageUtils.getJacocoAgentJarLocation();
         coverageDumpFilePath = FrameworkPathUtil.getCoverageDumpFilePath();
         scriptName = "integrator";
-        CodeCoverageUtils.insertJacocoAgentToStartupBat(
-                Paths.get(carbonHome, "bin", scriptName + ".bat").toFile(),
-                Paths.get(carbonHome, "wso2", "tmp", scriptName + ".bat").toFile(),
-                "-Dcatalina.base",
-                "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" +
-                ",append=true,includes=" + CodeCoverageUtils.getInclusionJarsPattern(":"));
+        CodeCoverageUtils.insertJacocoAgentToStartupBat(Paths.get(carbonHome, "bin", scriptName + ".bat").toFile(),
+                Paths.get(carbonHome, "wso2", "tmp", scriptName + ".bat").toFile(), "-Dcatalina.base",
+                "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" + ",append=true,includes="
+                        + CodeCoverageUtils.getInclusionJarsPattern(":") + ",excludes=" + CodeCoverageUtils
+                        .getExclusionJarsPattern(":") + " \\");
     }
 
 
