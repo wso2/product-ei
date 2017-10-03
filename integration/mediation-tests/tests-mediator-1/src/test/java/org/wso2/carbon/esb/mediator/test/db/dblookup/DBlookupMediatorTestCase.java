@@ -23,206 +23,160 @@ import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.extensions.XPathConstants;
-import org.wso2.carbon.automation.test.utils.dbutils.MySqlDatabaseManager;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.carbon.automation.test.utils.dbutils.H2DataBaseManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.SQLException;
+import java.util.Random;
 
 public class DBlookupMediatorTestCase extends ESBIntegrationTest {
-    private MySqlDatabaseManager mySqlDatabaseManager;
-    private ServerConfigurationManager serverConfigurationManager;
-//    private final DataSource dbConfig = new EnvironmentBuilder().getFrameworkSettings()
-//            .getDataSource();
-//    private H2DataBaseManager h2DatabaseManager;
+    private H2DataBaseManager h2DatabaseManager;
     private String JDBC_URL;
     private String DB_USER;
     private String DB_PASSWORD;
-    private String DATASOURCE_NAME;
-
-
     private final double WSO2_PRICE = 200.0;
-    private final String MYSQL_JAR = "mysql-connector-java-5.1.6.jar";
-//    private final String H2_JAR ="h2-database-engine_1.2.140.wso2v3.jar";
 
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-
         AutomationContext automationContext = new AutomationContext();
-        DATASOURCE_NAME = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_NAME);
         DB_PASSWORD = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DB_PASSWORD);
         JDBC_URL = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_URL);
         DB_USER = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DB_USER_NAME);
-//        automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DRIVER_CLASS_NAME);
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        copyJDBCDriverToClassPath();
-        mySqlDatabaseManager = new MySqlDatabaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
-        mySqlDatabaseManager.executeUpdate("DROP DATABASE IF EXISTS SampleDBForAutomation");
-
-//        mySqlDatabaseManager = new MySqlDatabaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
-//        mySqlDatabaseManager.executeUpdate("DROP DATABASE IF EXISTS SampleDBForAutomation");
-
-
+        String databaseName = System.getProperty("basedir") + File.separator + "target" + File.separator +
+                "testdb_dblookp" + new Random().nextInt();
+        JDBC_URL = JDBC_URL + databaseName + ";AUTO_SERVER=TRUE";
+        h2DatabaseManager = new H2DataBaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
+        h2DatabaseManager.executeUpdate("CREATE TABLE IF NOT EXISTS company(price double, name varchar(20))");
         super.init();
-
-
-    }
-
-    /*
-        entries under columns 'price' & 'name'. Insert a row with "WSO2" as a value in 'name' &
-        respective price as "200"
-    */
-
-    @BeforeMethod(alwaysRun = true)
-    public void createDatabase() throws SQLException {
-        mySqlDatabaseManager.executeUpdate("DROP DATABASE IF EXISTS SampleDBForAutomation");
-        mySqlDatabaseManager.executeUpdate("Create DATABASE SampleDBForAutomation");
-        mySqlDatabaseManager.executeUpdate("USE SampleDBForAutomation");
-        mySqlDatabaseManager.executeUpdate("CREATE TABLE company(price double, name varchar(20))");
-
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", description = "Test  with more than one result")
+    @Test(groups = "wso2.esb", description = "Test dblookup mediator with more than one resultsets")
     public void dbLookupMediatorTestWithMultipleResults() throws Exception {
-
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(0,'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
-        mySqlDatabaseManager.executeUpdate("CREATE PROCEDURE `getId` (" +
-                                           "IN nameVar VARCHAR(20))" +
-                                           "BEGIN " +
-                                           "select * from company where name =nameVar;" +
-                                           "END");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(0,'WSO2')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
+        h2DatabaseManager.executeUpdate("DROP ALIAS IF EXISTS getId;");
+        // in H2 the stored procedures has to be defined as an alias
+        String storedProcStr = "CREATE ALIAS getId AS $$ " +
+                "ResultSet query(Connection conn, String nameVal) throws SQLException { " +
+                "String sql = \"select * from company where name = '\" + nameVal + \"'\";" +
+                "return conn.createStatement().executeQuery(sql); " +
+                "} $$;";
+        h2DatabaseManager.executeUpdate(storedProcStr);
         //first row of the result set should be taken into account
-        URL url =
-                getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_multiple_results_test.xml");
-        String s = FileUtils.readFileToString(new File(url.toURI()));
-        s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        URL fileLocation = getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/" +
+                "dbLookupMediatorMultipleResultsTestProxy.xml");
+        String proxyContent = FileUtils.readFileToString(new File(fileLocation.toURI()));
+        proxyContent = updateDatabaseInfo(proxyContent);
+        addProxyService(AXIOMUtil.stringToOM(proxyContent));
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
+                ("dbLookupMediatorMultipleResultsTestProxy"), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
-
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", description = "Test with multiple SQL statements")
+    @Test(groups = "wso2.esb", description = "Test dblookup mediator with multiple SQL statements")
     public void dbLookupMediatorTestMultipleStatements() throws Exception {
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'IBM')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
-
-        URL url =
-                getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_multiple_SQL_statements.xml");
-        String s = FileUtils.readFileToString(new File(url.toURI()));
-        s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'IBM')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
+        URL fileLocation = getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/" +
+                "dbLookupMediatorMultipleSQLStatementsTestProxy.xml");
+        String proxyContent = FileUtils.readFileToString(new File(fileLocation.toURI()));
+        proxyContent = updateDatabaseInfo(proxyContent);
+        addProxyService(AXIOMUtil.stringToOM(proxyContent));
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
+                ("dbLookupMediatorMultipleSQLStatementsTestProxy"), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Select rows from DB table while mediating messages.")
     public void dbLookupTestSelectRows() throws Exception {
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
-        URL url =
-                getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360.xml");
-        String s = FileUtils.readFileToString(new File(url.toURI()));
-        s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
+        URL fileLocation = getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/dbLookupTestProxy.xml");
+        String proxyContent = FileUtils.readFileToString(new File(fileLocation.toURI()));
+        proxyContent = updateDatabaseInfo(proxyContent);
+        addProxyService(AXIOMUtil.stringToOM(proxyContent));
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("dbLookupTestProxy"),
+                null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", description = "Test  with stored finctions")
+    @Test(groups = "wso2.esb", description = "Test dblookup mediator with stored functions")
     public void dbLookupTestStoredFunctions() throws Exception {
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
-        mySqlDatabaseManager.executeUpdate("CREATE FUNCTION getID(s VARCHAR(20))" + " RETURNS VARCHAR(50)"
-                                           + " RETURN CONCAT('Hello, ',s,'!');");
-
-        URL url =
-                getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_stored_function_test.xml");
-        String s = FileUtils.readFileToString(new File(url.toURI()));
-        s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
+        // in H2 the functions has to be defined as an alias
+        h2DatabaseManager.executeUpdate("DROP ALIAS IF EXISTS getId;");
+        String functionStr = "CREATE ALIAS getId AS $$ " +
+                "String query(Connection conn, String nameVal) throws SQLException { " +
+                "return \"Hello, \" + nameVal + \"!\"; " +
+                "} $$;";
+        h2DatabaseManager.executeUpdate(functionStr);
+        URL fileLocation = getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/dbLookupMediatorStoredFunctionTestProxy.xml");
+        String proxyContent = FileUtils.readFileToString(new File(fileLocation.toURI()));
+        proxyContent = updateDatabaseInfo(proxyContent);
+        addProxyService(AXIOMUtil.stringToOM(proxyContent));
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
+                ("dbLookupMediatorStoredFunctionTestProxy"), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
-
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", description = "Test  with stored procedures")
+    @Test(groups = "wso2.esb", description = "Test dblookup mediator with stored procedures")
     public void dbLookupTestStoredProcedures() throws Exception {
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
-        mySqlDatabaseManager.executeUpdate("CREATE PROCEDURE `getId` (" +
-                                           "IN nameVar VARCHAR(20))" +
-                                           "BEGIN " +
-                                           "select * from company where name =nameVar;" +
-                                           "END");
-        URL url =
-                getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/sample_360_stored_procedure.xml");
-        String s = FileUtils.readFileToString(new File(url.toURI()));
-        s = updateDatabaseInfo(s);
-        updateESBConfiguration(AXIOMUtil.stringToOM(s));
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(" + WSO2_PRICE + ",'WSO2')");
+        h2DatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
+        // in H2 the stored procedures has to be defined as an alias
+        h2DatabaseManager.executeUpdate("DROP ALIAS IF EXISTS getId;");
+        String storedProcStr = "CREATE ALIAS getId AS $$ " +
+                                "ResultSet query(Connection conn, String nameVal) throws SQLException { " +
+                                    "String sql = \"select * from company where name = '\" + nameVal + \"'\";" +
+                                    "return conn.createStatement().executeQuery(sql); " +
+                                "} $$;";
+        h2DatabaseManager.executeUpdate(storedProcStr);
+        URL fileLocation = getClass().getResource("/artifacts/ESB/mediatorconfig/dblookup/" +
+                "dbLookupMediatorStoredProcedureTestProxy.xml");
+        String proxyContent = FileUtils.readFileToString(new File(fileLocation.toURI()));
+        proxyContent = updateDatabaseInfo(proxyContent);
+        addProxyService(AXIOMUtil.stringToOM(proxyContent));
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
+                ("dbLookupMediatorStoredProcedureTestProxy"), null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
-
     }
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-
-        try {
-            mySqlDatabaseManager.executeUpdate("DROP DATABASE IF EXISTS SampleDBForAutomation");
-        } finally {
-            mySqlDatabaseManager.disconnect();
-
-        }
-        mySqlDatabaseManager = null;
+        h2DatabaseManager.disconnect();
+        h2DatabaseManager = null;
         super.cleanup();
-        super.init();
-        loadSampleESBConfiguration(0);
-        serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
-        serverConfigurationManager.restartGracefully();
-        serverConfigurationManager = null;
-    }
-
-
-    private void copyJDBCDriverToClassPath() throws Exception {
-        File jarFile;
-        jarFile = new File(getClass().getResource("/artifacts/ESB/jar/" + MYSQL_JAR + "").getPath());
-        System.out.println(jarFile.getName());
-        serverConfigurationManager.copyToComponentLib(jarFile);
-        serverConfigurationManager.restartGracefully();
     }
 
     private String updateDatabaseInfo(String synapseConfig) {
-        synapseConfig = synapseConfig.replace("$SampleDBForAutomation", JDBC_URL + "/SampleDBForAutomation");
-        synapseConfig = synapseConfig.replace("####", DB_USER);
-        synapseConfig = synapseConfig.replace("$$$$", DB_PASSWORD);
+        synapseConfig = synapseConfig.replace("$url", JDBC_URL);
+        synapseConfig = synapseConfig.replace("$username", DB_USER);
+        synapseConfig = synapseConfig.replace("$password", DB_PASSWORD);
         return synapseConfig;
     }
 }
