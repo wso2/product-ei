@@ -61,14 +61,8 @@
                below configuration at test run time
     -->
     <datasources>
-	<datasource name="dataServiceMysql">
-            <url>jdbc:mysql://localhost:3306</url>
-            <username>root</username>
-            <password>root123</password>
-            <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-        </datasource>
         <datasource name="dataService">
-            <url>jdbc:h2:testDB</url>
+            <url>jdbc:h2:</url>
             <username>wso2carbon</username>
             <password>wso2carbon</password>
             <driverClassName>org.h2.Driver</driverClassName>
@@ -78,7 +72,7 @@
             <username>wso2carbon</username>
             <password>wso2carbon</password>
             <driverClassName>org.h2.Driver</driverClassName>
-        </datasource>	
+        </datasource>
     </datasources>
     <security>
         <!--
