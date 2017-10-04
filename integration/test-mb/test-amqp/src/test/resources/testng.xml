@@ -23,6 +23,7 @@
     <!-- These test run sequentially -->
     <test name="tests-amqp-sequential" preserve-order="true" parallel="false">
         <classes>
+            <class name="org.wso2.ei.mb.test.amqp.UserAuthTestCase"/>
             <class name="org.wso2.ei.mb.test.amqp.QueueTestCase"/>
             <class name="org.wso2.ei.mb.test.amqp.AcknowledgementsTestCase"/>
             <class name="org.wso2.ei.mb.test.amqp.TopicBasicsTestCase"/>

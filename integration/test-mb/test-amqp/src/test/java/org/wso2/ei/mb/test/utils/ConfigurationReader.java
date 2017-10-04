@@ -34,12 +34,13 @@ public class ConfigurationReader {
 
     /**
      * Initializes a config reader object while reading from config file
+     *
      * @throws IOException
      */
-    public ConfigurationReader() throws IOException {
+    public ConfigurationReader(boolean invalid) throws IOException {
 
-        InputStream propertyFileInputStream = getClass().getClassLoader().getResourceAsStream(
-                ConfigurationConstants.CLIENT_CONFIG_PROPERTY_FILE);
+        InputStream propertyFileInputStream = getClass().getClassLoader()
+                .getResourceAsStream(ConfigurationConstants.CLIENT_CONFIG_PROPERTY_FILE);
         Properties configProperties = new Properties();
         configProperties.load(propertyFileInputStream);
 
@@ -51,16 +52,25 @@ public class ConfigurationReader {
                 configProperties.getProperty(ConfigurationConstants.CARBON_DEFAULT_HOSTNAME_PROPERTY));
         clientConfigPropertyMap.put(ConfigurationConstants.CARBON_DEFAULT_PORT_PROPERTY,
                 configProperties.getProperty(ConfigurationConstants.CARBON_DEFAULT_PORT_PROPERTY));
-        clientConfigPropertyMap.put(ConfigurationConstants.DEFAULT_USERNAME_PROPERTY,
-                configProperties.getProperty(ConfigurationConstants.DEFAULT_USERNAME_PROPERTY));
-        clientConfigPropertyMap.put(ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY,
-                configProperties.getProperty(ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY));
+        if (invalid) {
+            clientConfigPropertyMap.put(ConfigurationConstants.INVALID_USERNAME_PROPERTY,
+                    configProperties.getProperty(ConfigurationConstants.INVALID_USERNAME_PROPERTY));
+            clientConfigPropertyMap.put(ConfigurationConstants.INVALID_PASSWORD_PROPERTY,
+                    configProperties.getProperty(ConfigurationConstants.INVALID_PASSWORD_PROPERTY));
+        } else {
+            clientConfigPropertyMap.put(ConfigurationConstants.DEFAULT_USERNAME_PROPERTY,
+                    configProperties.getProperty(ConfigurationConstants.DEFAULT_USERNAME_PROPERTY));
+            clientConfigPropertyMap.put(ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY,
+                    configProperties.getProperty(ConfigurationConstants.DEFAULT_PASSWORD_PROPERTY));
+        }
 
         propertyFileInputStream.close();
 
     }
+
     /**
      * This method returns the map of client configs
+     *
      * @return A Map of clientConfig Properties
      * @throws IOException
      */
