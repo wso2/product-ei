@@ -47,7 +47,6 @@ public class UserAuthTestCase extends BrokerTest {
 
     /**
      * Create a queue connection with invalid user credentials
-     *
      * @throws Exception
      */
     @Test(groups = "wso2.mb")
@@ -65,7 +64,6 @@ public class UserAuthTestCase extends BrokerTest {
 
     /**
      * Create a queue connection with valid user credentials
-     *
      * @throws Exception
      */
     @Test(groups = "wso2.mb")

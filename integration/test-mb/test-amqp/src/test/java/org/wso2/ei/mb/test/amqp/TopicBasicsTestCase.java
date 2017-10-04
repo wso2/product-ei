@@ -52,7 +52,6 @@ public class TopicBasicsTestCase extends BrokerTest {
      * 3. Receive them by two subscribers.
      * 4. Send 500 messages.
      * 5. Receive them by two subscribers.
-     *
      * @throws JMSException
      * @throws NamingException
      * @throws IOException
@@ -106,7 +105,6 @@ public class TopicBasicsTestCase extends BrokerTest {
      * 4. Send 10 messages.
      * 5. Start the closed subscriber again.
      * 6. Check the reception of messages.
-     *
      * @throws JMSException
      * @throws NamingException
      * @throws IOException

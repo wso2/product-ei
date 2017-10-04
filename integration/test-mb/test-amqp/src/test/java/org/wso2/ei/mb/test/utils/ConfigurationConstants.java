@@ -57,12 +57,12 @@ public class ConfigurationConstants {
      */
     public static final String DEFAULT_PASSWORD_PROPERTY = "password";
     /**
-     * Default Username for carbon server.
+     * Invalid Username for carbon server.
      */
     public static final String INVALID_USERNAME_PROPERTY = "invalidUserName";
 
     /**
-     * Default password for carbon server.
+     * Invalid password for carbon server.
      */
     public static final String INVALID_PASSWORD_PROPERTY = "invalidPassword";
 
