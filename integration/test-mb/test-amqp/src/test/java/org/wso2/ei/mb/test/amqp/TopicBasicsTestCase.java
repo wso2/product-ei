@@ -21,11 +21,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
+import org.wso2.ei.mb.test.client.TopicReceiver;
+import org.wso2.ei.mb.test.client.TopicSender;
 import org.wso2.ei.mb.test.utils.ClientConstants;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
-import test.java.org.wso2.ei.mb.test.amqp.BrokerTest;
-import test.java.org.wso2.ei.mb.test.client.TopicReceiver;
-import test.java.org.wso2.ei.mb.test.client.TopicSender;
 
 import java.io.IOException;
 import javax.jms.JMSException;
@@ -53,6 +52,7 @@ public class TopicBasicsTestCase extends BrokerTest {
      * 3. Receive them by two subscribers.
      * 4. Send 500 messages.
      * 5. Receive them by two subscribers.
+     *
      * @throws JMSException
      * @throws NamingException
      * @throws IOException
@@ -106,6 +106,7 @@ public class TopicBasicsTestCase extends BrokerTest {
      * 4. Send 10 messages.
      * 5. Start the closed subscriber again.
      * 6. Check the reception of messages.
+     *
      * @throws JMSException
      * @throws NamingException
      * @throws IOException

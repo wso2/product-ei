@@ -26,8 +26,6 @@ import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.client.QueueReceiver;
 import org.wso2.ei.mb.test.client.QueueSender;
 import org.wso2.ei.mb.test.utils.JMSAcknowledgeMode;
-import test.java.org.wso2.ei.mb.test.amqp.BrokerTest;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;

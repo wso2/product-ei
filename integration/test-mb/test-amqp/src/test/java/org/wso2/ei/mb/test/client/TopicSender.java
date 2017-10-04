@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.java.org.wso2.ei.mb.test.client;
+package org.wso2.ei.mb.test.client;
 
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.utils.ClientConstants;
