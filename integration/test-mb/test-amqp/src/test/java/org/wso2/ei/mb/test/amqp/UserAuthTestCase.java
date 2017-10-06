@@ -39,31 +39,28 @@ public class UserAuthTestCase extends BrokerTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        boolean invalidUser = true;
         // Loading client configs with invalid user credentials
-        invalidCredentialsConfig = new ConfigurationReader(invalidUser);
+        invalidCredentialsConfig = ConfigurationReader.getClientConfigForInvalidUser();
 
     }
 
     /**
      * Create a queue connection with invalid user credentials
+     *
      * @throws Exception
      */
-    @Test(groups = "wso2.mb")
+    @Test(groups = "wso2.mb", expectedExceptions = JMSException.class)
     public void performInvalidConnectionTestCase() throws Exception {
-        QueueReceiver queueReceiver;
-        try {
-            queueReceiver = new QueueReceiver("InvalidConnectionQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
-                    invalidCredentialsConfig);
-            Assert.assertNull(queueReceiver, "Invalid user based connection made.");
-            Assert.fail("Expected exception not thrown for invalid user");
-        } catch (JMSException e) {
-            Assert.assertTrue(e.getMessage().contains("Unable to Connect"), e.getMessage());
-        }
+        QueueReceiver queueReceiver = new QueueReceiver("InvalidConnectionQueue", JMSAcknowledgeMode.AUTO_ACKNOWLEDGE,
+                invalidCredentialsConfig);
+        Assert.assertNull(queueReceiver, "Invalid user based connection made.");
+        Assert.fail("Expected exception not thrown for invalid user");
+
     }
 
     /**
      * Create a queue connection with valid user credentials
+     *
      * @throws Exception
      */
     @Test(groups = "wso2.mb")

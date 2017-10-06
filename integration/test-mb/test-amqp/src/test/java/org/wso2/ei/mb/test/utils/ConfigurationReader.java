@@ -37,7 +37,7 @@ public class ConfigurationReader {
      *
      * @throws IOException
      */
-    public ConfigurationReader(boolean invalid) throws IOException {
+    private ConfigurationReader(boolean invalid) throws IOException {
 
         InputStream propertyFileInputStream = getClass().getClassLoader()
                 .getResourceAsStream(ConfigurationConstants.CLIENT_CONFIG_PROPERTY_FILE);
@@ -68,6 +68,25 @@ public class ConfigurationReader {
 
     }
 
+    /**
+     * Get client configuration values for a valid user
+     *
+     * @return client configuration for valid user
+     * @throws IOException
+     */
+    public static ConfigurationReader getClientConfigForValidUser() throws IOException {
+        return new ConfigurationReader(false);
+    }
+
+    /**
+     * Get client configuration values for an invalid user.
+     *
+     * @return client configuration for an invalid user
+     * @throws IOException
+     */
+    public static ConfigurationReader getClientConfigForInvalidUser() throws IOException {
+        return new ConfigurationReader(true);
+    }
     /**
      * This method returns the map of client configs
      *

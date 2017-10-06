@@ -57,7 +57,7 @@ public class BrokerTest {
                 String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
 
                 // load client configs to map with valid username/password
-                configurationReader = new ConfigurationReader(false);
+                configurationReader = ConfigurationReader.getClientConfigForValidUser();
 
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
