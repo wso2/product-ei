@@ -11,8 +11,6 @@ import org.wso2.carbon.esb.hl7.transport.test.sample.HL7Sender;
 import org.wso2.carbon.esb.hl7.transport.test.sample.HL7Server;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-//import org.wso2.esb.integration.common.clients.feature.mgt.FeatureManagementAdminServiceClient;
-
 /**
  * Need to test once the product is released with the actual feature repo link
  * 
