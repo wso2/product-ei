@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test.java.org.wso2.ei.mb.test.amqp;
+package org.wso2.ei.mb.test.amqp;
 
 import org.testng.log4testng.Logger;
 import org.wso2.ei.mb.test.utils.ConfigurationReader;
 import org.wso2.ei.mb.test.utils.ServerManager;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -55,8 +56,8 @@ public class BrokerTest {
             try {
                 String tempCarbonHome = serverManager.setupServerHome(archiveFilePath);
 
-                // load client configs to map
-                configurationReader = new ConfigurationReader();
+                // load client configs to map with valid username/password
+                configurationReader = ConfigurationReader.getClientConfigForValidUser();
 
                 // Start Enterprise Integrator broker instance
                 serverManager.startServer(tempCarbonHome);
