@@ -60,9 +60,6 @@ public class AddressEndpointTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
-                                          File.separator + "endpoint" + File.separator + "addressEndpointConfig" + File.separator + "synapse.xml");
-
         endPointAdminClient = new EndPointAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
 
         resourceAdminServiceClient = new ResourceAdminServiceClient
@@ -90,7 +87,7 @@ public class AddressEndpointTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "Sending a Message to a Address endpoint")
     public void testSendingToAddressEndpoint()
             throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("addressEndPoint")
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("addressEndpointTestProxy")
                 , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         Assert.assertNotNull(response);
         Assert.assertTrue(response.toString().contains("WSO2 Company"));
@@ -100,7 +97,7 @@ public class AddressEndpointTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "Sending a Message to a Address endpoint in Config Reg")
     public void testSendingToAddressEndpoint_ConfigReg()
             throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("addressEndPoint_Config_Reg"),
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("addressEndPointRegistryConfigProxy"),
                                                                      getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         Assert.assertNotNull(response);
         Assert.assertTrue(response.toString().contains("WSO2 Company"));
@@ -113,7 +110,7 @@ public class AddressEndpointTestCase extends ESBIntegrationTest {
                    LoginAuthenticationExceptionException,
                    XMLStreamException {
         try {
-            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("invalidAddressEndPoint"),
+            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("invalidAddressEndpointProxy"),
                                                                          getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof AxisFault);

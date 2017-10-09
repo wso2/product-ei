@@ -34,8 +34,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class can be used to upload .car application to the server and verify whether that proxy service artifact got
  * deployed through CApp
+ * Related JIRA: https://wso2.org/jira/browse/ESBJAVA-3438
  */
-public class ESBJAVA3438CAppArtifactIndicationTestCase extends ESBIntegrationTest {
+public class CAppArtifactIndicationTestCase extends ESBIntegrationTest {
     private ServiceAdminClient serviceAdminClient;
 
     String service = "sampleCustomProxy";
