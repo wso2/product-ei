@@ -1,0 +1,6 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="replySequence">
+    <log level="full">
+        <property name="REPLY" value="MESSAGE"/>
+    </log>
+    <respond/>
+</sequence>

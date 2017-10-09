@@ -26,25 +26,13 @@ public class ESBJAVA3290TestXWWWFormURLEncodedFormatter extends ESBIntegrationTe
 
     private static final String synapseConfig = "x_www_form_url_encoded_formatter_test.xml";
     public WireMonitorServer wireServer;
-    private ServerConfigurationManager serverConfigurationManager;
+//    private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeTest(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
         wireServer = new WireMonitorServer(8991);
         wireServer.start();
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getClass().getResource(File.separator + "artifacts"
-                                                                                      + File.separator + "ESB" + File.separator +
-                                                                                      "xwwwformurlencodedformatter" + File.separator +
-                                                                                      "axis2.xml").getPath()),
-                                                      new File(CarbonBaseUtils.getCarbonHome() +
-                                                               File.separator + "repository" +
-                                                               File.separator
-                                                               + "conf" + File.separator +
-                                                               "axis2" + File.separator + "axis2" +
-                                                               ".xml"));
-        super.init();
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
                                           File.separator + "xwwwformurlencodedformatter"
                                           + File.separator + synapseConfig);
@@ -82,7 +70,7 @@ public class ESBJAVA3290TestXWWWFormURLEncodedFormatter extends ESBIntegrationTe
     public void stop() throws Exception {
         cleanup();
         Thread.sleep(3000);
-        serverConfigurationManager.restoreToLastConfiguration();
-        serverConfigurationManager = null;
+//        serverConfigurationManager.restoreToLastConfiguration();
+//        serverConfigurationManager = null;
     }
 }
