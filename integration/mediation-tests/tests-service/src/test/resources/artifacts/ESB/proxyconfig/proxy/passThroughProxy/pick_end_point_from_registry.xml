@@ -21,19 +21,5 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <sequence name="proxy">
-        <send>
-            <endpoint key="conf:/proxy/registry_endpoint.xml"/>
-        </send>
-    </sequence>
-    <sequence name="out">
-        <send/>
-    </sequence>
     <localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
-
-    <proxy name="StockQuoteProxy">
-        <publishWSDL key="proxy_wsdl"/>
-        <target inSequence="proxy" outSequence="out"/>
-        <publishWSDL key="proxy_wsdl"/>
-    </proxy>
 </definitions>

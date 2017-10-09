@@ -34,7 +34,7 @@ public class ProxyServiceEnablingHTTPSTestCase extends ESBIntegrationTest {
         super.init();
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/loggingProxy/proxy_service_enabling_only_https.xml");
-        isProxyDeployed("StockQuoteProxy");
+        isProxyDeployed("enableHttpsLoggingProxy");
 
     }
 
@@ -42,7 +42,7 @@ public class ProxyServiceEnablingHTTPSTestCase extends ESBIntegrationTest {
                                                             "- Proxy service enabling only https")
     public void testLoggingProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttps("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttps("enableHttpsLoggingProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

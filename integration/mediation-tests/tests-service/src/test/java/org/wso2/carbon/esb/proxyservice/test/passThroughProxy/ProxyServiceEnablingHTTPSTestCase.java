@@ -41,7 +41,7 @@ public class ProxyServiceEnablingHTTPSTestCase extends ESBIntegrationTest {
                                                             "- Proxy service enabling only https")
     public void testPassThroughProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttps("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttps("enableHttpsPassthroughProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

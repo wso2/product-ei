@@ -18,18 +18,18 @@
 ~
 -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <sequence name="proxy">
+    <sequence name="endpointThroughURLPassthroughInSeq">
         <send>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
             </endpoint>
         </send>
     </sequence>
-    <sequence name="out">
+    <sequence name="endpointThroughURLPassthroughOutSeq">
         <send/>
     </sequence>
-    <proxy name="StockQuoteProxy">
-        <target inSequence="proxy" outSequence="out"/>
+    <proxy name="endpointThroughURLPassthroughProxy">
+        <target inSequence="endpointThroughURLPassthroughInSeq" outSequence="endpointThroughURLPassthroughOutSeq"/>
         <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
 </definitions>

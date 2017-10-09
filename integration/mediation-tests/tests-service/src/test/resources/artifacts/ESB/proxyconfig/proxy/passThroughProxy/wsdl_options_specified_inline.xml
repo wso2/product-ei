@@ -18,9 +18,9 @@
 ~
 -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+    <proxy name="wsdlOptionsFromInlinePassthroughProxy" transports="https http" startOnLoad="true" trace="disable">
         <description/>
-        <target inSequence="proxy" outSequence="out"/>
+        <target inSequence="wsdlOptionsFromInlinePassthroughInSeq" outSequence="wsdlOptionsFromInlinePassthroughOutSeq"/>
         <publishWSDL>
             <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://services.samples" xmlns:ns1="http://services.samples/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://services.samples">
                 <wsdl:documentation>SimpleStockQuoteService</wsdl:documentation>
@@ -147,7 +147,7 @@
             </wsdl:definitions>
         </publishWSDL>
     </proxy>
-    <sequence name="proxy">
+    <sequence name="wsdlOptionsFromInlinePassthroughInSeq">
         <send>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
@@ -162,7 +162,7 @@
         </log>
         <drop/>
     </sequence>
-    <sequence name="out">
+    <sequence name="wsdlOptionsFromInlinePassthroughOutSeq">
         <send/>
     </sequence>
 </definitions>

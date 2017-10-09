@@ -49,16 +49,13 @@ public class IndirectEndpointTestCase extends ESBIntegrationTest {
 		super.init();
 		endPointAdminClient = new EndPointAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
 		addIndirectEndpoint();
-		loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator +
-		                                  "endpoint" + File.separator + "indirectEndpointConfig" + File.separator +
-		                                  "synapse.xml");
 	}
 
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	@Test(groups = { "wso2.esb" }, description = "Sending a Message to a Indirect endpoint")
 	public void testSendingToIndirectEndpoint()
 			throws Exception {
-		OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy")
+		OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("indirectEndpointTestProxy")
 				, null, "WSO2");
 		Assert.assertNotNull(response);
 		Assert.assertTrue(response.toString().contains("WSO2 Company"));

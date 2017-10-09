@@ -45,7 +45,7 @@ public class PickEndPointFromRegistryTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/loggingProxy/pick_end_point_from_registry.xml");
         log.info("Assert isProxyDeployed");
-        isProxyDeployed("StockQuoteProxy");
+        isProxyDeployed("pickEndpointFromRegLoggingProxy");
         log.info("Initializing environment completed");
     }
 
@@ -53,7 +53,7 @@ public class PickEndPointFromRegistryTestCase extends ESBIntegrationTest {
                                              "- Create a proxy service and pick the endpoint from registry (config)")
     public void testLoggingProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("pickEndpointFromRegLoggingProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

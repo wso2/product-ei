@@ -49,7 +49,7 @@ public class InSequenceFromRegistryTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "- Custom proxy -In sequence from registry")
     public void testCustomProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("inSeqFromRegCustomProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

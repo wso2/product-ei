@@ -20,12 +20,12 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+    <proxy name="wsdlOptionsFromRegPassthroughProxy" transports="https http" startOnLoad="true" trace="disable">
         <description/>
-        <target inSequence="proxy" outSequence="out"/>
+        <target inSequence="wsdlOptionsFromRegPassthroughInSeq" outSequence="wsdlOptionsFromRegPassthroughOutSeq"/>
         <publishWSDL key="conf:/proxy/sample_proxy_1.wsdl"/>
     </proxy>
-    <sequence name="proxy">
+    <sequence name="wsdlOptionsFromRegPassthroughInSeq">
         <send>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
@@ -40,7 +40,7 @@
         </log>
         <drop/>
     </sequence>
-    <sequence name="out">
+    <sequence name="wsdlOptionsFromRegPassthroughOutSeq">
         <send/>
     </sequence>
 </definitions>

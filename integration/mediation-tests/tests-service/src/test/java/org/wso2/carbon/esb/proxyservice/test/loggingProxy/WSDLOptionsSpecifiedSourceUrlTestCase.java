@@ -18,15 +18,14 @@
 package org.wso2.carbon.esb.proxyservice.test.loggingProxy;
 
 import org.apache.axiom.om.OMElement;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 
 public class WSDLOptionsSpecifiedSourceUrlTestCase extends ESBIntegrationTest {
 
@@ -38,7 +37,7 @@ public class WSDLOptionsSpecifiedSourceUrlTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/loggingProxy/wsdl_options_specified_source_url.xml");
         log.info("Assert isProxyDeployed");
-        isProxyDeployed("StockQuoteProxy");
+        isProxyDeployed("wsdlOptionsFromSourceUrlLoggingProxy");
         log.info("Initializing environment completed");
     }
 
@@ -46,7 +45,8 @@ public class WSDLOptionsSpecifiedSourceUrlTestCase extends ESBIntegrationTest {
                                                     "- Publish WSDL Options - Specified source url")
     public void testLoggingProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("wsdlOptionsFromSourceUrlLoggingProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

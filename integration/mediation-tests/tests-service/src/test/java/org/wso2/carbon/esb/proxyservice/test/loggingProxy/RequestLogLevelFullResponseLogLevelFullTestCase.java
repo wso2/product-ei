@@ -31,7 +31,7 @@ public class RequestLogLevelFullResponseLogLevelFullTestCase extends ESBIntegrat
         super.init();
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/loggingProxy/request_log_level_full_response_log_level_full.xml");
-        isProxyDeployed("StockQuoteProxy");
+        isProxyDeployed("reqLogFullResLogFullLoggingProxy");
 
     }
 
@@ -39,7 +39,8 @@ public class RequestLogLevelFullResponseLogLevelFullTestCase extends ESBIntegrat
             enabled = false)
     public void testLoggingProxyLoggingLevel() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("reqLogFullResLogFullLoggingProxy"), null, "WSO2");
         //ToDo Assert Logs
     }
 

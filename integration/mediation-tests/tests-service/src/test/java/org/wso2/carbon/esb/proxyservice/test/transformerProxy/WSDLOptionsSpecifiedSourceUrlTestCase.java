@@ -18,6 +18,8 @@
 package org.wso2.carbon.esb.proxyservice.test.transformerProxy;
 
 import org.apache.axiom.om.OMElement;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -30,9 +32,6 @@ import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpressionException;
 import java.net.URL;
 import java.rmi.RemoteException;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 
 public class WSDLOptionsSpecifiedSourceUrlTestCase extends ESBIntegrationTest {
 
@@ -51,7 +50,8 @@ public class WSDLOptionsSpecifiedSourceUrlTestCase extends ESBIntegrationTest {
                                              "- Publish WSDL Options - Specified source url")
     public void testTransformerProxy() throws Exception {
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(
+                getProxyServiceURLHttp("wsdlOptionsFromSourceUrlTransformerProxy"), null, "WSO2");
 
         assertNotNull(response, "Fault response message null");
 
