@@ -24,13 +24,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.esb.tcp.transport.test.util.TcpClient;
-
-import java.io.File;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 public class TcpTransportProxyServiceTestCase extends ESBIntegrationTest {
 
