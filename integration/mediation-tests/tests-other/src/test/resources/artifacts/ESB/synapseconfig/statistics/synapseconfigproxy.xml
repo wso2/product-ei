@@ -4,7 +4,7 @@
         <parameter name="cachableDuration">15000</parameter>
     </registry>
     <taskManager provider="org.wso2.carbon.mediation.ntask.NTaskTaskManager"/>
-    <proxy name="StockQuoteProxy" startOnLoad="true" statistics="enable" trace="enable">
+    <proxy name="StockQuoteProxy" startOnLoad="true" transports="https, http" statistics="enable" trace="enable">
         <target>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
@@ -14,7 +14,7 @@
             </outSequence>
         </target>
     </proxy>
-    <proxy name="SplitAggregateProxy" startOnLoad="true"
+    <proxy name="SplitAggregateProxy" transports="https, http" startOnLoad="true"
            statistics="enable" trace="enable">
         <target>
             <inSequence>
