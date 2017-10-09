@@ -4,7 +4,6 @@
 -org.wso2.carbon.user.core.*
 -samples.*
 -.log4j*
--.axis2*
 -.ui*
 -.tenant*
 -.stratos*
