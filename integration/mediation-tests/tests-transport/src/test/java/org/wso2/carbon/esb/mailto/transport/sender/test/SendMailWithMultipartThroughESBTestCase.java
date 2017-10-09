@@ -24,17 +24,15 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.MailToTransportUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.MailToTransportUtil;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 import org.wso2.esb.integration.common.utils.exception.ESBMailTransportIntegrationTestException;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.xml.stream.XMLStreamException;
 
 import static org.testng.Assert.assertTrue;
 

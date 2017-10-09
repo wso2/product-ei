@@ -21,13 +21,10 @@ import org.apache.axiom.om.OMElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
-import javax.xml.namespace.QName;
 import java.io.File;
+import javax.xml.namespace.QName;
 
 import static org.testng.Assert.assertEquals;
 

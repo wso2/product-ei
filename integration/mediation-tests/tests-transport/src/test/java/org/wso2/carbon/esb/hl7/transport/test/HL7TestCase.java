@@ -1,7 +1,5 @@
 package org.wso2.carbon.esb.hl7.transport.test;
 
-import java.io.File;
-
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -9,13 +7,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
-//import org.wso2.esb.integration.common.clients.feature.mgt.FeatureManagementAdminServiceClient;
-import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.esb.hl7.transport.test.sample.HL7Sender;
 import org.wso2.carbon.esb.hl7.transport.test.sample.HL7Server;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 /**
  * Need to test once the product is released with the actual feature repo link
