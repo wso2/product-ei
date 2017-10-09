@@ -1,0 +1,17 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="storeDynamicRoutingTestProxy"
+       transports="http,https"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property name="Store Name " expression="//ns:getQuote/ns:request/ns:symbol"
+                          xmlns:ns="http://services.samples"/>
+            </log>
+            <property name="target.endpoint" value="StockQuote_9000_EP"/>
+            <store messageStore="{//ns:getQuote/ns:request/ns:symbol}" xmlns:ns="http://services.samples"/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>
