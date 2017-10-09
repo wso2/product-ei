@@ -29,6 +29,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skip>${maven.test.skip}</skip>
                     <executable>java</executable>
                     <arguments>
                         <argument>-Dcarbon.zip=${basedir}/../../../distribution/target/wso2ei-${product.ei.version}.zip</argument>
