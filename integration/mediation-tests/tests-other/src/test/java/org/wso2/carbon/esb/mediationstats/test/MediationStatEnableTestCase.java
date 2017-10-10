@@ -26,7 +26,6 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.endpoint.EndPointAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
@@ -49,11 +48,6 @@ public class MediationStatEnableTestCase extends ESBIntegrationTest {
 
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
-		super.init();
-		ServerConfigurationManager serverConfigurationManager =
-				new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-		serverConfigurationManager.applyConfigurationWithoutRestart(new File(resourceFolderPath + "carbon.xml"));
-		serverConfigurationManager.applyConfiguration(new File(resourceFolderPath + "synapse.properties"));
 		super.init();
 		loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File
 				.separator + "mediationStatConfig" + File.separator + "synapse.xml");
