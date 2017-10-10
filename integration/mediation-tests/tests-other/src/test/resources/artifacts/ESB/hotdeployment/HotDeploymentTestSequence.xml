@@ -1,0 +1,4 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="HotDeploymentTestSequence">
+    <log level="full"/>
+    <drop></drop>
+</sequence>
