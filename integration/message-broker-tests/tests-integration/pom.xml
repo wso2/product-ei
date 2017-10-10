@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.wso2.ei</groupId>
+        <artifactId>message-broker-tests</artifactId>
+        <version>6.2.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <name>Integration Test Module</name>
+    <artifactId>org.wso2.ei.mb.integration.tests</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>tests-amqp</module>
+        <module>tests-server</module>
+        <!--<module>tests-mqtt</module>-->
+        <!--<module>coverage-report</module>-->
+        <!--<module>reports</module>-->
+    </modules>
+
+</project>

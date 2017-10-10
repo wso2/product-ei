@@ -820,9 +820,14 @@
                 <version>${org.apache.activemq.version}</version>
             </dependency>
             <dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons.configuration.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.eclipse.paho</groupId>
                 <artifactId>mqtt-client</artifactId>
-                <version>${org.eclipse.paho.version}</version>
+                <version>${eclipse.paho.mqtt.client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.analytics-common</groupId>
@@ -1199,6 +1204,70 @@
                 <artifactId>netty-resolver</artifactId>
                 <version>${netty.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.integration.common.clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.integration.common.utils</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.identity</groupId>
+                <artifactId>org.wso2.carbon.um.ws.api.stub</artifactId>
+                <version>${carbon.um.ws.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons.lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-jxpath</groupId>
+                <artifactId>commons-jxpath</artifactId>
+                <version>${apache.commons.jxpath.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.andes.wso2</groupId>
+                <artifactId>andes</artifactId>
+                <version>${andes.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>slf4j.wso2</groupId>
+                <artifactId>slf4j</artifactId>
+                <version>${slf4j.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.messaging</groupId>
+                <artifactId>org.wso2.carbon.andes.stub</artifactId>
+                <version>${carbon.messaging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.messaging</groupId>
+                <artifactId>org.wso2.carbon.andes.stub</artifactId>
+                <version>${carbon.messaging.version}</version>
+            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.wso2.carbon.commons</groupId>-->
+                <!--<artifactId>org.wso2.carbon.event.stub</artifactId>-->
+                <!--<version>${carbon.commons.version}</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
+            <dependency>
+                <groupId>org.wso2.carbon.messaging</groupId>
+                <artifactId>org.wso2.carbon.andes.event.stub</artifactId>
+                <version>${carbon.messaging.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -1434,6 +1503,18 @@
         <maven.xmlbeans-maven-plugin.plugin.version>2.3.3</maven.xmlbeans-maven-plugin.plugin.version>
         <maven.docker.plugin.version>0.22.1</maven.docker.plugin.version>
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
+
+        <eclipse.paho.mqtt.client.version>0.4.0</eclipse.paho.mqtt.client.version>
+        <commons.configuration.version>1.10</commons.configuration.version>
+        <commons.lang.version>2.6.0.wso2v1</commons.lang.version>
+        <apache.commons.jxpath.version>1.3</apache.commons.jxpath.version>
+        <guava.version>19.0</guava.version>
+        <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
+        <org.apache.commons.version>3.3.2</org.apache.commons.version>
+        <carbon.um.ws.version>5.0.8</carbon.um.ws.version>
+        <apache.commons.lang.version>3.3.2</apache.commons.lang.version>
+
+
     </properties>
 
     <pluginRepositories>

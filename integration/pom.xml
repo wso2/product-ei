@@ -36,12 +36,13 @@
         <profile>
             <id>default</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <!--<activeByDefault>true</activeByDefault>-->
             </activation>
             <modules>
                 <module>automation-extensions</module>
                 <module>mediation-tests</module>
                 <module>business-process-tests</module>
+                <module>message-broker-tests</module>
                 <module>dataservice-hosting-tests</module>
             </modules>
         </profile>
@@ -81,6 +82,23 @@
                 <module>dataservice-hosting-tests</module>
             </modules>
         </profile>
+        <profile>
+            <id>message-broker-tests-profile</id>
+            <activation>
+                <property>
+                    <name>message-broker.integration.test.profile</name>
+                </property>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>automation-extensions</module>
+                <module>message-broker-tests</module>
+                <!--<module>mediation-tests</module>-->
+            </modules>
+        </profile>
     </profiles>
+    <!--modules>
+        <module>message-broker-tests</module>
+    </modules-->
 
 </project>
