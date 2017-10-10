@@ -97,6 +97,7 @@ public class ESBTestCaseUtils {
 	private static final String KEY = "key";
 	private static final String NAME = "name";
 	private static final String TASK = "task";
+	private static final String INBOUND_ENDPOINT = "inboundEndpoint";
 
 
 	/**
@@ -227,6 +228,7 @@ public class ESBTestCaseUtils {
         RestApiAdminClient apiAdminClient = new RestApiAdminClient(backendURL, sessionCookie);
         PriorityMediationAdminClient priorityMediationAdminClient = new PriorityMediationAdminClient(backendURL, sessionCookie);
         TaskAdminClient taskAdminClient = new TaskAdminClient(backendURL, sessionCookie);
+        InboundAdminClient inboundAdminClient = new InboundAdminClient(backendURL, sessionCookie);
 
         Iterator<OMElement> localEntries = synapseConfig.getChildrenWithLocalName(LOCAL_ENTRY);
         while (localEntries.hasNext()) {
@@ -372,6 +374,18 @@ public class ESBTestCaseUtils {
             taskAdminClient.addTask(task);
             Assert.assertTrue(isScheduleTaskDeployed(backendURL, sessionCookie, taskName), " Task deployment failed");
             log.info(taskName + " Task Uploaded");
+        }
+
+        Iterator<OMElement> inboundEndpoints = synapseConfig.getChildrenWithLocalName(INBOUND_ENDPOINT);
+        while (inboundEndpoints.hasNext()) {
+            OMElement inboundEndpoint = inboundEndpoints.next();
+            String inboundEP = inboundEndpoint.getAttributeValue(new QName(NAME));
+            if (ArrayUtils.contains(inboundAdminClient.getAllInboundEndpointNames(), inboundEP)) {
+                Assert.fail("Inbound Endpoint already exist " + inboundEP + ". Use different name");
+            }
+            inboundAdminClient.addInboundEndpoint(inboundEndpoint.toString());
+            isInboundEndpointDeployed(backendURL, sessionCookie, inboundEP);
+            log.info(inboundEP + " Inbound endpoint Uploaded");
         }
 
         Thread.sleep(1000);

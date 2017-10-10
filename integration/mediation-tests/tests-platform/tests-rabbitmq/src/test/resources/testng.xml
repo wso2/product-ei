@@ -51,5 +51,11 @@
         </classes>
     </test>
 
+    <test name="RabbitMQ-Inbound-Endpoint-test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.rabbitmq.inbound.RabbitMQInboundTestCase"/>
+        </classes>
+    </test>
+
 </suite>
 
