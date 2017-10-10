@@ -29,18 +29,20 @@ import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 /**
  * Class representing MQTT client
  */
-public class MQTTClient {
+public class MQTTTestClient {
 
-    private static final Log log = LogFactory.getLog(MQTTClient.class);
+    private static final Log log = LogFactory.getLog(MQTTTestClient.class);
 
     // Java temporary directory location
     private static final String JAVA_TMP_DIR = System.getProperty("java.io.tmpdir");
     // The MQTT broker URL
     private String brokerURL = "tcp://localhost:1883";
+    //Paho MQTT client
+    MqttClient mqttClient;
 
 
     /**
-     * Generate a MQTT client with given paramaters
+     * Generate a MQTT client with given parameters
      *
      * @param brokerURL url of MQTT provider
      * @param userName username to connect to MQTT provider
@@ -48,11 +50,11 @@ public class MQTTClient {
      * @param clientId unique id for the publisher/subscriber client
      * @throws MqttException in case of issue of connect/publish/consume
      */
-    public MQTTClient(String brokerURL, String userName, char[] password, String clientId) throws MqttException {
+    public MQTTTestClient(String brokerURL, String userName, char[] password, String clientId) throws MqttException {
         this.brokerURL = brokerURL;
         //Store messages until server fetches them
         MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(JAVA_TMP_DIR + "/" + clientId);
-        MqttClient mqttClient = new MqttClient(brokerURL, clientId, dataStore);
+        mqttClient = new MqttClient(brokerURL, clientId, dataStore);
         SimpleMQTTCallback callback = new SimpleMQTTCallback();
         mqttClient.setCallback(callback);
         MqttConnectOptions connectOptions = new MqttConnectOptions();
@@ -61,6 +63,18 @@ public class MQTTClient {
         connectOptions.setCleanSession(true);
         mqttClient.connect(connectOptions);
 
-        log.info("MQTTClient successfully connected to broker at " + this.brokerURL);
+        log.info("MQTTTestClient successfully connected to broker at " + this.brokerURL);
+    }
+
+    public void publishMessage(String topic, byte[] payload, int qosLevel, boolean retained) throws MqttException {
+        mqttClient.publish(topic,payload, qosLevel, retained);
+    }
+
+    public void subscribe(String topic, int qosLevel) throws MqttException {
+        mqttClient.subscribe(topic, qosLevel);
+    }
+
+    public void disconnect() throws MqttException {
+        mqttClient.disconnect();
     }
 }

@@ -159,21 +159,30 @@ public class Utils {
      */
     public static boolean assertIfSystemLogContains(LogViewerClient logViewerClient, String expected)
             throws RemoteException, LogViewerLogViewerException {
-        boolean matchFounf = false;
+        boolean matchFound = false;
         long startTime = System.currentTimeMillis();
         LogEvent[] systemLogs;
-        while (!matchFounf && (System.currentTimeMillis() - startTime) < 10000) {
-            systemLogs = logViewerClient.getAllRemoteSystemLogs();
-            if (systemLogs != null) {
-                for (LogEvent logEvent : systemLogs) {
-                    if (logEvent.getMessage().contains(expected)) {
-                        matchFounf = true;
-                        break;
-                    }
+        while (!matchFound && (System.currentTimeMillis() - startTime) < 10000) {
+            matchFound = assertIfLogExists(logViewerClient, expected);
+        }
+        return matchFound;
+    }
+
+    private static boolean assertIfLogExists(LogViewerClient logViewerClient, String expected)
+            throws RemoteException, LogViewerLogViewerException {
+
+        LogEvent[] systemLogs;
+        systemLogs = logViewerClient.getAllRemoteSystemLogs();
+        boolean matchFound = false;
+        if (systemLogs != null) {
+            for (LogEvent logEvent : systemLogs) {
+                if (logEvent.getMessage().contains(expected)) {
+                    matchFound = true;
+                    break;
                 }
             }
         }
-        return matchFounf;
+        return matchFound;
     }
 
     /**
@@ -181,7 +190,7 @@ public class Utils {
      *
      * @param logViewerClient log viewer used for test
      * @param expected        expected log string
-     * @param timeout         max time to do polling
+     * @param timeout         max time to do polling in seconds
      * @return true if the log is found with given timeout, false otherwise
      * @throws InterruptedException        if interrupted while sleeping
      * @throws RemoteException             due to a logviewer error
@@ -192,7 +201,7 @@ public class Utils {
         boolean logExists = false;
         for (int i = 0; i < timeout; i++) {
             TimeUnit.SECONDS.sleep(1);
-            if (Utils.assertIfSystemLogContains(logViewerClient, expected)) {
+            if (assertIfLogExists(logViewerClient, expected)) {
                 logExists = true;
                 break;
             }
