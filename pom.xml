@@ -820,6 +820,11 @@
                 <version>${org.apache.activemq.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.eclipse.paho</groupId>
+                <artifactId>mqtt-client</artifactId>
+                <version>${org.eclipse.paho.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.carbon.analytics-common</groupId>
                 <artifactId>org.wso2.carbon.databridge.commons</artifactId>
                 <version>${carbon.analytics.common.version}</version>
@@ -1358,6 +1363,7 @@
         <org.testng.version>6.1.1</org.testng.version>
         <mysql.connector.version>5.1.6</mysql.connector.version>
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
+        <org.eclipse.paho.version>0.4.0</org.eclipse.paho.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
         <org.wso2.andes.client.version>3.2.26</org.wso2.andes.client.version>
 
