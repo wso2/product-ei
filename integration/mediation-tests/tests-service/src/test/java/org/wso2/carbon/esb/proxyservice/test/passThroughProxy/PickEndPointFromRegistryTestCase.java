@@ -41,9 +41,6 @@ public class PickEndPointFromRegistryTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/proxyconfig/proxy/passThroughProxy/pick_end_point_from_registry.xml");
-
     }
 
     @Test(groups = "wso2.esb", description = "- Pass through proxy" +

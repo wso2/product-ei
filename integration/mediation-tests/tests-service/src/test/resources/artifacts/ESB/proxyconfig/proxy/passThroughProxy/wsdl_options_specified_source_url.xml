@@ -29,6 +29,8 @@
         <send/>
     </sequence>
     <proxy name="wsdlOptionsFromSourceUrlPassthroughProxy">
+        <parameter name="transport.vfs.FileURI">file:///home/user/test/in</parameter>
+        <parameter name="transport.vfs.ContentType">text/xml</parameter>
         <target inSequence="wsdlOptionsFromSourceUrlPassthroughInSeq" outSequence="wsdlOptionsFromSourceUrlPassthroughOutSeq"/>
         <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
