@@ -52,9 +52,6 @@ public class XMLToJsonTestCase extends ESBIntegrationTest {
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/json/xml-to-json.xml");
         serverManager = new ServerConfigurationManager(context);
-        serverManager.applyConfiguration(new File(FrameworkPathUtil.getSystemResourceLocation()+"artifacts"+File.separator+
-                "ESB"+File.separator+ "json" + File.separator + "synapse.properties"));
-        super.init();
     }
     @Test(groups = "wso2.esb", description = "XML to JSON Test")
     public void testXMLToJson() throws Exception {
@@ -91,10 +88,7 @@ public class XMLToJsonTestCase extends ESBIntegrationTest {
     public void destroy() throws Exception {
         try {
             super.cleanup();
-            Thread.sleep(5000);
         } finally {
-            serverManager.restartGracefully();
-            serverManager.restoreToLastConfiguration();
             serverManager = null;
         }
     }

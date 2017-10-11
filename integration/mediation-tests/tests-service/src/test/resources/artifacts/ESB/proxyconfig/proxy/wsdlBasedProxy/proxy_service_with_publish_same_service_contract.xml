@@ -21,7 +21,7 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <proxy name="StockQuoteProxy" transports="https http" startOnLoad="true" trace="disable">
+    <proxy name="publishSameServiceContractTestProxy" transports="https http" startOnLoad="true" trace="disable">
         <target>
             <endpoint>
                 <wsdl service="SimpleStockQuoteService" port="SimpleStockQuoteServiceHttpSoap11Endpoint" uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl"/>

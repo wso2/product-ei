@@ -18,12 +18,12 @@
 ~
 -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="StockQuoteProxy" transports="https" startOnLoad="true" trace="disable">
+    <proxy name="enableHttpsPassthroughProxy" transports="https" startOnLoad="true" trace="disable">
         <description/>
-        <target inSequence="proxy" outSequence="out"/>
+        <target inSequence="enableHttpsPassthroughInSeq" outSequence="enableHttpsPassthroughOutSeq"/>
 
     </proxy>
-    <sequence name="proxy">
+    <sequence name="enableHttpsPassthroughInSeq">
         <send>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
@@ -38,7 +38,7 @@
         </log>
         <drop/>
     </sequence>
-    <sequence name="out">
+    <sequence name="enableHttpsPassthroughOutSeq">
         <send/>
     </sequence>
 </definitions>

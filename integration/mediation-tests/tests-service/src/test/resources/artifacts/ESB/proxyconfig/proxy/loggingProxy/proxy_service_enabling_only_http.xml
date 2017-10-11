@@ -22,7 +22,7 @@
         <parameter name="cachableDuration">15000</parameter>
     </registry>
     <localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
-    <proxy name="StockQuoteProxy" transports="http" startOnLoad="true" trace="disable">
+    <proxy name="enableHttpLoggingProxy" transports="http" startOnLoad="true" trace="disable">
         <target>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>

@@ -19,6 +19,8 @@ package org.wso2.carbon.esb.proxyservice.test.passThroughProxy;
 
 import org.apache.axiom.om.OMElement;
 import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,24 +36,19 @@ import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-
 public class PickEndPointFromRegistryTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
         uploadResourcesToConfigRegistry();
-        loadESBConfigurationFromClasspath(
-                "/artifacts/ESB/proxyconfig/proxy/passThroughProxy/pick_end_point_from_registry.xml");
-
     }
 
     @Test(groups = "wso2.esb", description = "- Pass through proxy" +
                                              "- Create a proxy service and pick the endpoint from registry (config)")
     public void testPassThroughProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("pickEndpointFromRegTestProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

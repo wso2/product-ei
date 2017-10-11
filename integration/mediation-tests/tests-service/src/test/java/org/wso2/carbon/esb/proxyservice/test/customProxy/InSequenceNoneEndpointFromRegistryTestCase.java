@@ -18,6 +18,8 @@
 package org.wso2.carbon.esb.proxyservice.test.customProxy;
 
 import org.apache.axiom.om.OMElement;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -30,9 +32,6 @@ import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpressionException;
 import java.net.URL;
 import java.rmi.RemoteException;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 
 public class InSequenceNoneEndpointFromRegistryTestCase extends ESBIntegrationTest {
 
@@ -49,7 +48,8 @@ public class InSequenceNoneEndpointFromRegistryTestCase extends ESBIntegrationTe
     @Test(groups = "wso2.esb", description = "- Custom proxy -In sequence none endpoint from registry")
     public void testCustomProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("inSeqNonEndpointFromRegCustomProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

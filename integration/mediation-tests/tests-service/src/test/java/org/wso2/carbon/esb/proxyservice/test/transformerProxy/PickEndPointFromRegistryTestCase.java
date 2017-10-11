@@ -50,7 +50,7 @@ public class PickEndPointFromRegistryTestCase extends ESBIntegrationTest {
                                              "- Create a proxy service and pick the endpoint from registry (config)")
     public void testTransformerProxy() throws Exception {
 
-        OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("pickEndpointFromRegTransformerProxy"), null, "WSO2");
 
         assertNotNull(response, "Fault response message null");
 

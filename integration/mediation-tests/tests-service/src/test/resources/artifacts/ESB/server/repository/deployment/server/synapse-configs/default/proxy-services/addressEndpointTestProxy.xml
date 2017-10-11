@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="addressEndpointTestProxy" transports="http,https">
+    <target>
+        <inSequence>
+            <send>
+                <endpoint xmlns="http://ws.apache.org/ns/synapse" name="addressEP_Test">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send />
+        </outSequence>
+    </target>
+</proxy>

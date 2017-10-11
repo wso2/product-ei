@@ -46,7 +46,7 @@ public class InvalidXSLTTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "- Transformer proxy" +
                                              "- Invalid XSLT referred, AxisFault Expected", expectedExceptions = AxisFault.class)
     public void testTransformerProxy() throws Exception {
-        axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        axis2Client.sendCustomQuoteRequest(getProxyServiceURLHttp("invalidXsltTransformerProxy"), null, "WSO2");
     }
 
 

@@ -55,18 +55,9 @@ public class CAppDeactivateAndRestartTestCase extends ESBIntegrationTest {
 
         //start FTP server
         startFTPServer();
-
-        // replace the axis2.xml enabled vfs transfer and restart the ESB server
-        // gracefully
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() +
-                File.separator + "synapseconfig" +
-                File.separator + "vfsTransport" +
-                File.separator + "axis2.xml"));
-        log.info("Updated axis2.xml to enable vfs transport");
 
-        super.init();
         //upload CAPP
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
@@ -126,7 +117,6 @@ public class CAppDeactivateAndRestartTestCase extends ESBIntegrationTest {
         } finally {
             //stop the ftp server
             ftpServerManager.stop();
-            serverConfigurationManager.restoreToLastConfiguration();
             serverConfigurationManager = null;
         }
     }

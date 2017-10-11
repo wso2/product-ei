@@ -1,0 +1,5 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="pickEndpointFromRegTestProxy">
+    <publishWSDL key="PickEndpointFromRegTestLE" />
+    <target inSequence="pickEndpointFromRegTestInSeq" outSequence="pickEndpointFromRegTestOutSeq" />
+    <publishWSDL key="PickEndpointFromRegTestLE" />
+</proxy>

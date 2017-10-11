@@ -1,0 +1,5 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="pickEndpointFromRegTestInSeq">
+    <send>
+        <endpoint key="conf:/proxy/registry_endpoint.xml"/>
+    </send>
+</sequence>

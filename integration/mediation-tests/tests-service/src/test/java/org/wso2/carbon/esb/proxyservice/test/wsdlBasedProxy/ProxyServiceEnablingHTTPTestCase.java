@@ -18,15 +18,14 @@
 package org.wso2.carbon.esb.proxyservice.test.wsdlBasedProxy;
 
 import org.apache.axiom.om.OMElement;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 
 public class ProxyServiceEnablingHTTPTestCase extends ESBIntegrationTest {
 
@@ -42,7 +41,8 @@ public class ProxyServiceEnablingHTTPTestCase extends ESBIntegrationTest {
                                                             "- Proxy service enabling only http")
     public void testWSDLBasedProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("enableHttpWsdlBasedProxy"),
+                                                                     null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

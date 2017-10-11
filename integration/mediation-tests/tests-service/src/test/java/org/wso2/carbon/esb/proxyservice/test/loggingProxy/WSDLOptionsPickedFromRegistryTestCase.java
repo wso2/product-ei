@@ -42,7 +42,7 @@ public class WSDLOptionsPickedFromRegistryTestCase extends ESBIntegrationTest {
         uploadResourcesToConfigRegistry();
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/loggingProxy/wsdl_options_pick_from_registry.xml");
-        isProxyDeployed("StockQuoteProxy");
+        isProxyDeployed("wsdlOptionsFromRegLoggingProxy");
 
     }
 
@@ -50,7 +50,7 @@ public class WSDLOptionsPickedFromRegistryTestCase extends ESBIntegrationTest {
                                              "- Publish WSDL Options - Picked from registry")
     public void testLoggingProxy() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("wsdlOptionsFromRegLoggingProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
                 .getText();

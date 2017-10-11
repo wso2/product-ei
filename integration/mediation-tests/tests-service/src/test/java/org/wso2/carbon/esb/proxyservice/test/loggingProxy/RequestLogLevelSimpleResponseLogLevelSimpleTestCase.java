@@ -30,7 +30,7 @@ public class RequestLogLevelSimpleResponseLogLevelSimpleTestCase extends ESBInte
         super.init();
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/proxyconfig/proxy/loggingProxy/request_log_level_simple_response_log_level_simple.xml");
-        isProxyDeployed("StockQuoteProxy");
+        isProxyDeployed("reqLogSimpleResLogSimpleLoggingProxy");
 
     }
 
@@ -38,7 +38,8 @@ public class RequestLogLevelSimpleResponseLogLevelSimpleTestCase extends ESBInte
             enabled = false)
     public void testLoggingProxyLoggingLevel() throws Exception {
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest(
+                getProxyServiceURLHttp("reqLogSimpleResLogSimpleLoggingProxy"), null, "WSO2");
         //ToDo Assert Logs
     }
 
