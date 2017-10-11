@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageStore xmlns="http://ws.apache.org/ns/synapse"
+              name="HotDeploymentTestMessageStore"/>
