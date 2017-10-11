@@ -93,6 +93,12 @@
         </classes>
     </test>
 
+    <test name="Hot-Deployment-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.hotdeployment.test"/>
+        </packages>
+    </test>
+
     <test name="LocalEntry-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.localentry.test.*"/>
