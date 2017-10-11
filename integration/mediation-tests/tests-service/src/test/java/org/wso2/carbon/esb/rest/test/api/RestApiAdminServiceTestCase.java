@@ -70,7 +70,7 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
     public void testCreateAPI() throws Exception {
         boolean apiAdded = restAdminClient.addAPI(api1);
         Assert.assertEquals(apiAdded, true, "API was not created");
-
+        verifyAPIExistence(api1.getName());
     }
 
     @Test(groups = { "wso2.esb" },
@@ -80,7 +80,7 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
         String tenantAPISource = restAdminClient.getAPISource(api2);
         boolean apiAdded = restAdminClient.addAPIFromTenant(tenantAPISource, tenantDomain);
         Assert.assertEquals(apiAdded, true, "API was not created for tenant");
-
+        verifyAPIExistence(api2.getName());
     }
 
     @Test(groups = { "wso2.esb" },
