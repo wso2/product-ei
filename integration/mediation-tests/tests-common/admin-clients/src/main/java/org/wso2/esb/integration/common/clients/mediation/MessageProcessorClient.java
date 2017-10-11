@@ -73,4 +73,38 @@ public class MessageProcessorClient {
     public String[] getMessageProcessorNames() throws RemoteException {
         return messageProcessorAdminServiceStub.getMessageProcessorNames();
     }
+
+    public void modifyMessageProcessor(String xml) throws RemoteException {
+        messageProcessorAdminServiceStub.modifyMessageProcessor(xml);
+    }
+
+    public String getMessageProcessor(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.getMessageProcessor(processorName);
+    }
+
+    public String[] getMessageIds(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.getMessageIds(processorName);
+    }
+
+    public void activateMessageProcessor(String processorName) throws RemoteException {
+        messageProcessorAdminServiceStub.activate(processorName);
+    }
+
+    public void deactivateProcessor(String processorName) throws RemoteException {
+        messageProcessorAdminServiceStub.deactivate(processorName);
+    }
+
+    public void deleteAllMessages(String processorName) throws RemoteException {
+        messageProcessorAdminServiceStub.deleteAllMessages(processorName);
+    }
+
+    public void deleteMessage(String processorName, String messageId) throws RemoteException {
+        messageProcessorAdminServiceStub.deleteMessage(processorName, messageId);
+    }
+
+    public String[] getDefinedEndpoints(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.getDefinedEndpoints();
+    }
+
+
 }
