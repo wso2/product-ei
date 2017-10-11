@@ -78,6 +78,8 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         log.info(proxyFileName + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "'HotDeploymentTestProxy' has been update from file"),
                 "Proxy deployment failed on updating file");
+        Assert.assertTrue(esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
+                "Proxy Deployment failed on updating file");
         FileManager.deleteFile(proxyServiceFile);
         Assert.assertTrue(esbUtils.isProxyUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
                 "Proxy Undeployment failed");
@@ -96,7 +98,8 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         log.info(sequenceFileName + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestSequence has been updated from the file"),
                 "Sequence deployment failed on updating file");
-
+        Assert.assertTrue(esbUtils.isSequenceDeployed(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
+                "Sequence Deployment failed on updating file");
         FileManager.deleteFile(sequenceFile);
         Assert.assertTrue(esbUtils.isSequenceUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
                 "Sequence Undeployment failed");
@@ -115,6 +118,8 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         log.info(endpointFileName + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestEndpoint has been updated from the file"),
                 "Endpoint deployment failed on updating file");
+        Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
+                "Endpoint Deployment failed on updating file");
         FileManager.deleteFile(endpointFile);
         Assert.assertTrue(esbUtils.isEndpointUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
                 "Endpoint Undeployment failed");
