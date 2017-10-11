@@ -37,7 +37,6 @@ import java.rmi.RemoteException;
 /**
  * This class will test the ESB artifacts hot deployment.
  */
-
 public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
 
     private final String SERVER_DEPLOYMENT_DIR =
