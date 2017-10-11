@@ -150,4 +150,11 @@
             <package name="org.wso2.carbon.esb.mediator.test.publishevent"/>
         </packages>
     </test>
+
+    <test name="Message-Processor-Test" preserve-order="true" verbose="2" parallel="false">
+        <classes>
+            <class name="org.wso2.carbon.esb.message.processor.test.MessageProcessorAdminTestCase" />
+        </classes>
+    </test>
+
 </suite>
