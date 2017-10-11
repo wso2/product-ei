@@ -21,10 +21,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.rest.api.stub.RestApiAdminAPIException;
 import org.wso2.carbon.rest.api.stub.types.carbon.APIData;
 import org.wso2.carbon.rest.api.stub.types.carbon.ResourceData;
 import org.wso2.esb.integration.common.clients.rest.api.RestApiAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+
+import java.rmi.RemoteException;
 
 /**
  * Testcase for RestAPIAdminService
@@ -32,9 +35,12 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
 
     private RestApiAdminClient restAdminClient;
-    private APIData api1, api2;
+    private APIData api1, api2, api3;
     private static final String tenantAPIName = "TenantServiceAPI";
     private static final String tenantDomain = "carbon.super";
+    private static final String sampleInSequence = "<inSequence>\n" + "<log level=\"custom\">\n"
+            + " <property name=\"processing sequence\" value=\"Executing sequence\"/>\n" + " </log>\n"
+            + " </inSequence>";
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -42,12 +48,23 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
         restAdminClient = new RestApiAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         api1 = new APIData();
         api2 = new APIData();
+        api3 = new APIData();
+
         //  sample API resource
         ResourceData resource = new ResourceData();
         String[] methods = { "POST" };
         resource.setMethods(methods);
         resource.setUrlMapping("/usage");
+
+        ResourceData resource2 = new ResourceData();
+        String[] methods2 = { "GET" };
+        resource2.setMethods(methods);
+        resource2.setInSeqXml(sampleInSequence);
+        resource2.setUrlMapping("/usage");
+
         ResourceData[] resourceList = new ResourceData[] { resource };
+
+        ResourceData[] resourceList2 = new ResourceData[] { resource2 };
 
         api1.setName("SampleServiceAPI");
         api1.setContext("/createApi");
@@ -61,6 +78,12 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
         api2.setHost("localhost");
         api2.setPort(8480);
         api2.setResources(resourceList);
+
+        api3.setName("SampleServiceAPI");
+        api3.setContext("/createApi");
+        api3.setHost("localhost");
+        api3.setPort(8480);
+        api3.setResources(resourceList2);
 
     }
 
@@ -101,30 +124,110 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
     }
 
     @Test(groups = { "wso2.esb" },
-          description = "Test API update service",
+          description = "Test API update service with string param",
           priority = 5)
-    public void testUpdateAPI() throws Exception {
+    public void testUpdateAPIFromString() throws Exception {
         String updateData =
                 "<api xmlns=\"http://ws.apache.org/ns/synapse\" name=\"SampleServiceAPI\" context=\"/createApi\">\n"
                         + "    <resource methods=\"POST PUT\" uri-template=\"/\"> </resource></api>";
         boolean apiUpdated = restAdminClient.updateAPIFromString(api1.getName(), updateData);
+        APIData updatedAPI = restAdminClient.getAPIbyName(api1.getName());
+        ResourceData[] updatedResourceData = updatedAPI.getResources();
+        String updatedResource = restAdminClient.getAPIResource(updatedResourceData[0]);
         Assert.assertEquals(apiUpdated, true, "API was not updated");
+        Assert.assertTrue(updatedResource.contains("POST PUT"), "API was not updated with new method");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test API update service with API data param",
+          priority = 6)
+    public void testUpdateAPIFromAPIData() throws Exception {
+        boolean apiUpdated = restAdminClient.updateAPIFromAPIData(api1.getName(), api3);
+        String[] sequences = restAdminClient.getAPISequences();
+        Assert.assertEquals(apiUpdated, true, "API was not updated");
+        Assert.assertNotNull(sequences, "API does not contained updated sequence");
     }
 
     @Test(groups = { "wso2.esb" },
           description = "Test API update service for tenant",
-          priority = 6)
+          priority = 7)
     public void testUpdateAPIForTenant() throws Exception {
         String updateData =
                 "<api xmlns=\"http://ws.apache.org/ns/synapse\" name=\"TenantServiceAPI\" context=\"/tenant\">\n"
-                        + "    <resource methods=\"POST\" uri-template=\"/\"> </resource></api>";
+                        + "    <resource methods=\"POST\" uri-template=\"/\"> </resource><resource methods=\"GET\" uri-template=\"/updateUser\"> </resource></api>";
         boolean apiUpdated = restAdminClient.updateAPIForTenant(tenantAPIName, updateData, "carbon.super");
+        APIData updatedAPI = restAdminClient.getAPIbyName(tenantAPIName);
         Assert.assertEquals(apiUpdated, true, "API was not updated for tenant");
+        Assert.assertEquals(updatedAPI.getResources().length, 2, "API is not updated with 2 resources");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test API statistics enable operation",
+          priority = 8)
+    public void testEnableAPIStatistics() throws Exception {
+        restAdminClient.enableStatisticsForAPI(api1.getName());
+        APIData statEnabledAPI = getAPIFromList(api1.getName());
+        Assert.assertNotNull(statEnabledAPI,"Unable to get requested API");
+        Assert.assertEquals(statEnabledAPI.getStatisticsEnable(), true, "Statistics not enabled for API");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test  enabling statistics for non-existent API",
+          priority = 9,
+          expectedExceptions = RestApiAdminAPIException.class)
+    public void testEnableStatisticsForInvalidAPI() throws Exception {
+        restAdminClient.enableStatisticsForAPI("invalidAPI");
+        Assert.fail("Expected exception not thrown for non-existent API");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test  enabling tracing for non-existent API",
+          priority = 10,
+          expectedExceptions = RestApiAdminAPIException.class)
+    public void testEnableTracingForInvalidAPI() throws Exception {
+        restAdminClient.enableTracingForAPI("invalidAPI");
+        Assert.fail("Expected exception not thrown for non-existent API");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test API statistics disable operation ",
+          priority = 11)
+    public void testDisabledAPIStatistics() throws Exception {
+        restAdminClient.disableStatisticsForAPI(api1.getName());
+        APIData statDisabledAPI = getAPIFromList(api1.getName());
+        Assert.assertNotNull(statDisabledAPI, "Unable to get requested API");
+        Assert.assertEquals(statDisabledAPI.getStatisticsEnable(), false, "Statistics not disabled for API");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test API tracing enable operation",
+          priority = 12)
+    public void testEnableAPITracing() throws Exception {
+        restAdminClient.enableTracingForAPI(api1.getName());
+        APIData traceEnabledAPI = getAPIFromList(api1.getName());
+        Assert.assertNotNull(traceEnabledAPI,"Unable to get requested API");
+        Assert.assertEquals(traceEnabledAPI.getTracingEnable(), true, "Tracing not enabled for API");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test API tracing disable operation",
+          priority = 13)
+    public void testDisableAPITracing() throws Exception {
+        restAdminClient.disableTracingForAPI(api1.getName());
+        APIData traceDisabledAPI = getAPIFromList(api1.getName());
+        Assert.assertNotNull(traceDisabledAPI,"Unable to get requested API");
+        Assert.assertEquals(traceDisabledAPI.getTracingEnable(), false, "Tracing not disabled for API");
+
     }
 
     @Test(groups = { "wso2.esb" },
           description = "Test API delete service ",
-          priority = 7)
+          priority = 14)
     public void testDeleteAPI() throws Exception {
         boolean apiResult = restAdminClient.deleteApi(api1.getName());
         Assert.assertEquals(apiResult, true, "API was not removed");
@@ -133,20 +236,44 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
 
     @Test(groups = { "wso2.esb" },
           description = "Test API delete service for tenant ",
-          priority = 8)
+          priority = 15)
     public void testDeleteAPIForTenant() throws Exception {
         boolean apiResult = restAdminClient.deleteApiForTenant(tenantAPIName, tenantDomain);
         Assert.assertEquals(apiResult, true, "API was not removed");
 
     }
 
-    @AfterClass(groups = "wso2.esb")
+    @Test(groups = { "wso2.esb" },
+          description = "Test fault handling for empty API update ",
+          priority = 16,
+          expectedExceptions = RestApiAdminAPIException.class)
+    public void testAPIUpdateWithEmptyAPIName() throws Exception {
+        String emptyAPIName = "";
+        restAdminClient.updateAPIFromAPIData(emptyAPIName, api3);
+        Assert.fail("Expected exception not thrown for updating empty API");
+
+    }
+
+    @AfterClass(alwaysRun = true)
     public void close() throws Exception {
         if (restAdminClient.getAPICount() > 0) {
             restAdminClient.deleteAllApis();
         }
         restAdminClient = null;
         super.cleanup();
+    }
+
+    private APIData getAPIFromList(String apiName) throws RestApiAdminAPIException, RemoteException {
+        int pageNumber = 1;
+        int itemCount = 3;
+        APIData[] apiList = restAdminClient.getAPIList(pageNumber, itemCount);
+        for (APIData api : apiList) {
+            if (api.getName().equals(apiName)) {
+                return api;
+            }
+        }
+
+        return null;
     }
 
 }
