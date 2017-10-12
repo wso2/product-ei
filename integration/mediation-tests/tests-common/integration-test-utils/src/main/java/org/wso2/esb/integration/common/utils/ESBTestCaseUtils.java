@@ -36,6 +36,7 @@ import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
 import org.wso2.carbon.inbound.stub.types.carbon.InboundEndpointDTO;
 import org.wso2.carbon.localentry.stub.types.LocalEntryAdminException;
 import org.wso2.carbon.mediation.library.stub.MediationLibraryAdminServiceException;
+import org.wso2.carbon.mediation.library.stub.types.carbon.LibraryInfo;
 import org.wso2.carbon.mediation.library.stub.upload.types.carbon.LibraryFileItem;
 import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminProxyAdminException;
 import org.wso2.carbon.rest.api.stub.RestApiAdminAPIException;
@@ -550,6 +551,90 @@ public class ESBTestCaseUtils {
 		mediationLibraryUploaderClient.uploadConnector(fileItems);
 
 	}
+
+    /**
+     * Add import to synapse context
+     * @param backEndUrl
+     * @param sessionCookie
+     * @param libName
+     * @param packageName
+     * @throws RemoteException
+     */
+    public void addImport(String backEndUrl, String sessionCookie, String libName, String packageName)
+            throws RemoteException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        mediationLibraryAdminServiceClient.addImport(libName, packageName);
+    }
+
+    /**
+     * Get import of a particular library qualified name
+     * @param backEndUrl
+     * @param sessionCookie
+     * @param qualifiedName
+     * @throws RemoteException
+     */
+    public String getImport(String backEndUrl, String sessionCookie, String qualifiedName) throws RemoteException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        return mediationLibraryAdminServiceClient.getImport(qualifiedName);
+    }
+
+    /**
+     * Return the list of library information
+     * @param backEndUrl
+     * @param sessionCookie
+     * @return
+     * @throws RemoteException
+     */
+    public LibraryInfo[] getAllLibraryInfo(String backEndUrl, String sessionCookie) throws RemoteException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        return mediationLibraryAdminServiceClient.getAllLibraryInfo();
+    }
+
+    /**
+     * Return all the libraries
+     * @param backEndUrl
+     * @param sessionCookie
+     * @return
+     * @throws RemoteException
+     */
+    public String[] getAllLibraries(String backEndUrl, String sessionCookie) throws RemoteException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        return mediationLibraryAdminServiceClient.getAllLibraries();
+    }
+
+    /**
+     * Delete import of a library
+     * @param backEndUrl
+     * @param sessionCookie
+     * @param importQualifiedName
+     * @throws RemoteException
+     */
+    public void deleteImport(String backEndUrl, String sessionCookie, String importQualifiedName)
+            throws RemoteException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        mediationLibraryAdminServiceClient.deleteImport(importQualifiedName);
+    }
+
+    /**
+     * Return library artifact information
+     * @param backEndUrl
+     * @param sessionCookie
+     * @param libName
+     * @param packageName
+     * @return
+     * @throws RemoteException
+     */
+    public LibraryInfo getLibraryInfo(String backEndUrl, String sessionCookie, String libName, String packageName)
+            throws RemoteException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        return mediationLibraryAdminServiceClient.getLibraryInfo(libName, packageName);
+    }
 
 	/**
 	 * Update connector status

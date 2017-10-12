@@ -20,7 +20,6 @@ package org.wso2.esb.integration.common.utils;
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
-import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -41,6 +40,7 @@ import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.exceptions.AutomationUtilException;
 import org.wso2.carbon.localentry.stub.types.LocalEntryAdminException;
 import org.wso2.carbon.mediation.library.stub.MediationLibraryAdminServiceException;
+import org.wso2.carbon.mediation.library.stub.types.carbon.LibraryInfo;
 import org.wso2.carbon.mediation.library.stub.upload.types.carbon.LibraryFileItem;
 import org.wso2.carbon.rest.api.stub.RestApiAdminAPIException;
 import org.wso2.carbon.security.mgt.stub.config.SecurityAdminServiceSecurityConfigExceptionException;
@@ -419,6 +419,29 @@ public abstract class ESBIntegrationTest {
 		esbUtils.updateConnectorStatus(contextUrls.getBackEndUrl(),sessionCookie,libQName, libName, packageName, status);
 	}
 
+    protected void addImport(String libName, String packageName) throws RemoteException {
+        esbUtils.addImport(contextUrls.getBackEndUrl(), sessionCookie, libName, packageName);
+    }
+
+    protected String getImport(String qualifiedName) throws RemoteException {
+        return esbUtils.getImport(contextUrls.getBackEndUrl(), sessionCookie, qualifiedName);
+    }
+
+    protected LibraryInfo[] getAllLibraryInfo() throws RemoteException {
+        return esbUtils.getAllLibraryInfo(contextUrls.getBackEndUrl(), sessionCookie);
+    }
+
+    protected String[] getAllLibraries() throws RemoteException {
+        return esbUtils.getAllLibraries(contextUrls.getBackEndUrl(), sessionCookie);
+    }
+
+    protected void deleteImport(String importQualifiedName) throws RemoteException {
+        esbUtils.deleteImport(contextUrls.getBackEndUrl(), sessionCookie, importQualifiedName);
+    }
+
+    protected LibraryInfo getLibraryInfo(String libName, String packageName) throws RemoteException {
+        return esbUtils.getLibraryInfo(contextUrls.getBackEndUrl(), sessionCookie, libName, packageName);
+    }
 
 	protected void addEndpoint(OMElement endpointConfig)
 			throws Exception {

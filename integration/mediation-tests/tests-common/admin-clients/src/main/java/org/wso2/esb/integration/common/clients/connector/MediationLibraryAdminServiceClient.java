@@ -21,6 +21,7 @@ package org.wso2.esb.integration.common.clients.connector;
 import org.apache.axis2.AxisFault;
 import org.wso2.carbon.mediation.library.stub.MediationLibraryAdminServiceException;
 import org.wso2.carbon.mediation.library.stub.MediationLibraryAdminServiceStub;
+import org.wso2.carbon.mediation.library.stub.types.carbon.LibraryInfo;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
 import java.rmi.RemoteException;
@@ -58,4 +59,27 @@ public class MediationLibraryAdminServiceClient {
         return mediationLibraryAdminServiceStub.getAllImports();
     }
 
+    public String getImport(String qualifiedName) throws RemoteException {
+        return mediationLibraryAdminServiceStub.getImport(qualifiedName);
+    }
+
+    public LibraryInfo[] getAllLibraryInfo() throws RemoteException {
+        return mediationLibraryAdminServiceStub.getAllLibraryInfo();
+    }
+
+    public void addImport(String libName, String packageName) throws RemoteException {
+        mediationLibraryAdminServiceStub.addImport(libName, packageName);
+    }
+
+    public String[] getAllLibraries() throws RemoteException {
+        return mediationLibraryAdminServiceStub.getAllLibraries();
+    }
+
+    public void deleteImport(String importQualifiedName) throws RemoteException {
+        mediationLibraryAdminServiceStub.deleteImport(importQualifiedName);
+    }
+
+    public LibraryInfo getLibraryInfo(String libName, String packageName) throws RemoteException {
+        return mediationLibraryAdminServiceStub.getLibraryInfo(libName, packageName);
+    }
 }
