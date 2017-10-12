@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~  Copyright (c) 2017, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+~
+~  WSO2 Inc. licenses this file to you under the Apache License,
+~  Version 2.0 (the "License"); you may not use this file except
+~  in compliance with the License.
+~  You may obtain a copy of the License at
+~
+~   http://www.apache.org/licenses/LICENSE-2.0
+~
+~  Unless required by applicable law or agreed to in writing,
+~  software distributed under the License is distributed on an
+~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~  KIND, either express or implied.  See the License for the
+~  specific language governing permissions and limitations
+~  under the License.
+-->
+<template xmlns="http://ws.apache.org/ns/synapse" name="getMessage">
+    <parameter name="username" description="Name of the user"/>
+    <parameter name="id" description="Id of the user"/>
+    <sequence>
+        <log level="custom">
+            <property name="message" value="Invoke get message API"/>
+        </log>
+        <property name="USER_NAME" expression="$func:username" scope="default" type="STRING" />
+        <payloadFactory media-type="xml">
+            <format>
+                <message xmlns="">$1</message>
+            </format>
+            <args>
+                <arg evaluator="xml" expression="get-property('USER_NAME')" literal="false" />
+            </args>
+        </payloadFactory>
+        <respond />
+    </sequence>
+</template>
