@@ -47,14 +47,12 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
             TestConfigurationProvider.getResourceLocation(ESBTestConstant.ESB_PRODUCT_GROUP) + File.separator
                     + "hotdeployment" + File.separator;
 
-    private final String proxyName = "HotDeploymentTestProxy";
     private final String proxyFileName = "HotDeploymentTestProxy.xml";
-
-    private final String sequenceName = "HotDeploymentTestSequence";
     private final String sequenceFileName = "HotDeploymentTestSequence.xml";
-
-    private final String endpointName = "HotDeploymentTestEndpoint";
     private final String endpointFileName = "HotDeploymentTestEndpoint.xml";
+    private final String apiFileName = "HotDeploymentTestAPI.xml";
+    private final String localEntryFileName = "HotDeploymentTestLocalEntry.xml";
+    private final String messageStoreFileName = "HotDeploymentTestMessageStore.xml";
 
     private LogViewerClient logViewerClient;
 
@@ -68,6 +66,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb",
           description = "Proxy Service Hot Deployment")
     public void testProxyServiceHotDeployment() throws Exception {
+        String proxyName = "HotDeploymentTestProxy";
         String proxyServiceFile = SERVER_DEPLOYMENT_DIR + "proxy-services" + File.separator + proxyFileName;
 
         Assert.assertTrue(esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
@@ -77,7 +76,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         FileUtils.touch(new File(proxyServiceFile));
         log.info(proxyFileName + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "'HotDeploymentTestProxy' has been update from file"),
-                "Proxy deployment failed on updating file");
+                "Proxy deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
                 "Proxy Deployment failed on updating file");
         FileManager.deleteFile(proxyServiceFile);
@@ -88,6 +87,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb",
           description = "Sequence Hot Deployment")
     public void testSequenceHotDeployment() throws Exception {
+        String sequenceName = "HotDeploymentTestSequence";
         String sequenceFile = SERVER_DEPLOYMENT_DIR + "sequences" + File.separator + sequenceFileName;
 
         Assert.assertTrue(esbUtils.isSequenceDeployed(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
@@ -97,17 +97,18 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         FileUtils.touch(new File(sequenceFile));
         log.info(sequenceFileName + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestSequence has been updated from the file"),
-                "Sequence deployment failed on updating file");
+                "Sequence deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isSequenceDeployed(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
                 "Sequence Deployment failed on updating file");
         FileManager.deleteFile(sequenceFile);
-        Assert.assertTrue(esbUtils.isSequenceUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
+        Assert.assertTrue(esbUtils.isSequenceUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
                 "Sequence Undeployment failed");
     }
 
     @Test(groups = "wso2.esb",
           description = "Endpoint Hot Deployment")
     public void testEndpointHotDeployment() throws Exception {
+        String endpointName = "HotDeploymentTestEndpoint";
         String endpointFile = SERVER_DEPLOYMENT_DIR + "endpoints" + File.separator + endpointFileName;
 
         Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
@@ -117,12 +118,75 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         FileUtils.touch(new File(endpointFile));
         log.info(endpointFileName + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestEndpoint has been updated from the file"),
-                "Endpoint deployment failed on updating file");
+                "Endpoint deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
                 "Endpoint Deployment failed on updating file");
         FileManager.deleteFile(endpointFile);
         Assert.assertTrue(esbUtils.isEndpointUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
                 "Endpoint Undeployment failed");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "API Hot Deployment")
+    public void testAPIHotDeployment() throws Exception {
+        String apiName = "HotDeploymentTestAPI";
+        String apiFile = SERVER_DEPLOYMENT_DIR + "api" + File.separator + apiFileName;
+
+        Assert.assertTrue(esbUtils.isApiDeployed(contextUrls.getBackEndUrl(), sessionCookie, apiName),
+                "API Deployment failed");
+
+        logViewerClient.clearLogs();
+        FileUtils.touch(new File(apiFile));
+        log.info(apiFileName + " has been updated and waiting for redeployment");
+        Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestAPI has been updated from the file"),
+                "API deployment failed on updating file. Log message not found");
+        Assert.assertTrue(esbUtils.isApiDeployed(contextUrls.getBackEndUrl(), sessionCookie, apiName),
+                "API Deployment failed on updating file");
+        FileManager.deleteFile(apiFile);
+        Assert.assertTrue(esbUtils.isApiUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, apiName),
+                "API Undeployment failed");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Local Entry Hot Deployment")
+    public void testLocalEntryHotDeployment() throws Exception {
+        String localEntryName = "HotDeploymentTestLocalEntry";
+        String localEntryFile = SERVER_DEPLOYMENT_DIR + "local-entries" + File.separator + localEntryFileName;
+
+        Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie, localEntryName),
+                "Local Entry Deployment failed");
+
+        logViewerClient.clearLogs();
+        FileUtils.touch(new File(localEntryFile));
+        log.info(localEntryFileName + " has been updated and waiting for redeployment");
+        Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestLocalEntry has been updated from the file"),
+                "Local Entry deployment failed on updating file. Log message not found");
+        Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie, localEntryName),
+                "Local Entry Deployment failed on updating file");
+        FileManager.deleteFile(localEntryFile);
+        Assert.assertTrue(esbUtils.isLocalEntryUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, localEntryName),
+                "Local Entry Undeployment failed");
+    }
+
+    @Test(groups = "wso2.esb",
+          description = "Message Store Hot Deployment")
+    public void testMessageStoreHotDeployment() throws Exception {
+        String messageStoreName = "HotDeploymentTestMessageStore";
+        String messageStoreFile = SERVER_DEPLOYMENT_DIR + "message-stores" + File.separator + messageStoreFileName;
+
+        Assert.assertTrue(esbUtils.isMessageStoreDeployed(contextUrls.getBackEndUrl(), sessionCookie, messageStoreName),
+                "Message Store Deployment failed");
+
+        logViewerClient.clearLogs();
+        FileUtils.touch(new File(messageStoreFile));
+        log.info(messageStoreFileName + " has been updated and waiting for redeployment");
+        Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestMessageStore has been updated from the file"),
+                "Message Store deployment failed on updating file. Log message not found");
+        Assert.assertTrue(esbUtils.isMessageStoreDeployed(contextUrls.getBackEndUrl(), sessionCookie, messageStoreName),
+                "Message Store Deployment failed on updating file");
+        FileManager.deleteFile(messageStoreFile);
+        Assert.assertTrue(esbUtils.isSequenceUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, messageStoreName),
+                "Message Store Undeployment failed");
     }
 
     @AfterClass(alwaysRun = true)
@@ -134,12 +198,20 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
         String proxyFile = SOURCE_DIR + proxyFileName;
         String sequenceFile = SOURCE_DIR + sequenceFileName;
         String endpointFile = SOURCE_DIR + endpointFileName;
-        FileManager.copyFile(new File(proxyFile),
-                SERVER_DEPLOYMENT_DIR + "proxy-services" + File.separator + proxyFileName);
-        FileManager.copyFile(new File(sequenceFile),
-                SERVER_DEPLOYMENT_DIR + "sequences" + File.separator + sequenceFileName);
-        FileManager.copyFile(new File(endpointFile),
-                SERVER_DEPLOYMENT_DIR + "endpoints" + File.separator + endpointFileName);
+        String apiFile = SOURCE_DIR + apiFileName;
+        String localEntryFile = SOURCE_DIR + localEntryFileName;
+        String messageStoreFile = SOURCE_DIR + messageStoreFileName;
+        FileUtils.copyFile(new File(proxyFile),
+                new File(SERVER_DEPLOYMENT_DIR + "proxy-services" + File.separator + proxyFileName));
+        FileUtils.copyFile(new File(sequenceFile),
+                new File(SERVER_DEPLOYMENT_DIR + "sequences" + File.separator + sequenceFileName));
+        FileUtils.copyFile(new File(endpointFile),
+                new File(SERVER_DEPLOYMENT_DIR + "endpoints" + File.separator + endpointFileName));
+        FileUtils.copyFile(new File(apiFile), new File(SERVER_DEPLOYMENT_DIR + "api" + File.separator + apiFileName));
+        FileUtils.copyFile(new File(localEntryFile),
+                new File(SERVER_DEPLOYMENT_DIR + "local-entries" + File.separator + localEntryFileName));
+        FileUtils.copyFile(new File(messageStoreFile),
+                new File(SERVER_DEPLOYMENT_DIR + "message-stores" + File.separator + messageStoreFileName));
     }
 
     private boolean searchInLogs(LogViewerClient logViewerClient, String searchString)

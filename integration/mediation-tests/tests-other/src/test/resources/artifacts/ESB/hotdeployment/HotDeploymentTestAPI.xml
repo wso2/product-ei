@@ -1,0 +1,12 @@
+<api xmlns="http://ws.apache.org/ns/synapse" context="/hotdeploymenttest" name="HotDeploymentTestAPI">
+    <resource methods="GET">
+        <inSequence>
+            <log level="full"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+    </resource>
+</api>
