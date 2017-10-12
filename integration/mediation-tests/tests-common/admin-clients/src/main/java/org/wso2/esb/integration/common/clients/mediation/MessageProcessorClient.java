@@ -73,4 +73,53 @@ public class MessageProcessorClient {
     public String[] getMessageProcessorNames() throws RemoteException {
         return messageProcessorAdminServiceStub.getMessageProcessorNames();
     }
+
+    /**
+     * Update existing message processor configurations.
+     * @param xml new configuration
+     * @throws RemoteException
+     */
+    public void modifyMessageProcessor(String xml) throws RemoteException {
+        messageProcessorAdminServiceStub.modifyMessageProcessor(xml);
+    }
+
+    /**
+     * Get message processor by name.
+     * @param processorName processor name
+     * @return XML configuration of message processor
+     * @throws RemoteException
+     */
+    public String getMessageProcessor(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.getMessageProcessor(processorName);
+    }
+
+    /**
+     * Activate given message processor to resume processing of messages.
+     * @param processorName name of Processor
+     * @throws RemoteException
+     */
+    public void activateMessageProcessor(String processorName) throws RemoteException {
+        messageProcessorAdminServiceStub.activate(processorName);
+    }
+
+    /**
+     * Pause processing of messages from given processor and deactivate.
+     * @param processorName name of Processor
+     * @throws RemoteException
+     */
+    public void deactivateProcessor(String processorName) throws RemoteException {
+        messageProcessorAdminServiceStub.deactivate(processorName);
+    }
+
+    /**
+     * Check if message processor is active and handling messages.
+     * @param processorName name of Processor
+     * @return true if processor is active
+     * @throws RemoteException
+     */
+    public boolean isActive(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.isActive(processorName);
+    }
+
+
 }
