@@ -58,7 +58,7 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
 
         ResourceData resource2 = new ResourceData();
         String[] methods2 = { "GET" };
-        resource2.setMethods(methods);
+        resource2.setMethods(methods2);
         resource2.setInSeqXml(sampleInSequence);
         resource2.setUrlMapping("/usage");
 
@@ -162,19 +162,8 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
     }
 
     @Test(groups = { "wso2.esb" },
-          description = "Test API statistics enable operation",
-          priority = 8)
-    public void testEnableAPIStatistics() throws Exception {
-        restAdminClient.enableStatisticsForAPI(api1.getName());
-        APIData statEnabledAPI = getAPIFromList(api1.getName());
-        Assert.assertNotNull(statEnabledAPI,"Unable to get requested API");
-        Assert.assertEquals(statEnabledAPI.getStatisticsEnable(), true, "Statistics not enabled for API");
-
-    }
-
-    @Test(groups = { "wso2.esb" },
           description = "Test  enabling statistics for non-existent API",
-          priority = 9,
+          priority = 8,
           expectedExceptions = RestApiAdminAPIException.class)
     public void testEnableStatisticsForInvalidAPI() throws Exception {
         restAdminClient.enableStatisticsForAPI("invalidAPI");
@@ -184,7 +173,7 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
 
     @Test(groups = { "wso2.esb" },
           description = "Test  enabling tracing for non-existent API",
-          priority = 10,
+          priority = 9,
           expectedExceptions = RestApiAdminAPIException.class)
     public void testEnableTracingForInvalidAPI() throws Exception {
         restAdminClient.enableTracingForAPI("invalidAPI");
@@ -193,11 +182,21 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
     }
 
     @Test(groups = { "wso2.esb" },
+          description = "Test API statistics enable operation",
+          priority = 10)
+    public void testEnableAPIStatistics() throws Exception {
+        restAdminClient.enableStatisticsForAPI(tenantAPIName);
+        APIData statEnabledAPI = getAPIFromList(tenantAPIName);
+        Assert.assertEquals(statEnabledAPI.getStatisticsEnable(), true, "Statistics not enabled for API");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
           description = "Test API statistics disable operation ",
           priority = 11)
     public void testDisabledAPIStatistics() throws Exception {
-        restAdminClient.disableStatisticsForAPI(api1.getName());
-        APIData statDisabledAPI = getAPIFromList(api1.getName());
+        restAdminClient.disableStatisticsForAPI(tenantAPIName);
+        APIData statDisabledAPI = getAPIFromList(tenantAPIName);
         Assert.assertNotNull(statDisabledAPI, "Unable to get requested API");
         Assert.assertEquals(statDisabledAPI.getStatisticsEnable(), false, "Statistics not disabled for API");
 
@@ -207,9 +206,9 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test API tracing enable operation",
           priority = 12)
     public void testEnableAPITracing() throws Exception {
-        restAdminClient.enableTracingForAPI(api1.getName());
-        APIData traceEnabledAPI = getAPIFromList(api1.getName());
-        Assert.assertNotNull(traceEnabledAPI,"Unable to get requested API");
+        restAdminClient.enableTracingForAPI(tenantAPIName);
+        APIData traceEnabledAPI = getAPIFromList(tenantAPIName);
+        Assert.assertNotNull(traceEnabledAPI, "Unable to get requested API");
         Assert.assertEquals(traceEnabledAPI.getTracingEnable(), true, "Tracing not enabled for API");
 
     }
@@ -218,9 +217,9 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test API tracing disable operation",
           priority = 13)
     public void testDisableAPITracing() throws Exception {
-        restAdminClient.disableTracingForAPI(api1.getName());
-        APIData traceDisabledAPI = getAPIFromList(api1.getName());
-        Assert.assertNotNull(traceDisabledAPI,"Unable to get requested API");
+        restAdminClient.disableTracingForAPI(tenantAPIName);
+        APIData traceDisabledAPI = getAPIFromList(tenantAPIName);
+        Assert.assertNotNull(traceDisabledAPI, "Unable to get requested API");
         Assert.assertEquals(traceDisabledAPI.getTracingEnable(), false, "Tracing not disabled for API");
 
     }
@@ -263,9 +262,10 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
         super.cleanup();
     }
 
-    private APIData getAPIFromList(String apiName) throws RestApiAdminAPIException, RemoteException {
+    private APIData getAPIFromList(String apiName)
+            throws RestApiAdminAPIException, InterruptedException, RemoteException {
         int pageNumber = 1;
-        int itemCount = 3;
+        int itemCount = (restAdminClient.getAPICount() - 1);
         APIData[] apiList = restAdminClient.getAPIList(pageNumber, itemCount);
         for (APIData api : apiList) {
             if (api.getName().equals(apiName)) {
