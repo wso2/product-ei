@@ -150,5 +150,4 @@
             <package name="org.wso2.carbon.esb.mediator.test.publishevent"/>
         </packages>
     </test>
-
 </suite>
