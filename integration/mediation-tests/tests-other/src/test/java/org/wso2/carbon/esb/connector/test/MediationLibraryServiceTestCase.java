@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.carbon.mediation.library.stub.types.carbon.LibraryInfo;
+import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
@@ -46,7 +47,7 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
     private static final String TEMP_CONNECTOR_LIB_QNAME = "{org.wso2.carbon.connector}temp";
     private static final String TEMP_LIB_NAME = "temp";
 
-    private static final String FAULTY_CONNECTOR_ZIP_NAME = "helloworld-connector-1.0.5-SNAPSHOT.zip";
+    private static final String FAULTY_CONNECTOR_ZIP = "helloworld-connector-1.0.5-SNAPSHOT.zip";
     private static final String FAULTY_CONNECTOR_LIB_QNAME = "{org.wso2.carbon.connector}helloworld";
     private static final String FAULTY_LIB_NAME = "helloworld";
 
@@ -72,7 +73,7 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
         //upload connector
         uploadConnector(resourcePath, HELLO_CONNECTOR_ZIP);
-        Thread.sleep(20000);
+        waitUntilLibAvailable(HELLO_CONNECTOR_ZIP);
 
         //enable connector
         updateConnectorStatus(HELLO_CONNECTOR_LIB_QNAME, HELLO_LIB_NAME, PACKAGE_NAME, ENABLED);
@@ -92,7 +93,7 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
         //deploy connector
         uploadConnector(resourcePath, AMAZON_CONNECTOR_ZIP);
-        Thread.sleep(20000);
+        waitUntilLibAvailable(AMAZON_CONNECTOR_ZIP);
         Assert.assertFalse(checkAvailabilityInImports(AMAZON_CONNECTOR_LIB_QNAME),
                            "Connector is already enabled at the deployment.");
 
@@ -238,8 +239,8 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
         try {
             uploadConnector(getESBResourceLocation().replace("//", "/") + File.separator + "connector",
-                            FAULTY_CONNECTOR_ZIP_NAME);
-            Thread.sleep(20000);
+                            FAULTY_CONNECTOR_ZIP);
+            waitUntilLibAvailable(FAULTY_CONNECTOR_ZIP);
 
             updateConnectorStatus(FAULTY_CONNECTOR_LIB_QNAME, FAULTY_LIB_NAME, PACKAGE_NAME, ENABLED);
             deleteLibrary(FAULTY_CONNECTOR_LIB_QNAME);
@@ -271,6 +272,29 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
         }
         return false;
+    }
+
+    /**
+     * Wait until the zip file is copied to the synapse-libs directory or the default wait time is exceeded
+     *
+     * @param connectorZip
+     */
+    private void waitUntilLibAvailable(String connectorZip) {
+
+        String connectorZipPath = ServerConstants.CARBON_HOME + File.separator + "repository" + File.separator +
+                "deployment" + File.separator + "server" + File.separator + "synapse-libs" + File.separator +
+                connectorZip;
+
+        File zipFile = new File(connectorZipPath);
+        long startTime = System.currentTimeMillis();
+
+        while (((System.currentTimeMillis() - startTime) < 20000) && !zipFile.exists()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                log.warn("Error while sleep the thread for 0.5 sec");
+            }
+        }
     }
 
     /**
