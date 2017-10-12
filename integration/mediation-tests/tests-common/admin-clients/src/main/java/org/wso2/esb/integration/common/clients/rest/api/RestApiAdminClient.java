@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.rest.api.stub.RestApiAdminAPIException;
 import org.wso2.carbon.rest.api.stub.RestApiAdminStub;
 import org.wso2.carbon.rest.api.stub.types.carbon.APIData;
+import org.wso2.carbon.rest.api.stub.types.carbon.ResourceData;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
 import java.rmi.RemoteException;
@@ -89,6 +90,11 @@ public class RestApiAdminClient {
         return restApiAdminStub.updateApiFromString(apiName, updateData);
     }
 
+    public boolean updateAPIFromAPIData(String apiName, APIData apiData)
+            throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.updateApi(apiName, apiData);
+    }
+
     public boolean updateAPIForTenant(String apiName, String updateData, String tenant)
             throws RestApiAdminAPIException, RemoteException {
         return restApiAdminStub.updateApiForTenant(apiName, updateData, tenant);
@@ -104,5 +110,32 @@ public class RestApiAdminClient {
 
     public String getAPISource(APIData apiData) throws RestApiAdminAPIException, RemoteException {
         return restApiAdminStub.getApiSource(apiData);
+    }
+
+    public String[] getAPISequences() throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.getSequences();
+    }
+
+    public String enableStatisticsForAPI(String apiName) throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.enableStatistics(apiName);
+    }
+
+    public String disableStatisticsForAPI(String apiName) throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.disableStatistics(apiName);
+    }
+
+    public String enableTracingForAPI(String apiName) throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.enableTracing(apiName);
+    }
+
+    public String disableTracingForAPI(String apiName) throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.disableTracing(apiName);
+    }
+
+    public APIData[] getAPIList(int page, int count) throws RestApiAdminAPIException, RemoteException{
+        return  restApiAdminStub.getAPIsForListing(page,count);
+    }
+    public String getAPIResource(ResourceData resourceData) throws RestApiAdminAPIException, RemoteException {
+        return restApiAdminStub.getResourceSource(resourceData);
     }
 }
