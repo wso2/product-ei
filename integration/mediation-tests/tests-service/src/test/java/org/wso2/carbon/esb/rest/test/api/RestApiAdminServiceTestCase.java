@@ -145,7 +145,7 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
         boolean apiUpdated = restAdminClient.updateAPIFromAPIData(api1.getName(), api3);
         String[] sequences = restAdminClient.getAPISequences();
         Assert.assertEquals(apiUpdated, true, "API was not updated");
-        Assert.assertNotNull(sequences, "API does not contained updated sequence");
+        Assert.assertNotNull(sequences, "API does not contain updated sequence");
     }
 
     @Test(groups = { "wso2.esb" },
@@ -255,9 +255,6 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-        if (restAdminClient.getAPICount() > 0) {
-            restAdminClient.deleteAllApis();
-        }
         restAdminClient = null;
         super.cleanup();
     }
