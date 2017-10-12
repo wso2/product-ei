@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="TestInSeq">
+        <log level="full"/>
+        <drop/>
+    </sequence>
+    <sequence name="inboundFaultSeq">
+        <!-- Log the message at the full log level with the ERROR_MESSAGE and the ERROR_CODE-->
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <!-- Drops the messages by default if there is a fault -->
+        <drop/>
+    </sequence>
+    <!-- You can add any flat sequences, endpoints, etc.. to this synapse.xml file if you do
+    *not* want to keep the artifacts in several files -->
+    <inboundEndpoint name="MQTT_Test_Inbound_EP" onError="inboundFaultSeq"
+                     protocol="mqtt" sequence="TestInSeq" suspend="false">
+        <parameters>
+            <parameter name="sequential">true</parameter>
+            <parameter name="coordination">true</parameter>
+            <parameter name="mqtt.connection.factory">mqttFactory</parameter>
+            <parameter name="mqtt.server.host.name">localhost</parameter>
+            <parameter name="mqtt.server.port">1883</parameter>
+            <parameter name="mqtt.topic.name">esb.test1</parameter>
+            <parameter name="content.type">application/xml</parameter>
+            <parameter name="mqtt.subscription.qos">0</parameter>
+            <parameter name="mqtt.session.clean">true</parameter>
+            <parameter name="mqtt.ssl.enable">false</parameter>
+        </parameters>
+    </inboundEndpoint>
+</definitions>
