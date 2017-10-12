@@ -849,6 +849,11 @@ public abstract class ESBIntegrationTest {
 				"Local Entry not found. " + processorName);
 	}
 
+	protected void verifyMessageStoreExistence(String storeName) throws RemoteException {
+		Assert.assertTrue(esbUtils.isMessageStoreExist(contextUrls.getBackEndUrl(), sessionCookie, storeName),
+				"Message store not found. " + storeName);
+	}
+
 	private String replaceEndpoints(String config) throws XPathExpressionException {
 		//this should be AS context
 		String serviceUrl = new AutomationContext("AS", TestUserMode.SUPER_TENANT_ADMIN).getContextUrls().getServiceUrl();

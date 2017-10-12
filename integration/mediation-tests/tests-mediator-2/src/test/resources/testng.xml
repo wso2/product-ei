@@ -120,6 +120,12 @@
         </packages>
     </test>
 
+    <test name="Message-Store-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.message.store.test"/>
+        </packages>
+    </test>
+
     <test name="Iterate-mediator-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.iterate"/>

@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.message.store.stub.Exception;
 import org.wso2.carbon.message.store.stub.MessageInfo;
 import org.wso2.carbon.message.store.stub.MessageStoreAdminServiceStub;
+import org.wso2.carbon.message.store.stub.MessageStoreMetaData;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
 import javax.activation.DataHandler;
@@ -98,5 +99,17 @@ public class MessageStoreAdminClient {
 
     public String getEnvelope(String storeName, String messageId) throws RemoteException {
         return messageStoreAdminServiceStub.getEnvelope(storeName, messageId);
+    }
+
+    public MessageStoreMetaData[] getMessageStoreData() throws RemoteException {
+        return messageStoreAdminServiceStub.getMessageStoreData();
+    }
+
+    public void deleteFirstMessage(String storeName) throws RemoteException {
+        messageStoreAdminServiceStub.deleteFirstMessages(storeName);
+    }
+
+    public void deleteAllMessages(String storeName) throws RemoteException {
+        messageStoreAdminServiceStub.deleteAllMessages(storeName);
     }
 }
