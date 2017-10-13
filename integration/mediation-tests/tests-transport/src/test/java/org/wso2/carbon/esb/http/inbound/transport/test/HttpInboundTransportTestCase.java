@@ -33,16 +33,9 @@ import java.io.FileNotFoundException;
 
 public class HttpInboundTransportTestCase extends ESBIntegrationTest {
 
-    private SampleAxis2Server axis2Server;
-
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-
-        axis2Server = new SampleAxis2Server("test_axis2_server_9000.xml");
-        axis2Server.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE);
-        axis2Server.start();
-
         addSequence(getArtifactConfig("TestIn.xml"));
         addSequence(getArtifactConfig("reciveSeq.xml"));
         addSequence(getArtifactConfig("TestOut.xml"));
@@ -68,10 +61,6 @@ public class HttpInboundTransportTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        if (axis2Server.isStarted()) {
-            axis2Server.stop();
-        }
-        axis2Server = null;
         super.cleanup();
     }
 

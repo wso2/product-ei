@@ -36,18 +36,12 @@ import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
  * Test the SOAP version conversion to client version after a format switching inside sequences.
  */
 public class ESBJAVA1994SOAPFormatSwitchingTestcase extends ESBIntegrationTest {
-    private ServerConfigurationManager serverConfigurationManager;
-    private SampleAxis2Server axis2Server1 = null;
     private AxisOperationClient operationClient;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(
-                new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/httpproxy/httpProxySwitchingSoap12.xml");
-
     }
 
     @Test(groups = "wso2.esb",
