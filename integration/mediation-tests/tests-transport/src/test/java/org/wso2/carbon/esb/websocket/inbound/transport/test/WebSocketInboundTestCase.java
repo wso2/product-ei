@@ -29,6 +29,9 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Test the wes socket transport functionality with inbound endpoint.
+ */
 public class WebSocketInboundTestCase extends ESBIntegrationTest {
 
     private WebSocketServer webSocketServer;
