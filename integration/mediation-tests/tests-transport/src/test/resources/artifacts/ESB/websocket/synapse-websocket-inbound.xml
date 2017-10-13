@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <sequence name="dispatchSeq" xmlns="http://ws.apache.org/ns/synapse">
+        <property name="OUT_ONLY" value="true"/>
+        <log level="full">
+            <property name="LOGGED_MESSAGE" value="LOGGED"/>
+        </log>
+        <send>
+            <endpoint>
+                <address uri="ws://localhost:7474/websocket"/>
+            </endpoint>
+        </send>
+    </sequence>
+    <sequence name="outDispatchSeq" trace="enable" xmlns="http://ws.apache.org/ns/synapse">
+        <log level="full"/>
+        <respond/>
+    </sequence>
+    <inboundEndpoint name="websocketTestInbound" onError="fault" protocol="ws"
+                     sequence="dispatchSeq" suspend="false">
+        <parameters>
+            <parameter name="inbound.ws.port">9091</parameter>
+            <parameter name="ws.outflow.dispatch.sequence">outDispatchSeq</parameter>
+            <parameter name="ws.client.side.broadcast.level">0</parameter>
+            <parameter name="ws.outflow.dispatch.fault.sequence">fault</parameter>
+        </parameters>
+    </inboundEndpoint>
+</definitions>
+
+
