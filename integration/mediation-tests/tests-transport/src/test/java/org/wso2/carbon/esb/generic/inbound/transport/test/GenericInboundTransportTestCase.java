@@ -38,7 +38,6 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 		loadESBConfigurationFromClasspath(
 				"/artifacts/ESB/generic/inbound/transport/generic_inbound_transport_config.xml");
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test Adding Generic Inbound End point")
@@ -56,9 +55,6 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 		}
 
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
-
-		deleteInboundEndpoints();
-
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test creating Generic Inbound EP without sequence")
@@ -75,9 +71,6 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 		}
 
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
-
-		deleteInboundEndpoints();
-
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test creating Generic Inbound EP without implementation class")
@@ -94,9 +87,6 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 		}
 
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
-
-		deleteInboundEndpoints();
-
 	}
 
 	@AfterClass(alwaysRun = true)

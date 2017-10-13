@@ -62,7 +62,6 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
     //Should be checked in detail and fix in functionality
 	@Test(groups = { "wso2.esb" }, description = "Polling Message from a Queue", enabled = false)
 	public void testPollingMessages() throws Exception {
-		deleteInboundEndpoints();
 		JMSQueueMessageProducer sender =
 				new JMSQueueMessageProducer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
 		String queueName = "localq";
@@ -104,7 +103,6 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 		}
 
 		Assert.assertTrue(status, "Couldn't Consume messages from Queue");
-		deleteInboundEndpoints();
 	}
 
 	@AfterClass(alwaysRun = true)

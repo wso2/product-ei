@@ -20,7 +20,6 @@ package org.wso2.esb.integration.common.utils;
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
-import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -34,7 +33,6 @@ import org.wso2.carbon.automation.engine.context.beans.Tenant;
 import org.wso2.carbon.automation.engine.context.beans.User;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
-import org.wso2.carbon.inbound.stub.types.carbon.InboundEndpointDTO;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.carbon.integration.common.admin.client.SecurityAdminServiceClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
@@ -52,10 +50,6 @@ import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuote
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 import org.xml.sax.SAXException;
 
-import javax.activation.DataHandler;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -70,6 +64,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
+import javax.activation.DataHandler;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.xpath.XPathExpressionException;
 
 public abstract class ESBIntegrationTest {
 	protected Log log = LogFactory.getLog(getClass());
@@ -88,6 +86,7 @@ public abstract class ESBIntegrationTest {
 	private List<String> apiList = null;
 	private List<String> priorityExecutorList = null;
 	private List<String[]> scheduledTaskList = null;
+	private List<String> inboundEndpointList = null;
 	private static final String synapsePathFormBaseUri =
 			File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator +
 			"synapse-configs" + File.separator + "default" + File.separator + "synapse.xml";
@@ -132,29 +131,17 @@ public abstract class ESBIntegrationTest {
 					}
 				}
 			}
-
-			deleteProxyServices();
-
-			deleteSequences();
-
-			deleteEndpoints();
-
-			deleteMessageProcessors();
-
-			deleteMessageStores();
-
-			deleteSequenceTemplates();
-
-			deleteLocalEntries();
-
-			deleteApi();
-
-			deletePriorityExecutors();
-
 			deleteScheduledTasks();
-
+			deleteMessageProcessors();
+			deleteMessageStores();
 			deleteInboundEndpoints();
-
+			deleteApi();
+			deleteProxyServices();
+			deleteEndpoints();
+			deleteSequences();
+			deleteSequenceTemplates();
+			deleteLocalEntries();
+			deletePriorityExecutors();
 		} finally {
 			restoreSynapseConfig();
 			synapseConfiguration = null;
@@ -275,11 +262,12 @@ public abstract class ESBIntegrationTest {
 	}
 
 	protected void addInboundEndpoint(OMElement inboundEndpoint) throws Exception {
-		try {
-			esbUtils.addInboundEndpoint(contextUrls.getBackEndUrl(), sessionCookie, inboundEndpoint);
-		} catch (Exception e) {
-			throw new Exception("Error when adding InboundEndpoint",e);
+		String inboundName = inboundEndpoint.getAttributeValue(new QName("name"));
+		if (inboundEndpointList == null) {
+			inboundEndpointList = new ArrayList<String>();
 		}
+		inboundEndpointList.add(inboundName);
+		esbUtils.addInboundEndpoint(contextUrls.getBackEndUrl(), sessionCookie, inboundEndpoint);
 	}
 
 	protected void isInboundUndeployed(String inboundEndpoint) throws Exception {
@@ -304,22 +292,31 @@ public abstract class ESBIntegrationTest {
 	}
 
 
-	protected void deleteInboundEndpoints() throws Exception {
-        try {
-            InboundEndpointDTO[] inboundEndpointDTOs = esbUtils.getAllInboundEndpoints(contextUrls.getBackEndUrl(), sessionCookie);
-            if (inboundEndpointDTOs != null) {
-                for (InboundEndpointDTO inboundEndpointDTO : inboundEndpointDTOs) {
-                    if (inboundEndpointDTO != null && inboundEndpointDTO.getName() != null) {
-                        esbUtils.deleteInboundEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie,
-                                                               inboundEndpointDTO.getName());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error when deleting InboundEndpoint", e);
-        }
+	private void deleteInboundEndpoints() throws Exception {
+		if (inboundEndpointList != null) {
+			Iterator<String> itr = inboundEndpointList.iterator();
+			while (itr.hasNext()) {
+				String inboundEPName = itr.next();
+				try {
+					if (esbUtils.isInboundEndpointExist(contextUrls.getBackEndUrl(), sessionCookie, inboundEPName)) {
+						esbUtils.deleteInboundEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, inboundEPName);
+					}
+				} catch (Exception e) {
+					Assert.fail("while undeploying Inbound Endpoint. " + e.getMessage());
+				}
+			}
+			inboundEndpointList.clear();
+		}
     }
+
+	protected void deleteInboundEndpoint(String name) throws Exception {
+		esbUtils.deleteInboundEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, name);
+		Assert.assertTrue(esbUtils.isInboundEndpointUndeployed(contextUrls.getBackEndUrl(), sessionCookie, name),
+				"Inbound Deletion failed");
+		if (inboundEndpointList != null && inboundEndpointList.contains(name)) {
+			inboundEndpointList.remove(name);
+		}
+	}
 
 	protected void deleteInboundEndpointFromName(String name) throws Exception {
 		try {

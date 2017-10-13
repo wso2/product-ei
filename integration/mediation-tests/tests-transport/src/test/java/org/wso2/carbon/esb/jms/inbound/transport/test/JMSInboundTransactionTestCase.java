@@ -85,7 +85,6 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
         boolean committed = Utils.checkForLog(logViewerClient, "Committed", 8);
 
         Assert.assertTrue(committed, "Did not find the \"Committed\" log");
-        deleteInboundEndpoints();
 
         Assert.assertTrue(isQueueEmpty(queueName), "Queue (" + queueName + ") should be empty after commit");
     }
@@ -115,7 +114,6 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
         boolean rollbacked = Utils.checkForLog(logViewerClient, "Rollbacked", 8);
 
         Assert.assertTrue(rollbacked, "Did not find the \"Rollbacked\" log");
-        deleteInboundEndpoints();
 
         Assert.assertFalse(isQueueEmpty(queueName), "Queue (" + queueName + ") should not be empty after rollback");
     }
