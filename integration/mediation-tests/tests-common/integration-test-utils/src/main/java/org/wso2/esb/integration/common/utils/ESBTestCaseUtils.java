@@ -1853,7 +1853,7 @@ public class ESBTestCaseUtils {
 		Iterator<OMElement> inboundEntries = synapseConfig.getChildrenWithLocalName(INBOUND_ENDPOINT);
 		while (inboundEntries.hasNext()) {
 			OMElement inboundEntry = inboundEntries.next();
-			String inbound = inboundEntry.getAttributeValue(new QName(KEY));
+			String inbound = inboundEntry.getAttributeValue(new QName(NAME));
 			if (inboundAdminClient.getInboundEndpointbyName(inbound) != null) {
 				inboundAdminClient.removeInboundEndpoint(inbound);
 				Assert.assertTrue(isInboundEndpointUndeployed(backendURL, sessionCookie, inbound),
