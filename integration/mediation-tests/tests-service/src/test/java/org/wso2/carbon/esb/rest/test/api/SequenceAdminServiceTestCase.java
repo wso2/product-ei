@@ -37,6 +37,7 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
             "<sequence xmlns=\"http://ws.apache.org/ns/synapse\" name=\"AdminTenantSequence\">\n" + "</sequence>";
     private static final String seqName = "AdminServiceSequence";
     private static final String seqName2 = "AdminTenantSequence";
+    private static final String tenantDomain = "carbon.super";
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -71,7 +72,7 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
     public void testCreateSequenceForTenant() throws Exception {
 
         OMElement sequenceElm = AXIOMUtil.stringToOM(seq2);
-        seqAdminClient.addSequenceForTenant(sequenceElm, "carbon.super");
+        seqAdminClient.addSequenceForTenant(sequenceElm, tenantDomain);
         verifySequenceExistence(seqName2);
 
     }
@@ -81,9 +82,9 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
           priority = 4)
     public void testListSequenceForTenant() throws Exception {
 
-        OMElement seqElm = seqAdminClient.getSequenceForTenant(seqName2, "carbon.super");
+        OMElement seqElm = seqAdminClient.getSequenceForTenant(seqName2, tenantDomain);
         Assert.assertNotNull(seqElm, "Unable to list requested sequence");
-        seqAdminClient.isExistingSequenceForTenant(seqName2, "carbon.super");
+        seqAdminClient.isExistingSequenceForTenant(seqName2, tenantDomain);
         verifySequenceExistence(seqName2);
 
     }
@@ -92,7 +93,7 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test sequence delete service",
           priority = 5)
     public void deleteSequenceForTenant() throws Exception {
-        seqAdminClient.deleteSequenceForTenant(seqName2, "carbon.super");
+        seqAdminClient.deleteSequenceForTenant(seqName2, tenantDomain);
         Assert.assertFalse(seqAdminClient.isExistingSequence(seqName2), "Sequence not removed");
     }
 
