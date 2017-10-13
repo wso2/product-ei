@@ -14,6 +14,20 @@
                     <id>10</id>
                 </hello.getMessage>
             </inSequence>
+            <faultSequence>
+                <log level="custom">
+                    <property name="message" value="In fault sequence"/>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <message xmlns="">$1</message>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('ERROR_MESSAGE')" literal="false" />
+                    </args>
+                </payloadFactory>
+                <respond />
+            </faultSequence>
         </resource>
     </api>
 </definitions>

@@ -237,16 +237,27 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test connector upload and invoke.")
     public void invokeConnectorTest() throws Exception {
 
+        String apiURI = "http://localhost:8480/library-service/get-message";
         String expectedOutput = "<message>Bob</message>";
+        String expectedOutputAtDisable =
+                "<message>Sequence template org.wso2.carbon.connector.hello.init cannot be found</message>";
 
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "connector" + File.separator +
                         "MediationLibraryServiceTestAPI.xml");
         Thread.sleep(5000);
 
-        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL("http://localhost:8480/library-service/get-message"),
-                                                           "");
-        Assert.assertEquals(httpResponse.getData(), expectedOutput, "Invoking hello connector fails");
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(apiURI), "");
+        Assert.assertEquals(httpResponse.getData(), expectedOutput, "Invoking hello connector fails.");
+
+        //disable the hello library and try to invoke
+        updateConnectorStatus(HELLO_CONNECTOR_LIB_QNAME, HELLO_LIB_NAME, PACKAGE_NAME, DISABLED);
+        HttpResponse httpResponseAtDisable = HttpRequestUtil.doPost(new URL(apiURI), "");
+        Assert.assertEquals(httpResponseAtDisable.getData(), expectedOutputAtDisable,
+                            "Invoking disabled hello connector test fails.");
+
+        //enable back hello library for other tests
+        updateConnectorStatus(HELLO_CONNECTOR_LIB_QNAME, HELLO_LIB_NAME, PACKAGE_NAME, ENABLED);
     }
 
     /**
