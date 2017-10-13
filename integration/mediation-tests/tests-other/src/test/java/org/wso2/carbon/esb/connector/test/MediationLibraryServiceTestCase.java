@@ -105,19 +105,16 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
         //enable connector
         updateConnectorStatus(AMAZON_CONNECTOR_LIB_QNAME, AMAZON_LIB_NAME, PACKAGE_NAME, ENABLED);
-        Thread.sleep(5000);
         Assert.assertTrue(checkAvailabilityInImports(AMAZON_CONNECTOR_LIB_QNAME),
                           "Connector is still in the disable state after enable action.");
 
         //disable connector
         updateConnectorStatus(AMAZON_CONNECTOR_LIB_QNAME, AMAZON_LIB_NAME, PACKAGE_NAME, DISABLED);
-        Thread.sleep(5000);
         Assert.assertEquals(getImport(AMAZON_CONNECTOR_LIB_QNAME), expectedImport,
                             "Received synapse configuration after disabling the amazon-connector is incorrect.");
 
         //remove connector
         deleteLibrary(AMAZON_CONNECTOR_LIB_QNAME);
-        Thread.sleep(5000);
         Assert.assertFalse(checkAvailabilityInImports(AMAZON_CONNECTOR_LIB_QNAME),
                            "Connector is still available in the imports list after remove action.");
     }
@@ -245,7 +242,6 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "connector" + File.separator +
                         "MediationLibraryServiceTestAPI.xml");
-        Thread.sleep(5000);
 
         HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(apiURI), "");
         Assert.assertEquals(httpResponse.getData(), expectedOutput, "Invoking hello connector fails.");
@@ -327,17 +323,23 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
      * @return
      */
     private boolean checkAvailabilityInImports(String libName) {
-        try {
-            String[] imports = getAllImports();
-            if (imports != null) {
-                for (String anImport : imports) {
-                    if (anImport.contains(libName)) {
-                        return true;
+
+        long startTime = System.currentTimeMillis();
+        String[] imports;
+        while (((System.currentTimeMillis() - startTime) < 15000)) {
+            try {
+                imports = getAllImports();
+                if (imports != null) {
+                    for (String anImport : imports) {
+                        if (anImport.contains(libName)) {
+                            return true;
+                        }
                     }
                 }
-            }
-        } catch (Exception ignored) {
+                Thread.sleep(500);
+            } catch (Exception ignored) {
 
+            }
         }
         return false;
     }
