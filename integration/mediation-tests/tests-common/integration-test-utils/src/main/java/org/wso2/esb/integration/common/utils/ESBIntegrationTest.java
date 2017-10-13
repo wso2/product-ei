@@ -311,7 +311,11 @@ public abstract class ESBIntegrationTest {
 
 	protected void deleteInboundEndpoint(String name) throws Exception {
 		esbUtils.deleteInboundEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, name);
-		esbUtils.isInboundEndpointUndeployed(contextUrls.getBackEndUrl(), sessionCookie, name);
+		Assert.assertTrue(esbUtils.isInboundEndpointUndeployed(contextUrls.getBackEndUrl(), sessionCookie, name),
+				"Inbound Deletion failed");
+		if (inboundEndpointList != null && inboundEndpointList.contains(name)) {
+			inboundEndpointList.remove(name);
+		}
 	}
 
 	protected void deleteInboundEndpointFromName(String name) throws Exception {
