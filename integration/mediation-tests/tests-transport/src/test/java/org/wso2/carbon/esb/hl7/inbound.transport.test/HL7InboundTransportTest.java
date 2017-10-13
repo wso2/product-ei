@@ -51,7 +51,6 @@ public class HL7InboundTransportTest extends ESBIntegrationTest {
         HL7InboundTestSender sender = new HL7InboundTestSender();
         String response = sender.send("localhost", 20001);
         Assert.assertTrue(response.contains("Jambugasmulla Mawatha"));
-        deleteInboundEndpoints();
         Thread.sleep(5000);
     }
 
@@ -72,7 +71,6 @@ public class HL7InboundTransportTest extends ESBIntegrationTest {
         }
         Assert.assertTrue(response.contains("ACK^A01"));
         Assert.assertTrue(found, "Found HL7 message in ESB log");
-        deleteInboundEndpoints();
         Thread.sleep(5000);
     }
 

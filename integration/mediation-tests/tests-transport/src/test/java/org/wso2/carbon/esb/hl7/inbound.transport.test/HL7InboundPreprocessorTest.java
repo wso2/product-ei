@@ -53,8 +53,6 @@ public class HL7InboundPreprocessorTest extends ESBIntegrationTest {
             }
         }
         Assert.assertTrue(found, "Can we see the log added by custom HL7MessagePreprocessor?");
-        deleteInboundEndpoints();
-        Thread.sleep(5000);
     }
 
     @AfterClass(alwaysRun = true)
