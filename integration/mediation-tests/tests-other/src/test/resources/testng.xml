@@ -111,6 +111,12 @@
         </packages>
     </test>
 
+    <test name="library-service-tests" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.connector.test" />
+        </packages>
+    </test>
+
 </suite>
 
 

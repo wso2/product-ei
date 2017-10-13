@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api name="MediationLibraryServiceTestAPI" context="/library-service">
+        <resource methods="POST GET" uri-template="/get-message">
+            <inSequence>
+                <log level="custom">
+                    <property name="message" value="In library-service get Message resource" />
+                </log>
+                <hello.init>
+                    <username>Alice</username>
+                </hello.init>
+                <hello.getMessage>
+                    <username>Bob</username>
+                    <id>10</id>
+                </hello.getMessage>
+            </inSequence>
+            <faultSequence>
+                <log level="custom">
+                    <property name="message" value="In fault sequence"/>
+                </log>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <message xmlns="">$1</message>
+                    </format>
+                    <args>
+                        <arg evaluator="xml" expression="get-property('ERROR_MESSAGE')" literal="false" />
+                    </args>
+                </payloadFactory>
+                <respond />
+            </faultSequence>
+        </resource>
+    </api>
+</definitions>
