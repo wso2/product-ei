@@ -443,6 +443,11 @@ public abstract class ESBIntegrationTest {
         return esbUtils.getLibraryInfo(contextUrls.getBackEndUrl(), sessionCookie, libName, packageName);
     }
 
+    protected DataHandler downloadLibraryArchive(String fileName)
+            throws RemoteException, MediationLibraryAdminServiceException {
+        return esbUtils.downloadLibraryArchive(contextUrls.getBackEndUrl(), sessionCookie, fileName);
+    }
+
 	protected void addEndpoint(OMElement endpointConfig)
 			throws Exception {
 		String endpointName = endpointConfig.getAttributeValue(new QName("name"));

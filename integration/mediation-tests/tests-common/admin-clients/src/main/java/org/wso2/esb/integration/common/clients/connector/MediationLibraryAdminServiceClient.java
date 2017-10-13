@@ -24,6 +24,7 @@ import org.wso2.carbon.mediation.library.stub.MediationLibraryAdminServiceStub;
 import org.wso2.carbon.mediation.library.stub.types.carbon.LibraryInfo;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
+import javax.activation.DataHandler;
 import java.rmi.RemoteException;
 
 public class MediationLibraryAdminServiceClient {
@@ -81,5 +82,10 @@ public class MediationLibraryAdminServiceClient {
 
     public LibraryInfo getLibraryInfo(String libName, String packageName) throws RemoteException {
         return mediationLibraryAdminServiceStub.getLibraryInfo(libName, packageName);
+    }
+
+    public DataHandler downloadLibraryArchive(String fileName)
+            throws RemoteException, MediationLibraryAdminServiceException {
+        return mediationLibraryAdminServiceStub.downloadLibraryArchive(fileName);
     }
 }

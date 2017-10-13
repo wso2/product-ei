@@ -29,6 +29,7 @@ import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
+import javax.activation.DataHandler;
 import java.io.File;
 import java.net.URL;
 
@@ -53,6 +54,7 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
     private static final String PACKAGE_NAME = "org.wso2.carbon.connector";
     private static final String ENABLED = "enabled";
+    private static final String DISABLED = "disabled";
     private static final String CONNECTOR = "connector";
     private static final String INVALID_CONNECTOR = "invalid-connector";
 
@@ -91,6 +93,10 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test connector deploying, enabling and deleting.")
     public void deployEnableDeleteConnectorTest() throws Exception {
 
+        String expectedImport =
+                "<import xmlns=\"http://ws.apache.org/ns/synapse\" name=\"amazons3\" package=\"org.wso2.carbon" +
+                        ".connector\" status=\"disabled\"/>";
+
         //deploy connector
         uploadConnector(resourcePath, AMAZON_CONNECTOR_ZIP);
         waitUntilLibAvailable(AMAZON_CONNECTOR_ZIP);
@@ -102,6 +108,12 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
         Thread.sleep(5000);
         Assert.assertTrue(checkAvailabilityInImports(AMAZON_CONNECTOR_LIB_QNAME),
                           "Connector is still in the disable state after enable action.");
+
+        //disable connector
+        updateConnectorStatus(AMAZON_CONNECTOR_LIB_QNAME, AMAZON_LIB_NAME, PACKAGE_NAME, DISABLED);
+        Thread.sleep(5000);
+        Assert.assertEquals(getImport(AMAZON_CONNECTOR_LIB_QNAME), expectedImport,
+                            "Received synapse configuration after disabling the amazon-connector is incorrect.");
 
         //remove connector
         deleteLibrary(AMAZON_CONNECTOR_LIB_QNAME);
@@ -140,6 +152,14 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
             Assert.assertEquals(e.getMessage(), "Library Import null does not exist");
         }
 
+        try {
+            getImport(null);
+            Assert.fail("Test fails for getting the import with null library qualified name.");
+        } catch (AxisFault e) {
+            Assert.assertEquals(e.getMessage(), "Exception occurred while trying to invoke service method getImport",
+                                "Test fails for getting the import with null library qualified name.");
+        }
+
         //delete import
         deleteImport(TEMP_CONNECTOR_LIB_QNAME);
         Assert.assertFalse(checkAvailabilityInImports(TEMP_CONNECTOR_LIB_QNAME),
@@ -159,7 +179,7 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
 
         if (null != allLibraryInfo && allLibraryInfo.length > 0) {
             for (int i = 0; i < allLibraryInfo.length; i++) {
-                if (allLibraryInfo[i].getLibName().equals(HELLO_LIB_NAME)) {
+                if (HELLO_LIB_NAME.equals(allLibraryInfo[i].getLibName())) {
                     helloLibraryInfo = allLibraryInfo[i];
                     break;
                 }
@@ -214,7 +234,7 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(groups = "wso2.esb", description = "Test connector upload and invoke")
+    @Test(groups = "wso2.esb", description = "Test connector upload and invoke.")
     public void invokeConnectorTest() throws Exception {
 
         String expectedOutput = "<message>Bob</message>";
@@ -234,9 +254,10 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(groups = "wso2.esb", description = "Test faulty connector")
-    public void uploadFaultyConnectorTest() throws Exception {
+    @Test(groups = "wso2.esb", description = "Test faulty connector.")
+    public void faultyConnectorTest() throws Exception {
 
+        //upload a faulty connector
         try {
             uploadConnector(getESBResourceLocation().replace("//", "/") + File.separator + "connector",
                             FAULTY_CONNECTOR_ZIP);
@@ -249,6 +270,42 @@ public class MediationLibraryServiceTestCase extends ESBIntegrationTest {
         } catch (Exception e) {
             Assert.assertEquals(e.getMessage(),
                                 "No Mediation Library found of the name : {org.wso2.carbon.connector}helloworld");
+        }
+
+        //try to delete a library with null qualified name
+        try {
+            deleteLibrary(null);
+            Assert.fail("Test fails for deleting a library with a null qualified name.");
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Library name can't be null",
+                                "Test fails for deleting a library with a null qualified name.");
+        }
+    }
+
+    /**
+     * Test for downloading connector archives.
+     *
+     * @throws Exception
+     */
+    @Test(groups = "wso2.esb", description = "Test downloading connector archive.")
+    public void downloadConnectorArchiveTest() throws Exception {
+
+        //try to download the hello connector
+        try {
+            DataHandler dataHandler = downloadLibraryArchive(HELLO_LIB_NAME);
+            Assert.assertEquals(dataHandler.getContentType(), "application/octet-string",
+                                "Hello connector download does not have the file save content-type.");
+        } catch (Exception e) {
+            Assert.fail("Could not download the hello connector archive.");
+        }
+
+        //try to download an invalid connector
+        try {
+            downloadLibraryArchive(FAULTY_LIB_NAME);
+            Assert.fail("Test for downloading invalid connector archive fails.");
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Exception occurred while trying to invoke service method " +
+                    "downloadLibraryArchive", "Test for downloading invalid connector archive fails.");
         }
     }
 

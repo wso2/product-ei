@@ -59,6 +59,7 @@ import org.wso2.esb.integration.common.clients.template.EndpointTemplateAdminSer
 import org.wso2.esb.integration.common.clients.template.SequenceTemplateAdminServiceClient;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 
+import javax.activation.DataHandler;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
@@ -653,7 +654,24 @@ public class ESBTestCaseUtils {
 		mediationLibraryAdminServiceClient.updateStatus(libQName,libName,packageName,status);
 	}
 
-	/**
+    /**
+     * Download connector archive
+     *
+     * @param backEndUrl
+     * @param sessionCookie
+     * @param fileName
+     * @return
+     * @throws RemoteException
+     * @throws MediationLibraryAdminServiceException
+     */
+    public DataHandler downloadLibraryArchive(String backEndUrl, String sessionCookie, String fileName)
+            throws RemoteException, MediationLibraryAdminServiceException {
+        MediationLibraryAdminServiceClient mediationLibraryAdminServiceClient = new MediationLibraryAdminServiceClient(
+                backEndUrl, sessionCookie);
+        return mediationLibraryAdminServiceClient.downloadLibraryArchive(fileName);
+    }
+
+    /**
 	 * Provide All Imports
 	 * @param backEndUrl
 	 * @param sessionCookie
