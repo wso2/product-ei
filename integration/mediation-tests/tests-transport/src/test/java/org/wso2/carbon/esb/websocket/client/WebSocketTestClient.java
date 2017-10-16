@@ -108,9 +108,9 @@ public class WebSocketTestClient {
         final String host = uri.getHost() == null ? "127.0.0.1" : uri.getHost();
         final int port;
         if (uri.getPort() == -1) {
-            if ("ws" .equalsIgnoreCase(scheme)) {
+            if ("ws".equalsIgnoreCase(scheme)) {
                 port = 80;
-            } else if ("wss" .equalsIgnoreCase(scheme)) {
+            } else if ("wss".equalsIgnoreCase(scheme)) {
                 port = 443;
             } else {
                 port = -1;
@@ -119,12 +119,12 @@ public class WebSocketTestClient {
             port = uri.getPort();
         }
 
-        if (!"ws" .equalsIgnoreCase(scheme) && !"wss" .equalsIgnoreCase(scheme)) {
+        if (!"ws".equalsIgnoreCase(scheme) && !"wss".equalsIgnoreCase(scheme)) {
             logger.error("Only WS(S) is supported.");
             return false;
         }
 
-        final boolean ssl = "wss" .equalsIgnoreCase(scheme);
+        final boolean ssl = "wss".equalsIgnoreCase(scheme);
         final SslContext sslCtx;
         if (ssl) {
             sslCtx = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build();
@@ -138,34 +138,30 @@ public class WebSocketTestClient {
         for (Map.Entry<String, String> entry : customHeaders.entrySet()) {
             headers.add(entry.getKey(), entry.getValue());
         }
-        try {
-            // Connect with V13 (RFC 6455 aka HyBi-17). You can change it to V08 or V00.
-            // If you change it to V00, ping is not supported and remember to change
-            // HttpResponseDecoder to WebSocketHttpResponseDecoder in the pipeline.
-            handler = new WebSocketClientHandler(WebSocketClientHandshakerFactory
-                    .newHandshaker(uri, WebSocketVersion.V13, subProtocol, true, headers), latch);
+        // Connect with V13 (RFC 6455 aka HyBi-17). You can change it to V08 or V00.
+        // If you change it to V00, ping is not supported and remember to change
+        // HttpResponseDecoder to WebSocketHttpResponseDecoder in the pipeline.
+        handler = new WebSocketClientHandler(
+                WebSocketClientHandshakerFactory.newHandshaker(uri, WebSocketVersion.V13, subProtocol, true, headers),
+                latch);
 
-            Bootstrap b = new Bootstrap();
-            b.group(group).channel(NioSocketChannel.class).handler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel ch) {
-                    ChannelPipeline p = ch.pipeline();
-                    if (sslCtx != null) {
-                        p.addLast(sslCtx.newHandler(ch.alloc(), host, port));
-                    }
-                    p.addLast(new HttpClientCodec(), new HttpObjectAggregator(8192),
-                            WebSocketClientCompressionHandler.INSTANCE, handler);
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(group).channel(NioSocketChannel.class).handler(new ChannelInitializer<SocketChannel>() {
+            @Override
+            protected void initChannel(SocketChannel ch) {
+                ChannelPipeline p = ch.pipeline();
+                if (sslCtx != null) {
+                    p.addLast(sslCtx.newHandler(ch.alloc(), host, port));
                 }
-            });
+                p.addLast(new HttpClientCodec(), new HttpObjectAggregator(8192),
+                        WebSocketClientCompressionHandler.INSTANCE, handler);
+            }
+        });
 
-            channel = b.connect(uri.getHost(), port).sync().channel();
-            isSuccess = handler.handshakeFuture().sync().isSuccess();
-            logger.info("WebSocket Handshake successful : " + isSuccess);
-            return isSuccess;
-        } catch (Exception e) {
-            logger.error("Handshake unsuccessful : " + e.getMessage());
-            throw new ProtocolException("Protocol exception: " + e.getMessage());
-        }
+        channel = bootstrap.connect(uri.getHost(), port).sync().channel();
+        isSuccess = handler.handshakeFuture().sync().isSuccess();
+        logger.info("WebSocket Handshake successful : " + isSuccess);
+        return isSuccess;
     }
 
     /**

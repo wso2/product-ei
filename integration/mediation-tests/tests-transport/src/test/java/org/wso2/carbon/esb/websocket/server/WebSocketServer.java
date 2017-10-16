@@ -53,12 +53,12 @@ public final class WebSocketServer {
         bossGroup = new NioEventLoopGroup(1);
         workerGroup = new NioEventLoopGroup(2);
 
-        ServerBootstrap b = new ServerBootstrap();
-        b.group(bossGroup, workerGroup)
+        ServerBootstrap serverBootstrap = new ServerBootstrap();
+        serverBootstrap.group(bossGroup, workerGroup)
          .channel(NioServerSocketChannel.class)
          .childHandler(new WebSocketRemoteServerInitializer(sslCtx, subProtocols));
 
-        b.bind(port).sync();
+        serverBootstrap.bind(port).sync();
         logger.info("WebSocket remote server started listening on port " + port);
     }
 
