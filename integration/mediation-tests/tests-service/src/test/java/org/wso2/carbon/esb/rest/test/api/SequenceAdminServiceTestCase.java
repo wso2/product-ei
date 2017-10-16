@@ -102,44 +102,36 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test sequence statistics enable service",
           priority = 5)
     public void testSequenceStatisticsEnabler() throws Exception {
-
         seqAdminClient.enableStatistics(seqName2);
         Assert.assertTrue(seqAdminClient.getSequence(seqName2).toString().contains("statistics=\"enable\""),
                 "Stats not enabled for sequence");
-
     }
 
     @Test(groups = { "wso2.esb" },
           description = "Test sequence statistics disable service",
           priority = 6)
     public void testSequenceStatisticsDisabler() throws Exception {
-
         seqAdminClient.disableStatistics(seqName2);
         Assert.assertFalse(seqAdminClient.getSequence(seqName2).toString().contains("statistics=\"enable\""),
                 "Stats not disabled for sequence");
-
     }
 
     @Test(groups = { "wso2.esb" },
           description = "Test sequence tracing enable service",
           priority = 7)
     public void testSequenceTracingEnabler() throws Exception {
-
         seqAdminClient.enableTracing(seqName2);
         Assert.assertTrue(seqAdminClient.getSequence(seqName2).toString().contains("trace=\"enable\""),
                 "Tracing not enabled for sequence");
-
     }
 
     @Test(groups = { "wso2.esb" },
           description = "Test sequence tracing disable service",
           priority = 8)
     public void testSequenceTracingDisabler() throws Exception {
-
         seqAdminClient.disableTracing(seqName2);
         Assert.assertFalse(seqAdminClient.getSequence(seqName2).toString().contains("trace=\"enable\""),
                 "Tracing not disabled for sequence");
-
     }
 
     @Test(groups = { "wso2.esb" },
