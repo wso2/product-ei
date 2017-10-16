@@ -86,6 +86,40 @@ public class RabbitMQInboundTestCase extends ESBIntegrationTest {
         Assert.assertEquals(count, messageCount, "All messages are not received from queue");
     }
 
+    /**
+     * Deployes a rabbitmq inbound endpoint with invalid rabbitmq broker configurations and asserts the retries the
+     * server makes to re-connect to the broker.
+     *
+     * @throws Exception if an error occurs while accessing the logViewer client or while deploying the inbound
+     *                   endpoint.
+     */
+    @Test(groups = {"wso2.esb"}, description = "Test ESB RabbitMQ inbound endpoint deployement with incorrect server "
+                                               + "port")
+    public void testRabbitMQInboundEndpointDeploymentWithInvalidServerConfigs() throws Exception {
+        logViewer.clearLogs();
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
+                                          + "inbound" + File.separator + "rabbitmq_inbound_endpoint_invalid.xml");
+
+        RabbitMQTestUtils.waitForLogToGetUpdated();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
+        int retryCount = 0;
+        boolean delay = true;
+        for (LogEvent logEvent : logs) {
+            if (logEvent == null) {
+                continue;
+            }
+            String logMessage = logEvent.getMessage();
+            if (logMessage.contains("Attempting to create connection to RabbitMQ Broker")) {
+                retryCount++;
+                if (!logMessage.contains("Attempting to create connection to RabbitMQ Broker in 500 ms")) {
+                    delay = false;
+                }
+            }
+        }
+        Assert.assertTrue(delay, "The connection retry delay is incorrect");
+        Assert.assertEquals(retryCount, 3, "The connection retry count is incorrect");
+    }
+
     @AfterClass(alwaysRun = true)
     public void end() throws Exception {
         super.cleanup();
