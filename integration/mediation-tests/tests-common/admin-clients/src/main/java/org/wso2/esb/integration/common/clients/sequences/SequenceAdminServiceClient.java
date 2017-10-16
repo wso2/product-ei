@@ -27,12 +27,12 @@ import org.wso2.carbon.sequences.stub.types.SequenceEditorException;
 import org.wso2.carbon.sequences.stub.types.common.to.SequenceInfo;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import javax.activation.DataHandler;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.IOException;
-import java.rmi.RemoteException;
 
 public class SequenceAdminServiceClient {
     private static final Log log = LogFactory.getLog(SequenceAdminServiceClient.class);
@@ -185,6 +185,29 @@ public class SequenceAdminServiceClient {
         return sequenceAdminServiceStub.getSequences(pageNo, sequencePerPage);
     }
 
+    public boolean isExistingSequence(String name) throws SequenceEditorException, RemoteException {
+        return sequenceAdminServiceStub.isExistingSequence(name);
+    }
+
+    public boolean isExistingSequenceForTenant(String name, String tenant)
+            throws SequenceEditorException, RemoteException {
+        return sequenceAdminServiceStub.isExistingSequenceForTenant(name, tenant);
+    }
+
+    public void addSequenceForTenant(OMElement sequence, String tenant)
+            throws SequenceEditorException, RemoteException {
+        sequenceAdminServiceStub.addSequenceForTenant(sequence, tenant);
+    }
+
+    public OMElement getSequenceForTenant(String sequence, String tenant)
+            throws SequenceEditorException, RemoteException {
+        return sequenceAdminServiceStub.getSequenceForTenant(sequence, tenant);
+    }
+
+    public void deleteSequenceForTenant(String sequence, String tenant)
+            throws SequenceEditorException, RemoteException {
+        sequenceAdminServiceStub.deleteSequenceForTenant(sequence, tenant);
+    }
     /**
      * getting sequence list
      *
