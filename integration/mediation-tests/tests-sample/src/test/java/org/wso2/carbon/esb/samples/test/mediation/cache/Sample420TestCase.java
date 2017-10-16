@@ -58,8 +58,8 @@ public class Sample420TestCase extends ESBSampleIntegrationTest {
 
             assertEquals(firstResponse, response.getFirstElement().toString(), "Caching is less than 20 seconds");
 
-            /*The timeout I have set in the Sample is 20s. The test here is to check if the cache is evicted after
-             20s. Hence a thread sleep is used.*/
+            /*The timeout I have set in the Sample is 20s. The test here within the while loop is to ensure the
+             cache is not evicted before 20s. Hence a thread sleep is used.*/
             Thread.sleep(2000);
             timeDiff = System.currentTimeMillis() - currTime;
         }
