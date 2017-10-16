@@ -50,8 +50,8 @@ public class WebSocketInboundTestCase extends ESBIntegrationTest {
     public void webSocketInboundTest() throws Exception {
         int latchCountDownInSecs = 30;
         CountDownLatch latch = new CountDownLatch(1);
-        webSocketTestClient = new WebSocketTestClient("ws://localhost:9091/", latch);
-        webSocketTestClient.handhshake();
+        webSocketTestClient = new WebSocketTestClient("ws://localhost:9078/", latch);
+        Assert.assertTrue(webSocketTestClient.handhshake(), "Web Socket Handshake failed");
         String text = "{message:\"hello web socket test\"}";
         webSocketTestClient.sendText(text);
         latch.await(latchCountDownInSecs, TimeUnit.SECONDS);

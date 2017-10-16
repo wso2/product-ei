@@ -18,7 +18,7 @@
     <inboundEndpoint name="websocketTestInbound" onError="fault" protocol="ws"
                      sequence="dispatchSeq" suspend="false">
         <parameters>
-            <parameter name="inbound.ws.port">9091</parameter>
+            <parameter name="inbound.ws.port">9078</parameter>
             <parameter name="ws.outflow.dispatch.sequence">outDispatchSeq</parameter>
             <parameter name="ws.client.side.broadcast.level">0</parameter>
             <parameter name="ws.outflow.dispatch.fault.sequence">fault</parameter>
