@@ -26,12 +26,12 @@ import org.wso2.carbon.mediation.templates.stub.types.TemplateAdminServiceStub;
 import org.wso2.carbon.mediation.templates.stub.types.common.TemplateInfo;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import javax.activation.DataHandler;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.IOException;
-import java.rmi.RemoteException;
 
 public class SequenceTemplateAdminServiceClient {
     private static final Log log = LogFactory.getLog(SequenceTemplateAdminServiceClient.class);
@@ -105,5 +105,41 @@ public class SequenceTemplateAdminServiceClient {
             templates[i++] = tmpInfo.getName();
         }
         return templates;
+    }
+
+    public  OMElement getTemplate(String name) throws RemoteException{
+        return templateAdminStub.getTemplate(name);
+    }
+
+    public  OMElement getDynamicTemplate(String key) throws RemoteException{
+        return templateAdminStub.getDynamicTemplate(key);
+    }
+
+    public void updateDynamicTemplate(String key, OMElement elm) throws RemoteException{
+        templateAdminStub.updateDynamicTemplate(key,elm);
+    }
+
+    public void saveDynamicTemplate(String key, OMElement elm) throws RemoteException{
+        templateAdminStub.saveDynamicTemplate(key,elm);
+    }
+    public void saveTemplate(OMElement template) throws RemoteException{
+        templateAdminStub.saveTemplate(template);
+    }
+
+    public void updateDynamicTemplate(OMElement template, String name) throws RemoteException{
+        templateAdminStub.updateDynamicTemplate(name,template);
+    }
+
+    public String enableStatistics(String name) throws RemoteException{
+       return templateAdminStub.enableStatistics(name);
+    }
+    public String disableStatistics(String name) throws RemoteException{
+        return templateAdminStub.disableStatistics(name);
+    }
+    public String enableTracing(String name) throws RemoteException{
+        return templateAdminStub.enableTracing(name);
+    }
+    public String disableTracing(String name) throws RemoteException{
+        return templateAdminStub.disableTracing(name);
     }
 }
