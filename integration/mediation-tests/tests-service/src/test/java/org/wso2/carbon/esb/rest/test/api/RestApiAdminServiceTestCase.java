@@ -243,7 +243,7 @@ public class RestApiAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test fault handling for empty API update ",
           priority = 16,
           expectedExceptions = RestApiAdminAPIException.class)
-    public void testAPIUpdateWithEmptyAgetAPIFromListPIName() throws Exception {
+    public void testAPIUpdateWithEmptyAPIFromListPIName() throws Exception {
         String emptyAPIName = "";
         restAdminClient.updateAPIFromAPIData(emptyAPIName, api3);
         Assert.fail("Expected exception not thrown for updating empty API");
