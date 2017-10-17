@@ -19,6 +19,7 @@ package org.wso2.carbon.esb.rest.test.api;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.axis2.AxisFault;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -35,8 +36,15 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
             "<sequence xmlns=\"http://ws.apache.org/ns/synapse\" name=\"AdminServiceSequence\">\n" + "</sequence>";
     private static final String seq2 =
             "<sequence xmlns=\"http://ws.apache.org/ns/synapse\" name=\"AdminTenantSequence\">\n" + "</sequence>";
+    private static final String dynamicSeq1 =
+            "<sequence xmlns=\"http://ws.apache.org/ns/synapse\" name=\"DynamicServiceSequence\">\n" + "</sequence>";
+    private static final String dynamicSeq2 =
+            "<sequence xmlns=\"http://ws.apache.org/ns/synapse\" name=\"DynamicUpdatedSequence\">\n" + "</sequence>";
     private static final String seqName = "AdminServiceSequence";
     private static final String seqName2 = "AdminTenantSequence";
+    private static final String dynamicSeqName = "DynamicServiceSequence";
+    private static final String updatedSeqName = "DynamicUpdatedSequence";
+    private static final String dynamicKey = "conf:/dynamicSeq";
     private static final String tenantDomain = "carbon.super";
 
     @BeforeClass(alwaysRun = true)
@@ -49,7 +57,6 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test sequence creation service",
           priority = 1)
     public void testCreateSequence() throws Exception {
-
         OMElement sequenceElm = AXIOMUtil.stringToOM(seq1);
         seqAdminClient.addSequence(sequenceElm);
         seqAdminClient.isExistingSequence(seqName);
@@ -70,10 +77,12 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
           description = "Test sequence creation service for tenant",
           priority = 3)
     public void testCreateSequenceForTenant() throws Exception {
-
+        int prevSeqCount = seqAdminClient.getSequenceCount();
         OMElement sequenceElm = AXIOMUtil.stringToOM(seq2);
         seqAdminClient.addSequenceForTenant(sequenceElm, tenantDomain);
+        int latestSeqCount = seqAdminClient.getSequenceCount();
         verifySequenceExistence(seqName2);
+        Assert.assertTrue(prevSeqCount < latestSeqCount, "Sequence count is not increased");
 
     }
 
@@ -90,11 +99,104 @@ public class SequenceAdminServiceTestCase extends ESBIntegrationTest {
     }
 
     @Test(groups = { "wso2.esb" },
-          description = "Test sequence delete service",
+          description = "Test sequence statistics enable service",
           priority = 5)
+    public void testSequenceStatisticsEnabler() throws Exception {
+        seqAdminClient.enableStatistics(seqName2);
+        Assert.assertTrue(seqAdminClient.getSequence(seqName2).toString().contains("statistics=\"enable\""),
+                "Stats not enabled for sequence");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test sequence statistics disable service",
+          priority = 6)
+    public void testSequenceStatisticsDisabler() throws Exception {
+        seqAdminClient.disableStatistics(seqName2);
+        Assert.assertFalse(seqAdminClient.getSequence(seqName2).toString().contains("statistics=\"enable\""),
+                "Stats not disabled for sequence");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test sequence tracing enable service",
+          priority = 7)
+    public void testSequenceTracingEnabler() throws Exception {
+        seqAdminClient.enableTracing(seqName2);
+        Assert.assertTrue(seqAdminClient.getSequence(seqName2).toString().contains("trace=\"enable\""),
+                "Tracing not enabled for sequence");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test sequence tracing disable service",
+          priority = 8)
+    public void testSequenceTracingDisabler() throws Exception {
+        seqAdminClient.disableTracing(seqName2);
+        Assert.assertFalse(seqAdminClient.getSequence(seqName2).toString().contains("trace=\"enable\""),
+                "Tracing not disabled for sequence");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test sequence delete service",
+          priority = 9)
     public void deleteSequenceForTenant() throws Exception {
         seqAdminClient.deleteSequenceForTenant(seqName2, tenantDomain);
         Assert.assertFalse(seqAdminClient.isExistingSequence(seqName2), "Sequence not removed");
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test listing invalid service",
+          priority = 10)
+    public void listNonExistentSequence() throws Exception {
+        try {
+            seqAdminClient.getSequence(seqName2);
+            Assert.fail("Expected exception was not thrown when listing invalid sequence");
+        } catch (AxisFault e) {
+            Assert.assertTrue(e.getMessage().contains("Couldn't get the Synapse Configuration to get the sequence"),
+                    "Expected message not available in error");
+        }
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test  dynamic sequence creation service",
+          priority = 11)
+    public void testCreateDynamicSequence() throws Exception {
+        int prevDynamicCount = seqAdminClient.getDynamicSequenceCount();
+        OMElement sequenceElm = AXIOMUtil.stringToOM(dynamicSeq1);
+        seqAdminClient.addDynamicSequence(dynamicKey, sequenceElm);
+        int newDynamicCount = seqAdminClient.getDynamicSequenceCount();
+        Assert.assertTrue(newDynamicCount > prevDynamicCount, "Dynamic sequence not added");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test  dynamic sequence get service",
+          priority = 12)
+    public void testListDynamicSequence() throws Exception {
+        OMElement seq = seqAdminClient.getDynamicSequence(dynamicKey);
+        Assert.assertNotNull(seq, "Unable to list dynamic sequence");
+        Assert.assertTrue(seq.toString().contains(dynamicSeqName), "Dynamic sequence was not listed");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test  dynamic sequence update service",
+          priority = 13)
+    public void testUpdateDynamicSequence() throws Exception {
+        OMElement sequenceElm = AXIOMUtil.stringToOM(dynamicSeq2);
+        seqAdminClient.updateDynamicSequence(dynamicKey, sequenceElm);
+        Assert.assertTrue(seqAdminClient.getDynamicSequence(dynamicKey).toString().contains(updatedSeqName),
+                "Dynamic sequence was not updated");
+
+    }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Test  dynamic sequence delete service",
+          priority = 14)
+    public void testDeleteDynamicSequence() throws Exception {
+        int prevDynamicCount = seqAdminClient.getDynamicSequenceCount();
+        seqAdminClient.deleteDynamicSequence(dynamicKey);
+        int newDynamicCount = seqAdminClient.getDynamicSequenceCount();
+        Assert.assertTrue(prevDynamicCount > newDynamicCount, "Dynamic sequence not removed");
+
     }
 
     @AfterClass(alwaysRun = true)
