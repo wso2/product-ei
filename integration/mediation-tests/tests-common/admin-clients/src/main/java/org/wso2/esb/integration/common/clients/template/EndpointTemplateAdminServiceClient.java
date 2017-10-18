@@ -26,12 +26,12 @@ import org.wso2.carbon.mediation.templates.endpoint.stub.types.EndpointTemplateA
 import org.wso2.carbon.mediation.templates.endpoint.stub.types.common.EndpointTemplateInfo;
 import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import javax.activation.DataHandler;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.IOException;
-import java.rmi.RemoteException;
 
 /*
 This class can be used to manage ESB Endpoint templates
@@ -111,4 +111,17 @@ public class EndpointTemplateAdminServiceClient {
         return templates;
     }
 
+    public OMElement getEndpointTemplate(String name) throws RemoteException{
+        return endpointTemplateAdminStub.getTemplate(name);
+    }
+
+    public boolean hasDuplicateEndpointTemplate(String element)throws RemoteException{
+        return endpointTemplateAdminStub.hasDuplicateTempleteEndpoint(element);
+    }
+
+    public void saveEndpointTemplate(String element)throws RemoteException{
+        endpointTemplateAdminStub.saveEndpointTemplate(element);
+    }
+
 }
+
