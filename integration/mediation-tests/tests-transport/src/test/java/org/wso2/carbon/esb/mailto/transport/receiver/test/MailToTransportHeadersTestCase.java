@@ -63,7 +63,7 @@ public class MailToTransportHeadersTestCase extends ESBIntegrationTest {
           dependsOnMethods = {"testEmailReceivedHeaders"})
     public void testEmailPreserveHeaderTransport() throws Exception {
         assertTrue(MailToTransportUtil.searchStringInLog(
-                    contextUrls.getBackEndUrl(), "Delivered-To = test.automation.dummy.esb@gmail.com",
+                    contextUrls.getBackEndUrl(), "Delivered-To = test.automation.dummy.esb1@gmail.com",
                     getSessionCookie()),"Mail Has not Received to ESB with Preserve Header Successfully");
     }
 

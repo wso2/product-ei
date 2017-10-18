@@ -428,9 +428,9 @@
         <parameter name="mail.smtp.port">587</parameter>
         <parameter name="mail.smtp.starttls.enable">true</parameter>
         <parameter name="mail.smtp.auth">true</parameter>
-        <parameter name="mail.smtp.user">synapse.demo.1</parameter>
+        <parameter name="mail.smtp.user">synapse.demo.6</parameter>
         <parameter name="mail.smtp.password">mailpassword1</parameter>
-        <parameter name="mail.smtp.from">synapse.demo.1@gmail.com</parameter>
+        <parameter name="mail.smtp.from">synapse.demo.6@gmail.com</parameter>
     </transportSender>
 
     <transportSender name="mailtoWSO2" class="org.apache.axis2.transport.mail.MailTransportSender">
@@ -438,9 +438,9 @@
         <parameter name="mail.smtp.port">587</parameter>
         <parameter name="mail.smtp.starttls.enable">true</parameter>
         <parameter name="mail.smtp.auth">true</parameter>
-        <parameter name="mail.smtp.user">synapse.demo.1</parameter>
+        <parameter name="mail.smtp.user">synapse.demo.6</parameter>
         <parameter name="mail.smtp.password">mailpassword1</parameter>
-        <parameter name="mail.smtp.from">synapse.demo.1@gmail.com</parameter>
+        <parameter name="mail.smtp.from">synapse.demo.6@gmail.com</parameter>
     </transportSender>
 
     <!--Uncomment this for FIX transport support
