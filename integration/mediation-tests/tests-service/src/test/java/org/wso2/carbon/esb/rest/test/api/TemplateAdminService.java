@@ -217,6 +217,9 @@ public class TemplateAdminService extends ESBIntegrationTest {
             OMElement elm = endpointAdmin.getEndpointTemplate(endpointName);
             Assert.assertTrue(elm.toString().contains("updateEndpoint"), "Endpoint template not updated");
         }
+        else{
+            Assert.fail("Duplicated endpoint template exists for given template config");
+        }
     }
 
     @Test(groups = { "wso2.esb" },
