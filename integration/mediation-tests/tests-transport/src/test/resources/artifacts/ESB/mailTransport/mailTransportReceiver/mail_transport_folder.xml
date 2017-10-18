@@ -40,8 +40,8 @@
         <parameter name="mail.imap.starttls.enable">false</parameter>
         <parameter name="transport.mail.ContentType">text/plain</parameter>
         <parameter name="mail.imap.host">imap.gmail.com</parameter>
-        <parameter name="transport.mail.Address">test.automation.dummy.esb@gmail.com</parameter>
-        <parameter name="mail.imap.user">test.automation.dummy.esb</parameter>
+        <parameter name="transport.mail.Address">test.automation.dummy.esb1@gmail.com</parameter>
+        <parameter name="mail.imap.user">test.automation.dummy.esb1</parameter>
         <parameter name="mail.imap.socketFactory.port">993</parameter>
         <parameter name="transport.PollInterval">2</parameter>
         <parameter name="mail.imap.port">993</parameter>

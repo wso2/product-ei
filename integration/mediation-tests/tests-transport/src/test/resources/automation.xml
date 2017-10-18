@@ -77,9 +77,9 @@
 
     <!-- Mail Transport credentials-->
     <emailCredentials>
-        <sender>synapse.demo.1</sender>
+        <sender>synapse.demo.6</sender>
         <senderPassword>mailpassword1</senderPassword>
-        <receiver>test.automation.dummy.esb</receiver>
+        <receiver>test.automation.dummy.esb1</receiver>
         <receiverPassword>automation.test</receiverPassword>
         <domain>gmail.com</domain>
     </emailCredentials>

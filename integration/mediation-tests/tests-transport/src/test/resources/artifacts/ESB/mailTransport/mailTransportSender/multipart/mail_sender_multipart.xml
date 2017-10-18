@@ -39,7 +39,7 @@
                 <log level="full"/>
                 <send>
                     <endpoint>
-                        <address uri="mailto:test.automation.dummy.esb@gmail.com"/>
+                        <address uri="mailto:test.automation.dummy.esb1@gmail.com"/>
                     </endpoint>
                 </send>
                 <header name="To" action="remove"/>

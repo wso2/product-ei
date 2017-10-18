@@ -42,8 +42,8 @@
         <parameter name="mail.pop3.socketFactory.class">javax.net.ssl.SSLSocketFactory</parameter>
         <parameter name="transport.mail.ContentType">text/plain</parameter>
         <parameter name="mail.pop3.host">pop.gmail.com</parameter>
-        <parameter name="transport.mail.Address">test.automation.dummy.esb@gmail.com</parameter>
-        <parameter name="mail.pop3.user">test.automation.dummy.esb</parameter>
+        <parameter name="transport.mail.Address">test.automation.dummy.esb1@gmail.com</parameter>
+        <parameter name="mail.pop3.user">test.automation.dummy.esb1</parameter>
         <parameter name="mail.pop3.socketFactory.port">995</parameter>
         <parameter name="transport.PollInterval">1</parameter>
         <parameter name="mail.pop3.port">995</parameter>
