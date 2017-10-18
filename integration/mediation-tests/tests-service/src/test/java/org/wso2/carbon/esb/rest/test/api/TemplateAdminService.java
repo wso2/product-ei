@@ -212,14 +212,14 @@ public class TemplateAdminService extends ESBIntegrationTest {
           description = "Test endpoint template update service",
           priority = 15)
     public void testUpdateEndpointTemplate() throws Exception {
-        if (!endpointAdmin.hasDuplicateEndpointTemplate(endpointTmpl1)) {
+        if (endpointAdmin.hasDuplicateEndpointTemplate(endpointTmpl1)) {
+              endpointAdmin.deleteEndpointTemplate(endpointTmpl1);
+        }
             endpointAdmin.saveEndpointTemplate(endpointTmpl2);
             OMElement elm = endpointAdmin.getEndpointTemplate(endpointName);
             Assert.assertTrue(elm.toString().contains("updateEndpoint"), "Endpoint template not updated");
-        }
-        else{
-            Assert.fail("Duplicated endpoint template exists for given template config");
-        }
+
+
     }
 
     @Test(groups = { "wso2.esb" },
