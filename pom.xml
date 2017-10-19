@@ -1275,16 +1275,16 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v22</synapse.version>
+        <synapse.version>2.1.7-wso2v23</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v6</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v7</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.26</carbon.mediation.version>
+        <carbon.mediation.version>4.6.27</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.18</carbon.kernel.version>
@@ -1302,7 +1302,7 @@
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.5</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.7.29</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.10.9</carbon.identity.framework.version>
         <carbon.identity-inbound-auth-saml2.version>5.2.3</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>5.3.2</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.1.4</carbon.identity-user-ws.version>
