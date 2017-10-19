@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="dbReportMediatorTestProxy" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="custom">
+                <property name="text"
+                    value="** Reporting to the Database **"/>
+                </log>
+            <dbreport xmlns="http://ws.apache.org/ns/synapse">
+                <connection>
+                    <pool>
+                        <driver/>
+                        <url/>
+                        <user/>
+                        <password/>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql>delete from company where price &lt; 1000</sql>
+                </statement>
+            </dbreport>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
