@@ -1302,7 +1302,7 @@
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.5</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.7.29</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.10.9</carbon.identity.framework.version>
         <carbon.identity-inbound-auth-saml2.version>5.2.3</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>5.3.2</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.1.4</carbon.identity-user-ws.version>
