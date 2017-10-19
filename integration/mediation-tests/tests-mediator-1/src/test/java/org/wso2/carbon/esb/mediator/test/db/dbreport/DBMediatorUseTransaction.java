@@ -84,7 +84,7 @@ public class DBMediatorUseTransaction extends ESBIntegrationTest {
      */
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     /*JIRA issue: https://wso2.org/jira/browse/ESBJAVA-1553*/
-    @Test(groups = "wso2.esb", enabled = false, description = "Test UseTransaction option ." +
+    @Test(groups = "wso2.esb", description = "Test UseTransaction option ." +
             "Use in conjunction with Transaction mediator. Fail casse"
     )
     public void testDBmediatorFailCase() throws Exception {

@@ -72,7 +72,7 @@
                 <property name="text" value="** Rollback Transaction**"/>
             </log>
             <transaction action="rollback"/>
-            <send/>
+            <respond/>
         </faultSequence>
     </resource>
     <resource methods="POST" uri-template="/test1?testEntry={testVal}">
