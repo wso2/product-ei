@@ -44,9 +44,9 @@ public class CallMediatorBlockingAPITestCase extends ESBIntegrationTest {
     public void callMediatorBlockingAPITest() throws Exception {
         OMElement response = axis2Client
                 .sendSimpleStockQuoteRequest(getApiInvocationURL("testBlockingApi"), null, "WSO2");
-        boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
         assertNotNull(response, "Empty response received");
-        assertTrue(responseContainsWSO2, "Response does not contain expected output");
+        boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2");
+        assertTrue(responseContainsWSO2, "Response does not contain expected output.Received: " + response);
     }
 
     @AfterClass(alwaysRun = true)
