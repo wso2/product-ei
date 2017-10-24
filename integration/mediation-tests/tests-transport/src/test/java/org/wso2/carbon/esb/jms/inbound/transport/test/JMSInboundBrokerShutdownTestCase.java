@@ -46,9 +46,11 @@ public class JMSInboundBrokerShutdownTestCase extends ESBIntegrationTest {
                 new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
     }
 
+    //Disabling due to https://github.com/wso2/product-ei/issues/1199
     @Test(
             groups = {"wso2.esb"},
-            description = "Behaviour of a server, with a JMS Inbound Endpoint configured, when the JMS broker is down"
+            description = "Behaviour of a server, with a JMS Inbound Endpoint configured, when the JMS broker is down",
+            enabled = false
     )
     public void testJMSInboundEndpointBehaviourWithBrokerShutdown() throws Exception {
         addInboundEndpoint(AXIOMUtil
