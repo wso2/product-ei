@@ -28,13 +28,19 @@ import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.inbound.endpoint.InboundAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
+
+import javax.activation.DataHandler;
+import java.io.File;
+import java.net.URL;
 
 /**
  * class tests consuming message from a queue using inbound endpoints
@@ -44,6 +50,22 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 	private ServerConfigurationManager serverConfigurationManager;
 	private InboundAdminClient inboundAdminClient;
 	private ActiveMQServer activeMQServer = new ActiveMQServer();
+
+	String message = "<?xml version='1.0' encoding='UTF-8'?>" +
+			"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" +
+			" xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">" +
+			"   <soapenv:Header/>" +
+			"   <soapenv:Body>" +
+			"      <ser:placeOrder>" +
+			"         <ser:order>" +
+			"            <xsd:price>100</xsd:price>" +
+			"            <xsd:quantity>2000</xsd:quantity>" +
+			"            <xsd:symbol>JMSTransport</xsd:symbol>" +
+			"         </ser:order>" +
+			"      </ser:placeOrder>" +
+			"   </soapenv:Body>" +
+			"</soapenv:Envelope>";
+
 
 	@BeforeClass(alwaysRun = true)
 	protected void init() throws Exception {
@@ -110,6 +132,45 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 		super.cleanup();
 		activeMQServer.stopJMSBroker();
 	}
+
+	/**
+	 * Check whether the JMS listner has started before complete deployment of the JMS proxy.
+	 * @throws Exception
+	 */
+	@Test(groups = {"wso2.esb"}, description = "Test JMS proxy deployment.")
+	public void testDeploymentOrder() throws Exception {
+
+		JMSQueueMessageProducer sender = new JMSQueueMessageProducer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
+		String queueName = "TestQueue";
+		try {
+			sender.connect(queueName);
+			for (int i = 0; i < 5; i++) {
+				sender.pushMessage(message);
+			}
+		} finally {
+			sender.disconnect();
+		}
+
+		Thread.sleep(5000);
+
+		LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+		String errorMessage = "MessageConsumedBeforeDeployment";
+
+		logViewerClient.clearLogs();
+		//upload CAPP
+		CarbonAppUploaderClient carbonAppUploaderClient =
+				new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
+		String carFileName = "JMSProxyDeploymentTestCar_1.0.0.car";
+		carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName,
+				new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
+						+ File.separator + "car" + File.separator + carFileName)));
+
+		boolean errorOccurred = Utils.checkForLog(logViewerClient, errorMessage,30);
+
+		Assert.assertFalse(errorOccurred, "JMS listener started consuming messages before the proxy deployment");
+
+	}
+
 
 	private OMElement addEndpoint1() throws Exception {
 		OMElement synapseConfig = null;
