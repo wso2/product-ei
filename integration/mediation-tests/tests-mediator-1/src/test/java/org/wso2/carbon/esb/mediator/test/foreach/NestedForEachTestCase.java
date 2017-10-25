@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -33,6 +33,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
@@ -46,11 +47,13 @@ import static org.testng.Assert.assertTrue;
 public class NestedForEachTestCase extends ESBIntegrationTest {
 
     private IterateClient client;
+    private LogViewerClient logViewer;
 
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
         client = new IterateClient();
+        logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
     @Test(groups = {"wso2.esb"},
@@ -58,9 +61,7 @@ public class NestedForEachTestCase extends ESBIntegrationTest {
     public void testNestedForEach() throws Exception {
         verifyProxyServiceExistence("foreachNestedTestProxy");
 
-        LogViewerClient logViewer =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         String request =
                 "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:m0=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
@@ -77,10 +78,9 @@ public class NestedForEachTestCase extends ESBIntegrationTest {
         sendRequest(getProxyServiceURLHttp("foreachNestedTestProxy"), request);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
 
             if (message.contains("foreach = after")) {
                 String search = "<m0:getQuote>(.*)</m0:getQuote>";
@@ -112,23 +112,19 @@ public class NestedForEachTestCase extends ESBIntegrationTest {
     public void testNestedForEachMediatorWithIterate() throws Exception {
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/nested_foreach_iterate.xml");
-        LogViewerClient logViewer =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         String response = client.send(getMainSequenceURL(), createMultipleSymbolPayLoad(10),
                 "urn:getQuote");
         Assert.assertNotNull(response);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
         int forEachOuterCount = 0;
         int forEachInnerCount = 0;
 
         // Verify logs to check that the order of symbols is same as in the payload. The symbols should be as SYM[1-10]
         // as in payload. Since loop iterates from the last log onwards, verifying whether the symbols are in SYM[10-1] order
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
+        for (int i = logs.length-1; i>=0; i--) {
             String message = logs[i].getMessage();
             if (message.contains("foreach = outer")) {
                 if (!message.contains("SYM" + forEachOuterCount)) {
