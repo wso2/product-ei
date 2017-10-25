@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -37,30 +37,29 @@ import java.util.Iterator;
 public class ForEachWithIterateTestCase extends ESBIntegrationTest {
 
     private IterateClient client;
+    private LogViewerClient logViewer;
 
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
         client = new IterateClient();
+        logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
     @Test(groups = "wso2.esb", description = "Test foreach inline sequence to transform payload, passed to endpoint using iterate and aggregate mediators")
     public void testForEachInlineSequenceWithIterateEndpoint() throws Exception {
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_simple.xml");
-        LogViewerClient logViewer =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         String response = client.getMultipleCustomResponse(getProxyServiceURLHttp("foreachSequentialExecutionTestProxy"), "IBM", 2);
         Assert.assertNotNull(response);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("IBM")) {
                     Assert.fail("Incorrect message entered ForEach scope");
@@ -90,19 +89,16 @@ public class ForEachWithIterateTestCase extends ESBIntegrationTest {
     public void testForEachSequenceRefWithIterateEndpoint() throws Exception {
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/foreach_simple_sequenceref.xml");
-        LogViewerClient logViewer =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         String response = client.getMultipleCustomResponse(getMainSequenceURL(), "IBM", 2);
         Assert.assertNotNull(response);
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("IBM")) {
                     Assert.fail("Incorrect message entered ForEach scope");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -38,18 +38,19 @@ import static org.testng.Assert.assertTrue;
  */
 public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
 
+    private LogViewerClient logViewer;
+
     @BeforeClass
     public void setEnvironment() throws Exception {
         init();
+        logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
     @Test(groups = "wso2.esb", description = "Test multiple foreach constructs with property mediator in flow")
     public void testForEachPropertyMediator() throws Exception {
         verifyProxyServiceExistence("foreachPropertyTestProxy");
 
-        LogViewerClient logViewer =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         String request =
                 "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:m0=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
@@ -67,12 +68,10 @@ public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
 
-        int afterLogSize = logs.length;
-
         int verifyCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
 
             if (message.contains("fe_1_verify_in_1")) {
                 assertTrue(message.contains("fe_1_verify_in_1 = first property insequence"));
@@ -121,9 +120,7 @@ public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 "/artifacts/ESB/mediatorconfig/foreach/nested_foreach_property_mediator.xml");
 
-        LogViewerClient logViewer =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         String request =
                 "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:m0=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
@@ -142,10 +139,9 @@ public class ForEachPropertyMediatorTestCase extends ESBIntegrationTest {
         int verifyCount = 0;
 
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
-        int afterLogSize = logs.length;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
 
             if (message.contains("fe_outer_verify_in")) {
                 assertTrue(message.contains("fe_outer_verify_in = property insequence"));

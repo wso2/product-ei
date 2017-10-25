@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -48,7 +48,7 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests small message in small number ~20")
     public void testSmallNumbers() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         OMElement response = null;
         for (int i = 0; i < 20; i++) {
@@ -63,8 +63,8 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("IBM")) {
                     Assert.fail("Incorrect message entered ForEach scope. Could not find symbol IBM ..");
@@ -79,7 +79,7 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests small message in small number ~100")
     public void testLargeNumbers() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
 
         OMElement response = null;
         for (int i = 0; i < 100; i++) {
@@ -95,8 +95,8 @@ public class ForEachSmallMessageTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
-            String message = logs[i].getMessage();
+        for (LogEvent log : logs) {
+            String message = log.getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("MSFT")) {
                     Assert.fail("Incorrect message entered ForEach scope");
