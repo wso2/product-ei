@@ -26,6 +26,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
 
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -47,6 +48,16 @@ public class CallMediatorBlockingDirectEndpointTestCase extends ESBIntegrationTe
         boolean responseContainsWSO2 = response.getFirstElement().toString().contains("WSO2 Company");
         assertTrue(responseContainsWSO2);
     }
+
+    @Test(groups = { "wso2.esb" },
+          description = "Invoke a backend that returns a 204, empty response")
+    public void callMediatorBlockingNoContentResponseTest() throws AxisFault {
+        OMElement response = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CallMediatorBlockingDirectEndpointNoContentProxy"), null, "WSO2");
+
+        assertNull(response, "Empty response not received");
+    }
+
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {

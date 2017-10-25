@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="CallMediatorBlockingDirectEndpointNoContentProxy"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
+    <target>
+        <inSequence>
+            <call blocking="true">
+                <endpoint>
+                    <http method="POST" uri-template="http://localhost:8480/services/CallMediatorBlockingDirectEndpointNoContentBackendProxy"/>
+                </endpoint>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence>
+            <respond/>
+        </outSequence>
+    </target>
+    <description/>
+</proxy>
