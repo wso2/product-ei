@@ -75,7 +75,7 @@ public class ESBJAVA5094SetOperationContextWithInboundEndpointTestCase extends E
 
         //Add inbound endpoint configuration
         addInboundEndpoint(AXIOMUtil.stringToOM("<inboundEndpoint xmlns=\"http://ws.apache.org/ns/synapse\"\n" +
-                                                        "                 name=\"jms_inbound\"\n" +
+                                                        "                 name=\"jmsInboundEP\"\n" +
                                                         "                 sequence=\"firstSeq\"\n" +
                                                         "                 onError=\"fault\"\n" +
                                                         "                 protocol=\"jms\"\n" +
