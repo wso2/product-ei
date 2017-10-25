@@ -51,21 +51,6 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 	private InboundAdminClient inboundAdminClient;
 	private ActiveMQServer activeMQServer = new ActiveMQServer();
 
-	String message = "<?xml version='1.0' encoding='UTF-8'?>" +
-			"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" +
-			" xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">" +
-			"   <soapenv:Header/>" +
-			"   <soapenv:Body>" +
-			"      <ser:placeOrder>" +
-			"         <ser:order>" +
-			"            <xsd:price>100</xsd:price>" +
-			"            <xsd:quantity>2000</xsd:quantity>" +
-			"            <xsd:symbol>JMSTransport</xsd:symbol>" +
-			"         </ser:order>" +
-			"      </ser:placeOrder>" +
-			"   </soapenv:Body>" +
-			"</soapenv:Envelope>";
-
 
 	@BeforeClass(alwaysRun = true)
 	protected void init() throws Exception {
@@ -139,6 +124,21 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 	 */
 	@Test(groups = {"wso2.esb"}, description = "Test JMS proxy deployment.")
 	public void testDeploymentOrder() throws Exception {
+
+		String message = "<?xml version='1.0' encoding='UTF-8'?>" +
+				"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" +
+				" xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">" +
+				"   <soapenv:Header/>" +
+				"   <soapenv:Body>" +
+				"      <ser:placeOrder>" +
+				"         <ser:order>" +
+				"            <xsd:price>100</xsd:price>" +
+				"            <xsd:quantity>2000</xsd:quantity>" +
+				"            <xsd:symbol>JMSTransport</xsd:symbol>" +
+				"         </ser:order>" +
+				"      </ser:placeOrder>" +
+				"   </soapenv:Body>" +
+				"</soapenv:Envelope>";
 
 		JMSQueueMessageProducer sender = new JMSQueueMessageProducer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
 		String queueName = "TestQueue";
