@@ -34,14 +34,14 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
-import javax.activation.DataHandler;
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
+import javax.activation.DataHandler;
+import javax.xml.stream.XMLStreamException;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -139,7 +139,8 @@ public class DefaultEndpointTestCase extends ESBIntegrationTest {
             Assert.assertTrue(e instanceof org.apache.axis2.AxisFault);
         }
         Assert.assertNull(response);
-        Thread.sleep(10000);
+        //Increasing wait time than suspendDuration value
+        Thread.sleep(15000);
         response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPoint_Config_Reg"),
                                                            "http://localhost:9001/services/SimpleStockQuoteService", "WSO2");
         Assert.assertNotNull(response);
