@@ -97,8 +97,8 @@ function drawMergeView(placeholder, before, after) {
     }
     view.innerHTML = "";
       var dv = CodeMirror.MergeView(view, {
-        value: before,
-        origLeft: after,
+        value: after,
+        origLeft: before,
         lineNumbers: true,
         theme:"ambiance",
         highlightDifferences: true,
