@@ -88,23 +88,23 @@ public class ConfigReader {
             while (eventReader.hasNext()) {
                 XMLEvent xmlEvent = eventReader.nextEvent();
                 switch (xmlEvent.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    StartElement startElement = xmlEvent.asStartElement();
-                    checkFlowState(getElementOrAttributeName(startElement.getName()), true);
-                    loadIntermediateMuleObjects(startElement);
-                    break;
+                    case XMLStreamConstants.START_ELEMENT:
+                        StartElement startElement = xmlEvent.asStartElement();
+                        checkFlowState(getElementOrAttributeName(startElement.getName()), true);
+                        loadIntermediateMuleObjects(startElement);
+                        break;
 
-                case XMLStreamConstants.CDATA:
-                    populateCData(xmlEvent.asCharacters());
-                    break;
+                    case XMLStreamConstants.CDATA:
+                        populateCData(xmlEvent.asCharacters());
+                        break;
 
-                case XMLStreamConstants.END_ELEMENT:
-                    EndElement endElement = xmlEvent.asEndElement();
-                    checkFlowState(getElementOrAttributeName(endElement.getName()), false);
-                    break;
+                    case XMLStreamConstants.END_ELEMENT:
+                        EndElement endElement = xmlEvent.asEndElement();
+                        checkFlowState(getElementOrAttributeName(endElement.getName()), false);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
                 }
             }
         } catch (XMLStreamException e) {
@@ -275,20 +275,20 @@ public class ConfigReader {
      */
     private void checkFlowState(String startOrEndElement, boolean isFlowStarted) {
         switch (startOrEndElement) {
-        case Constant.MULE_FLOW:
-            flowStarted = isFlowStarted;
-            break;
-        case Constant.MULE_SUB_FLOW:
-            subFlowStarted = isFlowStarted;
-            break;
-        case Constant.MULE_ASYNC_FLOW:
-            asyncFlowStarted = isFlowStarted;
-            if (!isFlowStarted) {
-                rootObj.getScopeStack().pop();
-            }
-            break;
-        default:
-            break;
+            case Constant.MULE_FLOW:
+                flowStarted = isFlowStarted;
+                break;
+            case Constant.MULE_SUB_FLOW:
+                subFlowStarted = isFlowStarted;
+                break;
+            case Constant.MULE_ASYNC_FLOW:
+                asyncFlowStarted = isFlowStarted;
+                if (!isFlowStarted) {
+                    rootObj.getScopeStack().pop();
+                }
+                break;
+            default:
+                break;
         }
     }
 

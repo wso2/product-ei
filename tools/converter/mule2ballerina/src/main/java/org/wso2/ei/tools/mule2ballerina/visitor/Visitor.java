@@ -41,38 +41,38 @@ import org.wso2.ei.tools.mule2ballerina.model.VariableSetter;
  */
 public interface Visitor {
 
-    public void visit(Root root);
+    void visit(Root root);
 
-    public void visit(Payload payload);
+    void visit(Payload payload);
 
-    public void visit(HttpListenerConfig listenerConfig);
+    void visit(HttpListenerConfig listenerConfig);
 
-    public void visit(HttpListener listener);
+    void visit(HttpListener listener);
 
-    public void visit(Flow flow);
+    void visit(Flow flow);
 
-    public void visit(HttpRequest request);
+    void visit(HttpRequest request);
 
-    public void visit(HttpRequestConfig requestConfig);
+    void visit(HttpRequestConfig requestConfig);
 
-    public void visit(Comment comment);
+    void visit(Comment comment);
 
-    public void visit(Logger logger);
+    void visit(Logger logger);
 
-    public void visit(PropertySetter propertySetter);
+    void visit(PropertySetter propertySetter);
 
-    public void visit(PropertyRemover propertyRemover);
+    void visit(PropertyRemover propertyRemover);
 
-    public void visit(VariableSetter variableSetter);
+    void visit(VariableSetter variableSetter);
 
-    public void visit(VariableRemover variableRemover);
+    void visit(VariableRemover variableRemover);
 
-    public void visit(FlowReference flowReference);
+    void visit(FlowReference flowReference);
 
-    public void visit(AsynchronousTask asynchronousTask);
+    void visit(AsynchronousTask asynchronousTask);
 
-    public void visit(Database database);
+    void visit(Database database);
 
-    public void visit(DatabaseConfig databaseConfig);
+    void visit(DatabaseConfig databaseConfig);
 
 }

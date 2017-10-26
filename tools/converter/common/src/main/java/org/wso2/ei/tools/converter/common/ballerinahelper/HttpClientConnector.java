@@ -39,7 +39,7 @@ public class HttpClientConnector {
             Map<Property, String> parameters) {
         ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTModelBuilder.createRefereceTypeName();
-        /*Create an object out of above created ref type and initialize it with values*/
+        //Create an object out of above created ref type and initialize it with values
         ballerinaASTModelBuilder.createNameReference(Constant.BLANG_HTTP, Constant.BLANG_CLIENT_CONNECTOR);
         ballerinaASTModelBuilder.startExprList();
         ballerinaASTModelBuilder.createStringLiteral(parameters.get(Property.URL));

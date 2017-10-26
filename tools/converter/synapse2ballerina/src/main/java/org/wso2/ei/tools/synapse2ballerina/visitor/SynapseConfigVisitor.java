@@ -765,26 +765,4 @@ public class SynapseConfigVisitor implements Visitor {
         BallerinaProgramHelper.exitElseClause(ballerinaASTModelBuilder);
         BallerinaProgramHelper.exitIfElseStatement(ballerinaASTModelBuilder);
     }
-
-    /* private void parseJsonOrXML(String type, String packageName, String nextVariableName, String variableName) {
-        if (Constant.BLANG_TYPE_JSON.equals(type)) {
-            addImport(Constant.BLANG_PKG_JSON);
-        } else if (Constant.BLANG_TYPE_XML.equals(type)) {
-            addImport(Constant.BLANG_PKG_XML);
-        }
-
-        ballerinaASTModelBuilder.addTypes(type); //type of the variable
-        ballerinaASTModelBuilder.createNameReference(packageName, Constant.BLANG_PARSE);
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.startExprList();
-        //   ballerinaASTModelBuilder.createStringLiteral(strJsonOrXMLValue);
-        ballerinaASTModelBuilder.createNameReference(null, variableName);
-        ballerinaASTModelBuilder.createSimpleVarRefExpr();
-        ballerinaASTModelBuilder.endExprList(1);
-        ballerinaASTModelBuilder.addFunctionInvocationExpression(true);
-        ballerinaASTModelBuilder.createVariable(nextVariableName, true); //name of the variable
-        ballerinaASTModelBuilder.addTypes(type); //type of the variable
-        ballerinaASTModelBuilder.addReturnTypes();
-    }*/
-
 }
