@@ -124,27 +124,28 @@ public class DefaultEndpointTestCase extends ESBIntegrationTest {
                    XMLStreamException, InterruptedException {
 
         axis2Server1.stop();
-        OMElement response = null;
+        OMElement response1 = null;
+        OMElement response2 = null;
         try {
-            response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
+             axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
                                                                "http://localhost:9001/services/SimpleStockQuoteService", "WSO2");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof org.apache.axis2.AxisFault);
         }
         axis2Server1.start();
         try {
-            response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
+            response1 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
                                                                "http://localhost:9001/services/SimpleStockQuoteService", "WSO2");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof org.apache.axis2.AxisFault);
         }
-        Assert.assertNull(response);
+        Assert.assertNull(response1);
         //Increasing wait time than suspendDuration value
         Thread.sleep(15000);
-        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPoint_Config_Reg"),
+        response2 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPoint_Config_Reg"),
                                                            "http://localhost:9001/services/SimpleStockQuoteService", "WSO2");
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.toString().contains("WSO2 Company"));
+        Assert.assertNotNull(response2);
+        Assert.assertTrue(response2.toString().contains("WSO2 Company"));
     }
 
     private void cleanupEndpoints()
