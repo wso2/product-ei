@@ -295,6 +295,11 @@
             <package name="org.wso2.carbon.esb.mediator.test.db.dblookup"/>
         </packages>
     </test>
+    <test name="DBReport-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.db.dbreport"/>
+        </packages>
+    </test>
     <!--This has been commented out due to an issue in the automation framework. Once it is fixed (pull request already sent), we can uncomment this.-->
     <!--test name="dbreport-mediator-Test" preserve-order="true" verbose="2">
         <packages>
