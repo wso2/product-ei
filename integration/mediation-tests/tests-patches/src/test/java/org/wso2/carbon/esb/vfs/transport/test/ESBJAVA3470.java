@@ -37,13 +37,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminProxyAdminException;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -52,6 +50,8 @@ import java.nio.channels.FileChannel;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
 
 
 /**
@@ -106,7 +106,8 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
 
         //This is required to handle SFTP server root differences
         if(carbonHome.indexOf("/target") > 0){
-            baseDir = (carbonHome.split("/target"))[1];
+            String[] targetSplit = carbonHome.split("/target");
+            baseDir = targetSplit[targetSplit.length - 1];
         } else {
             baseDir = carbonHome;
         }
