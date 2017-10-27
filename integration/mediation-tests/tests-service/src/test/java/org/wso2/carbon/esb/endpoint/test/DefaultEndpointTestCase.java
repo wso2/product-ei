@@ -124,14 +124,16 @@ public class DefaultEndpointTestCase extends ESBIntegrationTest {
                    XMLStreamException, InterruptedException {
 
         axis2Server1.stop();
+        OMElement response = null;
         OMElement response1 = null;
         OMElement response2 = null;
         try {
-             axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
+             response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
                                                                "http://localhost:9001/services/SimpleStockQuoteService", "WSO2");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof org.apache.axis2.AxisFault);
         }
+        Assert.assertNull(response, "Received response: " + response);
         axis2Server1.start();
         try {
             response1 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPointWithSuspension"),
@@ -139,13 +141,13 @@ public class DefaultEndpointTestCase extends ESBIntegrationTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof org.apache.axis2.AxisFault);
         }
-        Assert.assertNull(response1);
+        Assert.assertNull(response1, "Received response: " + response1);
         //Increasing wait time than suspendDuration value
         Thread.sleep(15000);
         response2 = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("defaultEndPoint_Config_Reg"),
                                                            "http://localhost:9001/services/SimpleStockQuoteService", "WSO2");
         Assert.assertNotNull(response2);
-        Assert.assertTrue(response2.toString().contains("WSO2 Company"));
+        Assert.assertTrue(response2.toString().contains("WSO2 Company"), "Received response:" + response2.toString());
     }
 
     private void cleanupEndpoints()
