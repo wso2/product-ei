@@ -113,6 +113,12 @@
                     <exclude name=".*"/>
                 </methods>
             </class>
+            <!--excluded due to wso2/product-ei/#1229-->
+            <class name="org.wso2.carbon.esb.samples.test.mediation.Sample8TestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
         </classes>
     </test>
     <test name="ESB-Sample-Miscellaneous-Test" preserve-order="true" verbose="2">
