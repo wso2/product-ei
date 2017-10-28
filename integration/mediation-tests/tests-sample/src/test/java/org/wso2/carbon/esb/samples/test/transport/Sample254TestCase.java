@@ -18,7 +18,6 @@
 package org.wso2.carbon.esb.samples.test.transport;
 
 import org.apache.commons.io.FileUtils;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -26,12 +25,13 @@ import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
 import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
+import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertTrue;
 
@@ -61,6 +61,16 @@ public class Sample254TestCase extends ESBSampleIntegrationTest {
         originalFolder = new File(pathToVfsDir + "original" + File.separator);
 
         FileUtils.deleteDirectory(outFolder);
+        while (outFolder.exists()) {
+            try {
+                //wait until the directory is deleted
+                TimeUnit.MILLISECONDS.sleep(100);
+                log.info("Waiting for out folder to be deleted...");
+            } catch (InterruptedException e) {
+                //Continue looping until directory is deleted
+            }
+        }
+
         FileUtils.deleteDirectory(inFolder);
         FileUtils.deleteDirectory(originalFolder);
 
@@ -103,9 +113,9 @@ public class Sample254TestCase extends ESBSampleIntegrationTest {
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             boolean isOutFileExist = isOutFileExist();
-            Assert.assertTrue(isOutFileExist, "out.xml file not found");
+            assertTrue(isOutFileExist, "out.xml file not found");
             String vfsOut = FileUtils.readFileToString(outfile);
-            Assert.assertTrue(vfsOut.contains("WSO2 Company"), "WSO2 Company string not found");
+            assertTrue(vfsOut.contains("WSO2 Company"), "WSO2 Company string not found");
         } finally {
             deleteFolder(targetFile);
             deleteFolder(outfile);
