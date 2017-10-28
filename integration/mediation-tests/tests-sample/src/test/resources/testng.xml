@@ -158,8 +158,17 @@
     <test name="ESB-Sample-Transport-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.samples.test.transport.*"/>
-
         </packages>
+
+        <classes>
+            <!--excluded due to wso2/product-ei/#1234-->
+            <class name="org.wso2.carbon.esb.samples.test.transport.Sample254TestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+
     </test>
     <test name="ESB-Sample-StreamingXpath-Test" preserve-order="true" verbose="2">
         <packages>
