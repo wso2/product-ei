@@ -61,6 +61,9 @@ public class Sample254TestCase extends ESBSampleIntegrationTest {
         originalFolder = new File(pathToVfsDir + "original" + File.separator);
 
         FileUtils.deleteDirectory(outFolder);
+        FileUtils.deleteDirectory(inFolder);
+        FileUtils.deleteDirectory(originalFolder);
+
         while (outFolder.exists()) {
             try {
                 //wait until the directory is deleted
@@ -70,9 +73,6 @@ public class Sample254TestCase extends ESBSampleIntegrationTest {
                 //Continue looping until directory is deleted
             }
         }
-
-        FileUtils.deleteDirectory(inFolder);
-        FileUtils.deleteDirectory(originalFolder);
 
         assertTrue(outFolder.mkdirs(), "file folder not created");
         assertTrue(inFolder.mkdirs(), "file folder not created");
