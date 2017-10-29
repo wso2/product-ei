@@ -1,0 +1,13 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="CallMediatorNoContentTestAPI" context="/CallMediatorNoContentTestAPI">
+    <resource methods="GET">
+        <inSequence>
+            <call blocking="true">
+                <endpoint>
+                    <http uri-template="http://localhost:8480/CallMediatorNoContentBackendAPI"/>
+                </endpoint>
+            </call>
+            <respond/>
+        </inSequence>
+    </resource>
+
+</api>

@@ -1,0 +1,8 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="CallMediatorNoContentBackendAPI" context="/CallMediatorNoContentBackendAPI">
+    <resource methods="GET">
+        <inSequence>
+            <property name="HTTP_SC" value="204" scope="axis2" />
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

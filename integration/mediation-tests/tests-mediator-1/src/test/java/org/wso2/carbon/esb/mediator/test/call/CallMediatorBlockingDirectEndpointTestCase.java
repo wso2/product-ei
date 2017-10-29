@@ -23,10 +23,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -51,11 +54,13 @@ public class CallMediatorBlockingDirectEndpointTestCase extends ESBIntegrationTe
 
     @Test(groups = { "wso2.esb" },
           description = "Invoke a backend that returns a 204, empty response")
-    public void callMediatorBlockingNoContentResponseTest() throws AxisFault {
-        OMElement response = axis2Client
-                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("CallMediatorBlockingDirectEndpointNoContentProxy"), null, "WSO2");
-
-        assertNull(response, "Empty response not received");
+    public void callMediatorBlockingNoContentResponseTest() throws IOException {
+        SimpleHttpClient client = new SimpleHttpClient();
+        Map headers = new HashMap(1);
+        headers.put("Content-Type", "application/json");
+        org.apache.http.HttpResponse response = client.doGet("http://localhost:8480/CallMediatorNoContentTestAPI/",
+                headers);
+        assertEquals(response.getStatusLine().getStatusCode(), 204, "Empty response not received");
     }
 
 
