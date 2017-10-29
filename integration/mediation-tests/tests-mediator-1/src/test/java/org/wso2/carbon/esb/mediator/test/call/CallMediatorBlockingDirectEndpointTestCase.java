@@ -63,7 +63,6 @@ public class CallMediatorBlockingDirectEndpointTestCase extends ESBIntegrationTe
         assertEquals(response.getStatusLine().getStatusCode(), 204, "Empty response not received");
     }
 
-
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
