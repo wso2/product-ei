@@ -58,8 +58,8 @@ public class CallMediatorBlockingDirectEndpointTestCase extends ESBIntegrationTe
         SimpleHttpClient client = new SimpleHttpClient();
         Map headers = new HashMap(1);
         headers.put("Content-Type", "application/json");
-        org.apache.http.HttpResponse response = client.doGet("http://localhost:8480/CallMediatorNoContentTestAPI/",
-                headers);
+        org.apache.http.HttpResponse response = client.doGet(getApiInvocationURL
+                        ("CallMediatorNoContentTestAPI"), headers);
         assertEquals(response.getStatusLine().getStatusCode(), 204, "Empty response not received");
     }
 
