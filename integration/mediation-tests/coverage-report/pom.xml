@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>mediation-integration</artifactId>
-        <version>6.2.0-SNAPSHOT</version>
+        <version>6.1.1-update8</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -37,7 +35,7 @@
                         <argument>-Dinstr.file=${basedir}/instrumentation.txt</argument>
                         <argument>-Dfilters.file=${basedir}/filters.txt</argument>
                         <argument>-classpath</argument>
-                        <classpath/>
+                        <classpath />
                         <argument>org.wso2.esb.integration.common.utils.coverage.TestCoverageGenerator</argument>
                     </arguments>
                     <workingDirectory>${basedir}/target</workingDirectory>
