@@ -28,7 +28,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
-                <inherited>true</inherited>
+                <version>2.10</version>
                 <configuration>
                     <classpathContainers>
                         <classpathContainer>org.eclipse.jdt.USER_LIBRARY/Activiti Designer Extensions</classpathContainer>
