@@ -302,11 +302,6 @@
                 <artifactId>json-path</artifactId>
                 <version>${com.jayway.jsonpath.version}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.slf4j</groupId>-->
-                <!--<artifactId>slf4j-api</artifactId>-->
-                <!--<version>${slf4j.version}</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>com.jayway.jsonpath</groupId>
                 <artifactId>json-path-assert</artifactId>
@@ -449,7 +444,6 @@
         <andes.version>4.0.0-SNAPSHOT</andes.version>
         <synapse.core.version>2.1.7-wso2v16</synapse.core.version>
         <com.jayway.jsonpath.version>0.8.0</com.jayway.jsonpath.version>
-        <!--<slf4j.api.version>1.7.12</slf4j.api.version>-->
         <carbon.config.version>2.1.4</carbon.config.version>
         <carbon.secvault.version>5.0.10</carbon.secvault.version>
         <carbon.utils.version>2.0.4</carbon.utils.version>
