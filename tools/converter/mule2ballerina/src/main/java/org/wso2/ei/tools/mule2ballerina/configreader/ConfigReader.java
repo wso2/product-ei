@@ -197,7 +197,7 @@ public class ConfigReader {
      */
     private void populateIntermediateObject(Iterator<Attribute> attributes, String mClassName, String elementName) {
         try {
-            java.lang.Object object = null;
+            Object object = null;
             Class<?> mClass = Class.forName(mClassName);
             String constructorArgExist = (ConstructorHelper.get(elementName) != null ?
                     ConstructorHelper.get(elementName) :
