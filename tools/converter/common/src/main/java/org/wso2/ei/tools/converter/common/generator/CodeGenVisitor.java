@@ -745,17 +745,17 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(RetryStmt retryStmt) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(NamespaceDeclarationStmt namespaceDeclarationStmt) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(NamespaceDeclaration namespaceDeclaration) {
-
+        throw new NotImplementedException();
     }
 
     @Override
@@ -1071,22 +1071,22 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(FieldBasedVarRefExpr fieldBasedVarRefExpr) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(IndexBasedVarRefExpr indexBasedVarRefExpr) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(XMLAttributesRefExpr xmlAttributesRefExpr) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(XMLQNameExpr xmlqNameExpr) {
-
+        throw new NotImplementedException();
     }
 
     @Override
@@ -1096,17 +1096,17 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(XMLLiteral xmlLiteral) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(XMLElementLiteral xmlElementLiteral) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(XMLCommentLiteral xmlCommentLiteral) {
-
+        throw new NotImplementedException();
     }
 
     @Override
@@ -1118,22 +1118,22 @@ public class CodeGenVisitor implements NodeVisitor {
 
     @Override
     public void visit(XMLPILiteral xmlpiLiteral) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(XMLSequenceLiteral xmlSequenceLiteral) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(LambdaExpression lambdaExpression) {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void visit(StringTemplateLiteral stringTemplateLiteral) {
-
+        throw new NotImplementedException();
     }
 
     public String getBallerinaSourceStr() {
