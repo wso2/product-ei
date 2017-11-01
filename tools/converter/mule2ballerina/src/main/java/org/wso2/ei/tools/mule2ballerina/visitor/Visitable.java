@@ -23,6 +23,6 @@ package org.wso2.ei.tools.mule2ballerina.visitor;
  */
 public interface Visitable {
 
-    public void accept(Visitor visitor);
+    void accept(Visitor visitor);
 
 }
