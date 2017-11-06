@@ -225,7 +225,7 @@
             </dependency>
             <dependency>
                 <groupId>org.ballerinalang</groupId>
-                <artifactId>ballerina-native</artifactId>
+                <artifactId>ballerina-builtin</artifactId>
                 <version>${ballerina.core.version}</version>
             </dependency>
             <dependency>
@@ -419,8 +419,8 @@
 
     <properties>
         <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
-        <ballerina.runtime.version>0.92.1-SNAPSHOT</ballerina.runtime.version>
-        <ballerina.core.version>0.93</ballerina.core.version>
+        <ballerina.runtime.version>0.94.0-SNAPSHOT</ballerina.runtime.version>
+        <ballerina.core.version>0.94.0-SNAPSHOT</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>3.0.2</carbon.messaging.version>
         <!-- TODO: Can't update to latest version since msf4j uses 5.0,6 version range-->
@@ -434,7 +434,7 @@
         <carbon.cache.version>1.1.3</carbon.cache.version>
         <carbon.deployment.version>5.1.7</carbon.deployment.version>
         <carbon.datasources.version>1.1.4</carbon.datasources.version>
-        <carbon.business.messaging.version>4.0.3-SNAPSHOT</carbon.business.messaging.version>
+        <carbon.business.messaging.version>4.0.2</carbon.business.messaging.version>
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
         <slf4j.version>1.7.22</slf4j.version>
         <testng.version>6.9.10</testng.version>

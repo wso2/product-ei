@@ -33,9 +33,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>common</module>
-        <module>mule2ballerina</module>
-        <module>ds2ballerina</module>
-        <module>synapse2ballerina</module>
+        <!--<module>common</module>-->
+        <!--<module>mule2ballerina</module>-->
+        <!--<module>ds2ballerina</module>-->
+        <!--<module>synapse2ballerina</module>-->
     </modules>
 </project>
