@@ -34,8 +34,8 @@
     <url>http://wso2.org</url>
 
     <modules>
-        <module>org.wso2.ei.converter.tools.mule2ballerina.feature</module>
-        <module>org.wso2.ei.converter.tools.ds2ballerina.feature</module>
-        <module>org.wso2.ei.converter.tools.synapse2ballerina.feature</module>
+        <!--<module>org.wso2.ei.converter.tools.mule2ballerina.feature</module>-->
+        <!--<module>org.wso2.ei.converter.tools.ds2ballerina.feature</module>-->
+        <!--<module>org.wso2.ei.converter.tools.synapse2ballerina.feature</module>-->
     </modules>
 </project>
