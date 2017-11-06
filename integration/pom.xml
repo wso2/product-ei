@@ -35,6 +35,6 @@
 
     <modules>
         <!--<module>automation-extensions</module>-->
-        <module>test-mb</module>
+        <!--<module>test-mb</module>-->
     </modules>
 </project>
