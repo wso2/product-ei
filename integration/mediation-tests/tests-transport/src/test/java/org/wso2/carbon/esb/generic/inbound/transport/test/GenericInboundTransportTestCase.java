@@ -26,6 +26,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 
@@ -42,50 +43,22 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 
 	@Test(groups = { "wso2.esb" }, description = "Test Adding Generic Inbound End point")
 	public void testAddingGenericInboundEndpoints() throws Exception {
-		int beforeLogCount = logViewerClient.getAllSystemLogs().length;
 		addInboundEndpoint(addEndpoint1());
-		Thread.sleep(5000);
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
-		boolean status = false;
-		for (int i = 0; i < (logs.length - beforeLogCount); i++) {
-			if (logs[i].getMessage().contains("Generic Polling Consumer Invoked")) {
-				status = true;
-				break;
-			}
-		}
-
+		boolean status = Utils.checkForLog(logViewerClient, "Generic Polling Consumer Invoked",5000);
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test creating Generic Inbound EP without sequence")
 	public void testInjectingInvalidSequence() throws Exception {
-		int beforeLogCount = logViewerClient.getAllSystemLogs().length;
 		addInboundEndpoint(addEndpoint2());
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
-		boolean status = false;
-		for (int i = 0; i < (logs.length - beforeLogCount); i++) {
-			if (logs[i].getMessage().contains("Sequence name not specified")) {
-				status = true;
-				break;
-			}
-		}
-
+		boolean status = Utils.checkForLog(logViewerClient, "Sequence name not specified", 5000);
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test creating Generic Inbound EP without implementation class")
 	public void testWithoutImplementationClass() throws Exception {
-		int beforeLogCount = logViewerClient.getAllSystemLogs().length;
 		addInboundEndpoint(addEndpoint3());
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
-		boolean status = false;
-		for (int i = 0; i < (logs.length - beforeLogCount); i++) {
-			if (logs[i].getMessage().contains("Please check the required class is added to the classpath")) {
-				status = true;
-				break;
-			}
-		}
-
+		boolean status = Utils.checkForLog(logViewerClient, "Please check the required class is added to the classpath", 5000);
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
 	}
 

@@ -33,6 +33,7 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
@@ -72,8 +73,6 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
     public void testInboundEnpointReadFile_ContentType_Plain() throws Exception {
 
         addInboundEndpoint(addEndpoint());
-        // To check the file getting is read
-        boolean isFileRead = false;
 
         File sourceFile = new File(pathToFtpDir + File.separator + "test.txt");
         File targetFolder = new File(InboundFileFolder + File.separator + "in");
@@ -81,20 +80,11 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
         } finally {
             deleteFile(targetFile);
         }
 
-        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-
-        for (LogEvent logEvent : logs) {
-            String message = logEvent.getMessage();
-            if (message.contains("WSO2 Lanka Pvt Ltd")) {
-                isFileRead = true;
-            }
-        }
-
+        boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2000);
         Assert.assertTrue(isFileRead, "The Text file is not getting read");
     }
 

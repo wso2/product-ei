@@ -24,10 +24,12 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuoteClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.message.store.stub.MessageInfo;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -62,9 +64,8 @@ public class MessageStoreMessageDeleteTestCase extends ESBIntegrationTest {
         for (int i = 0; i < 5; i++) {
             client.sendSimpleQuoteRequest(getMainSequenceURL(), null, "WSO2");
         }
-        Thread.sleep(30000);
-        Assert.assertTrue(messageStoreAdminClient.getMessageCount(MESSAGE_STORE_NAME) == 5,
-                          "Messsages are missing or repeated");
+        Assert.assertTrue(Utils.waitForMessageCount(messageStoreAdminClient, MESSAGE_STORE_NAME, 5, 30000),
+                "Messsages are missing or repeated");
         MessageInfo info[] = messageStoreAdminClient.getPaginatedMessages(MESSAGE_STORE_NAME, 0);
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < info.length; i++) {
@@ -72,16 +73,14 @@ public class MessageStoreMessageDeleteTestCase extends ESBIntegrationTest {
         }
         messageStoreAdminClient.deleteMessage(MESSAGE_STORE_NAME, list.get(0));
         messageStoreAdminClient.deleteMessage(MESSAGE_STORE_NAME, list.get(1));
-        Thread.sleep(30000);
-        Assert.assertTrue(messageStoreAdminClient.getMessageCount(MESSAGE_STORE_NAME) == 3,
-                          "Error in message deletion");
+        Assert.assertTrue(Utils.waitForMessageCount(messageStoreAdminClient, MESSAGE_STORE_NAME, 3, 30000),
+                "Error in message deletion");
         for (int i = 2; i < 5; i++) {
             messageStoreAdminClient.deleteMessage(MESSAGE_STORE_NAME, list.get(i));
         }
-        Thread.sleep(30000);
         //message count should be 0 after deleting all messages
-        Assert.assertTrue(messageStoreAdminClient.getMessageCount(MESSAGE_STORE_NAME) == 0,
-                          "Error in message deletion");
+        Assert.assertTrue(Utils.waitForMessageCount(messageStoreAdminClient, MESSAGE_STORE_NAME, 0, 30000),
+                "Error in message deletion");
     }
 
     @AfterClass(alwaysRun = true)
