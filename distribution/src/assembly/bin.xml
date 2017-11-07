@@ -112,7 +112,7 @@
             <filtered>true</filtered>
         </file>
         <file>
-            <source>src/scripts/composer</source>
+            <source>src/scripts/composer.sh</source>
             <outputDirectory>bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
