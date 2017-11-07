@@ -56,6 +56,12 @@
             <outputDirectory>wso2/ballerina</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>
+                target/WSO2Carbon/tmp/ballerina-composer-web-zip/ballerina-composer-web-${ballerina.runtime.version}
+            </directory>
+            <outputDirectory>.</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>carbon-home</directory>
             <outputDirectory></outputDirectory>
             <includes>
@@ -105,5 +111,42 @@
             <fileMode>644</fileMode>
             <filtered>true</filtered>
         </file>
+        <file>
+            <source>src/scripts/composer</source>
+            <outputDirectory>bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>src/conf/composer/composer-logging.properties</source>
+            <outputDirectory>conf/composer</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                target/WSO2Carbon/tmp/workspace-service-jar/deployment.yaml
+            </source>
+            <outputDirectory>resources/composer/services</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
     </files>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>wso2/lib/plugins</outputDirectory>
+            <scope>runtime</scope>
+            <includes>
+                <include>org.ballerinalang:ballerina-core:jar</include>
+                <include>org.ballerinalang:ballerina-lang:jar</include>
+            </includes>
+        </dependencySet>
+        <!-- Composer specific artifacts -->
+        <dependencySet>
+            <outputDirectory>resources/composer/services</outputDirectory>
+            <includes>
+                <include>org.ballerinalang:workspace-service:jar</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
 </assembly>
