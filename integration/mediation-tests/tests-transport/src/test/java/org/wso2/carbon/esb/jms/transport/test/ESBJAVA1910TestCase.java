@@ -31,18 +31,9 @@ public class ESBJAVA1910TestCase extends ESBIntegrationTest {
         AxisServiceClient client = new AxisServiceClient();
         Thread.sleep(3000); //force wait until message processor executes
         client.sendRobust(Utils.getStockQuoteRequest("WSO2"), getProxyServiceURLHttp("MessageStoreProxy"), "getQuote");
-        Thread.sleep(5000);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
-        boolean status = false;
-        for (int i = 0; i < (logs.length - beforeLogCount); i++) {
-            if (logs[i].getMessage().contains("status code---------- = 200,")) {
-                status = true;
-                break;
-            }
-        }
 
+        boolean status = Utils.checkForLog(logViewerClient, "status code---------- = 200,", 5000);
         Assert.assertTrue(status, "Status Code not found in the logs");
-
     }
 
     @AfterClass(alwaysRun = true)

@@ -123,8 +123,6 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 	public void testInboundEnpointReadFileinFTP() throws Exception {
 
 		addInboundEndpoint(addEndpoint1());
-		// To check the file getting is read
-		boolean isFileRead = false;
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
 		File targetFolder = new File(FTPFolder + File.separator + "ftpin");
@@ -132,20 +130,11 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
 		} finally {
 			deleteFile(targetFile);
 		}
 
-		LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-
-		for (LogEvent logEvent : logs) {
-			String message = logEvent.getMessage();
-			if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-				isFileRead = true;
-			}
-		}
-
+		boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 2000);
 		Assert.assertTrue(isFileRead, "The XML file is not getting read");
 	}
 

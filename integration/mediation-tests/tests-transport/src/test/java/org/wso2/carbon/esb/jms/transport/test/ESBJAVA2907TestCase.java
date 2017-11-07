@@ -31,19 +31,8 @@ public class ESBJAVA2907TestCase extends ESBIntegrationTest {
 	public void testAddingOMElementPropertyToMessageStore() throws Exception {
 		AxisServiceClient client = new AxisServiceClient();
 		client.sendRobust(Utils.getStockQuoteRequest("IBM"), getProxyServiceURLHttp("testPS"), "getQuote");
-        Thread.sleep(5000);
 		LogViewerClient cli = new LogViewerClient(contextUrls.getBackEndUrl(),getSessionCookie());
-		LogEvent[] logs = cli.getAllSystemLogs();
-		Assert.assertNotNull(logs, "No logs found");
-		Assert.assertTrue(logs.length > 0, "No logs found");
-		boolean hasPrefix = false;
-		for (LogEvent logEvent : logs) {
-			String msg = logEvent.getMessage();
-			if (msg.contains(GET_QUOTE_REQUEST_BODY)) {
-				hasPrefix = true;
-				break;
-			}
-		}
+		boolean hasPrefix = Utils.checkForLog(cli, GET_QUOTE_REQUEST_BODY, 5000);
 		Assert.assertTrue(hasPrefix, "OMElement is not saved to the message store");
 		log.info(cli.getAllSystemLogs());
 	}

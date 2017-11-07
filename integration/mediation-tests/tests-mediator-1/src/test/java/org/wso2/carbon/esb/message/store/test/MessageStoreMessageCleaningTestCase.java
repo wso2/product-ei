@@ -23,6 +23,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
@@ -67,9 +68,8 @@ public class MessageStoreMessageCleaningTestCase extends ESBIntegrationTest {
 		for (int i = 0; i < 5; i++) {
 			axis2Client.sendSimpleQuoteRequest(getMainSequenceURL(), null, "WSO2");
 		}
-		Thread.sleep(30000);
-		Assert.assertTrue(messageStoreAdminClient.getMessageCount(MESSAGE_STORE_NAME) == 5,
-		                  "Messages are missing or repeated");
+		Assert.assertTrue(Utils.waitForMessageCount(messageStoreAdminClient, MESSAGE_STORE_NAME, 5, 30000),
+				"Messages are missing or repeated");
         serverConfigurationManager.restartGracefully();
         super.init();
         initVariables();

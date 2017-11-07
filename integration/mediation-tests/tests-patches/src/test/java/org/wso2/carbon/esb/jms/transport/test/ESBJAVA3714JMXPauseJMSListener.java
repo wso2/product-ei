@@ -11,6 +11,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
+import org.wso2.esb.integration.common.utils.Utils;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectInstance;
@@ -19,6 +20,7 @@ import javax.xml.namespace.QName;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -64,9 +66,8 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
         String msg = "";
         // Put message in queue.
         sendMessage(msgBefore);
-        Thread.sleep(10000);
-        assertTrue(stringExistsInLog(msgBefore));
-
+        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgBefore, 10000));
     }
 
     @Test(groups = "wso2.esb", description = "JMS Consumer Test after pause")
@@ -80,14 +81,12 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
             mbsc.invoke(obj.getObjectName(), "pause" , null, null);
         }
 
-        Thread.sleep(10000);
-        assertTrue(stringExistsInLog("Listener paused"));
+        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Listener paused", 10000));
 
         // Put message in queue.
         sendMessage(msgAfter);
-        Thread.sleep(10000);
-        assertTrue(!stringExistsInLog(msgAfter));
-
+        assertFalse(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 10000));
     }
 
     //This was disabled since it failed to start JMS listener intermittently
@@ -96,11 +95,10 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
 
         // redeploy proxy service
         addProxyService(AXIOMUtil.stringToOM(getJMSProxy()));
-        // give it max time to deploy
-        Thread.sleep(16000);
 
+        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         // JMS should still be paused.
-        assertTrue(!stringExistsInLog(msgAfter));
+        assertFalse(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 16000));
 
         // resume JMS Listener from JMXClient
         Set<ObjectInstance> objSet = mbsc.queryMBeans(new ObjectName("org.apache.axis2:Type=Transport,ConnectorName=jms-listener-*"), null);
@@ -110,27 +108,8 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
             mbsc.invoke(obj.getObjectName(), "resume" , null, null);
         }
 
-        Thread.sleep(10000);
-        assertTrue(stringExistsInLog("Listener resumed"));
-        assertTrue(stringExistsInLog(msgAfter));
-
-    }
-
-    protected boolean stringExistsInLog(String string) throws Exception {
-        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
-        boolean logFound = false;
-        for (LogEvent item : logs) {
-            if (item.getPriority().equals("INFO")) {
-                String message = item.getMessage();
-                if (message.contains(string)) {
-                    logFound = true;
-                    break;
-                }
-            }
-        }
-
-        return logFound;
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Listener resumed", 10000));
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 10000));
     }
 
     private void sendMessage(String msg) throws Exception {

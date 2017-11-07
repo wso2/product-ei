@@ -32,6 +32,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.services.jaxrs.customersample.CustomerConfig;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 
@@ -82,22 +83,12 @@ public class MSMPJsonRetryTestCase extends ESBIntegrationTest {
                 CustomerConfig.class.getName(), TomcatServerType.jaxrs.name(), 8080);
 
         tomcatServerManager.startServer();  // staring tomcat server instance
-        Thread.sleep(10000);
 
         // ASSERT RESULTS
         LogViewerClient logViewerClient =
                 new LogViewerClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
-        LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
-
-        boolean success = false;
-        for (int i = 0; i < logEvents.length ; i++) {
-            if (logEvents[i].getMessage().contains("Jack")) {
-                success = true;
-                break;
-            }
-        }
-
-        assertTrue(success, "Message process retry does not work for json");
+        boolean logFound = Utils.checkForLog(logViewerClient, "Jack", 10000);
+        assertTrue(logFound, "Message process retry does not work for json");
     }
 
     @AfterClass(alwaysRun = true)

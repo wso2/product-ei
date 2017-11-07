@@ -24,6 +24,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuoteClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.message.store.stub.MessageInfo;
@@ -66,8 +67,7 @@ public class MessageStoreMessageConcurrencyTestCase extends ESBIntegrationTest {
         for (int i = 0; i < 10; i++) {
             threads.get(i).start();
         }
-        Thread.sleep(30000);
-        Assert.assertTrue(messageStoreAdminClient.getMessageCount(MESSAGE_STORE_NAME) == 40,
+        Assert.assertTrue(Utils.waitForMessageCount(messageStoreAdminClient, MESSAGE_STORE_NAME, 40, 30000),
                           "Messsages are missing or repeated");
         MessageInfo info[] = messageStoreAdminClient.getPaginatedMessages(MESSAGE_STORE_NAME, 0);
         String sendEnvelope =

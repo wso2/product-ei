@@ -7,9 +7,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.esb.integration.common.clients.registry.PropertiesAdminServiceClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 import java.rmi.RemoteException;
 
@@ -70,9 +72,6 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
 
         SendRequest(ADD_URL, trpUrl);
 
-        //response assertions
-        Thread.sleep(2000);
-
         //Check if the new value is being used
         boolean validChangedLogMessage = validateLogMessage(NEW_VALUE);
 
@@ -81,23 +80,12 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
     }
 
 
-    private boolean validateLogMessage(String value) throws RemoteException {
+    private boolean validateLogMessage(String value) throws RemoteException, LogViewerLogViewerException, InterruptedException {
 
         LogEvent[] logs = cli.getAllSystemLogs();
-
         Assert.assertNotNull(logs, "No logs found");
         Assert.assertTrue(logs.length > 0, "No logs found");
-
-        boolean success = false;
-
-        for (LogEvent logEvent : logs) {
-            String msg = logEvent.getMessage();
-            if (msg.contains(value)) {
-                success = true;
-                break;
-            }
-        }
-        return success;
+        return Utils.checkForLog(cli, value, 2000);
     }
 
     private void SendRequest(String addurl, String trpurl) {
