@@ -37,6 +37,7 @@ public class CallMediatorBlockingAPITestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         verifyAPIExistence("CallBlockingPayloadAPI");
+        verifyAPIExistence("replyAPI");
     }
 
     @Test(groups = { "wso2.esb" },
