@@ -153,6 +153,15 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>workspace-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-composer-web</artifactId>
+            <type>zip</type>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>org.ballerinalang.tools</groupId>-->
             <!--<artifactId>ballerina</artifactId>-->
@@ -237,6 +246,31 @@
                                     <outputDirectory>target/ballerina</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeArtifactIds>
+                                workspace-service,ballerina-composer-web
+                            </includeArtifactIds>
+                            <outputDirectory>${basedir}/target/WSO2Carbon/tmp
+                            </outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
+                            <stripVersion>true</stripVersion>
                         </configuration>
                     </execution>
                 </executions>
