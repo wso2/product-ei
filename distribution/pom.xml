@@ -66,7 +66,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.secvault</groupId>
@@ -162,11 +165,35 @@
             <artifactId>ballerina-composer-web</artifactId>
             <type>zip</type>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.ballerinalang.tools</groupId>-->
-            <!--<artifactId>ballerina</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-builtin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-launcher</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-http</artifactId>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>org.wso2.ei</groupId>-->
             <!--<artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>-->
@@ -229,25 +256,6 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>unpack-ballerina</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.ballerinalang.tools</groupId>
-                                    <artifactId>ballerina</artifactId>
-                                    <version>${ballerina.runtime.version}</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -256,7 +264,7 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>unpack-dependencies</id>
+                        <id>unpack-dependencies-composer</id>
                         <phase>package</phase>
                         <goals>
                             <goal>unpack-dependencies</goal>
@@ -266,6 +274,24 @@
                                 workspace-service,ballerina-composer-web
                             </includeArtifactIds>
                             <outputDirectory>${basedir}/target/WSO2Carbon/tmp
+                            </outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-dependencies-runtime</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeArtifactIds>
+                                ballerina-builtin,ballerina-http,ballerina-logging
+                            </includeArtifactIds>
+                            <outputDirectory>${basedir}/target/ballerina
                             </outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>

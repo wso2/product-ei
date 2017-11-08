@@ -176,7 +176,7 @@ status=$START_EXIT_STATUS
 # Setting Classpath
 
 COMPOSER_CLASSPATH="$BAL_COMPOSER_HOME/resources/composer/services/*"
-for j in "$BAL_COMPOSER_HOME"/wso2/lib/plugins/*.jar
+for j in "$BAL_COMPOSER_HOME"/bre/lib/*.jar
 do
     COMPOSER_CLASSPATH="$COMPOSER_CLASSPATH":$j
 done
@@ -189,7 +189,7 @@ done
     -Xms256m -Xmx1024m \
     -XX:+HeapDumpOnOutOfMemoryError \
     -XX:HeapDumpPath="$BAL_COMPOSER_HOME/logs/heap-dump-tool.hprof" \
-    -Djava.util.logging.config.file="$BAL_COMPOSER_HOME/conf/composer/composer-logging.properties" \
+    -Djava.util.logging.config.file="$BAL_COMPOSER_HOME/bre/conf/composer-logging.properties" \
     $JAVA_OPTS \
     -classpath "$COMPOSER_CLASSPATH" \
     -Djava.io.tmpdir="$BAL_COMPOSER_HOME/tmp" \
@@ -203,4 +203,5 @@ done
     -Dworkspace.port=8289 \
     -Dtransports.netty.conf=./resources/composer/services/netty-transports.yml \
     -Dmsf4j.conf=./resources/composer/services/deployment.yaml \
-org.ballerinalang.composer.service.workspace.app.WorkspaceServiceRunner $@
+    org.ballerinalang.composer.service.workspace.app.WorkspaceServiceRunner $@
+
