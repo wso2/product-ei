@@ -16,8 +16,7 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -29,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
-    <version>7.0.0-SNAPSHOT</version>
+    <version>7.0.0-update0</version>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
@@ -362,7 +361,7 @@
         <url>https://github.com/wso2/product-ei.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-ei.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/product-ei.git</connection>
-        <tag>HEAD</tag>
+        <tag>v7.0.0-update0</tag>
     </scm>
 
     <build>
