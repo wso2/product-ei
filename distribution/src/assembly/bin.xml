@@ -57,11 +57,11 @@
             <outputDirectory>wso2/ballerina/bre/conf</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
-        <fileSet>
-            <directory>src/conf/ballerina</directory>
-            <outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>
-            <fileMode>644</fileMode>
-        </fileSet>
+        <!--<fileSet>-->
+            <!--<directory>src/conf/ballerina</directory>-->
+            <!--<outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</fileSet>-->
         <fileSet>
             <directory>src/ballerina/logs</directory>
             <outputDirectory>wso2/ballerina/logs</outputDirectory>
@@ -86,12 +86,12 @@
             <outputDirectory>wso2/ballerina/bre/security</outputDirectory>
         <fileMode>644</fileMode>
         </fileSet>
-        <fileSet>
-            <directory>
-                target/WSO2Carbon/tmp/ballerina-composer-web-zip/ballerina-composer-web-${ballerina.runtime.version}
-            </directory>
-            <outputDirectory>wso2/ballerina</outputDirectory>
-        </fileSet>
+        <!--<fileSet>-->
+            <!--<directory>-->
+                <!--target/WSO2Carbon/tmp/ballerina-composer-web-zip/ballerina-composer-web-${ballerina.runtime.version}-->
+            <!--</directory>-->
+            <!--<outputDirectory>wso2/ballerina</outputDirectory>-->
+        <!--</fileSet>-->
         <!--Ballerina related:end-->
         <fileSet>
             <directory>carbon-home</directory>
@@ -132,62 +132,62 @@
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
-        <file>
-            <source>src/ballerina/bin/composer</source>
-            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
-            <fileMode>755</fileMode>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>src/ballerina/bin/composer.bat</source>
-            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
-            <fileMode>755</fileMode>
-            <filtered>true</filtered>
-        </file>
+        <!--<file>-->
+            <!--<source>src/ballerina/bin/composer</source>-->
+            <!--<outputDirectory>wso2/ballerina/bin/</outputDirectory>-->
+            <!--<fileMode>755</fileMode>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>src/ballerina/bin/composer.bat</source>-->
+            <!--<outputDirectory>wso2/ballerina/bin/</outputDirectory>-->
+            <!--<fileMode>755</fileMode>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
         <file>
             <source>src/ballerina/bin/version.txt</source>
             <outputDirectory>wso2/ballerina/bin/</outputDirectory>
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
-        <file>
-            <source>src/scripts/ballerina.sh</source>
-            <outputDirectory>bin/</outputDirectory>
-            <fileMode>755</fileMode>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>src/scripts/ballerina.bat</source>
-            <outputDirectory>bin/</outputDirectory>
-            <fileMode>755</fileMode>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>src/scripts/composer.bat</source>
-            <outputDirectory>bin/</outputDirectory>
-            <fileMode>755</fileMode>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>src/scripts/composer.sh</source>
-            <outputDirectory>bin/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>755</fileMode>
-        </file>
-        <file>
-            <source>src/conf/composer/composer-logging.properties</source>
-            <outputDirectory>wso2/ballerina/bre/conf</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>
-                target/WSO2Carbon/tmp/workspace-service-jar/deployment.yaml
-            </source>
-            <outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>src/scripts/ballerina.sh</source>-->
+            <!--<outputDirectory>bin/</outputDirectory>-->
+            <!--<fileMode>755</fileMode>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>src/scripts/ballerina.bat</source>-->
+            <!--<outputDirectory>bin/</outputDirectory>-->
+            <!--<fileMode>755</fileMode>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>src/scripts/composer.bat</source>-->
+            <!--<outputDirectory>bin/</outputDirectory>-->
+            <!--<fileMode>755</fileMode>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>src/scripts/composer.sh</source>-->
+            <!--<outputDirectory>bin/</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>755</fileMode>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>src/conf/composer/composer-logging.properties</source>-->
+            <!--<outputDirectory>wso2/ballerina/bre/conf</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>-->
+                <!--target/WSO2Carbon/tmp/workspace-service-jar/deployment.yaml-->
+            <!--</source>-->
+            <!--<outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
         <file>
             <source>src/ballerina/LICENSE.txt</source>
             <outputDirectory>wso2/ballerina/</outputDirectory>
@@ -281,11 +281,11 @@
             </includes>
         </dependencySet>
         <!-- Composer specific artifacts -->
-        <dependencySet>
-            <outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>
-            <includes>
-                <include>org.ballerinalang:workspace-service:jar</include>
-            </includes>
-        </dependencySet>
+        <!--<dependencySet>-->
+            <!--<outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>-->
+            <!--<includes>-->
+                <!--<include>org.ballerinalang:workspace-service:jar</include>-->
+            <!--</includes>-->
+        <!--</dependencySet>-->
     </dependencySets>
 </assembly>

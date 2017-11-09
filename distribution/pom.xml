@@ -156,15 +156,15 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>workspace-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-composer-web</artifactId>
-            <type>zip</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.ballerinalang</groupId>-->
+            <!--<artifactId>workspace-service</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.ballerinalang</groupId>-->
+            <!--<artifactId>ballerina-composer-web</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-core</artifactId>
@@ -263,24 +263,24 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
-                    <execution>
-                        <id>unpack-dependencies-composer</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <includeArtifactIds>
-                                workspace-service,ballerina-composer-web
-                            </includeArtifactIds>
-                            <outputDirectory>${basedir}/target/WSO2Carbon/tmp
-                            </outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                            <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                            <stripVersion>true</stripVersion>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>unpack-dependencies-composer</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>unpack-dependencies</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<includeArtifactIds>-->
+                                <!--workspace-service,ballerina-composer-web-->
+                            <!--</includeArtifactIds>-->
+                            <!--<outputDirectory>${basedir}/target/WSO2Carbon/tmp-->
+                            <!--</outputDirectory>-->
+                            <!--<overWriteReleases>false</overWriteReleases>-->
+                            <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+                            <!--<useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>-->
+                            <!--<stripVersion>true</stripVersion>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                     <execution>
                         <id>unpack-dependencies-runtime</id>
                         <phase>package</phase>
@@ -558,11 +558,11 @@
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
                                 <delete dir="target/p2-repo" />
                                 <!-- Figure out a way to delete tmp.* files -->
-                                <delete file="target/tmp" />
-                                <delete dir="target/WSO2Carbon" />
-                                <delete dir="target/antrun" />
-                                <delete dir="target/director" />
-                                <delete dir="target/ballerina" />
+                                <!--<delete file="target/tmp" />-->
+                                <!--<delete dir="target/WSO2Carbon" />-->
+                                <!--<delete dir="target/antrun" />-->
+                                <!--<delete dir="target/director" />-->
+                                <!--<delete dir="target/ballerina" />-->
                             </target>
                         </configuration>
                         <goals>
