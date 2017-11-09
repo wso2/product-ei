@@ -39,18 +39,18 @@
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.osgi.feature</artifactId>
-            <type>zip</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon</groupId>-->
+            <!--<artifactId>org.wso2.carbon.osgi.feature</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.launcher</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.server.feature</artifactId>
+            <artifactId>org.wso2.carbon.kernel.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -58,11 +58,11 @@
             <artifactId>org.wso2.carbon.runtime.feature</artifactId>
             <type>zip</type>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.config</groupId>
-            <artifactId>org.wso2.carbon.config.feature</artifactId>
-            <type>zip</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.config</groupId>-->
+            <!--<artifactId>org.wso2.carbon.config.feature</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -71,26 +71,26 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.secvault</groupId>
-            <artifactId>org.wso2.carbon.secvault.feature</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.secvault</groupId>
-            <artifactId>org.wso2.carbon.secvault.tools.feature</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.utils</groupId>
-            <artifactId>org.wso2.carbon.utils.feature</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.touchpoint</groupId>
-            <artifactId>org.wso2.carbon.touchpoint.feature</artifactId>
-            <type>zip</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.secvault</groupId>-->
+            <!--<artifactId>org.wso2.carbon.secvault.feature</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.secvault</groupId>-->
+            <!--<artifactId>org.wso2.carbon.secvault.tools.feature</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.utils</groupId>-->
+            <!--<artifactId>org.wso2.carbon.utils.feature</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.touchpoint</groupId>-->
+            <!--<artifactId>org.wso2.carbon.touchpoint.feature</artifactId>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.wso2.carbon.jndi</groupId>
             <artifactId>org.wso2.carbon.jndi.feature</artifactId>
@@ -314,38 +314,38 @@
                         <configuration>
                             <targetRepository>file:${basedir}/target/p2-repo</targetRepository>
                             <features>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.touchpoint.feature</id>-->
+                                    <!--<version>${carbon.touchpoint.version}</version>-->
+                                <!--</feature>-->
                                 <feature>
-                                    <id>org.wso2.carbon.touchpoint.feature</id>
-                                    <version>${carbon.touchpoint.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.server.feature</id>
+                                    <id>org.wso2.carbon.kernel.feature</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.osgi.feature</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.osgi.feature</id>-->
+                                    <!--<version>${carbon.kernel.version}</version>-->
+                                <!--</feature>-->
                                 <feature>
                                     <id>org.wso2.carbon.runtime.feature</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.config.feature</id>
-                                    <version>${carbon.config.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.secvault.feature</id>
-                                    <version>${carbon.secvault.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.secvault.tools.feature</id>
-                                    <version>${carbon.secvault.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.utils.feature</id>
-                                    <version>${carbon.utils.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.config.feature</id>-->
+                                    <!--<version>${carbon.config.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.secvault.feature</id>-->
+                                    <!--<version>${carbon.secvault.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.secvault.tools.feature</id>-->
+                                    <!--<version>${carbon.secvault.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.utils.feature</id>-->
+                                    <!--<version>${carbon.utils.version}</version>-->
+                                <!--</feature>-->
                                 <feature>
                                     <id>org.wso2.carbon.caching.feature</id>
                                     <version>${carbon.cache.version}</version>
@@ -420,6 +420,7 @@
                             <goal>publish-product</goal>
                         </goals>
                         <configuration>
+                            <productConfigurationFile>${basedir}/carbon.product</productConfigurationFile>
                             <executable>
                                 ${basedir}/target/org.eclipse.equinox.executable_3.5.0.v20110530-7P7NFUFFLWUl76mart
                             </executable>
@@ -433,6 +434,7 @@
                             <goal>generate-runtime</goal>
                         </goals>
                         <configuration>
+                            <productConfigurationFile>${basedir}/carbon.product</productConfigurationFile>
                             <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
                             <targetPath>file:${basedir}/target/WSO2Carbon/wso2</targetPath>
                             <runtime>broker</runtime>
@@ -450,20 +452,24 @@
                             <destination>${basedir}/target/WSO2Carbon/wso2</destination>
                             <deleteOldRuntimeFiles>true</deleteOldRuntimeFiles>
                             <features>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.config.feature</id>-->
+                                    <!--<version>${carbon.config.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.osgi.feature</id>-->
+                                    <!--<version>${carbon.kernel.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.secvault.feature</id>-->
+                                    <!--<version>${carbon.secvault.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.utils.feature</id>-->
+                                    <!--<version>${carbon.utils.version}</version>-->
+                                <!--</feature>-->
                                 <feature>
-                                    <id>org.wso2.carbon.config.feature</id>
-                                    <version>${carbon.config.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.secvault.feature</id>
-                                    <version>${carbon.secvault.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.utils.feature</id>
-                                    <version>${carbon.utils.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.server.feature.group</id>
+                                    <id>org.wso2.carbon.kernel.feature.group</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
@@ -510,10 +516,10 @@
                                     <id>org.wso2.carbon.datasource.core.feature.group</id>
                                     <version>${carbon.datasources.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.deployment.engine.feature.group</id>
-                                    <version>${carbon.deployment.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.deployment.engine.feature.group</id>-->
+                                    <!--<version>${carbon.deployment.version}</version>-->
+                                <!--</feature>-->
                                 <feature>
                                     <id>org.wso2.carbon.deployment.engine.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
