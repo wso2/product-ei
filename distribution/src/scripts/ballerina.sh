@@ -59,9 +59,19 @@ NAME=start-ballerina
 # Daemon name, where is the actual executable
 BALLERINA_INIT_SCRIPT="$CARBON_HOME/wso2/ballerina/bin/ballerina"
 
-# If the daemon is not there, then exit.
+  echo
+  echo "Please provide ballerina command  :"
+  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "       Available Commands      "
+  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "run          compile and run Ballerina program"
+  echo "version      print Ballerina version"
+  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  read command1
+  echo
 
-sh $BALLERINA_INIT_SCRIPT $* &
+# If the daemon is not there, then exit.
+sh $BALLERINA_INIT_SCRIPT $command1 $* &
 
 trap "sh $BALLERINA_INIT_SCRIPT stop; exit;" INT TERM
 while :

@@ -51,16 +51,48 @@
             <!--</excludes>-->
             <fileMode>755</fileMode>
         </fileSet>
+        <!--Ballerina related:start-->
         <fileSet>
-            <directory>target/ballerina/ballerina-${ballerina.runtime.version}</directory>
-            <outputDirectory>wso2/ballerina</outputDirectory>
+            <directory>src/conf/ballerina</directory>
+            <outputDirectory>wso2/ballerina/bre/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/conf/ballerina</directory>
+            <outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/ballerina/logs</directory>
+            <outputDirectory>wso2/ballerina/logs</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>
+                target/ballerina/ballerina-builtin-jar/META-INF/ballerina
+            </directory>
+            <outputDirectory>wso2/ballerina/src</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>
+                target/ballerina/extracted-distributions/ballerina-http-jar/META-INF/natives
+            </directory>
+            <outputDirectory>wso2/ballerina/src</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>
+                src/ballerina/security
+            </directory>
+            <outputDirectory>wso2/ballerina/bre/security</outputDirectory>
+        <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
             <directory>
                 target/WSO2Carbon/tmp/ballerina-composer-web-zip/ballerina-composer-web-${ballerina.runtime.version}
             </directory>
-            <outputDirectory>.</outputDirectory>
+            <outputDirectory>wso2/ballerina</outputDirectory>
         </fileSet>
+        <!--Ballerina related:end-->
         <fileSet>
             <directory>carbon-home</directory>
             <outputDirectory></outputDirectory>
@@ -81,15 +113,40 @@
     </fileSets>
 
     <files>
+        <!--Ballerina related: start-->
         <file>
-            <source>src/scripts/broker.sh</source>
-            <outputDirectory>bin/</outputDirectory>
+            <source>target/ballerina/ballerina-logging-jar/logging.properties</source>
+            <outputDirectory>wso2/ballerina/bre/conf/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/ballerina/bin/ballerina</source>
+            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
         <file>
-            <source>src/scripts/msf4j.sh</source>
-            <outputDirectory>bin/</outputDirectory>
+            <source>src/ballerina/bin/ballerina.bat</source>
+            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/ballerina/bin/composer</source>
+            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/ballerina/bin/composer.bat</source>
+            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/ballerina/bin/version.txt</source>
+            <outputDirectory>wso2/ballerina/bin/</outputDirectory>
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
@@ -100,15 +157,15 @@
             <filtered>true</filtered>
         </file>
         <file>
-            <source>src/conf/msf4j/deployment.yaml</source>
-            <outputDirectory>conf/msf4j/</outputDirectory>
-            <fileMode>644</fileMode>
+            <source>src/scripts/ballerina.bat</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
         <file>
-            <source>src/conf/broker/deployment.yaml</source>
-            <outputDirectory>conf/broker/</outputDirectory>
-            <fileMode>644</fileMode>
+            <source>src/scripts/composer.bat</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
         <file>
@@ -119,7 +176,7 @@
         </file>
         <file>
             <source>src/conf/composer/composer-logging.properties</source>
-            <outputDirectory>conf/composer</outputDirectory>
+            <outputDirectory>wso2/ballerina/bre/conf</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
@@ -127,12 +184,94 @@
             <source>
                 target/WSO2Carbon/tmp/workspace-service-jar/deployment.yaml
             </source>
-            <outputDirectory>resources/composer/services</outputDirectory>
+            <outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>src/ballerina/LICENSE.txt</source>
+            <outputDirectory>wso2/ballerina/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/ballerina/copyright.txt</source>
+            <outputDirectory>wso2/ballerina/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/ballerina/README.txt</source>
+            <outputDirectory>wso2/ballerina/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <!--Ballerina related: end-->
+        <file>
+            <source>src/scripts/broker.sh</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/conf/broker/deployment.yaml</source>
+            <outputDirectory>conf/broker/</outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
     </files>
     <dependencySets>
+        <dependencySet>
+            <outputDirectory>wso2/ballerina/bre/lib</outputDirectory>
+            <scope>runtime</scope>
+            <includes>
+                <include>org.ballerinalang:ballerina-config:jar</include>
+                <include>org.ballerinalang:ballerina-core:jar</include>
+                <include>org.ballerinalang:ballerina-lang:jar</include>
+                <include>org.ballerinalang:ballerina-launcher:jar</include>
+                <include>org.ballerinalang:ballerina-builtin:jar</include>
+                <include>org.ballerinalang:ballerina-logging:jar</include>
+                <include>org.ballerinalang:ballerina-http:jar</include>
+                <include>org.wso2.orbit.org.antlr:antlr4-runtime</include>
+                <include>org.wso2.carbon.transport:org.wso2.carbon.transport.http.netty</include>
+                <include>org.wso2.carbon.messaging:org.wso2.carbon.messaging</include>
+                <include>org.wso2.orbit.net.sf.saxon:Saxon-HE</include>
+                <include>com.fasterxml.jackson.core:jackson-databind</include>
+                <include>com.fasterxml.jackson.core:jackson-core</include>
+                <include>com.fasterxml.jackson.core:jackson-annotations</include>
+                <include>org.apache.ws.commons.axiom:axiom-api</include>
+                <include>org.apache.ws.commons.axiom:axiom-impl</include>
+                <include>org.apache.ws.commons.axiom:axiom-dom</include>
+                <include>jaxen:jaxen</include>
+                <include>org.apache.geronimo.specs:geronimo-activation_1.1_spec</include>
+                <include>org.apache.geronimo.specs:geronimo-stax-api_1.0_spec</include>
+                <include>org.apache.james:apache-mime4j-core</include>
+                <include>com.beust:jcommander</include>
+                <include>org.slf4j:slf4j-api</include>
+                <include>org.slf4j:slf4j-jdk14</include>
+                <include>io.netty:netty-common</include>
+                <include>io.netty:netty-buffer</include>
+                <include>io.netty:netty-transport</include>
+                <include>io.netty:netty-handler</include>
+                <include>io.netty:netty-codec</include>
+                <include>io.netty:netty-codec-http</include>
+                <include>io.netty:netty-codec-http2</include>
+                <include>io.netty:netty-resolver</include>
+                <include>commons-pool.wso2:commons-pool</include>
+                <include>org.apache.commons:commons-pool2</include>
+                <include>org.wso2.orbit.org.yaml:snakeyaml</include>
+                <include>commons-logging:commons-logging</include>
+                <include>org.wso2.staxon:staxon-core</include>
+                <include>org.apache.commons:commons-lang3</include>
+                <include>javax.websocket:javax.websocket-api</include>
+                <include>org.wso2.carbon:org.wso2.carbon.core:jar</include>
+                <include>com.zaxxer:HikariCP</include>
+                <include>javax.transaction:fjavax.transaction-api</include>
+                <include>org.atomikos.wso2:atomikos</include>
+                <include>org.quartz-scheduler:quartz</include>
+                <include>org.quartz-scheduler:quartz-jobs</include>
+            </includes>
+        </dependencySet>
         <dependencySet>
             <outputDirectory>wso2/lib/plugins</outputDirectory>
             <scope>runtime</scope>
@@ -143,7 +282,7 @@
         </dependencySet>
         <!-- Composer specific artifacts -->
         <dependencySet>
-            <outputDirectory>resources/composer/services</outputDirectory>
+            <outputDirectory>wso2/ballerina/resources/composer/services</outputDirectory>
             <includes>
                 <include>org.ballerinalang:workspace-service:jar</include>
             </includes>
