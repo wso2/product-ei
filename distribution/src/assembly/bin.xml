@@ -46,9 +46,9 @@
                 <include>**/*.sh</include>
                 <include>**/native/*</include>
             </includes>
-            <excludes>
-            <exclude>**/carbon.sh</exclude>
-            </excludes>
+            <!--<excludes>-->
+            <!--<exclude>**/carbon.sh</exclude>-->
+            <!--</excludes>-->
             <fileMode>755</fileMode>
         </fileSet>
         <!--Ballerina related:start-->
@@ -213,12 +213,12 @@
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </file>
-        <!--<file>-->
-            <!--<source>src/conf/broker/deployment.yaml</source>-->
-            <!--<outputDirectory>conf/broker/</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-            <!--<filtered>true</filtered>-->
-        <!--</file>-->
+        <file>
+            <source>src/conf/broker/deployment.yaml</source>
+            <outputDirectory>conf/broker/</outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
     </files>
     <dependencySets>
         <dependencySet>
