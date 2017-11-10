@@ -46,9 +46,7 @@ public class DistributedCachingHeaderSerializationTestcase extends ESBIntegratio
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "mediatorconfig" + File.separator + "cache"
-                + File.separator + "DistributedCachingHeaderSerialization.xml");
+        verifyProxyServiceExistence("RespondProxy");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 

@@ -32,7 +32,7 @@ public class ESBJAVA5200DashSupportForMappingDataTestCase extends DataMapperInte
 
     @Test(groups = { "wso2.esb" }, description = "Datamapper : test including dash for mapping data")
     public void testMultiplePrefixesToSameNamespace() throws Exception {
-        loadESBConfigurationFromClasspath(DM_ARTIFACT_ROOT_PATH + File.separator + "synapse.xml");
+        verifyAPIExistence("dashSupport");
         uploadResourcesToGovernanceRegistry(DM_REGISTRY_ROOT_PATH + "dashSupport/", DM_ARTIFACT_ROOT_PATH,
                 "DashSupportConfig.dmc",
                 "DashSupportConfig_inputSchema.json",

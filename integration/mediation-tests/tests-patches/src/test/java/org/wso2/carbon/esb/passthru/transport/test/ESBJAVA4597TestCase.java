@@ -30,17 +30,14 @@ public class ESBJAVA4597TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4597/TestProxy.xml");
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4597/ReceiveSeq.xml");
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4597/MyFaultSequency.xml");
-
+        verifyProxyServiceExistence("ESBJAVA4597TestProxy");
     }
 
     @Test(groups = "wso2.esb",
           description = " Checking response for HEAD request contains a body")
     public void testResponseBodyOfHEADRequest() throws Exception {
         OMElement response = axis2Client.
-                sendSimpleStockQuoteRequest("http://localhost:8280/services/TestProxy", null, "IBM");
+                sendSimpleStockQuoteRequest("http://localhost:8280/services/ESBJAVA4597TestProxy", null, "IBM");
         Assert.assertNotNull(response);
 
     }

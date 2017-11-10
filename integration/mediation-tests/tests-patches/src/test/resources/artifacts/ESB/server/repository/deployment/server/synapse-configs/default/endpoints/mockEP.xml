@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="mockEP">
+    <http method="get"
+          uri-template="http://www.mocky.io/v2/5646b874100000e815889a82"/>
+</endpoint>

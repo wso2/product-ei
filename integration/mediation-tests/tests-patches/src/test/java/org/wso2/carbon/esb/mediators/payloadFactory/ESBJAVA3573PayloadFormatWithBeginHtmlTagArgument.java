@@ -51,9 +51,7 @@ public class ESBJAVA3573PayloadFormatWithBeginHtmlTagArgument extends ESBIntegra
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        // applying changes to esb - source view
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/payloadmediatype/" +
-                                          "expressionWithDeepCheck.xml");
+        verifyAPIExistence("deepCheckAPI");
     }
 
     @AfterClass(alwaysRun = true)

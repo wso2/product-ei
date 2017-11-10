@@ -51,7 +51,7 @@ public class HttpEpTemplateWithSystemPropsTestCase {
 			+ "/HttpTemplateTestAPI/SimpleStockQuoteService";
 	ESBTestCaseUtils esbUtils;
 	CarbonTestServerManager server2;
-	
+
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	@BeforeClass(groups = { "wso2.esb" })
 	public void init() throws Exception {
@@ -87,7 +87,7 @@ public class HttpEpTemplateWithSystemPropsTestCase {
 		ClientConnectionUtil.waitForPort(SERVER_PORT, HOST);
 		ClientConnectionUtil.waitForLogin(context);// (SERVER_PORT, HOST,
 		// BACKEND_URL);
-        TimeUnit.SECONDS.sleep(15);
+		TimeUnit.SECONDS.sleep(15);
 		String sessionCookie = authenticatorClient.login("admin", "admin",
 				new URL(BACKEND_URL).getHost());
 
@@ -99,4 +99,3 @@ public class HttpEpTemplateWithSystemPropsTestCase {
 	}
 
 }
-

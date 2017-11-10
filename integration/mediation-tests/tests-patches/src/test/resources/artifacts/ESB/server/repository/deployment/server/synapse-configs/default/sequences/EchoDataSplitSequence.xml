@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="EchoDataSplitSequence" xmlns="http://ws.apache.org/ns/synapse">
+    <iterate xmlns:ns="http://org.apache.synapse/xsd"
+             continueParent="true" expression="//security/security_row"
+             sequential="true">
+        <target>
+            <sequence>
+                <clone continueParent="true" id="clone2" sequential="true">
+                    <target>
+                        <sequence>
+                            <sequence key="EchoSequenceOne" />
+                        </sequence>
+                    </target>
+                    <target>
+                        <sequence>
+                            <sequence key="EchoSequenceTwo" />
+                        </sequence>
+                    </target>
+                </clone>
+            </sequence>
+        </target>
+    </iterate>
+</sequence>

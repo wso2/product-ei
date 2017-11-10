@@ -30,7 +30,7 @@ public class ESBJAVA3412EmptyStackExceptionTest extends ESBIntegrationTest {
 		super.init();
 		/* deploying the artifact defined in the proxy_service.xml */
 
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/cloneMediatorEmptyStackException.xml");
+		verifyProxyServiceExistence("CloneMediatorEmptyStackProxy");
 
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
 				getSessionCookie());
@@ -56,7 +56,7 @@ public class ESBJAVA3412EmptyStackExceptionTest extends ESBIntegrationTest {
 		// invoking the service through the proxy service
 		AxisServiceClient client = new AxisServiceClient();
 
-		final String proxyUrl = contextUrls.getServiceUrl() + "/TestProxy ";
+		final String proxyUrl = contextUrls.getServiceUrl() + "/CloneMediatorEmptyStackProxy";
 
 		try {
 			client.sendRobust(request, proxyUrl, "mediate");

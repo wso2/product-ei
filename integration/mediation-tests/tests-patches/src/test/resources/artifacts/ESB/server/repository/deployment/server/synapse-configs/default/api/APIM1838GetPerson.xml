@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="APIM1838getPerson" context="/APIM1838getPerson">
+    <resource methods="GET" uri-template="/person*">
+        <inSequence>
+            <property name="POST_TO_URI" value="true" scope="axis2" type="STRING"/>
+            <property name="uri.var.emailAddress"
+                      expression="$ctx:query.param.email"
+                      scope="default"
+                      type="STRING"/>
+            <log>
+                <property name="email" expression="get-property('uri.var.emailAddress')"/>
+            </log>
+            <cache id="arcGisSingleCache"
+                   scope="per-host"
+                   collector="false"
+                   hashGenerator="org.wso2.caching.digest.REQUESTHASHGenerator"
+                   timeout="100"
+                   maxMessageSize="1000000">
+                <implementation type="memory" maxSize="1000000"/>
+            </cache>
+            <send>
+                <endpoint>
+                    <http method="get"
+                          uri-template="http://localhost:8080/rest/api/people/{uri.var.emailAddress}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <cache id="arcGisSingleCache" scope="per-host" collector="true"/>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

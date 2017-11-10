@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="EndpointErrorTestRightErrorSequence">
+<log level="custom">
+    <property name="-----------EndpointErrorTestRightErrorSequence Processing Sequence-------------"
+              value="==========EndpointErrorTestRightErrorSequence============"/>
+</log>
+<payloadFactory media-type="xml">
+    <format>
+        <error xmlns="">EndpointErrorTestRightErrorSequence Fault Handler Called</error>
+    </format>
+    <args/>
+</payloadFactory>
+<respond/>
+</sequence>

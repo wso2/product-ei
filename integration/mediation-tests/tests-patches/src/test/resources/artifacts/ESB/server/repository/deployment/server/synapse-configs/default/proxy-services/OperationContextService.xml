@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="OperationContextService"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target faultSequence="fault">
+        <inSequence>
+            <property name="ContentMgs" scope="operation">
+                <Content xmlns="">
+                    <article>
+                        <title>My article</title>
+                        <content>My article content</content>
+                        <footer>dd:MM:yyyy HH:mm:ss</footer>
+                    </article>
+                </Content>
+            </property>
+            <payloadFactory media-type="xml">
+                <format>
+                    <article xmlns="">
+                        <title>My article</title>
+                        <content>My article content</content>
+                        <footer>dd:MM:yyyy HH:mm:ss</footer>
+                    </article>
+                </format>
+                <args/>
+            </payloadFactory>
+            <enrich>
+                <source xmlns:ns="http://org.apache.synapse/xsd"
+                        clone="true"
+                        xpath="$body/*[1]"/>
+                <target action="child" xpath="get-property('operation', 'ContentMgs')"/>
+            </enrich>
+            <payloadFactory media-type="xml">
+                <format>
+                    <page xmlns="">$1</page>
+                </format>
+                <args>
+                    <arg xmlns:ns="http://org.apache.synapse/xsd"
+                         evaluator="xml"
+                         expression="get-property('operation','ContentMgs')"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+    </target>
+    <parameter name="disableREST">true</parameter>
+    <parameter name="disableSOAP12">true</parameter>
+    <description/>
+</proxy>

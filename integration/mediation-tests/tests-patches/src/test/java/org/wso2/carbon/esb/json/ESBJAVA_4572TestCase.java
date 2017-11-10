@@ -38,8 +38,7 @@ public class ESBJAVA_4572TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File.separator +
-                                          "json" + File.separator + "TestApi.xml");
+        verifyAPIExistence("ESBJAVA4572TestAPI");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.ALL})
@@ -49,7 +48,7 @@ public class ESBJAVA_4572TestCase extends ESBIntegrationTest {
                    "{\"state\":[{\"path\":\"user_programs_progress\",\"entry\":" +
                    "[{\"value\":\"false\",\"key\":\"testJson14\"}]}]}";
 
-        HttpResponse response = httpClient.doPost("http://localhost:8280/abc/dd",
+        HttpResponse response = httpClient.doPost("http://localhost:8280/ESBJAVA4572abc/dd",
                                                   null, payload, "application/json");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         response.getEntity().writeTo(bos);

@@ -39,9 +39,7 @@ public class ESBJAVA5098_WSAddressingSupportTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(
-                "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig" + File.separator + "header" +
-                        File.separator + "WSAddressingSupport.xml");
+        verifyProxyServiceExistence("WSAProxy");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})

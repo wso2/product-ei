@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="NoEntityBodyPropertyTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <target>
+      <inSequence>
+         <property name="HTTP_SC" value="500" scope="axis2" type="STRING"/>
+         <property name="NO_ENTITY_BODY" value="true" scope="axis2" type="BOOLEAN"/>
+         <log level="full"/>
+         <respond/>
+      </inSequence>
+   </target>
+</proxy>

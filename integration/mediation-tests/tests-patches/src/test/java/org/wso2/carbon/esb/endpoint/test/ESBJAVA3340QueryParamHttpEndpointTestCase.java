@@ -37,10 +37,7 @@ public class ESBJAVA3340QueryParamHttpEndpointTestCase extends ESBIntegrationTes
     public void init() throws Exception {
         super.init();
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "synapseconfig" + File.separator + "rest"
-                + File.separator + "query_params_api.xml");
+        verifyAPIExistence("passParamsToEPTestApi");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Sending a Message Via REST to test query param works with space character", enabled = true)

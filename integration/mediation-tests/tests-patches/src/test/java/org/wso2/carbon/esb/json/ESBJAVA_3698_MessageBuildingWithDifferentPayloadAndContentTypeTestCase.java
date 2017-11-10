@@ -40,8 +40,7 @@ public class ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestC
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 		super.init();
-		loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB" + File.separator +
-		                                  "json" + File.separator + "StockQuoteAPI.xml");
+		verifyAPIExistence("ESBJAVA3698JsonStockQuoteAPI");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 	}
 
@@ -50,7 +49,7 @@ public class ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestC
 	public void testAxisFaultWithXmlPayloadAndJSONContentType() throws ClientProtocolException,
 	                                                           IOException, InterruptedException,
                                                                LogViewerLogViewerException {
-		final HttpPost post = new HttpPost("http://localhost:8480/jsonstockquote/test");
+		final HttpPost post = new HttpPost("http://localhost:8480/ESBJAVA3698jsonstockquote/test");
 		post.addHeader("Content-Type", "application/json");
 		post.addHeader("SOAPAction", "urn:getQuote");
 		StringEntity se = new StringEntity(getPayload());

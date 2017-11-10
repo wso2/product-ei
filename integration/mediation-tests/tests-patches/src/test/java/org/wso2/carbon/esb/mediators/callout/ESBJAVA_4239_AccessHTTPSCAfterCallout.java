@@ -26,9 +26,7 @@ public class ESBJAVA_4239_AccessHTTPSCAfterCallout extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployeService() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/FetchHTTPSCWithCalloutMediator.xml");
-        isProxyDeployed(PROXY_SERVICE_NAME);
-
+        verifyProxyServiceExistence("HTTPSCProxy");
     }
 
     @Test(groups = { "wso2.esb" }, description = "Test whether an HTTP SC can be retrieved after the callout mediator.")

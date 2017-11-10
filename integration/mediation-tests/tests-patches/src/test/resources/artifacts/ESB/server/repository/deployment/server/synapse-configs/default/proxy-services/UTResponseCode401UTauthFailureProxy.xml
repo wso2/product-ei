@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="UTResponseCode401UTauthFailureProxy" startOnLoad="true" trace="disable" transports="https http">
+    <description/>
+    <target>
+        <inSequence>
+            <respond/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <publishWSDL uri="http://localhost:9000/services/SimpleStockQuoteService?wsdl"/>
+    <policy key="UTResponseCode401UTauthFailureLE"/>
+    <parameter name="ScenarioID">scenario1</parameter>
+    <enableSec/>
+</proxy>

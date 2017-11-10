@@ -33,7 +33,7 @@ public class ESBJAVA4892EnrichPropertyTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/enrich/OperationContextService.xml");
+        verifyProxyServiceExistence(PROXY_NAME);
     }
 
     @Test(groups = "wso2.esb", description = "Tests Enriching Property in Operation context")

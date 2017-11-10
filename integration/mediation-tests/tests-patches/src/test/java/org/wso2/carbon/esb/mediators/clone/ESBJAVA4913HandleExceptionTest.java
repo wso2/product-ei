@@ -25,8 +25,7 @@ public class ESBJAVA4913HandleExceptionTest extends ESBIntegrationTest {
     public void deployService() throws Exception {
         // Initializing server configuration
         super.init();
-        // Deploying the artifact defined in the cloneMediatorHandleException.xml.
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/clone/cloneMediatorHandleException.xml");
+        verifyAPIExistence("ESBJAVA4913testapi");
         // Initialize log viewer client
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         // Clear all system logs

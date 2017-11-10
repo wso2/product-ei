@@ -1,0 +1,8 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="ESBJAVA4239FaultSeq">
+    <log level="custom">
+        <property xmlns:ns="http://org.apache.synapse/xsd"
+                  name="STATUS-Fault"
+                  expression="get-property('ERROR_MESSAGE')"/>
+    </log>
+    <drop/>
+</sequence>

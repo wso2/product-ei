@@ -52,8 +52,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
         applyProperty(log4jProperties, "log4j.logger.org.apache.synapse.transport.http.wire", "DEBUG");
         serverConfigurationManager.restartGracefully();
         init();
-        loadESBConfigurationFromClasspath
-                ("/artifacts/ESB/mediatorconfig/property/HOST_HEADER.xml");
+        verifyProxyServiceExistence("ESBJAVA3336httpsBackendProxyService");
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
@@ -61,7 +60,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
     @Test(groups = "wso2.esb", description = "Test wrong port(80) attached with the HOST_HEADERS for https backend")
     public void testHOST_HEADERPropertyTest() throws Exception {
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("httpsBackendProxyService"), null, "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("ESBJAVA3336httpsBackendProxyService"), null, "WSO2");
         } catch (Exception e) {
 
         }

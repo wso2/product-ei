@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="CorrelateOnExpressionTestAPI2"
+     context="/correlateOnExpressionTest2">
+    <resource methods="GET">
+        <inSequence>
+            <payloadFactory media-type="xml">
+                <format>
+                    <data xmlns="">
+                        <type>1</type>
+                        <value>value2</value>
+                    </data>
+                </format>
+                <args/>
+            </payloadFactory>
+            <property name="messageType" value="text/xml" scope="axis2"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

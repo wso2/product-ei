@@ -30,11 +30,9 @@ import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
-import javax.xml.xpath.XPathExpressionException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -71,8 +69,7 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
         applyProperty(log4jProperties, "log4j.logger.org.apache.synapse.transport.http.access", "DEBUG");
         serverConfigurationManager.restartGracefully();
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/httpaccesslogs/httpaccesslog_test_synapse.xml");
-        Thread.sleep(30000);
+        verifyProxyServiceExistence("HttpAccessLogsTestProxy");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.ALL})
