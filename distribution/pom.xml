@@ -426,6 +426,73 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>materialize-product-msf4j</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-runtime</goal>
+                        </goals>
+                        <configuration>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                            <targetPath>file:${basedir}/target/WSO2Carbon/wso2</targetPath>
+                            <runtime>msf4j</runtime>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>feature-installation-msf4j</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <configuration>
+                            <runtime>msf4j</runtime>
+                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
+                            <destination>${basedir}/target/WSO2Carbon/wso2</destination>
+                            <deleteOldRuntimeFiles>true</deleteOldRuntimeFiles>
+                            <features>
+                                <feature>
+                                    <id>org.wso2.carbon.config.feature</id>
+                                    <version>${carbon.config.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.secvault.feature</id>
+                                    <version>${carbon.secvault.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.utils.feature</id>
+                                    <version>${carbon.utils.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.server.feature.group</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.osgi.feature</id>
+                                    <version>${carbon.kernel.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.engine.feature</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.msf4j.feature</id>
+                                    <version>${msf4j.version}</version>
+                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.ei.converter.tools.synapse2ballerina.feature.group</id>-->
+                                    <!--<version>${product.ei.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.ei.converter.tools.mule2ballerina.feature.group</id>-->
+                                    <!--<version>${product.ei.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.ei.converter.tools.ds2ballerina.feature.group</id>-->
+                                    <!--<version>${product.ei.version}</version>-->
+                                <!--</feature>-->
+                            </features>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>materialize-product-broker</id>
                         <phase>package</phase>
                         <goals>
