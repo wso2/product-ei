@@ -78,13 +78,13 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
         File targetFolder = new File(InboundFileFolder + File.separator + "in");
         File targetFile = new File(targetFolder + File.separator + "test.txt");
 
+        boolean isFileRead = false;
         try {
             FileUtils.copyFile(sourceFile, targetFile);
+            isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2500);
         } finally {
             deleteFile(targetFile);
         }
-
-        boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2000);
         Assert.assertTrue(isFileRead, "The Text file is not getting read");
     }
 
