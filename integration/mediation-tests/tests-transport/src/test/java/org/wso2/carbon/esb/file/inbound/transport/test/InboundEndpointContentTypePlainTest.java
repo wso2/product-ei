@@ -70,9 +70,8 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Inbound endpoint Reading file with Content type Plain Test Case")
-    public void testInboundEnpointReadFile_ContentType_Plain() throws Exception {
+    public void testInboundEnpointReadFileContentTypePlain() throws Exception {
 
-        addInboundEndpoint(addEndpoint());
 
         File sourceFile = new File(pathToFtpDir + File.separator + "test.txt");
         File targetFolder = new File(InboundFileFolder + File.separator + "in");
@@ -80,12 +79,13 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
+            addInboundEndpoint(addEndpoint());
+            boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2);
+            Assert.assertTrue(isFileRead, "The Text file is not getting read");
         } finally {
             deleteFile(targetFile);
         }
 
-        boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2000);
-        Assert.assertTrue(isFileRead, "The Text file is not getting read");
     }
 
     private OMElement addEndpoint() throws Exception {
