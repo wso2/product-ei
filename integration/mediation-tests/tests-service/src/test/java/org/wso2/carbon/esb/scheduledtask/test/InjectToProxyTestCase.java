@@ -59,7 +59,7 @@ public class InjectToProxyTestCase extends ESBIntegrationTest {
                                               "</task:task>");
 
         addScheduledTask(task);
-        boolean invokedLogFound = Utils.checkForLog(logViewer, "PROXY INVOKED", 4000);
+        boolean invokedLogFound = Utils.checkForLog(logViewer, "PROXY INVOKED", 4);
         assertTrue(invokedLogFound);
     }
 

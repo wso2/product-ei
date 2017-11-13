@@ -32,7 +32,7 @@ public class ESBJAVA2907TestCase extends ESBIntegrationTest {
 		AxisServiceClient client = new AxisServiceClient();
 		client.sendRobust(Utils.getStockQuoteRequest("IBM"), getProxyServiceURLHttp("testPS"), "getQuote");
 		LogViewerClient cli = new LogViewerClient(contextUrls.getBackEndUrl(),getSessionCookie());
-		boolean hasPrefix = Utils.checkForLog(cli, GET_QUOTE_REQUEST_BODY, 5000);
+		boolean hasPrefix = Utils.checkForLog(cli, GET_QUOTE_REQUEST_BODY, 5);
 		Assert.assertTrue(hasPrefix, "OMElement is not saved to the message store");
 		log.info(cli.getAllSystemLogs());
 	}

@@ -67,7 +67,7 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
         // Put message in queue.
         sendMessage(msgBefore);
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgBefore, 10000));
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgBefore, 10));
     }
 
     @Test(groups = "wso2.esb", description = "JMS Consumer Test after pause")
@@ -82,11 +82,11 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
         }
 
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Listener paused", 10000));
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Listener paused", 10));
 
         // Put message in queue.
         sendMessage(msgAfter);
-        assertFalse(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 10000));
+        assertFalse(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 10));
     }
 
     //This was disabled since it failed to start JMS listener intermittently
@@ -98,7 +98,7 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
 
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         // JMS should still be paused.
-        assertFalse(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 16000));
+        assertFalse(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 16));
 
         // resume JMS Listener from JMXClient
         Set<ObjectInstance> objSet = mbsc.queryMBeans(new ObjectName("org.apache.axis2:Type=Transport,ConnectorName=jms-listener-*"), null);
@@ -108,8 +108,8 @@ public class ESBJAVA3714JMXPauseJMSListener extends ESBIntegrationTest {
             mbsc.invoke(obj.getObjectName(), "resume" , null, null);
         }
 
-        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Listener resumed", 10000));
-        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 10000));
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Listener resumed", 10));
+        assertTrue(Utils.checkForLogsWithPriority(logViewerClient, "INFO", msgAfter, 10));
     }
 
     private void sendMessage(String msg) throws Exception {

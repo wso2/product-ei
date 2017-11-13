@@ -62,7 +62,7 @@ public class ESBJAVA2824MissingResponseTestCase extends ESBIntegrationTest {
 			LogEvent[] logs = cli.getAllSystemLogs();
 			Assert.assertNotNull(logs, "No logs found");
 			Assert.assertTrue(logs.length > 0, "No logs found");
-			boolean errorMsgTrue = Utils.checkForLogsWithPriority(cli,"ERROR", logLine0, 10000);
+			boolean errorMsgTrue = Utils.checkForLogsWithPriority(cli,"ERROR", logLine0, 10);
 			Assert.assertTrue(errorMsgTrue, "Axis Fault Did not receive");
 		}
 	}

@@ -61,7 +61,7 @@ public class ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestC
 		httpClient.execute(post);
 
         boolean errorLogFound = Utils.checkForLog(logViewerClient,
-				"Error occurred while processing document for application/json", 10000);
+				"Error occurred while processing document for application/json", 10);
         Assert.assertEquals(errorLogFound, true, "Expected SOAP Response was NOT found in the LOG stream.");
 	}
 
