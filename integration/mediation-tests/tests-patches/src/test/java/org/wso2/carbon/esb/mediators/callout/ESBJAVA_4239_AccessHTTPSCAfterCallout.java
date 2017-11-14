@@ -39,7 +39,7 @@ public class ESBJAVA_4239_AccessHTTPSCAfterCallout extends ESBIntegrationTest {
         client.sendRobust(createPlaceOrderRequest(3.141593E0, 4, "IBM"), proxyUrl, "placeOrder");
 
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        boolean isScFound = Utils.checkForLog(logViewerClient, EXPECTED_LOG_MESSAGE, 20000);
+        boolean isScFound = Utils.checkForLog(logViewerClient, EXPECTED_LOG_MESSAGE, 20);
         Assert.assertTrue(isScFound, "The HTTP Status Code was not found in the log.");
     }
 
