@@ -84,8 +84,8 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
         systemLogs = logViewerClient.getAllRemoteSystemLogs();
         //Create a stack to store the intended logs in order
         Stack<String> logStack = new Stack<>();
-        logStack.push("Inbound Endpoint named 'inbound-endpoint' has been deployed from file");
         logStack.push("Sequence named 'test-sequence' has been deployed from file");
+        logStack.push("Inbound Endpoint named 'inbound-endpoint' has been deployed from file");
 
         //Check whether the logs are in the stack's order
         if (systemLogs != null) {
