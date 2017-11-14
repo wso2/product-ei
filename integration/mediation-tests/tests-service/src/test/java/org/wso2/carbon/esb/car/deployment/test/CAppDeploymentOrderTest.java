@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * This class tests whether the artifacts in deployed car file is in order
- * Related JIRA: https://wso2.org/jira/browse/ESBJAVA-3438
+ * Related issue: https://github.com/wso2/product-ei/issues/1261
  */
 public class CAppDeploymentOrderTest extends ESBIntegrationTest {
     private CarbonAppUploaderClient carbonAppUploaderClient;
