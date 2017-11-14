@@ -32,6 +32,7 @@
     <test name="InitializeAndSetupServer" preserve-order="true">
         <classes>
             <class name="org.wso2.ei.dataservice.integration.test.server.mgt.DSSServerStartupTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.datasource.DataSourceInitializationAtStartUpTestCase"/>
             <!--disabled due to test failure-->
             <!--<class name="org.wso2.ei.dataservice.integration.test.server.mgt.DSSServerBundleStatusTestCase"/>-->
         </classes>
@@ -80,9 +81,7 @@
         <classes>
             <class name="org.wso2.ei.dataservice.integration.test.fileservice.AGSpreadDataServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.fileservice.CSVDataServiceTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.fileservice.CSVSampleServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.fileservice.ExcelDataServiceTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.fileservice.ExcelSampleServiceTestCase"/>
         </classes>
     </test>
 
@@ -111,7 +110,6 @@
             <class name="org.wso2.ei.dataservice.integration.test.services.SecureDataServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.SecurityVerificationTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.SingleServiceGeneratorTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.services.SqlDataServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.services.SQLDriverGspreadSheetTestCase"/>
         </classes>
     </test>
@@ -126,19 +124,10 @@
 
     <test name="DSS-faulty-service-tests" parallel="false" verbose="2">
         <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.faulty.service.EditFaultyDataServiceTest"/>
+            <class name="org.wso2.ei.dataservice.integration.test.faulty.service.FaultyDataServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.faulty.service.FaultDBExceptionTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.faulty.service.FaultyServiceTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.faulty.service.InvalidClosingTagUnDeployedServiceTestCase"/>
-            <class name="org.wso2.ei.dataservice.integration.test.faulty.service.ServiceFaultyTestCase"/>
         </classes>
-    </test>
-
-
-    <test name="DSS-datasource-tests" parallel="false" verbose="2">
-        <packages>
-            <package name="org.wso2.ei.dataservice.integration.test.datasource"/>
-        </packages>
     </test>
 
  <!--   <test name="DSS-jmx-tests" parallel="false" verbose="2">
@@ -184,12 +173,11 @@
         </classes>
     </test>-->
 
-    <test name="DSS-jira-issues-tests" parallel="false" verbose="2">
+    <!--test name="DSS-jira-issues-tests" parallel="false" verbose="2">
         <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS954UseExcelFromRegistryTestCase"/>
-            <!--<class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15928JMXDisablingTest"/>-->
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15928JMXDisablingTest"/>
         </classes>
-    </test>
+    </test-->
 
 <!--    <test name="DSS-jira-issues-tests-time" parallel="false" verbose="2">
         <classes>
@@ -203,47 +191,11 @@
        </classes>
    </test>-->
 
-   <test name="DSS-jira-issues-boxcarring-parallel-access" parallel="false" verbose="2">
+   <!--test name="DSS-jira-issues-boxcarring-parallel-access" parallel="false" verbose="2">
        <classes>
-           <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1083BoxcarringParallelInsertTestCase">
-               <methods>
-                   <exclude name="boxcarringParallelInsertsTest"/>
-               </methods>
-           </class>
-           <!--<class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS937BoxcarringTestCase"/>-->
+           <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS937BoxcarringTestCase"/>
        </classes>
-    </test>
-
-    <test name="DSS-jira-issues-dataservice-duplicate" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1103DuplicateDataServiceTestCase"/>
-        </classes>
-    </test>
-
-    <test name="DSS-jira-issues-policy-key-without-policy-path" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1031PolicyKeyWithoutPolicyPathTestCase"/>
-        </classes>
-    </test>
-
-    <test name="DSS-jira-issues-escape-non-printable-chars" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1090EscapeNonPrintableCharactersTestCase"/>
-        </classes>
-    </test>
-
-    <test name="DSS-jira-issues-resource-with-same-context" parallel="false" verbose="2">
-       <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.ResourcesServiceTestWithSameContextNameTestCase"/>
-        </classes>
-    </test>
-
-    <!-- todo test and uncomment below test once DSS is upgraded to kernel 4.4.x or 4.5.0 -->
-    <test name="DSS-jira-issues-XML-Entity-Attack-Test" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15379XMLExternalEntityAttacksTestCase"/>
-        </classes>
-    </test>
+    </test-->
 
     <test name="DSS-requestBox-tests" parallel="false" verbose="2">
         <classes>
@@ -258,46 +210,12 @@
         </classes>
     </test-->
 
-    <test name="DSS-jira-issues-role-extension-test" parallel="false" verbose="2">
+    <!--test name="DSS-gson-tests">
         <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1111UserRoleExtensionTestCase"/>
+            TODO: This was commented out due to intermittent build failures. Need to find the root cause and fix
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15263JsonGsonFormatterSuperTenantModeTest"/>
         </classes>
-    </test>
-
-    <test name="DSS-jira-issues-json-render" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1186JsonRenderTestCase"/>
-        </classes>
-    </test>
-
-    <test name="DSS-jira-issues-delete-with-batchtest" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1201DeleteWithBatchReqTest"/>
-        </classes>
-    </test>
-
-    <test name="DSS-jira-issues-nullvalues" parallel="false" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1081NullValuesTest"/>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1194NestedQueryEmptyResultTest"/>
-        </classes>
-    </test>
-
-    <test name="DSS-gson-tests">
-        <classes>
-            <!--TODO: This was commented out due to intermittent build failures. Need to find the root cause and fix-->
-            <!--<class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15263JsonGsonFormatterSuperTenantModeTest"/>-->
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15339JsonGsonFormatterTenantModeTest"/>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15262JsonGsonFormatterTenantModeTest"/>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1209EqualElementNamesInJSONHierarchyTestCase"/>
-        </classes>
-    </test>
-
-    <test name="DSS-repeat-service-name">
-        <classes>
-            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15280RepeatServiceNameInURLTest"/>
-        </classes>
-    </test>
+    </test-->
 
     <!-- Test case is disabled because need axis2 1.6.1-wso2v21 version release -->
 <!--    <test name="RequestBoxJsonTests">
@@ -305,5 +223,26 @@
             <class name="org.wso2.ei.dataservice.integration.test.requestBox.RequestBoxJsonTestCase"/>
         </classes>
     </test>-->
-
+    <test name="DSS-JIRA-issues" parallel="false" verbose="2">
+        <classes>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS954UseExcelFromRegistryTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1083BoxcarringParallelInsertTestCase">
+                <methods>
+                    <exclude name="boxcarringParallelInsertsTest"/>
+                </methods>
+            </class>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1103DuplicateDataServiceTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1031PolicyKeyWithoutPolicyPathTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1090EscapeNonPrintableCharactersTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.ResourcesServiceTestWithSameContextNameTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15379XMLExternalEntityAttacksTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1111UserRoleExtensionTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1186JsonRenderTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1201DeleteWithBatchReqTest"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1081NullValuesTest"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1209EqualElementNamesInJSONHierarchyTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15280RepeatServiceNameInURLTest"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15262JsonGsonFormatterTenantModeTest"/>
+        </classes>
+    </test>
 </suite>

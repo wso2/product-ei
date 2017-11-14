@@ -25,14 +25,10 @@ public class ResourcesServiceTestWithSameContextNameTestCase extends DSSIntegrat
     public void serviceDeployment() throws Exception {
         super.init();
         serviceEndPoint = getServiceUrlHttp(serviceName);
-        deployService(serviceName,
-                new DataHandler(new URL("file:///" +getResourceLocation() + File.separator + "samples"
-                        + File.separator + "dbs" + File.separator
-                        + "rdbms" + File.separator + "ResourcesServiceTestWithSameContextName.dbs")));
+        Assert.assertTrue(isServiceDeployed(serviceName));
     }
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        deleteService(serviceName);
         cleanup();
     }
     private void getProduct(String id) throws Exception {

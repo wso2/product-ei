@@ -45,9 +45,7 @@ public class RDFExposedAsRDFSampleTestCase extends DSSIntegrationTest {
     public void serviceDeployment() throws Exception {
         super.init();
         String resourceFileLocation = getResourceLocation();
-        deployService(serviceName,
-                new DataHandler(new URL("file:///" + resourceFileLocation +File.separator + "dbs" + File.separator +
-                        "rdf" + File.separator + "RDFExposeAsRDFSample.dbs")));
+        Assert.assertTrue(isServiceDeployed("RDFExposeAsRDFSample"));
         log.info(serviceName + " uploaded");
         serviceEndPoint = getServiceUrlHttp(serviceName) + "/";
     }
@@ -76,7 +74,6 @@ public class RDFExposedAsRDFSampleTestCase extends DSSIntegrationTest {
 
     @AfterClass(alwaysRun = true, groups = "wso2.dss", description = "delete service")
     public void deleteService() throws Exception {
-        deleteService(serviceName);
         cleanup();
     }
 

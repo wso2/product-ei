@@ -30,11 +30,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.axis2client.AxisServiceClient;
 import org.wso2.ei.dataservice.integration.test.DSSIntegrationTest;
+import org.wso2.ei.dataservice.integration.test.odata.ODataTestUtils;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static org.wso2.ei.dataservice.integration.test.odata.ODataTestUtils.sendGET;
 
 public class NestedQueryTestCase extends DSSIntegrationTest {
     private static final Log log = LogFactory.getLog(NestedQueryTestCase.class);
@@ -54,6 +59,7 @@ public class NestedQueryTestCase extends DSSIntegrationTest {
         sqlFileLis.add(selectSqlFile("Customers.sql"));
         sqlFileLis.add(selectSqlFile("Employees.sql"));
         sqlFileLis.add(selectSqlFile("Orders.sql"));
+        sqlFileLis.add(selectSqlFile("NestedQueryEmptyResult.sql"));
         deployService(serviceName,
                       createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator
                                      + "rdbms" + File.separator + "MySql" + File.separator
@@ -83,6 +89,16 @@ public class NestedQueryTestCase extends DSSIntegrationTest {
             getOffices();
         }
         log.info("List Office Nested Query verified");
+    }
+
+    @Test(groups = {"wso2.dss"}, description = "nested query empty result test")
+    public void testNestedQueryEmptyResultJson() throws Exception {
+        String endpoint = getServiceUrlHttp(serviceName) + "/listOffices";
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Accept", "application/json");
+        Object[] response = sendGET(endpoint, headers);
+        Assert.assertEquals(response[0], ODataTestUtils.OK);
+        Assert.assertTrue(response[1].toString().contains("\"Employees\":{}"));
     }
 
     private void getCustomerName() throws AxisFault, XPathExpressionException {

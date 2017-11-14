@@ -51,9 +51,9 @@ import java.util.Iterator;
 import static org.testng.Assert.assertTrue;
 
 
-public class EditFaultyDataServiceTest extends DSSIntegrationTest {
+public class FaultyDataServiceTestCase extends DSSIntegrationTest {
 
-    private static final Log log = LogFactory.getLog(EditFaultyDataServiceTest.class);
+    private static final Log log = LogFactory.getLog(FaultyDataServiceTestCase.class);
 
     private String serviceName = "FaultyDataService";
     private String resourceFileLocation;
