@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~
   ~ Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
@@ -16,12 +14,11 @@
   ~ KIND, either express or implied.  See the License for the
   ~ specific language governing permissions and limitations
   ~ under the License.
-  ~
   -->
 
 <definitions xmlns="http://ws.apache.org/ns/synapse">
     <proxy xmlns="http://ws.apache.org/ns/synapse"
-           name="MailTransportProtocolIMAP"
+           name="MailTransportRemoveHeader"
            transports="mailto"
            statistics="disable"
            trace="disable"
@@ -29,31 +26,33 @@
         <target>
             <inSequence>
                 <log level="custom">
+                    <property name="Received" expression="$trp:Received"/>
+                    <property name="Delivered-To" expression="$trp:Delivered-To"/>
+                    <property name="Content-Type" expression="$trp:Content-Type"/>
+                    <property name="To" expression="$trp:To"/>
                     <property name="Date" expression="$trp:Date"/>
                     <property name="Subject" expression="$trp:Subject"/>
-                    <property name="Content-Type" expression="$trp:Content-Type"/>
-                    <property name="From" expression="$trp:From"/>
                 </log>
+
                 <drop/>
             </inSequence>
             <outSequence>
                 <send/>
             </outSequence>
         </target>
-        <parameter name="mail.imap.socketFactory.class">javax.net.ssl.SSLSocketFactory</parameter>
-        <parameter name="mail.imap.starttls.enable">false</parameter>
+        <parameter name="transport.mail.RemoveHeaders">Subject,Received</parameter>
         <parameter name="transport.mail.ContentType">text/plain</parameter>
-        <parameter name="mail.imap.host">imap.gmail.com</parameter>
-        <parameter name="transport.mail.Address">test.automation.dummy.esb1@gmail.com</parameter>
-        <parameter name="mail.imap.user">test.automation.dummy.esb1</parameter>
-        <parameter name="mail.imap.socketFactory.port">993</parameter>
-        <parameter name="transport.PollInterval">2</parameter>
-        <parameter name="mail.imap.port">993</parameter>
+        <parameter name="mail.imap.host">localhost</parameter>
+        <parameter name="transport.mail.Address">wso2@localhost</parameter>
+        <parameter name="mail.imap.user">wso2</parameter>
+        <parameter name="transport.PollInterval">1</parameter>
+        <parameter name="mail.imap.port">3143</parameter>
         <parameter name="mail.imap.ssl.enable">false</parameter>
-        <parameter name="mail.imap.fetchsize">2</parameter>
+        <parameter name="mail.imap.starttls.enable">false</parameter>
+        <parameter name="mail.imap.fetchsize">1</parameter>
         <parameter name="mail.imap.socketFactory.fallback">false</parameter>
         <parameter name="transport.mail.Protocol">imap</parameter>
-        <parameter name="mail.imap.password">automation.test</parameter>
+        <parameter name="mail.imap.password">wso2</parameter>
         <description/>
     </proxy>
 </definitions>
