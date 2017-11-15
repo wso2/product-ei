@@ -59,8 +59,8 @@ public class PrependProtocolTestCase extends ESBIntegrationTest {
     @DataProvider(name = "addressingUrl")
     public Object[][] addressingUrl() throws XPathExpressionException {
         return new Object[][]{
-               // {"tp://localhost:9000/services/SimpleStockQuoteService"},
-//                {"ttp://localhost:9000/services/SimpleStockQuoteService"},
+                {"tp://localhost:9000/services/SimpleStockQuoteService"},
+                {"ttp://localhost:9000/services/SimpleStockQuoteService"},
                 {getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE)},
 
         };
