@@ -41,69 +41,74 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 
 public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
+
     private Log log = LogFactory.getLog(HTTPResponseCodeTestCase.class);
-	private HttpServer server = null;
+    private HttpServer server = null;
+    private static int responseCode;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-	    String relativePath = "/artifacts/ESB/synapseconfig/esbjava2283/api.xml";
-	    ESBTestCaseUtils util = new ESBTestCaseUtils();
-	    relativePath = relativePath.replaceAll("[\\\\/]", File.separator);
-	    OMElement apiConfig = util.loadResource(relativePath);
-	    addApi(apiConfig);
+        String relativePath = "/artifacts/ESB/synapseconfig/esbjava2283/api.xml";
+        ESBTestCaseUtils util = new ESBTestCaseUtils();
+        relativePath = relativePath.replaceAll("[\\\\/]", File.separator);
+        OMElement apiConfig = util.loadResource(relativePath);
+        addApi(apiConfig);
     }
 
-	@Test(groups = { "wso2.esb" }, description = "Test different response codes", dataProvider = "getResponseCodes")
-	public void testReturnResponseCode(int responseCode) throws Exception {
-		int port = 8089;
-		server = HttpServer.create(new InetSocketAddress(port), 0);
-		server.createContext("/gettest", new MyHandler());
-		server.setExecutor(null); // creates a default executor
-		server.start();
-		switch (responseCode) {
-			case 200:
-				String contentType = "text/xml";
-				String url = "http://localhost:8480/serviceTest/test";
-				sendRequest(url, 200, contentType);
-			case 404:
-				contentType = "text/html";
-				url = "http://localhost:8480/serviceTest/notfound";
-				sendRequest(url, 404, contentType);
-		}
+    @Test(groups = {"wso2.esb" }, description = "Test whether ESB pass-through responses with different response codes.",
+            dataProvider = "getResponseCodes")
+    public void testReturnResponseCode(
+            int responseCode) throws Exception {
+        HTTPResponseCodeTestCase.responseCode = responseCode;
+        //Starting backend server
+        int port = 8089;
+        server = HttpServer.create(new InetSocketAddress(port), 0);
+        server.createContext("/gettest", new ResponseHandler());
+        server.setExecutor(null); // creates a default executor
+        server.start();
+        //Invoke API deployed in ESB
+        switch (responseCode) {
+        case 404:
+            String contentType = "text/html";
+            String url = getApiInvocationURL("/serviceTest/notfound");
+            sendRequest(url, contentType);
+        default:
+            contentType = "text/xml";
+            url = getApiInvocationURL("/serviceTest/test");
+            sendRequest(url, contentType);
+        }
 
-		server.stop(0);
+        server.stop(0);
 
-	}
+    }
 
-	private class MyHandler implements HttpHandler {
-		public void handle(HttpExchange t) throws IOException {
-			Headers h = t.getResponseHeaders();
-			h.add("Content-Type", "text/xml");
-			String response = "This is Response status code test case";
-			t.sendResponseHeaders(200, response.length());
-			OutputStream os = t.getResponseBody();
-			os.write(response.getBytes());
-			os.close();
-		}
-	}
+    // Construct response that should be returned from the backend server
+    private class ResponseHandler implements HttpHandler {
+        public void handle(HttpExchange httpExchange) throws IOException {
+            Headers headers = httpExchange.getResponseHeaders();
+            headers.add("Content-Type", "text/xml");
+            String response = "This is Response status code test case";
+            httpExchange.sendResponseHeaders(responseCode, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
 
-	private void sendRequest(String url, int responseCode, String contentType) {
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(url);
-		HttpResponse response = null;
-		try {
-			response = httpclient.execute(httpGet);
-		} catch (IOException e) {
-			log.error("Error Occured while sending http get request. " + e);
-		}
-		log.info(response.getEntity().getContentType());
-		log.info(response.getStatusLine().getStatusCode());
+    // Function to send an HTTP get request and assert response.
+    private void sendRequest(String url, String contentType) {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+        HttpResponse response = null;
+        try {
+            response = httpclient.execute(httpGet);
+        } catch (IOException e) {
+            log.error("Error Occured while sending http get request. " + e);
+        }
 
-		assertEquals(response.getFirstHeader("Content-Type").getValue(), contentType,
-		             "Expected content type doesn't match");
-		assertEquals(response.getStatusLine().getStatusCode(), responseCode, "response code doesn't match");
-	}
+        assertEquals(response.getStatusLine().getStatusCode(), responseCode, "response code doesn't match");
+    }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
@@ -112,15 +117,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
 
     @DataProvider(name = "responseCodeProvider")
     public Object[][] getResponseCodes() {
-        return new Object[][]{
-                {200},
-                {400},
-                {403},
-                {404},
-                {500},
-                {501},
-                {503},
-        };
+        return new Object[][] { { 200 }, { 400 }, { 403 }, { 404 }, { 500 }, { 501 }, { 503 }, };
     }
 
 }
