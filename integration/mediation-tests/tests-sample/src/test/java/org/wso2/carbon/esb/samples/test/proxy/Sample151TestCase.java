@@ -39,19 +39,31 @@ public class Sample151TestCase extends ESBSampleIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Custom sequences and endpoints with proxy services")
     public void customSequencesAndEndpointsWithProxyServices() throws Exception {
+        //invoking the StockQuoteProxy1
+        OMElement responseStockQuoteProxy1 = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy1"), null, "WSO2");
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy1"), null, "WSO2");
+        String lastPriceStockQuoteProxy1 = responseStockQuoteProxy1.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "last")).getText();
+        assertNotNull(lastPriceStockQuoteProxy1, "Fault: response message 'last' price null");
 
-        String lastPrice = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "last"))
-                .getText();
-        assertNotNull(lastPrice, "Fault: response message 'last' price null");
-
-        String symbol = response.getFirstElement().getFirstChildWithName(new QName("http://services.samples/xsd", "symbol"))
-                .getText();
+        String symbol = responseStockQuoteProxy1.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
         assertEquals(symbol, "WSO2", "Fault: value 'symbol' mismatched");
 
-    }
+        //invoking the StockQuoteProxy2
+        OMElement responseStockQuoteProxy2 = axis2Client
+                .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteProxy2"), null, "WSO2");
 
+        String lastPriceStockQuoteProxy2 = responseStockQuoteProxy2.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "last")).getText();
+        assertNotNull(lastPriceStockQuoteProxy2, "Fault: response message 'last' price null");
+
+        String symbol2 = responseStockQuoteProxy2.getFirstElement()
+                .getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
+        assertEquals(symbol2, "WSO2", "Fault: value 'symbol' mismatched");
+
+    }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
