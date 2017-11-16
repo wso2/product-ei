@@ -25,7 +25,7 @@
     <test name="tests-amqp-sequential" preserve-order="true" parallel="false">
         <classes>
             <!-- Test with server restarts and test with @BeforeMethod or @AfterMethod code are added here -->
-            <class name="org.wso2.ei.mb.integration.tests.amqp.functional.DLCMessageExpiryTestCase"/>
+            <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.DLCMessageExpiryTestCase"/>-->
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.DurableTopicServerRestartTestCase"/>-->
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.RedeliveryDelayTestCase"/>-->
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.PerMessageAcknowledgementsTestCase"/>-->
@@ -62,7 +62,7 @@
             <!-- functional test cases -->
 
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.AutoAcknowledgementsTestCase"/>-->
-            <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.ClientAcknowledgementsTestCase"/>-->
+            <class name="org.wso2.ei.mb.integration.tests.amqp.functional.ClientAcknowledgementsTestCase"/>
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.DuplicatesOkAcknowledgementsTestCase"/>-->
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.QueueMessageExpireTestCase"/>-->
             <!--<class name="org.wso2.ei.mb.integration.tests.amqp.functional.MultipleQueueSendReceiveTestCase"/>-->

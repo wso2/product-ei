@@ -294,7 +294,7 @@
                 <class>
                     <name>org.wso2.esb.integration.common.extensions.carbonserver.CarbonServerExtension</name>
                     <parameter name="-DportOffset" value="1500" />
-                    <parameter name="startupScript" value="integrator" />
+                    <parameter name="startupScript" value="../wso2/broker/bin/wso2server" />
                     <!--<parameter name="cmdArg" value="debug 5005" />-->
                 </class>
                 <class>

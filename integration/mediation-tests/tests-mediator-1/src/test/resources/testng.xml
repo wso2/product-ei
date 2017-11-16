@@ -37,12 +37,12 @@
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.cache"/>
         </packages>
-        <classes>
-            <class name="org.wso2.carbon.esb.mediator.test.cache.LargeCacheTimeOutTestCase">
+		<classes>
+           <class name="org.wso2.carbon.esb.mediator.test.cache.LargeCacheTimeOutTestCase">
                 <methods>
                     <exclude name=".*" />
                 </methods>
-            </class>
+           </class>
         </classes>
     </test>
 
@@ -105,36 +105,36 @@
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorLoadBalanceFailoverTest"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorOutOnlyTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorProxyWithNamedSeqCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA4469CallMediatorWithOutOnlyTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5216CallMediatorPerAPILogTest"/>
+           <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA4469CallMediatorWithOutOnlyTestCase"/>
+           <class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5216CallMediatorPerAPILogTest"/>
             <!--This has been commented out until carbon kernel going to release with axis2 version 1.6.1-wso2v23.-->
             <!--<class name="org.wso2.carbon.esb.mediator.test.call.ESBJAVA5217NoDefaultContentTypeTestCase"/>-->
 
-            <!--            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
-                            <methods>
-                                <exclude name=".*" />
-                            </methods>
-                       </class>
-                            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInAPITestCase">
-                            <methods>
-                                <exclude name=".*" />
-                            </methods>
-                       </class>
-                            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorAPIWithNamedSeqCase">
-                            <methods>
-                                <exclude name=".*" />
-                            </methods>
-                       </class>
-                        <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingSecurityTestCase">
-                            <methods>
-                                <exclude name=".*" />
-                            </methods>
-                        </class>
-                        <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingInboundOutboundPolicySecurityTestCase">
-                            <methods>
-                                <exclude name=".*" />
-                            </methods>
-                        </class>&ndash;&gt;-->
+<!--            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorFailOverTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+           </class>
+                <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorInAPITestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+           </class>
+                <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorAPIWithNamedSeqCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+           </class>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingSecurityTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+            </class>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingInboundOutboundPolicySecurityTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+            </class>&ndash;&gt;-->
         </classes>
     </test>
 
