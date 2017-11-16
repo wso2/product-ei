@@ -21,6 +21,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -52,9 +53,7 @@ public class BPELTestCaseMisc extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("Async-Server");
         uploadBpelForTest("Async-Client");
-        uploadBpelForTest("TestCorrelationWithAttribute");
         requestSender.waitForProcessDeployment(backEndUrl + "TestCorrelationWithAttribute");
     }
 
@@ -104,9 +103,7 @@ public class BPELTestCaseMisc extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("Async-Server");
         bpelPackageManagementClient.undeployBPEL("Async-Client");
-        bpelPackageManagementClient.undeployBPEL("TestCorrelationWithAttribute");
         this.loginLogoutClient.logout();
     }
 }

@@ -94,6 +94,54 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                                 log.error("Error while copying lib directory.", e);
                             }
                         }
+                    } else if ("BPS".equalsIgnoreCase(System.getProperty("server.list"))) {
+                        //copying the files before server start. Ex: bpel, bpmn, etc...
+                        String artifactPath = FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                                + File.separator + "BPS" + File.separator + "wso2" + File.separator + "business-process"
+                                + File.separator + "repository" + File.separator + "deployment" + File.separator + "server";
+                        String bpelHome = artifactPath + File.separator + "bpel";
+                        String bpmnHome = artifactPath + File.separator + "bpmn";
+                        String humanTaskHome = artifactPath + File.separator + "humantasks";
+
+                        File deploymentSourceBpel = new File(bpelHome);
+                        File deploymentSourceBpmn = new File(bpmnHome);
+                        File deploymentSourceHumanTask = new File(humanTaskHome);
+
+                        String deploymentDestination = this.getCarbonHome() + File.separator + "wso2" + File.separator + "business-process"
+                                + File.separator + "repository" + File.separator + "deployment" + File.separator
+                                + "server";
+
+                        File deploymentDestinationBpel = new File(deploymentDestination + File.separator + "bpel");
+                        File deploymentDestinationBpmn = new File(deploymentDestination + File.separator + "bpmn");
+                        File deploymentDestinationHumanTask = new File(deploymentDestination + File.separator + "humantasks");
+
+                        if (deploymentSourceBpel.exists() && deploymentSourceBpel.isDirectory()) {
+                            try {
+                                log.info("Copying " + deploymentSourceBpel.getPath() + " to " + deploymentDestinationBpel
+                                        .getPath());
+                                FileUtils.copyDirectory(deploymentSourceBpel, deploymentDestinationBpel);
+                            } catch (IOException e) {
+                                log.error("Error while copying bpel deployment directory.", e);
+                            }
+                        }
+                        if (deploymentSourceBpmn.exists() && deploymentSourceBpmn.isDirectory()) {
+                            try {
+                                log.info("Copying " + deploymentSourceBpmn.getPath() + " to " + deploymentDestinationBpmn
+                                        .getPath());
+                                FileUtils.copyDirectory(deploymentSourceBpmn, deploymentDestinationBpmn);
+                            } catch (IOException e) {
+                                log.error("Error while copying bpmn deployment directory.", e);
+                            }
+                        }
+                        if (deploymentSourceHumanTask.exists() && deploymentSourceHumanTask.isDirectory()) {
+                            try {
+                                log.info("Copying " + deploymentSourceHumanTask.getPath() + " to " + deploymentDestinationHumanTask
+                                        .getPath());
+                                FileUtils.copyDirectory(deploymentSourceHumanTask, deploymentDestinationHumanTask);
+                            } catch (IOException e) {
+                                log.error("Error while copying humantasks deployment directory.", e);
+                            }
+                        }
                     }
                 }
             };

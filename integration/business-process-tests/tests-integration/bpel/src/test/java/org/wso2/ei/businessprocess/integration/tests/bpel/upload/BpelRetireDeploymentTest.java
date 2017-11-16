@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.ei.businessprocess.integration.common.clients.bpel.BpelInstanceManagementClient;
 import org.wso2.ei.businessprocess.integration.common.clients.bpel.BpelPackageManagementClient;
@@ -44,7 +45,7 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
 
     RequestSender requestSender;
 
-
+    @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();
         bpelPackageManagementClient = new BpelPackageManagementClient(backEndUrl, sessionCookie);
@@ -53,19 +54,8 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
         requestSender = new RequestSender();
     }
 
-
-    public void deployArtifact()
-            throws Exception {
-        setEnvironment();
-        uploadBpelForTest("HelloWorld-retire");
-
-    }
-
     @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel with retire true", priority = 1)
     public void testRetireClient() throws Exception {
-        // wait till the uploaded process deploy
-        deployArtifact();
-        Thread.sleep(20000);
         String processId = bpelProcessManagementClient.getProcessId("HelloWorld-retire");
         String status = bpelProcessManagementClient.getStatus(processId);
         Assert.assertTrue(status.equals("RETIRED".toUpperCase()), "Process State is still Active");
@@ -74,7 +64,6 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
     @AfterClass(alwaysRun = true)
     public void cleanup() throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("HelloWorld-retire");
         this.loginLogoutClient.logout();
     }
 }

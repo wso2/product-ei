@@ -75,15 +75,9 @@ public class BPMNRestVariableTestCase extends BPSMasterTest {
         BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, BPMNTestPackageName, deploymentCount);
 
         //Create new process instance
-        BPMNInstance[] bpmnInstances = startProcessInstance(BPMNTestPackageName);
-
-        Assert.assertNotNull(bpmnInstances, "BPMN process instance creation failed");
-        Assert.assertEquals(bpmnInstances.length, 1, "More than one instance get created");
-
-        log.info("Process instance creation success. Instance ID: " +bpmnInstances[0].getInstanceId());
-
-        targetProcessInstance = bpmnInstances[0];
-
+        targetProcessInstance = startProcessInstance(BPMNTestPackageName);
+        Assert.assertNotNull(targetProcessInstance, "BPMN process instance creation failed");
+        log.info("Process instance creation success. Instance ID: " + targetProcessInstance.getInstanceId());
     }
 
     @AfterTest(alwaysRun = true)
@@ -418,29 +412,24 @@ public class BPMNRestVariableTestCase extends BPSMasterTest {
 
     /**
      * This function will start process instance of target bpmn process
-     * @param processId : process id of the deployed process [<process id="oneTaskProcess" .. ></process>]
+     * @param processKey : process key of the deployed process [<process id="oneTaskProcess" .. ></process>]
      * @return returns current all available process instances if successfully created otherwise returns null
      */
-    private BPMNInstance[] startProcessInstance (String processId) throws Exception {
-        BPMNProcess[] processes = workflowServiceClient.getProcesses();
+    private BPMNInstance startProcessInstance (String processKey) throws Exception {
         BPMNInstanceService bpmnInstanceService = workflowServiceClient.getInstanceServiceStub();
-        BPMNInstance[] instances = bpmnInstanceService.getProcessInstances();
-
-        int previousInstanceCount = instances == null ? 0 : instances.length;
-        for (BPMNProcess process : processes) {
-            if (process.getProcessId().split(":")[0].equals(processId)) {
+        for (BPMNProcess process : workflowServiceClient.getProcesses()) {
+            if (process.getProcessId().split(":")[0].equals(processKey)) {
                 bpmnInstanceService.startProcess(process.getProcessId());
                 break;
             }
         }
 
-        instances = bpmnInstanceService.getProcessInstances();
-        if (instances.length > previousInstanceCount) {
-            return instances;
+        BPMNInstance[] instances = bpmnInstanceService.getProcessInstances();
+        for (BPMNInstance bpmnInstance : instances) {
+            if (bpmnInstance.getProcessId().split(":")[0].equals(processKey)) {
+                return bpmnInstance;
+            }
         }
-
         return null;
     }
-
-
 }

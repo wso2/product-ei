@@ -22,6 +22,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -51,11 +52,12 @@ public class BPELFunctionalityTest extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("TestAlarm");
-        uploadBpelForTest("DynPartner");
-        uploadBpelForTest("TestForEach");
+        // TODO Fix validation error in "TestPickOneWay"
         uploadBpelForTest("TestPickOneWay");
         requestSender.waitForProcessDeployment(backEndUrl + "PickService");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "CanonicServiceForClient"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "DynMainService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "ForEachService"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "onAlarm BPEL functionality test case")
@@ -120,9 +122,6 @@ public class BPELFunctionalityTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("TestAlarm");
-        bpelPackageManagementClient.undeployBPEL("DynPartner");
-        bpelPackageManagementClient.undeployBPEL("TestForEach");
         bpelPackageManagementClient.undeployBPEL("TestPickOneWay");
         this.loginLogoutClient.logout();
     }
