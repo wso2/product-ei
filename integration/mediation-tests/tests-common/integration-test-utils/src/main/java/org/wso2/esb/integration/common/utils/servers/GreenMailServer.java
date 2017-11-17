@@ -158,9 +158,10 @@ public class GreenMailServer {
      * @param protocol     protocol used to connect to the server
      * @return
      * @throws MessagingException if we're unable to connect to the store
+     * @throws InterruptedException if thread sleep fails
      */
     public static boolean checkEmailDeleted(String emailSubject, String protocol, GreenMailUser user)
-            throws MessagingException {
+            throws MessagingException, InterruptedException {
         boolean isEmailDeleted = false;
         long startTime = System.currentTimeMillis();
 
@@ -170,16 +171,21 @@ public class GreenMailServer {
                 isEmailDeleted = true;
                 break;
             }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                log.warn("Error during thread sleep for 0.5 sec");
-            }
+            Thread.sleep(500);
         }
         return isEmailDeleted;
     }
 
-    public static boolean checkEmailDeleted(String emailSubject, String protocol) throws MessagingException {
+    /**
+     * Overloaded method to check deletion of mail in the primary user's store
+     * @param emailSubject
+     * @param protocol
+     * @return
+     * @throws MessagingException
+     * @throws InterruptedException
+     */
+    public static boolean checkEmailDeleted(String emailSubject, String protocol)
+            throws MessagingException, InterruptedException {
         return checkEmailDeleted(emailSubject, protocol, primaryUser);
     }
 
@@ -190,9 +196,10 @@ public class GreenMailServer {
      * @param protocol     protocol used to connect to the server
      * @return
      * @throws MessagingException if we're unable to connect to the store
+     * @throws InterruptedException if thread sleep fails
      */
     public static boolean checkEmailMoved(String emailSubject, String protocol, GreenMailUser user)
-            throws MessagingException {
+            throws MessagingException, InterruptedException {
         boolean mailReceived = false;
         long startTime = System.currentTimeMillis();
         while ((System.currentTimeMillis() - startTime) < WAIT_TIME_MS) {
@@ -201,16 +208,21 @@ public class GreenMailServer {
                 mailReceived = true;
                 break;
             }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                log.warn("Error during thread sleep for 0.5 sec");
-            }
+            Thread.sleep(500);
         }
         return mailReceived;
     }
 
-    public static boolean checkEmailMoved(String emailSubject, String protocol) throws MessagingException {
+    /**
+     * Overloaded method to check moving of mail in the primary user's store
+     * @param emailSubject
+     * @param protocol
+     * @return
+     * @throws MessagingException
+     * @throws InterruptedException
+     */
+    public static boolean checkEmailMoved(String emailSubject, String protocol)
+            throws MessagingException, InterruptedException {
         return checkEmailMoved(emailSubject, protocol, primaryUser);
     }
 
@@ -242,6 +254,11 @@ public class GreenMailServer {
         }
     }
 
+    /**
+     * Overloaded method to delete all the mails in the primary user's store
+     * @param protocol
+     * @throws MessagingException
+     */
     public static void deleteAllEmails(String protocol) throws MessagingException {
         deleteAllEmails(protocol, primaryUser);
     }

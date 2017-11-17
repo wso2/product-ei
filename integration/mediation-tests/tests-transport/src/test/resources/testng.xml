@@ -156,6 +156,12 @@
         </packages>
     </test>
 
+    <test name="MailTo-transport-Test-Sender" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mailto.transport.sender.test"/>
+        </packages>
+    </test>
+
     <test name="Https Inbound Transport Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
