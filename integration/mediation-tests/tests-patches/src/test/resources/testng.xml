@@ -177,6 +177,12 @@
         </classes>
     </test>
 
+    <test name="Fix-for-CARBON16113" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.car.deployment.test.CARBON16113DeployArtifactsBeforeTransportStarsTestCase"/>
+        </classes>
+    </test>
+
     <test name="soap-header-handling-test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4118_SOAPHeaderHandlingTest"></class>
