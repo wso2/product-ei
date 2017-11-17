@@ -31,4 +31,4 @@ All the open issues pertaining to WSO2 Enterprise Integrator are reported at the
 
 |  Branch | Build Status |
 | :------------ |:-------------
-| master      | [![Build Status](https://wso2.org/jenkins/job/product-ei/badge/icon)](https://wso2.org/jenkins/job/product-ei) |
+| master      | [![Build Status](https://wso2.org/jenkins/view/products/job/products/job/product-ei_7.0.x/badge/icon)](https://wso2.org/jenkins/view/products/job/products/job/product-ei_7.0.x) |
