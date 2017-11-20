@@ -155,15 +155,6 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.ballerinalang</groupId>-->
-            <!--<artifactId>workspace-service</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.ballerinalang</groupId>-->
-            <!--<artifactId>ballerina-composer-web</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-core</artifactId>
@@ -192,22 +183,6 @@
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-http</artifactId>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.ei</groupId>-->
-            <!--<artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.ei</groupId>-->
-            <!--<artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.ei</groupId>-->
-            <!--<artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>
@@ -262,24 +237,6 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
-                    <!--<execution>-->
-                        <!--<id>unpack-dependencies-composer</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>unpack-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<includeArtifactIds>-->
-                                <!--workspace-service,ballerina-composer-web-->
-                            <!--</includeArtifactIds>-->
-                            <!--<outputDirectory>${basedir}/target/WSO2Carbon/tmp-->
-                            <!--</outputDirectory>-->
-                            <!--<overWriteReleases>false</overWriteReleases>-->
-                            <!--<overWriteSnapshots>true</overWriteSnapshots>-->
-                            <!--<useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>-->
-                            <!--<stripVersion>true</stripVersion>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
                     <execution>
                         <id>unpack-dependencies-runtime</id>
                         <phase>package</phase>
@@ -397,18 +354,6 @@
                                     <id>org.wso2.carbon.business.messaging.admin.services.feature</id>
                                     <version>${carbon.business.messaging.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.ei.converter.tools.mule2ballerina.feature</id>-->
-                                    <!--<version>${product.ei.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.ei.converter.tools.ds2ballerina.feature</id>-->
-                                    <!--<version>${product.ei.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.ei.converter.tools.synapse2ballerina.feature</id>-->
-                                    <!--<version>${product.ei.version}</version>-->
-                                <!--</feature>-->
                             </features>
                         </configuration>
                     </execution>

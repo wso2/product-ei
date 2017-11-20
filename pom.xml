@@ -227,18 +227,6 @@
                 <artifactId>ballerina-launcher</artifactId>
                 <version>${ballerina.runtime.version}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.ballerinalang</groupId>-->
-                <!--<artifactId>workspace-service</artifactId>-->
-                <!--<version>${ballerina.runtime.version}</version>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>org.ballerinalang</groupId>-->
-                <!--<artifactId>ballerina-composer-web</artifactId>-->
-                <!--<version>${ballerina.runtime.version}</version>-->
-                <!--<type>zip</type>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.ballerinalang.tools</groupId>
                 <artifactId>ballerina-tools</artifactId>
