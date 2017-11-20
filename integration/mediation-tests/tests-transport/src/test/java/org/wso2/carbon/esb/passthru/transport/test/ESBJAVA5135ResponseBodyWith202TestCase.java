@@ -40,8 +40,8 @@ public class ESBJAVA5135ResponseBodyWith202TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/" +
-                "transport/ESBJAVA-5135.xml");
+        verifyProxyServiceExistence("ResponseBodyWith202TestProxy");
+        verifyProxyServiceExistence("ResponseBodyWith202MockProxy");
     }
 
     /**
@@ -64,7 +64,7 @@ public class ESBJAVA5135ResponseBodyWith202TestCase extends ESBIntegrationTest {
                 + "</soapenv:Envelope>";
 
         HttpResponse response = HttpRequestUtil.
-                doPost(new URL(getProxyServiceURLHttp("mockProxy")), message, requestHeader);
+                doPost(new URL(getProxyServiceURLHttp("ResponseBodyWith202MockProxy")), message, requestHeader);
 
         Assert.assertTrue(response.getData().contains("Hello World"), "Expected response was not"
                 + " received. Got " + response.getData());

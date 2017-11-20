@@ -17,20 +17,16 @@
   ~  under the License.
   ~
   -->
-<definitions xmlns="http://ws.apache.org/ns/synapse">
-	<api name="AuthHeaderTestAPI" context="/stockquote">
-		<resource url-pattern="/order/*" methods="POST">
-			<inSequence>
-				<property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" />
-				<property name="OUT_ONLY" value="true" />
-				<send>
-					<endpoint>
-						<address uri="http://localhost:8991/services/SimpleStockQuoteService"
-							format="soap11" />
-					</endpoint>
-				</send>
-			</inSequence>
-		</resource>
-	</api>
-</definitions>
-
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="HTTPPatchMethodSupportRespondProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>

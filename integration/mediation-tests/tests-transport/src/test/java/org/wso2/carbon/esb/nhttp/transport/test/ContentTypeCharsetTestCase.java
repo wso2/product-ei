@@ -35,8 +35,7 @@ public class ContentTypeCharsetTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/nhttp_transport"
-                                          + "/content_type_charset_synapse.xml");
+        verifyProxyServiceExistence("ContentTypeCharsetTestProxy");
     }
 
     @Test(groups = { "wso2.esb" }, description = "Test for charset value proprty in the header response")
@@ -48,7 +47,7 @@ public class ContentTypeCharsetTestCase extends ESBIntegrationTest {
         SimpleHttpClient httpClient = new SimpleHttpClient();
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("content-type", contentType);
-        HttpResponse response = httpClient.doGet(getProxyServiceURLHttp("FooProxy"), headers);
+        HttpResponse response = httpClient.doGet(getProxyServiceURLHttp("ContentTypeCharsetTestProxy"), headers);
         String contentTypeData = response.getEntity().getContentType().getValue();
         Assert.assertTrue(contentTypeData.contains(charset));
 
