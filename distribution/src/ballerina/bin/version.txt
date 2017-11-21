@@ -1,1 +1,0 @@
-Ballerina Tools version: 0.94.0-SNAPSHOT
