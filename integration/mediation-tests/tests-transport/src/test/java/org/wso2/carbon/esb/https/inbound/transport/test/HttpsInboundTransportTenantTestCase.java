@@ -39,9 +39,9 @@ public class HttpsInboundTransportTenantTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init(TestUserMode.TENANT_ADMIN);
         secureAxisServiceClient = new SecureServiceClient();
-        addSequence(getArtifactConfig("TestIn.xml"));
-        addSequence(getArtifactConfig("reciveSeq.xml"));
-        addSequence(getArtifactConfig("TestOut.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestInSeq.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestReceiveSeq.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestOutSeq.xml"));
         addInboundEndpoint(getArtifactConfig("synapse2.xml"));
 
     }

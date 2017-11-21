@@ -37,12 +37,12 @@ public class HttpInboundTransportTenantTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init(TestUserMode.TENANT_ADMIN);
 
-        addSequence(getArtifactConfig("TestIn.xml"));
-        addSequence(getArtifactConfig("reciveSeq.xml"));
-        addSequence(getArtifactConfig("TestOut.xml"));
-        addInboundEndpoint(getArtifactConfig("synapse.xml"));
-        addApi(getArtifactConfig("Test.xml"));
-        addInboundEndpoint(getArtifactConfig("apidispatch.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestInSeq.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestReceiveSeq.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestOutSeq.xml"));
+        addInboundEndpoint(getArtifactConfig("HttpInboundTransportTestHttpListenerEP.xml"));
+        addApi(getArtifactConfig("HttpInboundTransportTestAPI.xml"));
+        addInboundEndpoint(getArtifactConfig("HttpInboundTransportTestDispatchEP.xml"));
     }
 
     @Test(groups = "wso2.esb", description = "Inbound Http  test case for tenant" )
@@ -54,7 +54,7 @@ public class HttpInboundTransportTenantTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Inbound Http  test case for tenant API dispatching" )
     public void inboundHttpAPITest() throws AxisFault {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest("http://localhost:8082/t/wso2.com/test/map", null, "IBM");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest("http://localhost:8082/t/wso2.com/HttpInboundTransportTestAPI/map", null, "IBM");
         Assert.assertNotNull(response);
         Assert.assertEquals("getQuoteResponse", response.getLocalName());
     }

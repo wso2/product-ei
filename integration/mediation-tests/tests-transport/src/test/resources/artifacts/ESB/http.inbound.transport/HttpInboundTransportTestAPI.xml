@@ -1,7 +1,7 @@
 
 <api xmlns="http://ws.apache.org/ns/synapse"
-     name="Test"
-     context="/testapi"
+     name="HttpInboundTransportTestAPI"
+     context="/HttpInboundTransportTestAPI"
      hostname="localhost"
      port="8082">
     <resource methods="POST GET" url-mapping="/map">

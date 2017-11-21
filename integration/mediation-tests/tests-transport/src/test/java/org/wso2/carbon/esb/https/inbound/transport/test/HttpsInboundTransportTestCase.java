@@ -37,10 +37,10 @@ public class HttpsInboundTransportTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         secureAxisServiceClient = new SecureServiceClient();
-        addSequence(getArtifactConfig("TestIn.xml"));
-        addSequence(getArtifactConfig("reciveSeq.xml"));
-        addSequence(getArtifactConfig("TestOut.xml"));
-        addInboundEndpoint(getArtifactConfig("synapse.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestInSeq.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestReceiveSeq.xml"));
+        addSequence(getArtifactConfig("HttpInboundTransportTestOutSeq.xml"));
+        addInboundEndpoint(getArtifactConfig("HttpInboundTransportTestHttpListenerEP.xml"));
         Thread.sleep(30000);
 
     }

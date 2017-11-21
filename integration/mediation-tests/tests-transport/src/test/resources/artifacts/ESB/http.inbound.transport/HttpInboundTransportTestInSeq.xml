@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence xmlns="http://ws.apache.org/ns/synapse" name="TestIn">
-    <send receive="reciveSeq">
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="HttpInboundTransportTestInSeq">
+    <send receive="HttpInboundTransportTestReceiveSeq">
         <endpoint>
             <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
         </endpoint>

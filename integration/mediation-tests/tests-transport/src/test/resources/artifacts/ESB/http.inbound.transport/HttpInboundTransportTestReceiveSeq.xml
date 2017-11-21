@@ -15,6 +15,6 @@
   ~ limitations under the License.
   -->
 
-<sequence xmlns="http://ws.apache.org/ns/synapse" name="reciveSeq">
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="HttpInboundTransportTestReceiveSeq">
     <send/>
 </sequence>

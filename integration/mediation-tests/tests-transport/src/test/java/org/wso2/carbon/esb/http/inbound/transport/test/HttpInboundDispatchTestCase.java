@@ -41,18 +41,12 @@ public class HttpInboundDispatchTestCase extends ESBIntegrationTest {
 
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
-        addSequence(getArtifactConfig("sequences", "fault.xml"));
         addSequence(getArtifactConfig("sequences", "main.xml"));
         addSequence(getArtifactConfig("sequences", "super.xml"));
 
-        addApi(getArtifactConfig("api", "BOO.xml"));
-        addApi(getArtifactConfig("api", "FOO.xml"));
-        addApi(getArtifactConfig("api", "TenantContext.xml"));
-
-        addProxyService(getArtifactConfig("proxy-services", "TestProxy.xml"));
-        addInboundEndpoint(getArtifactConfig("inbound-endpoints", "inbound1.xml"));
-        addInboundEndpoint(getArtifactConfig("inbound-endpoints", "inbound2.xml"));
-
+        verifyAPIExistence("HttpInboundDispatchTestboo");
+        verifyAPIExistence("HttpInboundDispatchTestfoo");
+        verifyProxyServiceExistence("HttpInboundDispatchTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Inbound HTTP Super Tenant Sequence Dispatch" )
@@ -64,9 +58,9 @@ public class HttpInboundDispatchTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Inbound HTTP Super Tenant API Dispatch" )
     public void inboundHttpSuperAPITest() throws Exception {
-        axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/foo", null, "WSO2");
+        axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/HttpInboundDispatchTestfoo", null, "WSO2");
         Assert.assertTrue(stringExistsInLog("FOO"));
-        axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/boo", null, "WSO2");
+        axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/HttpInboundDispatchTestboo", null, "WSO2");
         Assert.assertTrue(stringExistsInLog("BOO"));
 
         /**
@@ -86,7 +80,7 @@ public class HttpInboundDispatchTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Inbound HTTP Super Tenant Proxy Dispatch" )
     public void inboundHttpSuperProxyDispatchTest() throws Exception {
-        axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/services/TestProxy", null, "WSO2");
+        axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/services/HttpInboundDispatchTestProxy", null, "WSO2");
         Assert.assertTrue(stringExistsInLog("PROXY_HIT"));
     }
 

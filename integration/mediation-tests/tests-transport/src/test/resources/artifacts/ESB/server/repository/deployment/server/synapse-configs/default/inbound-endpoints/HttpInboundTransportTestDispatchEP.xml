@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inboundEndpoint name="HttpInboundTransportTestDispatchEP"
+                 protocol="http"
+                 suspend="false" sequence="HttpInboundTransportTestInSeq" onError="fault" >
+    <p:parameters xmlns:p="http://ws.apache.org/ns/synapse">
+        <p:parameter  name="inbound.http.port">8082</p:parameter>
+        <p:parameter  name="api.dispatching.enabled">true</p:parameter>
+    </p:parameters>
+</inboundEndpoint>

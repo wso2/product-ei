@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api xmlns="http://ws.apache.org/ns/synapse" name="BOO" context="/boo">
+<api xmlns="http://ws.apache.org/ns/synapse" name="HttpInboundDispatchTestfoo" context="/HttpInboundDispatchTestfoo">
    <resource methods="GET POST">
       <inSequence>
          <log level="custom">
-            <property name="BOO-API" value="BOO"/>
+            <property name="FOO-API" value="FOO"/>
          </log>
           <respond/>
       </inSequence>
