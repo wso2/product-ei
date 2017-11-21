@@ -31,6 +31,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
+import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -49,19 +50,10 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
             + "envelope/\"><soapenv:Body><ns:getQuote xmlns:ns=\"http://services.samples\"><ns:request><ns:symbol>"
             + "JMS</ns:symbol></ns:request></ns:getQuote></soapenv:Body></soapenv:Envelope>";
     private LogViewerClient logViewerClient;
-    private JMSBroker jmsBroker;
 
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
-
-        /* Initialize the JMS Broker */
-        List<TransportConnector> tcpConnectors = new ArrayList<>();
-        tcpConnectors.add(getTCPConnector());
-        this.jmsBroker = new JMSBroker("JMSConnectionCaching", tcpConnectors);
-
-        startBroker();
-
         /* uploadSynapseConfig (Proxy) */
         OMElement synapse = esbUtils.loadResource("artifacts/ESB/jms/transport/JMSSenderStaleConnectionsTestProxy.xml");
         updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
@@ -69,9 +61,7 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
-    @Test(groups = {
-            "wso2.esb"
-    },
+    @Test(groups = {"wso2.esb"},
           description = "Test for JMS sender side stale connections handling")
     public void staleConnectionsTestJMSProxy() throws Exception {
 
@@ -86,8 +76,9 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
         }
 
         /* restart the JMS broker */
-        stopBroker();
-        startBroker();
+        ActiveMQServer activeMQServer = JMSBrokerManager.getActiveMQServer();
+        activeMQServer.stopJMSBroker();
+        activeMQServer.startJMSBroker();
 
         /* send another message after broker restart */
         client.sendRobust(Utils.getStockQuoteRequest("JMS"),
@@ -101,41 +92,11 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
                 break;
             }
         }
-        Assert.assertTrue(!isExceptionThrown, "Sender Side Stale connections handling test passed");
+        Assert.assertFalse(isExceptionThrown, "Sender Side Stale connections handling test failed");
     }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        super.cleanup();
-        stopBroker();
-    }
-
-    /**
-     * Start the JMS broker (ActiveMQ)
-     */
-    private void startBroker() {
-        if (jmsBroker != null && !jmsBroker.isBrokerStarted()) {
-            Assert.assertTrue(this.jmsBroker.start(), "JMS Broker(ActiveMQ) stating failed");
-        }
-    }
-
-    /**
-     * Stop the JMS broker (ActiveMQ)
-     */
-    private void stopBroker() {
-        if (jmsBroker != null && jmsBroker.isBrokerStarted()) {
-            Assert.assertTrue(jmsBroker.stop(), "JMS Broker(ActiveMQ) Stopping failed");
-        }
-    }
-
-    private TransportConnector getTCPConnector() {
-        TransportConnector tcp = new TransportConnector();
-        tcp.setName("tcp");
-        try {
-            tcp.setUri(new URI("tcp://127.0.0.1:61626"));
-        } catch (URISyntaxException e) {
-            log.error("Error while setting tcp uri :tcp://127.0.0.1:61626", e);
-        }
-        return tcp;
+            super.cleanup();
     }
 }

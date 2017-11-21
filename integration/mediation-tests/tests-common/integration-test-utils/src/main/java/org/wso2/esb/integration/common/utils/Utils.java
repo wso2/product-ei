@@ -29,6 +29,7 @@ import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.concurrent.TimeUnit;
@@ -99,9 +100,8 @@ public class Utils {
      *
      * @param port
      */
-    public static void shutdownFailsafe(int port) {
+    public static void shutdownFailsafe(int port) throws IOException {
         try {
-            System.out.println("Method to kill already existing servers in port " + port);
             Process p = Runtime.getRuntime().exec("lsof -Pi tcp:" + port);
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
@@ -110,20 +110,13 @@ public class Utils {
             if (line != null) {
                 line = line.trim();
                 String processId = line.split(" +")[1];
-                System.out.println("There is already a process using " + port + ", process id is - " + processId);
                 if (processId != null) {
                     String killStr = "kill -9 " + processId;
-                    System.out.println("kill string to kill the process - " + killStr);
                     Runtime.getRuntime().exec(killStr);
-
-                    System.out.println(
-                            "process " + processId + " killed successfully, which was running on port " + port);
                 }
-            } else {
-                System.out.println("There are no existing processes running on port " + port);
             }
-        } catch (Exception e) {
-            System.out.println("Error killing the process which uses the port " + port);
+        } catch (IOException e) {
+            throw new IOException("Error killing the process which uses the port " + port);
         }
     }
 
