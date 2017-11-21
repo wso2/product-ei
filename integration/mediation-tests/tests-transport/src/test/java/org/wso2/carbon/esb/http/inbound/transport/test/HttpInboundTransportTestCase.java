@@ -36,12 +36,10 @@ public class HttpInboundTransportTestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        addSequence(getArtifactConfig("TestIn.xml"));
-        addSequence(getArtifactConfig("reciveSeq.xml"));
-        addSequence(getArtifactConfig("TestOut.xml"));
-        addInboundEndpoint(getArtifactConfig("synapse.xml"));
-        addApi(getArtifactConfig("Test.xml"));
-        addInboundEndpoint(getArtifactConfig("apidispatch.xml"));
+        verifySequenceExistence("HttpInboundTransportTestInSeq");
+        verifySequenceExistence("HttpInboundTransportTestReceiveSeq");
+        verifySequenceExistence("HttpInboundTransportTestOutSeq");
+        verifyAPIExistence("HttpInboundTransportTestAPI");
     }
 
     @Test(groups = "wso2.esb", description = "Inbound Http  test case" )
@@ -54,7 +52,7 @@ public class HttpInboundTransportTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Inbound Http  test case for API" )
     public void inboundHttpAPITest() throws AxisFault {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest("http://localhost:8082/testapi/map", null, "IBM");
+        OMElement response = axis2Client.sendSimpleStockQuoteRequest("http://localhost:8082/HttpInboundTransportTestAPI/map", null, "IBM");
         Assert.assertNotNull(response);
         Assert.assertEquals("getQuoteResponse", response.getLocalName());
     }
@@ -62,19 +60,5 @@ public class HttpInboundTransportTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-    }
-
-    private OMElement getArtifactConfig(String fileName) throws Exception {
-        OMElement synapseConfig = null;
-        String path = "artifacts" + File.separator + "ESB" + File.separator
-                      + "http.inbound.transport" + File.separator + fileName;
-        try {
-            synapseConfig = esbUtils.loadResource(path);
-        } catch (FileNotFoundException e) {
-            throw new Exception("File Location " + path + " may be incorrect", e);
-        } catch (XMLStreamException e) {
-            throw new XMLStreamException("XML Stream Exception while reading file stream", e);
-        }
-        return synapseConfig;
     }
 }

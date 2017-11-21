@@ -55,7 +55,7 @@ public class ESBJAVA4891ConsumeAndDiscardTest  extends ESBIntegrationTest {
     public void uploadSynapseConfig() throws Exception {
         super.init();
         input = FileUtils.readFileToString(new File(getESBResourceLocation() + "/passthru/transport/inputESBJAVA4891.xml"), "ISO-8859-1");
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA-4891.xml");
+        verifyProxyServiceExistence("ESBJAVA4891ConsumeAndDiscardTestProxy");
     }
 
     /**
@@ -66,7 +66,7 @@ public class ESBJAVA4891ConsumeAndDiscardTest  extends ESBIntegrationTest {
      */
     @Test(groups = "wso2.esb", description = "Testing with a Payload Mediator")
     public void testPartialReadErrorWithPayloadMediator() throws Exception {
-        URL endpoint = new URL(getProxyServiceURLHttp("TestProxy"));
+        URL endpoint = new URL(getProxyServiceURLHttp("ESBJAVA4891ConsumeAndDiscardTestProxy"));
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", "application/xml");
         HttpResponse httpResponse = doPost(endpoint, input, header);

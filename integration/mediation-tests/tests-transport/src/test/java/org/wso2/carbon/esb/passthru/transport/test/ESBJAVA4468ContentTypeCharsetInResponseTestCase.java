@@ -46,7 +46,9 @@ public class ESBJAVA4468ContentTypeCharsetInResponseTestCase extends ESBIntegrat
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4468.xml");
+        verifyProxyServiceExistence("contentTypeCharsetProxy1");
+        verifyProxyServiceExistence("contentTypeCharsetProxy2");
+        verifyProxyServiceExistence("contentTypeCharsetProxy3");
         messagePayload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                          "xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
                          "   <soapenv:Header/>\n" +

@@ -43,10 +43,8 @@ public class ESBJAVA4326OverridingHostHeaderTestCase extends ESBIntegrationTest 
 
     @BeforeClass(alwaysRun = true)
     public void deployAPI() throws Exception {
-
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA-4326.xml");
-
+        verifyAPIExistence("OverridingHostHeaderTestAPI");
     }
 
     @Test(groups = {"wso2.esb"}, description = "replacing the host header after first call")
@@ -68,7 +66,7 @@ public class ESBJAVA4326OverridingHostHeaderTestCase extends ESBIntegrationTest 
         requestHeader.put("Content-type", "text/xml");
         requestHeader.put("SOAPAction", "urn:getQuote");
         try {
-            HttpResponse response = HttpRequestUtil.doPost(new URL(getApiInvocationURL("products/"))
+            HttpResponse response = HttpRequestUtil.doPost(new URL(getApiInvocationURL("OverridingHostHeaderTestAPI"))
                     , payload, requestHeader);
         }catch (Exception e) {
             //expected

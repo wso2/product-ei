@@ -18,11 +18,10 @@
 
 package org.wso2.carbon.esb.passthru.transport.test;
 
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.io.FileUtils;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -46,7 +45,7 @@ public class ESBJAVA4999ResponsePayloadWithHTTPAcceptedTestCase extends ESBInteg
     public void deployAPI() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA-4999.xml");
+        verifyAPIExistence("ResponsePayloadWithHTTPAcceptedTestAPI");
     }
 
     /**
@@ -61,7 +60,7 @@ public class ESBJAVA4999ResponsePayloadWithHTTPAcceptedTestCase extends ESBInteg
         requestHeader.put("Content-type", "application/json");
 
         HttpResponse response = HttpRequestUtil.doPost(
-                new URL(getApiInvocationURL("payload-with-202/frontend/")), "{}", requestHeader);
+                new URL(getApiInvocationURL("ResponsePayloadWithHTTPAcceptedTestAPI/frontend/")), "{}", requestHeader);
 
         Assert.assertEquals(response.getResponseCode(), 202);
         Assert.assertFalse(response.getData().isEmpty());

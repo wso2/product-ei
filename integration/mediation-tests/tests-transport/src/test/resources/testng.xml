@@ -9,16 +9,10 @@
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
     </listeners>
 
-    <test name="POST-Request-Without-Body-without-chunking" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4402MessageWithoutPayloadTestCase"/>
-        </classes>
-    </test>
-
     <test name="passthru-Transport-Test" preserve-order="true" verbose="2">
         <classes>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4402MessageWithoutPayloadTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.CheckAuthHeaderOrderTestCase"/>
-            <class name="org.wso2.carbon.esb.passthru.transport.test.ContentTypeCharsetTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA1897HttpHeadMethodTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA1994SOAPFormatSwitchingTestcase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3022SendingSoapRequestAfterRestRequestTestCase"/>
@@ -38,12 +32,6 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.HTTPDeleteTestCases"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.MTOMMIMEBoundaryWhenContentTypePreservedTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.CookieHeaderExpiresHavingCommaTestCase"/>
-        </classes>
-    </test>
-
-    <test name="http-patch-method-support-test" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3051HTTPPatchMethodSupportTestCase"/>
         </classes>
     </test>
 
@@ -72,6 +60,8 @@
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTestCase"/>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundDispatchTestCase"/>
+            <class name="org.wso2.carbon.esb.https.inbound.transport.test.HttpsInboundTransportTestCase"/>
+            <class name="org.wso2.carbon.esb.https.inbound.transport.test.HttpsInboundTransportTenantTestCase"/>
         </classes>
     </test>
 
@@ -154,12 +144,6 @@
     <test name="MailTo-transport-Test-Receiver" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mailto.transport.receiver.test"/>
-        </packages>
-    </test>
-
-    <test name="Https Inbound Transport Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
         </packages>
     </test>
 

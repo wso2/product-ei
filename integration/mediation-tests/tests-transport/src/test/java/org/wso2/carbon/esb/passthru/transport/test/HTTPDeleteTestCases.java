@@ -37,7 +37,9 @@ public class HTTPDeleteTestCases extends ESBIntegrationTest{
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/http_transport/HTTPDeleteSupportTestSynapseConfig.xml");
+        verifyProxyServiceExistence("HTTPDeleteTestProxy");
+        verifyAPIExistence("HTTPDeleteTestAPI");
+        verifyAPIExistence("HTTPDeleteTestExternalServiceAPI");
     }
 
 
@@ -56,7 +58,7 @@ public class HTTPDeleteTestCases extends ESBIntegrationTest{
                 + "</soapenv:Body></soapenv:Envelope>";
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
-        String url = getProxyServiceURLHttp("testDeleteProxy");
+        String url = getProxyServiceURLHttp("HTTPDeleteTestProxy");
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", "application/soap+xml; charset=UTF-8; action=\"urn:mediate\"");
 
@@ -77,7 +79,7 @@ public class HTTPDeleteTestCases extends ESBIntegrationTest{
         String expectedResponse = "{\"HTTPMethod\":\"DELETE\",\"Response\": {\"RequestMessage\":\"This is request message to test HTTP DELETE\"}}";
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
-        String url = getApiInvocationURL("testbackend");
+        String url = getApiInvocationURL("HTTPDeleteTestAPI");
 
         HttpResponse response = httpClient.doDeleteWithPayload(url, null, requestMessage, "application/json");
 
@@ -89,7 +91,7 @@ public class HTTPDeleteTestCases extends ESBIntegrationTest{
 
     /**
      * This testcase tests making DELETE request to external service from ESB.
-     * TEST Client -> testdeletecall API -> testbackend API
+     * TEST Client -> HTTPDeleteTestExternalServiceAPI -> HTTPDeleteTestAPI
      * @throws Exception
      */
     @Test(groups = "wso2.esb", description = "Test Invoking api containing call mediator to test HTTP DELETE with Call Mediator")
@@ -100,7 +102,7 @@ public class HTTPDeleteTestCases extends ESBIntegrationTest{
         String expectedResponse = "{\"HTTPMethod\":\"DELETE\",\"Response\": {\"RequestMessage\":\"This is request message to test HTTP DELETE\"}}";
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
-        String url = getApiInvocationURL("testdeletecall");
+        String url = getApiInvocationURL("HTTPDeleteTestExternalServiceAPI");
 
         HttpResponse response = httpClient.doPost(url, null, requestMessage, "application/json");
 

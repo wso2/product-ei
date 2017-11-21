@@ -45,9 +45,7 @@ public class CheckAuthHeaderOrderTestCase extends ESBIntegrationTest {
         init();
         wireServer = new WireMonitorServer(8991);
         wireServer.start();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                                          + "nhttp" + File.separator + "transport" + File.separator
-                                          + "auth-headers.xml");
+        verifyAPIExistence("AuthHeaderTestAPI");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Sending a Message Via REST to check the order of the auth headers")
@@ -55,7 +53,7 @@ public class CheckAuthHeaderOrderTestCase extends ESBIntegrationTest {
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
-        HttpPost httpPost = new HttpPost(getApiInvocationURL("stockquote") + "/order/");
+        HttpPost httpPost = new HttpPost(getApiInvocationURL("AuthHeaderTestAPI") + "/order/");
         httpPost.addHeader("WWW-Authenticate", "NTLM");
         httpPost.addHeader("WWW-Authenticate", "Basic realm=\"BasicSecurityFilterProvider\"");
         httpPost.addHeader("WWW-Authenticate", "ANTLM3");
