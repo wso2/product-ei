@@ -114,12 +114,12 @@
 
     <files>
         <!--Ballerina related: start-->
-        <file>
+        <!--<file>
             <source>target/ballerina/ballerina-logging-jar/logging.properties</source>
             <outputDirectory>wso2/ballerina/bre/conf/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
-        </file>
+        </file>-->
         <file>
             <source>src/ballerina/bin/ballerina</source>
             <outputDirectory>wso2/ballerina/bin/</outputDirectory>

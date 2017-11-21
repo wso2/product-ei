@@ -155,34 +155,6 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-lang</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-builtin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-launcher</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-http</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -230,29 +202,25 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
+                    <!-- Unpack Ballerina distribution -->
                     <execution>
-                        <id>unpack-dependencies-runtime</id>
+                        <id>unpack-ballerina</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>unpack-dependencies</goal>
+                            <goal>unpack</goal>
                         </goals>
                         <configuration>
-                            <includeArtifactIds>
-                                ballerina-builtin,ballerina-http,ballerina-logging
-                            </includeArtifactIds>
-                            <outputDirectory>${basedir}/target/ballerina
-                            </outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                            <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                            <stripVersion>true</stripVersion>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang.tools</groupId>
+                                    <artifactId>ballerina</artifactId>
+                                    <version>${ballerina.runtime.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/wso2</outputDirectory>
+                                    <includes>**/*</includes>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
