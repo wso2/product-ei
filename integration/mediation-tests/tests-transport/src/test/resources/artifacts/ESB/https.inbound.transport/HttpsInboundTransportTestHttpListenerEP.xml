@@ -14,11 +14,11 @@
   ~ limitations under the License.
   -->
 
-<inboundEndpoint name="HttpsListenerEP"
+<inboundEndpoint name="HttpsInboundTransportTestHttpListenerEP"
                  protocol="https"
-                  suspend="false" sequence="TestIn" onError="fault" >
+                  suspend="false" sequence="HttpsInboundTransportTestInSeq" onError="fault" >
     <p:parameters xmlns:p="http://ws.apache.org/ns/synapse">
-        <p:parameter  name="inbound.http.port">8081</p:parameter>
+        <p:parameter  name="inbound.http.port">8084</p:parameter>
         <p:parameter name="keystore">
             <KeyStore>
                 <Location>repository/resources/security/wso2carbon.jks</Location>

@@ -39,18 +39,18 @@ public class HttpsInboundTransportTenantTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init(TestUserMode.TENANT_ADMIN);
         secureAxisServiceClient = new SecureServiceClient();
-        addSequence(getArtifactConfig("HttpInboundTransportTestInSeq.xml"));
-        addSequence(getArtifactConfig("HttpInboundTransportTestReceiveSeq.xml"));
-        addSequence(getArtifactConfig("HttpInboundTransportTestOutSeq.xml"));
-        addInboundEndpoint(getArtifactConfig("synapse2.xml"));
-
+        addSequence(getArtifactConfig("HttpsInboundTransportTestInSeq.xml"));
+        addSequence(getArtifactConfig("HttpsInboundTransportTestReceiveSeq.xml"));
+        addSequence(getArtifactConfig("HttpsInboundTransportTestOutSeq.xml"));
+        addInboundEndpoint(getArtifactConfig("HttpsInboundTransportTestDispatchEP.xml"));
+        addInboundEndpoint(getArtifactConfig("HttpsInboundTransportTestHttpListenerEP.xml"));
     }
 
     @Test(groups = "wso2.esb", description = "" )
     public void testSecureProxyEndPointThruUri() throws Exception {
 
         OMElement response = secureAxisServiceClient.
-                   sendSecuredStockQuoteRequest(userInfo, "https://localhost:8083/t/wso2.com/", "WSO2", true);
+                   sendSecuredStockQuoteRequest(userInfo, "https://localhost:8084/t/wso2.com/", "WSO2", true);
         Assert.assertNotNull(response);
         Assert.assertEquals("getQuoteResponse", response.getLocalName());
     }

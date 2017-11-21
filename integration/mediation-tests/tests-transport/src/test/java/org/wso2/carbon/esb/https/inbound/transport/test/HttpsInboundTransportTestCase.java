@@ -37,12 +37,9 @@ public class HttpsInboundTransportTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         secureAxisServiceClient = new SecureServiceClient();
-        addSequence(getArtifactConfig("HttpInboundTransportTestInSeq.xml"));
-        addSequence(getArtifactConfig("HttpInboundTransportTestReceiveSeq.xml"));
-        addSequence(getArtifactConfig("HttpInboundTransportTestOutSeq.xml"));
-        addInboundEndpoint(getArtifactConfig("HttpInboundTransportTestHttpListenerEP.xml"));
-        Thread.sleep(30000);
-
+        verifySequenceExistence("HttpsInboundTransportTestInSeq");
+        verifySequenceExistence("HttpsInboundTransportTestReceiveSeq");
+        verifySequenceExistence("HttpsInboundTransportTestOutSeq");
     }
 
     @Test(groups = "wso2.esb", description = "" )
@@ -59,20 +56,4 @@ public class HttpsInboundTransportTestCase extends ESBIntegrationTest {
     public void destroy() throws Exception {
         super.cleanup();
     }
-
-
-    private OMElement getArtifactConfig(String fileName) throws Exception {
-        OMElement synapseConfig = null;
-        String path = "artifacts" + File.separator + "ESB" + File.separator
-                      + "https.inbound.transport" + File.separator + fileName;
-        try {
-            synapseConfig = esbUtils.loadResource(path);
-        } catch (FileNotFoundException e) {
-            throw new Exception("File Location " + path + " may be incorrect", e);
-        } catch (XMLStreamException e) {
-            throw new XMLStreamException("XML Stream Exception while reading file stream", e);
-        }
-        return synapseConfig;
-    }
-
 }

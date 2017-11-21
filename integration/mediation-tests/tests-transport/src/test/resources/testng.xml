@@ -59,6 +59,8 @@
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTestCase"/>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundDispatchTestCase"/>
+            <class name="org.wso2.carbon.esb.https.inbound.transport.test.HttpsInboundTransportTestCase"/>
+            <class name="org.wso2.carbon.esb.https.inbound.transport.test.HttpsInboundTransportTenantTestCase"/>
         </classes>
     </test>
 
@@ -141,12 +143,6 @@
     <test name="MailTo-transport-Test-Receiver" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mailto.transport.receiver.test"/>
-        </packages>
-    </test>
-
-    <test name="Https Inbound Transport Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
         </packages>
     </test>
 
