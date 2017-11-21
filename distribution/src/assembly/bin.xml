@@ -102,14 +102,4 @@
             <filtered>true</filtered>
         </file>
     </files>
-    <dependencySets>
-        <dependencySet>
-            <outputDirectory>wso2/lib/plugins</outputDirectory>
-            <scope>runtime</scope>
-            <includes>
-                <include>org.ballerinalang:ballerina-core:jar</include>
-                <include>org.ballerinalang:ballerina-lang:jar</include>
-            </includes>
-        </dependencySet>
-    </dependencySets>
 </assembly>
