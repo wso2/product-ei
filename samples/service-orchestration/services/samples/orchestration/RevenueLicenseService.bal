@@ -57,11 +57,10 @@ service <http> RevenueLicenseService {
             return;
         }
             
-        // Call Lisense Issuer    
+        // Call License Issuer
         http:Response licenseResponse = {};
         licenseResponse,_ = licenseIssuerEP.get("/" + vehicleId, req);
         resp.forward(licenseResponse);
-        
     }
     
     
