@@ -32,10 +32,14 @@ This service handles the payment.
 
 ## Orchestrating Services
 Revenue License Service orchestrates all the above services and offers a service which can be used to renew the license.
+
 Revenue License Service contains two Resources. They are validateCertsResource and licenseResource.
 validateCertsResource offers a way to the user to check whether they have valid certificates by themselves before submitting a request to renew the license. 
-licenseResource provides the main functionality of the service. Both these resources need to call the Emission Test Service and the Insurance Service to get the certificates validated. So validation logic is implemented in a function (named as validateCertificates) so that both resouces can reuse the same code segment.
+licenseResource provides the main functionality of the service. 
+Both these resources need to call the Emission Test Service and the Insurance Service to get the certificates validated. So validation logic is implemented in a function (named as validateCertificates) so that both resouces can reuse the same code segment.
+
 Emission Test Service and Insurance Service can be invoked in parallel as they are mutually exclusive. Fork-Join and Worker cocepts in ballerina is used for that purpose. 
+
 Rest of the service invocations need to be done sequentially as output of the one service invocation is required for the next service invocation.
 
 # Running the sample
