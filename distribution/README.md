@@ -1,19 +1,14 @@
-##WSO2 Enterprise Integrator product distribution
+# WSO2 Enterprise Integrator product distribution
 
 -bin <br>
 Contains various scripts .sh & .bat scripts.
 
--database <br> 
-Contains the database.
 
 -dbscripts <br>
 Contains all the database scripts.
 
 -lib <br>
-Contains basic libraries that are required to startup EI.
-
--repository  <br>
-The repository where services and modules deployed in WSO2 EI are stored.
+Place to add external library files
 
 -conf <br>
 Contains configuration files specific to EI.
@@ -36,41 +31,12 @@ Used for storing temporary files, and is pointed to by the java.io.tmpdir System
 -README.txt <br> 
  Product information for WSO2 EI 7.0.0.
 
--release-notes.html <br>
- Release information for WSO2 EI 7.0.0.
-
--patches <br>
-Used to add patches related for all runtimes.
-
--dropins <br>
- Used to add external jars(dependencies) of all runtimes.
-
--extensions <br>
- Used to add carbon extensions.
-
--servicepacks <br>
- Used to add service packs related to all runtimes.
-
--wso2/components <br>
- Contains profiles for all runtimes and the plugins folder.
-
--wso2/lib <br>
- Contains jars that are required/shared by all runtimes.
-
--wso2/analytics <br>
- Contains analytics runtime related files/folders.
-
--wso2/analytics/conf <br>
- Analytics runtime specific configuration files.
-
--wso2/analytics/repository <br>
- Where deployments of Analytics runtime are stored.
-
 -wso2/broker <br>
  Contains broker runtime related files/folders.
 
 -wso2/broker/conf <br>
  Broker runtime specific configuration files.
 
--wso2/broker/repository <br>
- Where deployments of broker runtime is stored.
+-wso2/ballerina <br>
+ Contains ballerina runtime related files/folders.
+
