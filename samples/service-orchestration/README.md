@@ -1,5 +1,8 @@
 # Service Orchestration
 
+![Service Orchestration](https://github.com/isudana/product-ei/blob/7.0.x/samples/service-orchestration/orchestration-scenario.png "Service Orchestration")
+
+
 This scenario is about an online vehicle license renewal system. 
 Vehicle owners have to renew their vehicle license annually. 
 To renew the license, the vehicle should have a valid insurance policy, a valid emission test certificate, 
