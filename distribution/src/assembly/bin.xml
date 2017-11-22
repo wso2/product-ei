@@ -104,6 +104,18 @@
             <filtered>true</filtered>
         </file>
         <file>
+            <source>src/scripts/integrator.sh</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/scripts/integrator.bat</source>
+            <outputDirectory>bin/</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
             <source>src/conf/broker/deployment.yaml</source>
             <outputDirectory>conf/broker/</outputDirectory>
             <fileMode>644</fileMode>
