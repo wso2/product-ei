@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inboundEndpoint xmlns="http://ws.apache.org/ns/synapse"
+                 name="PublishToMqttTestEndpoint"
+                 sequence="PublishToMqttTestSequence"
+                 onError="fault"
+                 protocol="mqtt"
+                 suspend="false">
+   <parameters>
+      <parameter name="mqtt.connection.factory">mqttFactory</parameter>
+      <parameter name="sequential">true</parameter>
+      <parameter name="mqtt.topic.name">carbon.super/test/listener/1</parameter>
+      <parameter name="content.type">application/json</parameter>
+      <parameter name="mqtt.session.clean">true</parameter>
+      <parameter name="coordination">true</parameter>
+      <parameter name="mqtt.server.port">1883</parameter>
+      <parameter name="mqtt.ssl.enable">false</parameter>
+      <parameter name="mqtt.subscription.qos">0</parameter>
+      <parameter name="mqtt.server.host.name">localhost</parameter>
+   </parameters>
+</inboundEndpoint>
