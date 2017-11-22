@@ -385,7 +385,7 @@
         </parameter>
     </transportReceiver-->
 
-   <!-- <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
+    <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
         <parameter locked="false" name="mqttConFactory">
             <parameter locked="false" name="mqtt.server.host.name">localhost</parameter>
             <parameter name="mqtt.connection.factory">mqttConFactory</parameter>
@@ -393,7 +393,7 @@
             <parameter locked="false" name="mqtt.client.id">client-id-1234</parameter>
             <parameter locked="false" name="mqtt.topic.name">esb.test</parameter>
         </parameter>
-    </transportReceiver>-->
+    </transportReceiver>
 
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
@@ -486,7 +486,7 @@
     <!-- Uncomment this and configure to use RabbitMQ connection pools for sending messages
     <transportSender name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQSender"/-->
 
-    <!--<transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>-->
+    <transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>
     
     <transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
         <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
