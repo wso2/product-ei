@@ -42,7 +42,7 @@ Emission Test Service and Insurance Service can be invoked in parallel as they a
 
 Rest of the service invocations need to be done sequentially as output of the one service invocation is required for the next service invocation.
 
-# Running the sample
+## How to run the sample
 
 TODO: Add content after finalizing the execution script.
 
