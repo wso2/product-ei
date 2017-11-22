@@ -155,59 +155,6 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.ballerinalang</groupId>-->
-            <!--<artifactId>workspace-service</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.ballerinalang</groupId>-->
-            <!--<artifactId>ballerina-composer-web</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-lang</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-builtin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-launcher</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-http</artifactId>
-        </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.ei</groupId>-->
-            <!--<artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.ei</groupId>-->
-            <!--<artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.ei</groupId>-->
-            <!--<artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>-->
-            <!--<type>zip</type>-->
-        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>
@@ -255,47 +202,24 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <!--<execution>-->
-                        <!--<id>unpack-dependencies-composer</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>unpack-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<includeArtifactIds>-->
-                                <!--workspace-service,ballerina-composer-web-->
-                            <!--</includeArtifactIds>-->
-                            <!--<outputDirectory>${basedir}/target/WSO2Carbon/tmp-->
-                            <!--</outputDirectory>-->
-                            <!--<overWriteReleases>false</overWriteReleases>-->
-                            <!--<overWriteSnapshots>true</overWriteSnapshots>-->
-                            <!--<useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>-->
-                            <!--<stripVersion>true</stripVersion>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
+                    <!-- Unpack Ballerina distribution -->
                     <execution>
-                        <id>unpack-dependencies-runtime</id>
+                        <id>unpack-ballerina</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>unpack-dependencies</goal>
+                            <goal>unpack</goal>
                         </goals>
                         <configuration>
-                            <includeArtifactIds>
-                                ballerina-builtin,ballerina-http,ballerina-logging
-                            </includeArtifactIds>
-                            <outputDirectory>${basedir}/target/ballerina
-                            </outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                            <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
-                            <stripVersion>true</stripVersion>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang.tools</groupId>
+                                    <artifactId>ballerina</artifactId>
+                                    <version>${ballerina.runtime.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
@@ -397,18 +321,6 @@
                                     <id>org.wso2.carbon.business.messaging.admin.services.feature</id>
                                     <version>${carbon.business.messaging.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.ei.converter.tools.mule2ballerina.feature</id>-->
-                                    <!--<version>${product.ei.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.ei.converter.tools.ds2ballerina.feature</id>-->
-                                    <!--<version>${product.ei.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.ei.converter.tools.synapse2ballerina.feature</id>-->
-                                    <!--<version>${product.ei.version}</version>-->
-                                <!--</feature>-->
                             </features>
                         </configuration>
                     </execution>
@@ -560,12 +472,14 @@
                                 <delete dir="target/dependency-maven-plugin-markers" />
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
                                 <delete dir="target/p2-repo" />
-                                <!-- Figure out a way to delete tmp.* files -->
-                                <!--<delete file="target/tmp" />-->
-                                <!--<delete dir="target/WSO2Carbon" />-->
-                                <!--<delete dir="target/antrun" />-->
-                                <!--<delete dir="target/director" />-->
-                                <!--<delete dir="target/ballerina" />-->
+                                <delete dir="target/WSO2Carbon"/>
+                                <delete dir="target/director"/>
+                                <delete dir="target/antrun" />
+                                <delete dir="target/ballerina" />
+                                <delete dir="target/findbugs" />
+                                <delete dir="target/maven-shared-archive-resources" />
+                                <delete file="target/timestamp" />
+                                <delete file="target/carbon.product"/>
                             </target>
                         </configuration>
                         <goals>
