@@ -71,7 +71,9 @@
 
     <test name="Content-Type-Test" preserve-order="true" verbose="2">
         <classes>
+            <class name="org.wso2.carbon.esb.contenttype.json.XMLToJsonTestCase"/>
             <class name="org.wso2.carbon.esb.contenttype.json.XMLToJsonNilTestCase"/>
+            <class name="org.wso2.carbon.esb.contenttype.json.XMLToJsonTransformationPropertiesTestCase"/>
         </classes>
     </test>
 
