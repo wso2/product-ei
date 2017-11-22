@@ -74,6 +74,14 @@
                 <exclude>**/*</exclude>
             </excludes>
         </fileSet>
+        <fileSet>
+            <directory>../samples/</directory>
+            <outputDirectory>samples</outputDirectory>
+            <fileMode>644</fileMode>
+            <excludes>
+                <exclude>**/*.png</exclude>
+            </excludes>
+        </fileSet>
     </fileSets>
 
     <files>
