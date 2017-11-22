@@ -9,7 +9,12 @@ To renew the license, the vehicle should have a valid insurance policy, a valid 
 and a credit card to make the payment.
 The system is built by orchestrating several services.
 
+Client provides the vehichle registration number and the credit card details in the request. Service should validate the validity of certificates by calling relevent services. Thereafter Payment Gateway get called to make the payment and finally LicenseIssuer service get called to issue the license. 
+
 ## Services
+
+Our main focus in this sample is on Revenue License Service. 
+However other sample backend services are also written in ballerina.
 
 ### Insurance Service
 Insurance service takes the vehicle registration number as the input data and gives out whether the vehicle has a valid insurance policy or not.
