@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.wso2.ei</groupId>
+        <artifactId>message-broker-tests</artifactId>
+        <version>6.2.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <name>WSO2 MB - Integration Test Common Utils Module</name>
+    <artifactId>org.wso2.ei.mb.integration.common.utils</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wso2.carbon.automation</groupId>
+            <artifactId>org.wso2.carbon.automation.engine</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.mb.integration.common.clients</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.automationutils</groupId>
+            <artifactId>org.wso2.carbon.integration.common.utils</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.automation</groupId>
+            <artifactId>org.wso2.carbon.automation.extensions</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-jxpath</groupId>
+            <artifactId>commons-jxpath</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.andes.wso2</groupId>
+            <artifactId>andes</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+</project>

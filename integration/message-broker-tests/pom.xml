@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>integrations</artifactId>
+        <groupId>org.wso2.ei</groupId>
+        <version>6.2.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>message-broker-tests</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>tests-common/admin-clients</module>
+        <module>tests-common/integration-tests-utils</module>
+        <module>tests-common/platform-tests-utils</module>
+        <module>tests-integration</module>
+    </modules>
+
+
+</project>
