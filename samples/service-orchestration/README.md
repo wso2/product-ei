@@ -44,7 +44,32 @@ Rest of the service invocations need to be done sequentially as output of the on
 
 ## How to run the sample
 
-TODO: Add content after finalizing the execution script.
+bin$ ./integrator.sh ../samples/service-orchestration/orchestration.balx
+
+## Invoking the service
+Create a payload.json file with the following content.
+```
+{
+   "Vehicle":{
+      "ID":"11111"
+   },
+   "card":{
+      "no":"1234098618781768",
+      "cvv":"123"
+   }
+}
+```
+Invoke the service using cURL as follows
+```
+curl -v http://localhost:9090/license/renew -d@payload.json
+```
+
+You should get something similar to following as the output.
+```
+{"License Certificate":"XLO1029302020","Vehicle ID":"11111"}
+```
+
+
 
 
 
