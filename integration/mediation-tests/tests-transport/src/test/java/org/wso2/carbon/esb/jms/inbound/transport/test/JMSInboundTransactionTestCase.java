@@ -63,7 +63,7 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
      * @throws Exception for any unexpected exception
      */
     @Test(groups = { "wso2.esb" },
-          description = "Successfully committing the message")
+          description = "Successfully committing the message", enabled = false)
     public void testTransactionCommit() throws Exception {
 
         String queueName = "testTransactionCommitQueue";
@@ -95,7 +95,7 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
      * @throws Exception
      */
     @Test(groups = { "wso2.esb" },
-          description = "Rolling back the failed message to the queue")
+          description = "Rolling back the failed message to the queue", enabled = false)
     public void testTransactionRollBack() throws Exception {
 
         String queueName = "testTransactionRollBackQueue";
