@@ -61,10 +61,10 @@ public class DS1083BoxcarringParallelInsertTestCase extends DSSIntegrationTest {
         super.init();
         List<File> sqlFileList = new ArrayList<File>();
         sqlFileList.add(selectSqlFile("BoxcarringParallelAccess.sql"));
-        SqlDataSourceUtil dataSource = new SqlDataSourceUtil(sessionCookie
-                , dssContext.getContextUrls().getBackEndUrl());
+        SqlDataSourceUtil dataSource = new SqlDataSourceUtil(sessionCookie,
+                dssContext.getContextUrls().getBackEndUrl());
         dataSource.createDataSource(sqlFileList);
-        Assert.assertTrue(isServiceDeployed(serviceName));
+        Assert.assertTrue(isServiceDeployed(serviceName), "Data service not deployed");
         serviceEndPoint = getServiceUrlHttp(serviceName);
     }
 

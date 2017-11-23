@@ -25,7 +25,7 @@ public class ResourcesServiceTestWithSameContextNameTestCase extends DSSIntegrat
     public void serviceDeployment() throws Exception {
         super.init();
         serviceEndPoint = getServiceUrlHttp(serviceName);
-        Assert.assertTrue(isServiceDeployed(serviceName));
+        Assert.assertTrue(isServiceDeployed(serviceName), "Data service not deployed");
     }
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {

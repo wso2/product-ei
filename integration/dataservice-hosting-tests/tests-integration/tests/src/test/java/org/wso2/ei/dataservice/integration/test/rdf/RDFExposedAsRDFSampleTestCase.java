@@ -45,7 +45,7 @@ public class RDFExposedAsRDFSampleTestCase extends DSSIntegrationTest {
     public void serviceDeployment() throws Exception {
         super.init();
         String resourceFileLocation = getResourceLocation();
-        Assert.assertTrue(isServiceDeployed("RDFExposeAsRDFSample"));
+        Assert.assertTrue(isServiceDeployed("RDFExposeAsRDFSample"), "Data service not deployed");
         log.info(serviceName + " uploaded");
         serviceEndPoint = getServiceUrlHttp(serviceName) + "/";
     }

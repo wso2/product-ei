@@ -97,8 +97,8 @@ public class NestedQueryTestCase extends DSSIntegrationTest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
         Object[] response = sendGET(endpoint, headers);
-        Assert.assertEquals(response[0], ODataTestUtils.OK);
-        Assert.assertTrue(response[1].toString().contains("\"Employees\":{}"));
+        Assert.assertEquals(response[0], ODataTestUtils.OK, "Invalid status received");
+        Assert.assertTrue(response[1].toString().contains("\"Employees\":{}"), "Invalid result received");
     }
 
     private void getCustomerName() throws AxisFault, XPathExpressionException {

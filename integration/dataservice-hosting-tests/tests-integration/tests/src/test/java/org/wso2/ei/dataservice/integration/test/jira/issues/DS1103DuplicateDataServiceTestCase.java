@@ -42,8 +42,8 @@ public class DS1103DuplicateDataServiceTestCase extends DSSIntegrationTest {
 		sqlFileList = new ArrayList<>();
 		sqlFileList.add(selectSqlFile("CreateTables.sql"));
 		sqlFileList.add(selectSqlFile("Students.sql"));
-		SqlDataSourceUtil dataSource = new SqlDataSourceUtil(sessionCookie
-				, dssContext.getContextUrls().getBackEndUrl());
+		SqlDataSourceUtil dataSource = new SqlDataSourceUtil(sessionCookie,
+				dssContext.getContextUrls().getBackEndUrl());
 		dataSource.createDataSource("duplicate_test", sqlFileList);
 	}
 
