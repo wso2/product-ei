@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb.mailto.transport.receiver.test;
+package org.wso2.carbon.esb.mailto.transport.sender.test;
 
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -27,9 +27,10 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 /**
  * Base class to start and stop GreenMail server
  */
-public class MailToTransportBaseClass extends ESBIntegrationTest {
+public class SenderBaseClass extends ESBIntegrationTest {
 
     private GreenMailServer greenMailServer;
+
     @BeforeTest(alwaysRun = true)
     public void setUp() throws Exception {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
