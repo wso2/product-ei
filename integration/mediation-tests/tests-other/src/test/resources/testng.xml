@@ -39,6 +39,12 @@
         </packages>
     </test>
 
+    <test name="Security-Test-Tryit" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.security.test.tryit"/>
+        </packages>
+    </test>
+
     <test name="Test-Multiple-servers" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.test.servers.NewInstanceTestCase"/>
@@ -65,7 +71,9 @@
 
     <test name="Content-Type-Test" preserve-order="true" verbose="2">
         <classes>
+            <class name="org.wso2.carbon.esb.contenttype.json.XMLToJsonTestCase"/>
             <class name="org.wso2.carbon.esb.contenttype.json.XMLToJsonNilTestCase"/>
+            <class name="org.wso2.carbon.esb.contenttype.json.XMLToJsonTransformationPropertiesTestCase"/>
         </classes>
     </test>
 

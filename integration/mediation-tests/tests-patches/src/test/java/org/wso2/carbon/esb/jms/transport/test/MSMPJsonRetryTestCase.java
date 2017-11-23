@@ -87,7 +87,7 @@ public class MSMPJsonRetryTestCase extends ESBIntegrationTest {
         // ASSERT RESULTS
         LogViewerClient logViewerClient =
                 new LogViewerClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
-        boolean logFound = Utils.checkForLog(logViewerClient, "Jack", 10000);
+        boolean logFound = Utils.checkForLog(logViewerClient, "Jack", 10);
         assertTrue(logFound, "Message process retry does not work for json");
     }
 

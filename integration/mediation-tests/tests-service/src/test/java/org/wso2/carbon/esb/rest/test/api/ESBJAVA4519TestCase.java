@@ -84,9 +84,9 @@ public class ESBJAVA4519TestCase extends ESBIntegrationTest {
 		Files.copy(corruptedApiFile.toPath(), esbApiFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		log.info("Copied the corrupted api config file to config folder.");
 
-		boolean messageInLog = Utils.checkForLog(logViewerClient, "Deployment of synapse artifact failed", 100000);
-		Assert.assertTrue(messageInLog, "Exception has occurred");
-		messageInLog = Utils.checkForLog(logViewerClient, "Restoring the existing artifact into the file", 10000);
+		boolean messageInLog = Utils.checkForLog(logViewerClient, "Deployment of synapse artifact failed", 100);
+		Assert.assertTrue(messageInLog, "synapse artifact failed message was not found in logs");
+		messageInLog = Utils.checkForLog(logViewerClient, "Restoring the existing artifact into the file", 10);
 		Assert.assertTrue(messageInLog, "Original xml is not restored.");
 	}
 

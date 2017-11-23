@@ -51,7 +51,7 @@ public class ESBJAVA4692_MP_FaultSequence_HttpsEndpoint_TestCase extends ESBInte
 
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         boolean logFound  = Utils.checkForLogsWithPriority(logViewerClient, "INFO",
-                "FaultSeq = *********** FaultSeq *****************", 10000);
+                "FaultSeq = *********** FaultSeq *****************", 10);
         assertTrue(logFound, "Fault Sequence Not Executed for Soap Fault");
     }
 

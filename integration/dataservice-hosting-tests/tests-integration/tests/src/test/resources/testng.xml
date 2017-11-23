@@ -243,6 +243,7 @@
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1209EqualElementNamesInJSONHierarchyTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15280RepeatServiceNameInURLTest"/>
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15262JsonGsonFormatterTenantModeTest"/>
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.EI1222JSONSecuredServiceWithXMLCharacterTestCase"/>
         </classes>
     </test>
 </suite>

@@ -58,9 +58,6 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
         //invoking the service
         SendRequest(ADD_URL, trpUrl);
 
-        //response assertions
-        Thread.sleep(2000);
-
         //Check if the property we set is used
         boolean validLogMessage = validateLogMessage(OLD_VALUE);
         Assert.assertTrue(validLogMessage);
@@ -85,7 +82,7 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
         LogEvent[] logs = cli.getAllSystemLogs();
         Assert.assertNotNull(logs, "No logs found");
         Assert.assertTrue(logs.length > 0, "No logs found");
-        return Utils.checkForLog(cli, value, 2000);
+        return Utils.checkForLog(cli, value, 2);
     }
 
     private void SendRequest(String addurl, String trpurl) {

@@ -118,6 +118,14 @@
             <package name="org.wso2.carbon.esb.message.processor.test.forwarding"/>
             <package name="org.wso2.carbon.esb.message.processor.test"/>
         </packages>
+        <!--Disabled test due to the issue https://github.com/wso2/product-ei/issues/515-->
+        <classes>
+            <class name="org.wso2.carbon.esb.message.processor.test.failover.FailoverForwardingProcessorTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+            </class>
+        </classes>
     </test>
 
     <test name="Message-Store-Test" preserve-order="true" verbose="2">
