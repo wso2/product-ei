@@ -444,6 +444,7 @@
         <carbon.secvault.version>5.0.10</carbon.secvault.version>
         <carbon.utils.version>2.0.4</carbon.utils.version>
         <carbon.touchpoint.version>1.1.0</carbon.touchpoint.version>
+        <project.scm.id>wso2-scm-server</project.scm.id>
 
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
     </properties>
