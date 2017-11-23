@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
-        <version>7.0.0-SNAPSHOT</version>
+        <version>7.0.0-update1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -495,15 +495,15 @@
                                 <delete dir="target/dependency-maven-plugin-markers" />
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
                                 <delete dir="target/p2-repo" />
-                                <delete dir="target/WSO2Carbon"/>
-                                <delete dir="target/director"/>
+                                <delete dir="target/WSO2Carbon" />
+                                <delete dir="target/director" />
                                 <delete dir="target/antrun" />
                                 <delete dir="target/ballerina" />
                                 <delete dir="target/ballerina-connectors" />
                                 <delete dir="target/findbugs" />
                                 <delete dir="target/maven-shared-archive-resources" />
                                 <delete file="target/timestamp" />
-                                <delete file="target/carbon.product"/>
+                                <delete file="target/carbon.product" />
                             </target>
                         </configuration>
                         <goals>
