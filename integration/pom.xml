@@ -33,7 +33,6 @@
     <url>http://wso2.org</url>
 
     <modules>
-        <!--<module>automation-extensions</module>-->
         <!--<module>test-mb</module>-->
     </modules>
 </project>
