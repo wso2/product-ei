@@ -301,6 +301,13 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
             </dependency>
+
+            <!--Default Ballerina Connectors-->
+            <dependency>
+                <groupId>org.ballerinalang</groupId>
+                <artifactId>ballerina-soap</artifactId>
+                <version>${ballerina.soap.connector.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -437,6 +444,8 @@
         <carbon.secvault.version>5.0.10</carbon.secvault.version>
         <carbon.utils.version>2.0.4</carbon.utils.version>
         <carbon.touchpoint.version>1.1.0</carbon.touchpoint.version>
+
+        <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
     </properties>
 </project>
 

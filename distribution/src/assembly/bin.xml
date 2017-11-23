@@ -82,6 +82,15 @@
                 <exclude>**/*.png</exclude>
             </excludes>
         </fileSet>
+        <!--copy ballerina connectors-->
+        <fileSet>
+            <directory>target/ballerina-connectors</directory>
+            <outputDirectory>wso2/ballerina/bre/lib</outputDirectory>
+            <fileMode>644</fileMode>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
     </fileSets>
 
     <files>
