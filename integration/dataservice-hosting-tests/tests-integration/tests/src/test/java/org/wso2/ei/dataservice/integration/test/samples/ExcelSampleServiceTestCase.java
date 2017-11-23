@@ -15,7 +15,7 @@
 *specific language governing permissions and limitations
 *under the License.
 */
-package org.wso2.ei.dataservice.integration.test.fileservice;
+package org.wso2.ei.dataservice.integration.test.samples;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
