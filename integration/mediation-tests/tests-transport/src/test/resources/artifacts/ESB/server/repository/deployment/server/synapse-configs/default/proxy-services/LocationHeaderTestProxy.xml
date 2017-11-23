@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="LocationHeaderTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <endpoint>
+            <address uri="http://localhost:8480/services/LocationHeaderInnerTestProxy"/>
+        </endpoint>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

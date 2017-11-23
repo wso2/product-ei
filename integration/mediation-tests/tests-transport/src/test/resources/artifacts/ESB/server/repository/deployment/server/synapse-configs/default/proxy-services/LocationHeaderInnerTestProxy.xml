@@ -1,0 +1,12 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="LocationHeaderInnerTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <header name="Location" scope="transport" value="//services"/>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>
