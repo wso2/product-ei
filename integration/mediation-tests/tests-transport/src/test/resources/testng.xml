@@ -15,6 +15,12 @@
         </classes>
     </test>
 
+    <test name="axis2-transport-test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.axis2.transport.test.MultipartFormDataFormatTestCase"/>
+        </classes>
+    </test>
+
     <test name="passthru-Transport-Test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.passthru.transport.test.CheckAuthHeaderOrderTestCase"/>

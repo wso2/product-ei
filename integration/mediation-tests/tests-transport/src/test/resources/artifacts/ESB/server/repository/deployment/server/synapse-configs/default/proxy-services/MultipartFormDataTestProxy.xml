@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+
+<proxy  xmlns="http://ws.apache.org/ns/synapse" name="MultipartFormDataTestProxy"
+        transports="https,http"
+        statistics="disable"
+        trace="disable"
+        startOnLoad="true">
+    <target>
+        <inSequence>
+            <payloadFactory media-type="xml">
+                <format>
+                    <data xmlns="">
+                        <files>
+                            <file>
+                                <name>2.png</name>
+                                <parentPath>/wso2/images</parentPath>
+                                <checksum>6a900bdf3eeb1aca104128330f279f9fd2af1f47d3ef0beedb60bdf256619355</checksum>
+                                <contentToken>CUT:ZHZjaHVuazovdnotaW50LWFwaTAyLzAxMTIvZGIvNTgvZGI1ODAzMjUyNjE3NDg5MDk1NDRjOGRlNDYxNTI1MTQtNmRkMTUxNzI1NjQ0NDJjMzhmYTM1YjUxNTUwNTg3MzEtODUxOTg=</contentToken>
+                            </file>
+                        </files>
+                    </data>
+                </format>
+                <args/>
+            </payloadFactory>
+            <property name="messageType"
+                      value="multipart/form-data"
+                      scope="axis2"
+                      type="STRING"/>
+            <respond/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>
