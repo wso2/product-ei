@@ -1,7 +1,7 @@
 # WSO2 Enterprise Integrator 7.0.0
-WSO2 Enterprise Integrator 7.0.0 is a unified distribution of Ballerina which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
+WSO2 Enterprise Integrator 7.0.0 is a unified distribution of Ballerina which works as a single runtime (Integrator) along with optional runtime for the WSO2 Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
-WSO2 EI simplifies integration by allowing users to connect apps and services to handle all types of integration scenarios, such as collecting top tweets from a specific location and adding them to a Google spreadsheet, generating emails with real-time quotes pulled from a stock quote service, transforming and routing data based on advanced logic, and much more. These integration capabilities are further powered by the capabilities of the WSO2 Analytics and Message Broker runtimes.
+WSO2 EI simplifies integration by allowing users to connect apps and services to handle all types of integration scenarios, such as collecting top tweets from a specific location and adding them to a Google spreadsheet, generating emails with real-time quotes pulled from a stock quote service, transforming and routing data based on advanced logic, and much more. These integration capabilities are further powered by the capabilities of the Message Broker runtime.
 
 ## Installation & Running
 ## Running the Integrator
