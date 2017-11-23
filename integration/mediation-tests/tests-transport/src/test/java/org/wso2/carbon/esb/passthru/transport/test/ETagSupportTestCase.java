@@ -35,7 +35,7 @@ public class ETagSupportTestCase extends ESBIntegrationTest {
 
     //TODO: Enable tests after fixing fixing SimpleHttpClient issue TA-945
 
-    private final String epr;
+    private String epr;
     private SimpleHttpClient httpClient;
     private Map<String, String> headers;
     private Header eTagHeader;
