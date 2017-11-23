@@ -59,6 +59,7 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 
     /**
      * Tests whether committing a transaction removes the message from the queue.
+     * Disabling until find a proper fix to https://github.com/wso2/product-ei/issues/1389
      *
      * @throws Exception for any unexpected exception
      */
@@ -91,6 +92,7 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 
     /**
      * Tests whether rolling back a transaction does not removes the message from the queue.
+     *  Disabling until find a proper fix to https://github.com/wso2/product-ei/issues/1389
      *
      * @throws Exception
      */
