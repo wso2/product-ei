@@ -147,11 +147,11 @@
             <class name="org.wso2.carbon.esb.car.deployment.test.ESBJAVA3546CAppProxyOnLoadTestCase"/>
             <class name="org.wso2.carbon.esb.car.deployment.test.ESBJAVA4116CAppArtifactDeploymentFailureDueToNameTestCase"/>
             <class name="org.wso2.carbon.esb.car.deployment.test.CarbonApplicationReDeploymentTestCase"/>
+            <class name="org.wso2.carbon.esb.car.deployment.test.CARBON16113DeployArtifactsBeforeTransportStarsTestCase"/>
         </classes>
     </test>
 
-    <test name="MessageProcessorRetryUponHTTP-SC-500-With-200-202-as-non-retrysc-TestCase"
-            preserve-order="true" verbose="2">
+    <test name="soap-header-handling-test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.message.processor.test.ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_and_202_TestCase" />
             <class name="org.wso2.carbon.esb.message.processor.test.ESBJAVA3650_CustomHeaderPreserved_MessageProcessorOutMessage_TestCase" />

@@ -44,21 +44,21 @@ public class GenericInboundTransportTestCase extends ESBIntegrationTest {
 	@Test(groups = { "wso2.esb" }, description = "Test Adding Generic Inbound End point")
 	public void testAddingGenericInboundEndpoints() throws Exception {
 		addInboundEndpoint(addEndpoint1());
-		boolean status = Utils.checkForLog(logViewerClient, "Generic Polling Consumer Invoked",5000);
+		boolean status = Utils.checkForLog(logViewerClient, "Generic Polling Consumer Invoked",5);
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test creating Generic Inbound EP without sequence")
 	public void testInjectingInvalidSequence() throws Exception {
 		addInboundEndpoint(addEndpoint2());
-		boolean status = Utils.checkForLog(logViewerClient, "Sequence name not specified", 5000);
+		boolean status = Utils.checkForLog(logViewerClient, "Sequence name not specified", 5);
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
 	}
 
 	@Test(groups = { "wso2.esb" }, description = "Test creating Generic Inbound EP without implementation class")
 	public void testWithoutImplementationClass() throws Exception {
 		addInboundEndpoint(addEndpoint3());
-		boolean status = Utils.checkForLog(logViewerClient, "Please check the required class is added to the classpath", 5000);
+		boolean status = Utils.checkForLog(logViewerClient, "Please check the required class is added to the classpath", 5);
 		Assert.assertTrue(status, "There is no Generic Inbound Endpoint.");
 	}
 

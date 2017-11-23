@@ -58,7 +58,7 @@ public class ESBJAVA4913HandleExceptionTest extends ESBIntegrationTest {
         } catch (Exception e) {
             // Ignore read timeout from get request.
         }
-        boolean isExpectedErrorMessageFound = Utils.checkForLog(logViewerClient, expectedErrorMsg, 2000);
+        boolean isExpectedErrorMessageFound = Utils.checkForLog(logViewerClient, expectedErrorMsg, 3);
         /*
          * Asserting the results here. If there's no logs from error sequence, then the
          * assertion should fail.

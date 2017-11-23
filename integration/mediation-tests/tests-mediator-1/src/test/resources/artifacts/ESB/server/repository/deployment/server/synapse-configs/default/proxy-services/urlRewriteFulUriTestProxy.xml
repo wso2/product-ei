@@ -11,7 +11,7 @@
                     <condition>
                         <equal xmlns="" type="url" source="protocol" value="https"/>
                     </condition>
-                    <action value="https://localhost:9002/services/SimpleStockQuoteService"
+                    <action value="http://localhost:9000/services/SimpleStockQuoteService"
                             regex="\w.*" type="replace" fragment="full"/>
                 </rewriterule>
                 <rewriterule>

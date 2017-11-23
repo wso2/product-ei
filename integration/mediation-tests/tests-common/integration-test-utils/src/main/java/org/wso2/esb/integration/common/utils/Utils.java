@@ -191,9 +191,10 @@ public class Utils {
 
     /**
      * Check whether a log found with expected string of given priority
+     *
      * @param logViewerClient LogViewerClient object
-     * @param priority priority level
-     * @param expected expected string
+     * @param priority        priority level
+     * @param expected        expected string
      * @return true if a log found with expected string of given priority, false otherwise
      * @throws RemoteException
      * @throws LogViewerLogViewerException
@@ -244,10 +245,11 @@ public class Utils {
 
     /**
      * Check for the existence of a given log message of given priority within the given timeout
+     *
      * @param logViewerClient LogViewerClient object
-     * @param priority priority level
-     * @param expected expected string to search in logs
-     * @param timeout  timeout value
+     * @param priority        priority level
+     * @param expected        expected string to search in logs
+     * @param timeout         timeout value in seconds
      * @return true if a log found with the given priority and content within the given timeout, false otherwise
      * @throws InterruptedException
      * @throws LogViewerLogViewerException
@@ -270,7 +272,7 @@ public class Utils {
      * Wait for expected message count found in the message store until a defined timeout
      * @param messageStoreName Message store name
      * @param expectedCount    Expected message count
-     * @param timeout          Timeout to wait
+     * @param timeout          Timeout to wait in Milliseconds
      * @return true if the expected message count found, false otherwise
      */
     public static boolean waitForMessageCount(MessageStoreAdminClient messageStoreAdminClient, String messageStoreName, int expectedCount, long timeout) throws InterruptedException, RemoteException {

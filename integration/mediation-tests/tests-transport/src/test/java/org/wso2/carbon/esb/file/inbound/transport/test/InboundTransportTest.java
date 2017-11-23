@@ -77,7 +77,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 
         FileUtils.copyFile(sourceFile, targetFile);
 
-        boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10000);
+        boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
         Assert.assertTrue(isFileRead, "The XML file is not getting read");
     }
 
@@ -99,7 +99,8 @@ public class InboundTransportTest extends ESBIntegrationTest {
         logViewerClient.clearLogs();
         addInboundEndpoint(addEndpoint3());
 
-        boolean errorMessageFound = Utils.checkForLog(logViewerClient, "Invalid numeric value for interval", 10000);
+        boolean errorMessageFound = Utils.checkForLog(logViewerClient,
+                "Invalid numeric value for interval", 10);
         Assert.assertTrue(errorMessageFound, "The Error message not found in the log");
     }
 
@@ -167,7 +168,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
         File targetFile = new File(targetFolder + File.separator + "invalidContentType.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10000);
+            boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
             Assert.assertTrue(isFileRead, "The XML file is not getting read");
 
             Assert.assertTrue(!targetFile.exists(), "file not deleted after processed");
