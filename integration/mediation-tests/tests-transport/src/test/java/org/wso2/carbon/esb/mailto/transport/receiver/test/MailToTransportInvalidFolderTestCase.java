@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -21,9 +21,10 @@ package org.wso2.carbon.esb.mailto.transport.receiver.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.MailToTransportUtil;
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.esb.integration.common.utils.servers.GreenMailServer;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.exception.ESBMailTransportIntegrationTestException;
+import org.wso2.esb.integration.common.utils.Utils;
 
 import java.io.File;
 
@@ -32,23 +33,26 @@ import static org.testng.Assert.assertTrue;
 
 public class MailToTransportInvalidFolderTestCase extends ESBIntegrationTest {
 
+    private static LogViewerClient logViewerClient;
+
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
         super.init();
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mailTransport" +
                 File.separator + "mailTransportReceiver" + File.separator + "mail_transport_invalid_folder.xml");
+        logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
         // Since ESB reads all unread emails one by one, we have to delete
         // the all unread emails before run the test
-        MailToTransportUtil.deleteAllUnreadEmailsFromGmail();
+        GreenMailServer.deleteAllEmails("imap");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Test email transport with invalid folder")
-    public void testEmailTransportInvalidFolder() throws ESBMailTransportIntegrationTestException {
-        assertTrue(MailToTransportUtil.searchStringInLog(
-                contextUrls.getBackEndUrl(), "FolderABC not found",
-                getSessionCookie()), "Couldn't find the error message in log");
+    public void testEmailTransportInvalidFolder() throws Exception {
+        logViewerClient.clearLogs();
+        assertTrue(Utils.checkForLog(logViewerClient, "FolderABC not found", 1000),
+                "Couldn't find the error message in log");
     }
 
     @AfterClass(alwaysRun = true)

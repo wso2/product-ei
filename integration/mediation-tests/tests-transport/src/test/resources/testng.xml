@@ -37,6 +37,7 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA5135ResponseBodyWith202TestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.HTTPDeleteTestCases"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.MTOMMIMEBoundaryWhenContentTypePreservedTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.CookieHeaderExpiresHavingCommaTestCase"/>
         </classes>
     </test>
 
@@ -153,6 +154,12 @@
     <test name="MailTo-transport-Test-Receiver" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mailto.transport.receiver.test"/>
+        </packages>
+    </test>
+
+    <test name="MailTo-transport-Test-Sender" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mailto.transport.sender.test"/>
         </packages>
     </test>
 

@@ -28,6 +28,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.ei.dataservice.integration.common.utils.SqlDataSourceUtil;
 import org.wso2.ei.dataservice.integration.test.DSSIntegrationTest;
 import org.wso2.ei.dataservice.integration.test.util.LockHolder;
 import org.wso2.ei.dataservice.integration.test.util.ParallelRequestHelper;
@@ -58,13 +59,12 @@ public class DS1083BoxcarringParallelInsertTestCase extends DSSIntegrationTest {
     public void serviceDeployment() throws Exception {
 
         super.init();
-        List<File> sqlFileLis = new ArrayList<File>();
-        sqlFileLis.add(selectSqlFile("BoxcarringParallelAccess.sql"));
-
-        deployService(serviceName,
-                createArtifact(getResourceLocation() + File.separator + "dbs"
-                        + File.separator + "rdbms" + File.separator + "h2"
-                        + File.separator + serviceName + ".dbs", sqlFileLis));
+        List<File> sqlFileList = new ArrayList<File>();
+        sqlFileList.add(selectSqlFile("BoxcarringParallelAccess.sql"));
+        SqlDataSourceUtil dataSource = new SqlDataSourceUtil(sessionCookie,
+                dssContext.getContextUrls().getBackEndUrl());
+        dataSource.createDataSource(sqlFileList);
+        Assert.assertTrue(isServiceDeployed(serviceName), "Data service not deployed");
         serviceEndPoint = getServiceUrlHttp(serviceName);
     }
 
@@ -129,7 +129,6 @@ public class DS1083BoxcarringParallelInsertTestCase extends DSSIntegrationTest {
 
     @AfterClass
     public void clean() throws Exception {
-        deleteService(serviceName);
         cleanup();
     }
 }

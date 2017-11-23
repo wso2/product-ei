@@ -1,0 +1,1 @@
+insert into Students values ('001', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&','097774546546', 'NY', 'US');

@@ -21,6 +21,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.ei.dataservice.integration.common.utils.DSSTestCaseUtils;
+import org.wso2.ei.dataservice.integration.common.utils.SqlDataSourceUtil;
 import org.wso2.ei.dataservice.integration.test.DSSIntegrationTest;
 
 import javax.activation.DataHandler;
@@ -32,25 +33,25 @@ import java.util.List;
  * This test was written to verify the fix for https://wso2.org/jira/browse/DS-1103.
  */
 public class DS1103DuplicateDataServiceTestCase extends DSSIntegrationTest {
-	private final String serviceName = "H2SimpleJsonTest";
-	private List<File> sqlFileLis;
+	private final String serviceName = "DuplicateDataServiceTest";
+	private List<File> sqlFileList;
 
 	@BeforeClass(alwaysRun = true)
 	public void serviceDeployment() throws Exception {
 		super.init();
-		sqlFileLis = new ArrayList<>();
-		sqlFileLis.add(selectSqlFile("CreateTables.sql"));
-		sqlFileLis.add(selectSqlFile("Students.sql"));
-		deployService(serviceName,
-		              createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator + "rdbms" +
-		                             File.separator + "h2" + File.separator + serviceName + ".dbs", sqlFileLis));
+		sqlFileList = new ArrayList<>();
+		sqlFileList.add(selectSqlFile("CreateTables.sql"));
+		sqlFileList.add(selectSqlFile("Students.sql"));
+		SqlDataSourceUtil dataSource = new SqlDataSourceUtil(sessionCookie,
+				dssContext.getContextUrls().getBackEndUrl());
+		dataSource.createDataSource("duplicate_test", sqlFileList);
 	}
 
 	@Test(groups = "wso2.dss", description = "Testing the duplicate data service deployment fail test case.")
 	public void testForDuplicateDataServiceDeployment() throws Exception {
 		DataHandler dssConfig = createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
 		                                       "rdbms" + File.separator + "h2" + File.separator +
-		                                       "H2SimpleJsonTestDuplicate.dbs", sqlFileLis);
+		                                       "H2SimpleJsonTestDuplicate.dbs", sqlFileList);
 		DSSTestCaseUtils dssTest = new DSSTestCaseUtils();
 		Assert.assertTrue(dssTest.uploadArtifact(dssContext.getContextUrls().getBackEndUrl(), sessionCookie,
 		                                         "H2SimpleJsonTestDuplicate", dssConfig),
@@ -60,7 +61,6 @@ public class DS1103DuplicateDataServiceTestCase extends DSSIntegrationTest {
 
 	@AfterClass
 	public void clean() throws Exception {
-		deleteService(serviceName);
 		cleanup();
 	}
 

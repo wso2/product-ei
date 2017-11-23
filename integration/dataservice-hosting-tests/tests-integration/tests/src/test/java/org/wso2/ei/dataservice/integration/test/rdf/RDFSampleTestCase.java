@@ -20,6 +20,7 @@ package org.wso2.ei.dataservice.integration.test.rdf;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -47,9 +48,6 @@ public class RDFSampleTestCase extends DSSIntegrationTest {
         String serviceEndPoint = getServiceUrlHttp(serviceName);
         String resourceFileLocation = getResourceLocation();
         stub = new SamplesRDFSampleServiceStub(serviceEndPoint);
-        deployService(serviceName,
-                new DataHandler(new URL("file:///" + resourceFileLocation +File.separator + "dbs" + File.separator +
-                        "rdf" + File.separator + "RDFSampleService.dbs")));
         log.info(serviceName + " uploaded");
     }
 
@@ -79,7 +77,6 @@ public class RDFSampleTestCase extends DSSIntegrationTest {
 
     @AfterClass(alwaysRun = true, groups = "wso2.dss", description = "delete service")
     public void deleteService() throws Exception {
-        deleteService(serviceName);
         cleanup();
     }
 

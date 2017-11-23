@@ -39,14 +39,12 @@
                 <send/>
             </outSequence>
         </target>
-        <parameter name="mail.pop3.socketFactory.class">javax.net.ssl.SSLSocketFactory</parameter>
         <parameter name="transport.mail.ContentType">text/plain</parameter>
-        <parameter name="mail.pop3.host">pop.gmail.com</parameter>
-        <parameter name="transport.mail.Address">invalid_email@gmail.com</parameter>
+        <parameter name="mail.pop3.host">localhost</parameter>
+        <parameter name="transport.mail.Address">invalid_email@localhost</parameter>
         <parameter name="mail.pop3.user">test.automation.dummyabc</parameter>
-        <parameter name="mail.pop3.socketFactory.port">995</parameter>
         <parameter name="transport.PollInterval">1</parameter>
-        <parameter name="mail.pop3.port">995</parameter>
+        <parameter name="mail.pop3.port">3110</parameter>
         <parameter name="mail.pop3.fetchsize">1</parameter>
         <parameter name="mail.pop3.socketFactory.fallback">false</parameter>
         <parameter name="transport.mail.Protocol">pop3</parameter>

@@ -140,6 +140,41 @@ public class CarbonServerExtension extends ExecutionListenerExtension {
                                 FileUtils.copyDirectory(deploymentSourceHumanTask, deploymentDestinationHumanTask);
                             } catch (IOException e) {
                                 log.error("Error while copying humantasks deployment directory.", e);
+                    } else if ("DSS".equalsIgnoreCase(System.getProperty("server.list"))) {
+                        //copying the files before server start. Ex: dss artifacts, etc...
+                        String carbonHome = FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts"
+                                + File.separator + "DSS" + File.separator + "server";
+                        String repository = carbonHome + File.separator + "repository";
+                        File deploymentSource = new File(repository + File.separator + "deployment");
+                        File confSource = new File(carbonHome + File.separator + "conf");
+                        File libDirectorySource = new File(carbonHome + File.separator + "lib");
+                        File deploymentDestination = new File(
+                                this.getCarbonHome() + File.separator + "repository" + File.separator + "deployment");
+                        File confDestination = new File(this.getCarbonHome() + File.separator + "conf");
+                        File libDestination = new File(this.getCarbonHome() + File.separator + "lib");
+                        if (confSource.exists() && confSource.isDirectory()) {
+                            try {
+                                log.info("Copying " + confSource.getPath() + " to " + confDestination.getPath());
+                                FileUtils.copyDirectory(confSource, confDestination, true);
+                            } catch (IOException e) {
+                                log.error("Error while copying conf directory.", e);
+                            }
+                        }
+                        if (deploymentSource.exists() && deploymentSource.isDirectory()) {
+                            try {
+                                log.info("Copying " + deploymentSource.getPath() + " to " + deploymentDestination
+                                        .getPath());
+                                FileUtils.copyDirectory(deploymentSource, deploymentDestination);
+                            } catch (IOException e) {
+                                log.error("Error while copying deployment directory.", e);
+                            }
+                        }
+                        if (libDirectorySource.exists() && libDirectorySource.isDirectory()) {
+                            try {
+                                log.info("Copying " + libDirectorySource.getPath() + " to " + libDestination.getPath());
+                                FileUtils.copyDirectory(libDirectorySource, libDestination);
+                            } catch (IOException e) {
+                                log.error("Error while copying lib directory.", e);
                             }
                         }
                     }
