@@ -1,127 +1,75 @@
  WSO2 Enterprise Integrator @product.version@
-======================================================================
+===============================================
 
 Welcome to the WSO2 EI @product.version@ release
 
-WSO2 EI is a unified distribution of Ballerina which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
+WSO2 EI is a unified distribution of Ballerina which works as a single runtime (Integrator) along with the optional runtime
+for Message Broker.
 
-WSO2 EI simplifies integration by allowing users to connect apps and services to handle all types of integration scenarios, such as collecting top tweets from a specific location and adding them to a Google spreadsheet, generating emails with real-time quotes pulled from a stock quote service, transforming and routing data based on advanced logic, and much more. These integration capabilities are further powered by the capabilities of the WSO2 Analytics and Message Broker runtimes.
+This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
-Key features of WSO2 EI @product.version@
-==================================
-
-See the online WSO2 EI documentation for more information on product features: https://docs.wso2
-.com/display/EI700/WSO2+Enterprise+Integrator+Documentation
-
+WSO2 EI simplifies integration by allowing users to connect apps and services to handle all types of integration scenarios,
+such as collecting top tweets from a specific location and adding them to a Google spreadsheet,
+generating emails with real-time quotes pulled from a stock quote service, transforming and routing data based on advanced logic, and much more.
+These integration capabilities are further powered by the capabilities of the WSO2 Message Broker runtime.
 
 Installation & Running
-==================================
+=======================
 
 Running the Integrator
-==================================
-1. Extract  wso2ei-@product.version@.zip and go to the extracted directory/bin.
-2. Run integrator.sh or integrator.bat.
-3. Point your favourite browser to  https://localhost:9443/carbon
-4. Use the following username and password to login
-   username : admin
-   password : admin
+=======================
+1. Extract  wso2ei-7.0.0.zip and go to the extracted directory/bin.
+2. Run integrator.sh <.balx_FILE_LOCATION> or integrator.bat <.balx_FILE_LOCATION>.
 
-Running other runtimes individually (Analytics, Broker)
-========================================================
-1. Extract wso2ei-@product.version@.zip and go to the extracted directory.
-2. Go to wso2ei-@product.version@/wso2 directory.
-3. Go to appropriate runtime directory (analytics/broker) /bin.
-4. Execute wso2server.sh or wso2server.bat.
-5. Optionally, you can start the runtimes using scripts located at wso2ei-@product.version@/bin directry. Scripts
-available are analytics.sh/analytics.bat for analytics profile , broker.sh /broker.bat for broker profile
-6. Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the
-analytics runtime.)
+
+Running the Broker
+==================
+1. Extract wso2ei-7.0.0.zip and go to the extracted directory/bin.
+2. Execute broker.sh or broker.bat.
+
 
 WSO2 EI distribution directory
-=============================================
+===============================
 
- - bin
-	  Contains various scripts .sh & .bat scripts
+-bin <br>
+    Contains various scripts .sh & .bat scripts.
 
-    - database
-	  Contains the database
+-dbscripts <br>
+    Contains all the database scripts.
 
-    - dbscripts
-	  Contains all the database scripts
+-lib <br>
+    Place to add external library files
 
-    - lib
-	  Contains the basic set of libraries required to startup EI
-	  in standalone mode
+-conf <br>
+    Contains configuration files specific to EI.
 
-    - repository
-	  The repository where services and modules deployed in WSO2 EI
-	  are stored.
+-logs <br>
+    Contains all log files created during execution of EI.
 
-	- conf
-	  Contains configuration files specific to EI
+-resources <br>
+    Contains additional resources that may be required, including sample configuration and sample resources.
 
-	- logs
-	  Contains all log files created during execution of EI
+-samples <br>
+    Contains some sample services and client applications that demonstrate the functionality and capabilities of WSO2 EI.
 
-    - resources
-	  Contains additional resources that may be required, including sample
-	  configuration and sample resources
+-tmp <br>
+    Used for storing temporary files, and is pointed to by the java.io.tmpdir System property.
 
-    - samples
-	  Contains some sample services and client applications that demonstrate
-	  the functionality and capabilities of WSO2 EI
+-LICENSE.txt <br>
+    Apache License 2.0 and the relevant other licenses under which WSO2 EI is distributed.
 
-    - tmp
-	  Used for storing temporary files, and is pointed to by the
-	  java.io.tmpdir System property
+-README.txt <br>
+    Product information for WSO2 EI 7.0.0.
 
-    - LICENSE.txt
-	  Apache License 2.0 and the relevant other licenses under which
-	  WSO2 EI is distributed.
+-wso2/broker <br>
+    Contains broker runtime related files/folders.
 
-    - README.txt
-	  This document.
+-wso2/broker/conf <br>
+    Broker runtime specific configuration files.
 
-    - release-notes.html
-	  Release information for WSO2 EI @product.version@
+-wso2/ballerina <br>
+    Contains ballerina runtime related files/folders.
 
-	- patches
-	  Used to add patches related for all runtimes.
-
-	-dropins
-	  Used to add external jars(dependencies) of all runtimes.
-
-	-extensions
-	  Used to add carbon extensions.
-
-	-servicepacks
-	 Used to add service packs related to all runtimes.
-
-	-webapp-mode
-
-	-wso2/components
-	 Contains profiles for all runtimes and the plugins folder
-
-	-wso2/lib
-	  Contains jars that are required/shared by all runtimes.
-
-	-wso2/analytics
-	  Contains analytics runtime related files/folders.
-
-	-wso2/analytics/conf
-	  Analytics runtime specific configuration files.
-
-    -wso2/analytics/repository
-	  Where deployments of Analytics runtime is stored.
-
-   -wso2/broker
-      Contains broker runtime related files/folders.
-
-   -wso2/broker/conf
-      Broker runtime specific configuration files.
-
-   -wso2/broker/repository
-      Where deployments of broker runtime is stored.
 
 Known issues of WSO2 EI @product.version@
 ==================================

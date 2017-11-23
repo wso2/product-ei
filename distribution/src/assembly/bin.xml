@@ -121,5 +121,17 @@
             <fileMode>644</fileMode>
             <filtered>true</filtered>
         </file>
+        <file>
+            <source>LICENSE.txt</source>
+            <outputDirectory></outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>README.txt</source>
+            <outputDirectory></outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
     </files>
 </assembly>
