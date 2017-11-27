@@ -155,6 +155,10 @@
             <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-soap</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -218,6 +222,25 @@
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ballerina</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <!--Prepare ballerina connector for packing -->
+                    <execution>
+                        <id>prepare-ballerina-connectors</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang</groupId>
+                                    <artifactId>ballerina-soap</artifactId>
+                                    <version>${ballerina.soap.connector.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -472,14 +495,15 @@
                                 <delete dir="target/dependency-maven-plugin-markers" />
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
                                 <delete dir="target/p2-repo" />
-                                <delete dir="target/WSO2Carbon"/>
-                                <delete dir="target/director"/>
+                                <delete dir="target/WSO2Carbon" />
+                                <delete dir="target/director" />
                                 <delete dir="target/antrun" />
                                 <delete dir="target/ballerina" />
+                                <delete dir="target/ballerina-connectors" />
                                 <delete dir="target/findbugs" />
                                 <delete dir="target/maven-shared-archive-resources" />
                                 <delete file="target/timestamp" />
-                                <delete file="target/carbon.product"/>
+                                <delete file="target/carbon.product" />
                             </target>
                         </configuration>
                         <goals>

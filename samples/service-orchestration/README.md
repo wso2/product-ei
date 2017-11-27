@@ -1,6 +1,6 @@
 # Service Orchestration
 
-![Service Orchestration](https://github.com/isudana/product-ei/blob/7.0.x/samples/service-orchestration/orchestration-scenario.png "Service Orchestration")
+![Service Orchestration](orchestration-scenario.png "Service Orchestration")
 
 
 This scenario is about an online vehicle license renewal system. 
@@ -9,7 +9,7 @@ To renew the license, the vehicle should have a valid insurance policy, a valid 
 and a credit card to make the payment.
 The system is built by orchestrating several services.
 
-Client provides the vehichle registration number and the credit card details in the request. Service should validate the validity of certificates by calling relevent services. Thereafter Payment Gateway get called to make the payment and finally LicenseIssuer service get called to issue the license. 
+Client provides the vehicle registration number and the credit card details in the request. Service should validate the validity of certificates by calling relevent services. Thereafter Payment Gateway get called to make the payment and finally LicenseIssuer service get called to issue the license. 
 
 ## Services
 
@@ -61,7 +61,7 @@ Create a payload.json file with the following content.
 ```
 Invoke the service using cURL as follows
 ```
-curl -v http://localhost:9090/license/renew -d@payload.json
+curl -v http://localhost:9090/license/renew -d@payload.json -H"Content-Type: application/json"
 ```
 
 You should get something similar to following as the output.
