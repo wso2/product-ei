@@ -166,5 +166,6 @@
         <samples.version.maven.surefire.report.plugin>2.7.1</samples.version.maven.surefire.report.plugin>
         <samples.version.maven.checkstyle.plugin>2.15</samples.version.maven.checkstyle.plugin>
         <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
+        <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
     </properties>
 </project>
