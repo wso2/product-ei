@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -21,9 +21,10 @@ package org.wso2.carbon.esb.mailto.transport.receiver.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.esb.integration.common.utils.MailToTransportUtil;
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.esb.integration.common.utils.servers.GreenMailServer;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.exception.ESBMailTransportIntegrationTestException;
+import org.wso2.esb.integration.common.utils.Utils;
 
 import java.io.File;
 
@@ -34,6 +35,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class MailToTransportInvalidAddressTestCase extends ESBIntegrationTest {
 
+    private static LogViewerClient logViewerClient;
 
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
@@ -41,19 +43,19 @@ public class MailToTransportInvalidAddressTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mailTransport" +
                 File.separator + "mailTransportReceiver" + File.separator + "mail_transport_invalid_address.xml");
+        logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
         // Since ESB reads all unread emails one by one, we have to delete
         // the all unread emails before run the test
-        MailToTransportUtil.deleteAllUnreadEmailsFromGmail();
+        GreenMailServer.deleteAllEmails("pop3");
     }
 
 
     @Test(groups = {"wso2.esb"}, description = "Test email transport with invalid address parameter and pop3 protocol")
-    public void testEmailTransportInvalidAddress() throws ESBMailTransportIntegrationTestException {
-
-        assertTrue(MailToTransportUtil.searchStringInLog(
-                contextUrls.getBackEndUrl(), "Error connecting to mail server for address",
-                getSessionCookie()), "Couldn't find the error message in log");
+    public void testEmailTransportInvalidAddress() throws Exception {
+        logViewerClient.clearLogs();
+        assertTrue(Utils.checkForLog(logViewerClient, "Error connecting to mail server for address", 10000),
+                "Couldn't find the error message in log");
     }
 
     @AfterClass(alwaysRun = true)

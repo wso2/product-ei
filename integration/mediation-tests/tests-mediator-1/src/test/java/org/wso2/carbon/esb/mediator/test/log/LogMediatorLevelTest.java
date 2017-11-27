@@ -27,6 +27,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.clients.logging.LoggingAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class LogMediatorLevelTest extends ESBIntegrationTest {
 
@@ -71,16 +72,9 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
                                                                      null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));
         log.info(response);
-        Thread.sleep(2000);
-        boolean isLogFound = false;
-        LogEvent[] logs = logViewer.getAllSystemLogs();
-        for (int i = 0; i < (logs.length - beforeCount); i++) {
-            if (logs[i].getMessage().contains("*****TEST CUSTOM LOGGING MESSAGE TO SYSTEM LOGS TEST*****")) {
-                isLogFound = true;
-                break;
-            }
-        }
-        Assert.assertTrue(isLogFound, "System Log not found. LogViewer Admin service not working properly");
+        boolean logFound = Utils.checkForLog(logViewer,
+                "*****TEST CUSTOM LOGGING MESSAGE TO SYSTEM LOGS TEST*****", 2);
+        Assert.assertTrue(logFound, "System Log not found. LogViewer Admin service not working properly");
     }
 
 

@@ -1,0 +1,169 @@
+<!--
+  ~ Copyright (c) 2017 WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<api xmlns="http://ws.apache.org/ns/synapse" context="/dbReportMeditorUseTransactionTestAPI" name="dbReportMeditorUseTransactionTestAPI">
+    <resource methods="POST" uri-template="/init1">
+        <inSequence>
+            <dbreport>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[DROP TABLE IF EXISTS COMPANY;
+                    CREATE table company(name varchar(10) primary key, id varchar(10), price double);
+                    INSERT into company values ('IBM','c1',0.0);
+                    INSERT into company values ('SUN','c2',0.0);]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/init2">
+        <inSequence>
+            <dbreport>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[DROP TABLE IF EXISTS COMPANY1;
+                    CREATE table company1(name varchar(10) primary key, id varchar(10), price double);
+                    INSERT into company1 values ('SUN','c2',0.0);
+                    INSERT into company1 values ('MSFT','c3',0.0);]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/commit?nameEntry={name}">
+        <inSequence>
+            <property name="NAME_ENTRY" expression="$url:nameEntry" scope="default" type="STRING" />
+            <log>
+                <property name="Message" value="Start Commit Transaction" />
+            </log>
+            <transaction action="new" />
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql>delete from company where name =?</sql>
+                    <parameter expression="get-property('NAME_ENTRY')" type="VARCHAR" />
+                </statement>
+            </dbreport>
+            <dbreport useTransaction="true">
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql>INSERT into company1 values (?,'c4',200.0)</sql>
+                    <parameter expression="get-property('NAME_ENTRY')" type="VARCHAR" />
+                </statement>
+            </dbreport>
+            <transaction action="commit" />
+            <log>
+                <property name="Message" value="Finish Commit Transaction" />
+            </log>
+        </inSequence>
+        <faultSequence>
+            <log level="custom">
+                <property name="text" value="** Rollback Transaction**"/>
+            </log>
+            <transaction action="rollback"/>
+            <respond/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/test1?testEntry={testVal}">
+        <inSequence>
+            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING" />
+            <dblookup>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[select * from COMPANY where name = ?]]></sql>
+                    <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+                    <result name="id_tb1" column="name" />
+                </statement>
+            </dblookup>
+            <payloadFactory media-type="xml">
+                <format>
+                    <response xmlns="">
+                        <table1>$1</table1>
+                    </response>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id_tb1')"
+                         literal="false" />
+                </args>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/test2?testEntry={testVal}">
+        <inSequence>
+            <property name="TEST_ENTRY" expression="$url:testEntry" scope="default" type="STRING" />
+            <dblookup>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[select * from COMPANY1 where name = ?]]></sql>
+                    <parameter expression="get-property('TEST_ENTRY')" type="VARCHAR" />
+                    <result name="id_tb1" column="name" />
+                </statement>
+            </dblookup>
+            <payloadFactory media-type="xml">
+                <format>
+                    <response xmlns="">
+                        <table2>$1</table2>
+                    </response>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id_tb1')"
+                         literal="false" />
+                </args>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+    </resource>
+    <resource methods="POST" uri-template="/cleanup">
+        <inSequence>
+            <dbreport>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TestDB1</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[DROP TABLE IF EXISTS PERSON1;
+                    DROP TABLE IF EXISTS PERSON2;]]></sql>
+                </statement>
+            </dbreport>
+        </inSequence>
+    </resource>
+</api>

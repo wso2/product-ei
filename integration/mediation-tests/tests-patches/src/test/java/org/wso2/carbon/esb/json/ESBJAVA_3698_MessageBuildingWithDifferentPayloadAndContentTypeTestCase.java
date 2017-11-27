@@ -30,6 +30,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestCase extends
                                                                                    ESBIntegrationTest {
@@ -59,19 +60,9 @@ public class ESBJAVA_3698_MessageBuildingWithDifferentPayloadAndContentTypeTestC
 
 		httpClient.execute(post);
 
-		Thread.sleep(10000);
-
-        boolean isError = false;
-
-        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-        for (int i = 0; i < logs.length; i++) {
-            if (logs[i].getMessage().contains("Error occurred while processing document for application/json")) {
-                isError = true;
-                break;
-            }
-        }
-
-        Assert.assertEquals(isError, true, "Expected SOAP Response was NOT found in the LOG stream.");
+        boolean errorLogFound = Utils.checkForLog(logViewerClient,
+				"Error occurred while processing document for application/json", 10);
+        Assert.assertEquals(errorLogFound, true, "Expected SOAP Response was NOT found in the LOG stream.");
 	}
 
 	private String getPayload() {

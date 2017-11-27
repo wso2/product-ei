@@ -30,6 +30,7 @@ import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.inbound.endpoint.InboundAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 import java.rmi.RemoteException;
@@ -75,15 +76,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewerClient.clearLogs();
         axis2Client.sendRobust(getProxyServiceURLHttp("jmsHeaderInboundEpTestProxy"), null, null, AXIOMUtil.stringToOM("<body/>"));
-        Thread.sleep(5000);
-        boolean isHeaderSet = false;
-        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-        for (LogEvent event : logs) {
-            String message = event.getMessage();
-            if (message.contains("Producer_Log = MDM")) {
-                isHeaderSet = true;
-            }
-        }
+        boolean isHeaderSet = Utils.checkForLog(logViewerClient, "Producer_Log = MDM", 5);
         Assert.assertTrue(isHeaderSet, "Log for transport header is not present in carbon log");
     }
 

@@ -57,7 +57,7 @@ public class ReWriteFullUrlTestCase extends ESBIntegrationTest {
     public Object[][] addressingUrl() {
         return new Object[][]{
                 {"http://10.100.10.9:8000/services/SimpleStockQuoteService"},
-                {"http://test.com/SimpleStockQuoteService"},
+                {"https://test.com/SimpleStockQuoteService"},
         };
 
     }

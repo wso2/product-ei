@@ -39,6 +39,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.extensions.servers.ftpserver.FTPServerManager;
 import org.wso2.carbon.automation.extensions.servers.sftpserver.SFTPServer;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
@@ -205,19 +206,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
             LOGGER.error("Error while updating the Synapse config", e);
         }
         LOGGER.info("Synapse config updated");
-        Thread.sleep(30000);//Here we can't know whether the proxy polling happened or not, hence only way is to wait and see. Since poll interval is 1,
-        // this waiting period should suffice. But it may include the time it take to deploy ther service as well.
-
-        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-        boolean isSuccess = false;
-        for (LogEvent logEvent : logs) {
-            String message = logEvent.getMessage();
-            if (message.contains(log)) {
-                isSuccess = true;
-                break;
-            }
-        }
-
+        boolean isSuccess = Utils.checkForLog(logViewerClient, log, 30);
         Assert.assertTrue(
                 isSuccess,
                 "Secure password deployment failed, file did not received to the vfs proxy");

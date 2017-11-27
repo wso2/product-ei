@@ -12,8 +12,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.axis2client.AxisServiceClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class ESBJAVA_4239_AccessHTTPSCAfterCallout extends ESBIntegrationTest {
     private LogViewerClient logViewerClient;
@@ -31,27 +33,14 @@ public class ESBJAVA_4239_AccessHTTPSCAfterCallout extends ESBIntegrationTest {
 
     @Test(groups = { "wso2.esb" }, description = "Test whether an HTTP SC can be retrieved after the callout mediator.")
     public void testFetchHTTP_SC_After_Callout_Mediator() throws RemoteException,
-                                                         InterruptedException {
+            InterruptedException, LogViewerLogViewerException {
         final String proxyUrl = getProxyServiceURLHttp(PROXY_SERVICE_NAME);
         AxisServiceClient client = new AxisServiceClient();
         client.sendRobust(createPlaceOrderRequest(3.141593E0, 4, "IBM"), proxyUrl, "placeOrder");
 
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-
-        // Wait till the log appears
-        Thread.sleep(20000);
-        
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
-        boolean isScFound = false;
-        for (LogEvent logEvent : logs) {
-            String message = logEvent.getMessage();
-            if (message.contains(EXPECTED_LOG_MESSAGE)) {
-                isScFound = true;
-            }
-        }
-        
+        boolean isScFound = Utils.checkForLog(logViewerClient, EXPECTED_LOG_MESSAGE, 20);
         Assert.assertTrue(isScFound, "The HTTP Status Code was not found in the log.");
-
     }
 
     /*

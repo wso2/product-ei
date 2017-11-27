@@ -385,7 +385,7 @@
         </parameter>
     </transportReceiver-->
 
-   <!-- <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
+    <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
         <parameter locked="false" name="mqttConFactory">
             <parameter locked="false" name="mqtt.server.host.name">localhost</parameter>
             <parameter name="mqtt.connection.factory">mqttConFactory</parameter>
@@ -393,7 +393,7 @@
             <parameter locked="false" name="mqtt.client.id">client-id-1234</parameter>
             <parameter locked="false" name="mqtt.topic.name">esb.test</parameter>
         </parameter>
-    </transportReceiver>-->
+    </transportReceiver>
 
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
@@ -453,24 +453,24 @@
     <!-- Uncomment and configure the SMTP server information
     check com.sun.mail.smtp package documentation for descriptions of properties-->
     <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
-        <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
-        <parameter name="mail.smtp.port">587</parameter>
+        <parameter name="mail.smtp.host">localhost</parameter>
+        <parameter name="mail.smtp.port">3025</parameter>
         <parameter name="mail.smtp.starttls.enable">true</parameter>
         <parameter name="mail.smtp.auth">true</parameter>
-        <parameter name="mail.smtp.user">synapse.demo.1</parameter>
-        <parameter name="mail.smtp.password">mailpassword1</parameter>
-        <parameter name="mail.smtp.from">synapse.demo.1@gmail.com</parameter>
-        <parameter name="transport.mail.SMTPBccAddresses">test.automation.dummy.esb@gmail.com</parameter>
+        <parameter name="mail.smtp.user">wso2</parameter>
+        <parameter name="mail.smtp.password">wso2</parameter>
+        <parameter name="mail.smtp.from">wso2@localhost</parameter>
+        <parameter name="transport.mail.SMTPBccAddresses">wso2bcc@localhost</parameter>
     </transportSender>
 
     <transportSender name="mailtoWSO2" class="org.apache.axis2.transport.mail.MailTransportSender">
-        <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
-        <parameter name="mail.smtp.port">587</parameter>
+        <parameter name="mail.smtp.host">localhost</parameter>
+        <parameter name="mail.smtp.port">3025</parameter>
         <parameter name="mail.smtp.starttls.enable">true</parameter>
         <parameter name="mail.smtp.auth">true</parameter>
-        <parameter name="mail.smtp.user">synapse.demo.1</parameter>
-        <parameter name="mail.smtp.password">mailpassword1</parameter>
-        <parameter name="mail.smtp.from">synapse.demo.1@gmail.com</parameter>
+        <parameter name="mail.smtp.user">wso2_secondary</parameter>
+        <parameter name="mail.smtp.password">wso2_secondary</parameter>
+        <parameter name="mail.smtp.from">wso2_secondary@localhost</parameter>
     </transportSender>
 
     <!--Uncomment this for FIX transport support
@@ -486,7 +486,7 @@
     <!-- Uncomment this and configure to use RabbitMQ connection pools for sending messages
     <transportSender name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQSender"/-->
 
-    <!--<transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>-->
+    <transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>
     
     <transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
         <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>

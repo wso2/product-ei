@@ -33,6 +33,7 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
@@ -69,11 +70,8 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Inbound endpoint Reading file with Content type Plain Test Case")
-    public void testInboundEnpointReadFile_ContentType_Plain() throws Exception {
+    public void testInboundEnpointReadFileContentTypePlain() throws Exception {
 
-        addInboundEndpoint(addEndpoint());
-        // To check the file getting is read
-        boolean isFileRead = false;
 
         File sourceFile = new File(pathToFtpDir + File.separator + "test.txt");
         File targetFolder = new File(InboundFileFolder + File.separator + "in");
@@ -81,21 +79,13 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            addInboundEndpoint(addEndpoint());
+            boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2);
+            Assert.assertTrue(isFileRead, "The Text file is not getting read");
         } finally {
             deleteFile(targetFile);
         }
 
-        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-
-        for (LogEvent logEvent : logs) {
-            String message = logEvent.getMessage();
-            if (message.contains("WSO2 Lanka Pvt Ltd")) {
-                isFileRead = true;
-            }
-        }
-
-        Assert.assertTrue(isFileRead, "The Text file is not getting read");
     }
 
     private OMElement addEndpoint() throws Exception {

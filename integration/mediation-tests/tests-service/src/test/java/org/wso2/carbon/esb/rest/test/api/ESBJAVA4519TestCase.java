@@ -27,6 +27,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 
 import java.io.File;
@@ -50,7 +51,6 @@ public class ESBJAVA4519TestCase extends ESBIntegrationTest {
 	public void testRestoringToPreviousConfigurationOnHotDeploymentFailure()
 			throws Exception {
 
-		boolean messageInLog = false;
 		String esbApiPath = System.getProperty(ServerConstants.CARBON_HOME) + File.separator +
 		                    "repository" + File.separator + "deployment" + File.separator + "server" + File.separator +
 		                    "synapse-configs" + File.separator + "default" + File.separator + "api" + File.separator +
@@ -80,38 +80,13 @@ public class ESBJAVA4519TestCase extends ESBIntegrationTest {
 			}
 		}
 
-		LogEvent[] logs;
 		log.info("Copying the corrupted api config file...");
 		Files.copy(corruptedApiFile.toPath(), esbApiFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		log.info("Copied the corrupted api config file to config folder.");
-		for (int i = 0; i < 5; i++) {
-			log.info("Checking for error logs in the esb..");
-			logs = logViewerClient.getAllRemoteSystemLogs();
-			for (LogEvent logEvent : logs) {
-				String message = logEvent.getMessage();
-				if (message.contains("Deployment of synapse artifact failed")) {
-					log.info("Hot Deployment error log is printed in the ESB logs.");
-					messageInLog = true;
-					break;
-				}
-			}
-			if (!messageInLog) {
-				Thread.sleep(20000);
-			} else {
-				break;
-			}
-		}
 
-		Assert.assertTrue(messageInLog, "Exception has occurred");
-		messageInLog = false;
-		logs = logViewerClient.getAllRemoteSystemLogs();
-		for (LogEvent logEvent : logs) {
-			String message = logEvent.getMessage();
-			if (message.contains("Restoring the existing artifact into the file")) {
-				messageInLog = true;
-				break;
-			}
-		}
+		boolean messageInLog = Utils.checkForLog(logViewerClient, "Deployment of synapse artifact failed", 100);
+		Assert.assertTrue(messageInLog, "synapse artifact failed message was not found in logs");
+		messageInLog = Utils.checkForLog(logViewerClient, "Restoring the existing artifact into the file", 10);
 		Assert.assertTrue(messageInLog, "Original xml is not restored.");
 	}
 

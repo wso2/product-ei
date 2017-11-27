@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 import static org.testng.Assert.assertTrue;
 
@@ -57,19 +58,8 @@ public class InjectToProxyTestCase extends ESBIntegrationTest {
                                               "    <task:property name=\"injectTo\" value=\"proxy\"/>\n" +
                                               "</task:task>");
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
         addScheduledTask(task);
-        Thread.sleep(4000);
-        LogEvent[] logs = logViewer.getAllSystemLogs();
-        int afterLogSize = logs.length;
-
-        boolean invokedLogFound = false;
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
-            if (logs[i].getMessage().contains("PROXY INVOKED")) {
-                invokedLogFound = true;
-                break;
-            }
-        }
+        boolean invokedLogFound = Utils.checkForLog(logViewer, "PROXY INVOKED", 4);
         assertTrue(invokedLogFound);
     }
 

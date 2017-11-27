@@ -21,14 +21,12 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.extensions.XPathConstants;
-import org.wso2.carbon.automation.test.utils.dbutils.MySqlDatabaseManager;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.carbon.automation.test.utils.dbutils.H2DataBaseManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;
@@ -41,76 +39,55 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Random;
 
 import static org.testng.Assert.assertEquals;
 
 public class DBReportMediatorTestCase extends ESBIntegrationTest {
 
-    private final String MYSQL_JAR = "mysql-connector-java-5.1.6.jar";
-    private ServerConfigurationManager serverConfigurationManager;
-    private MySqlDatabaseManager mySqlDatabaseManager;
-//    private final DataSource dbConfig = new EnvironmentBuilder().getFrameworkSettings()
-//            .getDataSource();
-//    private final String JDBC_DRIVER = dbConfig.get_dbDriverName();
-//    private final String JDBC_URL = dbConfig.getDbUrl();
-//    private final String DB_USER = dbConfig.getDbUser();
-//    private final String DB_PASSWORD = dbConfig.getDbPassword();
-
+    private H2DataBaseManager h2DataBaseManager;
     private String JDBC_URL;
     private String DB_USER;
     private String DB_PASSWORD;
-    private String DATASOURCE_NAME;
     private String JDBC_DRIVER;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
         AutomationContext automationContext = new AutomationContext();
-        DATASOURCE_NAME = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_NAME);
         DB_PASSWORD = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DB_PASSWORD);
         JDBC_URL = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_URL);
         DB_USER = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DB_USER_NAME);
         JDBC_DRIVER = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DRIVER_CLASS_NAME);
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        copyJDBCDriverToClassPath();
-        mySqlDatabaseManager = new MySqlDatabaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
-        mySqlDatabaseManager.executeUpdate("DROP DATABASE IF EXISTS SampleDBForAutomation");
-
-
-
+        String databaseName = System.getProperty("basedir") + File.separator + "target" + File.separator +
+                "testdb_dbreport" + new Random().nextInt();
+        JDBC_URL = JDBC_URL + databaseName + ";AUTO_SERVER=TRUE";
+        h2DataBaseManager = new H2DataBaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
+        h2DataBaseManager.executeUpdate("CREATE TABLE company(price double, name varchar(20))");
         super.init();
     }
 
-    @BeforeMethod(alwaysRun = true)
-    public void createDatabase() throws SQLException {
-        mySqlDatabaseManager.executeUpdate("DROP DATABASE IF EXISTS SampleDBForAutomation");
-        mySqlDatabaseManager.executeUpdate("Create DATABASE SampleDBForAutomation");
-        mySqlDatabaseManager.executeUpdate("USE SampleDBForAutomation");
-        mySqlDatabaseManager.executeUpdate("CREATE TABLE company(price double, name varchar(20))");
-
-    }
-
     /*  before a request is sent to the db mediator the count of price rows greater than 1000 should
-be 3. After the request is gone through db mediator the count shoud be zero. price values
+be 3. After the request is gone through db mediator the count should be zero. price values
 greater than 1000 will remain with the count of one */
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "DBLookup/DBReport mediator should replace a" +
-                                             " &lt;/&gt; with </>")
+            " &lt;/&gt; with </>")
     public void DBMediatorReplaceLessThanAndGreaterThanSignTestCase() throws Exception {
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100,'ABC')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(200,'CDE')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300,'MNO')");
-
-        File synapseFile = new File(getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/synapse_dbReport.xml").getPath());
-        updateESBConfiguration(updateSynapseConfiguration(synapseFile));
-
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(100,'ABC')");
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(2000,'XYZ')");
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(200,'CDE')");
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(300,'MNO')");
         int numOfPrice, numOfPriceGreaterThan;
         numOfPrice = getRecordCount("SELECT price from company WHERE price < 1000 ");
         numOfPriceGreaterThan = getRecordCount("SELECT price from company WHERE price > 1000 ");
         assertEquals(numOfPrice, 3, "Fault, invalid response");
         assertEquals(numOfPriceGreaterThan, 1, "Fault, invalid response");
-        axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        File synapseFile = new File(getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/dbReportMediatorTestProxy.xml").getPath());
+        addProxyService(updateSynapseConfiguration(synapseFile));
+        axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
+                ("dbReportMediatorTestProxy"), null, "WSO2");
         numOfPrice = getRecordCount("SELECT price from company WHERE price < 1000 ");
         numOfPriceGreaterThan = getRecordCount("SELECT price from company WHERE price > 1000 ");
         assertEquals(numOfPrice, 0, "Fault, invalid response");
@@ -124,23 +101,24 @@ the 'name' "WSO2".
 * message content. */
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", description = "Insert or update DB table using message coontents."
+    @Test(groups = "wso2.esb", description = "Insert or update DB table using message contents."
     )
     public void DBReportUseMessageContentTestCase() throws Exception {
         double price = 200.0;
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(" + price + ",'WSO2')");
-        mySqlDatabaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
-
-        File synapseFile = new File(getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/synapse_sample_361.xml").getPath());
-        updateESBConfiguration(updateSynapseConfiguration(synapseFile));
         OMElement response;
         String priceMessageContent;
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(100.0,'ABC')");
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(2000.0,'XYZ')");
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(" + price + ",'WSO2')");
+        h2DataBaseManager.executeUpdate("INSERT INTO company VALUES(300.0,'MNO')");
 
+        File synapseFile = new File(getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/" +
+                "dbReportMediatorUsingMessageContentTestProxy.xml").getPath());
+        addProxyService(updateSynapseConfiguration(synapseFile));
         priceMessageContent = getPrice();
         assertEquals(priceMessageContent, Double.toString(price), "Fault, invalid response");
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
+        response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp
+                ("dbReportMediatorUsingMessageContentTestProxy"), null, "WSO2");
         priceMessageContent = getPrice();
         OMElement returnElement = response.getFirstElement();
         OMElement lastElement = returnElement.getFirstChildWithName(new QName("http://services.samples/xsd", "last"));
@@ -149,19 +127,9 @@ the 'name' "WSO2".
 
     @AfterClass(alwaysRun = true)
     public void close() throws Exception {
-
-        try {
-            mySqlDatabaseManager.executeUpdate("DROP DATABASE SampleDBForAutomation");
-        } finally {
-            mySqlDatabaseManager.disconnect();
-
-
-        }
+        h2DataBaseManager.disconnect();
+        h2DataBaseManager = null;
         super.cleanup();
-        super.init();
-        loadSampleESBConfiguration(0);
-        serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
-        serverConfigurationManager.restartGracefully();
     }
 
     private OMElement updateSynapseConfiguration(File synapseFile)
@@ -175,10 +143,10 @@ the 'name' "WSO2".
         synapseContent.build();
         bufferedInputStream.close();
 
-        OMElement sequenceElemnt = synapseContent.getFirstElement();
-        OMElement outElement = sequenceElemnt.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "out"));
-        OMElement dbReportElemnet = outElement.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "dbreport"));
-        OMElement connectionElement = dbReportElemnet.getFirstChildWithName(
+        OMElement targetElement = synapseContent.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "target"));
+        OMElement outSequenceElement = targetElement.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "outSequence"));
+        OMElement dbReportElement = outSequenceElement.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "dbreport"));
+        OMElement connectionElement = dbReportElement.getFirstChildWithName(
                 new QName("http://ws.apache.org/ns/synapse", "connection"));
         OMElement poolElement = connectionElement.getFirstElement();
         OMElement driverElemnt = poolElement.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "driver"));
@@ -187,38 +155,51 @@ the 'name' "WSO2".
         OMElement passwordElemnt = poolElement.getFirstChildWithName(new QName("http://ws.apache.org/ns/synapse", "password"));
 
         driverElemnt.setText(JDBC_DRIVER);
-        urlElemnt.setText(JDBC_URL + "/SampleDBForAutomation");
+        urlElemnt.setText(JDBC_URL);
         userElemnt.setText(DB_USER);
         passwordElemnt.setText(DB_PASSWORD);
         return synapseContent;
     }
 
     private int getRecordCount(String sql) throws SQLException {
-        ResultSet rs = mySqlDatabaseManager.executeQuery(sql);
-        int count = 0;
-        while (rs.next()) {
-            count++;
+        ResultSet rs = null;
+        Statement stm = null;
+        try {
+            stm = h2DataBaseManager.getStatement(sql);
+            rs = stm.executeQuery(sql);
+            int count = 0;
+            while (rs.next()) {
+                count++;
+            }
+            return count;
+        } finally {
+            releaseResources(stm, rs);
         }
-        rs.close();
-        return count;
     }
 
     private String getPrice() throws SQLException {
-        String price = null;
-        ResultSet rs = mySqlDatabaseManager.executeQuery("SELECT price from company WHERE name = 'WSO2'");
-
-        while (rs.next()) {
-            price = Double.toString(rs.getDouble("price"));
+        ResultSet rs = null;
+        Statement stm = null;
+        try {
+            String price = null;
+            String sql = "SELECT price from company WHERE name = 'WSO2'";
+            stm = h2DataBaseManager.getStatement(sql);
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                price = Double.toString(rs.getDouble("price"));
+            }
+            return price;
+        } finally {
+            releaseResources(stm, rs);
         }
-        rs.close();
-        return price;
     }
 
-    private void copyJDBCDriverToClassPath() throws Exception {
-        File jarFile;
-        jarFile = new File(getClass().getResource("/artifacts/ESB/jar/" + MYSQL_JAR + "").getPath());
-        System.out.println(jarFile.getName());
-        serverConfigurationManager.copyToComponentLib(jarFile);
-        serverConfigurationManager.restartGracefully();
+    private void releaseResources(Statement stm, ResultSet rs) throws SQLException {
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
     }
 }

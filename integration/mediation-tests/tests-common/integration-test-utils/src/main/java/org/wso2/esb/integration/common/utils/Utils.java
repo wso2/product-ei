@@ -26,6 +26,7 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -189,6 +190,36 @@ public class Utils {
     }
 
     /**
+     * Check whether a log found with expected string of given priority
+     *
+     * @param logViewerClient LogViewerClient object
+     * @param priority        priority level
+     * @param expected        expected string
+     * @return true if a log found with expected string of given priority, false otherwise
+     * @throws RemoteException
+     * @throws LogViewerLogViewerException
+     */
+    private static boolean assertIfLogExistsWithGivenPriority(LogViewerClient logViewerClient, String priority, String expected)
+            throws RemoteException, LogViewerLogViewerException {
+
+        LogEvent[] systemLogs;
+        systemLogs = logViewerClient.getAllRemoteSystemLogs();
+        boolean matchFound = false;
+        if (systemLogs != null) {
+            for (LogEvent logEvent : systemLogs) {
+                if (logEvent == null) {
+                    continue;
+                }
+                if (logEvent.getPriority().equals(priority) && logEvent.getMessage().contains(expected)) {
+                    matchFound = true;
+                    break;
+                }
+            }
+        }
+        return matchFound;
+    }
+
+    /**
      * Check for the existence of the given log message. The polling will happen in one second intervals.
      *
      * @param logViewerClient log viewer used for test
@@ -210,5 +241,48 @@ public class Utils {
             }
         }
         return logExists;
+    }
+
+    /**
+     * Check for the existence of a given log message of given priority within the given timeout
+     *
+     * @param logViewerClient LogViewerClient object
+     * @param priority        priority level
+     * @param expected        expected string to search in logs
+     * @param timeout         timeout value in seconds
+     * @return true if a log found with the given priority and content within the given timeout, false otherwise
+     * @throws InterruptedException
+     * @throws LogViewerLogViewerException
+     * @throws RemoteException
+     */
+    public static boolean checkForLogsWithPriority(LogViewerClient logViewerClient, String priority,  String expected, int timeout)
+            throws InterruptedException, LogViewerLogViewerException, RemoteException {
+        boolean logExists = false;
+        for (int i = 0; i < timeout; i++) {
+            TimeUnit.SECONDS.sleep(1);
+            if (assertIfLogExistsWithGivenPriority(logViewerClient, priority, expected)) {
+                logExists = true;
+                break;
+            }
+        }
+        return logExists;
+    }
+
+    /**
+     * Wait for expected message count found in the message store until a defined timeout
+     * @param messageStoreName Message store name
+     * @param expectedCount    Expected message count
+     * @param timeout          Timeout to wait in Milliseconds
+     * @return true if the expected message count found, false otherwise
+     */
+    public static boolean waitForMessageCount(MessageStoreAdminClient messageStoreAdminClient, String messageStoreName, int expectedCount, long timeout) throws InterruptedException, RemoteException {
+        long elapsedTime = 0;
+        boolean messageCountFound = false;
+        while(elapsedTime < timeout && !messageCountFound) {
+            Thread.sleep(500);
+            messageCountFound = messageStoreAdminClient.getMessageCount(messageStoreName) == expectedCount;
+            elapsedTime += 500;
+        }
+        return messageCountFound;
     }
 }

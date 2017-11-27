@@ -43,16 +43,13 @@
                         <arg value="Hello WSO2.....!"/>
                     </args>
                 </payloadFactory>
-                <send>
+                <call>
                     <endpoint>
-                        <address uri="mailtoWSO2:synapse.demo.0@gmail.com"/>
+                        <address uri="mailtoWSO2:receiver@localhost"/>
                     </endpoint>
-                </send>
+                </call>
                 <respond/>
             </inSequence>
-            <outSequence>
-                <send/>
-            </outSequence>
         </target>
         <description/>
     </proxy>

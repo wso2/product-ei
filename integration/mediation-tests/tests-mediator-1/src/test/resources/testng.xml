@@ -74,6 +74,7 @@
     <test name="Call-mediator-Test" preserve-order="true" verbose="2">
         <classes>
             <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorAPIWithNamedSeqCase"/>-->
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingAPITestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingDirectEndpointTestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingFilterTestCase"/>
             <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingInboundOutboundPolicySecurityTestCase"/>-->
@@ -295,6 +296,11 @@
             <package name="org.wso2.carbon.esb.mediator.test.db.dblookup"/>
         </packages>
     </test>
+    <test name="DBReport-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.db.dbreport"/>
+        </packages>
+    </test>
     <!--This has been commented out due to an issue in the automation framework. Once it is fixed (pull request already sent), we can uncomment this.-->
     <!--test name="dbreport-mediator-Test" preserve-order="true" verbose="2">
         <packages>
@@ -306,6 +312,7 @@
         <classes>
             <!--TODO Uncomment following test case after wso2-synapse 2.1.7-wso2v22 upgrade
             <class name="org.wso2.carbon.esb.message.processor.test.MessageProcessorSOAPHeadersTestcase"/-->
+            <class name="org.wso2.carbon.esb.message.processor.test.DynamicallySettingWSAHeadersTestCase"/>
         </classes>
     </test>
 

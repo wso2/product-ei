@@ -32,6 +32,7 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 public class InboundTransportTest extends ESBIntegrationTest {
 
@@ -68,8 +69,6 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound endpoint Reading file with Contect type XML Test Case")
     public void testInboundEnpointReadFile_ContentType_XML() throws Exception {
         logViewerClient.clearLogs();
-        // To check the file getting is read
-        boolean isFileRead = false;
 
         File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
         File targetFolder = new File(inboundFileListeningFolder + File.separator + "ContentType");
@@ -78,20 +77,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
 
         FileUtils.copyFile(sourceFile, targetFile);
 
-        for (int i = 0; i < 10; i++) {
-            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-
-            for (LogEvent logEvent : logs) {
-                String message = logEvent.getMessage();
-                if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-                    isFileRead = true;
-                }
-            }
-            if (isFileRead) {
-                break;
-            }
-            Thread.sleep(1000);
-        }
+        boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
         Assert.assertTrue(isFileRead, "The XML file is not getting read");
     }
 
@@ -111,24 +97,11 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint invalid interval Test case")
     public void testInboundEndpointPollInterval_NonInteger() throws Exception {
         logViewerClient.clearLogs();
-        boolean errorMessage = false;
         addInboundEndpoint(addEndpoint3());
-        for (int i = 0; i < 10; i++) {
-            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
-            for (LogEvent logEvent : logs) {
-                String message = logEvent.getMessage();
-                if (message.contains("Invalid numeric value for interval")) {
-                    errorMessage = true;
-                }
-            }
-
-            if (errorMessage) {
-                break;
-            }
-            Thread.sleep(1000);
-        }
-        Assert.assertTrue(errorMessage, "The Error message not found in the log");
+        boolean errorMessageFound = Utils.checkForLog(logViewerClient,
+                "Invalid numeric value for interval", 10);
+        Assert.assertTrue(errorMessageFound, "The Error message not found in the log");
     }
 
     @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
@@ -190,30 +163,12 @@ public class InboundTransportTest extends ESBIntegrationTest {
         logViewerClient.clearLogs();
         addInboundEndpoint(addEndpoint6());
 
-        // To check the file getting is read
-        boolean isFileRead = false;
-
         File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
         File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
         File targetFile = new File(targetFolder + File.separator + "invalidContentType.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            for (int i = 0; i < 10; i++) {
-
-                LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
-
-                for (LogEvent logEvent : logs) {
-                    String message = logEvent.getMessage();
-                    if (message.contains("<m0:symbol>WSO2</m0:symbol>")) {
-                        isFileRead = true;
-                    }
-                }
-                if (isFileRead) {
-                    break;
-                }
-                Thread.sleep(1000);
-            }
-
+            boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
             Assert.assertTrue(isFileRead, "The XML file is not getting read");
 
             Assert.assertTrue(!targetFile.exists(), "file not deleted after processed");

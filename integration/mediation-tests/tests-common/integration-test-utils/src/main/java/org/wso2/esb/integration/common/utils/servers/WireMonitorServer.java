@@ -21,6 +21,8 @@ package org.wso2.esb.integration.common.utils.servers;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * This class can be used to capture wire messages
  */
@@ -43,8 +45,17 @@ public class WireMonitorServer {
 
     public void start() {
         response = "";
-        Thread thread = new WireMonitor(port, this);
-        thread.start();
+        WireMonitor wireMonitor = new WireMonitor(port, this);
+        wireMonitor.start();
+        while (!wireMonitor.isStarted()) {
+            try {
+                //wait until the wire monitor is started
+                TimeUnit.MILLISECONDS.sleep(100);
+                log.info("Waiting for wire monitor to start...");
+            } catch (InterruptedException e) {
+                //Continue looping until the server is started
+            }
+        }
     }
 
 

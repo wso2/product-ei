@@ -34,6 +34,7 @@ class WireMonitor extends Thread {
     private ServerSocket providerSocket;
     private Socket connection = null;
     private WireMonitorServer trigger;
+    private boolean started;
 
     public void run() {
         try {
@@ -42,9 +43,9 @@ class WireMonitor extends Thread {
 
             log.info("WireMonitor Server started on port " + port);
             log.info("Waiting for connection");
+            started = true;
             connection = providerSocket.accept();
-            log.info("Connection received from " +
-                     connection.getInetAddress().getHostName());
+            log.info("Connection received from " + connection.getInetAddress().getHostName());
             InputStream in = connection.getInputStream();
             int ch;
             StringBuffer buffer = new StringBuffer();
@@ -105,6 +106,15 @@ class WireMonitor extends Thread {
     public WireMonitor(int listenPort, WireMonitorServer trigger) {
         port = listenPort;
         this.trigger = trigger;
+    }
+
+    /**
+     * Method to return the status of the wire monitor.
+     *
+     * @return true is the wire monitor is started and accepting connections
+     */
+    public boolean isStarted() {
+        return started;
     }
 
 }

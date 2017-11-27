@@ -27,7 +27,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.ei.dataservice.integration.test.DSSIntegrationTest;
-import org.wso2.ei.dataservice.integration.test.services.SqlDataServiceTestCase;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,7 +46,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class CARBON15046JsonGsonNUllValueTest extends DSSIntegrationTest {
 
-    private static final Log log = LogFactory.getLog(SqlDataServiceTestCase.class);
+    private static final Log log = LogFactory.getLog(CARBON15046JsonGsonNUllValueTest.class);
 
     private final String serviceName = "JsonNullValueOnGET";
     private String serviceEndPoint;

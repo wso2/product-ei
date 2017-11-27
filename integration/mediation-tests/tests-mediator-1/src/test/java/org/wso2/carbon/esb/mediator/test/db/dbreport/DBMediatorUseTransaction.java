@@ -17,208 +17,121 @@
 */
 package org.wso2.carbon.esb.mediator.test.db.dbreport;
 
-import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.util.AXIOMUtil;
-import org.apache.axis2.AxisFault;
-import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.extensions.XPathConstants;
-import org.wso2.carbon.automation.test.utils.dbutils.MySqlDatabaseManager;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.carbon.automation.engine.exceptions.AutomationFrameworkException;
+import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
+import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class DBMediatorUseTransaction extends ESBIntegrationTest {
-    private MySqlDatabaseManager mySqlDatabaseManager1, mySqlDatabaseManager2;
-    private ServerConfigurationManager serverConfigurationManager;
-//    private final DataSource dbConfig = new EnvironmentBuilder().getFrameworkSettings().getDataSource();
-//    private final String JDBC_URL = dbConfig.getDbUrl();
-//    private final String DB_USER = dbConfig.getDbUser();
-//    private final String DB_PASSWORD = dbConfig.getDbPassword();
-//    private final String JDBC_DRIVER = dbConfig.get_dbDriverName();
 
-    private String JDBC_URL;
-    private String DB_USER;
-    private String DB_PASSWORD;
-    private String DATASOURCE_NAME;
-    private String JDBC_DRIVER;
+    private static final String API_URL = "dbReportMeditorUseTransactionTestAPI/";
+    private static final String INIT_CONTEXT_1 = "init1";
+    private static final String INIT_CONTEXT_2 = "init2";
+    private static final String COMMIT_CONTEXT = "commit";
+    private static final String TEST_CONTEXT_1 = "test1";
+    private static final String TEST_CONTEXT_2 = "test2";
+    private static final String CLEANUP_CONTEXT = "cleanup";
 
-    private final String MYSQL_JAR = "mysql-connector-java-5.1.6.jar";
-    private final String DB_NAME1 = "SampleDBForAutomation1";
-    private final String DB_NAME2 = "SampleDBForAutomation2";
-
+    /**
+     * Initialize database by creating necessary tables and entries for following tests
+     *
+     * @throws Exception
+     */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        OMElement updatedSynapseContent;
-
         super.init();
-        AutomationContext automationContext = new AutomationContext();
-        DATASOURCE_NAME = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_NAME);
-        DB_PASSWORD = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DB_PASSWORD);
-        JDBC_URL = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_URL);
-        DB_USER = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DB_USER_NAME);
-        JDBC_DRIVER = automationContext.getConfigurationValue(XPathConstants.DATA_SOURCE_DRIVER_CLASS_NAME);
-        serverConfigurationManager = new ServerConfigurationManager(context);
-        copyJDBCDriverToClassPath();
-        super.init();
-        updatedSynapseContent = updateSynapseConfiguration();
-        handlingMysqlDB();
-        updateESBConfiguration(updatedSynapseContent);
+        HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + INIT_CONTEXT_1)), "");
+        HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + INIT_CONTEXT_2)), "");
     }
 
+    /**
+     * Test with UseTransaction flag. The transaction mediator is used to handle transactional behaviour.
+     * The commit operation is checked.
+     * @throws Exception
+     */
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Test UseTransaction option .Use in conjunction with Transaction mediator "
     )
-    public void testDBmediatorSuccessCase() throws AxisFault, SQLException {
-        int IBMcountDB1, IBMcountDB2;
-
-        IBMcountDB1 = getDatabaseResultsForDB1();
-        assertEquals(IBMcountDB1, 1, "Fault, invalid response");
-        IBMcountDB2 = getDatabaseResultsForDB2();
-        assertEquals(IBMcountDB2, 0, "Fault, invalid response");
-        axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "IBM");
-        IBMcountDB1 = getDatabaseResultsForDB1();
-        assertEquals(IBMcountDB1, 0, "Fault, Record Not Deleted from Database1");
-        IBMcountDB2 = getDatabaseResultsForDB2();
-        assertEquals(IBMcountDB2, 1, "Fault, Record Not Inserted to Database2");
+    public void testDBmediatorSuccessCase() throws Exception {
+        String ibmStringDB1, ibmStringDB2;
+        ibmStringDB1 = getDatabaseResultsForDB1();
+        assertTrue(ibmStringDB1.contains("IBM"), "Fault, invalid response");
+        ibmStringDB2 = getDatabaseResultsForDB2();
+        assertFalse(ibmStringDB2.contains("IBM"), "Fault, invalid response");
+        HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + COMMIT_CONTEXT + "?nameEntry=IBM")), "");
+        ibmStringDB1 = getDatabaseResultsForDB1();
+        assertFalse(ibmStringDB1.contains("IBM"), "Fault, Record Not Deleted from Database1");
+        ibmStringDB2 = getDatabaseResultsForDB2();
+        assertTrue(ibmStringDB2.contains("IBM"), "Fault, Record Not Inserted to Database2");
 
     }
+
+    /**
+     * Test with UseTransaction flag. The transaction mediator is used to handle transactional behaviour.
+     * The rollback operation is checked.
+     * @throws Exception
+     */
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     /*JIRA issue: https://wso2.org/jira/browse/ESBJAVA-1553*/
-    @Test(groups = "wso2.esb", enabled = false, description = "Test UseTransaction option ." +
-                                                                            "Use in conjunction with Transaction mediator. Fail casse"
+    @Test(groups = "wso2.esb", description = "Test UseTransaction option ." +
+            "Use in conjunction with Transaction mediator. Fail casse"
     )
-    public void testDBmediatorFailCase() throws AxisFault, SQLException {
-        OMElement response;
-        int SUNcountDB1, SUNcountDB2;
-
-        SUNcountDB1 = getDatabaseResultsForDB1FailCase();
-        assertEquals(SUNcountDB1, 1, "Fault, invalid response");
-        SUNcountDB2 = getDatabaseResultsForDB2FailCase();
-        assertEquals(SUNcountDB2, 1, "Fault, invalid response");
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "SUN");
-        SUNcountDB1 = getDatabaseResultsForDB1FailCase();
-        assertEquals(SUNcountDB1, 1, "Fault, invalid response. Transaction is not rollbacked.");
-        SUNcountDB2 = getDatabaseResultsForDB2FailCase();
-        assertEquals(SUNcountDB2, 1, "Fault, invalid response.Transaction is not rollbacked.");
+    public void testDBmediatorFailCase() throws Exception {
+        String sunStringtDB1, sunStringtDB2;
+        sunStringtDB1 = getDatabaseResultsForDB1FailCase();
+        assertTrue(sunStringtDB1.contains("SUN"), "Fault, invalid response");
+        sunStringtDB2 = getDatabaseResultsForDB2FailCase();
+        assertTrue(sunStringtDB2.contains("SUN"), "Fault, invalid response");
+        HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + COMMIT_CONTEXT + "?nameEntry=SUN")), "");
+        sunStringtDB1 = getDatabaseResultsForDB1FailCase();
+        assertTrue(sunStringtDB1.contains("SUN"), "Fault, invalid response. Transaction is not rollbacked.");
+        sunStringtDB2 = getDatabaseResultsForDB2FailCase();
+        assertTrue(sunStringtDB2.contains("SUN"), "Fault, invalid response.Transaction is not rollbacked.");
 
     }
 
+    private String getDatabaseResultsForDB1() throws MalformedURLException, AutomationFrameworkException {
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + TEST_CONTEXT_1
+                + "?testEntry=IBM")), "");
+        return httpResponse.getData();
+    }
 
+    private String getDatabaseResultsForDB1FailCase() throws MalformedURLException, AutomationFrameworkException {
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + TEST_CONTEXT_1
+                + "?testEntry=SUN")), "");
+        return httpResponse.getData();
+    }
+
+    private String getDatabaseResultsForDB2FailCase() throws MalformedURLException, AutomationFrameworkException {
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + TEST_CONTEXT_2
+                + "?testEntry=SUN")), "");
+        return httpResponse.getData();
+    }
+
+    private String getDatabaseResultsForDB2() throws MalformedURLException, AutomationFrameworkException {
+        HttpResponse httpResponse = HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + TEST_CONTEXT_2
+                + "?testEntry=IBM")), "");
+        return httpResponse.getData();
+    }
+
+    /**
+     * Remove tables from the database
+     *
+     * @throws Exception
+     */
     @AfterClass(alwaysRun = true)
-    public void close() throws Exception {
-
-        try {
-            mySqlDatabaseManager1.executeUpdate("DROP DATABASE " + DB_NAME1);
-            mySqlDatabaseManager2.executeUpdate("DROP DATABASE " + DB_NAME2);
-
-        } finally {
-            mySqlDatabaseManager1.disconnect();
-            mySqlDatabaseManager2.disconnect();
-
-        }
-        super.cleanup();
-        super.init();
-        loadSampleESBConfiguration(0);
-        serverConfigurationManager.removeFromComponentLib(MYSQL_JAR);
-        serverConfigurationManager.restartGracefully();
-
+    public void cleanup() throws Exception {
+        HttpRequestUtil.doPost(new URL(getApiInvocationURL(API_URL + CLEANUP_CONTEXT)), "");
     }
-
-    private int getDatabaseResultsForDB1() throws SQLException {
-        int count = 0;
-        ResultSet rs = mySqlDatabaseManager1.executeQuery("SELECT * FROM company where name='IBM' ");
-
-        while (rs.next()) {
-            count++;
-        }
-        rs.close();
-        return count;
-    }
-
-    private int getDatabaseResultsForDB1FailCase() throws SQLException {
-        int count = 0;
-        ResultSet rs = mySqlDatabaseManager1.executeQuery("SELECT * FROM company where name='SUN' ");
-
-        while (rs.next()) {
-            count++;
-            // companyName=rs.getString("name");
-        }
-        rs.close();
-        return count;
-    }
-
-    private int getDatabaseResultsForDB2FailCase() throws SQLException {
-        int count = 0;
-        ResultSet rs = mySqlDatabaseManager1.executeQuery("SELECT * FROM company where name='SUN' ");
-
-        while (rs.next()) {
-            count++;
-        }
-        rs.close();
-        return count;
-    }
-
-    private int getDatabaseResultsForDB2() throws SQLException {
-        int count = 0;
-        ResultSet rs = mySqlDatabaseManager2.executeQuery("SELECT * FROM company where name='IBM' ");
-
-        while (rs.next()) {
-            count++;
-        }
-        rs.close();
-        return count;
-    }
-
-    private void copyJDBCDriverToClassPath() throws Exception {
-        File jarFile;
-
-        jarFile = new File(getClass().getResource("/artifacts/ESB/jar/" + MYSQL_JAR + "").getPath());
-        serverConfigurationManager.copyToComponentLib(jarFile);
-        serverConfigurationManager.restartGracefully();
-    }
-
-    private OMElement updateSynapseConfiguration() throws Exception {
-        OMElement synapseContent;
-        URL url = getClass().getResource("/artifacts/ESB/mediatorconfig/dbreport/synapse_use_transaction.xml");
-        String s = FileUtils.readFileToString(new File(url.toURI()));
-        s = s.replace("$SampleDBForAutomation1", JDBC_URL + "/" + DB_NAME1);
-        s = s.replace("$SampleDBForAutomation2", JDBC_URL + "/" + DB_NAME2);
-        s = s.replace("####", DB_USER);
-        s = s.replace("$$$$", DB_PASSWORD);
-        synapseContent = AXIOMUtil.stringToOM(s);
-        return synapseContent;
-
-    }
-
-    private void handlingMysqlDB() throws ClassNotFoundException, SQLException {
-        mySqlDatabaseManager1 = new MySqlDatabaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
-        mySqlDatabaseManager2 = new MySqlDatabaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
-
-        mySqlDatabaseManager1.executeUpdate("DROP DATABASE IF EXISTS " + DB_NAME1);
-        mySqlDatabaseManager1.executeUpdate("Create DATABASE " + DB_NAME1);
-        mySqlDatabaseManager1.executeUpdate("USE " +DB_NAME1);
-        mySqlDatabaseManager1.executeUpdate("CREATE table company(name varchar(10) primary key, id varchar(10), price double) ENGINE= \"InnoDB\" ");
-        mySqlDatabaseManager1.executeUpdate("INSERT into company values ('IBM','c1',0.0)");
-        mySqlDatabaseManager1.executeUpdate("INSERT into company values ('SUN','c2',0.0)");
-
-        mySqlDatabaseManager2.executeUpdate("DROP DATABASE IF EXISTS " + DB_NAME2);
-        mySqlDatabaseManager2.executeUpdate("Create DATABASE " + DB_NAME2);
-        mySqlDatabaseManager2.executeUpdate("USE " + DB_NAME2);
-        mySqlDatabaseManager2.executeUpdate("CREATE table company(name varchar(10) primary key, id varchar(10), price double) ENGINE= \"InnoDB\" ");
-        mySqlDatabaseManager2.executeUpdate("INSERT into company values ('SUN','c2',0.0)");
-        mySqlDatabaseManager2.executeUpdate("INSERT into company values ('MSFT','c3',0.0)");
-    }
-
 }

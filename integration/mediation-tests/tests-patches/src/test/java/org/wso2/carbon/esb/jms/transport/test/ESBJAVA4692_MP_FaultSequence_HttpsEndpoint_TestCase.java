@@ -26,6 +26,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
 
 import static org.testng.Assert.assertTrue;
@@ -48,21 +49,9 @@ public class ESBJAVA4692_MP_FaultSequence_HttpsEndpoint_TestCase extends ESBInte
         client.sendRobust(AXIOMUtil.stringToOM(payload),
                           getProxyServiceURLHttps("MSProxy"), "urn:mediate");
 
-        Thread.sleep(10000); //wait until message processor picks the message
-
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
-        boolean logFound = false;
-        for (LogEvent item : logs) {
-            if (item.getPriority().equals("INFO")) {
-                String message = item.getMessage();
-                if (message.contains("FaultSeq = *********** FaultSeq *****************")) {
-                    logFound = true;
-                    break;
-                }
-            }
-        }
-
+        boolean logFound  = Utils.checkForLogsWithPriority(logViewerClient, "INFO",
+                "FaultSeq = *********** FaultSeq *****************", 10);
         assertTrue(logFound, "Fault Sequence Not Executed for Soap Fault");
     }
 
