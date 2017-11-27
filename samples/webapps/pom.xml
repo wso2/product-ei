@@ -21,6 +21,8 @@
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
         <version>1</version>
+        <!-- Empty relative path tag added to suppress warning-->
+        <relativePath></relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -163,5 +165,7 @@
 
         <samples.version.maven.surefire.report.plugin>2.7.1</samples.version.maven.surefire.report.plugin>
         <samples.version.maven.checkstyle.plugin>2.15</samples.version.maven.checkstyle.plugin>
+        <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
+        <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
     </properties>
 </project>

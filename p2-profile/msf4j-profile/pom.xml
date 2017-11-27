@@ -24,6 +24,8 @@
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
         <version>5</version>
+        <!-- Empty relative path tag added to suppress warning-->
+        <relativePath></relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
