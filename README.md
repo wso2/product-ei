@@ -1,8 +1,13 @@
 # WSO2 Enterprise Integrator 7.0.0
-WSO2 Enterprise Integrator 7.0.0 is a unified distribution of Ballerina which works as a single runtime (Integrator) along with optional runtime for the WSO2 Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
+WSO2 Enterprise Integrator 7.0.0 (WSO2 EI 7.0.0)is an intuitive, lightweight, container-native and high-performance integration platform that enables the agile and rapid development of integrations between services, apps, data and systems. 
+WSO2 Enterprise Integrator 7.0.0 is composed of 
 
-WSO2 EI simplifies integration by allowing users to connect apps and services to handle all types of integration scenarios, such as collecting top tweets from a specific location and adding them to a Google spreadsheet, generating emails with real-time quotes pulled from a stock quote service, transforming and routing data based on advanced logic, and much more. These integration capabilities are further powered by the capabilities of the Message Broker runtime.
+- An integrator runtime based on Ballerina, which is a event-driven, parallel programming language that is designed for building networked applications. 
+- A runtime of the WSO2 Message Broker 4.0, which is can be used alongside integrator for enabling reliable persistent messaging between system. 
+- A workflow engine based on activity Activiti to execute business processes described in BPMN 2.0. 
 
+
+WSO2 Enterprise Integrator 7.0.0 is an essential platform for building microservices compositions and bridging microservices and other monolithic applications, in which you will independently develop, deploy and administrate container native integration runtimes. WSO2 Enterprise Integrator 7.0.0 also can be used as the centralized integration middleware for conventional enterprise integration requirements. 
 ## Installation & Running
 ## Running the Integrator
 1. Extract  wso2ei-7.0.0.zip and go to the extracted directory/bin.
