@@ -28,9 +28,9 @@
                     <!-- define throttle policy -->
                     <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
                                 xmlns:throttle="http://www.wso2.org/products/wso2commons/throttle">
-                        <throttle:ThrottleAssertion>
+                        <throttle:MediatorThrottleAssertion>
                             <throttle:MaximumConcurrentAccess>10</throttle:MaximumConcurrentAccess>
-                        </throttle:ThrottleAssertion>
+                        </throttle:MediatorThrottleAssertion>
                     </wsp:Policy>
                 </policy>
                 <onAccept>
