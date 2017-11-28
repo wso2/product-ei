@@ -228,7 +228,7 @@
                     </execution>
                     <!--Prepare ballerina connector for packing -->
                     <execution>
-                        <id>prepare-ballerina-connectors</id>
+                        <id>prepare-ballerina-soap-connector</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
@@ -240,7 +240,26 @@
                                     <artifactId>ballerina-soap</artifactId>
                                     <version>${ballerina.soap.connector.version}</version>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                    <outputDirectory>target/ballerina-connectors/soap</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-ballerina-file-connector</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang</groupId>
+                                    <artifactId>ballerina-file</artifactId>
+                                    <version>${ballerina.file.connector.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors/file</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -480,6 +499,13 @@
                                 <replace dir="target/WSO2Carbon" token="false" value="true">
                                     <include name="**/bundles.info" />
                                 </replace>
+                                <!-- Copy connector jar files in sub directories into a single directory so
+                                that assembly plugin can copy them to bre/lib -->
+                                <copy todir="target/flatten-connector-jars-dir" flatten="true">
+                                    <fileset dir="target/ballerina-connectors">
+                                        <include name="**/*.jar"/>
+                                    </fileset>
+                                </copy>
                             </tasks>
                         </configuration>
                         <goals>
@@ -500,6 +526,7 @@
                                 <delete dir="target/antrun" />
                                 <delete dir="target/ballerina" />
                                 <delete dir="target/ballerina-connectors" />
+                                <delete dir="target/flatten-connector-jars-dir" />
                                 <delete dir="target/findbugs" />
                                 <delete dir="target/maven-shared-archive-resources" />
                                 <delete file="target/timestamp" />

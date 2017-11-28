@@ -84,7 +84,7 @@
         </fileSet>
         <!--copy ballerina connectors-->
         <fileSet>
-            <directory>target/ballerina-connectors</directory>
+            <directory>target/flatten-connector-jars-dir</directory>
             <outputDirectory>wso2/ballerina/bre/lib</outputDirectory>
             <fileMode>644</fileMode>
             <includes>

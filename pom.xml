@@ -308,6 +308,12 @@
                 <artifactId>ballerina-soap</artifactId>
                 <version>${ballerina.soap.connector.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.ballerinalang</groupId>
+                <artifactId>ballerina-file</artifactId>
+                <version>${ballerina.file.connector.version}</version>
+                <type>zip</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -447,6 +453,7 @@
         <project.scm.id>wso2-scm-server</project.scm.id>
 
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
+        <ballerina.file.connector.version>0.95.0</ballerina.file.connector.version>
     </properties>
 </project>
 
