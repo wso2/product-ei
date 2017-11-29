@@ -3,10 +3,11 @@ package samples.messaging;
 import ballerina.net.http;
 import ballerina.net.jms;
 
+@Description{value:"Place a coffee order reliably to queue"}
 @http:configuration {basePath:"/coffee"}
 service<http> coffeeOrderService {
 
-    endpoint<jms:JmsClient> jmsEP {
+    endpoint<jms:JmsClient> coffeeOrderJMSQueueEp {
         create jms:JmsClient(getConnectorConfig());
     }
 
@@ -16,18 +17,23 @@ service<http> coffeeOrderService {
     }
     resource coffeeResource (http:Request req, http:Response res) {
         json orderPayload = req.getJsonPayload();
-        // Create an empty Ballerina message.
-        jms:JMSMessage queueMessage = jms:createTextMessage(getConnectorConfig());
-        // Set a string payload to the message.
-        queueMessage.setTextMessageContent(orderPayload.toString());
-        // Send the Ballerina message to the JMS provider.
-        jmsEP.send("CoffeeOrders", queueMessage);
+        // Create a coffee order message
+        jms:JMSMessage coffeeOrderMessage = jms:createTextMessage(getConnectorConfig());
+        //Set the order content to the JMS message
+        //Note : in this sample we do not validate the incoming message since that is not the scope of this sample.
+        coffeeOrderMessage.setTextMessageContent(orderPayload.toString());
+        //Send the order message to a JMS queue.
+        coffeeOrderJMSQueueEp.send("CoffeeOrders", coffeeOrderMessage);
+        //Set the response payload and send it to the caller. By this time the message is added to the queue and
+        //would provide a guarantee to the caller on successful delivery of the message.
+        println("Coffee order :" + stringPayload + " successfully dispatched to the queue");
         json responsePayload = {"Status":"Coffee Order Processed"};
         res.setJsonPayload(responsePayload);
         res.send();
     }
 }
 
+@Description{value:"Retreive the broker configuration"}
 function getConnectorConfig () (jms:ClientProperties) {
     jms:ClientProperties properties = {initialContextFactory:"wso2mbInitialContextFactory",
                                        providerUrl:"amqp://admin:admin@carbon/carbon?brokerlist='tcp://localhost:5672'",
