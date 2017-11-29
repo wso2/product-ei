@@ -41,9 +41,8 @@
     </licenses>
 
     <modules>
-        <module>components</module>
-        <module>tools</module>
-        <module>features</module>
+        <module>modules/tools</module>
+        <module>modules/features</module>
         <module>distribution</module>
         <module>integration</module>
     </modules>
