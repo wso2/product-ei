@@ -80,6 +80,7 @@
             <fileMode>644</fileMode>
             <excludes>
                 <exclude>**/*.png</exclude>
+                <exclude>**/*.ignore</exclude>
             </excludes>
         </fileSet>
         <!--copy ballerina connectors-->
