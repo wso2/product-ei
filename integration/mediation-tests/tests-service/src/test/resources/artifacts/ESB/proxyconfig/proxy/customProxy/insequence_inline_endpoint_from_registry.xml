@@ -21,7 +21,6 @@
     <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
         <parameter name="cachableDuration">15000</parameter>
     </registry>
-    <localEntry key="proxy_wsdl" src="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     <proxy name="StockQuoteProxy123" transports="https http" startOnLoad="true" trace="disable">
         <description/>
         <target>

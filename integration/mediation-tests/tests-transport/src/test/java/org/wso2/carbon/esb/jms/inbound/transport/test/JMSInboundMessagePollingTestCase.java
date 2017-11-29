@@ -98,7 +98,7 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
         Thread.sleep(5000);
 
 		addInboundEndpoint(addEndpoint1());
-		boolean status = Utils.checkForLog(logViewerClient, "<xsd:symbol>WSO2</xsd:symbol>", 30000);
+		boolean status = Utils.checkForLog(logViewerClient, "<xsd:symbol>WSO2</xsd:symbol>", 30);
 		Assert.assertTrue(status, "Couldn't Consume messages from Queue");
 	}
 

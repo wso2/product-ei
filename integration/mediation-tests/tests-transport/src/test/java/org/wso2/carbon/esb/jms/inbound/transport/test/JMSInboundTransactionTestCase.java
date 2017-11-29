@@ -59,11 +59,12 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 
     /**
      * Tests whether committing a transaction removes the message from the queue.
+     * Disabling until find a proper fix to https://github.com/wso2/product-ei/issues/1389
      *
      * @throws Exception for any unexpected exception
      */
     @Test(groups = { "wso2.esb" },
-          description = "Successfully committing the message")
+          description = "Successfully committing the message", enabled = false)
     public void testTransactionCommit() throws Exception {
 
         String queueName = "testTransactionCommitQueue";
@@ -91,11 +92,12 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 
     /**
      * Tests whether rolling back a transaction does not removes the message from the queue.
+     *  Disabling until find a proper fix to https://github.com/wso2/product-ei/issues/1389
      *
      * @throws Exception
      */
     @Test(groups = { "wso2.esb" },
-          description = "Rolling back the failed message to the queue")
+          description = "Rolling back the failed message to the queue", enabled = false)
     public void testTransactionRollBack() throws Exception {
 
         String queueName = "testTransactionRollBackQueue";

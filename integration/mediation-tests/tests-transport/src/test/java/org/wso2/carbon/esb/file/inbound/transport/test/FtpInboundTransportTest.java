@@ -130,12 +130,11 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
+			boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 2);
+			Assert.assertTrue(isFileRead, "The XML file is not getting read");
 		} finally {
 			deleteFile(targetFile);
 		}
-
-		boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 2000);
-		Assert.assertTrue(isFileRead, "The XML file is not getting read");
 	}
 
 	//  This test case works locally, but in the Jenkins build, it fails due to a lack of permission issue

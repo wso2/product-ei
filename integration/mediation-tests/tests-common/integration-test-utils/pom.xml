@@ -88,6 +88,10 @@
          <groupId>org.apache.synapse</groupId>
          <artifactId>synapse-core</artifactId>
          </dependency>
+         <dependency>
+             <groupId>com.icegreen</groupId>
+             <artifactId>greenmail</artifactId>
+         </dependency>
      </dependencies>
 
 

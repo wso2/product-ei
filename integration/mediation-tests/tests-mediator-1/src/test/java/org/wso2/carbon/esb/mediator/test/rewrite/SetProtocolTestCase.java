@@ -59,7 +59,8 @@ public class SetProtocolTestCase extends ESBIntegrationTest {
     public Object[][] addressingUrl() {
         return new Object[][]{
                 {"https://localhost:9000/services/SimpleStockQuoteService"},
-                {"http://localhost:9000/services/SimpleStockQuoteService"},
+                {"htt://localhost:9000/services/SimpleStockQuoteService"},
+                {"http://localhost:9010/services/SimpleStockQuoteService"},
                 //todo https://wso2.org/jira/browse/ESBJAVA-1015
 //                {"localhost:9010/services/SimpleStockQuoteService"},
 

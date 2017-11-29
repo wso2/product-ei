@@ -28,55 +28,57 @@
                     <!-- define throttle policy -->
                     <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
                                 xmlns:throttle="http://www.wso2.org/products/wso2commons/throttle">
-                        <throttle:ThrottleAssertion>
-                            <wsp:All>
+                        <throttle:MediatorThrottleAssertion>
+                            <wsp:Policy>
                                 <throttle:ID throttle:type="IP">other</throttle:ID>
-                                <wsp:ExactlyOne>
-                                    <wsp:All>
+                                <wsp:Policy>
+                                    <throttle:Control>
+					<wsp:Policy>
                                         <throttle:MaximumCount>4</throttle:MaximumCount>
                                         <throttle:UnitTime>800000</throttle:UnitTime>
                                         <throttle:ProhibitTimePeriod wsp:Optional="true">10000
                                         </throttle:ProhibitTimePeriod>
-                                    </wsp:All>
-                                    <throttle:IsAllow>true</throttle:IsAllow>
-                                </wsp:ExactlyOne>
-                            </wsp:All>
-                            <wsp:All>
+					</wsp:Policy>
+                                    </throttle:Control>
+                                </wsp:Policy>
+                            </wsp:Policy>
+                            <wsp:Policy>
                                 <throttle:ID throttle:type="IP">192.168.8.200-192.168.8.222
                                 </throttle:ID>
-                                <wsp:ExactlyOne>
-                                    <wsp:All>
+                                <wsp:Policy>
+                                    <throttle:Control>
+					<wsp:Policy>
                                         <throttle:MaximumCount>8</throttle:MaximumCount>
                                         <throttle:UnitTime>800000</throttle:UnitTime>
                                         <throttle:ProhibitTimePeriod wsp:Optional="true">10
                                         </throttle:ProhibitTimePeriod>
-                                    </wsp:All>
-                                    <throttle:IsAllow>true</throttle:IsAllow>
-                                </wsp:ExactlyOne>
-                            </wsp:All>
-                            <wsp:All>
+					</wsp:Policy>
+                                    </throttle:Control>
+                                </wsp:Policy>
+                            </wsp:Policy>
+                            <wsp:Policy>
                                 <throttle:ID throttle:type="IP">192.168.8.201</throttle:ID>
-                                <wsp:ExactlyOne>
-                                    <wsp:All>
+                                <wsp:Policy>
+                                    <throttle:Control>
+					<wsp:Policy>
                                         <throttle:MaximumCount>200</throttle:MaximumCount>
                                         <throttle:UnitTime>600000</throttle:UnitTime>
-                                        <throttle:ProhibitTimePeriod wsp:Optional="true"/>
-                                    </wsp:All>
-                                    <throttle:IsAllow>true</throttle:IsAllow>
-                                </wsp:ExactlyOne>
-                            </wsp:All>
-                            <wsp:All>
+					</wsp:Policy>
+                                    </throttle:Control>
+                                </wsp:Policy>
+                            </wsp:Policy>
+                            <wsp:Policy>
                                 <throttle:ID throttle:type="IP">192.168.8.198</throttle:ID>
-                                <wsp:ExactlyOne>
-                                    <wsp:All>
+                                <wsp:Policy>
+                                    <throttle:Control>
+					<wsp:Policy>
                                         <throttle:MaximumCount>50</throttle:MaximumCount>
                                         <throttle:UnitTime>500000</throttle:UnitTime>
-                                        <throttle:ProhibitTimePeriod wsp:Optional="true"/>
-                                    </wsp:All>
-                                    <throttle:IsAllow>true</throttle:IsAllow>
-                                </wsp:ExactlyOne>
-                            </wsp:All>
-                        </throttle:ThrottleAssertion>
+					</wsp:Policy>
+                                    </throttle:Control>
+                                </wsp:Policy>
+                            </wsp:Policy>
+                        </throttle:MediatorThrottleAssertion>
                     </wsp:Policy>
                 </policy>
                 <onAccept>

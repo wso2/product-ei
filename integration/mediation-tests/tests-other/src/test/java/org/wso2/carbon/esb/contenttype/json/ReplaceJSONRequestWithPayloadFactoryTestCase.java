@@ -71,10 +71,10 @@ public class ReplaceJSONRequestWithPayloadFactoryTestCase extends ESBIntegration
 
         String msg = "Direction: response, JSON-Payload = {\"album\":\"First Change\",\"singer\":\"First DKL\"}";
 
-        isJsonPayload = Utils.checkForLog(logViewer, msg, 3000);
+        isJsonPayload = Utils.checkForLog(logViewer, msg, 3);
 
         //This is to verify that the payload factory in the 'insequence' behaved correctly.
-        assertTrue(isJsonPayload, "Response does not contain the expected JSON payload value");
+        assertTrue(isJsonPayload, "Response does not contain the expected JSON payload " + msg);
 
         //This is to verify that the payload factory in the 'outsequence' behaved correctly.
         assertEquals(postResponse.getType().toString(), "application/json;charset=UTF-8",

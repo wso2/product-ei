@@ -39,6 +39,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>${maven.war.plugin.version}</version>
                 <configuration>
                     <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
                     <warName>${project.artifactId}</warName>
@@ -46,6 +47,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
+                <version>${maven.eclipse.plugin.version}</version>
                 <configuration>
                     <buildcommands>
                         <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>

@@ -19,19 +19,14 @@
 
 <!-- Default main sequence shipped with the WSO2 EI -->
 <sequence xmlns="http://ws.apache.org/ns/synapse" name="main">
-    <description>The main sequence for the message mediation</description>
+    <description>The main sequence for the message mediation - this sequence will get invoked if there is no other
+        artifact to process the message</description>
     <in>
-        <!-- Log all messages passing through -->
-        <log level="full"/>
-
-        <!-- ensure that the default configuration only sends if it is one of samples -->
-        <!-- Otherwise Synapse would be an open proxy by default (BAD!)               -->
-        <filter source="get-property('To')" regex="http://localhost:9000.*">
-            <!-- Send the messages where they have been sent (i.e. implicit "To" EPR) -->
-            <send/>
-        </filter>
+        <log level="custom">
+            <property name="main sequence executed for call to non-existent" expression="get-property('To')"/>
+        </log>
+        <property name="NO_ENTITY_BODY" scope="axis2" value="true" type="BOOLEAN"/>
+        <property name="HTTP_SC" scope="axis2" value="404"/>
+        <respond/>
     </in>
-    <out>
-        <send/>
-    </out>
 </sequence>

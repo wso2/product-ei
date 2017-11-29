@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="failoverTestProxy"
+           transports="http,https"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" />
+                <store messageStore="failoverTestOriginalMessageStore" xmlns:ns="http://services.samples"/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <messageStore xmlns="http://ws.apache.org/ns/synapse" name="failoverTestOriginalMessageStore"
+                  class="org.apache.synapse.message.store.impl.jms.JmsStore">
+        <parameter name="store.failover.message.store.name">failoverTestFailoverMessageStore</parameter>
+        <parameter name="store.producer.guaranteed.delivery.enable">true</parameter>
+        <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        <parameter name="store.jms.connection.factory">QueueConnectionFactory</parameter>
+        <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+        <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+    </messageStore>
+
+    <messageProcessor name="failoverTestMessageProcessor"
+                      class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      targetEndpoint="StockQuote_9000_EP" messageStore="failoverTestOriginalMessageStore"
+                      xmlns="http://ws.apache.org/ns/synapse">
+        <parameter name="interval">1000</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="max.delivery.attempts">4</parameter>
+        <parameter name="message.processor.reply.sequence">replySequence</parameter>
+        <parameter name="is.active">true</parameter>
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="member.count">1</parameter>
+    </messageProcessor>
+
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="replySequence">
+        <log level="full">
+            <property name="REPLY" value="MESSAGE"/>
+        </log>
+        <drop />
+    </sequence>
+
+    <messageStore xmlns="http://ws.apache.org/ns/synapse" name="failoverTestFailoverMessageStore"/>
+
+    <messageProcessor name="failoverTestFailoverForwardingMessageProcessor"
+                      class="org.apache.synapse.message.processor.impl.failover.FailoverScheduledMessageForwardingProcessor"
+                      messageStore="failoverTestFailoverMessageStore" xmlns="http://ws.apache.org/ns/synapse">
+        <parameter name="interval">1000</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="max.delivery.attempts">1000</parameter>
+        <parameter name="is.active">true</parameter>
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="member.count">1</parameter>
+        <parameter name="message.target.store.name">failoverTestOriginalMessageStore</parameter>
+    </messageProcessor>
+</definitions>
