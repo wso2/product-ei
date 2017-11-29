@@ -159,6 +159,22 @@
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-soap</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.ballerinalang</groupId>
+            <artifactId>ballerina-jms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.andes.wso2</groupId>
+            <artifactId>andes-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.transport</groupId>
+            <artifactId>org.wso2.carbon.transport.jms</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -260,6 +276,48 @@
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ballerina-connectors/file</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang</groupId>
+                                    <artifactId>ballerina-jms</artifactId>
+                                    <version>${ballerina.jms.connector.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.carbon.transport</groupId>
+                                    <artifactId>org.wso2.carbon.transport.jms</artifactId>
+                                    <version>${carbon.transport.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>javax.jms</groupId>
+                                    <artifactId>javax.jms-api</artifactId>
+                                    <version>${javax.jms.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.commons</groupId>
+                                    <artifactId>commons-pool2</artifactId>
+                                    <version>${apache.commons-pool2.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>commons-lang</groupId>
+                                    <artifactId>commons-lang</artifactId>
+                                    <version>${apache.commons.lang.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.andes.wso2</groupId>
+                                    <artifactId>andes-client</artifactId>
+                                    <version>${andes.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>

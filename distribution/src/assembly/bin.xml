@@ -92,7 +92,6 @@
             </includes>
         </fileSet>
     </fileSets>
-
     <files>
         <file>
             <source>target/ballerina/ballerina-${ballerina.runtime.version}/bin/ballerina.bat</source>
