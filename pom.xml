@@ -310,12 +310,18 @@
             </dependency>
             <dependency>
                 <groupId>org.ballerinalang</groupId>
+                <artifactId>ballerina-jms</artifactId>
+                <version>${ballerina.jms.connector.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.ballerinalang</groupId>
                 <artifactId>ballerina-file</artifactId>
                 <version>${ballerina.file.connector.version}</version>
                 <type>zip</type>
             </dependency>
-        </dependencies>
-    </dependencyManagement>
+       </dependencies>
+   </dependencyManagement>
 
     <scm>
         <url>https://github.com/wso2/product-ei.git</url>
@@ -454,6 +460,7 @@
 
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
         <ballerina.file.connector.version>0.95.0</ballerina.file.connector.version>
+        <ballerina.jms.connector.version>0.95.0</ballerina.jms.connector.version>
     </properties>
 </project>
 

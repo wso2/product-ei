@@ -159,6 +159,10 @@
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-soap</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.andes.wso2</groupId>
+            <artifactId>andes-client</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -226,6 +230,25 @@
                             </artifactItems>
                         </configuration>
                     </execution>
+                    <!-- message broker client -->
+                    <execution>
+                        <id>prepare-ballerina-broker-client</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wso2.andes.wso2</groupId>
+                                    <artifactId>andes-client</artifactId>
+                                    <version>${andes.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ext/broker</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                     <!--Prepare ballerina connector for packing -->
                     <execution>
                         <id>prepare-ballerina-soap-connector</id>
@@ -260,6 +283,25 @@
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ballerina-connectors/file</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-ballerina-jms-connector</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang</groupId>
+                                    <artifactId>ballerina-jms</artifactId>
+                                    <version>${ballerina.jms.connector.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors/jms</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -506,6 +548,12 @@
                                         <include name="**/*.jar"/>
                                     </fileset>
                                 </copy>
+                                <!-- Copy broker client jar to a defined sub directory -->
+                                <copy todir="target/ext-jars-dir" flatten="true">
+                                    <fileset dir="target/ext">
+                                        <include name="**/*.jar"/>
+                                    </fileset>
+                                </copy>
                             </tasks>
                         </configuration>
                         <goals>
@@ -527,6 +575,8 @@
                                 <delete dir="target/ballerina" />
                                 <delete dir="target/ballerina-connectors" />
                                 <delete dir="target/flatten-connector-jars-dir" />
+                                <delete dir="target/ext" />
+                                <delete dir="target/ext-jars-dir" />
                                 <delete dir="target/findbugs" />
                                 <delete dir="target/maven-shared-archive-resources" />
                                 <delete file="target/timestamp" />

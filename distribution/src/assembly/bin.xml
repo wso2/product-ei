@@ -83,6 +83,15 @@
                 <exclude>**/*.ignore</exclude>
             </excludes>
         </fileSet>
+        <!-- Copy broker client libs -->
+        <fileSet>
+            <directory>target/ext-jars-dir</directory>
+            <outputDirectory>wso2/ballerina/bre/lib</outputDirectory>
+            <fileMode>644</fileMode>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
         <!--copy ballerina connectors-->
         <fileSet>
             <directory>target/flatten-connector-jars-dir</directory>
@@ -93,7 +102,6 @@
             </includes>
         </fileSet>
     </fileSets>
-
     <files>
         <file>
             <source>target/ballerina/ballerina-${ballerina.runtime.version}/bin/ballerina.bat</source>
