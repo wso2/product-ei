@@ -44,7 +44,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(HTTPResponseCodeTestCase.class);
     private HttpServer server = null;
-    private static int responseCode;
+    private int responseCode;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -60,7 +60,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
             dataProvider = "getResponseCodes")
     public void testReturnResponseCode(
             int responseCode) throws Exception {
-        HTTPResponseCodeTestCase.responseCode = responseCode;
+        this.responseCode = responseCode;
         //Starting backend server
         int port = 8089;
         server = HttpServer.create(new InetSocketAddress(port), 0);
