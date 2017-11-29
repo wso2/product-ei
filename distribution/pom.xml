@@ -160,20 +160,8 @@
             <artifactId>ballerina-soap</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.ballerinalang</groupId>
-            <artifactId>ballerina-jms</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.wso2.andes.wso2</groupId>
             <artifactId>andes-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>javax.jms-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.transport</groupId>
-            <artifactId>org.wso2.carbon.transport.jms</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -242,6 +230,25 @@
                             </artifactItems>
                         </configuration>
                     </execution>
+                    <!-- message broker client -->
+                    <execution>
+                        <id>prepare-ballerina-broker-client</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wso2.andes.wso2</groupId>
+                                    <artifactId>andes-client</artifactId>
+                                    <version>${andes.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ext/broker</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                     <!--Prepare ballerina connector for packing -->
                     <execution>
                         <id>prepare-ballerina-soap-connector</id>
@@ -277,47 +284,24 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ballerina-connectors/file</outputDirectory>
                                 </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-ballerina-jms-connector</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
                                 <artifactItem>
                                     <groupId>org.ballerinalang</groupId>
                                     <artifactId>ballerina-jms</artifactId>
                                     <version>${ballerina.jms.connector.version}</version>
+                                    <type>zip</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon.transport</groupId>
-                                    <artifactId>org.wso2.carbon.transport.jms</artifactId>
-                                    <version>${carbon.transport.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>javax.jms</groupId>
-                                    <artifactId>javax.jms-api</artifactId>
-                                    <version>${javax.jms.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.apache.commons</groupId>
-                                    <artifactId>commons-pool2</artifactId>
-                                    <version>${apache.commons-pool2.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>commons-lang</groupId>
-                                    <artifactId>commons-lang</artifactId>
-                                    <version>${apache.commons.lang.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.andes.wso2</groupId>
-                                    <artifactId>andes-client</artifactId>
-                                    <version>${andes.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/ballerina-connectors</outputDirectory>
+                                    <outputDirectory>target/ballerina-connectors/jms</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -564,6 +548,12 @@
                                         <include name="**/*.jar"/>
                                     </fileset>
                                 </copy>
+                                <!-- Copy broker client jar to a defined sub directory -->
+                                <copy todir="target/ext-jars-dir" flatten="true">
+                                    <fileset dir="target/ext">
+                                        <include name="**/*.jar"/>
+                                    </fileset>
+                                </copy>
                             </tasks>
                         </configuration>
                         <goals>
@@ -585,6 +575,8 @@
                                 <delete dir="target/ballerina" />
                                 <delete dir="target/ballerina-connectors" />
                                 <delete dir="target/flatten-connector-jars-dir" />
+                                <delete dir="target/ext" />
+                                <delete dir="target/ext-jars-dir" />
                                 <delete dir="target/findbugs" />
                                 <delete dir="target/maven-shared-archive-resources" />
                                 <delete file="target/timestamp" />

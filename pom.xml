@@ -308,21 +308,11 @@
                 <artifactId>ballerina-soap</artifactId>
                 <version>${ballerina.soap.connector.version}</version>
             </dependency>
-            <!-- JMS connector related dependencies -->
             <dependency>
                 <groupId>org.ballerinalang</groupId>
                 <artifactId>ballerina-jms</artifactId>
                 <version>${ballerina.jms.connector.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.transport</groupId>
-                <artifactId>org.wso2.carbon.transport.jms</artifactId>
-                <version>${carbon.transport.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.jms</groupId>
-                <artifactId>javax.jms-api</artifactId>
-                <version>${javax.jms.version}</version>
+                <type>zip</type>
             </dependency>
             <dependency>
                 <groupId>org.ballerinalang</groupId>
@@ -330,8 +320,8 @@
                 <version>${ballerina.file.connector.version}</version>
                 <type>zip</type>
             </dependency>
-        </dependencies>
-    </dependencyManagement>
+       </dependencies>
+   </dependencyManagement>
 
     <scm>
         <url>https://github.com/wso2/product-ei.git</url>
@@ -471,10 +461,6 @@
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
         <ballerina.file.connector.version>0.95.0</ballerina.file.connector.version>
         <ballerina.jms.connector.version>0.95.0</ballerina.jms.connector.version>
-        <carbon.transport.version>6.0.41</carbon.transport.version>
-        <apache.commons.lang.version>2.6</apache.commons.lang.version>
-        <javax.jms.version>2.0.1</javax.jms.version>
-        <apache.commons-pool2.version>2.4.2</apache.commons-pool2.version>
     </properties>
 </project>
 

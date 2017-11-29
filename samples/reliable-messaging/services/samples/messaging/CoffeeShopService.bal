@@ -26,7 +26,6 @@ service<http> coffeeOrderService {
         coffeeOrderJMSQueueEp.send("CoffeeOrders", coffeeOrderMessage);
         //Set the response payload and send it to the caller. By this time the message is added to the queue and
         //would provide a guarantee to the caller on successful delivery of the message.
-        println("Coffee order :" + stringPayload + " successfully dispatched to the queue");
         json responsePayload = {"Status":"Coffee Order Processed"};
         res.setJsonPayload(responsePayload);
         res.send();
