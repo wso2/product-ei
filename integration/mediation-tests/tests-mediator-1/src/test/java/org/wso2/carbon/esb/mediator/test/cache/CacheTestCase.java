@@ -85,16 +85,16 @@ public class CacheTestCase extends ESBIntegrationTest {
         response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "AB");
         String responseAB2 = response.getFirstElement().toString();
 
-        assertEquals(responseAB1, responseAB2, "The response for AB is cached");
+        assertEquals(responseAB1, responseAB2, "The response for AB is not cached");
 
         response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "ABC");
         String responseABC2 = response.getFirstElement().toString();
 
-        assertEquals(responseABC1, responseABC2, "The response for ABC is cached");
+        assertEquals(responseABC1, responseABC2, "The response for ABC is not cached");
 
         response = axis2Client.sendSimpleStockQuoteRequest(getApiInvocationURL(apiName), "", "ABCD");
         String responseABCD2 = response.getFirstElement().toString();
 
-        assertNotEquals(responseABCD1, responseABCD2, "The response for ABCD has been evicted");
+        assertNotEquals(responseABCD1, responseABCD2, "The response for ABCD has not been evicted");
     }
 }
