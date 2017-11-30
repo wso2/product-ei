@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
-        <version>7.0.0-SNAPSHOT</version>
+        <version>7.0.0-m2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -545,13 +545,13 @@
                                 that assembly plugin can copy them to bre/lib -->
                                 <copy todir="target/flatten-connector-jars-dir" flatten="true">
                                     <fileset dir="target/ballerina-connectors">
-                                        <include name="**/*.jar"/>
+                                        <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
                                 <!-- Copy broker client jar to a defined sub directory -->
                                 <copy todir="target/ext-jars-dir" flatten="true">
                                     <fileset dir="target/ext">
-                                        <include name="**/*.jar"/>
+                                        <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
                             </tasks>
