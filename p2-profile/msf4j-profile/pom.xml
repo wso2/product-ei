@@ -25,13 +25,13 @@
         <artifactId>wso2</artifactId>
         <version>5</version>
         <!-- Empty relative path tag added to suppress warning-->
-        <relativePath></relativePath>
+        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>msf4j-profile</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.1.1-update11</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
@@ -437,4 +437,8 @@
             </releases>
         </repository>
     </repositories>
+
+  <scm>
+    <tag>v6.1.1-update11</tag>
+  </scm>
 </project>
