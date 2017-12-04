@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ScriptWithNullJsonValueTest"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <header name="To" action="remove"/>
+            <property name="RESPONSE" value="true"/>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+            <payloadFactory media-type="json">
+                <format>{"test1":"test","test2":null}</format>
+                <args/>
+            </payloadFactory>
+            <script language="js"> <![CDATA[
+
+    payload = mc.getPayloadJSON();
+
+    var response = new Object();
+
+    /*This works*/
+    response.testString = payload.test1 ;
+
+    /*This works*/
+    response.testEmptyObject = new Object();
+
+    /*This works*/
+    response.testEmptyArray = new Array();
+
+    response.testNull = null;
+
+    response.testNull2 = payload.test2;
+
+    mc.setPayloadJSON(response); ]]> </script>
+            <send/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="deepCheckAPI" context="/deepCheckAPI">
+    <resource methods="POST">
+        <inSequence>
+            <property name="messageType"
+                      value="application/json"
+                      scope="axis2"
+                      type="STRING"/>
+            <property name="inputValue"
+                      expression="json-eval($.input.value)"
+                      scope="default"
+                      type="STRING"/>
+            <log level="custom">
+                <property name="###############################inputValue"
+                          expression="get-property('inputValue')"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                    "output": "$1"
+                    }
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:inputValue"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+    </resource>
+</api>

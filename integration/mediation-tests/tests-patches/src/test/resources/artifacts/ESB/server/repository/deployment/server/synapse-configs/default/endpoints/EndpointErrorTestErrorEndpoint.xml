@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="EndpointErrorTestErrorEndpoint">
+    <address uri="http://invalidEndpoint/name" format="soap11">
+        <timeout>
+            <duration>120000</duration>
+            <responseAction>fault</responseAction>
+        </timeout>
+        <suspendOnFailure>
+            <errorCodes>101000,101001,101500,101501,101503,101506,101507,101508,101509</errorCodes>
+            <initialDuration>1000</initialDuration>
+            <progressionFactor>2.0</progressionFactor>
+            <maximumDuration>64000</maximumDuration>
+        </suspendOnFailure>
+        <markForSuspension>
+            <errorCodes>101504,101505</errorCodes>
+            <retriesBeforeSuspension>3</retriesBeforeSuspension>
+            <retryDelay>1</retryDelay>
+        </markForSuspension>
+    </address>
+    <property name="NO_KEEPALIVE" value="true" scope="axis2"/>
+    <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
+</endpoint>

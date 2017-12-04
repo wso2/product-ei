@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/simpleDataAPI_XMLtoXML2_withDash" name="simpleDataAPI_XMLtoXML2_withDash" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST">
+        <inSequence>
+            <datamapper config="gov:datamapper/multiplePrefix/simpleDataAPI_XMLtoXML2_withDash_regConf.dmc"
+                        inputSchema="gov:datamapper/multiplePrefix/simpleDataAPI_XMLtoXML2_withDash_regConf_inputSchema.json"
+                        inputType="XML"
+                        outputSchema="gov:datamapper/multiplePrefix/simpleDataAPI_XMLtoXML2_withDash_regConf_outputSchema.json"
+                        outputType="XML"/>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

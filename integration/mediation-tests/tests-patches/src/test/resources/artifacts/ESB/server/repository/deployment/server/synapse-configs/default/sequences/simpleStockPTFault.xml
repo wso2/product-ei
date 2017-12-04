@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="simpleStockPTFault" onError="simpleStockPTFaultSeqOnError">
+    <log level="custom" separator=",">
+        <property name="SEQUENCE" value="simpleStockPTFault"/>
+        <property xmlns:ns="http://org.apache.synapse/xsd"
+                  name="errorCode"
+                  expression="get-property('ERROR_CODE')"/>
+        <property xmlns:ns="http://org.apache.synapse/xsd"
+                  name="proxyName"
+                  expression="$ctx:proxy.name"/>
+    </log>
+    <filter xmlns:ns="http://org.apache.synapse/xsd"
+            xpath="get-property('axis2','messageType')='text/xml'">
+        <then>
+            <makefault version="soap11">
+                <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+                      value="soap11Env:Server"/>
+                <reason expression="concat('Error while invoking the service: ', get-property('ERROR_MESSAGE'),' (',get-property('ERROR_CODE'), ')')"/>
+                <role/>
+            </makefault>
+        </then>
+        <else>
+            <makefault version="soap12">
+                <code xmlns:soap12Env="http://www.w3.org/2003/05/soap-envelope"
+                      value="soap12Env:Receiver"/>
+                <reason expression="concat('Error while invoking the service: ', get-property('ERROR_MESSAGE'),' (',get-property('ERROR_CODE'), ')')"/>
+                <node/>
+                <role/>
+            </makefault>
+        </else>
+    </filter>
+    <log level="custom">
+        <property name="ERROR_MESSAGE" expression="get-property('ERROR_MESSAGE')"/>
+        <property name="ERROR_CODE" expression="get-property('ERROR_CODE')"/>
+    </log>
+    <property name="HTTP_SC" value="200" scope="axis2" type="STRING"/>
+    <property name="NO_KEEPALIVE" value="true" scope="axis2"/>
+    <send/>
+</sequence>

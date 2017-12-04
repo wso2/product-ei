@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<api xmlns="http://ws.apache.org/ns/synapse" name="ESBJAVA3698JsonStockQuoteAPI"
+		context="/ESBJAVA3698jsonstockquote">
+		<resource methods="POST GET" uri-template="/test">
+			<inSequence>
+				<log level="full" />
+				<property name="REST_URL_POSTFIX" value="" scope="axis2" />
+				<send>
+					<endpoint>
+						<address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+					</endpoint>
+				</send>
+			</inSequence>
+			<outSequence>
+				<send />
+			</outSequence>
+			<faultSequence>
+				<log level="custom">
+					<property name="Fault Sequence" value="fault Sequence Hit" />
+				</log>
+			</faultSequence>
+		</resource>
+		<resource methods="POST GET" uri-template="/jsontest">
+			<inSequence>
+				<payloadFactory media-type="xml">
+					<format>
+						<m:getQuote xmlns:m="http://services.samples">
+							<m:request>
+								<m:symbol>$1</m:symbol>
+							</m:request>
+						</m:getQuote>
+					</format>
+					<args>
+						<arg evaluator="json" expression="$.symbol" />
+					</args>
+				</payloadFactory>
+				<header name="Action" value="urn:getQuote" />
+				<send>
+					<endpoint>
+						<address uri="http://localhost:9000/services/SimpleStockQuoteService"
+							format="soap11" />
+					</endpoint>
+				</send>
+			</inSequence>
+			<outSequence>
+				<send />
+			</outSequence>
+			<faultSequence>
+				<log level="custom">
+					<property name="Fault Sequence" value="Fault Sequence Hit" />
+				</log>
+			</faultSequence>
+		</resource>
+	</api>

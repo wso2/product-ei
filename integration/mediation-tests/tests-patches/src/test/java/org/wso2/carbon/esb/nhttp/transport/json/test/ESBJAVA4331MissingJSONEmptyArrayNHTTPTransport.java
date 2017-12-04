@@ -45,9 +45,7 @@ public class ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport extends ESBIntegrati
                                                                + "nhttp" + File.separator + "transport" +
                                                                File.separator + "json" + File.separator + "synapse.properties"));
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "nhttp" + File.separator + "transport"
-                + File.separator + "json" + File.separator + "synapse_config.xml");
+        verifyAPIExistence("testJsonEmptyArrayApi");
 
     }
 

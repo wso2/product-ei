@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="ESBJAVA4597MyFaultSequency">
+   <log>
+      <property name="faultSequence" value="*****Inside fault sequence*****"/>
+   </log>
+   <log level="full"/>
+   <property name="enableMTOM" value="false" scope="axis2" type="STRING"/>
+   <header name="Action"
+           scope="default"
+           value="http://www.webserviceX.NET/ConversionRate"/>
+   <payloadFactory media-type="xml">
+      <format>
+         <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+                        xmlns:web="http://www.webserviceX.NET/">
+            <soap:Header/>
+            <soap:Body>
+               <web:ConversionRate>
+                  <web:FromCurrency>?</web:FromCurrency>
+                  <web:ToCurrency>?</web:ToCurrency>
+               </web:ConversionRate>
+            </soap:Body>
+         </soap:Envelope>
+      </format>
+      <args/>
+   </payloadFactory>
+   <log level="full"/>
+   <call>
+      <endpoint>
+         <address uri="http://localhost:8888/test"/>
+      </endpoint>
+   </call>
+   <log>
+      <property name="faultSequence" value="********The call returned*********"/>
+   </log>
+   <respond/>
+   <log>
+      <property name="faultSequence" value="********Therespond returned*********"/>
+   </log>
+</sequence>

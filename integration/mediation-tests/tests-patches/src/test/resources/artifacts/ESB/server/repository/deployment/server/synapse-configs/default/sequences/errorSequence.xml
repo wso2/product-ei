@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="errorSequence">
+    <log level="custom">
+        <property name="errorSequence" value="This is error sequence from sequenceOne"/>
+    </log>
+</sequence>

@@ -37,12 +37,12 @@ public class ESBJAVA4760ContentLengthHeaderTest extends ESBIntegrationTest {
     @BeforeClass
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4760/ESBJAVA4760.xml");
+        verifyAPIExistence("StockQuoteAPIESBJAVA4760");
     }
 
     @Test(groups = "wso2.esb", description = "Test 204 status code  with disable chunking", enabled = true)
     public void testContentLengthWithDisableChunking() throws IOException {
-        HttpResponse response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("stockquoteapi") + "/view/IBM", null);
+        HttpResponse response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("StockQuoteAPIESBJAVA4760") + "/view/IBM", null);
         Assert.assertEquals(response.getResponseCode(), EXPECTED_HTTP_SC, "Expected response code didn't match");
     }
 

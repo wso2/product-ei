@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="dashSupport" context="/dashSupport">
+    <resource methods="POST GET">
+        <inSequence>
+            <datamapper config="gov:datamapper/dashSupport/DashSupportConfig.dmc"
+                        inputSchema="gov:datamapper/dashSupport/DashSupportConfig_inputSchema.json"
+                        outputSchema="gov:datamapper/dashSupport/DashSupportConfig_outputSchema.json"
+                        inputType="XML" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

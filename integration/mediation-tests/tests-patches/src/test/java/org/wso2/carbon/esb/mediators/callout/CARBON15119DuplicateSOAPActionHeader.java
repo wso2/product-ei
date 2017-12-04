@@ -45,7 +45,7 @@ public class CARBON15119DuplicateSOAPActionHeader extends ESBIntegrationTest {
         wireMonitorServer = new WireMonitorServer(6769);
         wireMonitorServer.start();
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/DuplicateSOAPActionHeader.xml");
+        verifyProxyServiceExistence("DuplicateSOAPActionHeader");
     }
 
     @Test(groups = "wso2.esb", description = "Test to check whether there are duplicate SOAPAction headers in the request to the service from callout mediator")

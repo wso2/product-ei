@@ -17,12 +17,12 @@ public class HttpRelativeLocationHeaderTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         jsonclient = new JSONClient();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/json/location-header-json.xml");
+        verifyProxyServiceExistence("HTTPRelativeLocationService0Proxy");
     }
 
     @Test(groups = {"wso2.esb", "localOnly"}, description = "Http Location header")
     public void testRelativeLocationHeader() throws Exception {
-        String addUrl = getProxyServiceURLHttp("service0");
+        String addUrl = getProxyServiceURLHttp("HTTPRelativeLocationService0Proxy");
         String query = "{\"employees\": [{\"id\": 0,\"name\": \"Carlene Pope\"},{\"id\": 1,\"name\": \"Jewell Richard\"}]}";
         String expectedResult = "{\"employees\":[{\"id\":0,\"name\":\"Carlene Pope\"},{\"id\":1,\"name\":\"Jewell Richard\"}]}";
         String actualResult = jsonclient.sendUserDefineRequest(addUrl, query).toString();

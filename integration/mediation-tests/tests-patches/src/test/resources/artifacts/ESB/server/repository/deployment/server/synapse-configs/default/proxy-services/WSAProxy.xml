@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="WSAProxy" startOnLoad="true" trace="disable" transports="http https">
+    <description/>
+    <target>
+        <inSequence>
+            <header scope="default">
+                <wsa:From xmlns:wsa="http://www.w3.org/2005/08/addressing"><wsa:Address>http://localhost:8480/wsaddressing-support-test</wsa:Address></wsa:From>
+            </header>
+            <header scope="default">
+                <wsa:MessageID xmlns:wsa="http://www.w3.org/2005/08/addressing">urn:uuid:ef503c98-f6c7-4aa4-8e91-d76a2a7efaf4</wsa:MessageID>
+            </header>
+            <header scope="default">
+                <wsa:Action xmlns:wsa="http://www.w3.org/2005/08/addressing">urn:anonOutInOpResponse</wsa:Action>
+            </header>
+            <property name="PRESERVE_WS_ADDRESSING" value="true"/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:8480/wsaddressing-support-test" format="soap11">
+                        <enableAddressing/>
+                    </address>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -48,7 +48,7 @@ public class ESBJAVA_4239_HTTP_SC_HandlingTests extends ESBIntegrationTest {
                                   "<test></test>";
         simpleSocketServer = new SimpleSocketServer(port, expectedResponse);
         simpleSocketServer.start();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/CalloutMediatorHTTP_SC_Test.xml");
+        verifyProxyServiceExistence("TestCalloutHTTP_SC");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 

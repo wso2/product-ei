@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="Axis2RestServiceEncoded" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="REST_URL_POSTFIX" expression="url-encode('wso2 lanka')" scope="axis2"/>
+            <log>
+                <property name="rest-url-value" expression="get-property('axis2','REST_URL_POSTFIX')"/>
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <ns:echoStringResponse xmlns:ns="http://echo.services.core.carbon.wso2.org">
+                        <return xmlns="">$1</return>
+                    </ns:echoStringResponse>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$axis2:REST_URL_POSTFIX"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

@@ -31,6 +31,7 @@ import org.wso2.carbon.automation.test.utils.axis2client.AxisServiceClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 /**
  * The Message processor is configured with 200,202 as non retry status codes.
@@ -47,12 +48,14 @@ public class ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_a
                                                                "Successfully deactivated the message processor [Processor1]";
     private static final int RETRY_COUNT = 4;
     private LogViewerClient logViewerClient;
+    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void deployeService() throws Exception {
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/messageProcessorConfig/MessageProcessorRetryUpon_500_ResponseWith_200And_202As_Non_retry_SC.xml");
         isProxyDeployed(PROXY_SERVICE_NAME);
+        activeMQServer.startJMSBroker();
     }
 
     @Test(groups = { "wso2.esb" }, description = "Test whether a Message Processor retries sending the message to the EP when the response status code is 500 and MP is configured with 200,202 as non-retry status codes.")
@@ -94,6 +97,7 @@ public class ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_a
     @AfterClass(alwaysRun = true)
     public void UndeployeService() throws Exception {
         super.cleanup();
+        activeMQServer.stopJMSBroker();
     }
 
     /*

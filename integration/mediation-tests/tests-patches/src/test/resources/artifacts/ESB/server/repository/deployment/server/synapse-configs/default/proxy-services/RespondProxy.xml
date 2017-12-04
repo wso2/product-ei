@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="RespondProxy" startOnLoad="true" trace="enable" transports="http">
+        <description/>
+        <target>
+            <inSequence>
+                <log level="custom">
+                    <property name="RespondProxy" value="Inside Respond Proxy"/>
+                </log>
+                <!-- Insert sleep here -->
+                <property name="milliseconds" value="1000"/>
+                <script language="js"><![CDATA[var ms = mc.getProperty("milliseconds");java.lang.Thread.sleep(ms);]]></script>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>

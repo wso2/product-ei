@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="EndpointErrorTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property name="MessageFlow" value=" ======= EndpointErrorTestProxy ======= "/>
+            </log>
+            <sequence key="EndpointErrorTestCloneSequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <log>
+                <property name="=============EndpointErrorTestProxy Fault Sequence=========="
+                          value="=====executed======"/>
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <error xmlns="">Proxy Fault Handler Called</error>
+                </format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </faultSequence>
+    </target>
+</proxy>

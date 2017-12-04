@@ -32,7 +32,7 @@ public class ESBJAVA3019_ScriptWithNullJson extends ESBIntegrationTest {
     public void deployService() throws Exception {
         super.init();
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),getSessionCookie());
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/script/ScriptwithNullJsonPayloadTest.xml");
+        verifyProxyServiceExistence("ScriptWithNullJsonValueTest");
     }
 
     @Test(groups = "wso2.esb", description = "Test for check http status code can be retrived form HTTP_SC")
