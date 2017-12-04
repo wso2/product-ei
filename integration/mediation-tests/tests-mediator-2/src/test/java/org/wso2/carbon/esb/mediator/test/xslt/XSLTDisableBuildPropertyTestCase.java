@@ -64,12 +64,7 @@ public class XSLTDisableBuildPropertyTestCase extends ESBIntegrationTest {
      */
     @Test(groups = "wso2.esb", description = "Test disable build property in XSLT mediator")
     public void disableBuildPropertyTest() throws Exception {
-        String encodedValue = "&#10;\n" +
-                "&#10;\n" +
-                "&#10;\n" +
-                "&#10;\n" +
-                "&#10;\n" +
-                "&#10;";
+        String encodedValue = "&#10;\n" + "&#10;\n" + "&#10;\n" + "&#10;\n" + "&#10;\n" + "&#10;";
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(TEST_PROXY)), "");
         Assert.assertTrue(assertIfSystemLogContains(logViewerClient, encodedValue),
@@ -90,9 +85,9 @@ public class XSLTDisableBuildPropertyTestCase extends ESBIntegrationTest {
 
         resourceAdminServiceStub.addResource(
                 REG_RESOURCE_PATH + XSLT + "/xsltDisableBuildPropertyRegResource.xslt", XML_CONTENT_TYPE, "xslt file",
-                new DataHandler(new URL("file:///" + getESBResourceLocation() + File.separator + "mediatorconfig" +
-                                                File.separator + XSLT + File.separator +
-                                                "xsltDisableBuildPropertyRegResource.xslt")));
+                new DataHandler(new URL("file:///" + getESBResourceLocation() + File.separator + "mediatorconfig"
+                                                + File.separator + XSLT + File.separator
+                                                + "xsltDisableBuildPropertyRegResource.xslt")));
         Thread.sleep(1000);
     }
 
