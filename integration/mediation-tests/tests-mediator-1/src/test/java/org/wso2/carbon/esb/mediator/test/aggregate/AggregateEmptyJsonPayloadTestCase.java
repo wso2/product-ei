@@ -54,21 +54,21 @@ public class AggregateEmptyJsonPayloadTestCase extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test CorrelateOn in Aggregate mediator ")
     public void testAggregateEmptyJsonPayload() throws Exception {
 
-        String inputPayload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                "<soapenv:Header/>\n" +
-                "<soapenv:Body>\n" +
-                "<m0:getQuote xmlns:m0=\"http://services.samples\">\n" +
-                " <m0:request>IBM\n" +
-                " </m0:request>\n" +
-                "   <m0:request>WSO2\n" +
-                " </m0:request>\n" +
-                "</m0:getQuote>\n" +
-                "</soapenv:Body>\n" +
-                "</soapenv:Envelope>";
+        String inputPayload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "<soapenv:Header/>\n"
+                + "<soapenv:Body>\n"
+                + "<m0:getQuote xmlns:m0=\"http://services.samples\">\n"
+                + " <m0:request>IBM\n"
+                + " </m0:request>\n"
+                + "   <m0:request>WSO2\n"
+                + " </m0:request>\n"
+                + "</m0:getQuote>\n"
+                + "</soapenv:Body>\n"
+                + "</soapenv:Envelope>";
 
-        String expectedOutput = "<OverallResponse " +
-                "xmlns=\"http://ws.apache.org/ns/synapse\"><jsonObject xmlns=\"\"/><jsonObject " +
-                "xmlns=\"\"/></OverallResponse>";
+        String expectedOutput = "<OverallResponse "
+                + "xmlns=\"http://ws.apache.org/ns/synapse\"><jsonObject xmlns=\"\"/><jsonObject "
+                + "xmlns=\"\"/></OverallResponse>";
 
         Map<String, String> requestHeader = new HashMap<>();
         requestHeader.put("Content-type", "text/xml");
