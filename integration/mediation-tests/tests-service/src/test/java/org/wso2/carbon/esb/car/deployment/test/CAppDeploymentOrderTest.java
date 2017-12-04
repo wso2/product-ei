@@ -49,7 +49,7 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
     private CarbonAppUploaderClient carbonAppUploaderClient;
     private ApplicationAdminClient applicationAdminClient;
     private final int MAX_TIME = 120000;
-    private final String carFileName = "esb-deployment-car_1.0.0";
+    private final String CAR_FILE_NAME = "esb-deployment-car_1.0.0";
     private FTPServerManager ftpServerManager;
     private String FTPUsername;
     private String FTPPassword;
@@ -69,12 +69,11 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
     protected void carFileDeploymentOrderTest() throws Exception {
         logViewerClient.clearLogs();
         carbonAppUploaderClient = new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
-        carbonAppUploaderClient.uploadCarbonAppArtifact("esb-deployment-car_1.0.0.car"
+        carbonAppUploaderClient.uploadCarbonAppArtifact(CAR_FILE_NAME + ".car"
                 , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                        + File.separator + "car" + File.separator + "esb-deployment-car_1.0.0.car")));
+                        + File.separator + "car" + File.separator + CAR_FILE_NAME + ".car")));
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
-        Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
-        TimeUnit.SECONDS.sleep(5);
+        Assert.assertTrue(isCarFileDeployed(CAR_FILE_NAME), "Car file deployment failed");
         boolean deploymentOrdered = checkLogOrder(logViewerClient);
         Assert.assertTrue(deploymentOrdered, "Deployment order isn't correct");
     }
