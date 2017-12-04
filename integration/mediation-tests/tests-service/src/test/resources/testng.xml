@@ -94,4 +94,10 @@
             <package name="org.wso2.carbon.esb.tenant.test.*"/>
         </packages>
     </test>
+
+    <test name="Secure-Proxy-Test" preserve-order="true" verbose="2" parallel="false">
+        <classes>
+            <class name="org.wso2.carbon.esb.proxyservice.test.secureProxy.SecureProxyUsingPolicyFileInLocalEntryTestCase"/>
+        </classes>
+    </test>
 </suite>

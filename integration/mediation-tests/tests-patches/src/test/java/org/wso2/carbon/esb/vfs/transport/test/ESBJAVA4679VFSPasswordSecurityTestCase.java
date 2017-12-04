@@ -206,7 +206,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
             LOGGER.error("Error while updating the Synapse config", e);
         }
         LOGGER.info("Synapse config updated");
-        boolean isSuccess = Utils.checkForLog(logViewerClient, log, 30000);
+        boolean isSuccess = Utils.checkForLog(logViewerClient, log, 30);
         Assert.assertTrue(
                 isSuccess,
                 "Secure password deployment failed, file did not received to the vfs proxy");

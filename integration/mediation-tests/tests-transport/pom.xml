@@ -335,6 +335,10 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-resolver</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

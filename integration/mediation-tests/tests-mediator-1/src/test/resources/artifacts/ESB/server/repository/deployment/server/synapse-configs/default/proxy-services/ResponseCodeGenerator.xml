@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ResponseCodeGenerator"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
+    <target>
+        <inSequence>
+            <property expression="$trp:CODE"
+                      name="HTTPCODE"
+                      scope="default"
+                      type="STRING"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <m0:getQuote xmlns:m0="http://services.samples">
+                        <m0:request>
+                            <m0:symbol>$1</m0:symbol>
+                        </m0:request>
+                    </m0:getQuote>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$trp:symbol"/>
+                </args>
+            </payloadFactory>
+            <header name="Action" value="urn:getQuote"/>
+            <property name="ContentType" scope="axis2" value="text/xml;charset=UTF"/>
+            <call>
+                <endpoint>
+                    <address format="soap11"
+                             uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+                </endpoint>
+            </call>
+            <property expression="get-property('HTTPCODE')"
+                      name="HTTP_SC"
+                      scope="axis2"
+                      type="STRING"/>
+            <property name="messageType"
+                      scope="axis2"
+                      type="STRING"
+                      value="application/xml"/>
+            <respond/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>

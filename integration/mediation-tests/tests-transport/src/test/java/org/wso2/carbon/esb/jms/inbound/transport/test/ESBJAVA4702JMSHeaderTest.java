@@ -76,7 +76,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewerClient.clearLogs();
         axis2Client.sendRobust(getProxyServiceURLHttp("jmsHeaderInboundEpTestProxy"), null, null, AXIOMUtil.stringToOM("<body/>"));
-        boolean isHeaderSet = Utils.checkForLog(logViewerClient, "Producer_Log = MDM", 5000);
+        boolean isHeaderSet = Utils.checkForLog(logViewerClient, "Producer_Log = MDM", 5);
         Assert.assertTrue(isHeaderSet, "Log for transport header is not present in carbon log");
     }
 

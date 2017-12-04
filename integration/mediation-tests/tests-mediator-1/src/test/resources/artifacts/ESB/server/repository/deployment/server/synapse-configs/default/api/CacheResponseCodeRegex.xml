@@ -1,0 +1,24 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="CacheResponseCodeRegex" context="/ResponseCodeRegex">
+    <resource methods="GET">
+        <inSequence>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <cache collector="false" timeout="5000">
+                <protocol type="HTTP">
+                    <methods>GET</methods>
+                    <headersToExcludeInHash/>
+                    <responseCodes>[2-4][0-9][0-9]</responseCodes>
+                    <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                </protocol>
+            </cache>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:8480/services/ResponseCodeGenerator"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <cache collector="true"/>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

@@ -9,7 +9,7 @@
                     <condition>
                         <equal xmlns="" type="url" source="protocol" value="htt"/>
                     </condition>
-                    <action xpath="get-property('protocol')" type="append" fragment="protocol"/>
+                    <action value="p" type="append" fragment="protocol"/>
                     <action value="9000" regex="\w.*" type="replace" fragment="port"/>
                 </rewriterule>
                 <rewriterule>

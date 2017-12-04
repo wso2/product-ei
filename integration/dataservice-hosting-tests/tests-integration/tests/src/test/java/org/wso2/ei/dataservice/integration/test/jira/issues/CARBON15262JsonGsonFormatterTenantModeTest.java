@@ -42,8 +42,9 @@ import java.util.List;
  *
  */
 public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTest {
-	private final String serviceName = "H2SimpleJsonTest2";
-	private String serviceEndPoint;
+	private final String serviceName = "H2SimpleJsonTest";
+	private final String serviceName1 = "H2SimpleJsonTest1";
+	private String serviceEndPoint, serviceEndPoint1;
 
 	private static final Log log = LogFactory.getLog(CARBON15262JsonGsonFormatterTenantModeTest.class);
 
@@ -55,9 +56,12 @@ public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTe
 		sqlFileLis.add(selectSqlFile("Offices.sql"));
 		deployService(serviceName, createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
 		                                          "rdbms" + File.separator + "h2" + File.separator +
-		                                          "H2SimpleJsonTest2.dbs", sqlFileLis));
+		                                          "H2SimpleJsonTest.dbs", sqlFileLis));
+		deployService(serviceName1, createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
+				                                  "rdbms" + File.separator + "h2" + File.separator +
+				                                  "H2SimpleJsonTest1.dbs", sqlFileLis));
 		serviceEndPoint = getServiceUrlHttp(serviceName) + "/";
-
+		serviceEndPoint1 = getServiceUrlHttp(serviceName1) + "/";
 	}
 
 	@AfterClass(alwaysRun = true) public void destroy() throws Exception {
@@ -104,6 +108,17 @@ public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTe
 	public void performJsonGetMethodTest() {
 		String response = getHttpResponse(serviceEndPoint + "getCountries", "GET", null);
 		Assert.assertTrue(response.contains("country"), "GET method failed");
+	}
+
+	/**
+	 * verify the fix for https://wso2.org/jira/browse/CARBON-15339
+	 */
+	@Test(groups = "wso2.dss", description = "Invoking Request with GET method of services having same namespace")
+	public void invokeSameNamespaceTest() {
+		String response = getHttpResponse(serviceEndPoint + "getCountries", "GET", null);
+		Assert.assertTrue(response.contains("country"), "GET method failed");
+		response = getHttpResponse(serviceEndPoint1 + "getCountries", "GET", null);
+		Assert.assertTrue(response.contains("country1"), "GET method failed");
 	}
 
 	private String getHttpResponse(String endpoint, String requestMethod, String payload) {

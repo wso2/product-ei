@@ -32,7 +32,7 @@ public class ESBJAVA1910TestCase extends ESBIntegrationTest {
         Thread.sleep(3000); //force wait until message processor executes
         client.sendRobust(Utils.getStockQuoteRequest("WSO2"), getProxyServiceURLHttp("MessageStoreProxy"), "getQuote");
 
-        boolean status = Utils.checkForLog(logViewerClient, "status code---------- = 200,", 5000);
+        boolean status = Utils.checkForLog(logViewerClient, "status code---------- = 200,", 5);
         Assert.assertTrue(status, "Status Code not found in the logs");
     }
 

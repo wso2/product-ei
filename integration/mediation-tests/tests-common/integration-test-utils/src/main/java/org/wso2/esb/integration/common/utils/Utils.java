@@ -29,6 +29,7 @@ import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.concurrent.TimeUnit;
@@ -99,9 +100,8 @@ public class Utils {
      *
      * @param port
      */
-    public static void shutdownFailsafe(int port) {
+    public static void shutdownFailsafe(int port) throws IOException {
         try {
-            System.out.println("Method to kill already existing servers in port " + port);
             Process p = Runtime.getRuntime().exec("lsof -Pi tcp:" + port);
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
@@ -110,20 +110,13 @@ public class Utils {
             if (line != null) {
                 line = line.trim();
                 String processId = line.split(" +")[1];
-                System.out.println("There is already a process using " + port + ", process id is - " + processId);
                 if (processId != null) {
                     String killStr = "kill -9 " + processId;
-                    System.out.println("kill string to kill the process - " + killStr);
                     Runtime.getRuntime().exec(killStr);
-
-                    System.out.println(
-                            "process " + processId + " killed successfully, which was running on port " + port);
                 }
-            } else {
-                System.out.println("There are no existing processes running on port " + port);
             }
-        } catch (Exception e) {
-            System.out.println("Error killing the process which uses the port " + port);
+        } catch (IOException e) {
+            throw new IOException("Error killing the process which uses the port " + port);
         }
     }
 
@@ -191,9 +184,10 @@ public class Utils {
 
     /**
      * Check whether a log found with expected string of given priority
+     *
      * @param logViewerClient LogViewerClient object
-     * @param priority priority level
-     * @param expected expected string
+     * @param priority        priority level
+     * @param expected        expected string
      * @return true if a log found with expected string of given priority, false otherwise
      * @throws RemoteException
      * @throws LogViewerLogViewerException
@@ -244,10 +238,11 @@ public class Utils {
 
     /**
      * Check for the existence of a given log message of given priority within the given timeout
+     *
      * @param logViewerClient LogViewerClient object
-     * @param priority priority level
-     * @param expected expected string to search in logs
-     * @param timeout  timeout value
+     * @param priority        priority level
+     * @param expected        expected string to search in logs
+     * @param timeout         timeout value in seconds
      * @return true if a log found with the given priority and content within the given timeout, false otherwise
      * @throws InterruptedException
      * @throws LogViewerLogViewerException
@@ -270,7 +265,7 @@ public class Utils {
      * Wait for expected message count found in the message store until a defined timeout
      * @param messageStoreName Message store name
      * @param expectedCount    Expected message count
-     * @param timeout          Timeout to wait
+     * @param timeout          Timeout to wait in Milliseconds
      * @return true if the expected message count found, false otherwise
      */
     public static boolean waitForMessageCount(MessageStoreAdminClient messageStoreAdminClient, String messageStoreName, int expectedCount, long timeout) throws InterruptedException, RemoteException {
