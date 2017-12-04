@@ -24,15 +24,14 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
-public class JMSBrokerStartupTestCase extends ESBIntegrationTest {
+public class JMSBrokerManager {
 
-    private ActiveMQServer activeMQServer
+    private static ActiveMQServer activeMQServer
             = new ActiveMQServer();
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @BeforeTest(alwaysRun = true)
     public void startJMSBrokerAndConfigureESB() throws Exception {
-        super.init();
         activeMQServer.startJMSBroker();
 
     }
@@ -41,6 +40,10 @@ public class JMSBrokerStartupTestCase extends ESBIntegrationTest {
     public void close() throws Exception {
         activeMQServer.stopJMSBroker();
 
+    }
+
+    public static ActiveMQServer getActiveMQServer() {
+        return activeMQServer;
     }
 }
 
