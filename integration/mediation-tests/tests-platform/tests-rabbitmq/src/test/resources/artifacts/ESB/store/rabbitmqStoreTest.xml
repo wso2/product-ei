@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <!--
+  ~  Copyright (c) 2017, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="rmqstoreTestProxy"
+           transports="http,https"
+           statistics="disable"
+           trace="disable"
+           startOnLoad="true">
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2" />
+                <store messageStore="SampleRMQStore" xmlns:ns="http://services.samples"/>
+            </inSequence>
+        </target>
+        <description/>
+    </proxy>
+
+    <messageStore xmlns="http://ws.apache.org/ns/synapse" name="SampleRMQStore"
+                  class="org.apache.synapse.message.store.impl.rabbitmq.RabbitMQStore">
+        <parameter name="store.rabbitmq.host.name">localhost</parameter>
+        <parameter name="store.rabbitmq.host.port">5672</parameter>
+        <parameter name="store.producer.guaranteed.delivery.enable">false</parameter>
+    </messageStore>
+
+    <messageProcessor name="SampleRMQProcessor"
+                      class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      targetEndpoint="StockQuoteEP" messageStore="SampleRMQStore"
+                      xmlns="http://ws.apache.org/ns/synapse">
+        <parameter name="interval">1000</parameter>
+        <parameter name="client.retry.interval">1000</parameter>
+        <parameter name="max.delivery.attempts">4</parameter>
+        <parameter name="message.processor.reply.sequence">replySequence</parameter>
+        <parameter name="is.active">true</parameter>
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="member.count">1</parameter>
+    </messageProcessor>
+
+    <sequence xmlns="http://ws.apache.org/ns/synapse" name="replySequence">
+        <log level="full">
+            <property name="REPLY" value="MESSAGE"/>
+        </log>
+        <drop />
+    </sequence>
+
+    <endpoint xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteEP">
+        <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+    </endpoint>
+</definitions>
