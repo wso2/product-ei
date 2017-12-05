@@ -42,13 +42,10 @@ public class BPMNRestExecutionTest extends BPSMasterTest {
         super.init();
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         loginLogoutClient.login();
-        uploadBPMNForTest("ExecutionResourceTest");
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "ExecutionResourceTest", 0);
     }
 
     @AfterTest (alwaysRun = true)
     public void cleanServer () throws Exception {
-        workflowServiceClient.undeploy("ExecutionResourceTest");
     }
 
     @Test(groups = {"wso2.bps.bpmn.rest"}, description = "get executions", priority = 1, singleThreaded =

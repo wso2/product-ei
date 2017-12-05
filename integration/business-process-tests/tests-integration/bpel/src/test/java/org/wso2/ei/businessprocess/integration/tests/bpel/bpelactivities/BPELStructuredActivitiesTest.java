@@ -21,6 +21,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -51,10 +52,8 @@ public class BPELStructuredActivitiesTest extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("TestForEach");
         uploadBpelForTest("TestPickOneWay");
-        uploadBpelForTest("TestFlowLinks");
-        requestSender.waitForProcessDeployment(backEndUrl + "FlowLinkTest");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "FlowLinkTest"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "for each in structured activities",
@@ -118,8 +117,6 @@ public class BPELStructuredActivitiesTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("TestFlowLinks");
-        bpelPackageManagementClient.undeployBPEL("TestForEach");
         bpelPackageManagementClient.undeployBPEL("TestPickOneWay");
         this.loginLogoutClient.logout();
     }

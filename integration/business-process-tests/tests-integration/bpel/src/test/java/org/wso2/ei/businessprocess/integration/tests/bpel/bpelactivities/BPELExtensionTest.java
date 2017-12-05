@@ -22,6 +22,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -53,8 +54,7 @@ public class BPELExtensionTest extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("TestProcessProperties");
-        requestSender.waitForProcessDeployment(backEndUrl + "TestProcessPropertiesService");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestProcessPropertiesService"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "Process Property in BPEL extension test")
@@ -76,7 +76,6 @@ public class BPELExtensionTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("TestProcessProperties");
         this.loginLogoutClient.logout();
     }
 }

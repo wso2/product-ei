@@ -23,6 +23,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -53,8 +54,7 @@ public class BPELBasicActivitiesTest extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("TestIf");
-        requestSender.waitForProcessDeployment(backEndUrl + "TestIf");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestIf"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "if true test case")
@@ -89,7 +89,6 @@ public class BPELBasicActivitiesTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("TestIf");
         this.loginLogoutClient.logout();
     }
 }

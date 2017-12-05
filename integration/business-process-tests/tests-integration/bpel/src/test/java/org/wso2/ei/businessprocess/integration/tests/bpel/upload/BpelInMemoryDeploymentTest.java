@@ -59,16 +59,12 @@ public class BpelInMemoryDeploymentTest extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("CustomerInfo");
-        requestSender.waitForProcessDeployment(backEndUrl + "CustomerInfoService");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "CustomerInfoService"));
     }
 
 
     @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel Service with In memory", priority = 0)
     public void testInmemoryUolpad() throws Exception {
-        bpelProcessManagementClient.getStatus(bpelProcessManagementClient.getProcessId("CustomerInfo"));
-        RequestSender requestSender = new RequestSender();
-        requestSender.waitForProcessDeployment(backEndUrl + "CustomerInfoService");
 
         requestSender.assertRequest(backEndUrl + "CustomerInfoService", "getCustomerSSN", "<p:CustomerInfo xmlns:p=\"http://wso2.org/bps/samples/loan_process/schema\">\n" +
                 "      <!--Exactly 1 occurrence-->\n" +
@@ -89,7 +85,6 @@ public class BpelInMemoryDeploymentTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("CustomerInfo");
         this.loginLogoutClient.logout();
     }
 }

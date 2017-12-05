@@ -22,6 +22,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -53,18 +54,17 @@ public class BPELDataHandlingTest extends BPSMasterTest {
     public void deployArtifact()
             throws Exception {
         setEnvironment();
-        uploadBpelForTest("TestComposeUrl");
-        uploadBpelForTest("FlexibleAssign");
-        uploadBpelForTest("TestIgnoreMissingFromData");
-        uploadBpelForTest("TestCombineUrl");
-        uploadBpelForTest("TestExpandTemplate");
-        uploadBpelForTest("TestAssignActivity1");
-        uploadBpelForTest("TestAssignDate");
-        uploadBpelForTest("TestXslTransform");
-        uploadBpelForTest("TestCounter");
-        uploadBpelForTest("TestSplit");
-        uploadBpelForTest("XMLAttributeProcess");
-        requestSender.waitForProcessDeployment(backEndUrl + "XMLAttributeProcessService");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestComposeUrlService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "FlexibleAssign"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestIgnoreMissingFromDataService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestCombineUrlService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestExpandTemplateService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestAssignService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestAssignDateService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "HelloXslService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "TestSplitService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "counterService"));
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "XMLAttributeProcessService"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "this test will use " +
@@ -267,18 +267,6 @@ public class BPELDataHandlingTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("TestComposeUrl");
-        bpelPackageManagementClient.undeployBPEL("FlexibleAssign");
-        bpelPackageManagementClient.undeployBPEL("TestIgnoreMissingFromData");
-        bpelPackageManagementClient.undeployBPEL("TestCombineUrl");
-        bpelPackageManagementClient.undeployBPEL("TestExpandTemplate");
-        bpelPackageManagementClient.undeployBPEL("TestAssignActivity1");
-        bpelPackageManagementClient.undeployBPEL("TestAssignDate");
-        bpelPackageManagementClient.undeployBPEL("TestXslTransform");
-        bpelPackageManagementClient.undeployBPEL("TestCounter");
-        bpelPackageManagementClient.undeployBPEL("TestSplit");
-        bpelPackageManagementClient.undeployBPEL("TestXslTransform");
-        bpelPackageManagementClient.undeployBPEL("XMLAttributeProcess");
         this.loginLogoutClient.logout();
     }
 }

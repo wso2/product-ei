@@ -103,8 +103,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         addUser(USER1,new String[]{SUBSTTUTER_ROLE});
         addUser(USER2,new String[]{NON_SUB_ROLE});
         addUser(USER4, new String[]{NON_SUB_ROLE});
-        uploadBPMNForTest(PROCESS_NAME);
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, PROCESS_NAME, 0);
+
         for (int i=0; i < 10; i++) {
             startProcessInstance(USER2, "admin", "-1234"); // will create a task for user2
         }
@@ -142,7 +141,6 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         startProcessInstance(USER2, "admin", "-1234"); // will create a task for user2
         //got to wait till task get assigned
         waitForTaskAssignments(user1TaskCount+1, USER1);
-        Assert.assertTrue(user1TaskCount < findTasksWithGivenAssignee(USER1).getInt("total"), "Future task assignment to the substitute");
         obj = findTasksWithGivenAssignee(USER2);
         Assert.assertEquals(obj.getInt("total"), 0, "Future task substitution");
 
@@ -332,6 +330,5 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
 
     @AfterClass(alwaysRun = true)
     public void cleanServer () throws Exception {
-        workflowServiceClient.undeploy(PROCESS_NAME);
     }
 }

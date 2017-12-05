@@ -50,6 +50,12 @@
                             </value>
                         </property>
                         <property>
+                            <name>server.list</name>
+                            <value>
+                                BPS
+                            </value>
+                        </property>
+                        <property>
                             <name>usedefaultlisteners</name>
                             <value>false</value>
                         </property>

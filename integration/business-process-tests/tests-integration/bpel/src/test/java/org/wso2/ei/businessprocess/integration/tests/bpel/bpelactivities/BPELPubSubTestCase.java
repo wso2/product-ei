@@ -22,6 +22,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.bpelactivities;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -50,8 +51,7 @@ public class BPELPubSubTestCase extends BPSMasterTest {
     @BeforeClass(alwaysRun = true, groups = "wso2.bps.bpelactivities")
     public void deployArtifact() throws Exception {
         setEnvironment();
-        uploadBpelForTest("TestPubSubInProc");
-        requestSender.waitForProcessDeployment(backEndUrl + "HelloPubService");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "HelloPubService"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "the original test uses enableSharing in Deployment" +
@@ -72,7 +72,6 @@ public class BPELPubSubTestCase extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("TestPubSubInProc");
         this.loginLogoutClient.logout();
     }
 }

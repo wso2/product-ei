@@ -52,8 +52,7 @@ public class BpelProcessManagementTest extends BPSMasterTest {
     @BeforeClass(alwaysRun = true)
     public void deployArtifact() throws Exception {
         setEnvironment();
-        uploadBpelForTest("LoanService");
-        requestSender.waitForProcessDeployment(backEndUrl + "XKLoanService");
+        Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "XKLoanService"));
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set process to retired State", priority = 1, singleThreaded = true)
@@ -85,7 +84,6 @@ public class BpelProcessManagementTest extends BPSMasterTest {
 
     @AfterClass(alwaysRun = true)
     public void removeArtifacts() throws Exception {
-        bpelPackageManagementClient.undeployBPEL("LoanService");
         this.loginLogoutClient.logout();
     }
 }

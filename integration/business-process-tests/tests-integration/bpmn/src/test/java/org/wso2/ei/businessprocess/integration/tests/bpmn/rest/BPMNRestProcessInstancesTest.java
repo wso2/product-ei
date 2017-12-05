@@ -41,17 +41,10 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
         super.init();
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         loginLogoutClient.login();
-        uploadBPMNForTest("ProcessInstanceResourceTest");
-        int deploymentCount = 0;
-        if (workflowServiceClient.getDeployments() != null) {
-            deploymentCount = workflowServiceClient.getDeployments().length;
-        }
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "ProcessInstanceResourceTest", deploymentCount);
     }
 
     @AfterTest
     public void afterTest() throws Exception {
-        workflowServiceClient.undeploy("ProcessInstanceResourceTest");
     }
 
     @Test(groups = {"wso2.bps.bpmn.rest"}, description = "get process instances", priority = 1, singleThreaded =
