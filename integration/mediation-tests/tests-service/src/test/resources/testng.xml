@@ -73,7 +73,7 @@
     	<packages>
     		<package name="org.wso2.carbon.esb.rest.test.security"/>
     	</packages>
-    </test-->   
+    </test-->
     <test name="Rest-JSON-Test" preserve-order="true" verbose="2" parallel="false">
         <packages>
             <package name="org.wso2.carbon.esb.json.test"/>
