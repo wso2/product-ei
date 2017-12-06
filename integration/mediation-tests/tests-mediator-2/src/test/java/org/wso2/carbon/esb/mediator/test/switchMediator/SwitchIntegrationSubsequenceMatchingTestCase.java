@@ -68,7 +68,7 @@ public class SwitchIntegrationSubsequenceMatchingTestCase extends ESBIntegration
     @Test(groups = {"wso2.esb"}, description = "Using switch mediator matching the part of the input at regex")
     public void testMatchSubSequenceAtRegexSwitchMediator3() throws Exception {
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "MSFT");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("switchMediatorSubsequenceMatchingTestProxy"), null, "MSFT");
             fail("Request must throw a Axis fault");
         } catch (AxisFault expected) {
             Assert.assertEquals(expected.getReason(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL, "Error Message Mismatched");

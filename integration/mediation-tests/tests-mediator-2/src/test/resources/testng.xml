@@ -33,18 +33,18 @@
         </packages>
     </test>
 
-    <!--<test name="Switch-mediator-Test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.mediator.test.switchMediator"/>-->
-        <!--</packages>-->
-        <!--<classes>-->
-            <!--<class name="org.wso2.carbon.esb.mediator.test.switchMediator.InvokeOnErrorSequenceFromSwitchIntegrationTestCase">-->
-                <!--<methods>-->
-                    <!--<exclude name=".*"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <test name="Switch-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.switchMediator"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.switchMediator.InvokeOnErrorSequenceFromSwitchIntegrationTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 
     <test name="Validate-mediator-Test" preserve-order="true" verbose="2">
         <packages>

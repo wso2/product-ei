@@ -116,7 +116,7 @@ public class Utils {
                 }
             }
         } catch (IOException e) {
-            throw new IOException("Error killing the process which uses the port " + port);
+            throw new IOException("Error killing the process which uses the port " + port, e);
         }
     }
 
