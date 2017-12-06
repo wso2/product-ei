@@ -27,6 +27,7 @@ import org.wso2.carbon.application.mgt.synapse.stub.ExceptionException;
 import org.wso2.carbon.application.mgt.synapse.stub.types.carbon.SynapseApplicationMetadata;
 import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
+import org.wso2.carbon.automation.engine.context.DefaultInstance;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.context.beans.ContextUrls;
 import org.wso2.carbon.automation.engine.context.beans.Tenant;
@@ -100,6 +101,25 @@ public abstract class ESBIntegrationTest {
 		userMode = TestUserMode.SUPER_TENANT_ADMIN;
 		init(userMode);
 	}
+
+    /**
+     * Initialize the context given a tenant domain and a user.
+     *
+     * @param tenantName the name of the tenant domain. Should be one of the domains specified in the automation.xml
+     * @param userName   The name of the user to be initialized
+     * @throws Exception if an error occurs during context initialization
+     */
+    protected void init(String tenantName, String userName) throws Exception {
+        axis2Client = new StockQuoteClient();
+        DefaultInstance defaultInstance = new DefaultInstance();
+        String instanceName = defaultInstance.getDefaultManager(ESBTestConstant.ESB_PRODUCT_GROUP);
+        context = new AutomationContext(ESBTestConstant.ESB_PRODUCT_GROUP, instanceName, tenantName, userName);
+        contextUrls = context.getContextUrls();
+        sessionCookie = login(context);
+        esbUtils = new ESBTestCaseUtils();
+        tenantInfo = context.getContextTenant();
+        userInfo = tenantInfo.getContextUser();
+    }
 
 	protected void init(TestUserMode userMode) throws Exception {
 		axis2Client = new StockQuoteClient();
