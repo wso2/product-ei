@@ -68,13 +68,13 @@
                                 <artifactItem>
                                     <groupId>org.wso2.ei</groupId>
                                     <artifactId>common</artifactId>
-                                    <version>${product.ei.version}</version>
+                                    <version>${pom.version}</version>
                                     <outputDirectory>${project.build.directory}/lib/tools</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.wso2.ei</groupId>
                                     <artifactId>synapse2ballerina</artifactId>
-                                    <version>${product.ei.version}</version>
+                                    <version>${pom.version}</version>
                                     <outputDirectory>${project.build.directory}/lib/tools</outputDirectory>
                                 </artifactItem>
                             </artifactItems>

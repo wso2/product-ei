@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>test-utils</artifactId>
-            <version>${product.ei.version}</version>
+            <version>${pom.version}</version>
         </dependency>
 
         <dependency>
@@ -81,7 +81,7 @@
                         </property>
                         <property>
                             <name>product.ei.version</name>
-                            <value>${product.ei.version}</value>
+                            <value>${pom.version}</value>
                         </property>
                     </systemProperties>
                 </configuration>
@@ -127,7 +127,7 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <unzip src="../../distribution/target/wso2ei-${product.ei.version}.zip"
+                                <unzip src="../../distribution/target/wso2ei-${pom.version}.zip"
                                        dest="../../distribution/target/test" overwrite="true"/>
                             </tasks>
                         </configuration>
