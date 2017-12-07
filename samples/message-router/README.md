@@ -45,9 +45,9 @@ Since Gateway acts as an intermediate hop, it is required to add the X-Forwarded
 
 
 ### Content-based routing
-There are multiple payment services exists which handles different type of payment methods.
+There are multiple resources in payment service exists which handles different type of payment methods.
 Payment type can be determined using the “PaymentType” element of the payment request.
-Payment request need to be routed to the correct service based on the content of payment request message.
+Payment request need to be routed to the correct resource based on the content of payment request message.
 
 
 ## Building the scenario
