@@ -1,0 +1,10 @@
+{
+   "fullName": "John Martin",
+   "shipmentType":"Normal",
+   "address":{
+      "street":"787 Castro st",
+      "city":"mountain view",
+      "state":"CA",
+      "zip":"94041-2013"
+   }
+}

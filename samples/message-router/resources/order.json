@@ -1,0 +1,12 @@
+{  
+   "order":[  
+      {  
+         "category":"Electronics",
+         "item":{  
+            "subcategory":"Phones",
+            "model":"S7 Edge",
+            "brand":"Samsung"
+         }
+      }
+   ]
+}
