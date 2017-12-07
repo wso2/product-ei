@@ -44,7 +44,7 @@
         <module>modules/tools</module>
         <module>modules/features</module>
         <module>distribution</module>
-        <module>integration</module>
+        <module>integration-test</module>
     </modules>
 
     <dependencyManagement>
