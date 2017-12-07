@@ -1,57 +1,57 @@
-#Message Routing Gateway Sample
+# Message Routing Gateway Sample
 
-##Scenario
+## Scenario
 
-The scenario is about an eCommerce API router scenario. 
-An eCommerce system consists of several microservices which provides a specific functionality. 
-Those services are not exposed externally. 
-To expose those functionality to the outside it is required to create a routing service which acts as a gateway. 
+The scenario is about an eCommerce API router scenario.
+An eCommerce system consists of several microservices which provides a specific functionality.
+Those services are not exposed externally.
+To expose those functionality to the outside it is required to create a routing service which acts as a gateway.
 So, the external applications can consume them through the Gateway service.
 
 Following are the available microservices.
 
-Browse Service: 
+Browse Service:
 browse available items
 
-Order Service: 
+Order Service:
 place an order
 
-Payment Service: 
+Payment Service:
 make the payment
 
-Shipment Service: 
+Shipment Service:
 submit shipment details
 
 
 Following are some of the key requirement of the gateway.
 
-##Routing based on url
+## Routing based on url
 Gateway service provides a single API to the outside which can be consumed by external applications.
  So it need to route the incoming requests into appropriate microservice based on the url.
 
-##Routing based on headers
-Gateway service is accessed by internal systems in the organization too. Those systems need special access to those microservices. 
+## Routing based on headers
+Gateway service is accessed by internal systems in the organization too. Those systems need special access to those microservices.
 ‘User-Agent’ header present in the request can be used to identify the internal system.
 Here shipment requests needed to be routered to appropriate resource based on the value of the ‘User-Agent’ header.
 
-##Manipulating headers
+## Manipulating headers
 Since Gateway acts as an intermediate hop, it is required to add the X-Forwarded-For header to the request.
 
 
-##Content-based routing
+## Content-based routing
 There are multiple payment services exists which handles different type of payment methods.
 Payment type can be determined using the “PaymentType” element of the payment request.
 Payment request need to be routed to the correct service based on the content of payment request message.
 
 
-##How to run the sample
+## How to run the sample
 
 bin$ ./integrator.sh ../samples/message-router/router.balx
 
 
-##Executing Sample
+## Executing Sample
 
-### Browse Electronics items 
+### Browse Electronics items
 
 Invoke the service using cURL as follows
 
@@ -62,27 +62,27 @@ curl -v http://localhost:9090/ecom/browse/Electronics
 You should get something similar to following as the output.
 
 ```
-{  
-   "Phones":[  
-      {  
+{
+   "Phones":[
+      {
          "model":"S7 Edge",
          "brand":"Samsung"
       },
-      {  
+      {
          "model":"S8 Edge",
          "brand":"Samsung"
       },
-      {  
+      {
          "model":"IphoneX",
          "brand":"Apple"
       }
    ],
-   "Televisions":[  
-      {  
+   "Televisions":[
+      {
          "model":"LF530 Smart",
          "brand":"LG"
       },
-      {  
+      {
          "model":"M5000",
          "brand":"Samsung"
       }
@@ -187,7 +187,7 @@ Submitting internal shipment details to order id: 371
 
 ### Manipulating Headers
 
-For every request you will notice following is getting printed in the log. 
+For every request you will notice following is getting printed in the log.
 Please refer to the setXFwdForHeader() function in the RoutingService.bal for more information about manipulating headers.
 
 ```
