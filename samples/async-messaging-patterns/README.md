@@ -64,8 +64,8 @@ ensure to persist the message and ensure that the message is successfully delive
 
 For this scenario we would need the following,
 
-- Service which will act as the ![TravelRequestProcessingService]("services/samples/queue/"+
-"TravelRequestProcessingService.bal")  
+- Service which will act as the 
+![TravelRequestProcessingService](services/samples/queue/TravelRequestProcessingService.bal)  
 - Service which will act as the gateway and which will publish the message to the queue 
 ![TravelRequestGateway](services/samples/queue/TravelRequestGateway.bal)  
 - Service which will consume the message from the queue and dispatch the message to "TravelRequestProcessingService"
@@ -142,10 +142,10 @@ message could be broad-casted among multiple consumers.
 
 ### Building the Scenario
 
-- Service which will act as the ![TravelRequestProcessingService]("services/samples/topic/common/"+
-"TravelRequestProcessingService.bal") 
-- Service which will act as the ![TravelRequestAuditingService]("services/samples/topic/common/"+
-"TravelRequestAuditingService.bal") 
+- Service which will act as the 
+![TravelRequestProcessingService](services/samples/topic/common/TravelRequestProcessingService.bal) 
+- Service which will act as the 
+![TravelRequestAuditingService](services/samples/topic/common/TravelRequestAuditingService.bal) 
 - Service which will act as the gateway to receive inbound http requests and dispatch them to the topic
 ![TravelRequestGateway](services/samples/topic/common/TravelRequestGateway.bal)
 - Service which will act as the topic consumer to dispatch to "TravelRequestProcessingService"
@@ -223,11 +223,11 @@ that time will not be delivered.
 
 - "common.balx" described in the section "Topic Usage Scenario" would be used in this scenario.
 - Service which will create a durable topic subscription in order to dispatch the request to 
-"TravelRequestProcessingService" would be ![TravelRequestProcessingConsumer]("services/samples/topic/durable/"+
-"TravelRequestProcessingConsumer.bal")
+"TravelRequestProcessingService" would be 
+![TravelRequestProcessingConsumer](services/samples/topic/durable/TravelRequestProcessingConsumer.bal)
 - Service which will create a durable topic subscription in order to dispatch the request to 
-"TravelRequestAuditingService" would be ![TravelRequestAuditingConsumer]("services/samples/topic/durable/"+
-"TravelRequestAuditingConsumer.bal")
+"TravelRequestAuditingService" would be 
+![TravelRequestAuditingConsumer](services/samples/topic/durable/TravelRequestAuditingConsumer.bal)
 
 Composing the above "TravelRequestProcessingConsumer" and "TravelRequestAuditingConsumer", "durable.balx" is created.
 
