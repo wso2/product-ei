@@ -60,6 +60,19 @@ its SLAs
 As soon as the message is received by the gateway, the message could be placed into a queue. Queue would 
 ensure to persist the message and ensure that the message is successfully delivered to its consumers. 
 
+### Building the Scenario
+
+For this scenario we would need the following,
+
+- Service which will act as the ![TravelRequestProcessingService]("services/samples/queue/"+
+"TravelRequestProcessingService.bal")  
+- Service which will act as the gateway and which will publish the message to the queue 
+![TravelRequestGateway](services/samples/queue/TravelRequestGateway.bal)  
+- Service which will consume the message from the queue and dispatch the message to "TravelRequestProcessingService"
+ ![TravelRequestConsumingService](services/samples/queue/TravelRequestConsumingService.bal)  
+
+Composing the above services queue.balx is created.
+
 ### Testing Scenario
 
 #### Sample Setup
@@ -127,6 +140,24 @@ In order to do that TravelGuideInc finance department created a service TravelRe
 With queue only one service will receive a given message. For such requirement topics should be used, so that a given
 message could be broad-casted among multiple consumers.
 
+### Building the Scenario
+
+- Service which will act as the ![TravelRequestProcessingService]("services/samples/topic/common/"+
+"TravelRequestProcessingService.bal") 
+- Service which will act as the ![TravelRequestAuditingService]("services/samples/topic/common/"+
+"TravelRequestAuditingService.bal") 
+- Service which will act as the gateway to receive inbound http requests and dispatch them to the topic
+![TravelRequestGateway](services/samples/topic/common/TravelRequestGateway.bal)
+- Service which will act as the topic consumer to dispatch to "TravelRequestProcessingService"
+![TravelRequestProcessingConsumer](services/samples/topic/default/TravelRequestProcessingConsumer.bal)
+- Service which will act as the topic consumer to dispatch to "TravelRequestAuditingService"
+![TravelRequestAuditingConsumer](services/samples/topic/default/TravelRequestAuditingConsumer.bal)
+
+Composing "TravelRequestProcessingService","TravelRequestAuditingService","TravelRequestGateway" commmon.balx is 
+created.
+
+Composing "TravelRequestProcessingConsumer" and "TravelRequestAuditingConsumer" default.balx is created.
+
 ### Testing Scenario
 
 #### Sample Setup
@@ -187,6 +218,18 @@ this it has come to notice that some messages have got lost and TravelGuideInc c
 As it was reflected at the beginning of the sample. Usage of non-durable topics would provide better performance. 
 However, messages will not be persisted in this mode. Hence, if the consumers are offline the messages dispatched at 
 that time will not be delivered.   
+
+### Building the Scenario
+
+- "common.balx" described in the section "Topic Usage Scenario" would be used in this scenario.
+- Service which will create a durable topic subscription in order to dispatch the request to 
+"TravelRequestProcessingService" would be ![TravelRequestProcessingConsumer]("services/samples/topic/durable/"+
+"TravelRequestProcessingConsumer.bal")
+- Service which will create a durable topic subscription in order to dispatch the request to 
+"TravelRequestAuditingService" would be ![TravelRequestAuditingConsumer]("services/samples/topic/durable/"+
+"TravelRequestAuditingConsumer.bal")
+
+Composing the above "TravelRequestProcessingConsumer" and "TravelRequestAuditingConsumer", "durable.balx" is created.
 
 ### Testing Scenario
 
