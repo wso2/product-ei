@@ -8,7 +8,7 @@ service<http> PaymentGatewayService {
         methods:["POST"],
         path:"/pay"
     }
-    resource validateCert (http:Request req, http:Response resp) {
+    resource makePayment (http:Request req, http:Response resp) {
         println("Processing Payment");
 
         // dummy payment service
