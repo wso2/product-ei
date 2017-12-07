@@ -26,7 +26,7 @@ service<jms> travelRequestProcessingConsumer {
         //Create a http message based on the content specified in JMS message
         http:Request travelOrderRequest = {};
         travelOrderRequest.setJsonPayload(travelRequestMessage);
-        //Create a place holder to retrieve the response obtained from coffee order service
+        //Create a place holder to retrieve the response obtained from travel order service
         http:Response travelOrderResponse = {};
         //Dispatch the order message to the respective endpoint.
         travelOrderResponse, travelOrderDispatchError = orderDispatchEp.post("/travelOrder", travelOrderRequest);

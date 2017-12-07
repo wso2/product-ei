@@ -15,9 +15,9 @@ service<http> travelRequestGateway {
         methods:["POST"],
         path:"/itinerary"
     }
-    resource coffeeResource (http:Request req, http:Response res) {
+    resource travelRequestResource (http:Request req, http:Response res) {
         json travelRequestPayload = req.getJsonPayload();
-        // Create a coffee order message
+        // Create a travel order message
         jms:JMSMessage travelRequestMessage = jms:createTextMessage(getConnectorConfig());
         //Set the order content to the JMS message
         //Note : in this sample we do not validate the incoming message since that is not the scope of this sample.
