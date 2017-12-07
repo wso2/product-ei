@@ -22,7 +22,7 @@ make the payment
 Shipment Service:
 submit shipment details
 
-So we need a single service or a gateway which routes the incoming traffic from various client into above microservices.
+So we need a single service or a gateway which routes the incoming traffic from various clients into above microservices.
 
 ![Message Router](routing-scenario.png "Message Routing Gateway")
 
