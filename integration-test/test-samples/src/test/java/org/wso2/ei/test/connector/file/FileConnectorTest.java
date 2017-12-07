@@ -28,7 +28,7 @@ import org.wso2.ei.test.connector.soap.SoapConnectorTest;
 import org.wso2.ei.test.utils.TestUtils;
 
 /**
- * Tests for File connector
+ * Tests for File connector.
  */
 public class FileConnectorTest {
 
@@ -46,10 +46,6 @@ public class FileConnectorTest {
         if (!serverStarted) {
             Assert.fail("Error running the test, server not stated");
         }
-
-
-
-
     }
 
     @AfterTest

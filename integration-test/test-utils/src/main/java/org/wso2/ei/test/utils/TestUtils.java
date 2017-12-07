@@ -45,7 +45,12 @@ public class TestUtils {
      * @return true if the start stared successfully, false otherwise
      */
     public static boolean startServer(String balxFile) {
-        String eiHome = "target/test-integration/wso2ei-" + System.getProperty("product.ei.version");
+        String relativeEiHome = ".." + File.separator + ".." + File.separator + "distribution"
+                + File.separator + "target" + File.separator + "test" + File.separator
+                + "wso2ei-" + System.getProperty("product.ei.version");
+        File eiHomeFile = new File(relativeEiHome);
+        String eiHome =   eiHomeFile.getAbsolutePath();
+
         boolean isStarted = false;
 
         String pathRelatedToTestModule = ".." + File.separator + ".." + File.separator + balxFile;
@@ -57,7 +62,7 @@ public class TestUtils {
             String canonicalPath = fullPath.getCanonicalPath();
             String[] startCmd;
             if (System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("windows")) {
-                startCmd = new String[] { "cmd.exe", "/c", "integrator.bat", canonicalPath };
+                startCmd = new String[] { "cmd.exe", "/c", "\"integrator.bat\"", canonicalPath };
             } else {
                 startCmd = new String[] { "bash", "integrator.sh", canonicalPath, "&" };
             }
@@ -91,27 +96,24 @@ public class TestUtils {
      * @return true if stopped successfully, false otherwise
      */
     public static boolean stopServer() {
-        BufferedReader bufferedReader = null;
         try {
+            String[] netstatCmd;
             if (System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("windows")) {
-                //todo later
+                netstatCmd = new String[] { "cmd.exe", "/c", "netstat", "-n", "-a", "-o" };
+                String pidLine = getPidLine(netstatCmd);
 
-            } else {
-                String[] netstatCmd = new String[] { "netstat", "-lntp" };
-                ProcessBuilder processBuilder = new ProcessBuilder(netstatCmd);
-
-                Process process = processBuilder.start();
-                bufferedReader = new BufferedReader(
-                        new InputStreamReader(process.getInputStream(), Charset.defaultCharset()));
-                String line;
-                String pidLine = null;
-                while ((line = bufferedReader.readLine()) != null) {
-                    if (line.contains(":9090")) {
-                        pidLine = line;
-                        break;
-                    }
+                if (pidLine != null) {
+                    String pidStr = pidLine.split("LISTENING")[1].trim();
+                    String[] killCmd = new String[] { "taskkill", "/F", "/PID", pidStr };
+                    ProcessBuilder killPB = new ProcessBuilder(killCmd);
+                    killPB.start();
+                } else {
+                    log.warn("EI server is not running");
+                    return false;
                 }
-                process.waitFor();
+            } else {
+                netstatCmd = new String[] { "netstat", "-lntp" };
+                String pidLine = getPidLine(netstatCmd);
 
                 if (pidLine != null) {
                     String pidStr = pidLine.split("LISTEN")[1].split("/java")[0].trim();
@@ -123,9 +125,34 @@ public class TestUtils {
                     return false;
                 }
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             log.error("Error stopping the server ", e);
             return false;
+        }
+        return true;
+    }
+
+    private static String getPidLine(String[] netstatCmd) {
+        BufferedReader bufferedReader = null;
+        ProcessBuilder processBuilder = new ProcessBuilder(netstatCmd);
+        String pidLine = null;
+        try {
+            Process process = processBuilder.start();
+
+            bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), Charset.defaultCharset()));
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains(":9090")) {
+                    pidLine = line;
+                    break;
+                }
+            }
+            process.waitFor();
+
+        } catch (IOException | InterruptedException e) {
+            log.error("Error finding the server process id ", e);
         } finally {
             if (bufferedReader != null) {
                 try {
@@ -135,7 +162,8 @@ public class TestUtils {
                 }
             }
         }
-        return true;
+
+        return pidLine;
     }
 
 }

@@ -48,7 +48,7 @@ public class SoapConnectorTest {
     @Test
     public void testSoapConnector() {
         if (!serverStarted) {
-            Assert.fail("Error running the test, server not stated");
+            Assert.fail("Error running the test, server not started");
         }
 
         String symbol = "ABC";

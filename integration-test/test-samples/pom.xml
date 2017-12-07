@@ -128,7 +128,7 @@
                         <configuration>
                             <tasks>
                                 <unzip src="../../distribution/target/wso2ei-${product.ei.version}.zip"
-                                       dest="target/test-integration" overwrite="true"/>
+                                       dest="../../distribution/target/test" overwrite="true"/>
                             </tasks>
                         </configuration>
                     </execution>
@@ -137,7 +137,7 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <delete dir="target/test-integration" />
+                                <delete dir="../../distribution/target/test" />
                             </target>
                         </configuration>
                         <goals>
