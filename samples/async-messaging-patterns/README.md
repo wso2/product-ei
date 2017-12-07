@@ -6,8 +6,8 @@ There're several messaging domains available for asynchronous messaging
 
 **Message queues**
 
-Provides delivery guarantees and preserves the order of the messages. If several consumers are bound to a queue only one 
-of them would receive a given message, the messages would be load balanced among the consumers.
+Provides delivery guarantees and preserves the order of the messages. If several consumers are bound to a single queue 
+only one of them would receive a given message, the messages would be load balanced among the consumers.
  
 **Message topics** 
 
@@ -111,7 +111,7 @@ curl -v http://localhost:9090/travel/itinerary -d@payload.json -H"Content-Type: 
 
 #### Observations
 
-The following response will be receive,
+The following response will be received,
 
 ```
 {"Status":"travel request processed"}
