@@ -21,10 +21,9 @@ package org.wso2.ei.test.connector.file;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.ei.test.connector.soap.SoapConnectorTest;
 import org.wso2.ei.test.utils.TestUtils;
 
 /**
@@ -32,11 +31,11 @@ import org.wso2.ei.test.utils.TestUtils;
  */
 public class FileConnectorTest {
 
-    private static final Logger log = LoggerFactory.getLogger(SoapConnectorTest.class);
+    private static final Logger log = LoggerFactory.getLogger(FileConnectorTest.class);
 
     private boolean serverStarted;
 
-    @BeforeTest
+    @BeforeClass
     public void startServer() {
         serverStarted = TestUtils.startServer("samples/file-connector/file-connector-sample.balx");
     }
@@ -44,14 +43,15 @@ public class FileConnectorTest {
     @Test
     public void testFileConnector() {
         if (!serverStarted) {
-            Assert.fail("Error running the test, server not stated");
+            //this assertion makes sure that the file connector is deployed properly to EI7 pack
+            Assert.fail("Error running the test, server is not started");
         }
     }
 
-    @AfterTest
+    @AfterClass
     public void stopServer() {
         if (!TestUtils.stopServer()) {
-            log.error("Error Stopping the server");
+            log.error("Error stopping the server");
         }
     }
 }

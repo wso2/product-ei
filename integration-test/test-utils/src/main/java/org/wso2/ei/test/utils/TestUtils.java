@@ -107,6 +107,7 @@ public class TestUtils {
                     String[] killCmd = new String[] { "taskkill", "/F", "/PID", pidStr };
                     ProcessBuilder killPB = new ProcessBuilder(killCmd);
                     killPB.start();
+                    waitUtilServerStop();
                 } else {
                     log.warn("EI server is not running");
                     return false;
@@ -120,6 +121,7 @@ public class TestUtils {
                     String[] killCmd = new String[] { "kill", "-9", pidStr };
                     ProcessBuilder killPB = new ProcessBuilder(killCmd);
                     killPB.start();
+                    waitUtilServerStop();
                 } else {
                     log.warn("EI server is not running");
                     return false;
@@ -130,6 +132,31 @@ public class TestUtils {
             return false;
         }
         return true;
+    }
+
+    private static void waitUtilServerStop() {
+        Socket socket;
+        int safeCount = 0;
+        boolean isStopped = false;
+        while (!isStopped && safeCount < 5) {
+            try {
+                log.debug("Waiting till the server stops properly [" + safeCount + "]");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    log.debug("Error waiting on stopping server");
+                }
+                socket = new Socket(InetAddress.getLocalHost(), 9090);
+                isStopped = socket.isConnected();
+                safeCount++;
+            } catch (ConnectException ignore) {
+                log.debug("Sever is stopped completely");
+                isStopped = true;
+            } catch (IOException e) {
+                log.debug("Error waiting on stopping server");
+            }
+
+        }
     }
 
     private static String getPidLine(String[] netstatCmd) {
