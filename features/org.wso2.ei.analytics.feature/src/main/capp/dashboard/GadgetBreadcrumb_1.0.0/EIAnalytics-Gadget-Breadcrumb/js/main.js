@@ -19,7 +19,7 @@ $(function() {
     if (currentLocation != TYPE_LANDING) {
         appendTrail(lastSegment + pageName,currentLocation);
         if (qs[PARAM_ID] != null) {
-            appendTrail(lastSegment + pageName + "?" + PARAM_ID + "=" + qs[PARAM_ID],qs[PARAM_ID]);
+            appendTrail(lastSegment + pageName + "?" + PARAM_ID + "=" + qs[PARAM_ID], decodeURIComponent(qs[PARAM_ID]));
         }
     }
     
