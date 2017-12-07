@@ -2,7 +2,7 @@
 
 ## Scenario
 
-The scenario is about an eCommerce API router scenario.
+The scenario is about an eCommerce API router.
 An eCommerce system consists of several microservices which provides a specific functionality.
 Those services are not exposed externally.
 To expose those functionality to the outside it is required to create a routing service which acts as a gateway.
