@@ -137,8 +137,8 @@ public class TestUtils {
     private static void waitUtilServerStop() {
         Socket socket;
         int safeCount = 0;
-        boolean isStopped = false;
-        while (!isStopped && safeCount < 5) {
+        boolean isConnected = true;
+        while (isConnected && safeCount < 5) {
             try {
                 log.debug("Waiting till the server stops properly [" + safeCount + "]");
                 try {
@@ -147,11 +147,11 @@ public class TestUtils {
                     log.debug("Error waiting on stopping server");
                 }
                 socket = new Socket(InetAddress.getLocalHost(), 9090);
-                isStopped = socket.isConnected();
+                isConnected = socket.isConnected();
                 safeCount++;
             } catch (ConnectException ignore) {
                 log.debug("Sever is stopped completely");
-                isStopped = true;
+                isConnected = false;
             } catch (IOException e) {
                 log.debug("Error waiting on stopping server");
             }
@@ -171,14 +171,12 @@ public class TestUtils {
             String line;
 
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(":9090")) {
+                if (line.contains(":9090") && line.contains("LISTEN")) {
                     pidLine = line;
                     break;
                 }
             }
-            process.waitFor();
-
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             log.error("Error finding the server process id ", e);
         } finally {
             if (bufferedReader != null) {
