@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy name="TCPProxy"
+       transports="tcp"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="symbol" value="IBM" scope="default" type="STRING"/>
+            <enrich>
+                <source type="inline" clone="true">
+                    <m:getQuote xmlns:m="http://services.samples">
+                        <m:request>
+                            <m:symbol>?</m:symbol>
+                        </m:request>
+                    </m:getQuote>
+                </source>
+                <target type="body"/>
+            </enrich>
+            <enrich>
+                <source type="property" clone="true" property="symbol"/>
+                <target xmlns:m="http://services.samples" xpath="//m:getQuote/m:request/m:symbol"/>
+            </enrich>
+            <log level="full" separator=","/>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" format="soap11"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </target>
+    <parameter name="transport.tcp.recordDelimiter">0x03</parameter>
+    <parameter name="transport.tcp.responseClient">true</parameter>
+    <parameter name="transport.tcp.inputType">binary</parameter>
+    <parameter name="transport.tcp.port">6789</parameter>
+    <parameter name="transport.tcp.recordDelimiterType">byte</parameter>
+    <parameter name="transport.tcp.contentType">text/xml</parameter>
+</proxy>
+</definitions>
