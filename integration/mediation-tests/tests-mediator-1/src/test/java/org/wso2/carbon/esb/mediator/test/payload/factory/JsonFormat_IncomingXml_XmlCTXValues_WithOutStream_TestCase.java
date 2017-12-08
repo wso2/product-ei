@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -15,19 +15,16 @@
 *specific language governing permissions and limitations
 *under the License.
 */
+
 package org.wso2.carbon.esb.mediator.test.payload.factory;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient;
 import org.wso2.carbon.automation.test.utils.http.client.HttpURLConnectionClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URL;
 
 import static org.testng.Assert.assertTrue;
@@ -37,14 +34,14 @@ public class JsonFormat_IncomingXml_XmlCTXValues_WithOutStream_TestCase extends 
 	@BeforeClass(alwaysRun = true)
 	public void uploadSynapseConfig() throws Exception {
 		super.init();
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/jsonFormat_XmlExpressions_CTX.xml");
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
+		        File.separator + "mediatorconfig" + File.separator + "payload" + File.separator + "factory" +
+		        File.separator + "jsonFormat_XmlExpressions_CTX.xml");
 	}
 
-
-	@Test(groups = {"wso2.esb"}, description = "WithoutStream B&F, json format, xml evaluators, incoming xml, outgoing json ")
+	@Test(groups = {"wso2.esb"},
+			description = "WithoutStream B&F, json format, xml evaluators, incoming xml, outgoing json ")
 	public void transformPayloadByArgsValue() throws Exception {
-
-		SimpleHttpClient httpClient=new SimpleHttpClient();
 		String payload = "<xml><id_str>84315710834212866</id_str><entities><hashtags><text>wso2</text><indices>35</indices>"
 				+"<indices>45</indices>"
 				+"</hashtags>"
@@ -59,12 +56,9 @@ public class JsonFormat_IncomingXml_XmlCTXValues_WithOutStream_TestCase extends 
 		String contentType="application/xml";
 		Reader data = new StringReader(payload);
 		Writer writer = new StringWriter();
-
 		String responsePayload = HttpURLConnectionClient.sendPostRequestAndReadResponse(data,
 				new URL(url), writer, contentType);
-
-		assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message"); // fail
-
+		assertTrue(responsePayload.contains("wso2"), "Symbol wso2 not found in response message");
 	}
 
 	@AfterClass(alwaysRun = true)
