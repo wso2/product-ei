@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="CachingTestPost" trace="enable">
+    <property name="TargetUri" value="http://localhost:8480/services/RespondProxy"/>
+    <header expression="get-property('TargetUri')" name="To" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <cache collector="false"
+           hashGenerator="org.wso2.carbon.mediator.cache.digest.DOMHASHGenerator"
+           scope="per-host" timeout="30">
+        <onCacheHit>
+            <log>
+                <property name="CACHEMATCHED" value="CACHEMATCHEDCACHEMATCHED"/>
+            </log>
+            <respond/>
+        </onCacheHit>
+        <implementation maxSize="1000" type="memory"/>
+    </cache>
+    <call/>
+    <log level="full">
+        <property name="FULL_PAYLOAD" value="Full payload from backend"/>
+    </log>
+    <property name="RESPONSE" value="true"/>
+    <cache collector="true" scope="per-host"/>
+    <respond/>
+</sequence>

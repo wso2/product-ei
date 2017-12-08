@@ -54,14 +54,14 @@ public class ESBJAVA4931PreserveContentTypeHeaderCharSetTestCase extends ESBInte
                                    "proxy" +
                 File.separator + "sample_proxy_3.wsdl");
         FileUtils.copyFile(sourceFile, targetFile);
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4931/PreserveContentTypeHeaderCharSetTest.xml");
+        verifyProxyServiceExistence("PreserveContentTypeHeaderCharSetTestProxy");
     }
 
     @Test(groups = "wso2.esb", description = "Test to check whether the Content-Type header charset is preserved when sending " +
             "requests to back end")
     public void testPreserveContentTypeHeader() throws Exception {
 
-        String proxyServiceUrl = getProxyServiceURLHttp("PreserveContentTypeHeaderCharSetTest");
+        String proxyServiceUrl = getProxyServiceURLHttp("PreserveContentTypeHeaderCharSetTestProxy");
 
         String requestPayload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                 "   <soapenv:Header/>\n" +

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="APIM1838addPerson" context="/APIM1838addPerson">
+    <resource methods="GET POST" uri-template="/person*">
+        <inSequence>
+            <property name="POST_TO_URI" value="true" scope="axis2" type="STRING"/>
+            <property name="uri.var.email"
+                      expression="$ctx:query.param.email"
+                      scope="default"
+                      type="STRING"/>
+            <property name="uri.var.fname"
+                      expression="$ctx:query.param.firstName"
+                      scope="default"
+                      type="STRING"/>
+            <property name="uri.var.lname"
+                      expression="$ctx:query.param.lastName"
+                      scope="default"
+                      type="STRING"/>
+            <log>
+                <property name="email" expression="get-property('uri.var.email')"/>
+                <property name="fname" expression="get-property('uri.var.fname')"/>
+                <property name="lname" expression="get-property('uri.var.lname')"/>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="post"
+                          uri-template="http://localhost:8080/rest/api/people?email={uri.var.email}&amp;firstName={uri.var.fname}&amp;lastName={uri.var.lname}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

@@ -32,7 +32,7 @@ public class ESBJAVA5021MultiplePrefixesAndDashSupport extends DataMapperIntegra
 
     @Test(groups = { "wso2.esb" }, description = "Datamapper : test support for multiple prefixes for same namespace")
     public void testMultiplePrefixesToSameNamespace() throws Exception {
-        loadESBConfigurationFromClasspath(DM_ARTIFACT_ROOT_PATH + File.separator + "synapse.xml");
+        verifyAPIExistence("simpleDataAPI_XMLtoXML2_withDash");
         uploadResourcesToGovernanceRegistry(DM_REGISTRY_ROOT_PATH + "multiplePrefix/", DM_ARTIFACT_ROOT_PATH,
                                 "simpleDataAPI_XMLtoXML2_withDash_regConf.dmc",
                                 "simpleDataAPI_XMLtoXML2_withDash_regConf_inputSchema.json",

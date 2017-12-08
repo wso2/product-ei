@@ -158,12 +158,13 @@
 
     <test name="Message-Store-Test" preserve-order="true" verbose="2">
         <classes>
-            <class name="org.wso2.carbon.esb.message.store.test.JMSEndpointSuspensionViaVFSTest"/>
+            <!--<class name="org.wso2.carbon.esb.message.store.test.JMSEndpointSuspensionViaVFSTest"/>-->
             <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageCleaningTestCase"/>
             <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageConcurrencyTestCase"/>
             <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageDeleteTestCase"/>
             <class name="org.wso2.carbon.esb.message.store.test.MessageStoreMessageStoringTestCase"/>
             <class name="org.wso2.carbon.esb.message.store.test.MessageStorePersistenceTestCase"/>
+            <class name="org.wso2.carbon.esb.message.store.test.DynamicMessageRoutingTestCase"/>
         </classes>
     </test>
 

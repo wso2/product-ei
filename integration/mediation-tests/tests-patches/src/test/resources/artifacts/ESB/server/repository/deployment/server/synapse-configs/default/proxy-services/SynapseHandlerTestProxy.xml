@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="SynapseHandlerTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <inSequence>
+         <header name="Action" value="urn:getQuote"/>
+         <payloadFactory media-type="xml">
+            <format>
+               <m:getQuote xmlns:m="http://services.samples">
+                  <m:request>
+                     <m:symbol>IBM</m:symbol>
+                  </m:request>
+               </m:getQuote>
+            </format>
+            <args/>
+         </payloadFactory>
+         <call blocking="true">
+            <endpoint>
+               <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            </endpoint>
+         </call>
+         <respond/>
+      </inSequence>
+      <outSequence/>
+   </target>
+</proxy>

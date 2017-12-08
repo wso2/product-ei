@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint xmlns="http://ws.apache.org/ns/synapse" name="EchoEndpoint">
+    <address uri="http://localhost:8280/service/echo" statistics="enable" />
+</endpoint>

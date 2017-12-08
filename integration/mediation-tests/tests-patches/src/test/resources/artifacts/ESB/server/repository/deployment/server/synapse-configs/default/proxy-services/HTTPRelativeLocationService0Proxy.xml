@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="HTTPRelativeLocationService0Proxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence/>
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+        <endpoint>
+            <address uri="http://localhost:8480/services/HTTPRelativeLocationServiceProxy"/>
+        </endpoint>
+    </target>
+    <description/>
+</proxy>

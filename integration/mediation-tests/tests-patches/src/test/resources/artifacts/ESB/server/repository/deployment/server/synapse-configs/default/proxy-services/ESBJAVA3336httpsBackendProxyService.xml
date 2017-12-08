@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="ESBJAVA3336httpsBackendProxyService" transports="https http" startOnLoad="true" trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <send>
+                <endpoint key="ESBJAVA3336httpsEndpoint"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

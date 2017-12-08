@@ -51,7 +51,6 @@ import java.io.IOException;
 public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
     private final String MTOM_SERVICE = "MTOMSwASampleService";
     private SampleAxis2Server axis2Server;
-    private String relativeFilePath = "/artifacts/ESB/nhttp/transport/mtom/ESBJAVA4909MultipartRelatedTest.xml";
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @BeforeClass(alwaysRun = true)
@@ -60,7 +59,7 @@ public class ESBJAVA4909MultipartRelatedTestCase extends ESBIntegrationTest {
         axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server.start();
         axis2Server.deployService(MTOM_SERVICE);
-        loadESBConfigurationFromClasspath(relativeFilePath);
+        verifyProxyServiceExistence("MTOMChecker");
     }
 
     @Test(groups = {"wso2.esb"}, description = "ESBJAVA4909MultipartTest")

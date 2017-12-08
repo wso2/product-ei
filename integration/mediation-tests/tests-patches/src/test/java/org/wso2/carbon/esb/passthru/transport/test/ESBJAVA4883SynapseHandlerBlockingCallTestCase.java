@@ -17,7 +17,6 @@
 
 package org.wso2.carbon.esb.passthru.transport.test;
 
-import org.apache.axiom.om.OMElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -46,7 +45,7 @@ public class ESBJAVA4883SynapseHandlerBlockingCallTestCase extends ESBIntegratio
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator + "passthru" +
                 File.separator + "transport" + File.separator + "ESBJAVA4883" + File.separator + "synapse-handlers.xml"));
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/ESBJAVA4883/SynapseHandlerTestProxy.xml");
+        verifyProxyServiceExistence("SynapseHandlerTestProxy");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewerClient.clearLogs();
     }

@@ -45,6 +45,7 @@ public class ESBJAVA4565TestCase extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
+        verifySequenceExistence("ESBJAVA4565TestSequence");
         resourceAdminServiceStub =
                 new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
@@ -52,15 +53,12 @@ public class ESBJAVA4565TestCase extends ESBIntegrationTest {
                 new DataHandler(new URL("file:///" + getESBResourceLocation() +
                                         "/registry/ftp.xml")));
 
-        OMElement sequence = esbUtils.loadResource("/artifacts/ESB/sequence/esbjava4565/testSequence.xml");
-        this.addSequence(sequence);
-
         OMElement task = AXIOMUtil.stringToOM("<task:task xmlns:task=\"http://www.wso2.org/products/wso2commons/tasks\"\n" +
                                               "           name=\"TestTask\"\n" +
                                               "           class=\"org.apache.synapse.startup.tasks.MessageInjector\" group=\"synapse.simple.quartz\">\n" +
                                               "    <task:trigger interval=\"10\"/>\n" +
                                               "    <task:property name=\"format\" value=\"get\"/>\n" +
-                                              "    <task:property name=\"sequenceName\" value=\"testSequence\"/>\n" +
+                                              "    <task:property name=\"sequenceName\" value=\"ESBJAVA4565TestSequence\"/>\n" +
                                               "    <task:property name=\"injectTo\" value=\"sequence\"/>\n" +
                                               "    <task:property name=\"message\"><empty/></task:property>\n" +
                                               "</task:task>");

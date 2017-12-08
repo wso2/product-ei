@@ -38,7 +38,7 @@ public class ESBJAVA_4118_SOAPHeaderHandlingTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void deployService () throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/callout/CalloutMediatorSoapHeaderTest.xml");
+        verifyProxyServiceExistence("TestCalloutSoapHeader");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 

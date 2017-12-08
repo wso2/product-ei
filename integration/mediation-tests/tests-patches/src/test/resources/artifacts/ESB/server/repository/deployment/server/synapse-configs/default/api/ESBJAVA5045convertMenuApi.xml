@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/ESBJAVA5045convertMenuApi" name="ESBJAVA5045convertMenuApi" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST GET">
+        <inSequence>
+            <datamapper config="datamapper/multiplePrefix/FoodMapping.dmc" description="mapper"
+                        inputSchema="datamapper/multiplePrefix/FoodMapping_inputSchema.json"
+                        inputType="XML"
+                        outputSchema="datamapper/multiplePrefix/FoodMapping_outputSchema.json"
+                        outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

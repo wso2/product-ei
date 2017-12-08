@@ -106,9 +106,11 @@ public class JSONClient {
             out = sb.toString();
         }
 
-        JSONObject jsonObject = new JSONObject(out);
-
-        return jsonObject;
+        if (!out.isEmpty()) {
+            return new JSONObject(out);
+        } else {
+            return null;
+        }
     }
 
     private JSONObject sendRequest(String addUrl, String query, String action)
@@ -145,9 +147,11 @@ public class JSONClient {
             out = sb.toString();
         }
 
-        JSONObject jsonObject = new JSONObject(out);
-
-        return jsonObject;
+        if (!out.isEmpty()) {
+            return new JSONObject(out);
+        } else {
+            return null;
+        }
     }
 }
 

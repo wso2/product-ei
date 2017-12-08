@@ -33,9 +33,7 @@ public class ESBJAVA4394 extends ESBIntegrationTest {
          * to the client. (client gets empty response)
          */
         init();
-        loadESBConfigurationFromClasspath(
-                "artifacts" + File.separator + "ESB" + File.separator + "passthru" + File.separator + "transport"
-                        + File.separator + "ESBJAVA4394-config.xml");
+        verifyProxyServiceExistence("ESBJAVA4394simpleStockPassthrough");
 
         tcpMonListener1 = new TCPMonListener(9200, "localhost", 9300);
         tcpMonListener1.start();
@@ -49,7 +47,7 @@ public class ESBJAVA4394 extends ESBIntegrationTest {
                   + "when the error connection timeout occurs by closing the TCP mon connection")
     public void testMakeFaultForConnectionTimeoutResponse() {
         try {
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("simpleStockPassthroug"), null, "WSO2");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("ESBJAVA4394simpleStockPassthrough"), null, "WSO2");
         } catch (AxisFault axisFault) {
             /**
              * since we are making a soap fault in the configuration axis2 client receives axis fault.

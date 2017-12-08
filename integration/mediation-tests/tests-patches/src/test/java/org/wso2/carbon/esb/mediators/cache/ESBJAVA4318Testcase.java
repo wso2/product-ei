@@ -83,15 +83,23 @@ public class ESBJAVA4318Testcase extends ESBIntegrationTest {
         httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "text/xml;charset=UTF-8");
         HttpEntity stringEntity = new StringEntity(requestXml, CharEncoding.UTF_8);
         httpPost.setEntity(stringEntity);
-        //call to the backend
-        httpclient.execute(httpPost);
-
-        // this is to get the actual cached response
-        HttpResponse cachedResponse = httpclient.execute(httpPost);
+        HttpResponse response = httpclient.execute(httpPost);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        cachedResponse.getEntity().writeTo(baos);
+        response.getEntity().writeTo(baos);
         String actualValue = baos.toString();
-        Assert.assertEquals(actualValue, expectedValue);
+
+        // this is to get the actual cache response
+        HttpPost httpPost2 = new HttpPost(getProxyServiceURLHttp("PF"));
+        httpPost2.addHeader("SOAPAction", "urn:getFullQuote");
+        httpPost2.setHeader(HttpHeaders.CONTENT_TYPE, "text/xml;charset=UTF-8");
+        HttpEntity stringEntity2 = new StringEntity(requestXml, CharEncoding.UTF_8);
+        httpPost2.setEntity(stringEntity2);
+        HttpResponse response2 = httpclient.execute(httpPost);
+
+        ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+        response2.getEntity().writeTo(baos2);
+        String actualValue2 = baos2.toString();
+        Assert.assertEquals(actualValue2, expectedValue);
     }
 }

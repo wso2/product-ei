@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="HTTPSCProxy" xmlns="http://ws.apache.org/ns/synapse"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <callout endpointKey="mockEP">
+                <source type="envelope"/>
+                <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                        xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                        xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            </callout>
+            <log level="custom">
+                <property name="************** Status Code inSequence"
+                          expression="get-property('axis2','HTTP_SC')"/>
+            </log>
+            <drop/>
+        </inSequence>
+        <faultSequence>
+            <log level="custom">
+                <property name="************** Status Code faultSequence"
+                          expression="get-property('axis2','HTTP_SC')"/>
+                <property name="ERROR_DETAIL" expression="get-property('ERROR_DETAIL')"/>
+            </log>
+            <drop/>
+        </faultSequence>
+    </target>
+</proxy>

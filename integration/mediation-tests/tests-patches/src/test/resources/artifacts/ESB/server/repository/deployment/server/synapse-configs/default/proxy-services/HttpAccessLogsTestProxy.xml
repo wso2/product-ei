@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="HttpAccessLogsTestProxy"
+       transports="http https" startOnLoad="true"
+       trace="disable">
+    <target>
+
+        <inSequence>
+            <send/>
+        </inSequence>
+
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
+

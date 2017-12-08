@@ -36,7 +36,7 @@ public class ESBJAVA5045XsiNilElementSupport extends DataMapperIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Datamapper : test support for xsi:nil attribute in elements")
     public void testxsiNilAttributeInElement() throws Exception {
-        loadESBConfigurationFromClasspath(DM_ARTIFACT_ROOT_PATH + File.separator + "ESBJAVA5045Synapse.xml");
+        verifyAPIExistence("ESBJAVA5045convertMenuApi");
         uploadResourcesToGovernanceRegistry(DM_REGISTRY_ROOT_PATH + "multiplePrefix" + File.separator, DM_ARTIFACT_ROOT_PATH,
                                             "FoodMapping.dmc",
                                             "FoodMapping_inputSchema.json",
@@ -62,7 +62,7 @@ public class ESBJAVA5045XsiNilElementSupport extends DataMapperIntegrationTest {
                             + "</food>\n"
                             + "</breakfast_menu>\n";
 
-        String response = sendRequest(getApiInvocationURL("convertMenuApi"), requestMsg, "application/xml");
+        String response = sendRequest(getApiInvocationURL("ESBJAVA5045convertMenuApi"), requestMsg, "application/xml");
 
         Assert.assertEquals(response, "<menu><item><name>Belgian Waffles</name><price>$5.95</price>"
                                       + "<orgin>Belgian</orgin><veg>true</veg>"

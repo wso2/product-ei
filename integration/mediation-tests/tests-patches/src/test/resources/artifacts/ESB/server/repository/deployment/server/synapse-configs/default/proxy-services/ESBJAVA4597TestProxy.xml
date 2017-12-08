@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ESBJAVA4597TestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target faultSequence="ESBJAVA4597MyFaultSequency">
+      <inSequence>
+         <log level="full"/>
+         <send>
+            <endpoint>
+               <address uri="https://localhost:8888/test"/>
+            </endpoint>
+         </send>
+      </inSequence>
+      <outSequence>
+         <log>
+            <property name="OutSequence" value="***** OUT **************"/>
+         </log>
+         <respond/>
+      </outSequence>
+   </target>
+</proxy>

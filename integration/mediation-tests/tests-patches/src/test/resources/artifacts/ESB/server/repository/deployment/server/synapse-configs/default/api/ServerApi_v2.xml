@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/services/test_2" name="ServerApi_v2">
+    <resource methods="GET">
+        <inSequence>
+            <log level="full">
+            </log>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

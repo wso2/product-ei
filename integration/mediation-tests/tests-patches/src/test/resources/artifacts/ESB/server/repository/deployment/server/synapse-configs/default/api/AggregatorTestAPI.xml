@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse"
+     name="AggregatorTestAPI"
+     context="/testAggregate">
+    <resource methods="GET">
+        <inSequence>
+            <property name="enclosing_element" scope="default">
+                <result xmlns=""/>
+            </property>
+            <clone>
+                <target>
+                    <endpoint>
+                        <http uri-template="http://localhost:8480/correlateOnExpressionTest1"/>
+                    </endpoint>
+                </target>
+                <target>
+                    <endpoint>
+                        <http uri-template="http://localhost:8480/correlateOnExpressionTest2"/>
+                    </endpoint>
+                </target>
+                <target>
+                    <endpoint>
+                        <http uri-template="http://localhost:8480/correlateOnExpressionTest3"/>
+                    </endpoint>
+                </target>
+            </clone>
+        </inSequence>
+        <outSequence>
+            <aggregate>
+                <correlateOn expression="//data/type[text()='1']"/>
+                <completeCondition>
+                    <messageCount min="2" max="-1"/>
+                </completeCondition>
+                <onComplete expression="//data/value" enclosingElementProperty="enclosing_element">
+                    <respond/>
+                </onComplete>
+            </aggregate>
+            <respond/>
+        </outSequence>
+    </resource>
+</api>

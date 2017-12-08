@@ -35,9 +35,7 @@ public class ESBJAVA4781EscapeAutoPrimitiveTestCase extends ESBIntegrationTest {
   @BeforeClass(alwaysRun = true)
   public void setEnvironment() throws Exception {
     super.init();
-    loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-            + File.separator + "json" + File.separator + "autoprimitive" + File.separator
-            + "FormatterEscapePrimitiveSequence_synapse_config.xml");
+    verifyAPIExistence("FormatterEscapePrimitiveSequenceAPI");
 
   }
 
@@ -45,7 +43,7 @@ public class ESBJAVA4781EscapeAutoPrimitiveTestCase extends ESBIntegrationTest {
           "is matched with replace regex after flowing through Staxon formatter in passthrough transport | matched starting region" +
           "will be replaced")
   public void testJSONEmptyArrayMissingNHTTPTransport() throws Exception {
-    HttpResponse response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("formatter/escapePrimitive"), null);
+    HttpResponse response = HttpRequestUtil.sendGetRequest(getApiInvocationURL("formatterEscapePrimitiveSequenceAPI/escapePrimitive"), null);
     String expected = "{\"testEscapePrimitive\":{\"integer\":1989,\"float\":1989.9,\"null\":null,\"boolean_true\":true," +
             "\"boolean_false\":false,\"string\":\"string\",\"integer_escaped\":\"1989\",\"float_escaped\":\"1989.9\",\"null_escaped\":\"null\"," +
             "\"boolean_true_escaped\":\"true\",\"boolean_false_escaped\":\"false\",\"string_escaped\":\"string\"}}";

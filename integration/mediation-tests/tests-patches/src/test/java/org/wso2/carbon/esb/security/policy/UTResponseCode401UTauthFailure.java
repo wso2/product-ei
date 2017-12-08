@@ -61,13 +61,13 @@ public class UTResponseCode401UTauthFailure extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/securityPolicy/sequence.xml");
+        verifyProxyServiceExistence("UTResponseCode401UTauthFailureProxy");
         payload = AXIOMUtil.stringToOM(requestPayload);
     }
 
     @Test(groups = {"wso2.esb", "localOnly"}, description = "Test UT scenario without basic auth headers")
     public void testWithoutAuthHeaders() throws Exception {
-        String addUrl = getProxyServiceURLHttps("Hello");
+        String addUrl = getProxyServiceURLHttps("UTResponseCode401UTauthFailureProxy");
         try {
             axis2Client.clearHttpHeader();
             axis2Client.addHttpHeader("Content-type" , "text/xml;charset=UTF-8");
@@ -79,7 +79,7 @@ public class UTResponseCode401UTauthFailure extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb", "localOnly"}, description = "Test UT scenario with correct basic auth headers")
     public void testWithAuthHeaders() throws Exception {
-        String addUrl = getProxyServiceURLHttps("Hello");
+        String addUrl = getProxyServiceURLHttps("UTResponseCode401UTauthFailureProxy");
         axis2Client.clearHttpHeader();
         axis2Client.addHttpHeader("Content-type" , "text/xml;charset=UTF-8");
         axis2Client.addHttpHeader("Authorization", "Basic YWRtaW46YWRtaW4=");
@@ -93,7 +93,7 @@ public class UTResponseCode401UTauthFailure extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb", "localOnly"}, description = "Test UT scenario with incorrect basic auth headers")
     public void testWithWrongCredentials() throws Exception {
-        String addUrl = getProxyServiceURLHttps("Hello");
+        String addUrl = getProxyServiceURLHttps("UTResponseCode401UTauthFailureProxy");
         axis2Client.clearHttpHeader();
         axis2Client.addHttpHeader("Authorization", "Basic YWRtaW46YddWRtaW4=");
         try {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="sequenceOne" onError="errorSequence">
+    <dblookup>
+        <connection>
+            <pool>
+                <password>wso2user</password>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/wso2_esb</url>
+                <user>wso2user</user>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[select package from userinfo where msisdn=?]]></sql>
+            <parameter expression="get-property('endUserId')"
+                       type="VARCHAR" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <result column="package" name="packageType"/>
+        </statement>
+    </dblookup>
+</sequence>

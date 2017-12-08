@@ -34,7 +34,10 @@
     <!--</test>-->
     <test name="ESB-Sample-Test" preserve-order="true" verbose="2">
         <packages>
-            <package name="org.wso2.carbon.esb.ui.test.*"/>
+            <package name="org.wso2.carbon.esb.ui.test.endpoints" />
+            <package name="org.wso2.carbon.esb.ui.test.login" />
+            <package name="org.wso2.carbon.esb.ui.test.proxyadmin" />
+            <package name="org.wso2.carbon.esb.ui.test.templates" />
         </packages>
     </test>
 

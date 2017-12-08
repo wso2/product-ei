@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse"  name="EndpointErrorTestCloneSequence" onError="EndpointErrorTestRightErrorSequence">
+    <log level="full">
+        <property name="MessageFlow" value="======= Merge Sequence ======="/>
+    </log>
+    <clone sequential="true">
+        <target>
+            <sequence>
+                <log level="custom">
+                    <property name="MessageFlow" value="====== Clone 1 ======"/>
+                </log>
+            </sequence>
+        </target>
+        <target>
+            <sequence>
+                <sequence key="EndpointErrorTestErrorSequence"/>
+            </sequence>
+        </target>
+    </clone>
+</sequence>

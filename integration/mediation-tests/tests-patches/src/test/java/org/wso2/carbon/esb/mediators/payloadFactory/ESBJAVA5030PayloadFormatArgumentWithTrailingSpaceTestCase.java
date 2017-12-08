@@ -45,10 +45,7 @@ public class ESBJAVA5030PayloadFormatArgumentWithTrailingSpaceTestCase extends E
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        // applying changes to esb - source view
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-                                          + File.separator + "synapseconfig" + File.separator + "payloadmediatype"
-                                          + File.separator + "expressionForTrailingSpace.xml");
+        verifyAPIExistence("trailingSpaceAPI");
     }
 
     @AfterClass(alwaysRun = true)

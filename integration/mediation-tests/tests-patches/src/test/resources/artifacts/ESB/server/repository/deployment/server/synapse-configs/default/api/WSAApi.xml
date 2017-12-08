@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/wsaddressing-support-test" name="WSAApi">
+<resource methods="POST">
+    <inSequence>
+        <log level="custom">
+            <property expression="$header" name="header"/>
+        </log>
+        <payloadFactory media-type="xml">
+            <format>
+                <headerContent>$1</headerContent>
+            </format>
+            <args>
+                <arg evaluator="xml" expression="$header" xmlns:m0="http://services.samples/xsd"/>
+            </args>
+        </payloadFactory>
+        <respond/>
+    </inSequence>
+</resource>
+</api>

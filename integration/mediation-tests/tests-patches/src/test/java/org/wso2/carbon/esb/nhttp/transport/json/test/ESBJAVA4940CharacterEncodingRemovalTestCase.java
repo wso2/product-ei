@@ -51,7 +51,8 @@ public class ESBJAVA4940CharacterEncodingRemovalTestCase extends ESBIntegrationT
     @BeforeClass
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/nhttp/transport/ESBJAVA4940/synapseConfig.xml");
+        verifyProxyServiceExistence("ESBJAVA4940SetEncodingTrue");
+        verifyProxyServiceExistence("ESBJAVA4940SetEncodingFalse");
     }
 
     @Test(groups = "wso2.esb", description = "Test charset encoding removal when SetEncoding is true")

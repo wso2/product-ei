@@ -22,7 +22,7 @@
         <artifactId>wso2</artifactId>
         <version>1</version>
         <!-- Empty relative path tag added to suppress warning-->
-        <relativePath></relativePath>
+        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

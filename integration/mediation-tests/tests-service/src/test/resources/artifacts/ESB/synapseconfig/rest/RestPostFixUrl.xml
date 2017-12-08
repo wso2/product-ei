@@ -30,7 +30,7 @@
             <inSequence>
                 <send>
                     <endpoint>
-                        <address statistics="disable" trace="disable" uri="http://localhost:8480/services/test">
+                        <address statistics="disable" trace="disable" uri="http://localhost:8480/services/testAPI">
                             <timeout>
                                 <duration>0</duration>
                                 <responseAction>discard</responseAction>
@@ -53,7 +53,7 @@
             </outSequence>
         </resource>
     </api>
-    <api context="/services/test" name="ServerApi">
+    <api context="/services/testAPI" name="ServerApi">
         <resource methods="GET">
             <inSequence>
                 <log category="INFO" level="full" separator=",">

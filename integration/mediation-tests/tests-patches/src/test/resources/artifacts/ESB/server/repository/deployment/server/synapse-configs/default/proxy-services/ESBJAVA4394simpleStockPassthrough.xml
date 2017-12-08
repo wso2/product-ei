@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ESBJAVA4394simpleStockPassthrough"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target faultSequence="simpleStockPTFault">
+        <endpoint>
+            <address uri="http://localhost:9200/services/SimpleStockQuoteService"/>
+        </endpoint>
+        <inSequence>
+            <log level="custom">
+                <property name="inseq" value="yes"/>
+            </log>
+        </inSequence>
+        <outSequence>
+            <log level="custom">
+                <property name="outseq" value="yes"/>
+            </log>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

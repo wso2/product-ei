@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="HTTPRelativeLocationServiceProxy"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <!--<property name="Location" value="/abc/foo/bar/6Vsdd4990" scope="transport"/>-->
+            <log level="custom">
+                <property name="MESSAGE" value="***************************************************************"/>
+            </log>
+            <respond/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>
