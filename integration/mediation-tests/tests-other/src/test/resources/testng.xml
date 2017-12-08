@@ -133,6 +133,12 @@
         </packages>
     </test>
 
+    <test name="Synapse Handler Test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.handler.HandlerTest"/>
+        </classes>
+    </test>
+
 </suite>
 
 
