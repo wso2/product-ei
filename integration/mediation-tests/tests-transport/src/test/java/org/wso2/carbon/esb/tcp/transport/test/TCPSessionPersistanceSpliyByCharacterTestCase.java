@@ -54,8 +54,8 @@ public class TCPSessionPersistanceSpliyByCharacterTestCase extends ESBIntegratio
         String[] responses = tcpClient.receiveCharactorTypeDelimiterResonse();
         Assert.assertEquals(messageCount, responses.length);
         for(String response: responses) {
-            Assert.assertNotNull(response);
-            Assert.assertNotEquals(StringUtils.EMPTY, response);
+            Assert.assertNotNull(response,"Received a null response from the server");
+            Assert.assertNotEquals(StringUtils.EMPTY, response, "Received an empty response from the server");
         }
     }
 
