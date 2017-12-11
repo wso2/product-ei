@@ -293,7 +293,7 @@ public abstract class ESBIntegrationTest {
 	}
 
 
-	private void deleteInboundEndpoints() throws Exception {
+	protected void deleteInboundEndpoints() throws Exception {
 		if (inboundEndpointList != null) {
 			Iterator<String> itr = inboundEndpointList.iterator();
 			while (itr.hasNext()) {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="JMSDeliveryDelayed" startOnLoad="true" trace="disable" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="OUT_ONLY" value="true"/>
+                <property name="FORCE_SC_ACCEPTED" scope="axis2" value="true"/>
+                <property action="remove" name="Content-Length" scope="transport"/>
+                <property action="remove" name="MIME-Version" scope="transport"/>
+                <property action="remove" name="Transfer-Encoding" scope="transport"/>
+                <property action="remove" name="User-Agent" scope="transport"/>
+                <property action="remove" name="Accept-Encoding" scope="transport"/>
+                <property name="messageType" scope="axis2" value="application/xml"/>
+                <property action="remove" name="Content-Type" scope="transport"/>
+                <property name="JMS_MESSAGE_DELAY" scope="axis2" value="10000"/>
+                <log level="full"/>
+                <send>
+                    <endpoint>
+                        <address uri="jms:/transport.jms.ConnectionFactory=myQueueConnectionFactory"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <send/>
+            </outSequence>
+        </target>
+        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+    </proxy>
+</definitions>
