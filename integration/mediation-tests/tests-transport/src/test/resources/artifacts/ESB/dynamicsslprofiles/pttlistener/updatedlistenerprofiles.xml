@@ -1,0 +1,17 @@
+<parameter name="SSLProfiles">
+    <profile>
+        <bindAddress>localhost</bindAddress>
+        <KeyStore>
+            <Location>../../../src/test/resources/artifacts/ESB/dynamicsslprofiles/pttlistener/wso2carbon.jks</Location>
+            <Type>JKS</Type>
+            <Password>wso2carbon</Password>
+            <KeyPassword>wso2carbon</KeyPassword>
+        </KeyStore>
+        <TrustStore>
+            <Location>../../../src/test/resources/artifacts/ESB/dynamicsslprofiles/pttlistener/client-truststore.jks</Location>
+            <Type>JKS</Type>
+            <Password>wso2carbon</Password>
+        </TrustStore>
+        <SSLVerifyClient>require</SSLVerifyClient>
+    </profile>
+</parameter>

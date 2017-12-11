@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+        name="sslTestProxy"
+        transports="https,http"
+        statistics="disable"
+        trace="disable"
+        startOnLoad="true">
+    <target>
+        <inSequence>
+            <call>
+                <endpoint>
+                    <address uri="https://127.0.0.1:8443/services/echo"/>
+                </endpoint>
+            </call>
+        <respond />
+        </inSequence>
+    </target>
+    <description/>
+</proxy>
