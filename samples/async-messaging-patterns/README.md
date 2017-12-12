@@ -239,7 +239,7 @@ Composing the above "TravelRequestProcessingConsumer" and "TravelRequestAuditing
 
 bin$ ./broker.sh
 
-2. Ensure to have the common.balx running, it it's not running execute the following 
+2. Ensure to have the common.balx running, if it's not running execute the following 
 
 bin$ ./integrator.sh ../samples/async-messaging-patterns/common.balx  
 
