@@ -44,7 +44,7 @@
         <module>modules/tools</module>
         <module>modules/features</module>
         <module>distribution</module>
-        <module>integration</module>
+        <module>integration-test</module>
     </modules>
 
     <dependencyManagement>
@@ -219,7 +219,7 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>common</artifactId>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.xml.bind</groupId>
@@ -229,35 +229,35 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>mule2ballerina</artifactId>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>ds2ballerina</artifactId>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>synapse2ballerina</artifactId>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
                 <type>zip</type>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>
                 <type>zip</type>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
                 <type>zip</type>
-                <version>${product.ei.version}</version>
+                <version>${pom.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testng</groupId>
@@ -425,7 +425,6 @@
     </build>
 
     <properties>
-        <product.ei.version>7.0.0-SNAPSHOT</product.ei.version>
         <ballerina.runtime.version>0.95.1</ballerina.runtime.version>
         <ballerina.core.version>0.95.1</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
