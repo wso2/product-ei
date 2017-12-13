@@ -86,4 +86,68 @@ Audit service received the request: {"name":"User1","id":"19292","amount":"2000"
 ```
 
 Given that there're 3 users in the CSV record each users records is processed by both "BillAnalyticsService" and 
-"BillAuditingService" 
+"BillAuditingService"
+
+##Scenario - Routing File Content
+
+###Description
+XtreamEnergy Inc was requested to perform another operation to connect with "NewConnectionProcessingService". The 
+criteria is,
+
+1. Current file based system will include a file to the directory which will be in the following format,
+
+````
+<<Status>>
+{"user":"<<NameOfUser","connectionId":"<<IdOfUser>>"}
+````
+
+2. The status will be either "Approved" or "Rejected".
+3. If the status is "Approved" the relevant json message should be forwarded to "NewConnectionProcessingService". If 
+the status is "Rejected" the information should not be processed any further.
+
+![File Router](file-router-scenario.png "File Router")
+
+###Solution
+
+Once a file is placed under a local directory, read the first 8 characters of the file. This will indicate whether 
+the content is approved or rejected. If the content is rejected if will be pointless to process the file any further.
+If the content is approved read the remaining payload and dispatch the content to the corresponding service.
+
+###Building the Scenario
+
+In order to build the scenario we would need the following,
+
+- Service which will act as the
+![NewConnectionProcessingService](services/samples/routing/NewConnectionProcessingService.bal)
+- Service which will act as the router, which will read the content of the directory, filter the approved files and 
+dispatch them to the service 
+![FileProcessingRouter](services/samples/routing/FileProcessingRouter.bal) 
+
+###Testing the Scenario
+
+####Sample Setup
+
+1. Deploy the routing service by executing the following command,
+
+bin$ ./integrator.sh ../samples/file-gateway/routing.balx
+
+####Invoking the Service 
+
+1. Navigate to ../samples/file-gateway/resources directory 
+2. Copy the connection_req1 to ../samples/file-gateway/resources/connections folder (given that the 
+FileProcessingRouter service listens to "connections" directory).
+
+The following log will be indicated,
+
+````
+../samples/file-gateway/resources/connections/connection_req1.txt will not be processed any further, 
+since this is rejected.
+````
+
+3. Copy the connection_req2 to ../samples/file-gateway/resources/connections directory.
+
+The following log will be indicated,
+
+````
+New connection request received {"user":"bar","connectionId":"3737374"}
+````

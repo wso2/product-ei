@@ -65,5 +65,3 @@ function getFileRecordChannel (string filePath, string permission, string encodi
     io:TextRecordChannel textRecordChannel = characterChannel.toTextRecordChannel(rs, fs);
     return textRecordChannel;
 }
-
-
