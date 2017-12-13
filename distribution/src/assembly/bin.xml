@@ -25,23 +25,17 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>target/WSO2Carbon</directory>
-            <outputDirectory></outputDirectory>
+            <directory>target/ballerina/ballerina-${ballerina.runtime.version}</directory>
+            <outputDirectory>wso2/ballerina</outputDirectory>
             <fileMode>644</fileMode>
             <excludes>
-                <exclude>**/*.lock</exclude>
-                <exclude>**/.data</exclude>
-                <exclude>**/.settings</exclude>
-                <exclude>libcairo-swt.so</exclude>
-                <exclude>eclipse</exclude>
                 <exclude>**/*.sh</exclude>
-                <exclude>**/native/*</exclude>
-                <exclude>**/carbon.bat</exclude>
+                <exclude>**/*.bat</exclude>
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>target/ballerina/ballerina-${ballerina.runtime.version}</directory>
-            <outputDirectory>wso2/ballerina</outputDirectory>
+            <directory>target/broker/message-broker-${broker.version}</directory>
+            <outputDirectory>wso2/broker</outputDirectory>
             <fileMode>644</fileMode>
             <excludes>
                 <exclude>**/*.sh</exclude>
