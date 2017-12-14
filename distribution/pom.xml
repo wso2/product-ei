@@ -146,16 +146,6 @@
             <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.business.messaging</groupId>
-            <artifactId>org.wso2.carbon.business.messaging.core.feature</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.business.messaging</groupId>
-            <artifactId>org.wso2.carbon.business.messaging.admin.services.feature</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
             <groupId>org.ballerinalang</groupId>
             <artifactId>ballerina-soap</artifactId>
         </dependency>
@@ -226,6 +216,26 @@
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ballerina</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <!-- Unpack message broker distribution -->
+                    <execution>
+                        <id>unpack-broker</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wso2.messaging</groupId>
+                                    <artifactId>broker-launcher</artifactId>
+                                    <version>${broker.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/broker</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -397,14 +407,6 @@
                                     <id>org.wso2.carbon.deployment.engine.feature</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.business.messaging.core.feature</id>
-                                    <version>${carbon.business.messaging.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.business.messaging.admin.services.feature</id>
-                                    <version>${carbon.business.messaging.version}</version>
-                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -421,113 +423,6 @@
                             <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>materialize-product-broker</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>generate-runtime</goal>
-                        </goals>
-                        <configuration>
-                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
-                            <targetPath>file:${basedir}/target/WSO2Carbon/wso2</targetPath>
-                            <runtime>broker</runtime>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>feature-installation-broker</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>install</goal>
-                        </goals>
-                        <configuration>
-                            <runtime>broker</runtime>
-                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
-                            <destination>${basedir}/target/WSO2Carbon/wso2</destination>
-                            <deleteOldRuntimeFiles>true</deleteOldRuntimeFiles>
-                            <features>
-                                <feature>
-                                    <id>org.wso2.carbon.osgi.feature</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.config.feature</id>
-                                    <version>${carbon.config.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.secvault.feature</id>
-                                    <version>${carbon.secvault.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.utils.feature</id>
-                                    <version>${carbon.utils.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.server.feature.group</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.runtime.feature.group</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.caching.feature.group</id>
-                                    <version>${carbon.cache.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.msf4j.feature.group</id>
-                                    <version>${msf4j.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.messaging.feature.group</id>
-                                    <version>${carbon.messaging.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.transport.http.netty.feature.group</id>
-                                    <version>${carbon.transport.http.netty.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.connector.framework.feature.group</id>
-                                    <version>${carbon.transport.http.netty.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.jndi.feature.group</id>
-                                    <version>${carbon.jndi.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.metrics.core.feature.group</id>
-                                    <version>${carbon.metrics.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.metrics.jdbc.core.feature.group</id>
-                                    <version>${carbon.metrics.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.metrics.das.core.feature.group</id>
-                                    <version>${carbon.metrics.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.datasource.core.feature.group</id>
-                                    <version>${carbon.datasources.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.deployment.engine.feature.group</id>
-                                    <version>${carbon.deployment.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.deployment.engine.feature.group</id>
-                                    <version>${carbon.deployment.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.business.messaging.core.feature.group</id>
-                                    <version>${carbon.business.messaging.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.business.messaging.admin.services.feature.group</id>
-                                    <version>${carbon.business.messaging.version}</version>
-                                </feature>
-                            </features>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -538,9 +433,9 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <replace dir="target/WSO2Carbon" token="false" value="true">
+                                <!--replace dir="target/WSO2Carbon" token="false" value="true">
                                     <include name="**/bundles.info" />
-                                </replace>
+                                </replace-->
                                 <!-- Copy connector jar files in sub directories into a single directory so
                                 that assembly plugin can copy them to bre/lib -->
                                 <copy todir="target/flatten-connector-jars-dir" flatten="true">
@@ -569,10 +464,10 @@
                                 <delete dir="target/dependency-maven-plugin-markers" />
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
                                 <delete dir="target/p2-repo" />
-                                <delete dir="target/WSO2Carbon" />
                                 <delete dir="target/director" />
                                 <delete dir="target/antrun" />
                                 <delete dir="target/ballerina" />
+                                <delete dir="target/broker"/>
                                 <delete dir="target/ballerina-connectors" />
                                 <delete dir="target/flatten-connector-jars-dir" />
                                 <delete dir="target/ext" />
