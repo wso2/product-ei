@@ -63,12 +63,11 @@ service<http> RevenueLicenseService {
             return;
         }
 
-        // Call License Issuer
+        // Call license issuer
         http:Response licenseResponse = {};
         licenseResponse, _ = licenseIssuerEP.get("/" + vehicleId, req);
         resp.forward(licenseResponse);
     }
-
 
     @http:resourceConfig {
         methods:["POST"],
@@ -92,7 +91,6 @@ service<http> RevenueLicenseService {
         resp.send();
     }
 
-
     @http:resourceConfig {
         methods:["GET"],
         path:"/checkStatus/{vehicleId}"
@@ -103,6 +101,7 @@ service<http> RevenueLicenseService {
         sql:Parameter para1 = {sqlType:"varchar", value:vehicleId};
         params = [para1];
 
+        // Fetch vehicle information
         datatable vehicleInfoDt = vehicleInfoDB.select("SELECT * from VehicleDetails where VehicleNumber = ?", params);
         Vehicle vehicle;
         while (vehicleInfoDt.hasNext()) {
@@ -115,27 +114,27 @@ service<http> RevenueLicenseService {
             return;
         }
 
+        // Fetch license expiry
         datatable licenseInfoDt = vehicleInfoDB.select("SELECT * from LicenseDetails where VehicleNumber = ?", params);
-
         var expiry = "No valid license found";
-
         var result, _ = <json>licenseInfoDt;
         if (lengthof result != 0) {
             expiry, _ = (string)result[0].LicenseExpiry;
         }
 
+        // Fetch license fee
         para1 = {sqlType:"varchar", value:vehicle.VehicleClass};
         params = [para1];
         datatable licenseFeeDt = vehicleInfoDB.select("SELECT LicenseFee from LicenseFees where VehicleClass = ?", params);
-
         result, _ = <json>licenseFeeDt;
         var fee, _ = (int)result[0].LicenseFee;
+
+        // Construct the response message
         json<Status> status = <json<Status>, buildStatusMessage(fee, expiry)>vehicle;
 
         resp.setJsonPayload(status);
         resp.send();
     }
-
 }
 
 function validateCertificates (http:Request req) (boolean, string) {
@@ -198,7 +197,6 @@ transformer <Vehicle vehicle, json<Status> status> buildStatusMessage(int fee, s
     status.Model = vehicle.Model;
     status.LicenseExpiry = expiry;
     status.LicenseFee = fee;
-
 }
 
 struct Payment {
@@ -229,4 +227,3 @@ struct Status {
     string LicenseExpiry;
     int LicenseFee;
 }
-
