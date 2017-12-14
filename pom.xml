@@ -41,8 +41,6 @@
     </licenses>
 
     <modules>
-        <module>modules/tools</module>
-        <module>modules/features</module>
         <module>distribution</module>
         <module>integration-test</module>
     </modules>
@@ -207,7 +205,7 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>common</artifactId>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.xml.bind</groupId>
@@ -217,35 +215,35 @@
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>mule2ballerina</artifactId>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>ds2ballerina</artifactId>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>synapse2ballerina</artifactId>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.mule2ballerina.feature</artifactId>
                 <type>zip</type>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.ds2ballerina.feature</artifactId>
                 <type>zip</type>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.converter.tools.synapse2ballerina.feature</artifactId>
                 <type>zip</type>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testng</groupId>
@@ -439,7 +437,7 @@
         <carbon.business.messaging.version>4.0.7</carbon.business.messaging.version>
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
         <slf4j.version>1.7.22</slf4j.version>
-        <testng.version>6.9.10</testng.version>
+        <testng.version>6.13.1</testng.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
         <commons.configuration.version>1.10</commons.configuration.version>
         <commons.io.version>2.2</commons.io.version>

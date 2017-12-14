@@ -23,16 +23,16 @@
 <suite name="Product EI Integration suit">
 
 
-    <test name="Connector tests">
+    <test name="Connector tests" verbose="2">
         <classes>
-            <class name="org.wso2.ei.test.connector.soap.SoapConnectorTest" />
-            <class name="org.wso2.ei.test.connector.file.FileConnectorTest" />
+            <class name="org.wso2.ei.test.connector.soap.SoapConnectorTest"/>
+            <class name="org.wso2.ei.test.connector.file.FileConnectorTest"/>
         </classes>
     </test>
 
-    <test name="Scenario tests">
+    <test name="Scenario tests" verbose="2">
         <classes>
-            <class name="org.wso2.ei.test.service.orchestration.ServiceOrchestrationTest" />
+            <class name="org.wso2.ei.test.service.orchestration.ServiceOrchestrationTest"/>
         </classes>
     </test>
 

@@ -67,7 +67,7 @@ public class SoapConnectorTest {
             post.setRequestEntity(requestEntity);
 
             int status = client.executeMethod(post);
-            Assert.assertEquals(200, status);
+            Assert.assertEquals(status, 200);
             String responseBody = post.getResponseBodyAsString();
             String responseSymbol = responseBody.split("<ax21:symbol>")[1].split("</ax21:symbol>")[0].trim();
             Assert.assertEquals(responseSymbol, symbol);

@@ -66,7 +66,7 @@ public class ServiceOrchestrationTest {
             post.setRequestEntity(requestEntity);
 
             int status = client.executeMethod(post);
-            Assert.assertEquals(200, status);
+            Assert.assertEquals(status, 200);
             String responseBody = post.getResponseBodyAsString();
             String responseVehicleId = responseBody.split("Vehicle ID\":\"")[1].split("\"}")[0].trim();
             Assert.assertEquals(responseVehicleId, vehicleId);
