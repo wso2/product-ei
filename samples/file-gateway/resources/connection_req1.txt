@@ -1,0 +1,2 @@
+Rejected
+{"user":"foo","connectionId":"1938383"}
