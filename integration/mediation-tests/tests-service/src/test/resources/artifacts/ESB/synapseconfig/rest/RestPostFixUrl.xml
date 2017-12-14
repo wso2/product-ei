@@ -59,6 +59,7 @@
                 <log category="INFO" level="full" separator=",">
                     <property expression="$axis2:REST_URL_POSTFIX" name="To"/>
                 </log>
+                <respond/>
             </inSequence>
             <outSequence>
                 <send/>
