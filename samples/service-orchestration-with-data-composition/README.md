@@ -1,10 +1,10 @@
-# Services, application and data composition Scenario
+# Services, Applications and Data Composition Scenario
 
 ## Scenario
 
 ![Service Orchestration](resources/orchestration-scenario.png "Service Orchestration")
 
-## Note
+Note:
 This is an extended version of "Vehicle Revenue License Service Orchesestration" scenario.
 In addition the Service Orchestration capabilities described in that sample,
 here we are looking into the data composition functionality too.
@@ -47,15 +47,18 @@ Revenue License Service orchestrates all the above services and offers a service
 
 ## Requirements
 
-This sample use MySQL DB and before running the sample copy the MySQL JDBC driver to the EI_HOME/wso2/ballerina/bre/lib folder
-and change the DB connection properties as required.
+This sample uses MySQL DB. Before running the sample copy the MySQL JDBC driver to following location
+ ```
+ <EI_HOME>/wso2/ballerina/bre/lib folder
+ ```
+Change the DB connection parameters as required.
 
-Use the orchestrartion-data.sql file located at resources directory to create required database schema, tables and insert data.
+Use the orchestrartion-data.sql file located at resources directory to create required database schema, tables and data.
 
 
 ## Building the scenario
 
-Revenue License Service contains two Resources. They are validateCertsResource and licenseResource.
+Revenue License Service contains three Resources. They are validateCertsResource, checkStatusResource and licenseResource .
 validateCertsResource offers a way to the user to check whether they have valid certificates by themselves before submitting a request to renew the license. 
 licenseResource provides the main functionality of the service. 
 Both these resources need to call the Emission Test Service and the Insurance Service to get the certificates validated.
@@ -85,15 +88,9 @@ Change DB connection parameters in vehicleInfoDB endpoint of RevenueLicenseServi
 
 Goto <EI_HOME>/samples/service-orchestration-with-data-composition/services
 
-Execute following command to compile the ballerina program.
+Execute following command to compile and run the ballerina program.
 ```
-./../../../wso2/ballerina/bin/ballerina build samples/orchestration/
-```
-
-
-Execute following command to start the integrator with compiled ballerina program.
-```
-bin$ ./integrator.sh ../samples/service-orchestration-with-data-composition/orchestration.balx
+./../../../wso2/ballerina/bin/ballerina run samples/orchestration/
 ```
 
 ## Invoking the service
