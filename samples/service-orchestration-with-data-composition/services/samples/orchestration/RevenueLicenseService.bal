@@ -97,7 +97,7 @@ service<http> RevenueLicenseService {
         methods:["GET"],
         path:"/checkStatus/{vehicleId}"
     }
-    resource statusResource (http:Request req, http:Response resp, string vehicleId) {
+    resource checkStatusResource (http:Request req, http:Response resp, string vehicleId) {
 
         sql:Parameter[] params = [];
         sql:Parameter para1 = {sqlType:"varchar", value:vehicleId};
