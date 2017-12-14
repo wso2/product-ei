@@ -68,13 +68,13 @@
                                 <artifactItem>
                                     <groupId>org.wso2.ei</groupId>
                                     <artifactId>common</artifactId>
-                                    <version>${pom.version}</version>
+                                    <version>${project.version}</version>
                                     <outputDirectory>${project.build.directory}/lib/tools</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.wso2.ei</groupId>
                                     <artifactId>mule2ballerina</artifactId>
-                                    <version>${pom.version}</version>
+                                    <version>${project.version}</version>
                                     <outputDirectory>${project.build.directory}/lib/tools</outputDirectory>
                                 </artifactItem>
                             </artifactItems>

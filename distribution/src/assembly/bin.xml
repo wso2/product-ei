@@ -18,7 +18,7 @@
   -->
 <assembly>
     <includeBaseDirectory>true</includeBaseDirectory>
-    <baseDirectory>wso2ei-${pom.version}</baseDirectory>
+    <baseDirectory>wso2ei-${project.version}</baseDirectory>
     <id>wso2ei-dist</id>
     <formats>
         <format>zip</format>
