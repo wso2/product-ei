@@ -239,8 +239,8 @@
             </li>
             <li>
                 Execute the WSO2 EI start script or the daemon script from the bin
-                directory. e.g. ./wso2server.sh OR ./daemon.sh start OR
-                ./wso2server.sh --console
+                directory. e.g. ./integrator.sh OR ./daemon.sh start OR
+                ./integrator.sh --console
             </li>
             <li>
                 Check your WSO2 EI instance using the URL https://localhost:9443/carbon

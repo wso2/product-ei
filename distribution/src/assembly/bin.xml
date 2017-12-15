@@ -842,6 +842,7 @@
                 <exclude>**/*.bat</exclude>
                 <exclude>**/wrapper.conf</exclude>
                 <exclude>build.xml</exclude>
+                <exclude>README.txt</exclude>
             </excludes>
         </fileSet>
 
@@ -2739,8 +2740,9 @@
 	    <filtered>true</filtered>
         </file>
         <file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/bin/README.txt</source>
+            <source>src/resources/ei-bin-readme.txt</source>
             <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
+            <destName>README.txt</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
