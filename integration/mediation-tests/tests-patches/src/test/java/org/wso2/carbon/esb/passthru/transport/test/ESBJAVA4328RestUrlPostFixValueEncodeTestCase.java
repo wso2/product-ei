@@ -19,7 +19,6 @@
 package org.wso2.carbon.esb.passthru.transport.test;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.util.AXIOMUtil;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -38,9 +37,7 @@ public class ESBJAVA4328RestUrlPostFixValueEncodeTestCase extends ESBIntegration
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        OMElement config = esbUtils.loadResource("/artifacts/ESB/mediatorconfig/property/REST_URL_postfix_encode.xml");
-        config = AXIOMUtil.stringToOM(config.toString().replace("http://localhost:8280/services/", getProxyServiceURLHttp("")));
-        updateESBConfiguration(config);
+        verifyProxyServiceExistence("Axis2RestServiceEncoded");
         client= new HttpClientUtil();
     }
 
@@ -54,6 +51,7 @@ public class ESBJAVA4328RestUrlPostFixValueEncodeTestCase extends ESBIntegration
         assertEquals(response.getFirstElement().getText(),"wso2%20lanka","Text does not match");
 
     }
+
     @AfterClass(alwaysRun = true)
     public void stop() throws Exception {
         cleanup();

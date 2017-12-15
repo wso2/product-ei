@@ -37,33 +37,12 @@ import java.io.InputStreamReader;
  * under the License.
  */
 public class ESBJAVA3676EnrichSourcePropNoClone extends ESBIntegrationTest {
-    private static final String PROXY_NAME = "ESBJAVA3676";
+    private static final String PROXY_NAME = "ESBJAVA3676TestProxy";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        String proxy = "<proxy xmlns=\"http://ws.apache.org/ns/synapse\"\n" +
-                "       name=\"" + PROXY_NAME + "\"\n" +
-                "       transports=\"https,http\"\n" +
-                "       statistics=\"disable\"\n" +
-                "       trace=\"disable\"\n" +
-                "       startOnLoad=\"true\">\n" +
-                "    <target>\n" +
-                "        <inSequence>\n" +
-                "            <property name=\"PAYLOAD\" expression=\"//payload/content\" type=\"OM\"/>\n" +
-                "            <enrich>\n" +
-                "                <source type=\"property\" clone=\"false\" property=\"PAYLOAD\"/>\n" +
-                "                <target type=\"body\"/>\n" +
-                "            </enrich>\n" +
-                "            <respond/>\n" +
-                "        </inSequence>\n" +
-                "    </target>\n" +
-                "    <description/>\n" +
-                "</proxy>\n";
-
-        OMElement omProxy = AXIOMUtil.stringToOM(proxy);
-        addProxyService(omProxy);
-        isProxyDeployed(PROXY_NAME);
+        verifyProxyServiceExistence(PROXY_NAME);
     }
 
     @Test(groups = "wso2.esb", description = "Tests Enrich Source OM Property without clone")

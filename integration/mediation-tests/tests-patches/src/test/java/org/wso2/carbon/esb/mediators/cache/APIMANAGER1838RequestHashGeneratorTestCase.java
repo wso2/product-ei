@@ -45,9 +45,8 @@ public class APIMANAGER1838RequestHashGeneratorTestCase extends ESBIntegrationTe
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "synapseconfig" + File.separator + "cacheMediator"
-                + File.separator + "APIMANAGER1838RequestHashGenerator.xml");
+        verifyAPIExistence("APIM1838addPerson");
+        verifyAPIExistence("APIM1838getPerson");
         tomcatServerManager = new TomcatServerManager(AppConfig.class.getName(), "jaxrs", 8080);
         tomcatServerManager.startServer();
     }
@@ -55,12 +54,11 @@ public class APIMANAGER1838RequestHashGeneratorTestCase extends ESBIntegrationTe
 
     @Test(groups = {"wso2.esb"}, description = "Adding people to PeopleRestService" , enabled = false)
     public void addPeople() throws Exception {
-        Thread.sleep(5000);
-        if (tomcatServerManager.isRunning()) {
-            HttpResponse response1 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("addPerson") + "/person?email=john@wso2.com&firstName=John&lastName=Doe", null);
+        if (isTomcatServerRunning(tomcatServerManager, 5000)) {
+            HttpResponse response1 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("APIM1838addPerson") + "/person?email=john@wso2.com&firstName=John&lastName=Doe", null);
             assertEquals(response1.getResponseCode(), 201, "Response code mismatch");
 
-            HttpResponse response2 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("addPerson") + "/person?email=jane@wso2.com&firstName=Jane&lastName=Doe", null);
+            HttpResponse response2 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("APIM1838addPerson") + "/person?email=jane@wso2.com&firstName=Jane&lastName=Doe", null);
             assertEquals(response2.getResponseCode(), 201, "Response code mismatch");
         } else {
             Assert.fail("Jaxrs Service Startup failed");
@@ -69,14 +67,13 @@ public class APIMANAGER1838RequestHashGeneratorTestCase extends ESBIntegrationTe
     @Test(groups = {"wso2.esb"}, dependsOnMethods = "addPeople", description = "Retrieving people from PeopleRestService")
     public void getPeople() throws Exception {
 
-        Thread.sleep(5000);
-        if (tomcatServerManager.isRunning()) {
-        HttpResponse response1 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("getPerson") + "/person?email=john@wso2.com", null);
+        if (isTomcatServerRunning(tomcatServerManager, 5000)) {
+        HttpResponse response1 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("APIM1838getPerson") + "/person?email=john@wso2.com", null);
         assertEquals(response1.getResponseCode(), 200, "Response code mismatch");
         assertTrue(response1.getData().contains("John"), "Response message is not as expected.");
         assertTrue(response1.getData().contains("Doe"), "Response message is not as expected");
 
-        HttpResponse response2 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("getPerson") + "/person?email=jane@wso2.com", null);
+        HttpResponse response2 = HttpRequestUtil.sendGetRequest(getApiInvocationURL("APIM1838getPerson") + "/person?email=jane@wso2.com", null);
         assertEquals(response2.getResponseCode(), 200, "Response code mismatch");
         assertTrue(response2.getData().contains("Jane"), "Response message is not as expected.");
         assertTrue(response2.getData().contains("Doe"), "Response message is not as expected");
@@ -89,5 +86,16 @@ public class APIMANAGER1838RequestHashGeneratorTestCase extends ESBIntegrationTe
     public void destroy() throws Exception {
         tomcatServerManager.stop();
         super.cleanup();
+    }
+
+    private boolean isTomcatServerRunning(TomcatServerManager serverManager, long timeout) throws InterruptedException {
+        boolean isServerStarted = false;
+        long elapsedTime = 0;
+        while (elapsedTime <= timeout && !isServerStarted) {
+            isServerStarted = serverManager.isRunning();
+            Thread.sleep(500);
+            elapsedTime += 500;
+        }
+        return isServerStarted;
     }
 }

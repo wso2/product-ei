@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/services/test" name="ServerApi_v1">
+    <resource methods="GET">
+        <inSequence>
+            <log level="custom">
+                <property expression="$axis2:REST_URL_POSTFIX" name="queryParamValue"/>
+            </log>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

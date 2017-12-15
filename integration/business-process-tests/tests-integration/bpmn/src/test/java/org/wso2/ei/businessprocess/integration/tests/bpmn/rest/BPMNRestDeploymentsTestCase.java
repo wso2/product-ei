@@ -283,4 +283,33 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
         Assert.assertEquals("repository/process-definitions/{definitionId}/identitylinks/{familly}/{identityId} test",
                 "admin", jsonObject.getString("group"));
     }
+
+    /**
+     * Test for suspend and activate process definitions.
+     * PUT repository/process-definitions/{processDefinitionID}
+     */
+    @Test(groups = { "wso2.bps.bpmn.rest" },
+          description = "suspend and activate process definitions",
+          priority = 1,
+          singleThreaded = true)
+    public void testActiveAndSuspendProcessDefinitions() throws Exception {
+
+        uploadBPMNForTest("oneTaskProcess");
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "oneTaskProcess", 0);
+        BPMNProcess[] bpmnProcesses = workflowServiceClient.getProcesses();
+        String suspendRequest = "{\"action\":\"suspend\"}";
+        HttpResponse resultResponse = BPMNTestUtils
+                .putRequest(backEndUrl + "repository/process-definitions/" + bpmnProcesses[0].getProcessId(),
+                        new JSONObject(suspendRequest));
+        Assert.assertEquals(
+                "PUT repository/process-definitions/{processDefinitionID}  process definition suspend " + "test", 200,
+                resultResponse.getStatusLine().getStatusCode());
+        String activateRequest = "{\"action\":\"activate\"}";
+        resultResponse = BPMNTestUtils
+                .putRequest(backEndUrl + "repository/process-definitions/" + bpmnProcesses[0].getProcessId(),
+                        new JSONObject(activateRequest));
+        Assert.assertEquals(
+                "PUT repository/process-definitions/{processDefinitionID}  process definition activate " + "test", 200,
+                resultResponse.getStatusLine().getStatusCode());
+    }
 }

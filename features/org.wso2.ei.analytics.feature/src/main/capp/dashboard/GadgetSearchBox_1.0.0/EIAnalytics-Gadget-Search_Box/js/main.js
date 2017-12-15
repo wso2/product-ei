@@ -11,7 +11,7 @@ $(function() {
     $("#txtSearch").attr('placeholder', 'Search ' + page.placeholder + ' ...');
 
     if(qs[PARAM_ID] != null) {
-        $("#txtSearch").val(qs[PARAM_ID]);
+        $("#txtSearch").val(decodeURIComponent(qs[PARAM_ID]));
     }
 
     gadgetUtil.fetchData(CONTEXT, {
@@ -29,12 +29,12 @@ $(function() {
         }).on('typeahead:selected', function(evt, item) {
             var href = parent.window.location.href;
             if(qs[PARAM_ID]) {
-                href = href.replace(/(id=)[^\&]+/, '$1' + item);
+                href = href.replace(/(id=)[^\&]+/, '$1' + encodeURIComponent(item));
             } else {
                 if (href.includes("?")) {
-                    href = href + "&" + PARAM_ID + "=" + item;
+                    href = href + "&" + PARAM_ID + "=" + encodeURIComponent(item);
                 } else {
-                    href = href + "?" + PARAM_ID + "=" + item;
+                    href = href + "?" + PARAM_ID + "=" + encodeURIComponent(item);
                 }
             }
             parent.window.location = href;

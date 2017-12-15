@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="CloneMediatorEmptyStackProxy" transports="https http" startOnLoad="true"
+       trace="disable">
+    <description />
+    <target>
+        <inSequence>
+            <clone>
+                <target sequence="EchoDataSplitSequence" />
+            </clone>
+            <respond />
+        </inSequence>
+    </target>
+</proxy>

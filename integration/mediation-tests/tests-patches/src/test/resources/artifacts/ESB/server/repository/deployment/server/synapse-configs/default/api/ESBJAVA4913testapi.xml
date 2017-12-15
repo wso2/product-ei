@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/clonetest" name="ESBJAVA4913testapi">
+    <resource methods="GET">
+        <inSequence>
+            <clone sequential="true">
+                <target sequence="sequenceOne"/>
+                <target sequence="sequenceTwo"/>
+            </clone>
+        </inSequence>
+    </resource>
+</api>

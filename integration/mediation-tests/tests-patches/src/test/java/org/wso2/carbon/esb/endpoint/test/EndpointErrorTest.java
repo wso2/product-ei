@@ -31,14 +31,13 @@ public class EndpointErrorTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator +
-                "endpoint" + File.separator + "endpointError.xml");
+        verifyProxyServiceExistence("EndpointErrorTestProxy");
     }
 
     @Test(groups = {"wso2.esb"}, description = "Introduction to Proxy Services")
     public void testSequenceError() throws Exception {
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(
-                getProxyServiceURLHttp("CloneProxy"), null, "WSO2");
+                getProxyServiceURLHttp("EndpointErrorTestProxy"), null, "WSO2");
 
         Assert.assertTrue(response.toString().contains("RightErrorSequence Fault Handler Called"),
                 "Wrong fault sequence executed");

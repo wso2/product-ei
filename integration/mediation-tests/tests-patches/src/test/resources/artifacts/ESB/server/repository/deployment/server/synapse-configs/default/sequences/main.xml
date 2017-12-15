@@ -1,0 +1,12 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="main">
+    <in>
+        <log level="full"/>
+        <filter source="get-property('To')" regex="http://localhost:9000.*">
+            <send/>
+        </filter>
+    </in>
+    <out>
+        <send/>
+    </out>
+    <description>The main sequence for the message mediation</description>
+</sequence>

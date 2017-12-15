@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="TestCalloutHTTP_SC" xmlns="http://ws.apache.org/ns/synapse"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target faultSequence="ESBJAVA4239FaultSeq">
+        <inSequence>
+            <callout serviceURL="http://localhost:1995" action="urn:getQuote">
+                <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                        xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                        xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+                <target xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+                        xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
+                        xpath="s11:Body/child::*[fn:position()=1] | s12:Body/child::*[fn:position()=1]"/>
+            </callout>
+            <drop/>
+        </inSequence>
+    </target>
+</proxy>

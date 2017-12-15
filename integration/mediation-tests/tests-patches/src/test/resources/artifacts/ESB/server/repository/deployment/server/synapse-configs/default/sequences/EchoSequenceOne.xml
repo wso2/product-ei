@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <sequence name="EchoSequenceOne" xmlns="http://ws.apache.org/ns/synapse">
+        <property name="NEWSEC" value="true" />
+        <filter xmlns:ns3="http://org.apache.synapse/xsd" source="get-property('NEWSEC')"
+                regex="true">
+            <then>
+                <property name="ContentType" value="text/xml" scope="transport" />
+                <property name="OUT_ONLY" value="true" scope="axis2" />
+                <property name="transportNonBlocking" scope="axis2" action="remove" />
+                <send>
+                    <endpoint key="EchoEndpoint" />
+                </send>
+                <clone continueParent="true" id="Clone1">
+                    <target>
+                        <sequence>
+                            <send>
+                                <endpoint>
+                                    <address uri="http://localhost:8280/service/echo" />
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </clone>
+            </then>
+            <else>
+                <drop />
+            </else>
+        </filter>
+    </sequence>

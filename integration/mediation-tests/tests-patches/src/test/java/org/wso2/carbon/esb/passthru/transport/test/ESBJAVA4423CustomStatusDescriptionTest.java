@@ -41,9 +41,7 @@ public class ESBJAVA4423CustomStatusDescriptionTest extends ESBIntegrationTest {
     @BeforeClass
     public void init() throws Exception {
         super.init();
-        serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
-        super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/httpproxy/httpCustomProxy.xml");
+        verifyProxyServiceExistence("ESBJAVA4423HttpCustomProxyTest");
     }
 
     @Test(groups = "wso2.esb", description = "Test custom status description", enabled = true)
@@ -59,7 +57,7 @@ public class ESBJAVA4423CustomStatusDescriptionTest extends ESBIntegrationTest {
 
         try {
             //this will spawn an exception with the custom response included
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("HttpCustomProxyTest"), "", "IBM");
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("ESBJAVA4423HttpCustomProxyTest"), "", "IBM");
         } catch (IOException e) {
             Assert.assertTrue(e.getMessage().contains("Custom response"));
         }

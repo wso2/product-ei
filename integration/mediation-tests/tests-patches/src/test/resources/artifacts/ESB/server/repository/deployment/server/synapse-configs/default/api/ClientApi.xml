@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" context="/services/client/" name="ClientApi">
+    <resource methods="GET" uri-template="/urlEncoded?queryParam={+value}">
+        <inSequence>
+            <log level="custom">
+                <property name="decodedQueryParamValue" expression="get-property('uri.var.value')"></property>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="http://localhost:8480/services/test/urlEncoded?queryParam={uri.var.value}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/escapeUrlEncoded?queryParam={+value}">
+        <inSequence>
+            <log level="custom">
+                <property name="decodedQueryParamValue" expression="get-property('uri.var.value')"></property>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="http://localhost:8480/services/test/escapeUrlEncoded?queryParam={+uri.var.value}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/urlEncoded/{+value}">
+        <inSequence>
+            <log level="custom">
+                <property name="decodedQueryParamValue" expression="get-property('uri.var.value')"></property>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="http://localhost:8480/services/test_2/{uri.var.value}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/escapeUrlEncoded/{+value}">
+        <inSequence>
+            <log level="custom">
+                <property name="decodedQueryParamValue" expression="get-property('uri.var.value')"></property>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="http://localhost:8480/services/test_2/{+uri.var.value}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+    <resource methods="GET" uri-template="/special_case/{+value}">
+        <inSequence>
+            <log level="custom">
+                <property name="decodedQueryParamValue" expression="get-property('uri.var.value')"></property>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="{uri.var.value}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

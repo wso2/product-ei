@@ -46,7 +46,7 @@ public class AddScheduleTaskTestCase extends DSSIntegrationTest {
     private static final Log log = LogFactory.getLog(AddScheduleTaskTestCase.class);
 
     private final String scheduleTaskName = "testScheduleTaskTestCase";
-    private final int taskInterval = 10000;
+    private final int taskInterval = 5000;
     private final String employeeId = "1";
     private double empSalary;
     private String serviceName = "ScheduleTaskTest";
@@ -113,7 +113,7 @@ public class AddScheduleTaskTestCase extends DSSIntegrationTest {
         dsTaskInfo.setServiceName(serviceName);
         dsTaskInfo.setOperationName("incrementEmployeeSalary");
         dsTaskInfo.setTaskInterval(taskInterval);
-        dsTaskInfo.setTaskCount(9);
+        dsTaskInfo.setTaskCount(4);
 
         dssTaskClient.scheduleTask(dsTaskInfo);
         log.info("Task Scheduled");
@@ -127,8 +127,8 @@ public class AddScheduleTaskTestCase extends DSSIntegrationTest {
 
     @Test(groups = "wso2.dss", dependsOnMethods = {"addScheduleTask"})
     public void startScheduleTask() throws AxisFault {
-        //if task count is 9
-        for (int i = 0; i < 10; i++) {
+        //if task count is 4
+        for (int i = 0; i < 5; i++) {
             double currentSalary = getEmployeeSalary(getEmployeeById(employeeId));
             log.info("current salary after task: " + currentSalary);
             Assert.assertEquals(currentSalary, (empSalary = empSalary + 10000), "Task not properly Executed");

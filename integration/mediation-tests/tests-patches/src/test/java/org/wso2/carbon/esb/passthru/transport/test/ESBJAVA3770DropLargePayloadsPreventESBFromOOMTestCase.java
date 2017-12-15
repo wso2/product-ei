@@ -101,9 +101,7 @@ public class ESBJAVA3770DropLargePayloadsPreventESBFromOOMTestCase extends ESBIn
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator + "passthru" +
                 File.separator + "transport" + File.separator + "ESBJAVA3770" + File.separator + "passthru-http.properties"));
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "passthru" + File.separator + "transport" + File.separator + "ESBJAVA3770" + File.separator
-                + "DropLargePayloadPreventESBOOM.xml");
+        verifyAPIExistence("DropLargePayloadPreventESBOOM");
     }
 
     @Test(groups = "wso2.esb", description = "test whether messages are getting dropped when message size " +

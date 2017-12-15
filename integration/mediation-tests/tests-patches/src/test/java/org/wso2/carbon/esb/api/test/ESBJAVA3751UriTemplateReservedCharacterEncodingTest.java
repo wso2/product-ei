@@ -37,9 +37,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("artifacts" + File.separator + "ESB"
-                + File.separator + "synapseconfig" + File.separator + "rest"
-                + File.separator + "uri-template-encoding.xml");
+        verifyAPIExistence("ClientApi");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 

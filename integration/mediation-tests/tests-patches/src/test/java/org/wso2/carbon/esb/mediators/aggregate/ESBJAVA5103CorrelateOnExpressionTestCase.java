@@ -42,9 +42,8 @@ public class ESBJAVA5103CorrelateOnExpressionTestCase extends ESBIntegrationTest
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" + File.separator
-                + "mediatorconfig" + File.separator + "aggregate" + File.separator
-                + "CorrelateOnExpressionTest.xml");
+        verifyAPIExistence("AggregatorTestAPI");
+        verifyAPIExistence("CorrelateOnExpressionTestAPI1");
     }
 
     @Test(groups = "wso2.esb", description = "Test CorrelateOn in Aggregate mediator ")

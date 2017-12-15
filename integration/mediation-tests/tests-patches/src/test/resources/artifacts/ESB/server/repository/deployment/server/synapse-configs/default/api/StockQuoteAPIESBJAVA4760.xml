@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="StockQuoteAPIESBJAVA4760" context="/StockQuoteAPIESBJAVA4760">
+        <resource uri-template="/view/{symbol}" methods="GET">
+            <inSequence>
+                <payloadFactory>
+                    <format>
+                        <m0:getQuote xmlns:m0="http://services.samples">
+                            <m0:request>
+                                <m0:symbol>$1</m0:symbol>
+                            </m0:request>
+                        </m0:getQuote>
+                    </format>
+                    <args>
+                        <arg expression="get-property('uri.var.symbol')"/>
+                    </args>
+                </payloadFactory>
+                <header name="Action" value="getQuote"/>
+                <property name="SOAPAction" value="getQuote" scope="transport"/>
+                <send>
+                    <endpoint>
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService"
+                                 format="soap11"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <property name="TRANSPORT_HEADERS" scope="axis2" action="remove"/>
+                <property name="HTTP_SC" value="204" scope="axis2" type="STRING"/>
+                <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
+                <property name="messageType" value="application/json" scope="axis2" type="STRING"/>
+                <respond/>
+            </outSequence>
+        </resource>
+    </api>

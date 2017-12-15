@@ -46,7 +46,7 @@ public class ESBJAVA4631PreserveContentTypeHeaderTestCase extends ESBIntegration
         wireMonitorServer = new WireMonitorServer(6770);
         wireMonitorServer.start();
 
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/header/PreserveContentTypeHeaderTest.xml");
+        verifyProxyServiceExistence("PreserveContentTypeHeaderTest");
     }
 
     @Test(groups = "wso2.esb", description = "Test to check whether the Content-Type header is preserved when sending " +

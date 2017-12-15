@@ -244,10 +244,6 @@
             <artifactId>org.wso2.carbon.automation.engine</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.automation</groupId>
-            <artifactId>org.wso2.carbon.automation.engine</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>org.wso2.ei.businessprocess.integration.common.clients</artifactId>
         </dependency>

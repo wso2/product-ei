@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="EndpointErrorTestErrorSequence" onError="EndpointErrorTestRightErrorSequence">
+    <property xmlns:ns="http://org.apache.synapse/xsd"
+              name="ID"
+              expression="get-property('MessageID')"/>
+    <log level="custom" separator=",">
+        <property name="MessageFlow" value=" ======= Auth Sequence Called ======="/>
+    </log>
+    <call>
+        <endpoint>
+            <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+        </endpoint>
+    </call>
+    <send>
+        <endpoint key="EndpointErrorTestErrorEndpoint"/>
+    </send>
+</sequence>

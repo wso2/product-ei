@@ -37,19 +37,16 @@
                 <property name="OUT_ONLY" value="true" scope="default" type="STRING"/>
 
                 <log level="full"/>
-                <send>
+                <call>
                     <endpoint>
-                        <address uri="mailto:test.automation.dummy.esb1@gmail.com"/>
+                        <address uri="mailto:receiver@localhost"/>
                     </endpoint>
-                </send>
+                </call>
                 <header name="To" action="remove"/>
                 <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
                 <property name="RESPONSE" value="true" scope="default" type="STRING"/>
-                <send/>
+                <respond />
             </inSequence>
-            <outSequence>
-                <send/>
-            </outSequence>
         </target>
         <description/>
     </proxy>

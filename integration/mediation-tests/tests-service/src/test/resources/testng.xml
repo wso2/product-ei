@@ -73,7 +73,7 @@
     	<packages>
     		<package name="org.wso2.carbon.esb.rest.test.security"/>
     	</packages>
-    </test-->   
+    </test-->
     <test name="Rest-JSON-Test" preserve-order="true" verbose="2" parallel="false">
         <packages>
             <package name="org.wso2.carbon.esb.json.test"/>
@@ -83,6 +83,13 @@
         <packages>
             <package name="org.wso2.carbon.esb.car.deployment.test"/>
         </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.car.deployment.test.CAppDeploymentOrderTest">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
     </test>
     <test name="ScheduleTask-Test" preserve-order="true" verbose="2" parallel="false">
         <packages>
@@ -93,5 +100,11 @@
         <packages>
             <package name="org.wso2.carbon.esb.tenant.test.*"/>
         </packages>
+    </test>
+
+    <test name="Secure-Proxy-Test" preserve-order="true" verbose="2" parallel="false">
+        <classes>
+            <class name="org.wso2.carbon.esb.proxyservice.test.secureProxy.SecureProxyUsingPolicyFileInLocalEntryTestCase"/>
+        </classes>
     </test>
 </suite>

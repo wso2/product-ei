@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -21,23 +21,24 @@ package org.wso2.carbon.esb.mailto.transport.receiver.test;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.esb.integration.common.utils.MailToTransportUtil;
+import org.wso2.esb.integration.common.utils.servers.GreenMailServer;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 /**
- * This class is for replace axis2.xml to enable mail transport and restart after that to apply
- * new axis2.xml, at the end restore to the default axis2.xml.
+ * Base class to start and stop GreenMail server
  */
 public class MailToTransportBaseClass extends ESBIntegrationTest {
 
+    private GreenMailServer greenMailServer;
     @BeforeTest(alwaysRun = true)
     public void setUp() throws Exception {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
-        MailToTransportUtil.readXMLforEmailCredentials();
-
+        greenMailServer = new GreenMailServer();
+        greenMailServer.startServer();
     }
 
     @AfterTest(alwaysRun = true)
     public void cleanUp() throws Exception {
+        greenMailServer.stopServer();
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="ESBJAVA3676TestProxy"
+       xmlns="http://ws.apache.org/ns/synapse"
+       transports="http">
+<description/>
+<target>
+    <inSequence>
+        <property name="PAYLOAD" expression="//payload/content" type="OM"/>
+        <enrich>
+            <source type="property" clone="false" property="PAYLOAD"/>
+            <target type="body"/>
+        </enrich>
+        <respond/>
+    </inSequence>
+</target>
+</proxy>

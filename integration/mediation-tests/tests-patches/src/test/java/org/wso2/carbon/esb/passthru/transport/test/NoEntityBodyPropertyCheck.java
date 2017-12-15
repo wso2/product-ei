@@ -37,7 +37,7 @@ public class NoEntityBodyPropertyCheck extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/property/Test.xml");
+        verifyProxyServiceExistence("NoEntityBodyPropertyTestProxy");
     }
 
 
@@ -48,7 +48,7 @@ public class NoEntityBodyPropertyCheck extends ESBIntegrationTest {
                    "         <ID>12999E105</ID>" +
                    "      </Person>";
 
-        HttpResponse response = httpClient.doPost("http://localhost:8480/services/Test",
+        HttpResponse response = httpClient.doPost("http://localhost:8480/services/NoEntityBodyPropertyTestProxy",
                                                   null, payload, "application/xml");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         response.getEntity().writeTo(bos);

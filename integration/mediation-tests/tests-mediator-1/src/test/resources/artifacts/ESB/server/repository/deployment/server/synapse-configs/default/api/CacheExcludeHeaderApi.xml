@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="CacheExcludeHeaderApi.xml" context="/excludeHeaders">
+    <resource methods="POST">
+        <inSequence>
+            <cache collector="false" timeout="20">
+                <protocol type="HTTP">
+                    <methods>POST</methods>
+                    <headersToExcludeInHash>user</headersToExcludeInHash>
+                    <responseCodes>.*</responseCodes>
+                    <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                </protocol>
+            </cache>
+            <send>
+                <endpoint>
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService"
+                             format="soap11"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <cache collector="true"/>
+            <send/>
+        </outSequence>
+    </resource>
+</api>
