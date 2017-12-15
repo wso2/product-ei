@@ -340,15 +340,15 @@ oneWayUploadUsingMTOM saves the request message to the disk. </p>
 <h2 id="config">Starting Sample EI Configurations </h2>
 
 <p>To start the WSO2 EI with the sample default configuration, execute the
-wso2server.bat or wso2server.sh script found in the /bin directory. This starts
+integrator.bat or integrator.sh script found in the /bin directory. This starts
 up an instance of the EI using the Synapse and Axis2 configuration files
 located in the conf directory. The samples/service-bus directory contains
 the sample configurations available as synapse_sample_&lt;n&gt;.xml files. To
-start a specific sample configuration of the EI, use the wso2EI-samples.sh or
+start a specific sample configuration of the EI, use the wso2ei-samples.sh or
 wso2EI-samples.bat as follows: </p>
 
-<pre xml:space="preserve">wso2EI-samples.bat -sn &lt;n&gt;
- ./wso2EI-samples.sh -sn &lt;n&gt;</pre>
+<pre xml:space="preserve">wso2ei-samples.bat -sn &lt;n&gt;
+ ./wso2ei-samples.sh -sn &lt;n&gt;</pre>
 
 <h2 id="Setting">Setting up the JMS Listener </h2>
 
