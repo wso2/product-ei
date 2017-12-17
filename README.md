@@ -25,7 +25,7 @@ enterprise integration requirements.
 
 ## Installation
 Prerequisites
-- Java 8 or higher. 
+- Java 8
 
 
 ## Running the Integrator
