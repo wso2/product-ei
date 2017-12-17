@@ -7,14 +7,6 @@ WSO2 Enterprise Integrator 7.0.0 (WSO2 EI 7.0.0) is an intuitive, lightweight, c
 and high-performance integration platform that enables the agile and rapid development of integrations between services, 
 apps, data and systems.
 
-WSO2 Enterprise Integrator 7.0.0 is composed of:
-
-- An integrator runtime based on Ballerina, 
-which is an event-driven, parallel programming language that is designed for building networked applications.
-- A runtime of the WSO2 Message Broker 4.0, 
-which can be used alongside with integrator for enabling reliable persistent messaging between systems.
-- A workflow engine based on Activiti to execute business processes described in BPMN 2.0.
-
 WSO2 Enterprise Integrator 7.0.0 is an essential platform for building microservices, compositions and
 bridging microservices and other monolithic applications, in which you will independently develop,
 deploy and administrate container native integration runtimes.
@@ -22,6 +14,13 @@ deploy and administrate container native integration runtimes.
 WSO2 Enterprise Integrator 7.0.0 can also be used as the centralized integration middleware for conventional
 enterprise integration requirements.
 
+WSO2 Enterprise Integrator 7.0.0 is composed of:
+
+- An integrator runtime based on Ballerina, 
+which is an event-driven, parallel programming language that is designed for building networked applications.
+- WSO2 Message Broker,
+which can be used alongside with integrator for enabling reliable persistent messaging between systems.
+- A workflow engine based on Activiti to execute business processes described in BPMN 2.0.
 
 Installation & Running
 =======================
