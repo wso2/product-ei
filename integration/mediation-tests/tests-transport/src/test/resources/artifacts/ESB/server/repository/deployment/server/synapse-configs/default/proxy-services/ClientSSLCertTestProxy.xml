@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ClientSSLCertTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <class name="org.wso2.test.mediators.CertMediator"/>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>
