@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -31,58 +31,59 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.io.File;
+
 import static org.testng.Assert.assertFalse;
 
 public class FormatPayloadWithOMTypeCTXExpressionTestCase extends ESBIntegrationTest {
-	@BeforeClass(alwaysRun = true)
-	public void uploadSynapseConfig() throws Exception {
-		super.init();
-		loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/payload/factory/om_ctx_payload_factory_synapse.xml");
-	}
 
+    @BeforeClass(alwaysRun = true)
+    public void uploadSynapseConfig() throws Exception {
+        super.init();
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
+                File.separator + "mediatorconfig" + File.separator + "payload" + File.separator + "factory" +
+                File.separator + "om_ctx_payload_factory_synapse.xml");
+    }
 
-	@Test(groups = {"wso2.esb"}, description = "Do transformation with a Payload Format that has OM type properties")
-	public void transformPayloadByCTXPropertyValue() throws AxisFault {
-		sendRobust(getMainSequenceURL(), "IBM");
-	}
+    @Test(groups = {"wso2.esb"}, description = "Do transformation with a Payload Format that has OM type properties")
+    public void transformPayloadByCTXPropertyValue() throws AxisFault {
+        sendRobust(getMainSequenceURL(), "IBM");
+    }
 
+    private void sendRobust(String trpUrl, String symbol)
+            throws AxisFault {
+        ServiceClient sender;
+        Options options;
+        sender = new ServiceClient();
+        options = new Options();
+        options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
+        options.setAction("urn:placeOrder");
 
-	private void sendRobust(String trpUrl, String symbol)
-			throws AxisFault {
-		ServiceClient sender;
-		Options options;
+        if (trpUrl != null && !"null".equals(trpUrl)) {
+            options.setProperty(Constants.Configuration.TRANSPORT_URL, trpUrl);
+        }
 
-		sender = new ServiceClient();
-		options = new Options();
-		options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
-		options.setAction("urn:placeOrder");
+        sender.setOptions(options);
 
-		if (trpUrl != null && !"null".equals(trpUrl)) {
-			options.setProperty(Constants.Configuration.TRANSPORT_URL, trpUrl);
-		}
+        OMElement response = sender.sendReceive(createRequest(symbol));
+        assertFalse(response.toString().contains("&lt;"), "Transformed message contains &lt; instead of <");
+    }
 
-		sender.setOptions(options);
+    private OMElement createRequest(String symbol) {
+        OMFactory fac = OMAbstractFactory.getOMFactory();
+        OMNamespace omNs = fac.createOMNamespace("http://services.samples", "ns");
+        OMElement method = fac.createOMElement("payload", omNs);
+        OMElement value1 = fac.createOMElement("request", omNs);
+        OMElement value2 = fac.createOMElement("symbol", omNs);
+        value2.addChild(fac.createOMText(value1, symbol));
+        value1.addChild(value2);
+        method.addChild(value1);
 
-		OMElement response = sender.sendReceive(createRequest(symbol));
-		assertFalse(response.toString().contains("&lt;"), "Transformed message contains &lt; instead of <");
-	}
+        return method;
+    }
 
-	private OMElement createRequest(String symbol) {
-		OMFactory fac = OMAbstractFactory.getOMFactory();
-		OMNamespace omNs = fac.createOMNamespace("http://services.samples", "ns");
-		OMElement method = fac.createOMElement("payload", omNs);
-		OMElement value1 = fac.createOMElement("request", omNs);
-		OMElement value2 = fac.createOMElement("symbol", omNs);
-
-		value2.addChild(fac.createOMText(value1, symbol));
-		value1.addChild(value2);
-		method.addChild(value1);
-
-		return method;
-	}
-
-	@AfterClass(alwaysRun = true)
-	private void destroy() throws Exception {
-		super.cleanup();
-	}
+    @AfterClass(alwaysRun = true)
+    private void destroy() throws Exception {
+        super.cleanup();
+    }
 }
