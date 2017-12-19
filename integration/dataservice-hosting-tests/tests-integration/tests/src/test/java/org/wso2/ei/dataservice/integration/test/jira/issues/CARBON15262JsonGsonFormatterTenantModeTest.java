@@ -42,7 +42,7 @@ import java.util.List;
  *
  */
 public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTest {
-	private final String serviceName = "H2SimpleJsonTest";
+	private final String serviceName = "GsonFormatterTenantModeTest";
 	private final String serviceName1 = "H2SimpleJsonTest1";
 	private String serviceEndPoint, serviceEndPoint1;
 
@@ -54,12 +54,12 @@ public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTe
 		List<File> sqlFileLis = new ArrayList<>();
 		sqlFileLis.add(selectSqlFile("CreateTables.sql"));
 		sqlFileLis.add(selectSqlFile("Offices.sql"));
-		deployService(serviceName, createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
-		                                          "rdbms" + File.separator + "h2" + File.separator +
-		                                          "H2SimpleJsonTest.dbs", sqlFileLis));
-		deployService(serviceName1, createArtifact(getResourceLocation() + File.separator + "dbs" + File.separator +
-				                                  "rdbms" + File.separator + "h2" + File.separator +
-				                                  "H2SimpleJsonTest1.dbs", sqlFileLis));
+		deployService(serviceName, createArtifact(
+				getResourceLocation() + File.separator + "dbs" + File.separator + "rdbms" + File.separator + "h2"
+						+ File.separator + "GsonFormatterTenantModeTest.dbs", sqlFileLis));
+		deployService(serviceName1, createArtifact(
+				getResourceLocation() + File.separator + "dbs" + File.separator + "rdbms" + File.separator + "h2"
+						+ File.separator + "H2SimpleJsonTest1.dbs", sqlFileLis));
 		serviceEndPoint = getServiceUrlHttp(serviceName) + "/";
 		serviceEndPoint1 = getServiceUrlHttp(serviceName1) + "/";
 	}
