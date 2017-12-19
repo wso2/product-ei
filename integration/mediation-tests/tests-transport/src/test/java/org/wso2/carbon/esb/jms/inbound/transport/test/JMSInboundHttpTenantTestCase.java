@@ -31,6 +31,7 @@ import org.wso2.esb.integration.common.clients.inbound.endpoint.InboundAdminClie
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
+import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 /**
  * Test tenant users with inbound endpoints.
@@ -46,12 +47,13 @@ public class JMSInboundHttpTenantTestCase extends ESBIntegrationTest {
     private final String TENANT2 = "abc";
     private final String TENANT1_INBOUND_EP = "JMSTenant1InboundEp";
     private final String TENANT2_INBOUND_EP = "JMSTenant2InboundEp";
+    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
 
+        activeMQServer.startJMSBroker();
         OMElement synapse;
-
         super.init(TENANT1, "user1");
         inboundAdminClient1 = new InboundAdminClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
         synapse = esbUtils.loadResource("/artifacts/ESB/jms/inbound/transport/jms_http_tenant_transport.xml");
@@ -92,9 +94,13 @@ public class JMSInboundHttpTenantTestCase extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        super.cleanup();
-        inboundAdminClient1.removeInboundEndpoint(TENANT1_INBOUND_EP);
-        inboundAdminClient2.removeInboundEndpoint(TENANT2_INBOUND_EP);
+        try{
+            super.cleanup();
+            inboundAdminClient1.removeInboundEndpoint(TENANT1_INBOUND_EP);
+            inboundAdminClient2.removeInboundEndpoint(TENANT2_INBOUND_EP);
+        } finally {
+            activeMQServer.stopJMSBroker();
+        }
     }
 
     /**

@@ -134,11 +134,11 @@
         </packages>
     </test>
 
-    <!--<test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>-->
-        <!--</packages>-->
-    <!--</test>-->
+    <test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>
+        </packages>
+    </test>
 
     <test name="inbound-MQTT-Transport-Test" preserve-order="true" verbose="2">
         <packages>
