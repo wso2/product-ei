@@ -40,6 +40,7 @@
         <module>org.wso2.ei.samples.feature</module>
         <module>org.wso2.ei-business-process.styles.feature</module>
         <module>org.wso2.ei.broker.styles.feature</module>
+        <module>org.wso2.ei.analytics.elk.feature</module>
     </modules>
 
 </project>

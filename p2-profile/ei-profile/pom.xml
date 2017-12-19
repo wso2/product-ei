@@ -32,6 +32,16 @@
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - P2 Profile Generation</name>
     <url>http://www.wso2.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.analytics.elk.feature</artifactId>
+            <version>${analytics.elk.version}</version>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -378,6 +388,10 @@
 
                                 <featureArtifactDef>
                                     org.wso2.ei:org.wso2.carbon.integrator.server.feature:${product.ei.version}
+                                </featureArtifactDef>
+
+                                <featureArtifactDef>
+                                    org.wso2.ei:org.wso2.ei.analytics.elk.feature:${analytics.elk.version}
                                 </featureArtifactDef>
 
                             </featureArtifacts>
@@ -807,6 +821,57 @@
                                 <feature>
                                     <id>org.wso2.carbon.integrator.server.feature.group</id>
                                     <version>${product.ei.version}</version>
+                                </feature>
+
+                                <!--<feature>
+                                    <id>org.wso2.carbon.bam.mediation.agent.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature>-->
+                                <!--feature>
+                                    <id>org.wso2.carbon.bam.service.agent.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature-->
+                                <!--<feature>-->
+                                <!--<id>org.wso2.carbon.throttle.feature.group</id>-->
+                                <!--<version>${wso2carbon.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                <!--<id>org.wso2.carbon.bam.mediation.agent.feature.group</id>-->
+                                <!--<version>${wso2carbon.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                <!--<id>org.wso2.carbon.cloud.gateway.agent.feature.group</id>-->
+                                <!--<version>${wso2carbon.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--feature>
+                                   <id>org.wso2.carbon.load.balance.agent.ui.feature.group</id>
+                                   <version>${stratos.version}</version>
+                                </feature>
+                                <feature>
+                                   <id>org.wso2.carbon.load.balance.agent.server.feature.group</id>
+                                   <version>${stratos.version}</version>
+                                </feature-->
+                                <!--feature>
+                                   <id>org.wso2.carbon.ec2-client.feature.group</id>
+                                   <version>${wso2carbon.old.version}</version>
+                                </feature-->
+                                <!--feature>
+                                   <id>org.wso2.carbon.xfer.feature.group</id>
+                                   <version>${wso2carbon.old.version}</version>
+                                </feature>
+                                <feature>
+                                   <id>org.wso2.carbon.mex.feature.group</id>
+                                   <version>${wso2carbon.old.version}</version>
+                                </feature-->
+                                <!--<feature>-->
+                                <!--<id>org.wso2.carbon.statistics.transport.feature.group</id>-->
+                                <!--<version>${wso2carbon.feature.version}</version>-->
+                                <!--</feature>-->
+
+                                <!--ELK Analytics feature group-->
+                                <feature>
+                                    <id>org.wso2.ei.analytics.elk.feature.group</id>
+                                    <version>${analytics.elk.version}</version>
                                 </feature>
                             </features>
                         </configuration>
