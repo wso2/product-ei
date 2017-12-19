@@ -44,8 +44,7 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
 
-	    pathToFtpDir = FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts" + File.separator
-	                   + "ESB" + File.separator + "synapseconfig" + File.separator + "vfsTransport";
+	    pathToFtpDir = getESBResourceLocation() + File.separator + "synapseconfig" + File.separator + "vfsTransport";
 
         InboundFileFolder = new File(pathToFtpDir + File.separator + "InboundFileFolder");
 
@@ -80,7 +79,7 @@ public class InboundEndpointContentTypePlainTest extends ESBIntegrationTest {
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint());
-            boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 2);
+            boolean isFileRead = Utils.checkForLog(logViewerClient, "WSO2 Lanka Pvt Ltd", 10);
             Assert.assertTrue(isFileRead, "The Text file is not getting read");
         } finally {
             deleteFile(targetFile);
