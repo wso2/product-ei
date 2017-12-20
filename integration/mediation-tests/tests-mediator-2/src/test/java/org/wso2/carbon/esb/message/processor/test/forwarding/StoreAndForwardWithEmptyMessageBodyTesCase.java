@@ -50,7 +50,7 @@ public class StoreAndForwardWithEmptyMessageBodyTesCase extends ESBIntegrationTe
         DB_PATH = getESBResourceLocation();
         DB_PASSWORD = "wso2carbon";
         DB_USER = "wso2carbon";
-        JDBC_URL = "jdbc:h2:file:/" + DB_PATH + "/testDB;MV_STORE=FALSE;MVCC=FALSE;FILE_LOCK=NO;TRACE_LEVEL_FILE=0";
+        JDBC_URL = "jdbc:h2:file:/" + DB_PATH + "/testDB;MV_STORE=FALSE;MVCC=FALSE;FILE_LOCK=NO;TRACE_LEVEL_FILE=0;DB_CLOSE_DELAY=-1";
 
         h2DatabaseManager = new H2DataBaseManager(JDBC_URL, DB_USER, DB_PASSWORD);
         h2DatabaseManager.executeUpdate(
