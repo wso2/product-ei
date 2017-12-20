@@ -316,9 +316,7 @@ Following are the available ballerina program files.
 
 These four services are just dummy services which mock the functionality of a backend service.
 
- ![RoutingService.bal](services/samples/router/RoutingService.bal)
-
-is the main service which we focus on this sample.
+![RoutingService.bal](services/samples/router/RoutingService.bal) is the main service which we focus on this sample.
 
 Please note that these files are located at samples/router sub-directory inside the service directory
 as all these services belongs to the samples.router package.
