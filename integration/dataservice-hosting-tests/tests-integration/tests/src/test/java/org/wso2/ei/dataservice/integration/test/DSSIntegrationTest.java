@@ -21,6 +21,7 @@ import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.axiom.om.OMElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.context.beans.Tenant;
@@ -28,12 +29,18 @@ import org.wso2.carbon.automation.engine.context.beans.User;
 import org.wso2.carbon.automation.extensions.XPathConstants;
 import org.wso2.carbon.automation.test.utils.common.TestConfigurationProvider;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
+import org.wso2.carbon.integration.common.utils.exceptions.AutomationUtilException;
 import org.wso2.ei.dataservice.integration.common.utils.DSSTestCaseUtils;
 import org.wso2.ei.dataservice.integration.common.utils.SqlDataSourceUtil;
+import org.wso2.esb.integration.common.utils.ESBTestConstant;
+import org.xml.sax.SAXException;
 
 import javax.activation.DataHandler;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public abstract class DSSIntegrationTest {
@@ -169,5 +176,17 @@ public abstract class DSSIntegrationTest {
                 new Object[]{TestUserMode.SUPER_TENANT_ADMIN},
 //                new Object[]{TestUserMode.TENANT_ADMIN},
         };
+    }
+
+    protected void reloadSessionCookie(TestUserMode userType) throws Exception {
+        dssContext = new AutomationContext(PRODUCT_NAME, userType);
+        sessionCookie = login(dssContext);
+    }
+
+    protected String login(AutomationContext dssContext)
+            throws IOException, XPathExpressionException, URISyntaxException, SAXException, XMLStreamException,
+            LoginAuthenticationExceptionException, AutomationUtilException {
+        LoginLogoutClient loginLogoutClient = new LoginLogoutClient(dssContext);
+        return loginLogoutClient.login();
     }
 }

@@ -16,6 +16,7 @@
 
 package org.wso2.carbon.esb.ssl.test;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -132,8 +133,9 @@ public class DynamicSSLProfilesPTTListenerTestCase extends ESBIntegrationTest {
     }
 
     @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-    @AfterTest(alwaysRun = true)
+    @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
+        super.reloadSessionCookie();
         deleteProxyService(proxyService);
         super.cleanup();
         if (serverManager != null) {

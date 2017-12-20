@@ -65,6 +65,7 @@ public class CARBON15262JsonGsonFormatterTenantModeTest extends DSSIntegrationTe
 	}
 
 	@AfterClass(alwaysRun = true) public void destroy() throws Exception {
+		super.reloadSessionCookie(TestUserMode.TENANT_ADMIN);
 		deleteService(serviceName);
 		cleanup();
 	}
