@@ -18,7 +18,7 @@ service<http> ShipmentService {
 
         http:HttpConnectorError respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at ShipmentService when responding back");
         }
     }
@@ -35,7 +35,7 @@ service<http> ShipmentService {
         resp.setJsonPayload(payload);
         http:HttpConnectorError respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at ShipmentService when responding back");
         }
     }

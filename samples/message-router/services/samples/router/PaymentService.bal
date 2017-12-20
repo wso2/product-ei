@@ -24,7 +24,7 @@ service<http> PaymentGatewayService {
         resp.setJsonPayload(payload);
         http:HttpConnectorError respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at PaymentGatewayService visaCard while responding back");
         }
     }
@@ -48,7 +48,7 @@ service<http> PaymentGatewayService {
         resp.setJsonPayload(payload);
         http:HttpConnectorError respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at PaymentGatewayService masterCard while responding back");
         }
     }

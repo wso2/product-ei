@@ -64,7 +64,7 @@ service<http> GatewayService {
 
         http:HttpConnectorError respondError = resp.forward(responseMessage);
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at GatewayService when forwarding");
         }
     }

@@ -60,6 +60,7 @@ Following is the configuration for the complete service built in ballerina.
 package samples.router;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/ecom"}
 service<http> GatewayService {
@@ -85,23 +86,19 @@ service<http> GatewayService {
         path:"/{serviceType}/*"
     }
     resource route (http:Request req, http:Response resp, string serviceType) {
+        println("Message received to Router");
 
-        // Fetch url postfix
         var requestURL = req.getProperty("REQUEST_URL");
         string postfix = requestURL.replaceFirst("/ecom/" + serviceType, "");
 
-        // Manipulating headers
         setXFwdForHeader(req);
 
         http:Response responseMessage = {};
 
-        // Routing Logic
         if (serviceType.hasPrefix("browse")) {
             responseMessage, _ = browseServiceEP.get(postfix, req);
-
         } else if (serviceType.hasPrefix("order")) {
             responseMessage, _ = orderServiceEP.post("/placeOrder", req);
-
         } else if (serviceType.hasPrefix("payment")) {
             json payload = req.getJsonPayload();
             var cardType,_ = (string) payload.creditCardType;
@@ -113,29 +110,32 @@ service<http> GatewayService {
                 payload = {"Error":"Invalid Payment Type"};
                 responseMessage.setJsonPayload(payload);
             }
-
         } else if (serviceType.hasPrefix("shipment")) {
-            var userAgentHeader,_ = req.getHeader("User-Agent");
-            if (userAgentHeader == "Ecom-Agent") {
+            if (req.userAgent == "Ecom-Agent") {
                 responseMessage, _ = shipmentServiceEP.post("/internal/" + postfix, req);
             } else {
                 responseMessage, _ = shipmentServiceEP.post("/submit/" + postfix, req);
             }
-
         } else {
-
             json payload = {"Error":"No service found"};
             responseMessage.setJsonPayload(payload);
         }
-        resp.forward(responseMessage);
+
+        http:HttpConnectorError respondError = resp.forward(responseMessage);
+
+        if (respondError != null) {
+            log:printError("Error occured at GatewayService when forwarding");
+        }
     }
 }
 
 function setXFwdForHeader(http:Request req) {
-    var xFwdHeader,_ = req.getHeader("X-Forwarded-For");
+    http:HeaderValue headerValue = req.getHeader("X-Forwarded-For");
 
-    if (xFwdHeader != "") {
-        xFwdHeader = xFwdHeader + ", 10.100.1.127";
+    string xFwdHeader;
+
+    if (headerValue != null) {
+        xFwdHeader = headerValue.value + ", 10.100.1.127";
     } else {
         xFwdHeader = "10.100.1.127";
     }

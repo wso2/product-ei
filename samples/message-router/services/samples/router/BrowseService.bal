@@ -97,7 +97,7 @@ service<http> BrowseService {
         resp.setJsonPayload(payload);
         http:HttpConnectorError respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at BrowseService while responding back");
         }
     }

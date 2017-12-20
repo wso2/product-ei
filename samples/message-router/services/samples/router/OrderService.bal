@@ -22,7 +22,7 @@ service<http> OrderService {
         resp.setJsonPayload(payload);
         http:HttpConnectorError respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at OrderService while responding back");
         }
     }
