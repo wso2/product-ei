@@ -2,6 +2,7 @@ package samples.topic.common;
 
 import ballerina.net.http;
 import ballerina.net.jms;
+import ballerina.log;
 
 @Description {value:"Place a travel request"}
 @http:configuration {basePath:"/travel"}
@@ -27,8 +28,13 @@ service<http> travelRequestGateway {
         //Set the response payload and send it to the caller. By this time the message is added to the topic and
         //would provide a guarantee to the caller on successful delivery of the message.
         json responsePayload = {"Status":"travel request processed"};
+        http:HttpConnectorError respondError = null;
         res.setJsonPayload(responsePayload);
-        res.send();
+        respondError = res.send();
+
+        if(respondError != null) {
+            log:printError("Error while responding back to the client");
+        }
     }
 }
 

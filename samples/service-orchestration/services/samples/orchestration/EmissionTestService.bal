@@ -1,6 +1,7 @@
 package samples.orchestration;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/emission"}
 service<http> EmissionService {
@@ -20,6 +21,12 @@ service<http> EmissionService {
         }
 
         resp.setJsonPayload(payload);
-        resp.send();
+
+        http:HttpConnectorError respondError = null;
+        respondError = resp.send();
+
+        if(respondError != null) {
+            log:printError("Error occured at EmissionService while responding back");
+        }
     }
 }

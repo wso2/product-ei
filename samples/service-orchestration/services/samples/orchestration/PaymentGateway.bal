@@ -1,6 +1,7 @@
 package samples.orchestration;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/payment"}
 service<http> PaymentGatewayService {
@@ -22,6 +23,12 @@ service<http> PaymentGatewayService {
         }
         
         resp.setJsonPayload(payload);
-        resp.send();
+
+        http:HttpConnectorError respondError = null;
+        respondError = resp.send();
+
+        if(respondError != null) {
+            log:printError("Error occured at PaymentGatewayService while responding back");
+        }
     }
 }

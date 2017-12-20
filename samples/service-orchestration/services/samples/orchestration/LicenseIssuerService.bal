@@ -1,6 +1,7 @@
 package samples.orchestration;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/licenseIssuer"}
 service<http> LicenseIssuerService {
@@ -13,6 +14,12 @@ service<http> LicenseIssuerService {
 
         json payload = {"License Certificate":"XLO1029302020", "Vehicle ID": vehicleId};
         resp.setJsonPayload(payload);
-        resp.send();
+
+        http:HttpConnectorError respondError = null;
+        respondError = resp.send();
+
+        if(respondError != null) {
+            log:printError("Error occured at LicenseIssuerService while responding back");
+        }
     }
 }

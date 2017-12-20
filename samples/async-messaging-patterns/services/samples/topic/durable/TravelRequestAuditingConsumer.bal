@@ -21,7 +21,9 @@ service<jms> travelRequestAuditingConsumer {
 
     resource onMessage (jms:JMSMessage m) {
         // Retrieve the order message obtained from the queue
-        string travelRequestMessage = m.getTextMessageContent();
+        string travelRequestTextMessage = m.getTextMessageContent();
+        // convert the message to json
+        var travelRequestMessage,_ = <json> travelRequestTextMessage;
         http:HttpConnectorError travelOrderDispatchError;
         //Create a http message based on the content specified in JMS message
         http:Request travelOrderRequest = {};
