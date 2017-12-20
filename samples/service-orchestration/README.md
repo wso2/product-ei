@@ -75,18 +75,18 @@ All the services related to this sample is located at <EI_HOME>samples/service-o
 
 Following are the available ballerina program files.
 
-![EmissionTestService.bal](services/samples/orchestration/EmissionTestService.bal)
+[EmissionTestService.bal](services/samples/orchestration/EmissionTestService.bal)
 
-![InsuranceService.bal](services/samples/orchestration/InsuranceService.bal)
+[InsuranceService.bal](services/samples/orchestration/InsuranceService.bal)
 
-![LicenseIssuerService.bal](services/samples/orchestration/LicenseIssuerService.bal)
+[LicenseIssuerService.bal](services/samples/orchestration/LicenseIssuerService.bal)
 
-![PaymentGateway.bal](services/samples/orchestration/PaymentGateway.bal)
+[PaymentGateway.bal](services/samples/orchestration/PaymentGateway.bal)
 
 
 These four services are just dummy services which mock the functionality of a backend service.
 
-![RevenueLicenseService.bal](services/samples/orchestration/RevenueLicenseService.bal) is the main service which we focus on this sample.
+[RevenueLicenseService.bal](services/samples/orchestration/RevenueLicenseService.bal) is the main service which we focus on this sample.
 
 Please note that these files are located at samples/orchestration sub-directory inside the service directory
 as all these services belongs to the samples.router package.

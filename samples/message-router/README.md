@@ -306,17 +306,17 @@ All the services related to this sample is located at <EI_HOME>samples/message-r
 
 Following are the available ballerina program files.
 
-![BrowseService.bal](services/samples/router/BrowseService.bal)
+[BrowseService.bal](services/samples/router/BrowseService.bal)
 
-![OrderService.bal](services/samples/router/OrderService.bal)
+[OrderService.bal](services/samples/router/OrderService.bal)
 
-![PaymentService.bal](services/samples/router/PaymentService.bal)
+[PaymentService.bal](services/samples/router/PaymentService.bal)
 
-![ShipmentService.bal](services/samples/router/ShipmentService.bal)
+[ShipmentService.bal](services/samples/router/ShipmentService.bal)
 
 These four services are just dummy services which mock the functionality of a backend service.
 
-![RoutingService.bal](services/samples/router/RoutingService.bal) is the main service which we focus on this sample.
+[RoutingService.bal](services/samples/router/RoutingService.bal) is the main service which we focus on this sample.
 
 Please note that these files are located at samples/router sub-directory inside the service directory
 as all these services belongs to the samples.router package.
