@@ -161,7 +161,7 @@ We can simply edit the configurations as you prefer and execute the sample again
 content with the following command.
 
 ```
-samples/service-orchestration-with-data-composition/services$ ../../../../bin/integrator.sh samples/orchestration
+samples/service-orchestration-with-data-composition/services$ ../../../bin/integrator.sh samples/orchestration
 ```
 
 We can test the sample by executing the same set of steps given above.

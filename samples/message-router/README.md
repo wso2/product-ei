@@ -325,7 +325,7 @@ We can simply edit the configurations as you prefer and execute the sample again
 content with the following command.
 
 ```
-samples/message-router/services$ ../../../../bin/integrator.sh ../samples/router
+samples/message-router/services$ ../../../bin/integrator.sh samples/router
 ```
 
 We can test the sample by executing the same set of steps given above.
