@@ -90,7 +90,7 @@ Goto <EI_HOME>/samples/service-orchestration-with-data-composition/services
 
 Execute following command to compile and run the ballerina program.
 ```
-./../../../wso2/ballerina/bin/ballerina run samples/orchestration/
+samples/service-orchestration/services$ ../../../../bin/integrator.sh samples/orchestration/
 ```
 
 ## Invoking the service
@@ -134,3 +134,34 @@ You should get something similar to following as the output.
 ```
 {"License Certificate":"XLO1029302020","Vehicle ID":"CAV-5527"}
 ```
+
+### Modifying the code
+
+All the services related to this sample is located at <EI_HOME>samples/service-orchestration/services directory.
+
+Following are the available ballerina program files.
+
+![EmissionTestService.bal](services/samples/service-orchestration-with-data-composition/EmissionTestService.bal)
+
+![InsuranceService.bal](services/samples/service-orchestration-with-data-composition/InsuranceService.bal)
+
+![LicenseIssuerService.bal](services/samples/service-orchestration-with-data-composition/LicenseIssuerService.bal)
+
+![PaymentGateway.bal](services/samples/service-orchestration-with-data-composition/PaymentGateway.bal)
+
+
+These four services are just dummy services which mock the functionality of a backend service.
+
+![RevenueLicenseService.bal](services/samples/service-orchestration-with-data-composition/RevenueLicenseService.bal) is the main service which we focus on this sample.
+
+Please note that these files are located at samples/orchestration sub-directory inside the service directory
+as all these services belongs to the samples.router package.
+
+We can simply edit the configurations as you prefer and execute the sample again with modified
+content with the following command.
+
+```
+samples/service-orchestration-with-data-composition/services$ ../../../../bin/integrator.sh samples/orchestration
+```
+
+We can test the sample by executing the same set of steps given above.
