@@ -197,7 +197,7 @@ You should get something similar to following as the output.
 ```
 
 
-#### Submitting a order
+#### Submitting an order
 
 
 Create a order.json file with the following content.
@@ -291,7 +291,7 @@ Submitting internal shipment details to order id: 371
 ```
 
 
-#### Manipulating Headers
+#### Manipulating headers
 
 For every request, you will notice following is getting printed in the log.
 Please refer to the setXFwdForHeader() function in the RoutingService.bal for more information about manipulating headers.
@@ -299,3 +299,30 @@ Please refer to the setXFwdForHeader() function in the RoutingService.bal for mo
 ```
 Setting X-Forwarded-For to : 10.100.1.127
 ```
+
+### Modifying the code
+
+All the services related to this sample is located at <EI_HOME>samples/message-router/services directory.
+
+Following are the available ballerina program files.
+
+![BrowseService.bal](services/samples/router/BrowseService.bal)
+![OrderService.bal](services/samples/router/OrderService.bal)
+![PaymentService.bal](services/samples/router/PaymentService.bal)
+![ShipmentService.bal](services/samples/router/ShipmentService.bal)
+
+These four services are just dummy services which mock the functionality of a backend service.
+
+RoutingService.bal is the main service which we focus on this sample.
+
+Please note that these files are located at samples/router sub-directory inside the service directory
+as all these services belongs to the samples.router package.
+
+We can simply edit the configurations as you prefer and execute the sample again with modified
+content with the following command.
+
+```
+samples/message-router/services$ ../../../../bin/integrator.sh ../samples/router
+```
+
+We can test the sample by executing the same set of steps given above.
