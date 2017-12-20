@@ -21,6 +21,6 @@ service<http> OrderProcessor {
         json responsePayload = {"OrderId": orderId, "Status": status};
 
         response.setJsonPayload(responsePayload);
-        response.send();
+         _ = response.send();
     }
 }

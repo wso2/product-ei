@@ -1,6 +1,7 @@
 package samples.topic.common;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @Description {value:"Mimics order dispatching service"}
 @http:configuration {basePath:"/dispatch",
@@ -17,7 +18,12 @@ service<http> travelRequestProcessingService {
         println("Tavel order received : " + orderPayload.toString());
         //Send a successful response back to the caller
         json responsePayload = {"Status":"Success"};
+        http:HttpConnectorError respondError = null;
         res.setJsonPayload(responsePayload);
-        res.send();
+        respondError = res.send();
+
+        if (respondError != null) {
+            log:printError("Error while responding back from the travelRequestProcessingService backend");
+        }
     }
 }

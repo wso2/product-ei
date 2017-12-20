@@ -1,6 +1,7 @@
 package samples.orchestration;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/license"}
 service <http> RevenueLicenseService {
@@ -21,6 +22,7 @@ service <http> RevenueLicenseService {
 
         json clientPayload = req.getJsonPayload();
         var vehicleId,_ = (string) clientPayload.Vehicle.ID;
+        http:HttpConnectorError connectorError = null;
         
         // Validate Insurance Certificate and Emission Certificate
         boolean isValid;
@@ -29,7 +31,12 @@ service <http> RevenueLicenseService {
         if (!isValid) {
             json responsePayload = {"Error":statusMessage};
             resp.setJsonPayload(responsePayload);
-            resp.send();
+
+            connectorError = resp.send();
+
+            if (connectorError != null) {
+                log:printError("Error occured while responding back certificate validation faliure");
+            }
             return;
         }
         
@@ -53,14 +60,20 @@ service <http> RevenueLicenseService {
         if (status != "Successful") {
             json responsePayload = {"Error":"Payment Failed"};
             resp.setJsonPayload(responsePayload);
-            resp.send();
+            connectorError = resp.send();
+            if (connectorError != null) {
+                log:printError("Error occured while responding back payment faliure");
+            }
             return;
         }
             
         // Call License Issuer
         http:Response licenseResponse = {};
         licenseResponse,_ = licenseIssuerEP.get("/" + vehicleId, req);
-        resp.forward(licenseResponse);
+        connectorError = resp.forward(licenseResponse);
+        if (connectorError != null) {
+            log:printError("Error occured while calling license issuer");
+        }
     }
     
     
@@ -71,6 +84,7 @@ service <http> RevenueLicenseService {
     resource validateCertsResource (http:Request req, http:Response resp) {
         json clientPayload = req.getJsonPayload();
         var vehicleId,_ = (string) clientPayload.Vehicle.ID;
+        http:HttpConnectorError connectorError = null;
         
         boolean isValid;
         string statusMessage;
@@ -78,12 +92,18 @@ service <http> RevenueLicenseService {
         if (!isValid) {
             json responsePayload = {"Error":statusMessage};
             resp.setJsonPayload(responsePayload);
-            resp.send();
+            connectorError = resp.send();
+            if (connectorError != null) {
+                log:printError("Error occured while responding back at validate cert");
+            }
             return;
         }
         json payload = {"Status":"Valid"};
         resp.setJsonPayload(payload);
-        resp.send();
+        connectorError = resp.send();
+        if (connectorError != null) {
+            log:printError("Error occured while responding back at validate cert");
+        }
     }
     
 }

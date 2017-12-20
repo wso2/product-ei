@@ -2,6 +2,7 @@ package samples.messaging;
 
 import ballerina.net.http;
 import ballerina.net.jms;
+import ballerina.log;
 
 @Description{value:"Place a coffee order reliably to queue"}
 @http:configuration {basePath:"/coffee"}
@@ -27,8 +28,13 @@ service<http> coffeeOrderService {
         //Set the response payload and send it to the caller. By this time the message is added to the queue and
         //would provide a guarantee to the caller on successful delivery of the message.
         json responsePayload = {"Status":"Coffee Order Processed"};
+        http:HttpConnectorError respondError = null;
         res.setJsonPayload(responsePayload);
-        res.send();
+        respondError = res.send();
+
+        if (respondError != null) {
+            log:printError("Error while responding back to the client");
+        }
     }
 }
 

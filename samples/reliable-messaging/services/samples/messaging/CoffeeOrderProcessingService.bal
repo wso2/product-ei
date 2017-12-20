@@ -22,11 +22,12 @@ service<jms> coffeeConsumerService {
     resource onMessage (jms:JMSMessage m) {
         // Retrieve the order message obtained from the queue
         string orderMessage = m.getTextMessageContent();
+        var orderJsonMessage,_ = <json>orderMessage;
         http:HttpConnectorError pizzaSendError;
         println("Payload: " + orderMessage + " received by processing service");
         //Create a http message based on the content specified in JMS message
         http:Request pizzaOrderRequest = {};
-        pizzaOrderRequest.setJsonPayload(orderMessage);
+        pizzaOrderRequest.setJsonPayload(orderJsonMessage);
         //Create a place holder to retrieve the response obtained from coffee order service
         http:Response pizzaResponse = {};
         //Dispatch the order message to the respective endpoint.

@@ -419,8 +419,7 @@
     </build>
 
     <properties>
-        <ballerina.runtime.version>0.95.1</ballerina.runtime.version>
-        <ballerina.core.version>0.95.1</ballerina.core.version>
+        <ballerina.runtime.version>0.95.5</ballerina.runtime.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>3.0.2</carbon.messaging.version>
         <!-- TODO: Can't update to latest version since msf4j uses 5.0,6 version range-->
@@ -453,8 +452,8 @@
         <broker.version>1.0.31</broker.version>
 
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
-        <ballerina.file.connector.version>0.95.0</ballerina.file.connector.version>
-        <ballerina.jms.connector.version>0.95.2</ballerina.jms.connector.version>
+        <ballerina.file.connector.version>0.95.1</ballerina.file.connector.version>
+        <ballerina.jms.connector.version>0.95.3</ballerina.jms.connector.version>
     </properties>
 </project>
 
