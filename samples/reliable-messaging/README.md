@@ -22,6 +22,17 @@ service becomes available.
   
   * broker - Message broker which will allow to store the message in a queue or a topic. The broker will ensure to 
   preserve the order and provide delivery guarantees. 
+  
+### Building the sample
+
+In order to build the sample we would need the following,
+
+- Service which will act as the downstream service CoffeeOrderDispatchService
+[CoffeeOrderDispatchService](services/samples/downstream/CoffeeOrderDispatchService.bal)
+- Service which will act as the CoffeeOrderProcessingService
+[CoffeeOrderProcessingService](services/samples/messaging/CoffeeOrderProcessingService.bal)
+- Service which will act as the CoffeeShopService
+[CoffeeShopService](services/samples/messaging/CoffeeShopService.bal)
 
 # Environment Setup
 
@@ -36,6 +47,24 @@ bin$ ./integrator.sh ../samples/reliable-messaging/downstream.balx
 3. Deploy the reliable messaging service by running the following command,
 
 bin$ ./integrator.sh ../samples/reliable-messaging/messaging.balx
+
+#### Modifying the source
+
+If it's intended to modify the existing samples following could be done,
+
+1. As elaborated in the section "Building the sample", the relevant source could be found
+2. Modify the source as expected 
+3. Once modified in order to execute the scenario the following could be done
+
+The services related to reliable-messaging could be executed in the following manner,
+
+- Navigate to the directory <EI_HOME>/samples/reliable-messaging/services
+- Execute the following,
+
+samples/reliable-messaging/services$ ../../../bin/integrator.sh run samples/downstream
+samples/reliable-messaging/services$ ../../../bin/integrator.sh run samples/messaging
+
+The above operation will be similar to running downstream.balx and messaging.balx   
 
 ## Invoking the service
 

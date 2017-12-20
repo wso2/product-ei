@@ -73,6 +73,17 @@ For this scenario we would need the following,
 
 Composing the above services queue.balx is created.
 
+#### Generating a balx
+
+Currently balx is generated through ballerina-tools distribution which could be located in 
+[ballerina-tools](https://ballerinalang.org/downloads/)
+.Please follow the instructions in the site to setup ballerina-tools in the environment. 
+
+Currently EI includes only ballerina runtime, hence EI will not have Out of Box (OOB) support for composing a balx. 
+Ballerina tools pertaining to EI would be included in the future releases. 
+
+If it's intended to modify the source please refer section "modifying the source".
+
 ### Testing Scenario
 
 #### Sample Setup
@@ -85,6 +96,22 @@ bin$ ./broker.sh
 
 bin$ ./integrator.sh ../samples/async-messaging-patterns/queue.balx
 
+#### Modifying the source
+
+If it's intended to modify the existing samples following could be done,
+
+1. As elaborated in the section "Building the Scenario", the relevant source could be found
+2. Modify the source as expected 
+3. Once modified in order to execute the scenario the following could be done
+
+The services related to async-messaging-patterns could be executed in the following manner,
+
+- Navigate to the directory <EI_HOME>/samples/async-messaging-patterns/services
+- Execute the following,
+
+samples/async-messaging-patterns/services$ ../../../bin/integrator.sh run samples/queue
+
+The above operation will be similar to running queue.balx   
 
 #### Invoking the service
 
@@ -171,6 +198,24 @@ bin$ ./broker.sh
 bin$ ./integrator.sh ../samples/async-messaging-patterns/common.balx   
 bin$ ./integrator.sh ../samples/async-messaging-patterns/default.balx
 
+#### Modifying the source
+
+If it's intended to modify the existing samples following could be done,
+
+1. As elaborated in the section "Building the Scenario", the relevant source could be found
+2. Modify the source as expected 
+3. Once modified in order to execute the scenario the following could be done
+
+The services related to async-messaging-patterns could be executed in the following manner,
+
+- Navigate to the directory <EI_HOME>/samples/async-messaging-patterns/services
+- Execute the following,
+
+samples/async-messaging-patterns/services$ ../../../bin/integrator.sh run samples/topic/common
+samples/async-messaging-patterns/services$ ../../../bin/integrator.sh run samples/topic/default
+
+The above operation will be similar to running common.balx and default.balx  
+
 #### Invoking the service
 
 Create a payload.json file with the following content.
@@ -246,6 +291,24 @@ bin$ ./integrator.sh ../samples/async-messaging-patterns/common.balx
 3. Deploy the service by running the following command,
  
 bin$ ./integrator.sh ../samples/async-messaging-patterns/durable.balx
+
+#### Modifying the source
+
+If it's intended to modify the existing samples following could be done,
+
+1. As elaborated in the section "Building the Scenario", the relevant source could be found
+2. Modify the source as expected 
+3. Once modified in order to execute the scenario the following could be done
+
+The services related to async-messaging-patterns could be executed in the following manner,
+
+- Navigate to the directory <EI_HOME>/samples/async-messaging-patterns/services
+- Execute the following,
+
+samples/async-messaging-patterns/services$ ../../../bin/integrator.sh run samples/topic/common
+samples/async-messaging-patterns/services$ ../../../bin/integrator.sh run samples/topic/durable
+
+The above operation will be similar to running common.balx and durable.balx  
 
 #### Invoking the service
 

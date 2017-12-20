@@ -53,6 +53,17 @@ In order to build the scenario we would need the following,
 
 Composing the above services billing.balx was created.
 
+#### Generating a balx
+
+Currently balx is generated through ballerina-tools distribution which could be located in 
+[ballerina-tools](https://ballerinalang.org/downloads/)
+.Please follow the instructions in the site to setup ballerina-tools in the environment. 
+
+Currently EI includes only ballerina runtime, hence EI will not have Out of Box (OOB) support for composing a balx. 
+Ballerina tools pertaining to EI would be included in the future releases. 
+
+If it's intended to modify the source please refer section "modifying the source".
+
 ### Testing Scenario
 
 #### Sample Setup
@@ -64,6 +75,23 @@ bin$ ./broker.sh
 2. Deploy the billing service by running the following command,
  
 bin$ ./integrator.sh ../samples/file-gateway/billing.balx
+
+#### Modifying the source
+
+If it's intended to modify the existing samples following could be done,
+
+1. As elaborated in the section "Building the Scenario", the relevant source could be found
+2. Modify the source as expected 
+3. Once modified in order to execute the scenario the following could be done
+
+The services related to async-messaging-patterns could be executed in the following manner,
+
+- Navigate to the directory <EI_HOME>/samples/file-gateway/services
+- Execute the following,
+
+samples/file-gateway/services$ ../../../bin/integrator.sh run samples/billing
+
+The above operation will be similar to running billing.balx   
 
 #### Invoking the Service
 
@@ -130,6 +158,23 @@ dispatch them to the service
 1. Deploy the routing service by executing the following command,
 
 bin$ ./integrator.sh ../samples/file-gateway/routing.balx
+
+#### Modifying the source
+
+If it's intended to modify the existing samples following could be done,
+
+1. As elaborated in the section "Building the Scenario", the relevant source could be found
+2. Modify the source as expected 
+3. Once modified in order to execute the scenario the following could be done
+
+The services related to async-messaging-patterns could be executed in the following manner,
+
+- Navigate to the directory <EI_HOME>/samples/file-gateway/services
+- Execute the following,
+
+samples/file-gateway/services$ ../../../bin/integrator.sh run samples/routing
+
+The above operation will be similar to running routing.balx   
 
 #### Invoking the Service 
 
