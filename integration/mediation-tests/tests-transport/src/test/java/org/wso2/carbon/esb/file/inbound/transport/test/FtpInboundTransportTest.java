@@ -55,10 +55,8 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 		String outputFolderName = "ftpout";
 		int FTPPort = 9653;
 
-		pathToFtpDir = getClass().getResource(
-				File.separator + "artifacts" + File.separator + "ESB"
-						+ File.separator + "synapseconfig" + File.separator
-						+ "vfsTransport" + File.separator).getPath();
+		pathToFtpDir = getESBResourceLocation()	+ File.separator + "synapseconfig" + File.separator
+						+ "vfsTransport" + File.separator;
 
 		// Local folder of the FTP server root
 		FTPFolder = new File(pathToFtpDir + "FTP_Location" + File.separator);
@@ -122,7 +120,6 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 	@Test(groups = "wso2.esb", description = "Inbound endpoint Reading file in FTP Test Case")
 	public void testInboundEnpointReadFileinFTP() throws Exception {
 
-		addInboundEndpoint(addEndpoint1());
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
 		File targetFolder = new File(FTPFolder + File.separator + "ftpin");
@@ -130,7 +127,8 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 2);
+			addInboundEndpoint(addEndpoint1());
+			boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
 			Assert.assertTrue(isFileRead, "The XML file is not getting read");
 		} finally {
 			deleteFile(targetFile);
@@ -168,8 +166,6 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 	@Test(groups = "wso2.esb", description = "Inbound endpoint invalid FTP username Test Case")
 	public void testInboundInvalidFtpUsername() throws Exception {
 
-		addInboundEndpoint(addEndpoint3());
-
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
 		File targetFile = new File(FTPFolder + File.separator + "ftpin"
 				+ File.separator + "test.xml");
@@ -178,6 +174,7 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
+			addInboundEndpoint(addEndpoint3());
 			Thread.sleep(2000);
 			Assert.assertTrue(!outFile.exists());
 

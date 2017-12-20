@@ -40,6 +40,11 @@
             <package name="org.wso2.carbon.esb.ui.test.templates" />
         </packages>
     </test>
+    <test name="XSS-CSRF-Skip-Patterns-Test" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.ui.test.XssCsrfSkipPatternsTestCase"/>
+        </classes>
+    </test>
 
 </suite>
 

@@ -49,9 +49,8 @@ public class FileInboundWithDynamicSequenceTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        pathToDir = getClass().getResource(File.separator + "artifacts" + File.separator + "ESB"
-                                           + File.separator + "file" + File.separator + "inbound" + File.separator
-                                           + "transport").getPath();
+        pathToDir = getESBResourceLocation() + File.separator + "file" + File.separator + "inbound" + File.separator
+                                           + "transport";
 
         InboundFileFolder = new File(pathToDir + File.separator + "InboundInFileFolder");
 
