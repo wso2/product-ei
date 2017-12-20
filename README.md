@@ -4,16 +4,17 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # WSO2 Enterprise Integrator 7.0.0
-WSO2 Enterprise Integrator 7.0.0 (WSO2 EI 7.0.0) is an intuitive, lightweight, container-native
-and high-performance integration platform that enables the agile and rapid development of integrations between services, 
-apps, data and systems.
 
-WSO2 Enterprise Integrator 7.0.0 is an essential platform for building microservices, compositions and
-bridging microservices and other monolithic applications, in which you will independently develop,
-deploy and administrate container native integration runtimes.
+WSO2 Enterprise Integrator 7.0.0 (WSO2 EI 7.0.0) is an intuitive, lightweight, container-native and high-performance 
+integration platform that enables the agile and rapid development of integrations between services, apps, data and systems. 
 
-WSO2 Enterprise Integrator 7.0.0 can also be used as the centralized integration middleware for conventional
-enterprise integration requirements.
+WSO2 Enterprise Integrator 7.0.0 is an essential platform for building microservices compositions 
+and bridging microservices and other monolithic applications, in which you will independently develop, 
+deploy and administer container native integration runtimes. 
+
+WSO2 Enterprise Integrator 7.0.0 also can be used as the centralized integration middleware for 
+conventional enterprise integration requirements.  
+
 
 WSO2 Enterprise Integrator 7.0.0 is composed of:
 
