@@ -32,7 +32,7 @@ service<http> coffeeOrderService {
         res.setJsonPayload(responsePayload);
         respondError = res.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error while responding back to the client");
         }
     }

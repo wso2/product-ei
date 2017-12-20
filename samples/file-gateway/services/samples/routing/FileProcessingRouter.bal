@@ -27,7 +27,7 @@ service<fs> FileProcessingRouter {
         //We'll ignore the new line
         _ = characterChannel.readCharacters(1);
 
-        if(status == "Approved"){
+        if (status == "Approved"){
             //Read data from file block by block, 10 characters at a given time
             int readChunkSize = 10;
             string content = characterChannel.readCharacters(readChunkSize);

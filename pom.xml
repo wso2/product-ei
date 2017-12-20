@@ -420,7 +420,6 @@
 
     <properties>
         <ballerina.runtime.version>0.95.5</ballerina.runtime.version>
-        <ballerina.core.version>0.95.5</ballerina.core.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <carbon.messaging.version>3.0.2</carbon.messaging.version>
         <!-- TODO: Can't update to latest version since msf4j uses 5.0,6 version range-->

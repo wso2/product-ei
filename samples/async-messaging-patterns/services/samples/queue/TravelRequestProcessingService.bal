@@ -22,7 +22,7 @@ service<http> travelRequestProcessingService {
         res.setJsonPayload(responsePayload);
         respondError = res.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error responding back from the request processing service");
         }
     }

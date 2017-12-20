@@ -25,7 +25,7 @@ service<http> InsuranceService {
         http:HttpConnectorError respondError = null;
         respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at InsuranceService while responding back");
         }
     }

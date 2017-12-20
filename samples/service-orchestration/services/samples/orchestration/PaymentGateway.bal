@@ -27,7 +27,7 @@ service<http> PaymentGatewayService {
         http:HttpConnectorError respondError = null;
         respondError = resp.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error occured at PaymentGatewayService while responding back");
         }
     }

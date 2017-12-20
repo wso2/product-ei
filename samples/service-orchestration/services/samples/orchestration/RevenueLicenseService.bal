@@ -34,7 +34,7 @@ service <http> RevenueLicenseService {
 
             connectorError = resp.send();
 
-            if(connectorError != null) {
+            if (connectorError != null) {
                 log:printError("Error occured while responding back certificate validation faliure");
             }
             return;
@@ -61,7 +61,7 @@ service <http> RevenueLicenseService {
             json responsePayload = {"Error":"Payment Failed"};
             resp.setJsonPayload(responsePayload);
             connectorError = resp.send();
-            if(connectorError != null) {
+            if (connectorError != null) {
                 log:printError("Error occured while responding back payment faliure");
             }
             return;
@@ -71,7 +71,7 @@ service <http> RevenueLicenseService {
         http:Response licenseResponse = {};
         licenseResponse,_ = licenseIssuerEP.get("/" + vehicleId, req);
         connectorError = resp.forward(licenseResponse);
-        if(connectorError != null) {
+        if (connectorError != null) {
             log:printError("Error occured while calling license issuer");
         }
     }
@@ -93,7 +93,7 @@ service <http> RevenueLicenseService {
             json responsePayload = {"Error":statusMessage};
             resp.setJsonPayload(responsePayload);
             connectorError = resp.send();
-            if(connectorError != null) {
+            if (connectorError != null) {
                 log:printError("Error occured while responding back at validate cert");
             }
             return;
@@ -101,7 +101,7 @@ service <http> RevenueLicenseService {
         json payload = {"Status":"Valid"};
         resp.setJsonPayload(payload);
         connectorError = resp.send();
-        if(connectorError != null) {
+        if (connectorError != null) {
             log:printError("Error occured while responding back at validate cert");
         }
     }

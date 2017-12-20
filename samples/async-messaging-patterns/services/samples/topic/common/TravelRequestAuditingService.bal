@@ -22,7 +22,7 @@ service<http> travelRequestAuditingService {
         res.setJsonPayload(responsePayload);
         respondError= res.send();
 
-        if(respondError != null) {
+        if (respondError != null) {
             log:printError("Error while responding back from the travelRequestAuditingService backend");
         }
     }

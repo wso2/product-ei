@@ -1,6 +1,7 @@
 package samples.stockquote;
 
 import ballerina.net.soap;
+import ballerina.net.http;
 
 @http:configuration {basePath:"/soapSample"}
 service<http> sampleSoapService {
@@ -28,6 +29,6 @@ service<http> sampleSoapService {
 
         xml payload = soapResponse.payload;
         response.setXmlPayload(payload);
-        response.send();
+        _ = response.send();
     }
 }

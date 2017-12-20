@@ -38,6 +38,6 @@ service<http> helloWorld {
                                 </soapenv:Envelope>`;
         response.setXmlPayload(soapResponse);
         response.setHeader("Content-Type", "text/xml");
-        response.send();
+        _ = response.send();
     }
 }
