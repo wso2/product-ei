@@ -1,6 +1,7 @@
 package samples.router;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/browse"}
 service<http> BrowseService {
@@ -94,7 +95,11 @@ service<http> BrowseService {
         }
 
         resp.setJsonPayload(payload);
-        resp.send();
+        http:HttpConnectorError respondError = resp.send();
+
+        if(respondError != null) {
+            log:printError("Error occured at BrowseService while responding back");
+        }
     }
 
 }
