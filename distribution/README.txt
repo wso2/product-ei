@@ -64,6 +64,19 @@ Contains configuration files specific to EI.
  Contains ballerina runtime related files/folders.
 
 
+Documentation
+=============
+
+For Enterprise Integrator 7 documentation, please refer to:
+https://github.com/wso2/product-ei/blob/7.0.x/README.md
+
+For more information about Message Broker, please visit:
+https://github.com/wso2/message-broker/blob/master/README.md
+
+More information on Ballerina can be found from:
+https://ballerinalang.org/docs/
+
+
 Known issues of WSO2 EI @product.version@
 ==================================
 
