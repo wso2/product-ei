@@ -20,7 +20,8 @@ service<jms> billAuditingConsumer {
 
     resource onMessage (jms:JMSMessage m) {
         // Retrieve the order message obtained from the queue
-        string billAuditMessage = m.getTextMessageContent();
+        string billAuditMessageString = m.getTextMessageContent();
+        var billAuditMessage, _ = <json> billAuditMessageString;
         http:HttpConnectorError billAuditDispatchError;
         //Create a http message based on the content specified in JMS message
         http:Request billAuditRequest = {};
