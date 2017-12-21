@@ -1,6 +1,7 @@
 package samples.router;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/ecom"}
 service<http> GatewayService {
@@ -51,8 +52,7 @@ service<http> GatewayService {
                 responseMessage.setJsonPayload(payload);
             }
         } else if (serviceType.hasPrefix("shipment")) {
-            var userAgentHeader,_ = req.getHeader("User-Agent");
-            if (userAgentHeader == "Ecom-Agent") {
+            if (req.userAgent == "Ecom-Agent") {
                 responseMessage, _ = shipmentServiceEP.post("/internal/" + postfix, req);
             } else {
                 responseMessage, _ = shipmentServiceEP.post("/submit/" + postfix, req);
@@ -61,15 +61,22 @@ service<http> GatewayService {
             json payload = {"Error":"No service found"};
             responseMessage.setJsonPayload(payload);
         }
-        resp.forward(responseMessage);
+
+        http:HttpConnectorError respondError = resp.forward(responseMessage);
+
+        if (respondError != null) {
+            log:printError("Error occured at GatewayService when forwarding");
+        }
     }
 }
 
 function setXFwdForHeader(http:Request req) {
-    var xFwdHeader,_ = req.getHeader("X-Forwarded-For");
+    http:HeaderValue headerValue = req.getHeader("X-Forwarded-For");
 
-    if (xFwdHeader != "") {
-        xFwdHeader = xFwdHeader + ", 10.100.1.127";
+    string xFwdHeader;
+
+    if (headerValue != null) {
+        xFwdHeader = headerValue.value + ", 10.100.1.127";
     } else {
         xFwdHeader = "10.100.1.127";
     }

@@ -1,6 +1,7 @@
 package samples.router;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/shipment"}
 service<http> ShipmentService {
@@ -14,7 +15,12 @@ service<http> ShipmentService {
         // dummy shipment service
         json payload = {"Status":"Shipment details submitted", "Order ID": orderId};
         resp.setJsonPayload(payload);
-        resp.send();
+
+        http:HttpConnectorError respondError = resp.send();
+
+        if (respondError != null) {
+            log:printError("Error occured at ShipmentService when responding back");
+        }
     }
 
     @http:resourceConfig {
@@ -27,6 +33,10 @@ service<http> ShipmentService {
         // dummy shipment service
         json payload = {"Status":"Shipment details submitted", "Order ID": orderId};
         resp.setJsonPayload(payload);
-        resp.send();
+        http:HttpConnectorError respondError = resp.send();
+
+        if (respondError != null) {
+            log:printError("Error occured at ShipmentService when responding back");
+        }
     }
 }

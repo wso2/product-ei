@@ -1,6 +1,7 @@
 package samples.router;
 
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/payment"}
 service<http> PaymentGatewayService {
@@ -21,7 +22,11 @@ service<http> PaymentGatewayService {
         }
         
         resp.setJsonPayload(payload);
-        resp.send();
+        http:HttpConnectorError respondError = resp.send();
+
+        if (respondError != null) {
+            log:printError("Error occured at PaymentGatewayService visaCard while responding back");
+        }
     }
 
     @http:resourceConfig {
@@ -41,7 +46,11 @@ service<http> PaymentGatewayService {
         }
 
         resp.setJsonPayload(payload);
-        resp.send();
+        http:HttpConnectorError respondError = resp.send();
+
+        if (respondError != null) {
+            log:printError("Error occured at PaymentGatewayService masterCard while responding back");
+        }
     }
 
 }
