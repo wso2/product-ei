@@ -66,13 +66,8 @@ done
 # Get standard environment variables
 PRGDIR=`dirname "$PRG"`
 
-
-echo "$PRGDIR"
-
 # set BALLERINA_HOME
 BALLERINA_HOME=`cd "$PRGDIR/../wso2/ballerina" ; pwd`
-
-echo "$BALLERINA_HOME"
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin; then
