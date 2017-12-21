@@ -209,7 +209,8 @@ public class LastQueryParamEmptyTestCase extends ESBIntegrationTest {
         String responseData = response.getData();
         Assert.assertEquals(responseCode, 200);
         Assert.assertEquals(responseData, "<m:checkQueryParam xmlns:m=\"http://services.samples/xsd\">" +
-                "<m:latitude>10</m:latitude><m:longitude>20</m:longitude><m:floor/></m:checkQueryParam>");
+                "<m:latitude>10</m:latitude><m:longitude>20&amp;floor</m:longitude><m:floor/></m:checkQueryParam>",
+                "Query Parameter isn't evaluated according the standard");
     }
 
     /**
@@ -250,7 +251,8 @@ public class LastQueryParamEmptyTestCase extends ESBIntegrationTest {
         String responseData = response.getData();
         Assert.assertEquals(responseCode, 200);
         Assert.assertEquals(responseData, "<m:checkQueryParam xmlns:m=\"http://services.samples/xsd\">" +
-                "<m:latitude>10</m:latitude><m:longitude>20</m:longitude><m:floor/></m:checkQueryParam>");
+                "<m:latitude>10</m:latitude><m:longitude>20&amp;floor</m:longitude><m:floor/></m:checkQueryParam>",
+                "Query Parameter isn't evaluated according the standard");
     }
 
     /**
