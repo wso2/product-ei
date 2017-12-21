@@ -36,7 +36,7 @@ service<fs> FileProcessingRouter {
                 itrReadContent = characterChannel.readCharacters(readChunkSize);
                 content = content + itrReadContent;
             }
-            json payload = content;
+            var payload, _ = <json>content;
             //Create a http message based on the content specified in JMS message
             http:Request newConnectionRequest = {};
             newConnectionRequest.setJsonPayload(payload);
