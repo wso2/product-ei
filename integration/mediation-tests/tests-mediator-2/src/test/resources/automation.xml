@@ -62,7 +62,7 @@
     -->
     <datasources>
         <datasource name="dataService">
-            <url>jdbc:h2:testDB</url>
+            <url>jdbc:h2:</url>
             <username>wso2carbon</username>
             <password>wso2carbon</password>
             <driverClassName>org.h2.Driver</driverClassName>

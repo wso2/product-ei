@@ -1204,12 +1204,6 @@
                 <artifactId>greenmail</artifactId>
                 <version>${greenmail.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.db.version}</version>
-                <scope>test</scope>
-            </dependency>
             <!--Elasticsearch Transport Client Dependencies-->
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
@@ -1482,7 +1476,6 @@
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
         <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
         <greenmail.version>1.3</greenmail.version>
-        <h2.db.version>1.4.196</h2.db.version>
     </properties>
 
     <repositories>
