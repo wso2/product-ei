@@ -33,11 +33,11 @@ In order to build the sample we would need the following,
 
 3. Deploy the downstream service by running the following command,
 
-bin$ ./integrator.sh ../samples/reliable-messaging/downstream.balx
+bin$ ./integrator.sh ../samples/reliable-messaging-builtin/downstream.balx
 
 4. Deploy the reliable messaging service by running the following command,
 
-bin$ ./integrator.sh ../samples/reliable-messaging/messaging.balx
+bin$ ./integrator.sh ../samples/reliable-messaging-builtin/messaging.balx
 
 #### Modifying the source
 
@@ -49,11 +49,11 @@ If it's intended to modify the existing samples following could be done,
 
 The services related to reliable-messaging could be executed in the following manner,
 
-- Navigate to the directory <EI_HOME>/samples/reliable-messaging/services
+- Navigate to the directory <EI_HOME>/samples/reliable-messaging-builtin/services
 - Execute the following,
 
-samples/reliable-messaging/services$ ../../../bin/integrator.sh run samples/downstream
-samples/reliable-messaging/services$ ../../../bin/integrator.sh run samples/messaging
+samples/reliable-messaging-builtin/services$ ../../../bin/integrator.sh run samples/downstream
+samples/reliable-messaging-builtin/services$ ../../../bin/integrator.sh run samples/messaging
 
 The above operation will be similar to running downstream.balx and messaging.balx   
 
