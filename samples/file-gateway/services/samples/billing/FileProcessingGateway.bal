@@ -26,7 +26,7 @@ service<fs> FileProcessingGateway {
 
         while (true) {
             records = srcRecordChannel.readTextRecord();
-            if (lengthof records == 0) {
+            if (lengthof records < 3) {
                 break;
             }
             json payload = {

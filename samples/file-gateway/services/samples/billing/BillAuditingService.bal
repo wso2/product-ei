@@ -18,6 +18,6 @@ service<http> billAuditingService {
         //Send a successful response back to the caller
         json responsePayload = {"Status":"Success"};
         res.setJsonPayload(responsePayload);
-        res.send();
+        _ = res.send();
     }
 }
