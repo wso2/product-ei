@@ -132,11 +132,11 @@ service<http> RevenueLicenseService {
         params = [para1];
 
         // Fetch vehicle information
-        datatable vehicleInfoDt =
-                    vehicleInfoDB.select("SELECT * from VehicleDetails where VehicleNumber = ?", params, null);
+        datatable vehicleInfoDt = vehicleInfoDB.select("SELECT * from VehicleDetails where VehicleNumber = ?",
+                                                       params, typeof Vehicle);
         Vehicle vehicle;
         while (vehicleInfoDt.hasNext()) {
-            vehicle, _ = (Vehicle)vehicleInfoDt.getNext();
+            vehicle, _ = (Vehicle) vehicleInfoDt.getNext();
         }
         if (vehicle == null) {
             json payload = {"Status":"No record found for vehicle", "Vehicle ID":vehicleId};
