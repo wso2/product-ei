@@ -2,6 +2,7 @@ package samples.orchestration;
 
 import ballerina.data.sql;
 import ballerina.net.http;
+import ballerina.log;
 
 @http:configuration {basePath:"/license"}
 service<http> RevenueLicenseService {
@@ -16,7 +17,7 @@ service<http> RevenueLicenseService {
 
     endpoint<sql:ClientConnector> vehicleInfoDB {
         create sql:ClientConnector(
-        sql:MYSQL, "localhost", 3306, "VehicleRegistry", "root", "root123", {maximumPoolSize:5});
+        sql:DB.MYSQL, "localhost", 3306, "VehicleRegistry", "root", "root123", {maximumPoolSize:5});
     }
 
     @http:resourceConfig {
@@ -35,7 +36,13 @@ service<http> RevenueLicenseService {
         if (!isValid) {
             json responsePayload = {"Error":statusMessage};
             resp.setJsonPayload(responsePayload);
-            resp.send();
+
+            http:HttpConnectorError respondError = null;
+            respondError = resp.send();
+            if (respondError != null) {
+                log:printError("Error occured at RevenueLicenseService while responding back");
+            }
+
             return;
         }
 
@@ -59,14 +66,25 @@ service<http> RevenueLicenseService {
         if (status != "Successful") {
             json responsePayload = {"Error":"Payment Failed"};
             resp.setJsonPayload(responsePayload);
-            resp.send();
+
+            http:HttpConnectorError respondError = null;
+            respondError = resp.send();
+            if (respondError != null) {
+                log:printError("Error occured at RevenueLicenseService while responding back");
+            }
+
             return;
         }
 
         // Call license issuer
         http:Response licenseResponse = {};
         licenseResponse, _ = licenseIssuerEP.get("/" + vehicleId, req);
-        resp.forward(licenseResponse);
+
+        http:HttpConnectorError respondError = null;
+        respondError = resp.forward(licenseResponse);
+        if (respondError != null) {
+            log:printError("Error occured at RevenueLicenseService while responding back");
+        }
     }
 
     @http:resourceConfig {
@@ -83,12 +101,24 @@ service<http> RevenueLicenseService {
         if (!isValid) {
             json responsePayload = {"Error":statusMessage};
             resp.setJsonPayload(responsePayload);
-            resp.send();
+
+            http:HttpConnectorError respondError = null;
+            respondError = resp.send();
+            if (respondError != null) {
+                log:printError("Error occured at RevenueLicenseService while responding back");
+            }
             return;
         }
         json payload = {"Status":"Valid"};
         resp.setJsonPayload(payload);
-        resp.send();
+
+
+        http:HttpConnectorError respondError = null;
+        respondError = resp.send();
+        if (respondError != null) {
+            log:printError("Error occured at RevenueLicenseService while responding back");
+        }
+
     }
 
     @http:resourceConfig {
@@ -98,24 +128,31 @@ service<http> RevenueLicenseService {
     resource checkStatusResource (http:Request req, http:Response resp, string vehicleId) {
 
         sql:Parameter[] params = [];
-        sql:Parameter para1 = {sqlType:"varchar", value:vehicleId};
+        sql:Parameter para1 = {sqlType:sql:Type.VARCHAR, value:vehicleId};
         params = [para1];
 
         // Fetch vehicle information
-        datatable vehicleInfoDt = vehicleInfoDB.select("SELECT * from VehicleDetails where VehicleNumber = ?", params);
+        datatable vehicleInfoDt = vehicleInfoDB.select("SELECT * from VehicleDetails where VehicleNumber = ?",
+                                                       params, typeof Vehicle);
         Vehicle vehicle;
         while (vehicleInfoDt.hasNext()) {
-            vehicle, _ = (Vehicle)vehicleInfoDt.getNext();
+            vehicle, _ = (Vehicle) vehicleInfoDt.getNext();
         }
         if (vehicle == null) {
             json payload = {"Status":"No record found for vehicle", "Vehicle ID":vehicleId};
             resp.setJsonPayload(payload);
-            resp.send();
+
+            http:HttpConnectorError respondError = null;
+            respondError = resp.send();
+            if (respondError != null) {
+                log:printError("Error occured at RevenueLicenseService while responding back");
+            }
             return;
         }
 
         // Fetch license expiry
-        datatable licenseInfoDt = vehicleInfoDB.select("SELECT * from LicenseDetails where VehicleNumber = ?", params);
+        datatable licenseInfoDt =
+                    vehicleInfoDB.select("SELECT * from LicenseDetails where VehicleNumber = ?", params, null);
         var expiry = "No valid license found";
         var result, _ = <json>licenseInfoDt;
         if (lengthof result != 0) {
@@ -123,9 +160,10 @@ service<http> RevenueLicenseService {
         }
 
         // Fetch license fee
-        para1 = {sqlType:"varchar", value:vehicle.VehicleClass};
+        para1 = {sqlType:sql:Type.VARCHAR, value:vehicle.VehicleClass};
         params = [para1];
-        datatable licenseFeeDt = vehicleInfoDB.select("SELECT LicenseFee from LicenseFees where VehicleClass = ?", params);
+        datatable licenseFeeDt =
+                    vehicleInfoDB.select("SELECT LicenseFee from LicenseFees where VehicleClass = ?", params, null);
         result, _ = <json>licenseFeeDt;
         var fee, _ = (int)result[0].LicenseFee;
 
@@ -133,7 +171,11 @@ service<http> RevenueLicenseService {
         json<Status> status = <json<Status>, buildStatusMessage(fee, expiry)>vehicle;
 
         resp.setJsonPayload(status);
-        resp.send();
+        http:HttpConnectorError respondError = null;
+        respondError = resp.send();
+        if (respondError != null) {
+            log:printError("Error occured at RevenueLicenseService while responding back");
+        }
     }
 }
 
