@@ -65,11 +65,11 @@ ensure to persist the message and ensure that the message is successfully delive
 For this scenario we would need the following,
 
 - Service which will act as the 
-![TravelRequestProcessingService](services/samples/queue/TravelRequestProcessingService.bal)  
+[TravelRequestProcessingService](services/samples/queue/TravelRequestProcessingService.bal)  
 - Service which will act as the gateway and which will publish the message to the queue 
-![TravelRequestGateway](services/samples/queue/TravelRequestGateway.bal)  
+[TravelRequestGateway](services/samples/queue/TravelRequestGateway.bal)  
 - Service which will consume the message from the queue and dispatch the message to "TravelRequestProcessingService"
- ![TravelRequestConsumingService](services/samples/queue/TravelRequestConsumingService.bal)  
+[TravelRequestConsumingService](services/samples/queue/TravelRequestConsumingService.bal)  
 
 Composing the above services queue.balx is created.
 
@@ -170,15 +170,15 @@ message could be broad-casted among multiple consumers.
 ### Building the Scenario
 
 - Service which will act as the 
-![TravelRequestProcessingService](services/samples/topic/common/TravelRequestProcessingService.bal) 
+[TravelRequestProcessingService](services/samples/topic/common/TravelRequestProcessingService.bal) 
 - Service which will act as the 
-![TravelRequestAuditingService](services/samples/topic/common/TravelRequestAuditingService.bal) 
+[TravelRequestAuditingService](services/samples/topic/common/TravelRequestAuditingService.bal) 
 - Service which will act as the gateway to receive inbound http requests and dispatch them to the topic
-![TravelRequestGateway](services/samples/topic/common/TravelRequestGateway.bal)
+[TravelRequestGateway](services/samples/topic/common/TravelRequestGateway.bal)
 - Service which will act as the topic consumer to dispatch to "TravelRequestProcessingService"
-![TravelRequestProcessingConsumer](services/samples/topic/default/TravelRequestProcessingConsumer.bal)
+[TravelRequestProcessingConsumer](services/samples/topic/default/TravelRequestProcessingConsumer.bal)
 - Service which will act as the topic consumer to dispatch to "TravelRequestAuditingService"
-![TravelRequestAuditingConsumer](services/samples/topic/default/TravelRequestAuditingConsumer.bal)
+[TravelRequestAuditingConsumer](services/samples/topic/default/TravelRequestAuditingConsumer.bal)
 
 Composing "TravelRequestProcessingService","TravelRequestAuditingService","TravelRequestGateway" commmon.balx is 
 created.
@@ -269,10 +269,10 @@ that time will not be delivered.
 - "common.balx" described in the section "Topic Usage Scenario" would be used in this scenario.
 - Service which will create a durable topic subscription in order to dispatch the request to 
 "TravelRequestProcessingService" would be 
-![TravelRequestProcessingConsumer](services/samples/topic/durable/TravelRequestProcessingConsumer.bal)
+[TravelRequestProcessingConsumer](services/samples/topic/durable/TravelRequestProcessingConsumer.bal)
 - Service which will create a durable topic subscription in order to dispatch the request to 
 "TravelRequestAuditingService" would be 
-![TravelRequestAuditingConsumer](services/samples/topic/durable/TravelRequestAuditingConsumer.bal)
+[TravelRequestAuditingConsumer](services/samples/topic/durable/TravelRequestAuditingConsumer.bal)
 
 Composing the above "TravelRequestProcessingConsumer" and "TravelRequestAuditingConsumer", "durable.balx" is created.
 
