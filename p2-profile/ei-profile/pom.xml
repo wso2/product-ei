@@ -37,7 +37,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>org.wso2.ei.analytics.elk.feature</artifactId>
-            <version>${analytics.elk.version}</version>
             <type>zip</type>
         </dependency>
     </dependencies>
@@ -391,7 +390,7 @@
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
-                                    org.wso2.ei:org.wso2.ei.analytics.elk.feature:${analytics.elk.version}
+                                    org.wso2.ei:org.wso2.ei.analytics.elk.feature:${product.ei.version}
                                 </featureArtifactDef>
 
                             </featureArtifacts>
@@ -871,7 +870,7 @@
                                 <!--ELK Analytics feature group-->
                                 <feature>
                                     <id>org.wso2.ei.analytics.elk.feature.group</id>
-                                    <version>${analytics.elk.version}</version>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                             </features>
                         </configuration>

@@ -30,7 +30,6 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.ei.analytics.elk</artifactId>
-    <version>${analytics.elk.version}</version>
     <name>WSO2 Enterprise Integrator - Analytics ELK</name>
     <description>Custom statistic observer for WSO2 EI to publish statistic to Elasticsearch</description>
     <url>http://wso2.org</url>

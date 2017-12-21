@@ -1231,6 +1231,17 @@
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j2.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.analytics.elk</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.analytics.elk.feature</artifactId>
+                <version>${product.ei.version}</version>
+                <type>zip</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1459,9 +1470,6 @@
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
         <orbit.fasterxml.jackson.version>2.6.1.wso2v1</orbit.fasterxml.jackson.version>
-
-        <!--ei.analytics.elk version-->
-        <analytics.elk.version>1.0</analytics.elk.version>
 
         <!-- Elasticsearch Version -->
         <elasticsearch.version>5.4.3</elasticsearch.version>
