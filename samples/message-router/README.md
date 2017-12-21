@@ -302,7 +302,7 @@ Setting X-Forwarded-For to : 10.100.1.127
 
 ### Modifying the code
 
-All the services related to this sample is located at <EI_HOME>samples/message-router/services directory.
+All the services related to this sample is located at <EI_HOME>/samples/message-router/services directory.
 
 Following are the available ballerina program files.
 

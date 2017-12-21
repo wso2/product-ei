@@ -137,7 +137,7 @@ You should get something similar to following as the output.
 
 ### Modifying the code
 
-All the services related to this sample is located at <EI_HOME>samples/service-orchestration/services directory.
+All the services related to this sample is located at <EI_HOME>/samples/service-orchestration/services directory.
 
 Following are the available ballerina program files.
 
