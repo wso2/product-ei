@@ -33,14 +33,6 @@
         <description/>
     </proxy>
 
-    <messageStore class="org.apache.synapse.message.store.impl.jdbc.JDBCMessageStore" name="EmptyMsgBodyTestStore">
-        <parameter name="store.jdbc.driver">org.h2.Driver</parameter>
-        <parameter name="store.producer.guaranteed.delivery.enable">false</parameter>
-        <parameter name="store.jdbc.username">wso2carbon</parameter>
-        <parameter name="store.jdbc.password">wso2carbon</parameter>
-        <parameter name="store.jdbc.connection.url">jdbc:h2:file:../../../src/test/resources/artifacts/ESB/testDB</parameter>
-        <parameter name="store.jdbc.table">JDBC_MESSAGE_STORE</parameter></messageStore>
-
     <messageProcessor xmlns="http://ws.apache.org/ns/synapse"
                       class="org.apache.synapse.message.processor.impl.sampler.SamplingProcessor"
                       name="EmptyMsgBodyTestProcessor"
