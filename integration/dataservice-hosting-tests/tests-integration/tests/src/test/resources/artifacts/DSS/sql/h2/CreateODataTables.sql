@@ -46,3 +46,5 @@ CREATE TABLE IF NOT EXISTS Customers(
 );
 
 CREATE UNIQUE INDEX  customers_pk ON Customers( customerNumber );
+
+CREATE VIEW USACustomers AS SELECT * FROM Customers WHERE country = 'USA';
