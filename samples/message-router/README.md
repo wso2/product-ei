@@ -271,7 +271,7 @@ Create a shipment.json file with the following content.
 
 Invoke the service using cURL as follows
 ```
-curl -v http://localhost:9090/ecom/shipment/371 -d@../resources/shipment.json
+curl -v http://localhost:9090/ecom/shipment/371 -d@shipment.json
 ```
 
 
@@ -282,7 +282,7 @@ You should get something similar to following as the output.
 
 Invoke as the internal system specifying the ‘User-Agent’ header
 ```
-curl -v http://localhost:9090/ecom/shipment/371 -d@../resources/shipment.json -H "User-Agent: Ecom-Agent"
+curl -v http://localhost:9090/ecom/shipment/371 -d@shipment.json -H "User-Agent: Ecom-Agent"
 ```
 
 You will see following in the log
@@ -302,7 +302,7 @@ Setting X-Forwarded-For to : 10.100.1.127
 
 ### Modifying the code
 
-All the services related to this sample is located at <EI_HOME>samples/message-router/services directory.
+All the services related to this sample is located at <EI_HOME>/samples/message-router/services directory.
 
 Following are the available ballerina program files.
 
