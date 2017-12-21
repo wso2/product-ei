@@ -32,12 +32,15 @@ service<http> coffeeOrderService {
         endpoint<httpr:HttpGuaranteedClient> orderDispatchEp {
             create httpr:HttpGuaranteedClient("http://localhost:9091/dispatch", {}, guaranteedConfig);
         }
-
+        // create a reliable delivery http client connector
         http:Response coffeeResponse;
         http:HttpConnectorError coffeeSendError;
 
+        // action invocations are same as HttpClient connector
         coffeeResponse,coffeeSendError= orderDispatchEp.post("/coffeeOrder", req);
 
+        // create a custom response based on the response received for successful persistence of the message
+        // if the response is 202, from here onwards Ballerina will take care of the message
         if (coffeeResponse != null && coffeeResponse.getStatusCode() == 202) {
             coffeeResponse.setJsonPayload({status:"Coffee Order Processed"});
         } else {

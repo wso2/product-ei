@@ -313,6 +313,12 @@
                 <version>${ballerina.file.connector.version}</version>
                 <type>zip</type>
             </dependency>
+            <dependency>
+                <groupId>org.ballerinalang</groupId>
+                <artifactId>ballerina-reliable-delivery</artifactId>
+                <version>${ballerina.reliable.delivery.connector.version}</version>
+                <type>zip</type>
+            </dependency>
        </dependencies>
    </dependencyManagement>
 
@@ -454,6 +460,7 @@
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
         <ballerina.file.connector.version>0.95.1</ballerina.file.connector.version>
         <ballerina.jms.connector.version>0.95.3</ballerina.jms.connector.version>
+        <ballerina.reliable.delivery.connector.version>0.95.0-SNAPSHOT</ballerina.reliable.delivery.connector.version>
     </properties>
 </project>
 

@@ -26,11 +26,16 @@ In order to build the sample we would need the following,
 
 1. Start ActiveMQ broker locally with default port (61616).
 
-2. Deploy the downstream service by running the following command,
+2. Copy ActiveMQ libs into _<EI_HOME>/wso2/ballerina/bre/lib_ folder.
+   Following two jars need to be copied for ActiveMQ 5.8.0 or later versions. Those can be found at <ActiveMQ_HOME>/lib directory
+   - activemq-client-$version.jar
+   - geronimo-j2ee-management_1.1_spec-1.0.1.jar
+
+3. Deploy the downstream service by running the following command,
 
 bin$ ./integrator.sh ../samples/reliable-messaging/downstream.balx
 
-3. Deploy the reliable messaging service by running the following command,
+4. Deploy the reliable messaging service by running the following command,
 
 bin$ ./integrator.sh ../samples/reliable-messaging/messaging.balx
 

@@ -316,6 +316,25 @@
                             </artifactItems>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>prepare-ballerina-reliable-delivery-connector</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.ballerinalang</groupId>
+                                    <artifactId>ballerina-reliable-delivery</artifactId>
+                                    <version>${ballerina.reliable.delivery.connector.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ballerina-connectors/reliable-delivery</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
