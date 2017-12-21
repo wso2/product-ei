@@ -90,7 +90,7 @@ Goto <EI_HOME>/samples/service-orchestration-with-data-composition/services
 
 Execute following command to compile and run the ballerina program.
 ```
-samples/service-orchestration-with-data-composition/services$ ../../../../bin/integrator.sh samples/orchestration/
+samples/service-orchestration-with-data-composition/services$ ../../../bin/integrator.sh samples/orchestration/
 ```
 
 ## Invoking the service
