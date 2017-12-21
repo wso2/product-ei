@@ -30,7 +30,6 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.ei.analytics.elk.feature</artifactId>
-    <version>1.0</version>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Analytics ELK Feature</name>
     <url>http://wso2.org</url>
@@ -40,7 +39,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>org.wso2.ei.analytics.elk</artifactId>
-            <version>${analytics.elk.version}</version>
         </dependency>
     </dependencies>
 
