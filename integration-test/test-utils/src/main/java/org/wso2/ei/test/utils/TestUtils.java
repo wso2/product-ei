@@ -64,7 +64,7 @@ public class TestUtils {
             if (System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("windows")) {
                 startCmd = new String[] { "cmd.exe", "/c", "\"integrator.bat\"", canonicalPath };
             } else {
-                startCmd = new String[] { "bash", "integrator.sh", canonicalPath, "&" };
+                startCmd = new String[] { "bash", "integrator.sh", canonicalPath };
             }
             ProcessBuilder processBuilder = new ProcessBuilder(startCmd);
             processBuilder.directory(new File(eiHome + File.separator + "bin"));
