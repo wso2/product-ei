@@ -214,7 +214,7 @@ $JAVACMD \
 	-classpath "$BALLERINA_CLASSPATH" \
 	-Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
 	-Dballerina.home=$BALLERINA_HOME \
-	-Dballerina.version=0.95.1 \
+	-Dballerina.version=0.95.5 \
 	-Djava.util.logging.config.file="$BALLERINA_HOME/bre/conf/logging.properties" \
 	-Djava.util.logging.manager="org.ballerinalang.logging.BLogManager" \
 	-Dtransports.netty.conf="$BALLERINA_HOME/bre/conf/netty-transports.yml" \
