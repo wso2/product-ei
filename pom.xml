@@ -455,7 +455,7 @@
         <carbon.touchpoint.version>1.1.0</carbon.touchpoint.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
 
-        <broker.version>1.0.31</broker.version>
+        <broker.version>1.0.43</broker.version>
 
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
         <ballerina.file.connector.version>0.95.1</ballerina.file.connector.version>
