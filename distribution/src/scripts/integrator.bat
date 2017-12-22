@@ -1,22 +1,22 @@
 @echo off
 
-REM ---------------------------------------------------------------------------
-REM   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-REM
-REM   Licensed under the Apache License, Version 2.0 (the "License");
-REM   you may not use this file except in compliance with the License.
-REM   You may obtain a copy of the License at
-REM
-REM   http://www.apache.org/licenses/LICENSE-2.0
-REM
-REM   Unless required by applicable law or agreed to in writing, software
-REM   distributed under the License is distributed on an "AS IS" BASIS,
-REM   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-REM   See the License for the specific language governing permissions and
-REM   limitations under the License.
+rem ---------------------------------------------------------------------------
+rem   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+rem
+rem   Licensed under the Apache License, Version 2.0 (the "License");
+rem   you may not use this file except in compliance with the License.
+rem   You may obtain a copy of the License at
+rem
+rem   http://www.apache.org/licenses/LICENSE-2.0
+rem
+rem   Unless required by applicable law or agreed to in writing, software
+rem   distributed under the License is distributed on an "AS IS" BASIS,
+rem   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+rem   See the License for the specific language governing permissions and
+rem   limitations under the License.
 
 rem ---------------------------------------------------------------------------
-rem Main Script for Integrator
+rem Startup Script for Integrator
 rem
 rem Environment Variable Prerequisites
 rem
@@ -26,7 +26,7 @@ rem   JAVA_OPTS       (Optional) Java runtime options used when the commands
 rem                   is executed.
 rem ---------------------------------------------------------------------------
 
-rem ----- if JAVA_HOME is not set we're not happy ------------------------------
+rem ----- if JAVA_HOME is not set we're not happy -----------------------------
 
 :checkJava
 
@@ -127,4 +127,3 @@ set CMD_LINE_ARGS=-Xbootclasspath/a:%BALLERINA_XBOOTCLASSPATH% -Xms256m -Xmx1024
 "%JAVA_HOME%\bin\java" %CMD_LINE_ARGS% org.ballerinalang.launcher.Main %COMMANDLINE%
 
 :end
-

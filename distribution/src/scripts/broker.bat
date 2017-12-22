@@ -1,25 +1,32 @@
 @echo off
 
-REM ---------------------------------------------------------------------------
-REM  Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-REM
-REM  WSO2 Inc. licenses this file to you under the Apache License,
-REM  Version 2.0 (the "License"); you may not use this file except
-REM  in compliance with the License.
-REM  You may obtain a copy of the License at
-REM
-REM      http://www.apache.org/licenses/LICENSE-2.0
-REM
-REM  Unless required by applicable law or agreed to in writing,
-REM  software distributed under the License is distributed on an
-REM  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-REM  KIND, either express or implied. See the License for the
-REM  specific language governing permissions and limitations
-REM  under the License.
-REM
-REM ---------------------------------------------------------------------------
+rem ---------------------------------------------------------------------------
+rem   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+rem
+rem   Licensed under the Apache License, Version 2.0 (the "License");
+rem   you may not use this file except in compliance with the License.
+rem   You may obtain a copy of the License at
+rem
+rem   http://www.apache.org/licenses/LICENSE-2.0
+rem
+rem   Unless required by applicable law or agreed to in writing, software
+rem   distributed under the License is distributed on an "AS IS" BASIS,
+rem   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+rem   See the License for the specific language governing permissions and
+rem   limitations under the License.
 
-rem ----- if JAVA_HOME is not set we're not happy ------------------------------
+rem ---------------------------------------------------------------------------
+rem Startup Script for WSO2 Message Broker
+rem
+rem Environment Variable Prerequisites
+rem
+rem   JAVA_HOME       Must point at your Java Development Kit installation.
+rem
+rem   JAVA_OPTS       (Optional) Java runtime options used when the commands
+rem                   is executed.
+rem ---------------------------------------------------------------------------
+
+rem ----- if JAVA_HOME is not set we're not happy -----------------------------
 :checkJava
 if "%JAVA_HOME%" == "" goto noJavaHome
 if not exist "%JAVA_HOME%\bin\java.exe" goto noJavaHome
