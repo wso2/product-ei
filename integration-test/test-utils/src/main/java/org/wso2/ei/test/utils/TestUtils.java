@@ -97,10 +97,26 @@ public class TestUtils {
      */
     public static boolean stopServer() {
         try {
-            String[] netstatCmd;
-            if (System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("windows")) {
-                netstatCmd = new String[] { "cmd.exe", "/c", "netstat", "-n", "-a", "-o" };
-                String pidLine = getPidLine(netstatCmd);
+            String[] pidRetrievalCommand;
+            if (System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("mac")) {
+                pidRetrievalCommand = new String[] { "lsof", "-n", "-i:9090" };
+                String pidLine = getPidLine(pidRetrievalCommand, new String[]{"LISTEN"});
+
+                if (pidLine != null) {
+                    String pidStr = pidLine.split("java")[1].trim().split(" ")[0];
+
+                    String[] killCmd = new String[] { "kill", "-9", pidStr };
+                    ProcessBuilder killPB = new ProcessBuilder(killCmd);
+                    killPB.start();
+                    waitUtilServerStop();
+                } else {
+                    log.warn("EI server is not running");
+                    return false;
+                }
+
+            } else if (System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("windows")) {
+                pidRetrievalCommand = new String[] { "cmd.exe", "/c", "netstat", "-n", "-a", "-o" };
+                String pidLine = getPidLine(pidRetrievalCommand, new String[]{":9090", "LISTEN"});
 
                 if (pidLine != null) {
                     String pidStr = pidLine.split("LISTENING")[1].trim();
@@ -113,8 +129,8 @@ public class TestUtils {
                     return false;
                 }
             } else {
-                netstatCmd = new String[] { "netstat", "-lntp" };
-                String pidLine = getPidLine(netstatCmd);
+                pidRetrievalCommand = new String[] { "netstat", "-lntp" };
+                String pidLine = getPidLine(pidRetrievalCommand, new String[]{":9090", "LISTEN"});
 
                 if (pidLine != null) {
                     String pidStr = pidLine.split("LISTEN")[1].split("/java")[0].trim();
@@ -159,9 +175,9 @@ public class TestUtils {
         }
     }
 
-    private static String getPidLine(String[] netstatCmd) {
+    private static String getPidLine(String[] command, String[] filters) {
         BufferedReader bufferedReader = null;
-        ProcessBuilder processBuilder = new ProcessBuilder(netstatCmd);
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
         String pidLine = null;
         try {
             Process process = processBuilder.start();
@@ -171,7 +187,14 @@ public class TestUtils {
             String line;
 
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(":9090") && line.contains("LISTEN")) {
+                boolean lineFound = true;
+                for (String filter : filters) {
+                    if (!line.contains(filter)) {
+                       lineFound = false;
+                       break;
+                    }
+                }
+                if (lineFound) {
                     pidLine = line;
                     break;
                 }
