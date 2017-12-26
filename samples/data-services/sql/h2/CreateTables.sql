@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS Customers(
 
 CREATE UNIQUE INDEX IF NOT EXISTS customers_pk ON Customers( customerNumber );
 
+CREATE VIEW USACustomers AS SELECT * FROM Customers WHERE country = 'USA';
+
 CREATE TABLE IF NOT EXISTS Employees(
 	employeeNumber INTEGER,
 	lastName VARCHAR(50),
