@@ -35,8 +35,6 @@ import java.util.Map;
  */
 public class ODataViewTestCase extends DSSIntegrationTest {
     private final String serviceName = "ODataSampleSuperTenantService";
-    private final String configId = "default";
-    private final String viewName = "USACUSTOMERS";
     private String webAppUrl;
 
     @BeforeClass(alwaysRun = true)
@@ -59,17 +57,16 @@ public class ODataViewTestCase extends DSSIntegrationTest {
 
     @Test(groups = {"wso2.dss"}, description = "OData View Test")
     public void validateViewTestCase() throws Exception {
+        String configId = "default";
+        String viewName = "USACUSTOMERS";
         String endpoint = webAppUrl + "/odata/" + serviceName + "/" + configId + "/" + viewName;
         Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
         Object[] response = ODataTestUtils.sendGET(endpoint, headers);
-        Assert.assertEquals(response[0], ODataTestUtils.OK);
-        endpoint = webAppUrl + "/odata/" + serviceName + "/" + configId + "/";
-        response = ODataTestUtils.sendGET(endpoint, headers);
-        Assert.assertEquals(response[0], ODataTestUtils.OK);
-        Assert.assertTrue(response[1].toString().contains("USA"));
-        Assert.assertTrue(!response[1].toString().contains("France"));
-        Assert.assertTrue(!response[1].toString().contains("Finland"));
+        Assert.assertEquals(response[0], ODataTestUtils.OK, "OData Request is failed.");
+        Assert.assertTrue(response[1].toString().contains("USA"), "OData View Test case is failed : USA customers are not available in the database.");
+        Assert.assertTrue(!response[1].toString().contains("France"), "OData View Test case is failed : France customers are available in the database.");
+        Assert.assertTrue(!response[1].toString().contains("Finland"), "OData View Test case is failed : Finland customers are available in the database.");
     }
 
 }
