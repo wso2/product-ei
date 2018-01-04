@@ -3,18 +3,18 @@
 ## Scenario
 
 This scenario is about a order management system. It consists of two parties. Those are a customer and an order management system(OMS).
-In our sample we are hosting our OMS in  WSO2 Application Server. Customer would interact with OMS to place orders, view orders, make payments and view payments.
-As the order management system we will be using a simple java web service which we will be hosting in WSO2 AS.
-This is a SOAP service which is used to store all the order details in an in-memory table. To simulate customer operations, we will be using a simple HTTP client tool like curl.
-Because our backend(OMS) is a SOAP based backend we will have to use some sort of Rest to SOAP converter. This will be done by Enterprise Integrator.
+In this sample an OMS will be hosted in  WSO2 Application Server. Customer would interact with OMS to place orders, view orders, make payments and view payments.
+As the order management system a simple java web service hosted in WSO2 AS is used.
+This is a SOAP service which is used to store all the order details in an in-memory table. To simulate customer operations, a simple HTTP client tool like curl is used.
+Because our backend(OMS) is a SOAP based backend, some sort of Rest to SOAP converter should be used. This is done by Enterprise Integrator.
 
 ## Requirements
 
 ###Setting up servers
 Download the Application server and extract the downloaded zip. Start the Application Server.
 Download the OMS .aar file from this link. https://svn.wso2.org/repos/wso2/people/hiranya/rest-sample/bin/StarbucksOutletService.aar
-Simply login to the AS management console at https://localhost:9443/carbon. Upload the downloaded .aar file to Services > Add > AAR Service.
-It will take a few seconds for the service to get deployed properly.
+Login to the AS management console at https://localhost:9443/carbon. Upload the downloaded .aar file to Services > Add > AAR Service.
+After a few seconds the service will get deployed properly.
 
 ## Building the scenario
 
@@ -31,17 +31,17 @@ or execute
 
 bin$ ./integrator.sh ../samples/order-management-system/order.balx
 
-What is done from above 2 commands are quite similar. So select only one and execute it. It will deploy all the services used in our scenario.
+What is done from above 2 commands are quite similar. Select only one and execute it. It will deploy all the services used in our scenario.
 
 ## Placing new orders
 
 The back-end OMS provides an addOrder operation to handle this task.
-So our ballerina service should ultimately invoke that operation to get the job done.
-To build the order placement, we have used a ballerina HTTP service.
+Ballerina service should ultimately invoke that operation to get the job done.
+To build the order placement, a ballerina HTTP service is used.
 
 ### How to run
 
-If you are using Curl, put the following XML snippet into a file named order.xml
+If Curl is used as the client tool, put the following XML snippet into a file named order.xml
 
 <?xml version="1.0" encoding="UTF-8"?>
 <order xmlns="https://starbucks.example.org">
@@ -66,7 +66,7 @@ Response received:
                   <additions>Milk</additions>
                 </order>
 
-As you can see, a unique order id is generated for each order. This id can be used to get details about the order if you want to review it later.
+A unique order id is generated for each order. This id can be used to get details about the order if it is required to review the order later.
 
 ## Reviewing Orders
 
@@ -74,7 +74,7 @@ Once an order has been placed in the system, the customer should be able to revi
 
 ### How to run
 
-To try this scenario out, find out the unique ID of the order you submitted earlier (You can get it from the payload you received as the response after placing the order.)
+To try this scenario out, find out the unique ID of the order submitted earlier (It can be taken from the payload received as the response, after placing the order.)
 Run Curl as follows (replace my-order-id with the actual order ID)
 
 'curl -v http://localhost:9091/getOrderInfo/order/my-order-id'.
@@ -100,7 +100,7 @@ The payload of the request should contain all the required payment information s
 
 ### How to run
 
-If you are using Curl, put the following XML snippet into a file named payment.xml
+Put the following XML snippet into a file named payment.xml
 
 <?xml version="1.0" encoding="UTF-8"?>
 <payment xmlns="https://starbucks.example.org">
@@ -110,7 +110,7 @@ If you are using Curl, put the following XML snippet into a file named payment.x
   <amount>10.80</amount>
 </payment>
 
-Get the unique-id of the order you placed. And run the following command after replacing order-id from the order you submitted earlier.
+Get the unique-id of the placed order. And run the following command after replacing order-id from the order submitted earlier.
 And make sure to add an amount which is no less than the cost of the order.
 Run the command 'curl -v -X PUT -d @payment.xml -H "Content-type: application/xml" http://localhost:9092/payOrder/payment/order-id' from the place where order.xml is saved.
 
@@ -136,12 +136,12 @@ Once a payment has been made, the customer can review the payment details by mak
 
 ### How to run
 
-Get the unique-id of the order you paid for. And run the following command after replacing order-id.
+Get the unique-id of the paid order. And run the following command after replacing order-id.
 Run the command 'curl -v http://localhost:9093/getPaymentDetails/payment/order/order-id'.
 
 ### Observations
 
-Response received by the ballerina service will be as follows:
+Response received:
 
 < HTTP/1.1 200 OK
 < Content-Type: application/xml
