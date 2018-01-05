@@ -217,14 +217,6 @@
         </packages>
     </test>
 
-    <test name="Property-mediator-Test-0" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXpathAxis2PropertyTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathTrpPropertyTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathExtensionTestCase"/>
-            <class name="org.wso2.carbon.esb.mediator.test.property.PropertyIntegrationXPathBodyTestCase"/>
-        </classes>
-    </test>
     <test name="Property-mediator-Test-1" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.property"/>
