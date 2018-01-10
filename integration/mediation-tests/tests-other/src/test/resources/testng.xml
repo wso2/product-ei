@@ -93,6 +93,8 @@
     <test name="Template-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.template"/>
+            <!--todo Uncomment below package after synapse 2.1.7-wso2v35 or higher upgrade-->
+            <!--<package name="org.wso2.carbon.esb.template.endpointTemplate"/>-->
         </packages>
     </test>
 
