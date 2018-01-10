@@ -446,7 +446,7 @@
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
         <commons.configuration.version>1.10</commons.configuration.version>
         <commons.io.version>2.2</commons.io.version>
-        <andes.version>4.0.0</andes.version>
+        <andes.version>3.2.37</andes.version>
         <synapse.core.version>2.1.7-wso2v25</synapse.core.version>
         <com.jayway.jsonpath.version>0.8.0</com.jayway.jsonpath.version>
         <carbon.config.version>2.1.4</carbon.config.version>
@@ -454,7 +454,7 @@
         <carbon.utils.version>2.0.4</carbon.utils.version>
         <carbon.touchpoint.version>1.1.0</carbon.touchpoint.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
-
+        <securevault.version>1.0.0-wso2v2</securevault.version>
         <broker.version>1.0.46</broker.version>
 
         <ballerina.soap.connector.version>0.95.0</ballerina.soap.connector.version>
