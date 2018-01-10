@@ -259,7 +259,7 @@
                                 <artifactItem>
                                     <groupId>org.wso2.securevault</groupId>
                                     <artifactId>org.wso2.securevault</artifactId>
-                                    <version>1.0.0-wso2v2</version>
+                                    <version>${securevault.version}</version>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ext/broker</outputDirectory>
                                 </artifactItem>
