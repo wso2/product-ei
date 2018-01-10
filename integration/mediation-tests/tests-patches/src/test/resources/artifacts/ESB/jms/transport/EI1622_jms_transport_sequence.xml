@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <sequence name="faultSeq" xmlns="http://ws.apache.org/ns/synapse">
+        <property name="SET_ROLLBACK_ONLY" value="true"/>
+        <log level="custom">
+            <property name="Transaction Action" value="Rollbacked"/>
+        </log>
+    </sequence>
+
+    <sequence name="main" xmlns="http://ws.apache.org/ns/synapse">
+        <in>
+            <!-- Log all messages passing through -->
+            <log level="full"/>
+            <!-- ensure that the default configuration only sends if it is one of samples -->
+            <!-- Otherwise Synapse would be an open proxy by default (BAD!)               -->
+            <filter regex="http://localhost:9000.*"
+                    source="get-property('To')" xmlns:ns="http://org.apache.synapse/xsd">
+                <then>
+                    <!-- Send the messages where they have been sent (i.e. implicit "To" EPR) -->
+                    <send/>
+                </then>
+                <else/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+
+    <sequence name="request" onError="faultSeq" xmlns="http://ws.apache.org/ns/synapse">
+        <log level="custom">
+            <property name="TEST" value="Message Received to the sequence"/>
+        </log>
+        <call blocking="true">
+            <endpoint>
+                <!--calling a fake endpoint to test polling suspension-->
+                <address uri="http://fakeep.com"/>
+            </endpoint>
+        </call>
+        <log level="full"/>
+    </sequence>
+
+</definitions>
