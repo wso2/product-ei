@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.ei.test.service.orchestration;
+package org.wso2.ei.sample.test.connector.soap;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -33,43 +33,45 @@ import org.wso2.ei.test.utils.TestUtils;
 import java.io.IOException;
 
 /**
- * Service orchestration test.
+ * Integration tests for soap connector.
  */
-public class ServiceOrchestrationTest {
-    private static final Logger log = LoggerFactory.getLogger(ServiceOrchestrationTest.class);
+public class SoapConnectorSampleTest {
+    private static final Logger log = LoggerFactory.getLogger(SoapConnectorSampleTest.class);
 
     private boolean serverStarted;
 
     @BeforeClass
     public void startServer() {
-        serverStarted = TestUtils.startServer("samples/service-orchestration/orchestration.balx");
+        serverStarted = TestUtils.startServer("samples/soap-connector/soap-connector-sample.balx");
     }
 
     @Test
-    public void testServiceOrchestration() {
+    public void testSoapConnector() {
         if (!serverStarted) {
             Assert.fail("Error running the test, server is not started");
         }
 
-        String vehicleId = "11111";
-        String requestPayload = "{\"Vehicle\":{\"ID\":\"" + vehicleId + "\"\n" + "   },\n" + "   \"card\":{\n"
-                + "      \"no\":\"1234098618781768\",\n" + "      \"cvv\":\"123\"\n" + "   }\n" + "}";
+        String symbol = "ABC";
+        String requestPayload = "<ser:getSimpleQuote xmlns:ser=\"http://services.samples\">\n"
+                + "<ser:symbol>" + symbol + "</ser:symbol>\n"
+                + "</ser:getSimpleQuote>";
 
-        String url = "http://localhost:9090/license/renew";
+        String url = "http://localhost:9090/soapSample";
 
         HttpClient client = new HttpClient();
         PostMethod post = new PostMethod(url);
 
         try {
-            RequestEntity requestEntity = new StringRequestEntity(requestPayload, "application/json", "UTF-8");
+            RequestEntity requestEntity = new StringRequestEntity(requestPayload, "application/xml", "UTF-8");
 
             post.setRequestEntity(requestEntity);
 
             int status = client.executeMethod(post);
             Assert.assertEquals(status, 200);
             String responseBody = post.getResponseBodyAsString();
-            String responseVehicleId = responseBody.split("Vehicle ID\":\"")[1].split("\"}")[0].trim();
-            Assert.assertEquals(responseVehicleId, vehicleId);
+            String responseSymbol = responseBody.split("<ax21:symbol>")[1].split("</ax21:symbol>")[0].trim();
+            Assert.assertEquals(responseSymbol, symbol);
+
         } catch (IOException e) {
             log.error("Error while invoking the server ", e);
         }

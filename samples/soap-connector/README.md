@@ -55,4 +55,4 @@ The services related to SOAP sample could be executed in the following manner,
 - Navigate to the directory <EI_HOME>/samples/soap-connector/services
 - Execute the following,
 
-samples/soap-connector/services$ ../../../bin/integrator.sh run samples/stockquote
+samples/soap-connector/services$ ../../../bin/integrator.sh samples/stockquote

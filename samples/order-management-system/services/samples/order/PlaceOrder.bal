@@ -12,7 +12,7 @@ service<http> sampleSoapServiceForPlacingOrder {
 
     resource PlaceOrder (http:Request request, http:Response response) {
         endpoint<soap:SoapClient> soapClient {
-            create soap:SoapClient();
+            create soap:SoapClient("http://localhost:9763", {});
         }
 
         xmlns "http://ws.starbucks.com" as m0;
@@ -37,7 +37,7 @@ service<http> sampleSoapServiceForPlacingOrder {
         soap:Response soapResponse;
         soap:SoapError soapError;
         soapResponse, soapError = soapClient
-                                  .sendReceive(soapRequest, "http://localhost:9763/services/StarbucksOutletService/");
+                                  .sendReceive("/services/StarbucksOutletService/", soapRequest);
 
         //Payload coming with the response from backend after creating the order.
         xml backendPayload = soapResponse.payload;

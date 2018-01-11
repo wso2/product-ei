@@ -12,7 +12,7 @@ service<http> sampleSoapServiceForPayment {
 
     resource PayOrder (http:Request request, http:Response response, string orderIdPathParam) {
         endpoint<soap:SoapClient> soapClient {
-            create soap:SoapClient();
+            create soap:SoapClient("http://localhost:9763", {});
         }
 
         xmlns "http://ws.starbucks.com" as m0;
@@ -43,7 +43,7 @@ service<http> sampleSoapServiceForPayment {
         soap:Response soapResponse;
         soap:SoapError soapError;
         soapResponse, soapError = soapClient
-                                  .sendReceive(soapRequest, "http://localhost:9763/services/StarbucksOutletService/");
+                                  .sendReceive("/services/StarbucksOutletService/", soapRequest);
 
         xml backendPayload = soapResponse.payload;
 

@@ -12,7 +12,7 @@ service<http> sampleSoapService {
     }
     resource stockSample (http:Request request, http:Response response) {
         endpoint<soap:SoapClient> soapClient {
-            create soap:SoapClient();
+            create soap:SoapClient("http://localhost:9090", {});
         }
 
         xml body = request.getXmlPayload();
@@ -25,8 +25,9 @@ service<http> sampleSoapService {
 
         soap:Response soapResponse;
         soap:SoapError soapError;
-        soapResponse, soapError = soapClient.sendReceive(soapRequest, "http://localhost:9090/SimpleStockQuoteService/simpleQuote");
+        soapResponse, soapError = soapClient.sendReceive("/SimpleStockQuoteService/simpleQuote", soapRequest);
 
+        println(soapError);
         xml payload = soapResponse.payload;
         response.setXmlPayload(payload);
         _ = response.send();
