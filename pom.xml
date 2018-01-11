@@ -460,7 +460,7 @@
         <ballerina.soap.connector.version>0.95.1</ballerina.soap.connector.version>
         <ballerina.file.connector.version>0.95.2</ballerina.file.connector.version>
         <ballerina.jms.connector.version>0.95.4</ballerina.jms.connector.version>
-        <ballerina.reliable.delivery.connector.version>0.95.0</ballerina.reliable.delivery.connector.version>
+        <ballerina.reliable.delivery.connector.version>0.95.1</ballerina.reliable.delivery.connector.version>
     </properties>
 </project>
 
