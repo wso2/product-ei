@@ -50,6 +50,7 @@ The services related to reliable-messaging could be executed in the following ma
 - Execute the following,
 
 samples/reliable-messaging-builtin/services$ ../../../bin/integrator.sh run samples/downstream
+
 samples/reliable-messaging-builtin/services$ ../../../bin/integrator.sh run samples/messaging
 
 The above operation will be similar to running downstream.balx and messaging.balx   
