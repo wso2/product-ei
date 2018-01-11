@@ -14,45 +14,29 @@ below is and where the actual text of the license can be found.
 Name                                                                            Type           License   
 ---------------------------------------------------------------------------------------------------------
 andes-client-3.2.37.jar                                                         bundle         apache2   2761      
-andes-client-4.0.0.jar                                                          bundle         apache2   2443      
-animal-sniffer-annotations-1.14.jar                                             jar            mit       2458      
-annotations-3.0.1.jar                                                           bundle         lgpl      2457      
-antlr4-runtime-4.5.1.wso2v1.jar                                                 bundle         bsd       11767     
+animal-sniffer-annotations-1.14.jar                                             jar            mit       2458
+antlr4-runtime-4.5.1.wso2v1.jar                                                 bundle         bsd       11767
 apache-mime4j-core-0.7.2.jar                                                    bundle         apache2   2112      
 atomikos-3.8.0.wso2v1.jar                                                       bundle         apache2   12348     
 axiom-api-1.2.20.jar                                                            bundle         apache2   2111      
 axiom-dom-1.2.20.jar                                                            bundle         apache2   2219      
 axiom-impl-1.2.20.jar                                                           bundle         apache2   2110      
-ballerina-builtin-0.95.1.jar                                                    jar            apache2   2354      
-ballerina-builtin-0.95.6.jar                                                    jar            apache2   2672      
-ballerina-config-0.95.1.jar                                                     jar            apache2   2353      
-ballerina-config-0.95.6.jar                                                     jar            apache2   2671      
-ballerina-core-0.95.1.jar                                                       jar            apache2   2352      
-ballerina-core-0.95.6.jar                                                       jar            apache2   2670      
-ballerina-file-0.95.0.jar                                                       jar            apache2   2442      
-ballerina-file-0.95.2.jar                                                       jar            apache2   2680      
-ballerina-http-0.95.1.jar                                                       jar            apache2   2351      
-ballerina-http-0.95.6.jar                                                       jar            apache2   2669      
-ballerina-jms-0.95.2.jar                                                        jar            apache2   2441      
-ballerina-jms-0.95.4.jar                                                        jar            apache2   2679      
-ballerina-lang-0.95.1.jar                                                       jar            apache2   2350      
-ballerina-lang-0.95.6.jar                                                       jar            apache2   2668      
-ballerina-launcher-0.95.1.jar                                                   jar            apache2   2349      
-ballerina-launcher-0.95.6.jar                                                   jar            apache2   2667      
-ballerina-logging-0.95.1.jar                                                    jar            apache2   2348      
-ballerina-logging-0.95.6.jar                                                    jar            apache2   2666      
+ballerina-builtin-0.95.6.jar                                                    jar            apache2   2672
+ballerina-config-0.95.6.jar                                                     jar            apache2   2671
+ballerina-core-0.95.6.jar                                                       jar            apache2   2670
+ballerina-file-0.95.2.jar                                                       jar            apache2   2680
+ballerina-http-0.95.6.jar                                                       jar            apache2   2669
+ballerina-jms-0.95.4.jar                                                        jar            apache2   2679
+ballerina-lang-0.95.6.jar                                                       jar            apache2   2668
+ballerina-launcher-0.95.6.jar                                                   jar            apache2   2667
+ballerina-logging-0.95.6.jar                                                    jar            apache2   2666
 ballerina-reliable-delivery-0.95.1.jar                                          jar            apache2   2760      
-ballerina-soap-0.95.0.jar                                                       jar            apache2   2440      
-ballerina-soap-0.95.1.jar                                                       jar            apache2   2759      
-broker-amqp-1.0.31.jar                                                          jar            apache2   2456      
-broker-amqp-1.0.46.jar                                                          jar            apache2   2686      
-broker-common-1.0.31.jar                                                        jar            apache2   2455      
-broker-common-1.0.46.jar                                                        jar            apache2   2685      
+ballerina-soap-0.95.1.jar                                                       jar            apache2   2759
+broker-amqp-1.0.46.jar                                                          jar            apache2   2686
+broker-common-1.0.46.jar                                                        jar            apache2   2685
 broker-coordination-1.0.46.jar                                                  jar            apache2   2684      
-broker-core-1.0.31.jar                                                          jar            apache2   2454      
-broker-core-1.0.46.jar                                                          jar            apache2   2683      
-broker-launcher-1.0.31.jar                                                      jar            apache2   2453      
-broker-launcher-1.0.46.jar                                                      jar            apache2   2682      
+broker-core-1.0.46.jar                                                          jar            apache2   2683
+broker-launcher-1.0.46.jar                                                      jar            apache2   2682
 commons-lang-2.6.jar                                                            bundle         apache2   506       
 commons-lang3-3.5.jar                                                           bundle         apache2   2105      
 commons-logging-1.2.jar                                                         bundle         apache2   1702      
@@ -88,7 +72,7 @@ netty-codec-http2-4.1.16.Final.jar                                              
 netty-common-4.1.16.Final.jar                                                   bundle         apache2   2343      
 netty-handler-4.1.16.Final.jar                                                  bundle         apache2   2342      
 netty-handler-proxy-4.1.16.Final.jar                                            bundle         apache2   2341      
-netty-resolver-4.1.16.Final.jar                                                 bundle         apache2   2340      
+netty-resolver-4.1.16.Final.jar                                                 bundle         apache2   2340
 netty-transport-4.1.16.Final.jar                                                bundle         apache2   2339      
 org.wso2.carbon.config-2.1.5.jar                                                bundle         apache2   14845     
 org.wso2.carbon.connector.framework-6.0.43.jar                                  bundle         apache2   14592     
@@ -123,8 +107,6 @@ bsd            Berkeley License
                http://www.opensource.org/licenses/bsd-license.php
 apache2        Apache License Version 2.0
                http://www.apache.org/licenses/LICENSE-2.0.html
-lgpl           Lesser GPL
-               http://www.gnu.org/licenses/lgpl.html
 mit            MIT License
                http://www.opensource.org/licenses/mit-license.php
 mpl10          Mozilla Public License 1.0
