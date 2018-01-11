@@ -8,7 +8,7 @@ This product also contains software under different licenses. This table below
 all the contained libraries (jar files) and the license under which they are 
 provided to you.
 
-At the bottom of this file is a table that shows what each license indicated
+At the bottom of this file is a table that shows what each license indicatedS
 below is and where the actual text of the license can be found.
 
 Name                                                                            Type           License   
@@ -80,7 +80,7 @@ bcprov-jdk15on-1.56.jar                                                         
 bcprov-jdk15on.jar                                                              bundle         bouncy    1342
 bcprov-jdk15on_1.52.0.wso2v1.jar                                                bundle         bouncy    8485
 bigqueue_0.7.0.wso2v1.jar                                                       bundle         apache2   7036
-bpmn-sample-jars-6.1.1-update16-SNAPSHOT.jar                                    jar            apache2   2694
+bpmn-sample-jars-6.1.1-update16.jar                                             jar            apache2   2694
 BPMNAnalyticsUDF.jar                                                            jar            apache2   2154
 bsf-all_3.0.0.wso2v5.jar                                                        bundle         apache2   5254
 bsh_1.3.0.wso2v1.jar                                                            bundle         lgpl2     1539
@@ -767,7 +767,7 @@ org.wso2.carbon.inbound.endpoint_4.6.51.jar                                     
 org.wso2.carbon.inbound.stub_4.6.51.jar                                         bundle         apache2   15068
 org.wso2.carbon.inbound.ui_4.6.51.jar                                           bundle         apache2   15067
 org.wso2.carbon.inbound_4.6.51.jar                                              bundle         apache2   15066
-org.wso2.carbon.integrator.core_6.1.1.update16-SNAPSHOT.jar                     bundle         apache2   15065
+org.wso2.carbon.integrator.core_6.1.1.update16.jar                              bundle         apache2   15065
 org.wso2.carbon.java2wsdl.ui_4.6.8.jar                                          bundle         apache2   15064
 org.wso2.carbon.java2wsdl_4.6.8.jar                                             bundle         apache2   15063
 org.wso2.carbon.jndi_1.0.0.jar                                                  bundle         apache2   12175
@@ -1039,13 +1039,13 @@ org.wso2.carbon.wsdl2code_4.6.8.jar                                             
 org.wso2.carbon.wsdl2form-4.6.8.jar                                             bundle         apache2   14914
 org.wso2.ciphertool-1.0.0-wso2v6.jar                                            bundle         apache2   13264
 org.wso2.das4esb.multitenancy.dashboard.ui_5.0.0.jar                            bundle         apache2   11420
-org.wso2.ei.analytics.elk_6.1.1.update16-SNAPSHOT.jar                           bundle         apache2   14907
-org.wso2.ei.analytics.styles_6.1.1.update16-SNAPSHOT.jar                        bundle         apache2   14906
-org.wso2.ei.bpmn.analytics.core_6.1.1.update16-SNAPSHOT.jar                     bundle         apache2   14905
-org.wso2.ei.broker.styles_6.1.1.update16-SNAPSHOT.jar                           bundle         apache2   14904
-org.wso2.ei.business-process.styles_6.1.1.update16-SNAPSHOT.jar                 bundle         apache2   14903
-org.wso2.ei.samples_6.1.1.update16-SNAPSHOT.jar                                 bundle         apache2   14902
-org.wso2.ei.styles_6.1.1.update16-SNAPSHOT.jar                                  bundle         apache2   14901
+org.wso2.ei.analytics.elk_6.1.1.update16.jar                                    bundle         apache2   14907
+org.wso2.ei.analytics.styles_6.1.1.update16.jar                                 bundle         apache2   14906
+org.wso2.ei.bpmn.analytics.core_6.1.1.update16.jar                     		bundle         apache2   14905
+org.wso2.ei.broker.styles_6.1.1.update16.jar                           		bundle         apache2   14904
+org.wso2.ei.business-process.styles_6.1.1.update16.jar                 		bundle         apache2   14903
+org.wso2.ei.samples_6.1.1.update16.jar                                 		bundle         apache2   14902
+org.wso2.ei.styles_6.1.1.update16.jar                                  		bundle         apache2   14901
 org.wso2.orbit.asm4.asm4-all_4.0.0.wso2v1.jar                                   bundle         apache2   4710
 org.wso2.securevault-1.0.0-wso2v2.jar                                           bundle         apache2   3537
 org.wso2.securevault_1.0.0.wso2v2.jar                                           bundle         apache2   768
@@ -1068,7 +1068,7 @@ poi-ooxml_3.9.0.wso2v3.jar                                                      
 poi-scratchpad_3.14.0.wso2v1.jar                                                bundle         apache2   8217
 poi_3.14.0.wso2v1.jar                                                           bundle         apache2   8216
 poi_3.9.0.wso2v1.jar                                                            bundle         apache2   2017
-process-tools-6.1.1-update16-SNAPSHOT.jar                                       bundle         apache2   2693
+process-tools-6.1.1-update16.jar                                       		bundle         apache2   2693
 quartz_2.1.1.wso2v1.jar                                                         bundle         apache2   975
 quickfixj_1.4.0.wso2v2.jar                                                      bundle         apache2   1393
 rampart-1.6.1-wso2v18.mar                                                       bundle         apache2   9420
@@ -1080,8 +1080,8 @@ reflections_0.9.10.wso2v1.jar                                                   
 reindex-client-5.4.3.jar                                                        jarinbundle    apache2   2709
 rest-5.4.3.jar                                                                  jarinbundle    apache2   2708
 rome_0.9.0.wso2v1.jar                                                           bundle         apache2   930
-sample-client-6.1.1-update16-SNAPSHOT.jar                                       bundle         apache2   2696
-sample-utils-6.1.1-update16-SNAPSHOT.jar                                        bundle         apache2   2692
+sample-client-6.1.1-update16.jar                                       		bundle         apache2   2696
+sample-utils-6.1.1-update16.jar                                        		bundle         apache2   2692
 sandesha2-core-1.6.1-wso2v1.jar                                                 bundle         apache2   5039
 sandesha2.mar                                                                   jar            apache2   660
 saxon.bps_9.0.0.x-wso2v1.jar                                                    bundle         mpl11     985
