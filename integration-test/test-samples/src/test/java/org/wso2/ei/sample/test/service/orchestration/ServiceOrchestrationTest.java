@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.ei.test.service.orchestration;
+package org.wso2.ei.sample.test.service.orchestration;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;

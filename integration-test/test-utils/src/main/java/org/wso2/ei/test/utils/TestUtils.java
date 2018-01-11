@@ -56,7 +56,7 @@ public class TestUtils {
         String pathRelatedToTestModule = ".." + File.separator + ".." + File.separator + balxFile;
         File relatedPathFile = new File(pathRelatedToTestModule);
         File parentDirectory = new File(relatedPathFile.getParent());
-        File fullPath = new File(parentDirectory, pathRelatedToTestModule);
+        File fullPath = new File(parentDirectory + File.separator + relatedPathFile.getName());
 
         try {
             String canonicalPath = fullPath.getCanonicalPath();

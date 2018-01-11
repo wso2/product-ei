@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -40,23 +40,61 @@ public class SoapConnectorTest {
 
     private boolean serverStarted;
 
-    @BeforeClass
+    @BeforeClass(description = "Starts the server with the SoapConnectorTest.bal file")
     public void startServer() {
-        serverStarted = TestUtils.startServer("samples/soap-connector/soap-connector-sample.balx");
+        serverStarted = TestUtils.startServer(
+                "integration-test/test-connectors/src/test/java/org/wso2/ei/test/connector/soap/SoapConnectorTest.bal");
     }
 
-    @Test
-    public void testSoapConnector() {
+    @Test(description = "Tests the sendReceive method of the soap connector")
+    public void testSendReceive() {
+        String symbol = "ABC";
+        String responseBody = sendToBackend(symbol, 200, "sendReceive");
+
+        String responseSymbol = responseBody.split("<ax21:symbol>")[1].split("</ax21:symbol>")[0].trim();
+        Assert.assertEquals(responseSymbol, symbol);
+    }
+
+    @Test(description = "Tests the sendReboust method")
+    public void testSendRobust() {
+        String symbol = "DEF";
+        String responseBody = sendToBackend(symbol, 200, "sendRobust");
+
+        Assert.assertEquals(responseBody, "Success");
+    }
+
+    @Test(description = "Tests the error returned of the sendRobust method of the soap connector")
+    public void testSendRobustTimeout() {
+        String symbol = "ABC";
+        String responseBody = sendToBackend(symbol, 504, "sendRobustTimeout");
+
+        Assert.assertEquals(responseBody, "Gateway Timeout");
+    }
+
+    @Test(description = "Tests the fireAndForget method of the soap connector")
+    public void testFireAndForget() {
+        String symbol = "GHI";
+        sendToBackend(symbol, 200, "fireAndForget");
+    }
+
+    /**
+     * This is a convenient method for sending to the backend and asserts the status.
+     *
+     * @param symbol         the symbol to send to backend.
+     * @param expectedStatus the expected status from the call to the backend.
+     * @param invoke         the path to invoke when calling the backend.
+     * @return the response as a string.
+     */
+    private String sendToBackend(String symbol, int expectedStatus, String invoke) {
         if (!serverStarted) {
             Assert.fail("Error running the test, server is not started");
         }
 
-        String symbol = "ABC";
         String requestPayload = "<ser:getSimpleQuote xmlns:ser=\"http://services.samples\">\n"
                 + "<ser:symbol>" + symbol + "</ser:symbol>\n"
                 + "</ser:getSimpleQuote>";
 
-        String url = "http://localhost:9090/soapSample";
+        String url = "http://localhost:9090/SimpleStockQuoteService/" + invoke;
 
         HttpClient client = new HttpClient();
         PostMethod post = new PostMethod(url);
@@ -67,21 +105,19 @@ public class SoapConnectorTest {
             post.setRequestEntity(requestEntity);
 
             int status = client.executeMethod(post);
-            Assert.assertEquals(status, 200);
-            String responseBody = post.getResponseBodyAsString();
-            String responseSymbol = responseBody.split("<ax21:symbol>")[1].split("</ax21:symbol>")[0].trim();
-            Assert.assertEquals(responseSymbol, symbol);
+            Assert.assertEquals(status, expectedStatus, "Incorrect status of the response");
+            return post.getResponseBodyAsString();
 
         } catch (IOException e) {
             log.error("Error while invoking the server ", e);
         }
+        return null;
     }
 
-    @AfterClass
+    @AfterClass(description = "Stops the server and logs if it fails")
     public void stopServer() {
         if (!TestUtils.stopServer()) {
             log.error("Error stopping the server");
         }
     }
-
 }

@@ -256,6 +256,13 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/ext/broker</outputDirectory>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.securevault</groupId>
+                                    <artifactId>org.wso2.securevault</artifactId>
+                                    <version>${securevault.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/ext/broker</outputDirectory>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>

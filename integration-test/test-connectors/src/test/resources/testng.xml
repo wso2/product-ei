@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -22,17 +22,9 @@
 
 <suite name="Product EI Integration suit">
 
-
     <test name="Connector tests" verbose="2">
         <classes>
-            <class name="org.wso2.ei.sample.test.connector.soap.SoapConnectorSampleTest"/>
-            <class name="org.wso2.ei.sample.test.connector.file.FileConnectorTest"/>
-        </classes>
-    </test>
-
-    <test name="Scenario tests" verbose="2">
-        <classes>
-            <class name="org.wso2.ei.sample.test.service.orchestration.ServiceOrchestrationTest"/>
+            <class name="org.wso2.ei.test.connector.soap.SoapConnectorTest"/>
         </classes>
     </test>
 
