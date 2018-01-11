@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.ei.test.connector.file;
+package org.wso2.ei.sample.test.connector.file;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

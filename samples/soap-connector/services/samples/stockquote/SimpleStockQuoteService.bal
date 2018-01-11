@@ -3,7 +3,7 @@ package samples.stockquote;
 import ballerina.net.http;
 
 @http:configuration {basePath:"/SimpleStockQuoteService"}
-service<http> helloWorld {
+service<http> SimpleStockQuoteService {
 
     @http:resourceConfig {
         methods:["POST"],
