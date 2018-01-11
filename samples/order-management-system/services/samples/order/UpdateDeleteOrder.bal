@@ -3,9 +3,9 @@ package samples.order;
 import ballerina.net.http;
 import ballerina.net.soap;
 
-@http:configuration {basePath:"/order"}
+@http:configuration {basePath:"/modifyOrder"}
 
-service<http> DeleteOrder {
+service<http> ModifyOrder {
 
     @http:resourceConfig {
         methods:["DELETE"],
@@ -83,7 +83,7 @@ service<http> DeleteOrder {
 function sendRequest (xml orderPayload) (xml) {
 
     endpoint<soap:SoapClient> ep {
-        create soap:SoapClient();
+        create soap:SoapClient("http://localhost:9763", {});
     }
 
     soap:SoapVersion version11 = soap:SoapVersion.SOAP11;
@@ -96,7 +96,7 @@ function sendRequest (xml orderPayload) (xml) {
     soap:Response soapResponse;
     soap:SoapError soapError;
     soapResponse, soapError = ep
-                              .sendReceive(soapRequest, "http://localhost:9763/services/StarbucksOutletService/");
+                              .sendReceive("/services/StarbucksOutletService/", soapRequest);
 
     xml backendPayload = soapResponse.payload;
     return backendPayload;

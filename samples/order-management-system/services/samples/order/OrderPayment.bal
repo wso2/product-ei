@@ -3,7 +3,7 @@ package samples.order;
 import ballerina.net.http;
 import ballerina.net.soap;
 
-@http:configuration {basePath:"/payment", port:9096}
+@http:configuration {basePath:"/payment"}
 
 service<http> Payment {
     @http:resourceConfig {
@@ -47,7 +47,7 @@ service<http> Payment {
 function sendPaymentSOAPRequest (xml orderPayload, boolean paidOrder, http:Response response) {
 
     endpoint<soap:SoapClient> ep {
-        create soap:SoapClient();
+        create soap:SoapClient("http://localhost:9763", {});
     }
 
     soap:SoapVersion version11 = soap:SoapVersion.SOAP11;
@@ -60,7 +60,7 @@ function sendPaymentSOAPRequest (xml orderPayload, boolean paidOrder, http:Respo
     soap:Response soapResponse;
     soap:SoapError soapError;
     soapResponse, soapError = ep
-                              .sendReceive(soapRequest, "http://localhost:9763/services/StarbucksOutletService/");
+                              .sendReceive("/services/StarbucksOutletService/", soapRequest);
 
     string acceptedPayment = "Payment Accepted";
     string responseCardNo;

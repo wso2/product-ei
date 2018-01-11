@@ -58,7 +58,7 @@ If Curl is used as the client tool, put the following XML snippet into a file na
 Run the command
 
 ```
-curl -v -d @order.xml -H "Content-type: application/xml" http://localhost:9095/order/placeOrder
+curl -v -d @order.xml -H "Content-type: application/xml" http://localhost:9090/order/placeOrder
 ```
 
 from the place where 'order.xml' is saved.
@@ -92,7 +92,7 @@ To try this scenario out, find out the unique ID of the order submitted earlier 
 Run Curl as follows (replace my-order-id with the actual order ID)
 
 ```
-curl -v http://localhost:9095/order/orderId/my-order-id
+curl -v http://localhost:9090/order/orderId/my-order-id
 ```
 
 ### Observations
@@ -135,7 +135,7 @@ And make sure to add an amount which is no less than the cost of the order.
 Run the command
 
 ```
-curl -v -X PUT -d @payment.xml -H "Content-type: application/xml" http://localhost:9096/payment/payOrder/order-id
+curl -v -X PUT -d @payment.xml -H "Content-type: application/xml" http://localhost:9090/payment/payOrder/order-id
 ```
 
 from the place where order.xml is saved.
@@ -168,7 +168,7 @@ Get the unique-id of the paid order. And run the following command after replaci
 Run the command
 
 ```
-curl -v http://localhost:9096/payment/getPaymentInfo/order-id
+curl -v http://localhost:9090/payment/getPaymentInfo/order-id
 ```
 
 ### Observations
@@ -201,7 +201,7 @@ Get the unique-id of the placed order. And run the following command after repla
 Run the command
 
 ```
-curl -v -X OPTIONS http://localhost:9090/order/orderId/order-id
+curl -v -X OPTIONS http://localhost:9090/modifyOrder/orderId/order-id
 ```
 
 ### Observations
@@ -223,7 +223,7 @@ Get the unique-id of the order that needs to be updated. And run the following c
 Run the command
 
 ```
-curl -v -X PUT -d @update.xml -H "Content-type: application/xml" http://localhost:9090/order/orderId/order-id
+curl -v -X PUT -d @update.xml -H "Content-type: application/xml" http://localhost:9090/modifyOrder/orderId/order-id
 ```
 
 ### Observations
@@ -239,7 +239,7 @@ Response received:
                                     <orderId>0977229d-8180-4558-bd0d-3c87cc656fd9</orderId>
                                     <drink>coca-cola</drink>
                                     <cost>12.86</cost>
-                                    <additions>None</additions>
+                                    <additions>sugar</additions>
                                    </order>
 ```
 
@@ -253,7 +253,7 @@ Get the unique-id of the order that needs to be deleted. And run the following c
 Run the command
 
 ```
-curl -v -X DELETE http://localhost:9090/order/orderId/order-id
+curl -v -X DELETE http://localhost:9090/modifyOrder/orderId/order-id
 ```
 
 ### Observations

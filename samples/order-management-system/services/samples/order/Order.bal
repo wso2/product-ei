@@ -6,7 +6,7 @@ import ballerina.net.soap;
 xmlns "http://ws.starbucks.com" as m0;
 xmlns "http://ws.starbucks.com/xsd" as ax2438;
 
-@http:configuration {basePath:"/order", port:9095}
+@http:configuration {basePath:"/order"}
 
 service<http> Order {
 
@@ -49,7 +49,7 @@ service<http> Order {
 function sendSOAPRequest (xml orderPayload) (xml) {
 
     endpoint<soap:SoapClient> ep {
-        create soap:SoapClient();
+        create soap:SoapClient("http://localhost:9763", {});
     }
 
     soap:SoapVersion version11 = soap:SoapVersion.SOAP11;
@@ -62,7 +62,7 @@ function sendSOAPRequest (xml orderPayload) (xml) {
     soap:Response soapResponse;
     soap:SoapError soapError;
     soapResponse, soapError = ep
-                              .sendReceive(soapRequest, "http://localhost:9763/services/StarbucksOutletService/");
+                              .sendReceive("/services/StarbucksOutletService/", soapRequest);
 
     xml backendPayload = soapResponse.payload;
 
