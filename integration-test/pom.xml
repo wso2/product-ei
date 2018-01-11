@@ -35,5 +35,6 @@
     <modules>
         <module>test-utils</module>
         <module>test-samples</module>
+        <module>test-connectors</module>
     </modules>
 </project>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -27,16 +27,16 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>test-samples</artifactId>
-    <name>WSO2 Enterprise Integrator - Sample Tests</name>
+    <artifactId>test-connectors</artifactId>
+    <name>WSO2 Enterprise Integrator - Connector Tests</name>
     <url>http://wso2.org</url>
 
     <dependencies>
+
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>test-utils</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
