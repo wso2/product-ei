@@ -246,6 +246,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>test-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>${testng.version}</version>
@@ -285,6 +290,11 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>${commons.httpClient.version}</version>
             </dependency>
 
             <!-- MB 4 Dependencies -->
@@ -446,6 +456,7 @@
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
         <commons.configuration.version>1.10</commons.configuration.version>
         <commons.io.version>2.2</commons.io.version>
+        <commons.httpClient.version>3.1</commons.httpClient.version>
         <andes.version>3.2.37</andes.version>
         <synapse.core.version>2.1.7-wso2v25</synapse.core.version>
         <com.jayway.jsonpath.version>0.8.0</com.jayway.jsonpath.version>
