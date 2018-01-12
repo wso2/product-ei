@@ -48,7 +48,7 @@ samples/service-orchestration-with-parallel-processing/services$ ../../../bin/in
 or execute
 
 ```
-bin$ ./integrator.sh ../samples/service-orchestration-with-parallel-processing/holidayPackage.balx
+bin$ ./integrator.sh ../samples/service-orchestration-with-parallel-processing/holiday.balx
 ```
 
 What is done from above 2 commands are quite similar. Select only one and execute it. It will deploy all the services used in our scenario.
