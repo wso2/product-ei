@@ -19,12 +19,10 @@ service<http> AggregateService {
             create http:HttpClient("http://localhost:9093", {});
         }
 
-        xmlns "http://services.samples" as m0;
-        xmlns "http://schemas.xmlsoap.org/soap/envelope/" as soapenv;
-        xml xmlResponseA;
-        xml xmlResponseB;
-        xml xmlResponseC;
-        xml fullResponse;
+        json jsonResponseA;
+        json jsonResponseB;
+        json jsonResponseC;
+        json fullResponse;
 
         fork {
 
@@ -49,35 +47,32 @@ service<http> AggregateService {
                 responseC -> fork;
             }
         }
-        // Wait until all the responses are received from the parallely running workers.
+            // Wait until all the responses are received from the parallely running workers.
         join (all) (map responses) {
 
             if (responses["ReceiverA"] != null) {
                 var workerResponseA, _ = (any[])responses["ReceiverA"];
                 var responseFromReceiverA, _ = (http:Response)(workerResponseA[0]);
-                xmlResponseA = responseFromReceiverA.getXmlPayload().selectChildren(soapenv:Body)
-                               .selectChildren(m0:getQuoteResponse);
-                fullResponse = responseFromReceiverA.getXmlPayload().selectChildren(soapenv:Body);
+                jsonResponseA = responseFromReceiverA.getJsonPayload();
             }
 
             if (responses["ReceiverB"] != null) {
                 var workerResponseB, _ = (any[])responses["ReceiverB"];
                 var responseFromReceiverB, _ = (http:Response)(workerResponseB[0]);
-                xmlResponseB = responseFromReceiverB.getXmlPayload().selectChildren(soapenv:Body)
-                               .selectChildren(m0:getQuoteResponse);
+                jsonResponseB = responseFromReceiverB.getJsonPayload();
             }
 
             if (responses["ReceiverC"] != null) {
                 var workerResponseC, _ = (any[])responses["ReceiverC"];
                 var responseFromReceiverC, _ = (http:Response)(workerResponseC[0]);
-                xmlResponseC = responseFromReceiverC.getXmlPayload().selectChildren(soapenv:Body)
-                               .selectChildren(m0:getQuoteResponse);
+                jsonResponseC = responseFromReceiverC.getJsonPayload();
             }
 
-            fullResponse.setChildren(xmlResponseB + xmlResponseA + xmlResponseC);
+            fullResponse = {"A":jsonResponseA, "B":jsonResponseB, "C":jsonResponseC};
 
-            response.setXmlPayload(fullResponse);
+            response.setJsonPayload(fullResponse);
             _ = response.send();
         }
     }
 }
+
