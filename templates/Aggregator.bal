@@ -2,7 +2,7 @@ import ballerina.net.http;
 
 @http:configuration {basePath:"/"} @Description {value:"This service represents the Aggregator EIP pattern which
 is responsible for collecting and storing individual messages until a complete set of related messages has been received. "}
-service<http> Aggregate {
+service<http> AggregateService {
 
     @http:resourceConfig {
         methods:["GET"],
@@ -55,20 +55,23 @@ service<http> Aggregate {
             if (responses["ReceiverA"] != null) {
                 var workerResponseA, _ = (any[])responses["ReceiverA"];
                 var responseFromReceiverA, _ = (http:Response)(workerResponseA[0]);
-                xmlResponseA = responseFromReceiverA.getXmlPayload().selectChildren(soapenv:Body).selectChildren(m0:getQuoteResponse);
+                xmlResponseA = responseFromReceiverA.getXmlPayload().selectChildren(soapenv:Body)
+                               .selectChildren(m0:getQuoteResponse);
                 fullResponse = responseFromReceiverA.getXmlPayload().selectChildren(soapenv:Body);
             }
 
             if (responses["ReceiverB"] != null) {
                 var workerResponseB, _ = (any[])responses["ReceiverB"];
                 var responseFromReceiverB, _ = (http:Response)(workerResponseB[0]);
-                xmlResponseB = responseFromReceiverB.getXmlPayload().selectChildren(soapenv:Body).selectChildren(m0:getQuoteResponse);
+                xmlResponseB = responseFromReceiverB.getXmlPayload().selectChildren(soapenv:Body)
+                               .selectChildren(m0:getQuoteResponse);
             }
 
             if (responses["ReceiverC"] != null) {
                 var workerResponseC, _ = (any[])responses["ReceiverC"];
                 var responseFromReceiverC, _ = (http:Response)(workerResponseC[0]);
-                xmlResponseC = responseFromReceiverC.getXmlPayload().selectChildren(soapenv:Body).selectChildren(m0:getQuoteResponse);
+                xmlResponseC = responseFromReceiverC.getXmlPayload().selectChildren(soapenv:Body)
+                               .selectChildren(m0:getQuoteResponse);
             }
 
             fullResponse.setChildren(xmlResponseB + xmlResponseA + xmlResponseC);

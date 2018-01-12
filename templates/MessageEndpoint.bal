@@ -2,7 +2,7 @@ import ballerina.net.http;
 
 @http:configuration {basePath:"/"}@Description {value:"This service represents the Message Endpoint EIP pattern which
 is responsible encapsulating the messaging system inside an application. "}
-service<http> EndPoint {
+service<http> MessageEndPointService {
 
     @http:resourceConfig {
         methods:["GET"],

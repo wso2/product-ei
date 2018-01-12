@@ -8,12 +8,11 @@ service<http> PipesAndFiltersService {
         path:"/"
     }
     resource pipesAndFilters (http:Request request, http:Response response) {
-
         endpoint<http:HttpClient> httpEndpoint {
             create http:HttpClient("http://localhost:9091", {});
         }
-        http:Response backendResponse = {};
 
+        http:Response backendResponse = {};
         xmlns "http://services.samples" as m0;
         xmlns "http://schemas.xmlsoap.org/soap/envelope/" as soapenv;
         xml payload = request.getXmlPayload();

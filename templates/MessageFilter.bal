@@ -2,7 +2,7 @@ import ballerina.net.http;
 
 @http:configuration {basePath:"/"} @Description {value:"This service represents the Message Filter EIP pattern which
 checks an incoming message against a certain criteria that the message should adhere to. "}
-service<http> MessageRouterService {
+service<http> MessageFilterService {
 
     @http:resourceConfig {
         methods:["POST"],
