@@ -1,6 +1,6 @@
 import ballerina.net.http;
 
-@http:configuration {basePath:"/"}@Description {value:"This service represents the Pipes and Filters EIP pattern."}
+@http:configuration {basePath:"/"} @Description {value:"This service represents the Pipes and Filters EIP pattern."}
 service<http> PipesAndFiltersService {
 
     @http:resourceConfig {
