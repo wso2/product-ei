@@ -1,4 +1,4 @@
-<data name="ShoppingCartDS" enableBatchRequests="false" enableBoxcarring="true" serviceStatus="active" baseURI="com.acme.shoppingcart">      
+<data name="ShoppingCartDS" enableBatchRequests="false" enableBoxcarring="true" disableLegacyBoxcarringMode="true" serviceStatus="active" baseURI="com.acme.shoppingcart">
    <config id="default">            
       <property name="org.wso2.ws.dataservice.driver">org.h2.Driver</property>            
       <property name="org.wso2.ws.dataservice.protocol">jdbc:h2:file:./samples/database/SHOPPING_CART_SAMPLE_DB</property>            
