@@ -16,7 +16,7 @@
   ~ under the License.
   -->
 
-<data name="CarbonDSDataServiceTest" enableBoxcarring="true" serviceGroup="CarbonDS" baseURI="http://ws.wso2.org/dataservice/samples/rdbms_sample">
+<data name="CarbonDSDataServiceTest" enableBoxcarring="true" disableLegacyBoxcarringMode="true" serviceGroup="CarbonDS" baseURI="http://ws.wso2.org/dataservice/samples/rdbms_sample">
    <config id="MySqlDataSource">                                                                                                                                    
       <property name="carbon_datasource_name">testDBDataSource</property>
    </config>            

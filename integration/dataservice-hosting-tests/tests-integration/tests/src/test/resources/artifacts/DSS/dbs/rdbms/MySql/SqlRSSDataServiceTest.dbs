@@ -16,7 +16,7 @@
   ~ under the License.
   -->
 
-<data name="SqlRSSDataServiceTest" enableBoxcarring="true" serviceGroup="MySql" baseURI="http://ws.wso2.org/dataservice/samples/rdbms_sample">
+<data name="SqlRSSDataServiceTest" enableBoxcarring="true" disableLegacyBoxcarringMode="true" serviceGroup="MySql" baseURI="http://ws.wso2.org/dataservice/samples/rdbms_sample">
    <config id="MySqlDataSource">                  
       <property name="org.wso2.ws.dataservice.driver">com.mysql.jdbc.Driver</property>                  
       <property name="org.wso2.ws.dataservice.protocol">jdbc:mysql://192.168.4.27:3306/testDatabase_wso2automation_com</property>                  
