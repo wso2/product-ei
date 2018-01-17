@@ -1,0 +1,12 @@
+[
+    {
+        "drinkName": "orange",
+        "additions": "extra sugar",
+        "cost": 150
+    },
+    {
+        "drinkName": "lime",
+        "additions": "no sugar",
+        "cost": 140
+    }
+]
