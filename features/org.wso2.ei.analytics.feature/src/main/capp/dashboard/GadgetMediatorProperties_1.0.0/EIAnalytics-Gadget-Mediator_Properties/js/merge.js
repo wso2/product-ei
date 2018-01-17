@@ -3,7 +3,7 @@
 
 // declare global: diff_match_patch, DIFF_INSERT, DIFF_DELETE, DIFF_EQUAL
 
-(function(mod) {
+; (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("codemirror")); // Note non-packaged dependency diff_match_patch
   else if (typeof define == "function" && define.amd) // AMD
