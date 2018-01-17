@@ -28,6 +28,8 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.test.utils.http.client.HttpClientUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import javax.ws.rs.core.MediaType;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -37,7 +39,7 @@ import static org.testng.Assert.assertNotNull;
 
 public class PropertyIntegrationNO_ENTITY_BODY_PropertyTest extends ESBIntegrationTest {
 
-    private OMElement response1;
+    private OMElement response;
     private HttpClientUtil client;
 
     @BeforeClass(alwaysRun = true)
@@ -52,16 +54,17 @@ public class PropertyIntegrationNO_ENTITY_BODY_PropertyTest extends ESBIntegrati
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Test-Without No_ENTITY_BODY Property")
     public void testWithoutNoEntityBodyPropertTest() throws Exception {
-        response1 = client.get(getProxyServiceURLHttp("Axis2ProxyService1") + "/echoString?in=IBM");
-        assertNotNull(response1, "Response is null");
-        assertEquals(response1.getFirstElement().getText(), "IBM", "Text does not match");
+        response = client.getWithContentType(getProxyServiceURLHttp("Axis2ProxyService1") + "/echoString?in=IBM",
+                "", MediaType.APPLICATION_FORM_URLENCODED);
+        assertNotNull(response, "Response is null");
+        assertEquals(response.getFirstElement().getText(), "IBM", "Text does not match");
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
-    @Test(groups = "wso2.esb", expectedExceptions = OMException.class,
-          description = "Test-With NO_ENTITY_BODY")
+    @Test(groups = "wso2.esb", expectedExceptions = OMException.class, description = "Test-With NO_ENTITY_BODY")
     public void testWithNoEntityBodyPropertTest() throws Exception {
-        client.get(getProxyServiceURLHttp("Axis2ProxyService2") + "/echoString?in=IBM");
+        client.getWithContentType(getProxyServiceURLHttp("Axis2ProxyService2") + "/echoString",
+                "in=IBM", MediaType.APPLICATION_FORM_URLENCODED);
     }
 
     @AfterClass(alwaysRun = true)
