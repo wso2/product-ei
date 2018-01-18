@@ -22,9 +22,9 @@ import org.apache.axis2.AxisFault;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.esb.integration.common.utils.ESBTestConstant;import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 
 import javax.activation.DataHandler;
 import javax.xml.xpath.XPathExpressionException;
@@ -60,12 +60,12 @@ public class ValidateIntegrationNegativeTestCase extends ESBIntegrationTest {
                                                "XPath expression using \"source\" attribute " +
                                                "Check how mediator operates on the elements of SOAP body")
     public void TestWithInvalidXpath() throws Exception {
-
+        final String expectedErrorMsg = "Error occurred while accessing source element: //m0:requestElement/m0:getQuote";
         try {
             axis2Client.sendSimpleStockQuoteRequest(
                     getProxyServiceURLHttp("validateMediatorInvalidXPathTestProxy"), null, "WSO2");
         } catch (AxisFault expected) {
-            assertEquals(expected.getMessage(), ESBTestConstant.INCOMING_MESSAGE_IS_NULL, "Error Message mismatched");
+            assertEquals(expected.getMessage(), expectedErrorMsg, "Error Message mismatched");
         }
     }
 
