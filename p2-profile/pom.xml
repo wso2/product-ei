@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
-        <version>6.1.1-update17</version>
+        <version>6.1.1-update18-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

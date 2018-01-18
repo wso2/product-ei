@@ -28,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
-    <version>6.1.1-update17</version>
+    <version>6.1.1-update18-SNAPSHOT</version>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
@@ -1249,7 +1249,7 @@
         <url>https://github.com/wso2/product-ei.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-ei.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/product-ei.git</connection>
-        <tag>v6.1.1-update17</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <profiles>
@@ -1285,7 +1285,7 @@
 
         <!--Product Version-->
 
-        <product.ei.version>6.1.1-update17</product.ei.version>
+        <product.ei.version>6.1.1-update18-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
         <carbon.business-process.version>4.4.32</carbon.business-process.version>
