@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ---------------------------------------------------------------------------
 #  Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
@@ -7,7 +7,7 @@
 #  in compliance with the License.
 #  You may obtain a copy of the License at
 #
-#  http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 #  Unless required by applicable law or agreed to in writing,
 #  software distributed under the License is distributed on an
@@ -16,20 +16,6 @@
 #  specific language governing permissions and limitations
 #  under the License.
 # ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# Startup Script for WSO2 Message Broker
-#
-# Environment Variable Prerequisites
-#
-#   JAVA_HOME       Must point at your Java Development Kit installation.
-#
-#   JAVA_OPTS       (Optional) Java runtime options used when the commands
-#                   is executed.
-#
-# NOTE: Borrowed generously from Apache Tomcat startup scripts.
-# ---------------------------------------------------------------------------
-
 
 # resolve links - $0 may be a softlink
 PRG="$0"
@@ -74,6 +60,34 @@ if [ -z "$JAVA_HOME" ]; then
   exit 1
 fi
 
+args=""
+for c in $*
+do
+    if [ "$c" = "--debug" ] || [ "$c" = "-debug" ] || [ "$c" = "debug" ]; then
+          CMD="--debug"
+          continue
+    elif [ "$CMD" = "--debug" ]; then
+          if [ -z "$PORT" ]; then
+                PORT=$c
+          fi
+    else
+        args="$args $c"
+    fi
+done
+
+if [ "$CMD" = "--debug" ]; then
+  if [ "$PORT" = "" ]; then
+    echo " Please specify the debug port after the --debug option"
+    exit 1
+  fi
+  if [ -n "$JAVA_OPTS" ]; then
+    echo "Warning !!!. User specified JAVA_OPTS will be ignored, once you give the --debug option."
+  fi
+  CMD="RUN"
+  JAVA_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=$PORT"
+  echo "Please start the remote debugging client to continue..."
+fi
+
 MESSAGE_BROKER_CLASSPATH=""
 for j in "$MESSAGE_BROKER_HOME"/lib/*.jar
 do
@@ -87,7 +101,9 @@ $JAVACMD \
     $JAVA_OPTS \
     -classpath "$MESSAGE_BROKER_CLASSPATH" \
     -Dfile.encoding=UTF8 \
+    -Dderby.system.home="$MESSAGE_BROKER_HOME" \
     -Dmessage.broker.home="$MESSAGE_BROKER_HOME" \
     -Dlog4j.configuration="file:$MESSAGE_BROKER_HOME/conf/log4j.properties" \
     -Dbroker.config="$MESSAGE_BROKER_HOME/conf/broker.yaml" \
+    -Dbroker.users.config="$MESSAGE_BROKER_HOME/conf/security/users.yaml" \
     org.wso2.broker.Main
