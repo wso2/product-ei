@@ -78,6 +78,8 @@
             </activation>
             <modules>
                 <module>automation-extensions</module>
+                <module>mediation-tests/tests-common/admin-clients</module>
+                <module>mediation-tests/tests-common/integration-test-utils</module>
                 <module>dataservice-hosting-tests</module>
             </modules>
         </profile>
