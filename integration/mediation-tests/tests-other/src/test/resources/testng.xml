@@ -141,6 +141,12 @@
         </classes>
     </test>
 
+    <test name="FaultSequence tests" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.sequence.fault"/>
+        </packages>
+    </test>
+
 </suite>
 
 
