@@ -42,8 +42,8 @@ import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This class tests whether the artifacts in deployed car file is in order
- * Related issue: https://github.com/wso2/product-ei/issues/1261
+ * This class tests whether the artifacts in deployed and un deployed in the correct artifacts dependency order.
+ * Related issues: https://github.com/wso2/product-ei/issues/1261, https://github.com/wso2/product-ei/issues/1737
  */
 public class CAppDeploymentOrderTest extends ESBIntegrationTest {
     private CarbonAppUploaderClient carbonAppUploaderClient;
@@ -65,7 +65,8 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
-    @Test(groups = "wso2.esb", enabled = true, description = "Test whether proxy service get deployed through capp in order")
+    @Test(groups = "wso2.esb", enabled = true, description = "Test whether proxy service get deployed,unDeploy "
+            + "through capp in order")
     protected void carFileDeploymentOrderTest() throws Exception {
         logViewerClient.clearLogs();
         carbonAppUploaderClient = new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
@@ -76,6 +77,35 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
         Assert.assertTrue(isCarFileDeployed(CAR_FILE_NAME), "Car file deployment failed");
         boolean deploymentOrdered = checkLogOrder(logViewerClient);
         Assert.assertTrue(deploymentOrdered, "Deployment order isn't correct");
+
+        //check un deployment order
+        logViewerClient.clearLogs();
+        applicationAdminClient.deleteApplication(CAR_FILE_NAME);
+        Assert.assertTrue(isCarFileUnDeployed(CAR_FILE_NAME), "Car file un deployment failed");
+        Assert.assertTrue(checkUnDeployLogOrder(logViewerClient), "Un Deployment order isn't correct");
+    }
+
+    private boolean checkUnDeployLogOrder(LogViewerClient logViewerClient)
+            throws LogViewerLogViewerException, RemoteException {
+        LogEvent[] systemLogs;
+        systemLogs = logViewerClient.getAllRemoteSystemLogs();
+        //Create a stack to store the intended logs in order
+        Stack<String> logStack = new Stack<>();
+        logStack.push("Inbound Endpoint named 'inbound-endpoint' has been undeployed");
+        logStack.push("Sequence named 'test-sequence' has been undeployed");
+
+        //Check whether the logs are in the stack's order
+        if (systemLogs != null) {
+            for (LogEvent logEvent : systemLogs) {
+                if (logEvent == null) {
+                    continue;
+                }
+                if (logStack.size() != 0 && logEvent.getMessage().contains(logStack.peek())){
+                    logStack.pop();
+                }
+            }
+        }
+        return logStack.isEmpty();
     }
 
     private boolean checkLogOrder(LogViewerClient logViewerClient) throws LogViewerLogViewerException, RemoteException {
@@ -124,6 +154,32 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
 
         }
         return isCarFileDeployed;
+    }
+
+    private boolean isCarFileUnDeployed(String carFileName) throws Exception {
+        log.info("waiting " + MAX_TIME + " millis for car un deployment " + carFileName);
+        boolean isCarFileUnDeployed = false;
+        Calendar startTime = Calendar.getInstance();
+        long time;
+        while ((time = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())) < MAX_TIME) {
+            String[] applicationList = applicationAdminClient.listAllApplications();
+            if (applicationList != null) {
+                if (!ArrayUtils.contains(applicationList, carFileName)) {
+                    isCarFileUnDeployed = true;
+                    log.info("car file un deployed in " + time + " mills");
+                    return isCarFileUnDeployed;
+                }
+            } else {
+                return true;
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                //ignore
+            }
+        }
+        return isCarFileUnDeployed;
     }
 
     private void runFTPServerForInboundTest() throws Exception {
