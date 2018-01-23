@@ -100,7 +100,7 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
                 if (logEvent == null) {
                     continue;
                 }
-                if(logStack.size() != 0 && logEvent.getMessage().contains(logStack.peek())){
+                if (logStack.size() != 0 && logEvent.getMessage().contains(logStack.peek())){
                     logStack.pop();
                 }
             }
