@@ -27,6 +27,8 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.test.utils.http.client.HttpClientUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import javax.ws.rs.core.MediaType;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -51,7 +53,8 @@ public class PropertyIntegrationRESTURLPostFixTestCase extends ESBIntegrationTes
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Test-REST URL Postfix")
     public void testRESTUrlPostFix() throws Exception {
-        response = client.get(getProxyServiceURLHttp("REST_URL_POSTFIX_TestProxy")+"/echoString?in=wso2");
+        response = client.getWithContentType(getProxyServiceURLHttp("REST_URL_POSTFIX_TestProxy") + "/echoString",
+                "in=WSO2", MediaType.APPLICATION_FORM_URLENCODED);
         assertNotNull(response,"Response is null");
         assertEquals(response.getQName().getLocalPart(),"echoStringResponse","Tag does not match");
         assertEquals(response.getFirstElement().getLocalName(),"return","Tag does not match");
