@@ -14,7 +14,7 @@
                       value="true"
                       scope="axis2"
                       type="STRING"/>
-            <property name="OUT_ONLY" value="true" scope="default" type="STRING"/>
+            <!--property name="OUT_ONLY" value="true" scope="default" type="STRING"/-->
             <store messageStore="JMSMS"/>
          </inSequence>
       </target>
@@ -54,6 +54,8 @@
                      targetEndpoint="EP"
                      messageStore="JMSMS">
       <parameter name="client.retry.interval">2000</parameter>
+      <parameter name="max.store.connection.attempts">-1</parameter>
+      <parameter name="store.connection.retry.interval">1000</parameter>
       <parameter name="max.delivery.attempts">4</parameter>
       <parameter name="interval">4000</parameter>
       <parameter name="non.retry.status.codes">200,202</parameter>
