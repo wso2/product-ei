@@ -28,7 +28,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-webapp-samples</artifactId>
-    <version>6.1.1-update20-SNAPSHOT</version>
+    <version>6.1.1-update20</version>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Web App Samples</name>
     <url>http://wso2.org/projects/appserver/java</url>
@@ -168,4 +168,8 @@
         <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
         <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
     </properties>
+
+  <scm>
+    <tag>v6.1.1-update20</tag>
+  </scm>
 </project>
