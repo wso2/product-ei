@@ -1,8 +1,8 @@
-CREATE OR REPLACE FUNCTION cleanInstances(id INT, bpel_inst_state INT, lastActive timestamp)
+CREATE OR REPLACE FUNCTION cleanInstances(id INT, bpel_inst_state INT)
 RETURNS void AS $$
 BEGIN
 
-	CREATE TABLE TEMP_CLEAN_INS AS SELECT ID FROM ODE_PROCESS_INSTANCE WHERE INSTANCE_STATE = bpel_inst_state AND ID = id AND LAST_ACTIVE_TIME < lastActive;
+	CREATE TABLE TEMP_CLEAN_INS AS SELECT ID FROM ODE_PROCESS_INSTANCE WHERE INSTANCE_STATE = bpel_inst_state AND ID = id;
 	CREATE TABLE TEMP_CLEAN_SCOPE AS SELECT os.SCOPE_ID FROM ODE_SCOPE os INNER JOIN TEMP_CLEAN_INS tc ON os.PROCESS_INSTANCE_ID = tc.ID;
 	CREATE TABLE TEMP_CLEAN_MEX AS SELECT mex.MESSAGE_EXCHANGE_ID FROM ODE_MESSAGE_EXCHANGE mex INNER JOIN TEMP_CLEAN_INS tc ON mex.PROCESS_INSTANCE_ID = tc.ID;
 	DELETE FROM ODE_EVENT AS o USING TEMP_CLEAN_INS AS tc WHERE o.INSTANCE_ID = tc.ID;
@@ -29,7 +29,6 @@ BEGIN;
 --deletes given bpel instance
 --instance id to be removed - ex: 0
 --default instance state to delete - 30
---time interval to start deletion - now()
 
-SELECT cleanInstances(0, 30,localtimestamp);
+SELECT cleanInstances(0, 30);
 COMMIT;

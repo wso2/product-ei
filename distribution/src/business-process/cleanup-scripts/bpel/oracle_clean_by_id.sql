@@ -37,11 +37,8 @@ BEGIN
   --                           40  - Completed with Fault.
   --                           50  - Suspended.
   --                           60  - Terminated.
-  --      * Last Active Time : Last active time of the instances, which need to be cleaned from the database. .
-  --                            Eg: (SYSTIMESTAMP - 1) will filter instances which are older than 1 day.
-  --                            Eg: (SYSTIMESTAMP - 7) will filter instances which are older than 7 days.
   --
-  STMT2 := 'INSERT INTO TEMP_CLEANUP(ID) SELECT ID FROM ODE_PROCESS_INSTANCE WHERE ID = 0 AND INSTANCE_STATE IN (30 , 40 , 60) AND LAST_ACTIVE_TIME < (SYSTIMESTAMP - 1)';
+  STMT2 := 'INSERT INTO TEMP_CLEANUP(ID) SELECT ID FROM ODE_PROCESS_INSTANCE WHERE ID = 0 AND INSTANCE_STATE IN (30 , 40 , 60)';
   EXECUTE IMMEDIATE STMT2;
   ---
   ----------------------------ODE_XML_DATA_LOBS---------------------------------------------------
