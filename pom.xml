@@ -1307,11 +1307,11 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.29</carbon.messaging.version>
+        <carbon.messaging.version>3.2.30</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.44</andes.version>
+        <andes.version>3.2.45</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
