@@ -1,0 +1,25 @@
+<api xmlns="http://ws.apache.org/ns/synapse" context="/noStoreHeaderBackend" name="No_Store_Header_Backend">
+    <resource methods="POST">
+        <inSequence>
+            <property name="HTTP_ETAG" scope="axis2" type="BOOLEAN" value="true"/>
+            <log level="full"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <ser:getQuote xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+                        <ser:request>
+                            <xsd:symbol>WSO2</xsd:symbol>
+                        </ser:request>
+                    </ser:getQuote>
+                </format>
+                <args/>
+            </payloadFactory>
+            <call>
+                <endpoint name="inlined">
+                    <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                </endpoint>
+            </call>
+            <header name="Cache-Control" scope="transport" value="no-store, max-age=60"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>
