@@ -169,6 +169,8 @@
                           class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
         <messageFormatter contentType="text/plain"
                           class="org.apache.axis2.format.PlainTextFormatter"/>
+        <messageFormatter contentType="application/octet-streaml"
+                          class="org.wso2.carbon.relay.ExpandingMessageFormatter"/>
 
         <!--JSON Message Formatters-->
         <messageFormatter contentType="application/json"
@@ -209,6 +211,8 @@
                         class="org.apache.axis2.builder.MultipartFormDataBuilder"/>
         <messageBuilder contentType="text/plain"
                         class="org.apache.axis2.format.PlainTextBuilder"/>
+        <messageBuilder contentType="application/octet-stream"
+                        class="org.wso2.carbon.relay.BinaryRelayBuilder"/>
 
         <!--JSON Message Builders-->
         <messageBuilder contentType="application/json"
