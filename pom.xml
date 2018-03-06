@@ -1394,9 +1394,9 @@
         <sandesha2.version>1.6.1-wso2v1</sandesha2.version>
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
         <httpcore-nio.wso2.version>4.3.3.wso2v4</httpcore-nio.wso2.version>
-        <rampart.wso2.version>1.6.1.wso2v18</rampart.wso2.version>
+        <rampart.wso2.version>1.6.1-wso2v26</rampart.wso2.version>
         <neethi.orbit.version>2.0.4.wso2v4</neethi.orbit.version>
-        <rampart.mar.version>1.6.1-wso2v18</rampart.mar.version>
+        <rampart.mar.version>1.6.1-wso2v26</rampart.mar.version>
 
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
 
@@ -1430,8 +1430,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <opencsv.version>1.8</opencsv.version>
         <poi.version>3.0-FINAL</poi.version>
-        <rampart.apache.version>1.6.1-wso2v18</rampart.apache.version>
-        <rampart.wso2.version>1.6.1.wso2v18</rampart.wso2.version>
+        <rampart.apache.version>1.6.1-wso2v26</rampart.apache.version>
+        <rampart.wso2.version>1.6.1-wso2v26</rampart.wso2.version>
         <passthru.transport.patch.version>1.0.2</passthru.transport.patch.version>
         <servlet-api.version>2.4</servlet-api.version>
         <geronimo-jms.version>1.1.1</geronimo-jms.version>
