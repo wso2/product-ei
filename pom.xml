@@ -1322,7 +1322,7 @@
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
         <!-- Axis2 -->
-        <axis2.wso2.version>1.6.1.wso2v22</axis2.wso2.version>
+        <axis2.wso2.version>1.6.1-wso2v24</axis2.wso2.version>
         <addressing.version>1.6.1-wso2v22</addressing.version>
 
         <!-- Axiom -->
@@ -1330,7 +1330,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v42</synapse.version>
+        <synapse.version>2.1.7-wso2v43</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v14</axis2.transport.version>
@@ -1342,11 +1342,11 @@
         <carbon.mediation.version>4.6.60</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.18</carbon.kernel.version>
+        <carbon.kernel.version>4.4.23</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.6.16</carbon.commons.version>
+        <carbon.commons.version>4.6.19</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.7.11</carbon.deployment.version>
@@ -1357,7 +1357,7 @@
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.6</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.10.28</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.11.112</carbon.identity.framework.version>
         <carbon.identity-inbound-auth-saml2.version>5.2.3</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>5.3.5</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.1.4</carbon.identity-user-ws.version>
@@ -1376,7 +1376,7 @@
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.6.4</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.6.7</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
         <jaggery.version>0.12.8</jaggery.version>
