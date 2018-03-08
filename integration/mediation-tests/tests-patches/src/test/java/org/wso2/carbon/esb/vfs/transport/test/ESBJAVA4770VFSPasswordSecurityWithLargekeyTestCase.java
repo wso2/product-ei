@@ -172,7 +172,7 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
 
         //Below is encrypted value of "SFTPUser:SFTP321" using vfsKeystore.jks which has a key with key strength 2048
         String encryptedPass = "qZnz8nFwQGqI1jp5DcjW8mUurphNc9Mj1DH8cGQBYB0p05geEDMQE3mNp3FTGhAhlohzvzuHdymETTEniprVua4PqPoeB1ZOXpCxE2Xy/auq+JSo77uPmPc9Uf3wgx5fhKqSghENwiCeWqAvbiLwyArwpmq4A5PVAuIzjADFwSkIpRxD9VnDlaDr2ovYVfbrwM7Z3DF4w4GJmyeXdswoCiYBZ+t+SJEU8tihzLsO0B3cbYXbzDEDNUVF6lWnokD01Ywp4VcI3FSHI1XwyKeZj1RAtP4YdhqEnUbSnlG3VsMeSgFpjUrnRomVY6/Pw2rq7s19RGgVO+X6JekON1mH2w==";
-        String fileUri = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:8005" + inputFolder + "/?sftpPathFromRoot=true";//todo check
+        String fileUri = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:8005" + inputFolder + "/?sftpPathFromRoot=true%26transport.vfs.AvoidPermissionCheck=true";//todo check
         String moveAfterProcess = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:8005" + outputFolder + "/?sftpPathFromRoot=true";//todo check
 
         //create VFS transport listener proxy
