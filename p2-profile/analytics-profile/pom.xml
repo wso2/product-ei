@@ -272,6 +272,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.data:org.wso2.carbon.datasource.reader.cassandra.server.feature:${carbon.data.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.data:org.wso2.carbon.datasource.reader.mongo.server.feature:${carbon.data.version}
+                                </featureArtifactDef>
                                 <!-- END - Data source related -->
 
                                 <!-- ************** START - EVENT PROCESSING FEATURES *********** -->
@@ -639,6 +642,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.datasource.reader.cassandra.server.feature.group</id>
+                                    <version>${carbon.data.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.datasource.reader.mongo.server.feature.group</id>
                                     <version>${carbon.data.version}</version>
                                 </feature>
                                 <!-- END - Data source related -->
