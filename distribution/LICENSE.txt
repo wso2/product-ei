@@ -1071,10 +1071,10 @@ poi_3.9.0.wso2v1.jar                                                            
 process-tools-6.1.1-update16.jar                                       		bundle         apache2   2693
 quartz_2.1.1.wso2v1.jar                                                         bundle         apache2   975
 quickfixj_1.4.0.wso2v2.jar                                                      bundle         apache2   1393
-rampart-1.6.1-wso2v18.mar                                                       bundle         apache2   9420
-rampart-core_1.6.1.wso2v25.jar                                                  bundle         apache2   13547
-rampart-policy_1.6.1.wso2v25.jar                                                bundle         apache2   13546
-rampart-trust_1.6.1.wso2v25.jar                                                 bundle         apache2   13545
+rampart-1.6.1-wso2v26.mar                                                       bundle         apache2   9420
+rampart-core_1.6.1.wso2v26.jar                                                  bundle         apache2   13547
+rampart-policy_1.6.1.wso2v26.jar                                                bundle         apache2   13546
+rampart-trust_1.6.1.wso2v26.jar                                                 bundle         apache2   13545
 rampart.mar                                                                     jar            apache2   530
 reflections_0.9.10.wso2v1.jar                                                   bundle         bsd       12167
 reindex-client-5.4.3.jar                                                        jarinbundle    apache2   2709
