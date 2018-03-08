@@ -1300,7 +1300,7 @@
         <product.ei.version>6.1.1-update24-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.39</carbon.business-process.version>
+        <carbon.business-process.version>4.4.47</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v23</orbit.version.axis2>
@@ -1376,7 +1376,7 @@
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.6.8</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.6.6</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
         <jaggery.version>0.12.8</jaggery.version>
