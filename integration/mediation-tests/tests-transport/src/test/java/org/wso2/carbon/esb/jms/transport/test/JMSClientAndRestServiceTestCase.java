@@ -27,6 +27,7 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMe
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 import org.wso2.esb.integration.services.jaxrs.customersample.CustomerConfig;
 
 import java.io.File;
@@ -38,6 +39,7 @@ import java.io.File;
 public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
 
     private TomcatServerManager tomcatServerManager;
+    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
@@ -46,6 +48,7 @@ public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
 
         tomcatServerManager.startServer();  // staring tomcat server instance
         Thread.sleep(5000);
+        activeMQServer.startJMSBroker();
         super.init();
 
         //loading new ESB configuration
@@ -58,6 +61,7 @@ public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
             if (tomcatServerManager != null) {
                 tomcatServerManager.stop();
             }
+            activeMQServer.stopJMSBroker();
         } finally {
             super.cleanup();
         }
