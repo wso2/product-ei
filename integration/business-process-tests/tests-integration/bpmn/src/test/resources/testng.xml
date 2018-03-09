@@ -47,6 +47,12 @@
             <class name="org.wso2.ei.businessprocess.integration.tests.bpmn.BPMNUserSubstitutionTestCase"/>
         </classes>
     </test>
+
+    <test name="BPMN package deployment related Test Cases" preserve-order="true" verbose="2" parallel="false">
+        <classes>
+            <class name="org.wso2.ei.businessprocess.integration.tests.bpmn.BPMNPackageDeploymentResolveTestCase"/>
+        </classes>
+    </test>
 </suite>
 
 
