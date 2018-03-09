@@ -39,7 +39,6 @@ import java.io.File;
 public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
 
     private TomcatServerManager tomcatServerManager;
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
@@ -48,7 +47,6 @@ public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
 
         tomcatServerManager.startServer();  // staring tomcat server instance
         Thread.sleep(5000);
-        activeMQServer.startJMSBroker();
         super.init();
 
         //loading new ESB configuration
@@ -63,7 +61,6 @@ public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
             }
         } finally {
             super.cleanup();
-            activeMQServer.stopJMSBroker();
         }
 
     }
