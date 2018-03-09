@@ -61,9 +61,9 @@ public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
             if (tomcatServerManager != null) {
                 tomcatServerManager.stop();
             }
+            activeMQServer.stopJMSBroker();
         } finally {
             super.cleanup();
-            activeMQServer.stopJMSBroker();
         }
 
     }
