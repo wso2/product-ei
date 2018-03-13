@@ -1155,14 +1155,14 @@
                 <version>${commons-httpclient.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.orbit.com.fasterxml.jackson.core</groupId>
+                <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${orbit.fasterxml.jackson.version}</version>
+                <version>${fasterxml.jackson.databind.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.orbit.com.fasterxml.jackson.core</groupId>
+                <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>${orbit.fasterxml.jackson.version}</version>
+                <version>${fasterxml.jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
@@ -1481,7 +1481,9 @@
         <activemq.version>5.9.1</activemq.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
-        <orbit.fasterxml.jackson.version>2.6.1.wso2v1</orbit.fasterxml.jackson.version>
+        <fasterxml.jackson.version>2.6.7</fasterxml.jackson.version>
+        <fasterxml.jackson.databind.version>2.6.7.1</fasterxml.jackson.databind.version>
+
 
         <!-- Elasticsearch Version -->
         <elasticsearch.version>5.4.3</elasticsearch.version>
