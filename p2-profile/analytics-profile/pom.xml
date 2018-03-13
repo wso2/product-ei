@@ -23,7 +23,7 @@
     <parent>
         <artifactId>p2-profile</artifactId>
         <groupId>org.wso2.ei</groupId>
-        <version>6.1.1-update24-SNAPSHOT</version>
+        <version>6.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -271,6 +271,9 @@
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.data:org.wso2.carbon.datasource.reader.cassandra.server.feature:${carbon.data.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.data:org.wso2.carbon.datasource.reader.mongo.server.feature:${carbon.data.version}
                                 </featureArtifactDef>
                                 <!-- END - Data source related -->
 
@@ -639,6 +642,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.datasource.reader.cassandra.server.feature.group</id>
+                                    <version>${carbon.data.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.datasource.reader.mongo.server.feature.group</id>
                                     <version>${carbon.data.version}</version>
                                 </feature>
                                 <!-- END - Data source related -->

@@ -29,6 +29,7 @@ import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,9 @@ public class CacheControlHeadersTestCase extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
 
         super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/cache/CacheControlHeaders.xml");
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB"
+                + File.separator + "mediatorconfig" + File.separator + "cache" + File.separator
+                + "CacheControlHeaders.xml");
         messagePayload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                 "xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
                 "   <soapenv:Header/>\n" +

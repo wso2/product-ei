@@ -1797,8 +1797,8 @@
             <directory>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}</directory>
             <outputDirectory>${project.artifactId}-${pom.version}/wso2/tools/identity-anonymization-tool</outputDirectory>
             <excludes>
-                <exclude>**/forget-me</exclude>
-                <exclude>**/forget-me.bat</exclude>
+                <exclude>**/forgetme.sh</exclude>
+                <exclude>**/forgetme.bat</exclude>
             </excludes>
             <includes>
                 <include>**/lib/**</include>
@@ -1806,7 +1806,6 @@
                 <include>**/conf/log-config/patterns.xml</include>
                 <include>**/conf/log-config/ei-patterns.xml</include>
                 <include>**/conf/sql/bpmn/**</include>
-                <include>**/conf/datasources/activiti-datasources.xml</include>
             </includes>
             <fileMode>644</fileMode>
         </fileSet>
@@ -3644,61 +3643,61 @@
 
         <!-- Copying files related to forget me tool -->
         <file>
-            <source>src/scripts/forget-me.sh</source>
+            <source>src/scripts/forgetme.sh</source>
             <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/forget-me.bat</source>
+            <source>src/scripts/forgetme.bat</source>
             <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/profiles/forget-me.sh</source>
+            <source>src/scripts/profiles/forgetme.sh</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/profiles/forget-me.bat</source>
+            <source>src/scripts/profiles/forgetme.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/profiles/forget-me.sh</source>
+            <source>src/scripts/profiles/forgetme.sh</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/profiles/forget-me.bat</source>
+            <source>src/scripts/profiles/forgetme.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/profiles/forget-me.sh</source>
+            <source>src/scripts/profiles/forgetme.sh</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>src/scripts/profiles/forget-me.bat</source>
+            <source>src/scripts/profiles/forgetme.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forget-me</source>
+            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forget-me.bat</source>
+            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
@@ -3707,6 +3706,13 @@
             <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/product-config/config-ei.json</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/conf/</outputDirectory>
             <destName>config.json</destName>
+            <fileMode>744</fileMode>
+        </file>
+
+        <file>
+            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/datasources/sample-activiti-datasources.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/conf/datasources</outputDirectory>
+            <destName>activiti-datasources.xml</destName>
             <fileMode>744</fileMode>
         </file>
 

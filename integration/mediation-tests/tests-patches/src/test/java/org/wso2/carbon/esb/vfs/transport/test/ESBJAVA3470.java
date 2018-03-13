@@ -131,9 +131,9 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
                 "   <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n" +
                 "   <parameter name=\"transport.PollInterval\">5</parameter>\n" +
                 "   <parameter name=\"transport.vfs.MoveAfterProcess\">vfs:sftp://" + SFTP_USER_NAME +
-                "@localhost:9009"+baseDir +"/out/</parameter>\n" +
-                "   <parameter name=\"transport.vfs.FileURI\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:9009"+baseDir +"/in/</parameter>\n" +
-                "   <parameter name=\"transport.vfs.MoveAfterFailure\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:9009"+baseDir +"/original/</parameter>\n" +
+                "@localhost:9009"+baseDir +"/out/?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
+                "   <parameter name=\"transport.vfs.FileURI\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:9009"+baseDir +"/in/?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
+                "   <parameter name=\"transport.vfs.MoveAfterFailure\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:9009"+baseDir +"/original/?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
                 "   <parameter name=\"transport.vfs.FileNamePattern\">.*\\.xml</parameter>\n" +
                 "   <parameter name=\"transport.vfs.ContentType\">text/xml</parameter>\n" +
                 "   <parameter name=\"transport.vfs.ActionAfterFailure\">MOVE</parameter>\n" +
@@ -229,7 +229,7 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
             }
         });
 
-        sshd.setCommandFactory(new ScpCommandFactory());
+        sshd.setCommandFactory(new ScpCommandFactory(new SftpCommandFactory()));
 
         List<NamedFactory<Command>> namedFactoryList = new ArrayList<NamedFactory<Command>>();
         namedFactoryList.add(new SftpSubsystem.Factory());
