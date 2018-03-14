@@ -23,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-        <title>WSO2 EI v@product.version@ Released - October 2017</title>
+        <title>WSO2 EI v@product.version@ Released - March 2018</title>
     </head>
     <body>
         <div id="header">
@@ -57,7 +57,7 @@
                 <li>Extract the downloaded wso2ei-@product.version@.zip</li>
                 <li>Go to the bin directory in the extracted folder</li>
                 <li>Run the integrator.sh or integrator.bat as appropriate</li>
-                <li>Point your browser to the URL https://localhost:8243/carbon</li>
+                <li>Point your browser to the URL https://localhost:9443/carbon</li>
                 <li>Use "admin", "admin" as the username and password to login as an admin</li>
                 <li>If you need to start the OSGi console with the server use the property
                     -DosgiConsole when starting the server.</li>
