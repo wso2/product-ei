@@ -169,7 +169,7 @@
                           class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
         <messageFormatter contentType="text/plain"
                           class="org.apache.axis2.format.PlainTextFormatter"/>
-        <messageFormatter contentType="application/octet-streaml"
+        <messageFormatter contentType="application/octet-stream"
                           class="org.wso2.carbon.relay.ExpandingMessageFormatter"/>
 
         <!--JSON Message Formatters-->
