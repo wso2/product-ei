@@ -335,6 +335,7 @@ do
     -Dlogger.server.name="EI-Analytics" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
+    -Dcarbon.data.dir.path="$CARBON_HOME/repository/data" \
     -Dcarbon.repository.dir.path="$CARBON_HOME/repository" \
     -Dcarbon.components.dir.path="$CARBON_HOME/../components" \
     -Dcarbon.extensions.dir.path="$CARBON_HOME/../../extensions" \
