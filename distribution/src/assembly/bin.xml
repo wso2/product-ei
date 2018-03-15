@@ -1795,7 +1795,7 @@
         <!-- Copying forget me tool -->
         <fileSet>
             <directory>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}</directory>
-            <outputDirectory>${project.artifactId}-${pom.version}/wso2/tools/identity-anonymization-tool</outputDirectory>
+            <outputDirectory>${project.artifactId}-${pom.version}/wso2/tools/forget-me</outputDirectory>
             <excludes>
                 <exclude>**/forgetme.sh</exclude>
                 <exclude>**/forgetme.bat</exclude>
@@ -3692,26 +3692,26 @@
 
         <file>
             <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
             <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
             <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/product-config/config-ei.json</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/conf/</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/conf/</outputDirectory>
             <destName>config.json</destName>
             <fileMode>744</fileMode>
         </file>
 
         <file>
             <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/datasources/sample-activiti-datasources.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/tools/identity-anonymization-tool/conf/datasources</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/conf/datasources</outputDirectory>
             <destName>activiti-datasources.xml</destName>
             <fileMode>744</fileMode>
         </file>
