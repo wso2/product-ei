@@ -315,6 +315,13 @@ CARBON_CLASSPATH="$CARBON_CLASSPATH":"$CARBON_HOME/../components/plugins/"
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
 
+export CARBON_CONFIG_DIR_PATH="$CARBON_HOME/conf"
+export CARBON_INTERNAL_LIB_DIR_PATH="$CARBON_HOME/../lib"
+export CARBON_EXTERNAL_LIB_DIR_PATH="$CARBON_HOME/../../lib"
+export CARBON_DROPINS_DIR_PATH="$CARBON_HOME/../../dropins"
+export COMPONENTS_REPO="$CARBON_HOME/../components/plugins"
+export CARBON_DATA_DIR_PATH="$CARBON_HOME/repository/data"
+
 while [ "$status" = "$START_EXIT_STATUS" ]
 do
     $JAVACMD \
