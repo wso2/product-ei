@@ -1313,7 +1313,7 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.33</carbon.messaging.version>
+        <carbon.messaging.version>3.2.34</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
@@ -1330,7 +1330,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v46</synapse.version>
+        <synapse.version>2.1.7-wso2v48</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v15</axis2.transport.version>
@@ -1339,7 +1339,7 @@
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.63</carbon.mediation.version>
+        <carbon.mediation.version>4.6.64</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.26</carbon.kernel.version>
