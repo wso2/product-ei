@@ -133,6 +133,8 @@ WSO2 EI distribution directory
    -wso2/broker/repository
       Where deployments of broker runtime is stored.
 
+   -wso2/tools
+      Forget-me tool for user anonymization tasks.
 Known issues of WSO2 EI @product.version@
 ==================================
 
