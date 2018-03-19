@@ -114,6 +114,13 @@ public class JMXProfileDataMigrator extends Migrator {
 
     }
 
+    /**
+     * Write the profile configuration in registry
+     *
+     * @param profile
+     * @throws MigrationClientException
+     * @throws RegistryException
+     */
     private void saveUpdatedProfile(Profile profile) throws MigrationClientException, RegistryException {
         String path = PROFILE_SAVE_REG_LOCATION + profile.getName();
 
@@ -150,5 +157,4 @@ public class JMXProfileDataMigrator extends Migrator {
             log.warn("Unable to close byte stream ...", e);
         }
     }
-
 }

@@ -67,6 +67,12 @@ public class InputOutputDataMigration extends Migrator {
         }
     }
 
+    /**
+     * Migrate password in event publisher and receiver which is found in the provided path
+     *
+     * @param folder
+     * @throws MigrationClientException
+     */
     private static void migrateData(File folder) throws MigrationClientException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         documentBuilderFactory.setNamespaceAware(true);
@@ -81,7 +87,8 @@ public class InputOutputDataMigration extends Migrator {
                         parser = XMLInputFactory.newInstance().createXMLStreamReader(stream);
                         StAXOMBuilder builder = new StAXOMBuilder(parser);
                         OMElement documentElement = builder.getDocumentElement();
-                        Iterator it = ((OMElement) documentElement.getChildrenWithName(Constant.TO_Q).next()).getChildElements();
+                        Iterator it = ((OMElement) documentElement
+                                .getChildrenWithName(Constant.TO_Q).next()).getChildElements();
                         String newEncryptedPassword = null;
                         while (it.hasNext()) {
                             OMElement element = (OMElement) it.next();
@@ -95,7 +102,8 @@ public class InputOutputDataMigration extends Migrator {
                         }
 
                         if (newEncryptedPassword != null) {
-                            OutputStream outputStream = new FileOutputStream(new File(fileEntry.getAbsolutePath()).getPath());
+                            OutputStream outputStream =
+                                    new FileOutputStream(new File(fileEntry.getAbsolutePath()).getPath());
                             documentElement.serialize(outputStream);
                         }
                     }

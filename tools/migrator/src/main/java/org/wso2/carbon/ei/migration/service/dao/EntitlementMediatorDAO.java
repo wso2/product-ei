@@ -35,6 +35,14 @@ public class EntitlementMediatorDAO {
         return instance;
     }
 
+    /**
+     * Return the path of the synapse configurations where we can have the entitlement mediator
+     *
+     * @param carbonHome
+     * @param emPathFolders
+     * @param folder
+     * @return path of the configuration
+     */
     public String buildPathFromFolders(String carbonHome, String[] emPathFolders, String folder) {
         String[] folders;
         final int l = emPathFolders.length;
@@ -43,6 +51,13 @@ public class EntitlementMediatorDAO {
         return Paths.get(carbonHome, folders).toString();
     }
 
+    /**
+     * Put all paths of the synapse configurations.
+     *
+     * @param tenantId
+     * @return HashMap
+     * @throws FileNotFoundException
+     */
     public HashMap<String, File[]> getEMConfigFiles(int tenantId) throws FileNotFoundException {
         String carbonHome = System.getProperty(Constant.CARBON_HOME);
         HashMap<String, File[]> filesMap = new HashMap<>();
@@ -52,7 +67,8 @@ public class EntitlementMediatorDAO {
         if (tenantId == Constant.SUPER_TENANT_ID) {
             emPathFolders = new String[]{"repository", "deployment", "server", "synapse-configs", "default"};
         } else {
-            emPathFolders = new String[]{"repository", "tenants", String.valueOf(tenantId), "synapse-configs", "default"};
+            emPathFolders = new String[]{"repository", "tenants", String.valueOf(tenantId), "synapse-configs",
+                    "default"};
         }
         File[] files;
         for (String folder : containerFolders) {
@@ -63,5 +79,4 @@ public class EntitlementMediatorDAO {
         }
         return filesMap;
     }
-
 }

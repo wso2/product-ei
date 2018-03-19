@@ -58,6 +58,12 @@ public class EventSinkMigrator extends Migrator {
         }
     }
 
+    /**
+     * Transform the password in event sink mediator by new algorithm
+     *
+     * @param eventSinksList
+     * @throws MigrationClientException
+     */
     private void transformPasswordFromOldToNewEncryption(List<EventSink> eventSinksList)
             throws MigrationClientException {
 

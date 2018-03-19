@@ -74,6 +74,13 @@ public class DatasourceMigrator extends Migrator {
         }
     }
 
+    /**
+     * Migrate the password in datasource configuration
+     *
+     * @param tenantId
+     * @param dataSources
+     * @throws MigrationClientException
+     */
     private void updatePasswordInRegistryDataSources(int tenantId, List<Resource> dataSources)
             throws MigrationClientException {
 

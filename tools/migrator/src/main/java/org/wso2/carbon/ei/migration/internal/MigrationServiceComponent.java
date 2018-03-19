@@ -133,7 +133,7 @@ public class MigrationServiceComponent {
     /**
      * Method to set server configuration service.
      *
-     * @param serverConfigurationService service to get tenant data.
+     * @param serverConfigurationService ServerConfigurationService.
      */
     protected void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
         if (log.isDebugEnabled()) {
@@ -145,7 +145,7 @@ public class MigrationServiceComponent {
     /**
      * Method to unset server configuration service.
      *
-     * @param serverConfigurationService service to get tenant data.
+     * @param serverConfigurationService ServerConfigurationService.
      */
     protected void unsetServerConfigurationService(ServerConfigurationService serverConfigurationService) {
         if (log.isDebugEnabled()) {
@@ -156,7 +156,7 @@ public class MigrationServiceComponent {
     /**
      * Method to set carbon tomcat service.
      *
-     * @param carbonTomcatService service to get tenant data.
+     * @param carbonTomcatService CarbonTomcatService.
      */
     protected void setCarbonTomcatService(CarbonTomcatService carbonTomcatService) {
         if (log.isDebugEnabled()) {
@@ -168,7 +168,7 @@ public class MigrationServiceComponent {
     /**
      * Method to unset carbon tomcat service.
      *
-     * @param carbonTomcatService service to get tenant data.
+     * @param carbonTomcatService CarbonTomcatService.
      */
     protected void unsetCarbonTomcatService(CarbonTomcatService carbonTomcatService) {
         if (log.isDebugEnabled()) {

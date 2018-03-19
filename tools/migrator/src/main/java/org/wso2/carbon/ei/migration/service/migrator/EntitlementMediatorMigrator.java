@@ -56,8 +56,8 @@ public class EntitlementMediatorMigrator extends Migrator {
     }
 
     /**
-     * This method will transform the Entitlement Mediator password encrypted with old encryption algorithm to new encryption
-     * algorithm.
+     * This method will transform the Entitlement Mediator password encrypted with old encryption algorithm to
+     * new encryption algorithm.
      *
      * @throws MigrationClientException migration client exception
      */
@@ -69,7 +69,8 @@ public class EntitlementMediatorMigrator extends Migrator {
 
     private void updateSuperTenantConfigs() {
         try {
-            HashMap<String, File[]> filesMap = EntitlementMediatorDAO.getInstance().getEMConfigFiles(Constant.SUPER_TENANT_ID);
+            HashMap<String, File[]> filesMap = EntitlementMediatorDAO.getInstance()
+                    .getEMConfigFiles(Constant.SUPER_TENANT_ID);
             for (Map.Entry entry : filesMap.entrySet()) {
                 File[] emConfigs = (File[]) entry.getValue();
                 if (emConfigs != null) {
@@ -89,14 +90,16 @@ public class EntitlementMediatorMigrator extends Migrator {
         Tenant[] tenants;
         try {
             tenants = MigrationServiceDataHolder.getRealmService().getTenantManager().getAllTenants();
-            boolean isIgnoreForInactiveTenants = Boolean.parseBoolean(System.getProperty(Constant.IGNORE_INACTIVE_TENANTS));
+            boolean isIgnoreForInactiveTenants = Boolean
+                    .parseBoolean(System.getProperty(Constant.IGNORE_INACTIVE_TENANTS));
             for (Tenant tenant : tenants) {
                 if (isIgnoreForInactiveTenants && !tenant.isActive()) {
                     log.info("Tenant " + tenant.getDomain() + " is inactive. Skipping secondary userstore migration!");
                     continue;
                 }
 
-                HashMap<String, File[]> filesMap = EntitlementMediatorDAO.getInstance().getEMConfigFiles(tenant.getId());
+                HashMap<String, File[]> filesMap = EntitlementMediatorDAO.getInstance()
+                        .getEMConfigFiles(tenant.getId());
                 for (Map.Entry entry : filesMap.entrySet()) {
                     File[] emConfigs = (File[]) entry.getValue();
                     if (emConfigs != null) {
@@ -113,6 +116,12 @@ public class EntitlementMediatorMigrator extends Migrator {
         }
     }
 
+    /**
+     * Migrate the password in entitlement mediators
+     *
+     * @param filePath
+     * @throws MigrationClientException
+     */
     private void transformEMPassword(String filePath) throws MigrationClientException {
         isModified = false;
         XMLStreamReader parser = null;
@@ -148,6 +157,12 @@ public class EntitlementMediatorMigrator extends Migrator {
         }
     }
 
+    /**
+     * Iterate and change the password by new algorithm
+     *
+     * @param it
+     * @throws MigrationClientException
+     */
     private void loopAndEncrypt(Iterator it) throws MigrationClientException {
         while (it.hasNext()) {
             OMElement element = (OMElement) it.next();

@@ -62,7 +62,6 @@ public class RegistryDataManager {
     }
 
     private void startTenantFlow(Tenant tenant) {
-
         PrivilegedCarbonContext.startTenantFlow();
         PrivilegedCarbonContext carbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
         carbonContext.setTenantId(tenant.getId());
@@ -128,6 +127,13 @@ public class RegistryDataManager {
         }
     }
 
+    /**
+     * Migrate keystore password in super tenant and other tenants
+     *
+     * @param tenantId
+     * @throws RegistryException
+     * @throws CryptoException
+     */
     private void migrateKeyStorePasswordForTenant(int tenantId) throws RegistryException, CryptoException {
         Registry registry = MigrationServiceDataHolder.getRegistryService().getGovernanceSystemRegistry(tenantId);
         if (registry.resourceExists(Constant.KEYSTORE_RESOURCE_PATH)) {
@@ -140,7 +146,6 @@ public class RegistryDataManager {
     }
 
     private void migrateSysLogPropertyPasswordForTenant(int tenantId) throws RegistryException, CryptoException {
-
         Registry registry = MigrationServiceDataHolder.getRegistryService().getConfigSystemRegistry(tenantId);
         updateRegistryProperties(registry, Constant.SYSLOG, new ArrayList<>(Arrays.asList(Constant.PASSWORD)));
     }
@@ -183,6 +188,14 @@ public class RegistryDataManager {
         }
     }
 
+    /**
+     * Encrypt the security policy password by new algorithm and update
+     *
+     * @param tenantId
+     * @throws RegistryException
+     * @throws CryptoException
+     * @throws XMLStreamException
+     */
     private void updateSecurityPolicyPassword(int tenantId) throws RegistryException, CryptoException,
             XMLStreamException {
 
@@ -212,7 +225,8 @@ public class RegistryDataManager {
                         if (propertySet != null) {
                             while (propertySet.hasNext()) {
                                 OMElement kbProperty = (OMElement) propertySet.next();
-                                if (Constant.SERVICE_PRINCIPAL_PASSWORD.equals(kbProperty.getAttributeValue(Constant.NAME_Q))) {
+                                if (Constant.SERVICE_PRINCIPAL_PASSWORD
+                                        .equals(kbProperty.getAttributeValue(Constant.NAME_Q))) {
                                     String encryptedPassword = kbProperty.getText();
                                     newEncryptedPassword = Utility.getNewEncryptedValue(encryptedPassword);
                                     if (StringUtils.isNotEmpty(newEncryptedPassword)) {
@@ -249,6 +263,15 @@ public class RegistryDataManager {
 
     }
 
+    /**
+     * Encrypt the registry properties by new algorithm and update
+     *
+     * @param registry
+     * @param resource
+     * @param properties
+     * @throws RegistryException
+     * @throws CryptoException
+     */
     private void updateRegistryProperties(Registry registry, String resource, List<String> properties)
             throws RegistryException, CryptoException {
 
@@ -277,6 +300,13 @@ public class RegistryDataManager {
         }
     }
 
+    /**
+     *  Obtain the STS policy paths from registry
+     *
+     * @param registry
+     * @return
+     * @throws RegistryException
+     */
     private List<String> getSTSPolicyPaths(Registry registry) throws RegistryException {
 
         List<String> policyPaths = new ArrayList<>();

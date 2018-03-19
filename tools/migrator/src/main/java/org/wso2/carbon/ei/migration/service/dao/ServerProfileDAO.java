@@ -30,6 +30,7 @@ public class ServerProfileDAO {
 
         return instance;
     }
+
     public void modifyInsideExtractedFolder(String path) throws MigrationClientException {
         isModified = false;
         File[] files = new File(path).listFiles();
@@ -42,6 +43,12 @@ public class ServerProfileDAO {
         }
     }
 
+    /**
+     * Transform the password by new encryption algorithm
+     *
+     * @param filePath
+     * @throws MigrationClientException
+     */
     public void transformSPPassword(String filePath) throws MigrationClientException {
         XMLStreamReader parser = null;
         FileInputStream stream = null;
@@ -73,7 +80,7 @@ public class ServerProfileDAO {
         } catch (XMLStreamException | FileNotFoundException e) {
             new MigrationClientException("Error while writing the file: " + e);
         } catch (CryptoException e) {
-            e.printStackTrace();
+            new MigrationClientException("Error while encrypting the password: " + e);
         } finally {
             try {
                 if (parser != null) {

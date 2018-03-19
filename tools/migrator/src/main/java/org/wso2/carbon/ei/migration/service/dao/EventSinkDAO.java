@@ -78,6 +78,13 @@ public class EventSinkDAO {
         return eventSinks;
     }
 
+    /**
+     * Get the EventSink object from the configuration file
+     *
+     * @param name
+     * @return EventSink
+     * @throws EventSinkException
+     */
     public EventSink getEventSinkFromName(String name) throws EventSinkException {
         EventSinkConfigBuilder eventSinkConfigBuilder = new EventSinkConfigBuilder();
         EventSink eventSink = new EventSink();
@@ -89,11 +96,13 @@ public class EventSinkDAO {
 
             try {
                 fileInputStream = new FileInputStream(eventSinkFile);
-                eventSink = eventSinkConfigBuilder.createEventSinkConfig(Utility.toOM(fileInputStream), FilenameUtils.removeExtension(eventSink.getName()));
+                eventSink = eventSinkConfigBuilder.createEventSinkConfig(Utility.toOM(fileInputStream),
+                        FilenameUtils.removeExtension(eventSink.getName()));
             } catch (FileNotFoundException e) {
                 throw new EventSinkException("File not found. File: " + eventSinkFile.getName() + ", Error : " + e);
             } catch (EventSinkException e) {
-                throw new EventSinkException("Error occured in Obtaining Event Sink. With name : " + eventSink.getName() + ", Error: " + e);
+                throw new EventSinkException("Error occured in Obtaining Event Sink. With name : " + eventSink.getName()
+                        + ", Error: " + e);
             } catch (XMLStreamException e) {
                 throw new EventSinkException("Error creating a OMElement from an input stream : " + e);
             } finally {

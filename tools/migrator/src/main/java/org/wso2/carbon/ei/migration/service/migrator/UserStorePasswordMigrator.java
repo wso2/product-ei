@@ -56,11 +56,15 @@ public class UserStorePasswordMigrator extends Migrator {
         updateTenantConfigs();
     }
 
+    /**
+     * Update the user store configurations in tenants
+     */
     private void updateTenantConfigs() {
         Tenant[] tenants;
         try {
             tenants = MigrationServiceDataHolder.getRealmService().getTenantManager().getAllTenants();
-            boolean isIgnoreForInactiveTenants = Boolean.parseBoolean(System.getProperty(Constant.IGNORE_INACTIVE_TENANTS));
+            boolean isIgnoreForInactiveTenants =
+                    Boolean.parseBoolean(System.getProperty(Constant.IGNORE_INACTIVE_TENANTS));
             for (Tenant tenant : tenants) {
                 if (isIgnoreForInactiveTenants && !tenant.isActive()) {
                     log.info("Tenant " + tenant.getDomain() + " is inactive. Skipping secondary userstore migration!");
@@ -78,6 +82,9 @@ public class UserStorePasswordMigrator extends Migrator {
         }
     }
 
+    /**
+     * Update the user store configurations in super tenant
+     */
     private void updateSuperTenantConfigs() {
         try {
             File[] userstoreConfigs = getUserStoreConfigFiles(Constant.SUPER_TENANT_ID);
@@ -91,8 +98,14 @@ public class UserStorePasswordMigrator extends Migrator {
         }
     }
 
+    /**
+     * Get all user store config files
+     *
+     * @param tenantId
+     * @return
+     * @throws FileNotFoundException
+     */
     private File[] getUserStoreConfigFiles(int tenantId) throws FileNotFoundException {
-
         String carbonHome = System.getProperty(Constant.CARBON_HOME);
         String userStorePath;
         if (tenantId == Constant.SUPER_TENANT_ID) {
@@ -106,8 +119,14 @@ public class UserStorePasswordMigrator extends Migrator {
         return files != null ? files : new File[0];
     }
 
+    /**
+     * Encrypt by new algorithm and update the password in the provided file
+     *
+     * @param filePath
+     * @throws FileNotFoundException
+     * @throws CryptoException
+     */
     private void updatePassword(String filePath) throws FileNotFoundException, CryptoException {
-
         XMLStreamReader parser = null;
         FileInputStream stream = null;
         try {

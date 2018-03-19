@@ -49,6 +49,9 @@ public class ServerProfileMigrator extends Migrator {
         updateTenantConfigs();
     }
 
+    /**
+     * Update the server profile in super tenant
+     */
     private void updateSuperTenantConfigs() {
         String carbonHome = System.getProperty(Constant.CARBON_HOME);
         try {
@@ -82,7 +85,9 @@ public class ServerProfileMigrator extends Migrator {
         }
     }
 
-
+    /**
+     * Update the server profile in tenants
+     */
     private void updateTenantConfigs() {
         String carbonHome = System.getProperty(Constant.CARBON_HOME);
         try {

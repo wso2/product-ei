@@ -29,7 +29,6 @@ public class MigrationHolder {
     private static MigrationHolder migrationHolder = new MigrationHolder();
     private List<Migrator> migrationList = new ArrayList<>();
 
-
     private MigrationHolder() {
         migrationList.add(new DatasourceMigrator());
         migrationList.add(new EntitlementMediatorMigrator());

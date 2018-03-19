@@ -33,7 +33,6 @@ public class SecurityPolicyPasswordMigrator extends Migrator {
 
     @Override
     public void migrate() {
-
         log.info(Constant.MIGRATION_LOG + "Migration starting on Security Policies");
         RegistryDataManager registryDataManager = RegistryDataManager.getInstance();
 

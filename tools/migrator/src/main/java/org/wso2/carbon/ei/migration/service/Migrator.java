@@ -27,5 +27,4 @@ public abstract class Migrator {
      *
      */
     public abstract void migrate() throws MigrationClientException;
-
 }

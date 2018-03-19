@@ -82,11 +82,19 @@ public class DataSourceDAO {
                 }
             }
         } catch (Exception e) {
-            throw new MigrationClientException("Error in getting all data source names from repository: " + e.getMessage());
+            throw new MigrationClientException("Error in getting all data source names from repository: "
+                    + e.getMessage());
         }
         return dataSources;
     }
 
+    /**
+     * Obtain the datasource registry instance of the tenant
+     *
+     * @param tenantId
+     * @return
+     * @throws DataSourceException
+     */
     private static Registry getRegistry(int tenantId) throws DataSourceException {
 
         Registry registry = DataSourceUtils.getConfRegistryForTenant(tenantId);
@@ -97,6 +105,13 @@ public class DataSourceDAO {
         return registry;
     }
 
+    /**
+     * Save the resource in registry
+     *
+     * @param tenantId
+     * @param resource
+     * @throws DataSourceException
+     */
     public static void saveDataSource(int tenantId, Resource resource) throws DataSourceException {
         try {
             getRegistry(tenantId).put(resource.getPath(), resource);

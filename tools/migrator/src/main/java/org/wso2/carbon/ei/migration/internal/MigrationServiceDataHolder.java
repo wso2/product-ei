@@ -84,7 +84,7 @@ public class MigrationServiceDataHolder {
     /**
      * Method to set server configuration service.
      *
-     * @param serverConfigurationService RealmService.
+     * @param serverConfigurationService ServerConfigurationService.
      */
     public static void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
         MigrationServiceDataHolder.serverConfigurationService = serverConfigurationService;

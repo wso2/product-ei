@@ -21,7 +21,7 @@ import javax.xml.namespace.QName;
  * Holds common constants in migration service.
  */
 public class Constant {
-    public static final String RSA = "RSA" ;
+    public static final String RSA = "RSA";
     public static final String MIGRATION_LOG = " WSO2 Product Migration Service Task : ";
     public static final String CARBON_HOME = "carbon.home";
     public static final int SUPER_TENANT_ID = -1234;

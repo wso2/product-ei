@@ -37,7 +37,6 @@ public class KeyStorePasswordMigrator extends Migrator {
     }
 
     private void migrateKeystorePasswords() {
-
         log.info(Constant.MIGRATION_LOG + "Migration starting on Key Stores");
         boolean isIgnoreForInactiveTenants = Boolean.parseBoolean(System.getProperty(Constant.IGNORE_INACTIVE_TENANTS));
         RegistryDataManager registryDataManager = RegistryDataManager.getInstance();
