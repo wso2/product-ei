@@ -31,12 +31,10 @@ public class MigrationClientImpl implements MigrationClient {
 
     @Override
     public void execute() throws MigrationClientException {
-
         try {
             for (int i = 0; i < 5; i++) {
                 log.info("...........................................................................................");
             }
-
             MigrationHolder migrationHolder = MigrationHolder.getInstance();
             List<Migrator> migrators = migrationHolder.getMigrationList();
             for (Migrator migrator : migrators) {
@@ -46,7 +44,6 @@ public class MigrationClientImpl implements MigrationClient {
         } catch (Throwable e) {
             log.error("Migration process was stopped." + e.getMessage(), e);
         }
-
         for (int i = 0; i < 5; i++) {
             log.info("...........................................................................................");
         }

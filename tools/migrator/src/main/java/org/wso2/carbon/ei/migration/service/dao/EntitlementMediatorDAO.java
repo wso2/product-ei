@@ -23,6 +23,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Data Access layer for entitlement mediator
+ */
 public class EntitlementMediatorDAO {
 
     private static EntitlementMediatorDAO instance = new EntitlementMediatorDAO();

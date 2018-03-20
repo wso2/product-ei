@@ -39,6 +39,9 @@ import java.util.List;
 
 import org.wso2.carbon.ndatasource.core.utils.DataSourceUtils;
 
+/**
+ * Data Access layer for data source
+ */
 public class DataSourceDAO {
     private static final Log log = LogFactory.getLog(DataSourceDAO.class);
 

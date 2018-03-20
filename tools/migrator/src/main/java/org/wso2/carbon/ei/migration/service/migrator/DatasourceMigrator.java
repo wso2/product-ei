@@ -83,7 +83,6 @@ public class DatasourceMigrator extends Migrator {
      */
     private void updatePasswordInRegistryDataSources(int tenantId, List<Resource> dataSources)
             throws MigrationClientException {
-
         for (Resource dataSource : dataSources) {
             try {
                 InputStream contentStream = dataSource.getContentStream();

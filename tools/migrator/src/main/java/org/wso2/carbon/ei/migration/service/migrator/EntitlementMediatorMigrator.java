@@ -97,7 +97,6 @@ public class EntitlementMediatorMigrator extends Migrator {
                     log.info("Tenant " + tenant.getDomain() + " is inactive. Skipping secondary userstore migration!");
                     continue;
                 }
-
                 HashMap<String, File[]> filesMap = EntitlementMediatorDAO.getInstance()
                         .getEMConfigFiles(tenant.getId());
                 for (Map.Entry entry : filesMap.entrySet()) {

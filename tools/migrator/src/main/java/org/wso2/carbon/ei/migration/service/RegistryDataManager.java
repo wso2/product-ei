@@ -160,7 +160,6 @@ public class RegistryDataManager {
      */
     public void migrateServicePrinciplePassword(boolean migrateActiveTenantsOnly) throws
             CryptoException, RegistryException, UserStoreException {
-
         //migrating super tenant configurations
         try {
             updateSecurityPolicyPassword(SUPER_TENANT_ID);
@@ -168,7 +167,6 @@ public class RegistryDataManager {
         } catch (XMLStreamException e) {
             log.error("Error while migrating Policy Subscribers for tenant : " + SUPER_TENANT_DOMAIN_NAME, e);
         }
-
         //migrating tenant configurations
         Tenant[] tenants = MigrationServiceDataHolder.getRealmService().getTenantManager().getAllTenants();
         for (Tenant tenant : tenants) {
@@ -198,10 +196,8 @@ public class RegistryDataManager {
      */
     private void updateSecurityPolicyPassword(int tenantId) throws RegistryException, CryptoException,
             XMLStreamException {
-
         InputStream resourceContent = null;
         XMLStreamReader parser = null;
-
         try {
             Registry registry = MigrationServiceDataHolder.getRegistryService().getConfigSystemRegistry(tenantId);
             List<String> policyPaths = getSTSPolicyPaths(registry);
@@ -278,7 +274,6 @@ public class RegistryDataManager {
         if (registry == null || StringUtils.isEmpty(resource) || CollectionUtils.isEmpty(properties)) {
             return;
         }
-
         if (registry.resourceExists(resource)) {
             try {
                 registry.beginTransaction();

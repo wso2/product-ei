@@ -44,9 +44,7 @@ public class EventSinkMigrator extends Migrator {
      * algorithm.
      */
     private void transformPasswordInAllEventSinks() {
-
         log.info(Constant.MIGRATION_LOG + "Password transformation starting on Event Sink.");
-
         List<EventSink> eventSinksList;
         try {
             eventSinksList = EventSinkDAO.getInstance().getAllEventSinks();

@@ -52,7 +52,6 @@ public class InputOutputDataMigration extends Migrator {
     @Override
     public void migrate() {
         log.info(Constant.MIGRATION_LOG + "Password transformation starting on Event Publisher and Receiver.");
-
         String carbonPath = System.getProperty(Constant.CARBON_HOME);
         migratePublishers(carbonPath);
         migrateReceivers(carbonPath);
@@ -115,7 +114,6 @@ public class InputOutputDataMigration extends Migrator {
                                 }
                             }
                         }
-
                         if (newEncryptedPassword != null) {
                             OutputStream outputStream =
                                     new FileOutputStream(new File(fileEntry.getAbsolutePath()).getPath());

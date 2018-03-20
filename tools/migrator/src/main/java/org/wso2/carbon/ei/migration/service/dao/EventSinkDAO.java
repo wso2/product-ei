@@ -44,7 +44,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Data Access layer for event sink
+ */
 public class EventSinkDAO {
 
     private static EventSinkDAO instance = new EventSinkDAO();
@@ -93,7 +95,6 @@ public class EventSinkDAO {
         if (eventSinkFile.exists()) {
             eventSink.setName(eventSinkFile.getName());
             FileInputStream fileInputStream = null;
-
             try {
                 fileInputStream = new FileInputStream(eventSinkFile);
                 eventSink = eventSinkConfigBuilder.createEventSinkConfig(Utility.toOM(fileInputStream),
@@ -116,7 +117,6 @@ public class EventSinkDAO {
 
             }
         }
-
         return eventSink;
     }
 
@@ -136,7 +136,6 @@ public class EventSinkDAO {
                     new BufferedWriter(new FileWriter(new File(filePath, eventSink.getName() + ".xml")));
             String unFormattedXml = eventSinkConfigXml.buildEventSink(eventSink.getUsername(), eventSink.getPassword(),
                     eventSink.getReceiverUrlSet(), eventSink.getAuthenticationUrlSet()).toString();
-
             ///formatting xml
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -192,7 +191,6 @@ public class EventSinkDAO {
                         " with ERROR : " + se);
             }
         }
-
         return false;
     }
 }

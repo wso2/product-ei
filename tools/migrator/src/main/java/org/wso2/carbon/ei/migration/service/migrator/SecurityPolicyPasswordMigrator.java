@@ -35,7 +35,6 @@ public class SecurityPolicyPasswordMigrator extends Migrator {
     public void migrate() {
         log.info(Constant.MIGRATION_LOG + "Migration starting on Security Policies");
         RegistryDataManager registryDataManager = RegistryDataManager.getInstance();
-
         boolean isIgnoreForInactiveTenants = Boolean.parseBoolean(System.getProperty(Constant.IGNORE_INACTIVE_TENANTS));
         try {
             registryDataManager.migrateServicePrinciplePassword(isIgnoreForInactiveTenants);

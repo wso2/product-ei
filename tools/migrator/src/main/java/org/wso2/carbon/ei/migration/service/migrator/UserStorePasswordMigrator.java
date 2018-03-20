@@ -148,7 +148,6 @@ public class UserStorePasswordMigrator extends Migrator {
                     }
                 }
             }
-
             if (newEncryptedPassword != null) {
                 OutputStream outputStream = new FileOutputStream(filePath);
                 documentElement.serialize(outputStream);
@@ -170,7 +169,6 @@ public class UserStorePasswordMigrator extends Migrator {
             } catch (XMLStreamException ex) {
                 log.error("Error while closing XML stream", ex);
             }
-
         }
     }
 }

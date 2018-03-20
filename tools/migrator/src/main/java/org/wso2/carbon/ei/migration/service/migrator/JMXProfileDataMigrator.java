@@ -47,7 +47,6 @@ public class JMXProfileDataMigrator extends Migrator {
     private static final Log log = LogFactory.getLog(JMXProfileDataMigrator.class);
 
     private static final String PROFILE_SAVE_REG_LOCATION = "repository/components/org.wso2.carbon.publish.jmx.agent/";
-
     private Registry registry;
     private RegistryService registryService = MigrationServiceDataHolder.getRegistryService();
 
@@ -58,7 +57,6 @@ public class JMXProfileDataMigrator extends Migrator {
 
     private void migrateProfilePassword() {
         log.info(Constant.MIGRATION_LOG + "Migration starting on JMX Profile.");
-
         Tenant[] tenants;
         //for super tenant
         try {
@@ -115,7 +113,6 @@ public class JMXProfileDataMigrator extends Migrator {
         } catch (RegistryException e) {
             throw new MigrationClientException("Unable to get profile : ".concat(profileName).concat(". "), e);
         }
-
         Profile profile;
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Profile.class);
@@ -126,7 +123,6 @@ public class JMXProfileDataMigrator extends Migrator {
                     concat(profileName).concat("' profile from registry"), e);
         }
         return profile;
-
     }
 
     /**
@@ -138,7 +134,6 @@ public class JMXProfileDataMigrator extends Migrator {
      */
     private void saveUpdatedProfile(Profile profile) throws MigrationClientException, RegistryException {
         String path = PROFILE_SAVE_REG_LOCATION + profile.getName();
-
         JAXBContext jaxbContext;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
@@ -149,7 +144,6 @@ public class JMXProfileDataMigrator extends Migrator {
             throw new MigrationClientException("JAXB unmarshalling exception has occurred while saving '".
                     concat(profile.getName()).concat("'."), e);
         }
-
         //replace the profile if it exists
         try {
             Resource res = registry.newResource();

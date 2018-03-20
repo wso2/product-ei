@@ -61,7 +61,6 @@ public class MigrationServiceComponent {
                 MigrationClient migrationClientImpl = new MigrationClientImpl();
                 migrationClientImpl.execute();
             }
-
             if (log.isDebugEnabled()) {
                 log.debug("WSO2 EI migration bundle is activated");
             }

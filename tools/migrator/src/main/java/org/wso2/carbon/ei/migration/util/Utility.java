@@ -45,7 +45,6 @@ public class Utility {
     private static Log log = LogFactory.getLog(Utility.class);
 
     public static String getMigrationResourceDirectoryPath() {
-
         Path path = Paths.get(System.getProperty(Constant.CARBON_HOME), Constant.MIGRATION_RESOURCE_HOME);
         return path.toString();
     }
@@ -80,7 +79,6 @@ public class Utility {
                 MigrationServiceDataHolder.getRegistryService());
         return cryptoUtil;
     }
-
 
     public static void delete(File file) {
         if (file.isDirectory()) {
@@ -144,7 +142,6 @@ public class Utility {
                     in.close();
                 }
             }
-
             zos.closeEntry();
         } catch (IOException ex) {
             ex.printStackTrace();

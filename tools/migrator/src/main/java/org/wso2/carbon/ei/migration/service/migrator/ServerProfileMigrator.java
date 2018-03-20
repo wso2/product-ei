@@ -75,7 +75,6 @@ public class ServerProfileMigrator extends Migrator {
                     }
                 }
             }
-
             File[] spFolders = new File(Paths.get(carbonHome,
                     new String[]{"wso2", "business-process", "repository", "bpel", Constant.SUPER_TENANT_ID + ""})
                     .toString()).listFiles();
@@ -117,7 +116,6 @@ public class ServerProfileMigrator extends Migrator {
                             }
                         }
                     }
-
                     File[] spFolders = new File(Paths.get(carbonHome,
                             new String[]{"wso2", "business-process", "repository", "bpel", tenantFolder.getName() + ""})
                             .toString()).listFiles();

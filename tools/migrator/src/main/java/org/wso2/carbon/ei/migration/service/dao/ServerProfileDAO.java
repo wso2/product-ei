@@ -32,6 +32,9 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 import java.util.Iterator;
 
+/**
+ * Data Access layer for server profile
+ */
 public class ServerProfileDAO {
     public boolean isModified = false;
     private static final Log log = LogFactory.getLog(ServerProfileDAO.class);
@@ -73,7 +76,6 @@ public class ServerProfileDAO {
             parser = XMLInputFactory.newInstance().createXMLStreamReader(stream);
             StAXOMBuilder builder = new StAXOMBuilder(parser);
             OMElement documentElement = builder.getDocumentElement();
-
             Iterator it = documentElement.getChildElements();
             String newEncryptedPassword = null;
             while (it.hasNext()) {
