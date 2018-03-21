@@ -18,7 +18,6 @@ package org.wso2.carbon.ei.migration.internal;
 import org.apache.axis2.context.ConfigurationContext;
 import org.wso2.carbon.base.api.ServerConfigurationService;
 import org.wso2.carbon.registry.core.service.RegistryService;
-import org.wso2.carbon.service.mgt.internal.DataHolder;
 import org.wso2.carbon.tomcat.api.CarbonTomcatService;
 import org.wso2.carbon.user.core.service.RealmService;
 

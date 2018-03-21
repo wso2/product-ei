@@ -64,7 +64,6 @@ public class EventSinkMigrator extends Migrator {
      */
     private void transformPasswordFromOldToNewEncryption(List<EventSink> eventSinksList)
             throws MigrationClientException {
-
         for (EventSink eventSink : eventSinksList) {
             try {
                 String newEncryptedPassword = Utility.getNewEncryptedValue(eventSink.getPassword());

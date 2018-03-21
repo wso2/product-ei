@@ -88,7 +88,6 @@ public class ServerProfileDAO {
                     }
                 }
             }
-
             if (newEncryptedPassword != null) {
                 OutputStream outputStream = new FileOutputStream(new File(filePath));
                 documentElement.serialize(outputStream);

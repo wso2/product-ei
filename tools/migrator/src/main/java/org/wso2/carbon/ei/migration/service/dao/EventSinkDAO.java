@@ -114,7 +114,6 @@ public class EventSinkDAO {
                 } catch (IOException var19) {
                     throw new EventSinkException("Error Occured while closing FileInputStream , Error : " + var19);
                 }
-
             }
         }
         return eventSink;

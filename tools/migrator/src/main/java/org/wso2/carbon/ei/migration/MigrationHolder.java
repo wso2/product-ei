@@ -30,16 +30,21 @@ public class MigrationHolder {
     private List<Migrator> migrationList = new ArrayList<>();
 
     private MigrationHolder() {
-        migrationList.add(new DatasourceMigrator());
-        migrationList.add(new EntitlementMediatorMigrator());
-        migrationList.add(new EventSinkMigrator());
-        migrationList.add(new InputOutputDataMigration());
-        migrationList.add(new KeyStorePasswordMigrator());
-        migrationList.add(new JMXProfileDataMigrator());
-        migrationList.add(new SecurityPolicyPasswordMigrator());
-        migrationList.add(new ServerProfileMigrator());
-        migrationList.add(new SysLogPropertiesMigrator());
-        migrationList.add(new UserStorePasswordMigrator());
+        // if -Dprofile option is set.
+        String profile = System.getProperty("profile");
+        if (profile.toLowerCase().equals("analytics")) {
+            migrationList.add(new JMXProfileDataMigrator());
+        } else {
+            migrationList.add(new DatasourceMigrator());
+            migrationList.add(new EntitlementMediatorMigrator());
+            migrationList.add(new EventSinkMigrator());
+            migrationList.add(new InputOutputDataMigration());
+            migrationList.add(new KeyStorePasswordMigrator());
+            migrationList.add(new SecurityPolicyPasswordMigrator());
+            migrationList.add(new ServerProfileMigrator());
+            migrationList.add(new SysLogPropertiesMigrator());
+            migrationList.add(new UserStorePasswordMigrator());
+        }
     }
 
     public static MigrationHolder getInstance() {

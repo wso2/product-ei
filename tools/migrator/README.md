@@ -24,7 +24,14 @@ sh integrator.sh -Dmigrate
 * Windows:
 integrator.bat -Dmigrate
 
-***Note:*** If you want to migrate the password in JMX Server Profile, start the Analytics profile in migration mode.
+***Note:*** If you want to migrate the password in JMX Server Profile, start the Analytics profile in migration mode
+with -Dprofile=Analytics
+
+*Linux/Unix:
+sh integrator.sh -Dmigrate -Dprofile=Analytics
+
+*Windows:
+integrator.bat -Dmigrate -Dprofile=Analytics
 
 ## Migrate active tenants only
 Optional:If you have any disabled/inactive tenants in your WSO2 Enterprise Integrator and

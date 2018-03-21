@@ -52,7 +52,6 @@ public class DataSourceDAO {
     }
 
     public static DataSourceDAO getInstance() {
-
         return instance;
     }
 
@@ -74,7 +73,7 @@ public class DataSourceDAO {
         try {
             dsCollection = (Collection) registry.get(DataSourceConstants.DATASOURCES_REPOSITORY_BASE_PATH);
         } catch (RegistryException e) {
-            //Ignore
+            log.warn("Error while obtaining the registry ", e);
         }
         try {
             if (dsCollection != null) {
@@ -102,9 +101,8 @@ public class DataSourceDAO {
 
         Registry registry = DataSourceUtils.getConfRegistryForTenant(tenantId);
         if (log.isDebugEnabled()) {
-            log.debug("Retrieving the governance registry for tenant: " + tenantId);
+            log.debug("Retrieving the config registry for tenant: " + tenantId);
         }
-
         return registry;
     }
 

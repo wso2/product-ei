@@ -21,7 +21,7 @@
     <groupId>org.wso2.carbon.ei</groupId>
     <artifactId>org.wso2.carbon.ei.migration</artifactId>
     <packaging>bundle</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>org.wso2.carbon.ei.migration</name>
     <url>http://maven.apache.org</url>
 
@@ -82,11 +82,6 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.tomcat.ext</artifactId>
             <version>${carbon.kernel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.deployment</groupId>
-            <artifactId>org.wso2.carbon.service.mgt</artifactId>
-            <version>4.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
@@ -155,7 +150,6 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
-
         <repository>
             <id>wso2.releases</id>
             <name>WSO2 internal Repository</name>
@@ -166,7 +160,6 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
-
         <repository>
             <id>wso2.snapshots</id>
             <name>WSO2 Snapshot Repository</name>
@@ -179,8 +172,8 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-
     </repositories>
+
     <properties>
         <junit.version>3.8.1</junit.version>
         <carbon.mediation.version>4.6.60</carbon.mediation.version>
@@ -199,5 +192,4 @@
         <carbon.deployment.version>4.7.11</carbon.deployment.version>
         <carbon.analytics.common.version>5.1.31</carbon.analytics.common.version>
     </properties>
-
 </project>

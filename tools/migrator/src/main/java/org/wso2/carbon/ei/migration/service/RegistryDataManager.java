@@ -61,13 +61,6 @@ public class RegistryDataManager {
         return instance;
     }
 
-    private void startTenantFlow(Tenant tenant) {
-        PrivilegedCarbonContext.startTenantFlow();
-        PrivilegedCarbonContext carbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
-        carbonContext.setTenantId(tenant.getId());
-        carbonContext.setTenantDomain(tenant.getDomain());
-    }
-
     /**
      * Method to migrate encrypted password of key stores
      *
@@ -86,7 +79,6 @@ public class RegistryDataManager {
                     log.info("Tenant " + tenant.getDomain() + " is inactive. Skipping Subscriber migration!");
                     continue;
                 }
-                startTenantFlow(tenant);
                 migrateKeyStorePasswordForTenant(tenant.getId());
                 log.info("Keystore passwords migrated for tenant : " + tenant.getDomain());
             }
@@ -119,7 +111,6 @@ public class RegistryDataManager {
                 continue;
             }
             try {
-                startTenantFlow(tenant);
                 migrateSysLogPropertyPasswordForTenant(tenant.getId());
             } finally {
                 PrivilegedCarbonContext.endTenantFlow();
@@ -175,7 +166,6 @@ public class RegistryDataManager {
                 continue;
             }
             try {
-                startTenantFlow(tenant);
                 updateSecurityPolicyPassword(tenant.getId());
                 log.info("Service Principle Passwords migrated for tenant : " + tenant.getDomain());
             } catch (XMLStreamException e) {
@@ -270,7 +260,6 @@ public class RegistryDataManager {
      */
     private void updateRegistryProperties(Registry registry, String resource, List<String> properties)
             throws RegistryException, CryptoException {
-
         if (registry == null || StringUtils.isEmpty(resource) || CollectionUtils.isEmpty(properties)) {
             return;
         }
@@ -303,7 +292,6 @@ public class RegistryDataManager {
      * @throws RegistryException
      */
     private List<String> getSTSPolicyPaths(Registry registry) throws RegistryException {
-
         List<String> policyPaths = new ArrayList<>();
         if (registry.resourceExists(Constant.SERVICE_GROUPS_PATH)) {
             Collection serviceGroups = (Collection) registry.get(Constant.SERVICE_GROUPS_PATH);
