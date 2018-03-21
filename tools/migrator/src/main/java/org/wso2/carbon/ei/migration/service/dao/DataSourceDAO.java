@@ -15,17 +15,9 @@
 */
 package org.wso2.carbon.ei.migration.service.dao;
 
-import org.apache.axiom.om.OMElement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.wso2.carbon.context.PrivilegedCarbonContext;
-import org.wso2.carbon.ei.migration.MigrationClient;
 import org.wso2.carbon.ei.migration.MigrationClientException;
-import org.wso2.carbon.ei.migration.service.migrator.DatasourceMigrator;
-import org.wso2.carbon.ei.migration.util.Utility;
 import org.wso2.carbon.ndatasource.common.DataSourceConstants;
 import org.wso2.carbon.ndatasource.common.DataSourceException;
 import org.wso2.carbon.registry.api.Collection;
@@ -33,7 +25,6 @@ import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.Resource;
 import org.wso2.carbon.registry.core.exceptions.RegistryException;
 
-import javax.xml.stream.XMLStreamException;
 import java.util.ArrayList;
 import java.util.List;
 

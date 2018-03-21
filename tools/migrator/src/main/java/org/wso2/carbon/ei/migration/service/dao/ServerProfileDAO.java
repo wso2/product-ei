@@ -22,14 +22,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.core.util.CryptoException;
 import org.wso2.carbon.ei.migration.MigrationClientException;
-import org.wso2.carbon.ei.migration.service.migrator.ServerProfileMigrator;
 import org.wso2.carbon.ei.migration.util.Constant;
 import org.wso2.carbon.ei.migration.util.Utility;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 
 /**

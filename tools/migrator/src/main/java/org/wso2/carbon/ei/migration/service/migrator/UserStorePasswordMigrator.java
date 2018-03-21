@@ -23,7 +23,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.core.util.CryptoException;
-import org.wso2.carbon.ei.migration.MigrationClientException;
 import org.wso2.carbon.ei.migration.internal.MigrationServiceDataHolder;
 import org.wso2.carbon.ei.migration.service.Migrator;
 import org.wso2.carbon.ei.migration.util.Constant;

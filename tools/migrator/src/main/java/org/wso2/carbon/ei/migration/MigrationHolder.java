@@ -31,7 +31,7 @@ public class MigrationHolder {
 
     private MigrationHolder() {
         // if -Dprofile option is set.
-        String profile = System.getProperty("profile");
+        String profile = System.getProperty("eiprofile");
         if (profile.toLowerCase().equals("analytics")) {
             migrationList.add(new JMXProfileDataMigrator());
         } else {

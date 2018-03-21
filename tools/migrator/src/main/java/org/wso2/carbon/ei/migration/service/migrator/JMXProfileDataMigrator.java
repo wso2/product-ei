@@ -15,6 +15,7 @@
 */
 package org.wso2.carbon.ei.migration.service.migrator;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.analytics.common.jmx.agent.profiles.Profile;
@@ -99,8 +100,10 @@ public class JMXProfileDataMigrator extends Migrator {
     private void reEncryptProfileWithNewCipher(Profile profile) throws MigrationClientException, CryptoException,
             RegistryException {
         String reEncryptedValue = Utility.getNewEncryptedValue(profile.getPass());
-        profile.setPass(reEncryptedValue);
-        saveUpdatedProfile(profile);
+        if (StringUtils.isNotEmpty(reEncryptedValue)) {
+            profile.setPass(reEncryptedValue);
+            saveUpdatedProfile(profile);
+        }
     }
 
 
