@@ -23,7 +23,7 @@
     <parent>
         <artifactId>p2-profile</artifactId>
         <groupId>org.wso2.ei</groupId>
-        <version>6.2.1-SNAPSHOT</version>
+        <version>6.3.0-m1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
