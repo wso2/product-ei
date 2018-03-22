@@ -84,7 +84,7 @@ public class ServerProfileDAO {
             String newEncryptedPassword = null;
             while (it.hasNext()) {
                 OMElement element = (OMElement) it.next();
-                if ("true".equals(element.getAttributeValue(Constant.SECURE_PASSWORD_Q))) {
+                if (Boolean.parseBoolean(element.getAttributeValue(Constant.SECURE_PASSWORD_Q))) {
                     String password = element.getAttributeValue(Constant.PASSWORD_Q);
                     newEncryptedPassword = Utility.getNewEncryptedValue(password);
                     if (StringUtils.isNotEmpty(newEncryptedPassword)) {

@@ -106,7 +106,7 @@ public class InputOutputDataMigration extends Migrator {
                         String newEncryptedPassword = null;
                         while (it.hasNext()) {
                             OMElement element = (OMElement) it.next();
-                            if ("true".equals(element.getAttributeValue(Constant.ENCRYPTED_Q))) {
+                            if (Boolean.parseBoolean(element.getAttributeValue(Constant.ENCRYPTED_Q))) {
                                 String password = element.getText();
                                 newEncryptedPassword = Utility.getNewEncryptedValue(password);
                                 if (StringUtils.isNotEmpty(newEncryptedPassword)) {

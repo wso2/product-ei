@@ -91,7 +91,7 @@ public class DatasourceMigrator extends Migrator {
                         .getChildrenWithName(Constant.CONFIGURATION_Q).next()).getChildrenWithName(Constant.PASSWORD_Q);
                 while (pit.hasNext()) {
                     OMElement passwordElement = (OMElement) pit.next();
-                    if ("true".equals(passwordElement.getAttributeValue(Constant.ENCRYPTED_Q))) {
+                    if (Boolean.parseBoolean(passwordElement.getAttributeValue(Constant.ENCRYPTED_Q))) {
                         String password = passwordElement.getText();
                         String newEncryptedPassword = Utility.getNewEncryptedValue(password);
                         if (StringUtils.isNotEmpty(newEncryptedPassword)) {
