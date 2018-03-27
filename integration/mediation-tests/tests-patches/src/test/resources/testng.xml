@@ -93,6 +93,7 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4631PreserveHTTPHeadersTest"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3770DropLargePayloadsPreventESBFromOOMTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3336HostHeaderValuePortCheckTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ForceMessageValidationTestCase" />
             <!--<class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4931PreserveContentTypeHeaderCharSetTestCase"/>-->
         </classes>
     </test>
