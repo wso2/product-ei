@@ -69,13 +69,14 @@ public class ForceMessageValidationTestCase extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
+    //enable tests with the synapse fix
     /**
      * Test for invalid JSON message with force.json.message.validation property.
      *
      * @throws Exception
      */
     @Test(groups = "wso2.esb", description = "Test for invalid JSON payload with force.json.message.validation "
-            + "property.")
+            + "property.", enabled = false)
     public void testInvalidJSONMessage() throws Exception {
         logViewerClient.clearLogs();
 
@@ -96,7 +97,8 @@ public class ForceMessageValidationTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(groups = "wso2.esb", description = "Test for invalid XML payload with force.xml.message.validation property.")
+    @Test(groups = "wso2.esb", description = "Test for invalid XML payload with force.xml.message.validation property.",
+            enabled = false)
     public void testInvalidXMLMessage() throws Exception {
         logViewerClient.clearLogs();
 
