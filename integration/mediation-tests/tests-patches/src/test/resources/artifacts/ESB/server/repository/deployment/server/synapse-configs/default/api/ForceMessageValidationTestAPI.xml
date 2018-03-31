@@ -17,7 +17,7 @@
   ~  under the License.
   ~
   -->
-<api xmlns="http://ws.apache.org/ns/synapse" name="ForceMessageValidationTestAPI" context="/forceValidation">
+<api xmlns="http://ws.apache.org/ns/synapse" name="ForceMessageValidationTestAPI" context="/ForceMessageValidationTestAPI">
     <resource methods="POST">
         <inSequence>
             <log level="full"/>

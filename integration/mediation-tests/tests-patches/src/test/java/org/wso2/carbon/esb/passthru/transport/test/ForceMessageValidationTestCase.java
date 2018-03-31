@@ -61,11 +61,6 @@ public class ForceMessageValidationTestCase extends ESBIntegrationTest {
                         + File.separator + "forceMessageValidation" + File.separator + "passthru-http.properties"));
         super.init();
 
-        loadESBConfigurationFromClasspath(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "passthru" +
-                        File.separator + "transport" + File.separator + "forceMessageValidation" + File.separator
-                        + "ForceMessageValidationTestAPI.xml");
-
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
@@ -76,7 +71,7 @@ public class ForceMessageValidationTestCase extends ESBIntegrationTest {
      * @throws Exception
      */
     @Test(groups = "wso2.esb", description = "Test for invalid JSON payload with force.json.message.validation "
-            + "property.", enabled = false)
+            + "property.")
     public void testInvalidJSONMessage() throws Exception {
         logViewerClient.clearLogs();
 
@@ -97,8 +92,7 @@ public class ForceMessageValidationTestCase extends ESBIntegrationTest {
      *
      * @throws Exception
      */
-    @Test(groups = "wso2.esb", description = "Test for invalid XML payload with force.xml.message.validation property.",
-            enabled = false)
+    @Test(groups = "wso2.esb", description = "Test for invalid XML payload with force.xml.message.validation property.")
     public void testInvalidXMLMessage() throws Exception {
         logViewerClient.clearLogs();
 
