@@ -351,12 +351,14 @@
                                 <copy todir="target/samples/bpmn-jar/">
                                     <fileset dir="${basedir}/../samples/business-process-samples/product/bpmn-sample-jars/target">
                                         <exclude name="**/*sources.jar" />
+                                        <exclude name="**/*javadoc.jar" />
                                         <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
                                 <copy todir="target/samples/samples-jar/">
                                     <fileset dir="${basedir}/../samples/business-process-samples/product/sample-client/target">
                                         <exclude name="**/*sources.jar" />
+                                        <exclude name="**/*javadoc.jar" />
                                         <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
@@ -364,6 +366,7 @@
                                 <copy todir="target/samples/process-tools-jar/">
                                     <fileset dir="${basedir}/../samples/business-process-samples/product/process-tools/target">
                                         <exclude name="**/*sources.jar" />
+                                        <exclude name="**/*javadoc.jar" />
                                         <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
@@ -371,6 +374,7 @@
                                 <copy todir="target/samples/sample-utils-jar/">
                                     <fileset dir="${basedir}/../samples/business-process-samples/product/sample-utils/target">
                                         <exclude name="**/*sources.jar" />
+                                        <exclude name="**/*javadoc.jar" />
                                         <include name="**/*.jar" />
                                     </fileset>
                                 </copy>
