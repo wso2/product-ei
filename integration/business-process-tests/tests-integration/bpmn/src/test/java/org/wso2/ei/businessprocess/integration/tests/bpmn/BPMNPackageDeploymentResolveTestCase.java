@@ -40,7 +40,7 @@ public class BPMNPackageDeploymentResolveTestCase extends BPSMasterTest {
 
     private WorkflowServiceClient workflowServiceClient;
     private ServerConfigurationManager serverConfigurationManager;
-    CarbonTestServerManager server;
+    private CarbonTestServerManager server;
 
     private HashMap<String, String> startupParameterMap = new HashMap<String, String>();
     private final String BPMN_PACKAGE_NAME = "HelloApprove";
@@ -106,5 +106,6 @@ public class BPMNPackageDeploymentResolveTestCase extends BPSMasterTest {
     @AfterClass(alwaysRun = true)
     public void cleanServer() throws Exception {
         workflowServiceClient.undeploy(BPMN_PACKAGE_NAME);
+        server.stopServer();
     }
 }
