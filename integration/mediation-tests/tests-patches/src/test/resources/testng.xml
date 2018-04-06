@@ -48,6 +48,7 @@
             <class name="org.wso2.carbon.esb.mediators.clone.ESBJAVA3412EmptyStackExceptionTest"/>
             <class name="org.wso2.carbon.esb.mediators.enrich.ESBJAVA3676EnrichSourcePropNoClone"/>
             <class name="org.wso2.carbon.esb.mediators.enrich.ESBJAVA4892EnrichPropertyTestCase"/>
+            <class name="org.wso2.carbon.esb.mediators.enrich.EI2084EnrichNamespaceAdditionTestCase"/>
             <class name="org.wso2.carbon.esb.mediators.callout.CARBON15119DuplicateSOAPActionHeader"/>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4118_SOAPHeaderHandlingTest"/>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4239_HTTP_SC_HandlingTests"/>
