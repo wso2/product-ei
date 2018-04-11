@@ -1300,7 +1300,7 @@
         <product.ei.version>6.3.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.57</carbon.business-process.version>
+        <carbon.business-process.version>4.4.58</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v23</orbit.version.axis2>
@@ -1313,11 +1313,11 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.38</carbon.messaging.version>
+        <carbon.messaging.version>3.2.40</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.53</andes.version>
+        <andes.version>3.2.54</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1330,7 +1330,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v55</synapse.version>
+        <synapse.version>2.1.7-wso2v56</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v16</axis2.transport.version>
@@ -1339,7 +1339,7 @@
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.72</carbon.mediation.version>
+        <carbon.mediation.version>4.6.73</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.26</carbon.kernel.version>
@@ -1366,7 +1366,7 @@
         <carbon.rule.version>4.4.4</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.47</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.48</carbon-dataservice-hosting.feature.imp.version>
 
         <!-- Analytic Commons version-->
         <carbon.analytics.common.version>5.1.37</carbon.analytics.common.version>
@@ -1414,7 +1414,7 @@
         <carbon.analytics.version>1.3.25</carbon.analytics.version>
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.16</carbon.dashboard.version>
-        <carbon.data.version>4.4.47</carbon.data.version>
+        <carbon.data.version>4.4.48</carbon.data.version>
         <carbon.event-processing.version>2.1.23</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
