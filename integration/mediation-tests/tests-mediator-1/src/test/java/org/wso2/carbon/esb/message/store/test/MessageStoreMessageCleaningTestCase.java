@@ -46,7 +46,6 @@ public class MessageStoreMessageCleaningTestCase extends ESBIntegrationTest {
 	public void setEnvironment() throws Exception {
 		init();
 	    initVariables();
-		initialize();
 	}
 
     private void initVariables() throws Exception {
