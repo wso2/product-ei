@@ -40,9 +40,7 @@ public class BPMNPackageDeploymentResolveTestCase extends BPSMasterTest {
 
     private WorkflowServiceClient workflowServiceClient;
     private ServerConfigurationManager serverConfigurationManager;
-    private CarbonTestServerManager server;
 
-    private HashMap<String, String> startupParameterMap = new HashMap<String, String>();
     private final String BPMN_PACKAGE_NAME = "HelloApprove";
 
     public static final String NEW_CONF_DIR = "wso2/business-process/conf";
@@ -53,11 +51,6 @@ public class BPMNPackageDeploymentResolveTestCase extends BPSMasterTest {
         serverConfigurationManager = new ServerConfigurationManager(bpsServer);
         updateConfigFiles();
         super.init();
-        startupParameterMap.put("-DportOffset", "0");
-        startupParameterMap.put("-DresolveDeploymentsAtStartup", "false");
-        startupParameterMap.put("startupScript", "business-process");
-        server = new CarbonTestServerManager(bpsServer, System.getProperty("carbon.zip"), startupParameterMap);
-        server.startServer();
         loginLogoutClient.login();
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         serverConfigurationManager = new ServerConfigurationManager(bpsServer);
@@ -95,10 +88,6 @@ public class BPMNPackageDeploymentResolveTestCase extends BPSMasterTest {
             priority = 2, singleThreaded = true)
     public void testBPMNUndeployWithoutServerStartupResolving() throws Exception {
         workflowServiceClient.undeploy(BPMN_PACKAGE_NAME);
-        server.stopServer();
-        startupParameterMap.remove("-DresolveDeploymentsAtStartup");
-        server = new CarbonTestServerManager(bpsServer, System.getProperty("carbon.zip"), startupParameterMap);
-        server.startServer();
         Assert.assertNull(workflowServiceClient.getDeployments());
         Assert.assertNull(workflowServiceClient.getProcesses());
     }
@@ -106,6 +95,5 @@ public class BPMNPackageDeploymentResolveTestCase extends BPSMasterTest {
     @AfterClass(alwaysRun = true)
     public void cleanServer() throws Exception {
         workflowServiceClient.undeploy(BPMN_PACKAGE_NAME);
-        server.stopServer();
     }
 }
