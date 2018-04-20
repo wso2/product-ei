@@ -1101,6 +1101,21 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.carbon.micro.integrator.core</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.carbon.micro.integrator.server</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.server</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.styles</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
@@ -1339,7 +1354,7 @@
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.78</carbon.mediation.version>
+        <carbon.mediation.version>4.6.78-SNAPSHOT</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.26</carbon.kernel.version>
@@ -1500,6 +1515,56 @@
 
         <!-- Forget-me tool -->
         <forgetme.tool.version>1.1.18</forgetme.tool.version>
+
+        <version.equinox.http.servlet>1.1.400.v20130418-1354</version.equinox.http.servlet>
+        <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
+        <version.tomcat>7.0.85</version.tomcat>
+        <orbit.version.tomcat.jsp.api>${version.tomcat}.wso2v1</orbit.version.tomcat.jsp.api>
+        <orbit.version.tomcat.el.api>${version.tomcat}.wso2v1</orbit.version.tomcat.el.api>
+        <orbit.version.tomcat.servlet.api>${version.tomcat}.wso2v1</orbit.version.tomcat.servlet.api>
+        <orbit.version.tomcat>${version.tomcat}.wso2v1</orbit.version.tomcat>
+        <orbit.version.tomcat.ha>${version.tomcat}.wso2v1</orbit.version.tomcat.ha>
+        <antlr.wso2.version>3.2.0.wso2v1</antlr.wso2.version>
+
+        <jdbc-pool.version>7.0.81.wso2v2</jdbc-pool.version>
+        <version.opencsv>1.8.wso2v1</version.opencsv>
+        <securevault.version>1.0.0-wso2v2</securevault.version>
+        <version.h2.engine>1.3.175.wso2v1</version.h2.engine>
+        <orbit.version.axis2>1.6.1-wso2v23</orbit.version.axis2>
+        <orbit.version.jettison>1.3.4.wso2v1</orbit.version.jettison>
+        <orbit.version.commons.io>2.4.0.wso2v1</orbit.version.commons.io>
+        <orbit.version.commons.pool>1.5.6.wso2v1</orbit.version.commons.pool>
+        <orbit.version.commons.dbcp>1.4.0.wso2v1</orbit.version.commons.dbcp>
+        <orbit.version.abdera>1.0.0.wso2v3</orbit.version.abdera>
+        <orbit.version.hazelcast>3.5.4.wso2v2</orbit.version.hazelcast>
+        <orbit.version.tiles>2.0.5.wso2v1</orbit.version.tiles>
+        <version.ant>1.7.0.wso2v1</version.ant>
+        <version.xmlbeans>2.3.0.wso2v1</version.xmlbeans>
+        <orbit.version.axiom>1.2.11.wso2v11</orbit.version.axiom>
+        <neethi.osgi.version>2.0.4.wso2v5</neethi.osgi.version>
+        <version.woden>1.0.0.M9-wso2v1</version.woden>
+        <orbit.version.wsdl4j>1.6.2.wso2v4</orbit.version.wsdl4j>
+        <version.XmlSchema>1.4.7.wso2v3</version.XmlSchema>
+        <version.commons.codec>1.4.0.wso2v1</version.commons.codec>
+        <version.annogen>0.1.0.wso2v1</version.annogen>
+        <version.backport.util.concurrent>3.1.0.wso2v1</version.backport.util.concurrent>
+        <version.commons.fileupload>1.3.2.wso2v1</version.commons.fileupload>
+        <orbit.version.commons.lang>2.6.0.wso2v1</orbit.version.commons.lang>
+        <orbit.version.commons.httpclient>3.1.0.wso2v6</orbit.version.commons.httpclient>
+        <orbit.version.commons.collection>3.2.2.wso2v1</orbit.version.commons.collection>
+        <orbit.version.httpcore>4.3.3.wso2v1</orbit.version.httpcore>
+        <version.commons.codec>1.4.0.wso2v1</version.commons.codec>
+        <version.annogen>0.1.0.wso2v1</version.annogen>
+        <version.geronimo.saaj.spec>1.0.1.wso2v2</version.geronimo.saaj.spec>
+        <orbit.version.poi>3.17.0.wso2v1</orbit.version.poi>
+        <orbit.version.poi.scratchpad>3.17.0.wso2v1</orbit.version.poi.scratchpad>
+        <orbit.version.poi.ooxml>3.17.0.wso2v1</orbit.version.poi.ooxml>
+        <version.compass>2.0.1.wso2v2</version.compass>
+        <version.jaxb>2.2.5.wso2v1</version.jaxb>
+        <javasysmon.version>0.3.3.wso2v1</javasysmon.version>
+        <version.eclipse.ecj>4.4.2</version.eclipse.ecj>
+        <version.com.google.code.gson>2.3.1</version.com.google.code.gson>
+        <bouncycastle.orbit.version>1.52.0.wso2v1</bouncycastle.orbit.version>
     </properties>
 
     <repositories>
