@@ -96,7 +96,7 @@ public class DeactivatedCappMPBehaviourOnRestartTestCase extends ESBIntegrationT
     /*
      * Method create the payload required for place orders
      */
-    private static OMElement createPlaceOrderRequest(double purchPrice, int qty, String symbol) {
+    private OMElement createPlaceOrderRequest(double purchPrice, int qty, String symbol) {
         OMFactory factory = OMAbstractFactory.getOMFactory();
         OMNamespace ns = factory.createOMNamespace("http://services.samples", "m0");
         OMElement placeOrder = factory.createOMElement("placeOrder", ns);
