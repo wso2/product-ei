@@ -120,6 +120,11 @@ public class PropertyIntegrationAxis2ScopeRemovePropertiesTestCase extends ESBIn
                 "OM Property Not Either Set or Removed in the Axis2 scope!!");
     }
 
+    /**
+     * This method checks whether the logs contain the string
+     * 'symbol = some_value' and then checks whether another 'symbol = null' present,
+     * to make sure a property is set and removed.
+     */
     private boolean isMatchFound(String matchStr) throws Exception {
         boolean isSet = false;
         LogEvent[] logs = logViewer.getAllSystemLogs();
