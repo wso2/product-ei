@@ -56,7 +56,7 @@ public class GreenMailServer {
     /**
      * Start the server and add the user.
      */
-    public void startServer() {
+    public static void startServer() {
         greenMail = new GreenMail();
         greenMail.start();
         primaryUser = greenMail.setUser(USER_EMAIL, USER_LOGIN, USER_PW);
@@ -66,7 +66,7 @@ public class GreenMailServer {
     /**
      * Stop server.
      */
-    public void stopServer() {
+    public static void stopServer() {
         greenMail.stop();
         log.info("GreenMail Server stopped!");
     }
@@ -178,8 +178,8 @@ public class GreenMailServer {
 
     /**
      * Overloaded method to check deletion of mail in the primary user's store
-     * @param emailSubject
-     * @param protocol
+     * @param emailSubject Email subject
+     * @param protocol protocol used to connect to the server
      * @return
      * @throws MessagingException
      * @throws InterruptedException
@@ -215,8 +215,8 @@ public class GreenMailServer {
 
     /**
      * Overloaded method to check moving of mail in the primary user's store
-     * @param emailSubject
-     * @param protocol
+     * @param emailSubject Email subject
+     * @param protocol     protocol used to connect to the server
      * @return
      * @throws MessagingException
      * @throws InterruptedException
