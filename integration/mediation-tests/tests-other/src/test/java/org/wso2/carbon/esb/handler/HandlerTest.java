@@ -103,13 +103,13 @@ public class HandlerTest extends ESBIntegrationTest {
 
     }
 
-    public void copyToComponentConf(String sourcePath, String fileName) throws IOException, URISyntaxException {
+    private void copyToComponentConf(String sourcePath, String fileName) throws IOException, URISyntaxException {
         String carbonHome = System.getProperty("carbon.home");
         String targetPath = carbonHome + File.separator + "conf";
         FileManager.copyResourceToFileSystem(sourcePath, targetPath, fileName);
     }
 
-    public void removeFromComponentConf(String fileName) throws IOException, URISyntaxException {
+    private void removeFromComponentConf(String fileName) throws IOException, URISyntaxException {
         String carbonHome = System.getProperty("carbon.home");
         String filePath = carbonHome + File.separator + "conf" + File.separator + fileName;
         FileManager.deleteFile(filePath);

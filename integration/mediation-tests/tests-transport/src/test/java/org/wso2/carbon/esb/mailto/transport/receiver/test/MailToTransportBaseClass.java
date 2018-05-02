@@ -29,16 +29,14 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
  */
 public class MailToTransportBaseClass extends ESBIntegrationTest {
 
-    private GreenMailServer greenMailServer;
     @BeforeTest(alwaysRun = true)
     public void setUp() throws Exception {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
-        greenMailServer = new GreenMailServer();
-        greenMailServer.startServer();
+        GreenMailServer.startServer();
     }
 
     @AfterTest(alwaysRun = true)
     public void cleanUp() throws Exception {
-        greenMailServer.stopServer();
+        GreenMailServer.stopServer();
     }
 }
