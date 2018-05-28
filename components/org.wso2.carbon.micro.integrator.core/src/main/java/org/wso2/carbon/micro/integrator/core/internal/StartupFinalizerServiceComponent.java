@@ -32,6 +32,7 @@ import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.CarbonConstants;
 import org.wso2.carbon.core.ServerStatus;
 import org.wso2.carbon.core.init.JMXServerManager;
+import org.wso2.carbon.micro.integrator.core.init.CoreComponent;
 import org.wso2.carbon.user.core.service.RealmService;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ConfigurationContextService;

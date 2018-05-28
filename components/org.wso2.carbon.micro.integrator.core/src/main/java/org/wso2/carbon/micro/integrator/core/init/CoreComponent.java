@@ -1,4 +1,4 @@
-package org.wso2.carbon.micro.integrator.core.internal;
+package org.wso2.carbon.micro.integrator.core.init;
 
 /**
  * Created by madhawa on 5/24/18.
@@ -14,7 +14,9 @@ import org.wso2.carbon.core.ServerRestartHandler;
 import org.wso2.carbon.core.ServerShutdownHandler;
 import org.wso2.carbon.core.ServerStartupHandler;
 import org.wso2.carbon.core.ServerStartupObserver;
+import org.wso2.carbon.core.clustering.api.CoordinatedActivity;
 import org.wso2.carbon.core.encryption.SymmetricEncryption;
+import org.wso2.carbon.core.internal.CarbonCoreDataHolder;
 import org.wso2.carbon.core.internal.CarbonCoreServiceComponent;
 import org.wso2.carbon.core.internal.DeploymentServerStartupObserver;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
@@ -105,6 +107,7 @@ public class CoreComponent {
 
     protected void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
         this.serverConfigurationService = serverConfigurationService;
+        CarbonCoreDataHolder.getInstance().setServerConfigurationService(serverConfigurationService);
     }
 
     protected void unsetServerConfigurationService(ServerConfigurationService serverConfigurationService) {
@@ -113,6 +116,7 @@ public class CoreComponent {
 
     protected void setHttpService(HttpService httpService) {
         this.httpService = httpService;
+        CarbonCoreDataHolder.getInstance().setHttpService(httpService);
     }
 
     protected void unsetHttpService(HttpService httpService) {
@@ -199,5 +203,15 @@ public class CoreComponent {
     protected void removeServerStartupObserver(ServerStartupObserver startupObserver) {
         serverStartupObservers.remove(startupObserver);
     }
+
+    protected void addCoordinatedActivity(CoordinatedActivity coordinatedActivity) {
+        CarbonCoreDataHolder.getInstance().addCoordinatedActivity(coordinatedActivity);
+    }
+
+    protected void removeCoordinatedActivity(CoordinatedActivity coordinatedActivity) {
+        CarbonCoreDataHolder.getInstance().removeCoordinatedActivity(coordinatedActivity);
+    }
+
+
 
 }

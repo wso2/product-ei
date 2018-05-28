@@ -102,6 +102,7 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
     public CarbonAxisConfigurator() {
     }
 
+
     public Axis2ConfigItemHolder getConfigItemHolder() {
         return configItemHolder;
     }
@@ -228,7 +229,9 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
 
         //Deploying modules which come inside bundles.
         Axis2ModuleRegistry moduleRegistry = new Axis2ModuleRegistry(axisConfig);
-        moduleRegistry.register(configItemHolder.getModuleBundles());
+        if(configItemHolder.getModuleBundles() != null) {
+            moduleRegistry.register(configItemHolder.getModuleBundles());
+        }
 
         globallyEngagedModules = axisConfig.getEngagedModules();
         if (repoLocation != null && repoLocation.trim().length() != 0) {
@@ -390,37 +393,25 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
         List<TransportOutDescription> transportOuts = new ArrayList<TransportOutDescription>();
 
         // process transport senders
-        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
-        String[] transports = transportPM.getEnabledTransports(false);
-        if (transports != null) {
-            for (String transportToInit : transports) {
-                if (axisConfig.getTransportOut(transportToInit.trim()) == null) {
-                    TransportOutDescription transportOutDesc =
-                            transportPM.getTransportSender(transportToInit, true);
-                    if (transportOutDesc != null) {
-                        transportOuts.add(transportOutDesc);
-                        // No need to init the sender
-                        // ConfigurationContextFactory should take care of that
-                    }
-                }
+//        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
+       for(String transportOut : axisConfig.getTransportsOut().keySet()) {
+               TransportOutDescription transportOutDesc = axisConfig.getTransportOut(transportOut);
+               if (transportOutDesc != null) {
+                   transportOuts.add(transportOutDesc);
+                   // No need to init the sender
+                   // ConfigurationContextFactory should take care of that
+               }
+       }
+
+        for(String transportIn : axisConfig.getTransportsIn().keySet()) {
+            TransportInDescription transportInDesc = axisConfig.getTransportIn(transportIn);
+            if (transportInDesc != null) {
+                transportIns.add(transportInDesc);
+                // No need to init the sender
+                // ConfigurationContextFactory should take care of that
             }
         }
 
-        // process transport receivers
-        transports = transportPM.getEnabledTransports(true);
-        if (transports != null) {
-            for (String transportToInit : transports) {
-                if (axisConfig.getTransportIn(transportToInit.trim()) == null) {
-                    TransportInDescription transportInDesc =
-                            transportPM.getTransportListener(transportToInit, true);
-                    if (transportInDesc != null) {
-                        transportIns.add(transportInDesc);
-                        // No need to init the listener
-                        // ListenerManager should take care of that
-                    }
-                }
-            }
-        }
 
         // Now add the descriptions to the axis configuration
         // This ensures that either all the transports in the registry are initialized or none at all
@@ -441,8 +432,6 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
         // Save the transport configurations to the registry.
         // We do this here to ensure that necessary transport resources are in the registry
         // before services start getting deployed.
-        transportPM.updateEnabledTransports(axisConfig.getTransportsIn().values(),
-                                            axisConfig.getTransportsOut().values());
     }
 
     public synchronized void runDeployment(){
