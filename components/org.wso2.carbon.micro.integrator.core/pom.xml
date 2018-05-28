@@ -95,7 +95,7 @@
                         </Private-Package>
                         <Export-Package>
                             ! org.wso2.carbon.micro.integrator.core.internal,
-                            org.wso2.carbon.micro.integrator.core.*;version="${project.version}"
+                            org.wso2.carbon.micro.integrator.core.init.*;version="${project.version}"
                         </Export-Package>
                         <Import-Package>
                             !org.wso2.carbon.registry.core.session,

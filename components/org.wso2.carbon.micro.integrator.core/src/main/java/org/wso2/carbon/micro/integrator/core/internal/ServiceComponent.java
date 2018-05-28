@@ -35,27 +35,23 @@ import org.wso2.carbon.CarbonConstants;
 import org.wso2.carbon.base.CarbonBaseConstants;
 import org.wso2.carbon.base.api.ServerConfigurationService;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
-//import org.wso2.carbon.core.CarbonAxisConfigurator;
 import org.wso2.carbon.core.CarbonConfigurationContextFactory;
 import org.wso2.carbon.core.CarbonThreadCleanup;
 import org.wso2.carbon.core.CarbonThreadFactory;
 import org.wso2.carbon.core.ServerInitializer;
 import org.wso2.carbon.core.ServerManagement;
+import org.wso2.carbon.core.ServerStartupObserver;
 import org.wso2.carbon.core.ServerStatus;
 import org.wso2.carbon.core.deployment.OSGiAxis2ServiceDeployer;
 import org.wso2.carbon.core.init.JMXServerManager;
-import org.wso2.carbon.core.init.OSGiAxis2ServicesListener;
-import org.wso2.carbon.core.init.PreAxis2ConfigItemListener;
-import org.wso2.carbon.core.init.PreAxis2RequiredServiceListener;
-import org.wso2.carbon.core.internal.CarbonCoreServiceComponent;
+//import org.wso2.carbon.core.init.PreAxis2ConfigItemListener;
 import org.wso2.carbon.core.internal.HTTPGetProcessorListener;
 import org.wso2.carbon.core.multitenancy.GenericArtifactUnloader;
-import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.core.transports.CarbonServlet;
-import org.wso2.carbon.core.transports.TransportPersistenceManager;
 import org.wso2.carbon.core.util.HouseKeepingTask;
 import org.wso2.carbon.core.util.ParameterUtil;
 import org.wso2.carbon.core.util.Utils;
+import org.wso2.carbon.micro.integrator.core.init.CoreComponent;
 import org.wso2.carbon.utils.Axis2ConfigItemHolder;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ConfigurationContextService;
@@ -80,6 +76,8 @@ import java.util.concurrent.TimeUnit;
 
 import static org.apache.axis2.transport.TransportListener.HOST_ADDRESS;
 
+//import org.wso2.carbon.core.CarbonAxisConfigurator;
+
 /**
  * @scr.component name="micro.server.dscomponent"" immediate="true"
  * @scr.reference name="server.configuration.service" interface="org.wso2.carbon.base.api.ServerConfigurationService"
@@ -94,11 +92,7 @@ public class ServiceComponent {
     private final Map<String, String> pendingItemMap = new ConcurrentHashMap<String, String>();
 
     private BundleContext bundleContext;
-
     private PreAxis2ConfigItemListener configItemListener;
-    private PreAxis2RequiredServiceListener requiredServiceListener;
-    private OSGiAxis2ServicesListener osgiAxis2ServicesListener;
-
     private Timer timer = new Timer();
 
     private static final String CLIENT_REPOSITORY_LOCATION = "Axis2Config.ClientRepositoryLocation";
@@ -125,6 +119,8 @@ public class ServiceComponent {
     private ConfigurationContext serverConfigContext;
     private ConfigurationContext clientConfigContext;
 
+
+
     /**
      * Indicates whether the shutdown of the server was triggered by the Carbon shutdown hook
      */
@@ -133,6 +129,10 @@ public class ServiceComponent {
         try {
             // for new caching, every thread should has its own populated CC. During the deployment time we assume super tenant
             log.info("ffsdfsfsfsfsfsfsfsfsfsfsf");
+            ctxt.getBundleContext().registerService(ServerStartupObserver.class.getName(),
+                    new DeploymentServerStartupObserver(), null) ;
+            bundleContext = ctxt.getBundleContext();
+            configItemListener = new PreAxis2ConfigItemListener(bundleContext, new BundleHolder());
             initializeCarbon();
         } catch (Throwable e) {
             log.error("Failed to activate Carbon Core bundle ", e);
@@ -234,8 +234,8 @@ public class ServiceComponent {
 
             Axis2ConfigItemHolder configItemHolder = new Axis2ConfigItemHolder();
             //TODO need to write deploy bundles
-           /* configItemHolder.setDeployerBundles(configItemListener.getDeployerBundles());
-            configItemHolder.setModuleBundles(configItemListener.getModuleBundles());*/
+            configItemHolder.setDeployerBundles(configItemListener.getDeployerBundles());
+            configItemHolder.setModuleBundles(configItemListener.getModuleBundles());
 
             String carbonContextRoot = serverConfig.getFirstProperty("WebContextRoot");
 
@@ -281,9 +281,9 @@ public class ServiceComponent {
             AxisConfiguration axisConfig = serverConfigContext.getAxisConfiguration();
             axisConfig.addParameter(enableHttp);
 
-            new TransportPersistenceManager(axisConfig).
+/*            new TransportPersistenceManager(axisConfig).
                     updateEnabledTransports(axisConfig.getTransportsIn().values(),
-                            axisConfig.getTransportsOut().values());
+                            axisConfig.getTransportsOut().values());*/
 
             runInitializers();
 
@@ -304,7 +304,7 @@ public class ServiceComponent {
             System.setProperty("javax.net.ssl.trustStorePassword", password);
 
             addShutdownHook();
-            registerHouseKeepingTask(serverConfigContext);
+//            registerHouseKeepingTask(serverConfigContext);
 
             // Creating the Client side configuration context
             clientConfigContext = getClientConfigurationContext();
@@ -409,7 +409,7 @@ public class ServiceComponent {
                 String msg = "Cannot set server to shutdown mode";
                 log.error(msg, e);
             }
-            CarbonCoreServiceComponent.shutdown();
+            CoreComponent.shutdown();
 //            stopListenerManager();
             new JMXServerManager().stopJmxService();
             log.info("Shutting down OSGi framework...");
@@ -484,7 +484,7 @@ public class ServiceComponent {
         httpConnectionManager.setParams(params);
         clientConfigContextToReturn.setProperty(HTTPConstants.MULTITHREAD_HTTP_CONNECTION_MANAGER,
                 httpConnectionManager);
-        registerHouseKeepingTask(clientConfigContextToReturn);
+//        registerHouseKeepingTask(clientConfigContextToReturn);
         clientConfigContextToReturn.setProperty(ServerConstants.WORK_DIR, serverWorkDir);
         return clientConfigContextToReturn;
     }
