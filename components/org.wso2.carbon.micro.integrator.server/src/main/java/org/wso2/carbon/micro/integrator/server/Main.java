@@ -102,7 +102,7 @@ public class Main {
 
         invokeExtensions();
         removeAllAppendersFromCarbon();
-            startEquinox();
+        startEquinox();
 
     }
 
@@ -325,7 +325,7 @@ public class Main {
         }
         try {
 
-            /**
+            /*
              *  in order to support multiple profiling, the new install, configuration and workspace area got to move
              *  from ../components/ to ../components/ PROFILE_ID/
              */

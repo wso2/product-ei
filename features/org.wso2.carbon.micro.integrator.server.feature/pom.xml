@@ -79,22 +79,23 @@
                                 <bundleDef>org.wso2.ei:org.wso2.carbon.micro.integrator.core</bundleDef>
                                 <!--<bundleDef>org.wso2.ei:org.wso2.carbon.micro.integrator.server</bundleDef>-->
 
-                                <bundleDef>
-                                    org.json.wso2:json:${org.wso2.json.version}
-                                </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.core.services:${carbon.kernel.version}
-                                </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.server.admin:${carbon.kernel.version}
-                                </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.registry.server:${carbon.kernel.version}
-                                </bundleDef>
+                                <bundleDef>org.wso2.orbit.org.opensaml:opensaml:${opensaml.orbit.version}</bundleDef>
+                                <!--<bundleDef>-->
+                                    <!--org.json.wso2:json:${org.wso2.json.version}-->
+                                <!--</bundleDef>-->
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.core.services:${carbon.kernel.version}-->
+                                <!--</bundleDef>-->
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.server.admin:${carbon.kernel.version}-->
+                                <!--</bundleDef>-->
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.registry.server:${carbon.kernel.version}-->
+                                <!--</bundleDef>-->
                                 <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.feature.mgt.services:${carbon.kernel.version}
                                 </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.roles.mgt:${carbon.kernel.version}
-                                </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.user.core:${carbon.kernel.version}
-                                </bundleDef>
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.roles.mgt:${carbon.kernel.version}-->
+                                <!--</bundleDef>-->
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.user.core:${carbon.kernel.version}-->
+                                <!--</bundleDef>-->
                                 <bundleDef>org.wso2.orbit.org.bouncycastle:bcprov-jdk15on:${bouncycastle.orbit.version}
                                 </bundleDef>
                                 <bundleDef>org.wso2.orbit.org.apache.poi:poi-ooxml:${orbit.version.poi.ooxml}
@@ -162,6 +163,19 @@
                                 <bundleDef>org.wso2.orbit.org.apache.poi:poi:${orbit.version.poi}</bundleDef>
                                 <bundleDef>org.wso2.orbit.org.apache.poi:poi-scratchpad:${orbit.version.poi.scratchpad}
                                 </bundleDef>
+                                <bundleDef>org.slf4j:slf4j-api:${slf4j.version}</bundleDef>
+                                <bundleDef>org.slf4j:slf4j-log4j12:${slf4j.version}</bundleDef>
+                                <bundleDef>org.springframework.ws.wso2:spring.framework</bundleDef>
+                                <bundleDef>libthrift.wso2:libthrift</bundleDef>
+                                <bundleDef>org.perf4j.wso2:perf4j</bundleDef>
+                                <bundleDef>org.cliffc.high_scale_lib.wso2:high-scale-lib</bundleDef>
+                                <bundleDef>org.slf4j:slf4j-api</bundleDef>
+                                <bundleDef>org.slf4j:slf4j-log4j12</bundleDef>
+                                <bundleDef>org.hectorclient.wso2:hector-core</bundleDef>
+                                <bundleDef>antlr.wso2:antlr</bundleDef>
+                                <bundleDef>org.antlr.wso2:antlr-runtime</bundleDef>
+                                <bundleDef>com.google.guava:guava</bundleDef>
+                                <bundleDef>commons-configuration.wso2:commons-configuration</bundleDef>
                                 <bundleDef>com.sun.xml.bind.wso2:jaxb:${version.jaxb}</bundleDef>
                                 <bundleDef>com.jezhumble.wso2:javasysmon:${javasysmon.version}</bundleDef>
                                 <bundleDef>org.wso2.orbit.org.apache.tomcat:jdbc-pool:${jdbc-pool.version}</bundleDef>
@@ -179,29 +193,29 @@
                                 </bundleDef>
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.core.common:${carbon.kernel.version}
                                 </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.core:${carbon.kernel.version}</bundleDef>
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.core:${carbon.kernel.version}</bundleDef>-->
                                 <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.server.admin.common:${carbon.kernel.version}
                                 </bundleDef>
-                                <bundleDef>
+                     <!--           <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.application.deployer:${carbon.kernel.version}
-                                </bundleDef>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.registry.core:${carbon.kernel.version}
-                                </bundleDef>
+                                </bundleDef>-->
+                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.registry.core:${carbon.kernel.version}-->
+                                <!--</bundleDef>-->
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.feature.mgt.core:${carbon.kernel.version}
                                 </bundleDef>
-                                <bundleDef>
+<!--                                <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.authenticator.proxy:${carbon.kernel.version}
                                 </bundleDef>
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.authenticator.stub:${carbon.kernel.version}
-                                </bundleDef>
+                                </bundleDef>-->
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.queuing:${carbon.kernel.version}</bundleDef>
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.base:${carbon.kernel.version}</bundleDef>
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.registry.api:${carbon.kernel.version}
                                 </bundleDef>
-                                <bundleDef>
+<!--                                <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.core.bootup.validator:${carbon.kernel.version}
-                                </bundleDef>
+                                </bundleDef>-->
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.ndatasource.common:${carbon.kernel.version}
                                 </bundleDef>
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.ndatasource.core:${carbon.kernel.version}
@@ -221,8 +235,6 @@
                             </bundles>
 
                             <importFeatures>
-                                <importFeatureDef>org.wso2.carbon.dataservices.server:${carbon-dataservice-hosting.feature.imp.version}</importFeatureDef>
-                                <!--<importFeatureDef>org.wso2.carbon.webapp.mgt.server:${carbon-deployment.feature.imp.version}</importFeatureDef>-->
                             </importFeatures>
                         </configuration>
                     </execution>
