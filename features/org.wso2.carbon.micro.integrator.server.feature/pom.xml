@@ -165,7 +165,7 @@
                                 </bundleDef>
                                 <bundleDef>org.slf4j:slf4j-api:${slf4j.version}</bundleDef>
                                 <bundleDef>org.slf4j:slf4j-log4j12:${slf4j.version}</bundleDef>
-                                <bundleDef>org.springframework.ws.wso2:spring.framework</bundleDef>
+<!--                                <bundleDef>org.springframework.ws.wso2:spring.framework</bundleDef>
                                 <bundleDef>libthrift.wso2:libthrift</bundleDef>
                                 <bundleDef>org.perf4j.wso2:perf4j</bundleDef>
                                 <bundleDef>org.cliffc.high_scale_lib.wso2:high-scale-lib</bundleDef>
@@ -175,7 +175,7 @@
                                 <bundleDef>antlr.wso2:antlr</bundleDef>
                                 <bundleDef>org.antlr.wso2:antlr-runtime</bundleDef>
                                 <bundleDef>com.google.guava:guava</bundleDef>
-                                <bundleDef>commons-configuration.wso2:commons-configuration</bundleDef>
+                                <bundleDef>commons-configuration.wso2:commons-configuration</bundleDef>-->
                                 <bundleDef>com.sun.xml.bind.wso2:jaxb:${version.jaxb}</bundleDef>
                                 <bundleDef>com.jezhumble.wso2:javasysmon:${javasysmon.version}</bundleDef>
                                 <bundleDef>org.wso2.orbit.org.apache.tomcat:jdbc-pool:${jdbc-pool.version}</bundleDef>

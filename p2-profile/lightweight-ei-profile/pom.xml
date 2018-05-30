@@ -88,7 +88,7 @@
                             <featureArtifacts>
 
                                 <!--1. Carbon-Mediation-->
-  <!--                              <featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.apache.synapse.wso2.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -103,11 +103,17 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.apache.synapse.transport.vfs.smb.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
-                                &lt;!&ndash;TODO&ndash;&gt;
-&lt;!&ndash;                                <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.wso2.carbon.application.deployer.synapse.feature:${carbon.mediation.version}
-                                </featureArtifactDef>&ndash;&gt;
                                 <featureArtifactDef>
+                                    org.wso2.carbon.mediation:org.wso2.carbon.mediators.server.feature:${carbon.mediation.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.mediation:org.wso2.carbon.mediation.light.initializer.server.feature:${carbon.mediation.version}
+                                </featureArtifactDef>
+                                <!--TODO-->
+<!--                                <featureArtifactDef>
+                                    org.wso2.carbon.mediation:org.wso2.carbon.application.deployer.synapse.feature:${carbon.mediation.version}
+                                </featureArtifactDef>-->
+<!--                                <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.task.server.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -382,7 +388,7 @@
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
                                 <!--1 Carbon Mediation -->
-   <!--                             <feature>
+                                <feature>
                                     <id>org.apache.synapse.wso2.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
@@ -391,6 +397,18 @@
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>org.apache.synapse.transport.nhttp.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.apache.synapse.transport.vfs.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.apache.synapse.transport.vfs.smb.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature>
+<!--                                <feature>
                                     <id>org.wso2.carbon.task.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
@@ -405,12 +423,12 @@
                                 <feature>
                                     <id>org.wso2.carbon.relay.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>
-&lt;!&ndash;                                <feature>
+                                </feature>-->
+<!--                                <feature>
                                     <id>org.wso2.carbon.das.messageflow.data.publisher.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>&ndash;&gt;
-                                <feature>
+                                </feature>-->
+<!--                                <feature>
                                     <id>org.wso2.carbon.mediation.configadmin.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
@@ -442,43 +460,32 @@
                                     <id>org.wso2.carbon.hl7.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>&ndash;&gt;
+
                                 <feature>
-                                    <id>org.apache.synapse.transport.nhttp.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.apache.synapse.transport.vfs.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.apache.synapse.transport.vfs.smb.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
-                                </feature>-->
-<!--                                <feature>
                                     <id>org.wso2.carbon.application.mgt.synapse.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>-->
-<!--                                <feature>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.application.deployer.synapse.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>-->
-<!--                                <feature>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.identity.oauth.mediator.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.identity.xacml.mediator.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>-->
-<!--                                <feature>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.event.sink.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>-->
-<!--                                <feature>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.mediator.publishevent.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
-                                </feature>-->
-<!--                                <feature>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.mediator.cache.server.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
