@@ -58,6 +58,7 @@ import org.wso2.carbon.core.ServerManagement;
 import org.wso2.carbon.core.ServerStartupObserver;
 import org.wso2.carbon.core.ServerStatus;
 import org.wso2.carbon.core.deployment.OSGiAxis2ServiceDeployer;
+import org.wso2.carbon.core.init.PreAxis2ConfigItemListener;
 import org.wso2.carbon.core.internal.DeploymentServerStartupObserver;
 import org.wso2.carbon.core.internal.HTTPGetProcessorListener;
 import org.wso2.carbon.core.multitenancy.GenericArtifactUnloader;
@@ -105,7 +106,7 @@ public class ServiceComponent {
     private final Map<String, String> pendingItemMap = new ConcurrentHashMap<String, String>();
 
     private static BundleContext bundleContext;
-//    private PreAxis2ConfigItemListener configItemListener;
+    private PreAxis2ConfigItemListener configItemListener;
     private Timer timer = new Timer();
 
     private static final String CLIENT_REPOSITORY_LOCATION = "Axis2Config.ClientRepositoryLocation";
@@ -150,6 +151,8 @@ public class ServiceComponent {
                     new DeploymentServerStartupObserver(), null) ;
             bundleContext = ctxt.getBundleContext();
             CarbonCoreDataHolder.getInstance().setBundleContext(ctxt.getBundleContext());
+            //Initializing ConfigItem Listener - Modules and Deployers
+            configItemListener = new PreAxis2ConfigItemListener(bundleContext);
             initializeCarbon();
         } catch (Throwable e) {
             log.error("Failed to activate Carbon Core bundle ", e);
@@ -251,8 +254,8 @@ public class ServiceComponent {
 
             Axis2ConfigItemHolder configItemHolder = new Axis2ConfigItemHolder();
             //TODO need to write deploy bundles
-//            configItemHolder.setDeployerBundles(configItemListener.getDeployerBundles());
-//            configItemHolder.setModuleBundles(configItemListener.getModuleBundles());
+            configItemHolder.setDeployerBundles(configItemListener.getDeployerBundles());
+            configItemHolder.setModuleBundles(configItemListener.getModuleBundles());
 
             String carbonContextRoot = serverConfig.getFirstProperty("WebContextRoot");
 

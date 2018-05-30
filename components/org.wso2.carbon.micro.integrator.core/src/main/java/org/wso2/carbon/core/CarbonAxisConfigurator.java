@@ -68,7 +68,7 @@ import java.util.List;
  */
 public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConfigurator {
 
-    private static Log log = LogFactory.getLog(org.wso2.carbon.core.CarbonAxisConfigurator.class);
+    private static Log log = LogFactory.getLog(CarbonAxisConfigurator.class);
 
     private Collection globallyEngagedModules = new ArrayList();
     private String axis2xml;
