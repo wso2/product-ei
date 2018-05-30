@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.micro.integrator.core.internal;
+package org.wso2.carbon.core.internal;
 
 import org.apache.axis2.engine.AxisConfigurator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
+import org.wso2.carbon.core.CarbonAxisConfigurator;
 import org.wso2.carbon.core.ServerStartupObserver;
 import org.wso2.carbon.utils.ConfigurationContextService;
 

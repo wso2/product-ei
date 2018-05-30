@@ -35,6 +35,7 @@ import org.wso2.carbon.CarbonConstants;
 import org.wso2.carbon.base.CarbonBaseConstants;
 import org.wso2.carbon.base.api.ServerConfigurationService;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
+import org.wso2.carbon.core.CarbonAxisConfigurator;
 import org.wso2.carbon.core.CarbonConfigurationContextFactory;
 import org.wso2.carbon.core.CarbonThreadCleanup;
 import org.wso2.carbon.core.CarbonThreadFactory;
@@ -43,15 +44,13 @@ import org.wso2.carbon.core.ServerManagement;
 import org.wso2.carbon.core.ServerStartupObserver;
 import org.wso2.carbon.core.ServerStatus;
 import org.wso2.carbon.core.deployment.OSGiAxis2ServiceDeployer;
-import org.wso2.carbon.core.init.JMXServerManager;
-//import org.wso2.carbon.core.init.PreAxis2ConfigItemListener;
+import org.wso2.carbon.core.internal.DeploymentServerStartupObserver;
 import org.wso2.carbon.core.internal.HTTPGetProcessorListener;
 import org.wso2.carbon.core.multitenancy.GenericArtifactUnloader;
 import org.wso2.carbon.core.transports.CarbonServlet;
 import org.wso2.carbon.core.util.HouseKeepingTask;
 import org.wso2.carbon.core.util.ParameterUtil;
 import org.wso2.carbon.core.util.Utils;
-import org.wso2.carbon.micro.integrator.core.init.CoreComponent;
 import org.wso2.carbon.utils.Axis2ConfigItemHolder;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ConfigurationContextService;
@@ -91,8 +90,8 @@ public class ServiceComponent {
 
     private final Map<String, String> pendingItemMap = new ConcurrentHashMap<String, String>();
 
-    private BundleContext bundleContext;
-    private PreAxis2ConfigItemListener configItemListener;
+    private static BundleContext bundleContext;
+//    private PreAxis2ConfigItemListener configItemListener;
     private Timer timer = new Timer();
 
     private static final String CLIENT_REPOSITORY_LOCATION = "Axis2Config.ClientRepositoryLocation";
@@ -125,6 +124,11 @@ public class ServiceComponent {
      * Indicates whether the shutdown of the server was triggered by the Carbon shutdown hook
      */
     private volatile boolean isShutdownTriggeredByShutdownHook = false;
+
+    public static BundleContext getBundleContext() {
+        return bundleContext;
+    }
+
     protected void activate(ComponentContext ctxt) {
         try {
             // for new caching, every thread should has its own populated CC. During the deployment time we assume super tenant
@@ -132,7 +136,7 @@ public class ServiceComponent {
             ctxt.getBundleContext().registerService(ServerStartupObserver.class.getName(),
                     new DeploymentServerStartupObserver(), null) ;
             bundleContext = ctxt.getBundleContext();
-            configItemListener = new PreAxis2ConfigItemListener(bundleContext, new BundleHolder());
+            CarbonCoreDataHolder.getInstance().setBundleContext(ctxt.getBundleContext());
             initializeCarbon();
         } catch (Throwable e) {
             log.error("Failed to activate Carbon Core bundle ", e);
@@ -234,8 +238,8 @@ public class ServiceComponent {
 
             Axis2ConfigItemHolder configItemHolder = new Axis2ConfigItemHolder();
             //TODO need to write deploy bundles
-            configItemHolder.setDeployerBundles(configItemListener.getDeployerBundles());
-            configItemHolder.setModuleBundles(configItemListener.getModuleBundles());
+//            configItemHolder.setDeployerBundles(configItemListener.getDeployerBundles());
+//            configItemHolder.setModuleBundles(configItemListener.getModuleBundles());
 
             String carbonContextRoot = serverConfig.getFirstProperty("WebContextRoot");
 
@@ -409,9 +413,8 @@ public class ServiceComponent {
                 String msg = "Cannot set server to shutdown mode";
                 log.error(msg, e);
             }
-            CoreComponent.shutdown();
+//            CarbonCoreServiceComponent.shutdown();
 //            stopListenerManager();
-            new JMXServerManager().stopJmxService();
             log.info("Shutting down OSGi framework...");
             EclipseStarter.shutdown();
             log.info("Shutdown complete");
@@ -630,6 +633,7 @@ public class ServiceComponent {
 
     protected void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
         this.serverConfigurationService = serverConfigurationService;
+        CarbonCoreDataHolder.getInstance().setServerConfigurationService(serverConfigurationService);
     }
 
     protected void unsetServerConfigurationService(ServerConfigurationService serverConfigurationService) {
@@ -638,6 +642,7 @@ public class ServiceComponent {
 
     protected void setHttpService(HttpService httpService) {
         this.httpService = httpService;
+        CarbonCoreDataHolder.getInstance().setHttpService(httpService);
     }
 
     protected void unsetHttpService(HttpService httpService) {

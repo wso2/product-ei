@@ -95,10 +95,10 @@
                         </Private-Package>
                         <Export-Package>
                             ! org.wso2.carbon.micro.integrator.core.internal,
-                            org.wso2.carbon.micro.integrator.core.init.*;version="${project.version}"
+                            org.wso2.carbon.micro.integrator.core.*;version="${project.version}",
+                            org.wso2.carbon.core.*;version="${carbon.kernel.version}"
                         </Export-Package>
                         <Import-Package>
-                            !org.wso2.carbon.registry.core.session,
                             org.wso2.carbon.utils;version="${carbon.kernel.imp.pkg.version}"
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>

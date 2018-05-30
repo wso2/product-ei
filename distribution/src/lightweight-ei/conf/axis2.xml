@@ -111,7 +111,7 @@
 
     <!-- This deployment interceptor will be called whenever before a module is initialized or -->
     <!-- service is deployed -->
-    <listener class="org.wso2.carbon.core.deployment.DeploymentInterceptor"/>
+    <listener class="org.wso2.carbon.micro.integrator.core.init.DeploymentInterceptor"/>
 
     <!-- ================================================= -->
     <!--                  Deployers                        -->

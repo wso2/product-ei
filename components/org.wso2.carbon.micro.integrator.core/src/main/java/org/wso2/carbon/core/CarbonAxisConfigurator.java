@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.micro.integrator.core.internal;
+package org.wso2.carbon.core;
 
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axiom.om.OMElement;
@@ -28,8 +28,6 @@ import org.apache.axis2.deployment.RepositoryListener;
 import org.apache.axis2.deployment.util.Utils;
 import org.apache.axis2.description.AxisModule;
 import org.apache.axis2.description.Parameter;
-import org.apache.axis2.description.TransportInDescription;
-import org.apache.axis2.description.TransportOutDescription;
 import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.axis2.engine.AxisConfigurator;
 import org.apache.axis2.i18n.Messages;
@@ -39,9 +37,6 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 import org.wso2.carbon.CarbonConstants;
-import org.wso2.carbon.core.CarbonThreadFactory;
-import org.wso2.carbon.core.deployment.CarbonDeploymentSchedulerTask;
-import org.wso2.carbon.core.transports.TransportPersistenceManager;
 import org.wso2.carbon.utils.Axis2ConfigItemHolder;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ServerException;
@@ -52,7 +47,6 @@ import org.wso2.carbon.utils.deployment.Axis2ModuleRegistry;
 import org.wso2.carbon.utils.deployment.GhostArtifactRepository;
 import org.wso2.carbon.utils.deployment.GhostDeployerUtils;
 import org.wso2.carbon.utils.deployment.service.listeners.Axis2ConfigServiceListener;
-import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 
 import javax.xml.namespace.QName;
 import java.io.File;
@@ -67,9 +61,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * WSO2 Carbon implementation of AxisConfigurator to load Axis2
@@ -92,8 +83,8 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
 
     private BundleContext bundleContext;
     private String carbonContextRoot;
-    private ScheduledExecutorService scheduler;
-    private CarbonDeploymentSchedulerTask schedulerTask;
+/*    private ScheduledExecutorService scheduler;
+    private CarbonDeploymentSchedulerTask schedulerTask;*/
 
     public boolean isInitialized() {
         return isInitialized;
@@ -120,7 +111,7 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
      *
      * @param repoLocation repoLocation
      * @param weblocation  weblocation
-     * @throws org.wso2.carbon.utils.ServerException ServerException
+     * @throws ServerException ServerException
      */
     public void init(String repoLocation, String weblocation) throws
             ServerException {
@@ -192,7 +183,7 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
             throw new AxisFault("Exception occured while loading the Axis configuration " +
                     "from " + axis2xml, e);
         }
-        
+
         axisConfig.setConfigurator(this);
         // Registering Axis2 Configuration services in axis2config
         if (bundleContext != null) {
@@ -225,11 +216,11 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
 
         // Adding deployers from vhosts and deployers which come inside bundles
         new Axis2DeployerRegistry(axisConfig).register(configItemHolder.getDeployerBundles(),
-                    deployerConfigs);
+                deployerConfigs);
 
         //Deploying modules which come inside bundles.
         Axis2ModuleRegistry moduleRegistry = new Axis2ModuleRegistry(axisConfig);
-        if(configItemHolder.getModuleBundles() != null) {
+        if (configItemHolder.getModuleBundles() != null) {
             moduleRegistry.register(configItemHolder.getModuleBundles());
         }
 
@@ -340,30 +331,30 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
                 new AxisConfigBuilder(in, axisConfig, this);
         builder.populateConfig();
         /* if user is starting multiple instances change the default port numbers before starting Transports */
-        if(CarbonUtils.isChildNode()){
-            try{
+        if (CarbonUtils.isChildNode()) {
+            try {
                 OMElement element = (OMElement) XMLUtils.toOM(getAxis2XmlInputStream());
                 Iterator trs_Reivers =
                         element.getChildrenWithName(new QName(TAG_TRANSPORT_RECEIVER));
-                while(trs_Reivers.hasNext()){
+                while (trs_Reivers.hasNext()) {
                     OMElement transport = (OMElement) trs_Reivers.next();
                     String transportType = transport.getAttributeValue(new QName(ATTRIBUTE_NAME));
                     Iterator itr = transport.getChildrenWithName(new QName(TAG_PARAMETER));
                     while (itr.hasNext()) {
                         OMElement parameterElement = (OMElement) itr.next();
                         OMAttribute paramName = parameterElement.getAttribute(new QName(ATTRIBUTE_NAME));
-                        if("port".equals(paramName.getAttributeValue())){
-                            if("http".equals(transportType)){
+                        if ("port".equals(paramName.getAttributeValue())) {
+                            if ("http".equals(transportType)) {
                                 parameterElement.setText(System.getProperty("niohttpPort"));
-                            }else if("https".equals(transportType)){
-                                parameterElement.setText(System.getProperty("niohttpsPort"));                                
+                            } else if ("https".equals(transportType)) {
+                                parameterElement.setText(System.getProperty("niohttpsPort"));
                             }
                         }
                     }
                 }
                 builder.processTransportReceivers(element.getChildrenWithName(new QName(TAG_TRANSPORT_RECEIVER)));
-            }catch(Exception e){
-                log.error("Error Reading axis2.xml",e);
+            } catch (Exception e) {
+                log.error("Error Reading axis2.xml", e);
             }
         }
         try {
@@ -377,7 +368,7 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
 
         try {
             // Load transports from the registry
-            loadTransports();
+//            loadTransports();
         } catch (Exception e) {
             log.warn("Unable to load transports from the registry. Some transports may not " +
                     "get initialized.", e);
@@ -387,7 +378,7 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
         return axisConfig;
     }
 
-    private void loadTransports() throws Exception {
+/*    private void loadTransports() throws Exception {
 
         List<TransportInDescription> transportIns = new ArrayList<TransportInDescription>();
         List<TransportOutDescription> transportOuts = new ArrayList<TransportOutDescription>();
@@ -432,19 +423,20 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
         // Save the transport configurations to the registry.
         // We do this here to ensure that necessary transport resources are in the registry
         // before services start getting deployed.
+    }*/
+
+    public synchronized void runDeployment() {
+//        schedulerTask.runAxisDeployment();
     }
 
-    public synchronized void runDeployment(){
-        schedulerTask.runAxisDeployment();
-    }
-
-    public void setRepoUpdateFailed(){
-        schedulerTask.setRepoUpdateFailed();
+    public void setRepoUpdateFailed() {
+//        schedulerTask.setRepoUpdateFailed();
     }
 
     @Override
     protected void startSearch(RepositoryListener listener) {
-        schedulerTask = new CarbonDeploymentSchedulerTask(listener,
+        //TODO need to implement
+ /*       schedulerTask = new CarbonDeploymentSchedulerTask(listener,
                                                           axisConfig,
                                                           MultitenantConstants.SUPER_TENANT_ID,
                                                           MultitenantConstants.SUPER_TENANT_DOMAIN_NAME);
@@ -458,14 +450,15 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
            deploymentIntervalInt = Integer.parseInt(deploymentInterval);
         }
         scheduler.scheduleWithFixedDelay(schedulerTask, 0, deploymentIntervalInt, TimeUnit.SECONDS);
+   */
     }
 
     @Override
     public void cleanup() {
-	//NULL check for if hot deployment/update is turned off
-        if (scheduler != null) {
+        //NULL check for if hot deployment/update is turned off
+/*        if (scheduler != null) {
             scheduler.shutdown();
-        }
+        }*/
         super.cleanup();
     }
 
@@ -474,12 +467,12 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
         //deployment in later stage of server startup (Refer CARBON-14977 ).
     }
 
-    public void addAxis2ConfigServiceListener() throws Exception{
+    public void addAxis2ConfigServiceListener() throws Exception {
         bundleContext.addServiceListener(configServiceListener,
-                                             "("+ CarbonConstants.AXIS2_CONFIG_SERVICE +"=*)");
+                "(" + CarbonConstants.AXIS2_CONFIG_SERVICE + "=*)");
     }
 
-    public void setAxis2ConfigItemHolder(Axis2ConfigItemHolder configItemHolder){
+    public void setAxis2ConfigItemHolder(Axis2ConfigItemHolder configItemHolder) {
         this.configItemHolder = configItemHolder;
     }
 
@@ -517,9 +510,9 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
         return repositoryDir;
     }
 
-    private InputStream getAxis2XmlInputStream()throws AxisFault{
+    private InputStream getAxis2XmlInputStream() throws AxisFault {
         InputStream axis2xmlStream = null;
-        try{
+        try {
             if (axis2xml != null && axis2xml.trim().length() != 0) {
                 if (isUrlAxis2Xml) { // Is it a URL?
                     try {
@@ -535,8 +528,8 @@ public class CarbonAxisConfigurator extends DeploymentEngine implements AxisConf
                 axis2xmlStream =
                         cl.getResourceAsStream(DeploymentConstants.AXIS2_CONFIGURATION_RESOURCE);
             }
-        } catch(IOException e){
-            log.error("Cannot find axis2.xml file",e);
+        } catch (IOException e) {
+            log.error("Cannot find axis2.xml file", e);
         }
         return axis2xmlStream;
     }
