@@ -55,19 +55,11 @@ public abstract class AbstractTransportService implements TransportService {
             boolean listener, AxisConfiguration axisConfig) throws Exception {
 
         ParameterInclude transport;
-        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
+//        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
         if (listener) {
             transport = axisConfig.getTransportIn(transportName);
-            if (transport == null) {
-                transport =
-                        transportPM.getTransportListener(transportName, false);
-            }
         } else {
             transport = axisConfig.getTransportOut(transportName);
-            if (transport == null) {
-                transport =
-                        transportPM.getTransportSender(transportName, false);
-            }
         }
 
         return getParameters(transport);
@@ -88,13 +80,8 @@ public abstract class AbstractTransportService implements TransportService {
     }
 
     public boolean isAvailable(boolean listener, AxisConfiguration axisConfig) {
-        try {
-            TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
-            return transportPM.getTransportElement(transportName, listener) != null;
-        } catch (Exception e) {
-            log.error("Error while checking the transport availability", e);
-            return false;
-        }
+//        axisConfig.getT //TODO need to implement
+    return true;
     }
 
     public boolean isEnabled(boolean listener, AxisConfiguration axisConfig) {
@@ -109,50 +96,39 @@ public abstract class AbstractTransportService implements TransportService {
             TransportParameter[] params, boolean listener, ConfigurationContext cfgCtx) throws Exception {
 
         AxisConfiguration axisConfig = cfgCtx.getAxisConfiguration();
-        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
         if (listener) {
             TransportInDescription transportIn = axisConfig.getTransportIn(transportName);
             if (transportIn != null) {
                 transportIn.getReceiver().stop();
-            } else {
-                transportIn =
-                        transportPM.getTransportListener(transportName, true);
-                axisConfig.addTransportIn(transportIn);
-            }
-            setParameters(transportIn, params);
+                setParameters(transportIn, params);
 
-            try {
-                transportIn.getReceiver().init(cfgCtx, transportIn);
-                transportIn.getReceiver().start();
-            } catch (Throwable t) {
-                axisConfig.getTransportsIn().remove(transportName);
-                String msg = "Error while initializing the " + transportName + " listener";
-                log.error(msg, t);
-                throw new AxisFault(msg, t);
-            }
+                try {
+                    transportIn.getReceiver().init(cfgCtx, transportIn);
+                    transportIn.getReceiver().start();
+                } catch (Throwable t) {
+                    axisConfig.getTransportsIn().remove(transportName);
+                    String msg = "Error while initializing the " + transportName + " listener";
+                    log.error(msg, t);
+                    throw new AxisFault(msg, t);
+                }
 
-            transportPM.saveTransportListener(transportIn, true);
+            }
 
         } else {
             TransportOutDescription transportOut = axisConfig.getTransportOut(transportName);
             if (transportOut != null) {
                 transportOut.getSender().stop();
-            } else {
-                transportOut = transportPM.getTransportSender(transportName, true);
-                axisConfig.addTransportOut(transportOut);
-            }
-            setParameters(transportOut, params);
+                setParameters(transportOut, params);
 
-            try {
-                transportOut.getSender().init(cfgCtx, transportOut);
-            } catch (Throwable t) {
-                axisConfig.getTransportsOut().remove(transportName);
-                String msg = "Error while initializing the " + transportName + " sender";
-                log.error(msg, t);
-                throw new AxisFault(msg, t);
+                try {
+                    transportOut.getSender().init(cfgCtx, transportOut);
+                } catch (Throwable t) {
+                    axisConfig.getTransportsOut().remove(transportName);
+                    String msg = "Error while initializing the " + transportName + " sender";
+                    log.error(msg, t);
+                    throw new AxisFault(msg, t);
+                }
             }
-
-            transportPM.saveTransportSender(transportOut, true);
         }
     }
 
@@ -168,7 +144,6 @@ public abstract class AbstractTransportService implements TransportService {
     }
 
     public void disableTransport(boolean listener, AxisConfiguration axisConfig) throws Exception {
-        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
         if (listener) {
             TransportInDescription transport = axisConfig.getTransportIn(transportName);
             if (transport != null) {
@@ -187,14 +162,12 @@ public abstract class AbstractTransportService implements TransportService {
             }
         }
 
-        transportPM.setTransportEnabled(transportName, listener, false);
     }
 
     public void addTransportParameter(TransportParameter param,
                                       boolean listener, ConfigurationContext cfgCtx) throws Exception {
         ParameterInclude transport;
         AxisConfiguration axisConfig = cfgCtx.getAxisConfiguration();
-        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
         if (listener) {
             transport = axisConfig.getTransportIn(transportName);
         } else {
@@ -202,8 +175,7 @@ public abstract class AbstractTransportService implements TransportService {
         }
 
         if (transport == null) {
-            transportPM.addParameter(transportName, listener, false,
-                                     TransportBuilderUtils.toAxisParameter(param));
+
         } else {
             TransportParameter[] newParams;
             TransportParameter[] params = getGlobalTransportParameters(listener, axisConfig);
@@ -237,7 +209,6 @@ public abstract class AbstractTransportService implements TransportService {
                                          boolean listener, ConfigurationContext cfgCtx) throws Exception {
         ParameterInclude transport;
         AxisConfiguration axisConfig = cfgCtx.getAxisConfiguration();
-        TransportPersistenceManager transportPM = new TransportPersistenceManager(axisConfig);
         if (listener) {
             transport = axisConfig.getTransportIn(transportName);
         } else {
@@ -245,7 +216,6 @@ public abstract class AbstractTransportService implements TransportService {
         }
 
         if (transport == null) {
-            transportPM.removeParameter(transportName, listener, false, param);
         } else {
             TransportParameter[] params = getGlobalTransportParameters(listener, axisConfig);
             if (params != null) {
