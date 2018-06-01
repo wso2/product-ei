@@ -44,7 +44,6 @@ public class Activator implements BundleActivator {
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        log.info("Activated***************************");
         try {
             // Need permissions in order to activate Carbon Core
             SecurityManager secMan = System.getSecurityManager();
@@ -86,7 +85,7 @@ public class Activator implements BundleActivator {
             bundleContext.registerService(GhostMetaArtifactsLoader.class.getName(), serviceMetaArtifactsLoader, null);
             CarbonCoreDataHolder.getInstance().setBundleContext(bundleContext);
         } catch (Throwable e) {
-            log.info("Error***************************");
+            throw new Exception(e);
         }
     }
 

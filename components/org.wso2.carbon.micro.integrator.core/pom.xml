@@ -47,11 +47,25 @@
         </dependency>
 
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.core</artifactId>
+            <groupId>org.eclipse.osgi</groupId>
+            <artifactId>org.eclipse.osgi</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.eclipse.osgi</groupId>
+            <artifactId>org.eclipse.osgi.services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.http.helper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.p2.metadata</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.feature.mgt.core</artifactId>
+        </dependency>
     </dependencies>
 
 
@@ -96,7 +110,9 @@
                         <Export-Package>
                             ! org.wso2.carbon.micro.integrator.core.internal,
                             org.wso2.carbon.micro.integrator.core.*;version="${project.version}",
-                            org.wso2.carbon.core.*;version="${carbon.kernel.version}"
+                            org.wso2.carbon.core.*;version="${carbon.kernel.version}",
+                            org.wso2.carbon.application.deployer.*;version="${carbon.kernel.version}",
+                            org.wso2.carbon.service.mgt.*;version="${carbon.deployment.version}"
                         </Export-Package>
                         <Import-Package>
                             org.wso2.carbon.utils;version="${carbon.kernel.imp.pkg.version}"

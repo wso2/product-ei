@@ -22,14 +22,11 @@ import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.http.HttpStatus;
 import org.apache.http.protocol.HTTP;
 import org.wso2.carbon.CarbonConstants;
-import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.core.transports.CarbonHttpRequest;
 import org.wso2.carbon.core.transports.CarbonHttpResponse;
 import org.wso2.carbon.core.transports.HttpGetRequestProcessor;
-import org.wso2.carbon.core.util.GhostDispatcherUtils;
 import org.wso2.carbon.core.util.SystemFilter;
 import org.wso2.carbon.micro.integrator.core.internal.CarbonCoreDataHolder;
-import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.carbon.utils.deployment.GhostDeployerUtils;
 
@@ -47,16 +44,6 @@ public abstract class AbstractWsdlProcessor implements HttpGetRequestProcessor {
                              WSDLPrinter wsdlPrinter) throws IOException {
         AxisConfiguration axisConfig = configurationContext.getAxisConfiguration();
         AxisService axisService = axisConfig.getServiceForActivation(serviceName);
-        if (axisService == null) {
-            // Try to see whether the service is available in a tenant
-            axisService = TenantAxisUtils.getAxisService(serviceName, configurationContext);
-            if (axisService != null) {
-                axisConfig =
-                        TenantAxisUtils.
-                                getTenantAxisConfiguration(TenantAxisUtils.getTenantDomain(serviceName),
-                                                           configurationContext);
-            }
-        }
         if (GhostDeployerUtils.isGhostService(axisService) && axisConfig != null) {
             String serviceGroupName = null;
             if (axisService != null) {
@@ -65,10 +52,6 @@ public abstract class AbstractWsdlProcessor implements HttpGetRequestProcessor {
                 } else {
                     serviceGroupName = axisService.getName();
                 }
-            }
-            if (CarbonUtils.isDepSyncEnabled() && CarbonUtils.isWorkerNode() &&
-                    GhostDeployerUtils.isPartialUpdateEnabled()) {
-                GhostDispatcherUtils.handleDepSynchUpdate(axisConfig, axisService);
             }
             // if the existing service is a ghost service, deploy the actual one
             axisService = GhostDeployerUtils.deployActualService(axisConfig, axisService);

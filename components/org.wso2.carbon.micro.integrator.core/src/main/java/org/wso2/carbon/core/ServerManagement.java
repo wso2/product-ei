@@ -23,7 +23,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
-import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.micro.integrator.core.internal.CarbonCoreDataHolder;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.FileManipulator;
@@ -142,8 +141,7 @@ public class ServerManagement {
         // Stop all deployment tasks by calling cleanup on the super-tenant & tenant configurators
         //invoking  CarbonDeploymentSchedulerExtenders for all tenants before shutdown.
         //(this is done for the purpose of persisting all remaining stat data.)
-        Map<String, ConfigurationContext> tenantConfigContexts =
-                TenantAxisUtils.getTenantConfigurationContexts(serverConfigContext);
+
 
         serverConfigContext.getAxisConfiguration().getConfigurator().cleanup();
         // uncomment following to execute registered deployment  scheduler extenders for super
@@ -151,35 +149,7 @@ public class ServerManagement {
         /*DeploymentUtils.invokeCarbonDeploymentSchedulerExtenders(
                 serverConfigContext.getAxisConfiguration());*/
 
-        for (ConfigurationContext tenantConfigCtx : tenantConfigContexts.values()) {
-            // uncomment following to execute registered deployment  scheduler extenders for each
-            // tenant in maintenance mode.
-            /*int tenantId = MultitenantUtils.getTenantId(tenantConfigCtx);
-            if(log.isDebugEnabled()){
-                log.debug("invoking CarbonDeploymentSchedulerExtenders before shutdown, tenant " +
-                tenantId);
-            }
-            DeploymentUtils.invokeCarbonDeploymentSchedulerExtenders(
-                    tenantConfigCtx.getAxisConfiguration());*/
-
-            tenantConfigCtx.getAxisConfiguration().getConfigurator().cleanup();
-        }
-
         boolean isDeploymentSchedulerRunning;
-        do {
-            // Check whether the super-tenant deployment schedulers are running
-            isDeploymentSchedulerRunning = isDeploymentSchedulerRunning(serverConfigContext);
-
-            if (!isDeploymentSchedulerRunning) {
-                // Check whether tenant deployment schedulers are running
-                for (ConfigurationContext tenantConfigCtx : tenantConfigContexts.values()) {
-                    isDeploymentSchedulerRunning = isDeploymentSchedulerRunning(tenantConfigCtx);
-                    if (isDeploymentSchedulerRunning) {
-                        break;
-                    }
-                }
-            }
-        } while (isDeploymentSchedulerRunning);
         log.info("All deployment tasks have been completed.");
     }
 

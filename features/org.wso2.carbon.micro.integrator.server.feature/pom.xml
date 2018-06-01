@@ -89,13 +89,13 @@
                                 <!--</bundleDef>-->
                                 <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.registry.server:${carbon.kernel.version}-->
                                 <!--</bundleDef>-->
-                                <bundleDef>
+<!--                                <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.feature.mgt.services:${carbon.kernel.version}
-                                </bundleDef>
+                                </bundleDef>-->
                                 <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.roles.mgt:${carbon.kernel.version}-->
                                 <!--</bundleDef>-->
-                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.user.core:${carbon.kernel.version}-->
-                                <!--</bundleDef>-->
+                                <bundleDef>org.wso2.carbon:org.wso2.carbon.user.core:${carbon.kernel.version}
+                                </bundleDef>
                                 <bundleDef>org.wso2.orbit.org.bouncycastle:bcprov-jdk15on:${bouncycastle.orbit.version}
                                 </bundleDef>
                                 <bundleDef>org.wso2.orbit.org.apache.poi:poi-ooxml:${orbit.version.poi.ooxml}
@@ -189,8 +189,8 @@
                      <!--           <bundleDef>
                                     org.wso2.carbon:org.wso2.carbon.application.deployer:${carbon.kernel.version}
                                 </bundleDef>-->
-                                <!--<bundleDef>org.wso2.carbon:org.wso2.carbon.registry.core:${carbon.kernel.version}-->
-                                <!--</bundleDef>-->
+                                <bundleDef>org.wso2.carbon:org.wso2.carbon.registry.core:${carbon.kernel.version}
+                                </bundleDef>
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.feature.mgt.core:${carbon.kernel.version}
                                 </bundleDef>
 <!--                                <bundleDef>
