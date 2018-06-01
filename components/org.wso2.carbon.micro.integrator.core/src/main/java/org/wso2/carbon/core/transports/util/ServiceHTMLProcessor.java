@@ -22,7 +22,6 @@ import org.apache.axis2.description.AxisOperation;
 import org.apache.axis2.description.AxisService;
 import org.apache.axis2.description.AxisServiceGroup;
 import org.apache.axis2.engine.AxisConfiguration;
-import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.core.util.SystemFilter;
 
 import java.util.Enumeration;
@@ -87,10 +86,6 @@ public class ServiceHTMLProcessor {
         try {
             AxisConfiguration axisConfig = configurationContext.getAxisConfiguration();
             AxisService axisService = axisConfig.getService(serviceName);
-            if (axisService == null) {
-                // Try to see whether the service is available in a tenant
-                axisService = TenantAxisUtils.getAxisService(serviceName, configurationContext);
-            }
             if (axisService != null) {
                 if (!axisService.isActive()) {
                     temp.append("<b>Service ").append(serviceName).

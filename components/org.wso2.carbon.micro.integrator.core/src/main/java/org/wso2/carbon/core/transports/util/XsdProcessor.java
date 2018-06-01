@@ -18,7 +18,6 @@ package org.wso2.carbon.core.transports.util;
 
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.description.AxisService;
-import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.core.transports.CarbonHttpRequest;
 import org.wso2.carbon.core.transports.CarbonHttpResponse;
 import org.wso2.carbon.core.transports.HttpGetRequestProcessor;
@@ -36,14 +35,7 @@ public class XsdProcessor implements HttpGetRequestProcessor {
         String serviceName = requestURI.substring(requestURI.indexOf(contextPath) + contextPath.length() + 1);
         AxisService axisService =
                 configCtx.getAxisConfiguration().getServiceForActivation(serviceName);
-        if (axisService == null) {
-            // Try to see whether the service is available in a tenant
-            axisService = TenantAxisUtils.getAxisService(serviceName, configCtx);
-            XsdUtil.printXsd(request, response,
-                             TenantAxisUtils.getTenantConfigurationContextFromUrl(requestURI, configCtx),
-                             serviceName, axisService);
-        } else {
-            XsdUtil.printXsd(request, response, configCtx, serviceName, axisService);
-        }
+        XsdUtil.printXsd(request, response, configCtx, serviceName, axisService);
+
     }
 }

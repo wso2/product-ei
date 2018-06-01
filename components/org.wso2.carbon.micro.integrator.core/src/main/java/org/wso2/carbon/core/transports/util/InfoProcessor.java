@@ -20,7 +20,6 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.description.AxisService;
 import org.apache.http.HttpStatus;
 import org.apache.http.protocol.HTTP;
-import org.wso2.carbon.core.multitenancy.utils.TenantAxisUtils;
 import org.wso2.carbon.core.transports.CarbonHttpRequest;
 import org.wso2.carbon.core.transports.CarbonHttpResponse;
 import org.wso2.carbon.core.transports.HttpGetRequestProcessor;
@@ -39,10 +38,6 @@ public class InfoProcessor implements HttpGetRequestProcessor {
                 requestURI.substring(requestURI.indexOf(contextPath) + contextPath.length() + 1);
         AxisService axisService =
                 configurationContext.getAxisConfiguration().getServiceForActivation(serviceName);
-        if (axisService == null) {
-            // Try to see whether the service is available in a tenant
-            axisService = TenantAxisUtils.getAxisService(serviceName, configurationContext);
-        }
         if (!RequestProcessorUtil.canExposeServiceMetadata(axisService)) {
             response.setError(HttpStatus.SC_FORBIDDEN,
                               "Access to service metadata for service: " + serviceName +

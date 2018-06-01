@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.http.HttpService;
+import org.wso2.carbon.application.deployer.service.ApplicationManagerService;
 import org.wso2.carbon.base.api.ServerConfigurationService;
 
 /**
@@ -31,6 +32,11 @@ public class CarbonCoreDataHolder {
 
     private  BundleContext bundleContext;
 
+    public ApplicationManagerService getApplicationManager() {
+        return applicationManager;
+    }
+
+    private ApplicationManagerService applicationManager;
     private  HttpService httpService;
     private  ConfigurationContext mainServerConfigContext;
     private ServerConfigurationService serverConfigurationService;
@@ -85,6 +91,10 @@ public class CarbonCoreDataHolder {
 
     public  ConfigurationContext getMainServerConfigContext() {
         return mainServerConfigContext;
+    }
+
+    public void setApplicationManager(ApplicationManagerService applicationManager) {
+        this.applicationManager = applicationManager;
     }
 
 }

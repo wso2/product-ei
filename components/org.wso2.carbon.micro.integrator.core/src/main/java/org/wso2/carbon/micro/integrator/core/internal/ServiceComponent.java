@@ -18,6 +18,7 @@
 package org.wso2.carbon.micro.integrator.core.internal;
 
 
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.Constants;
 import org.apache.axis2.clustering.ClusteringConstants;
@@ -41,11 +42,17 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 import org.wso2.carbon.CarbonConstants;
+import org.wso2.carbon.application.deployer.AppDeployerConstants;
+import org.wso2.carbon.application.deployer.AppDeployerUtils;
+import org.wso2.carbon.application.deployer.Feature;
+import org.wso2.carbon.application.deployer.handler.AppDeploymentHandler;
+import org.wso2.carbon.application.deployer.service.ApplicationManagerService;
 import org.wso2.carbon.base.CarbonBaseConstants;
 import org.wso2.carbon.base.api.ServerConfigurationService;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
@@ -79,8 +86,12 @@ import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 import javax.servlet.Filter;
 import javax.servlet.ServletException;
 import java.io.File;
+import java.io.InputStream;
 import java.lang.management.ManagementPermission;
 import java.net.SocketException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
@@ -98,6 +109,9 @@ import static org.apache.axis2.transport.TransportListener.HOST_ADDRESS;
  * cardinality="1..1" policy="dynamic"  bind="setServerConfigurationService" unbind="unsetServerConfigurationService"
  * @scr.reference name="http.service" interface="org.osgi.service.http.HttpService"
  * cardinality="1..1" policy="dynamic"  bind="setHttpService" unbind="unsetHttpService"
+ * @scr.reference name="application.manager"
+ * interface="org.wso2.carbon.application.deployer.service.ApplicationManagerService"
+ * cardinality="0..1" policy="dynamic" bind="setAppManager" unbind="unsetAppManager"
  **/
 public class ServiceComponent {
 
@@ -133,7 +147,12 @@ public class ServiceComponent {
     private ConfigurationContext serverConfigContext;
     private ConfigurationContext clientConfigContext;
 
+    private static ServiceRegistration appManagerRegistration;
+    private static ApplicationManagerService applicationManager;
+    private static Map<String, List<Feature>> requiredFeatures;
+    private List<AppDeploymentHandler> appHandlers = new ArrayList<AppDeploymentHandler>();
 
+    private List<String> requiredServices = new ArrayList<String>();
 
     /**
      * Indicates whether the shutdown of the server was triggered by the Carbon shutdown hook
@@ -150,6 +169,21 @@ public class ServiceComponent {
             ctxt.getBundleContext().registerService(ServerStartupObserver.class.getName(),
                     new DeploymentServerStartupObserver(), null) ;
             bundleContext = ctxt.getBundleContext();
+            ApplicationManager applicationManager = ApplicationManager.getInstance();
+            applicationManager.init(); // this will allow application manager to register deployment handlers
+
+            // register ApplicationManager as a service
+            appManagerRegistration = ctxt.getBundleContext().registerService(
+                    ApplicationManagerService.class.getName(), applicationManager, null);
+
+            // read required-features.xml
+            URL reqFeaturesResource = bundleContext.getBundle()
+                    .getResource(AppDeployerConstants.REQ_FEATURES_XML);
+            if (reqFeaturesResource != null) {
+                InputStream xmlStream = reqFeaturesResource.openStream();
+                requiredFeatures = AppDeployerUtils
+                        .readRequiredFeaturs(new StAXOMBuilder(xmlStream).getDocumentElement());
+            }
             CarbonCoreDataHolder.getInstance().setBundleContext(ctxt.getBundleContext());
             //Initializing ConfigItem Listener - Modules and Deployers
             configItemListener = new PreAxis2ConfigItemListener(bundleContext);
@@ -174,6 +208,10 @@ public class ServiceComponent {
         }
 
         log.debug("Carbon Core bundle is deactivated ");
+    }
+
+    public static Map<String, List<Feature>> getRequiredFeatures() {
+        return requiredFeatures;
     }
 
     private void initializeCarbon() {
@@ -663,6 +701,16 @@ public class ServiceComponent {
 
     protected void unsetHttpService(HttpService httpService) {
         this.httpService = null;
+    }
+
+
+    protected void setAppManager(ApplicationManagerService applicationManager) {
+        this.applicationManager = applicationManager;
+        CarbonCoreDataHolder.getInstance().setApplicationManager(applicationManager);
+    }
+
+    protected void unsetAppManager(ApplicationManagerService applicationManager) {
+        this.applicationManager = null;
     }
 
 }

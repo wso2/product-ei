@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright 2005-2011 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<service name="Version">
+    <schema elementFormDefaultQualified="false"/>
+
+    <!--<module ref="module1"/>-->
+
+    <description>
+        This service outputs the version of WSO2 Carbon server it is deployed on.
+    </description>
+
+    <transports>
+     	<transport>https</transport>
+	<transport>http</transport>
+    </transports>
+
+    <!--wsp:Policy Name="urn:version"
+                wsu:Id="urn:version"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <intf:ServicePolicyTestAssertion1 xmlns:intf="http://test.policy.org/wsas" marker="2"/>
+    </wsp:Policy-->
+
+    <parameter name="ServiceClass" locked="false">
+        org.wso2.carbon.core.services.version.Version
+    </parameter>
+
+    <operation name="getVersion">
+        <!--wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+            <intf:OperationPolicyTestAssertion1 xmlns:intf="http://test.policy.org/wsas"
+                                                marker="2"/>
+        </wsp:Policy-->
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+    </operation>
+    <parameter name="modifyUserWSDLPortAddress" locked="false">true</parameter>
+</service>
