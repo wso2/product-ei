@@ -20,16 +20,12 @@ package org.wso2.carbon.micro.integrator.core.deployment;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.synapse.core.SynapseEnvironment;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.CarbonException;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
-import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeployer;
+import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
+import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
 import org.wso2.carbon.utils.ConfigurationContextService;
-
-import javax.xml.crypto.Data;
 
 /**
  * @scr.component name="application.deployer.dscomponent" immediate="true"
@@ -41,8 +37,7 @@ import javax.xml.crypto.Data;
  * cardinality="1..n" policy="dynamic" bind="setSynapseEnvironmentService"
  * unbind="unsetSynapseEnvironmentService"
  */
-
-public class AppDeployerServiceComponent implements ServiceListener {
+public class AppDeployerServiceComponent {
 
     private static final Log log = LogFactory.getLog(AppDeployerServiceComponent.class);
 
@@ -50,7 +45,8 @@ public class AppDeployerServiceComponent implements ServiceListener {
     private SynapseEnvironmentService synapseEnvironmentService;
 
     protected void activate(ComponentContext ctxt) {
-        log.info("*********** ACTIVATE **********");
+
+        log.debug("Activating AppDeployerServiceComponent");
 
         // Update DataHolder with SynapseEnvironmentService
         DataHolder.getInstance().setSynapseEnvironmentService(this.synapseEnvironmentService);
@@ -59,62 +55,64 @@ public class AppDeployerServiceComponent implements ServiceListener {
         // Initialize synapse deployers
         DataHolder.getInstance().initializeDefaultSynapseDeployers();
 
+        // Initialize micro integrator carbon application deployer
+        log.debug("Initializing carbon application deployment manager");
+        CAppDeploymentManager cAppDeploymentManager = new CAppDeploymentManager(configCtx.getAxisConfiguration());
+
+        // Register application deployment handlers
+        cAppDeploymentManager.registerDeploymentHandler(new SynapseAppDeployer());
+
         // Deploy carbon applications
         try {
-            new CAppDeployer(configCtx.getAxisConfiguration()).deploy();
+            cAppDeploymentManager.deploy();
         } catch (CarbonException e) {
-            log.error(e.getMessage(), e);
+            log.error("Error occurred while deploying carbon application", e);
         }
 
     }
 
     protected void deactivate(ComponentContext ctxt) {
-        log.info("*********** DEACTIVATE **********");
+        log.debug("Deactivating AppDeployerServiceComponent");
     }
 
+    /**
+     * Receive an event about creation of ConfigurationContext.
+     *
+     * @param configCtx Instance of ConfigurationContextService which wraps server configuration context
+     */
     protected void setConfigurationContext(ConfigurationContextService configCtx) {
-        log.info("*********** setConfigurationContext **********");
-
         this.configCtx = configCtx.getServerConfigContext();
     }
 
+    /**
+     * Receive an event about destroying ConfigurationContext
+     *
+     * @param configCtx
+     */
     protected void unsetConfigurationContext(ConfigurationContextService configCtx) {
-        log.info("*********** unsetConfigurationContext **********");
-
         this.configCtx = null;
     }
 
     /**
-     * Here we receive an event about the creation of a SynapseEnvironment. If this is
+     * Receive an event about the creation of a SynapseEnvironment. If this is
      * SuperTenant we have to wait until all the other constraints are met and actual
      * initialization is done in the activate method. Otherwise we have to do the activation here.
      *
      * @param synapseEnvironmentService SynapseEnvironmentService which contains information
      *                                  about the new Synapse Instance
      */
-    protected void setSynapseEnvironmentService(
-            SynapseEnvironmentService synapseEnvironmentService) {
-        log.info("*********** setSynapseEnvironmentService **********");
-
+    protected void setSynapseEnvironmentService(SynapseEnvironmentService synapseEnvironmentService) {
         this.synapseEnvironmentService = synapseEnvironmentService;
     }
 
     /**
-     * Here we receive an event about Destroying a SynapseEnvironment. This can be the super tenant
+     * Receive an event about Destroying a SynapseEnvironment. This can be the super tenant
      * destruction or a tenant destruction.
      *
      * @param synapseEnvironmentService synapseEnvironment
      */
-    protected void unsetSynapseEnvironmentService(
-            SynapseEnvironmentService synapseEnvironmentService) {
-        log.info("*********** setSynapseEnvironmentService **********");
-
+    protected void unsetSynapseEnvironmentService(SynapseEnvironmentService synapseEnvironmentService) {
         this.synapseEnvironmentService = null;
     }
 
-    @Override
-    public void serviceChanged(ServiceEvent serviceEvent) {
-        //Nothing to do yet
-        log.info("*********** serviceChanged ********** ");
-    }
 }

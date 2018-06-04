@@ -880,19 +880,6 @@ public class SynapseAppDeployer implements AppDeploymentHandler {
      * @return Deployer instance
      */
     private Deployer getDeployer(String type) {
-        /*Deployer deployer = null;
-        // access the deployment engine through axis config
-        DeploymentEngine deploymentEngine = (DeploymentEngine) axisConfig.getConfigurator();
-        SynapseEnvironmentService environmentService = DataHolder.getInstance().getSynapseEnvironmentService();
-
-        if (environmentService != null) {
-            String synapseConfigPath = ServiceBusUtils.getSynapseConfigAbsPath(
-                    environmentService.getSynapseEnvironment().getServerContextInformation());
-            String endpointDirPath = synapseConfigPath
-                                     + File.separator + directory;
-            deployer = deploymentEngine.getDeployer(endpointDirPath,
-                                                    ServiceBusConstants.ARTIFACT_EXTENSION);
-        }*/
         return DataHolder.getInstance().getDeployer(type);
     }
 

@@ -128,7 +128,7 @@ public class Utils {
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
-            log.error("Error while adding CAppDeployer to axis configuration", e);
+            log.error("Error while adding CAppDeploymentManager to axis configuration", e);
         }
         return successfullyAdded;
     }
