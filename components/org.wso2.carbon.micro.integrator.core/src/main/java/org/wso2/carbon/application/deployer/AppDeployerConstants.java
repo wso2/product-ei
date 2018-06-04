@@ -17,6 +17,8 @@
 */
 package org.wso2.carbon.application.deployer;
 
+import org.wso2.carbon.base.MultitenantConstants;
+
 /**
  * All constants related to app deployer
  */
@@ -84,4 +86,7 @@ public class AppDeployerConstants {
     public static final String DEPLOYMENT_STATUS_DEPLOYED = "Deployed";
     public static final String DEPLOYMENT_STATUS_PENDING = "Pending";
     public static final String DEPLOYMENT_STATUS_FAILED = "Failed";
+
+    public static final String SUPER_TENANT_ID_STR = String.valueOf(MultitenantConstants.SUPER_TENANT_ID);
+    public static final int SUPER_TENANT_ID_INT = MultitenantConstants.SUPER_TENANT_ID;
 }

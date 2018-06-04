@@ -25,12 +25,14 @@ import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.CarbonException;
+import org.wso2.carbon.application.deployer.AppDeployerConstants;
 import org.wso2.carbon.application.deployer.AppDeployerUtils;
 import org.wso2.carbon.application.deployer.CarbonApplication;
 import org.wso2.carbon.application.deployer.config.ApplicationConfiguration;
 import org.wso2.carbon.application.deployer.config.Artifact;
-import org.wso2.carbon.micro.integrator.core.deployment.DeploymentConstants;
+import org.wso2.carbon.application.deployer.handler.AppDeploymentHandler;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
+import org.wso2.carbon.utils.FileManipulator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,37 +43,47 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.stream.XMLStreamException;
 
-public class CAppDeployer {
+/**
+ * Carbon Application deployer to deploy synapse artifacts
+ */
+public class CAppDeploymentManager {
 
-    private static final Log log = LogFactory.getLog(CAppDeployer.class);
+    private static final Log log = LogFactory.getLog(CAppDeploymentManager.class);
 
     private AxisConfiguration axisConfiguration;
+    private List<AppDeploymentHandler> appDeploymentHandlers;
 
-    public CAppDeployer(AxisConfiguration axisConfiguration) {
+    public CAppDeploymentManager(AxisConfiguration axisConfiguration) {
         this.axisConfiguration = axisConfiguration;
+        this.appDeploymentHandlers = new ArrayList<AppDeploymentHandler>();
     }
 
     public void deploy() throws CarbonException {
 
-        String cAppSrcDir = axisConfiguration.getRepository().getPath() + DeploymentConstants.CAPP_DIR_NAME;
+        String cAppSrcDir = axisConfiguration.getRepository().getPath() + AppDeployerConstants.CARBON_APPS;
         File cAppDir = new File(cAppSrcDir);
 
         if (cAppDir.isDirectory()) {
-
             File[] fileList = cAppDir.listFiles();
-            for (File file : fileList) {
-                if (isCAppArchiveFile(file.getName())) {
+            if (fileList != null && fileList.length > 0) {
+                for (File file : fileList) {
+                    if (!isCAppArchiveFile(file.getName())) {
+                        log.warn("Only .car files are processed. Hence " + file.getName() + " will be ignored");
+                        continue;
+                    }
                     if (log.isDebugEnabled()) {
                         log.debug("Carbon Application detected : " + file.getName());
                     }
 
                     String cAppName = file.getName();
                     String targetCAppPath = cAppDir + File.separator + cAppName;
+
+                    // Extract to temporary location
                     String tempExtractedDirPath = AppDeployerUtils.extractCarbonApp(targetCAppPath);
 
                     // Build the app configuration by providing the artifacts.xml path
                     ApplicationConfiguration appConfig = new ApplicationConfiguration(tempExtractedDirPath +
-                            ApplicationConfiguration.ARTIFACTS_XML);
+                                    ApplicationConfiguration.ARTIFACTS_XML);
 
                     // If we don't have features (artifacts) for this server, ignore
                     if (appConfig.getApplicationArtifact().getDependencies().size() == 0) {
@@ -103,28 +115,33 @@ public class CAppDeployer {
                     // deploy sub artifacts of this cApp
                     this.searchArtifacts(currentApp.getExtractedPath(), currentApp);
 
-                    // Now ready to deploy
-                    SynapseAppDeployer synapseAppDeployer = new SynapseAppDeployer();
-                    try {
-                        synapseAppDeployer.deployArtifacts(currentApp, axisConfiguration);
-                    } catch (DeploymentException e) {
-                        log.error("Error occurred while deploying the Carbon application");
+                    if (isArtifactReadyToDeploy(currentApp.getAppConfig().getApplicationArtifact())) {
+                        // Now ready to deploy
+                        for (AppDeploymentHandler appDeploymentHandler : appDeploymentHandlers) {
+                            try {
+                                appDeploymentHandler.deployArtifacts(currentApp, axisConfiguration);
+                            } catch (DeploymentException e) {
+                                log.error("Error occurred while deploying the Carbon application : " +
+                                        currentApp.getAppName());
+                            }
+                        }
+                    } else {
+                        log.error("Some dependencies were not satisfied in cApp:" +
+                                currentApp.getAppNameWithVersion() +
+                                "Check whether all dependent artifacts are included in cApp file: " +
+                                targetCAppPath);
+                        FileManipulator.deleteDir(currentApp.getExtractedPath());
+                        return;
                     }
 
                     // Deployment Completed
                     currentApp.setDeploymentCompleted(true);
                     //this.addCarbonApp(tenantId, currentApp);
                     log.info("Successfully Deployed Carbon Application : " + currentApp.getAppNameWithVersion() +
-                            AppDeployerUtils.getTenantIdLogString(AppDeployerUtils.
-                                    getTenantId()));
+                            AppDeployerUtils.getTenantIdLogString(AppDeployerUtils.getTenantId()));
 
                 }
-
-
-
             }
-
-
         }
     }
 
@@ -140,14 +157,22 @@ public class CAppDeployer {
     }
 
     /**
+     * Function to register application deployers
+     *
+     * @param handler - app deployer which implements the AppDeploymentHandler interface
+     */
+    public synchronized void registerDeploymentHandler(AppDeploymentHandler handler) {
+        appDeploymentHandlers.add(handler);
+    }
+
+    /**
      * Deploys all artifacts under a root artifact..
      *
      * @param rootDirPath - root dir of the extracted artifact
      * @param parentApp - capp instance
      * @throws org.wso2.carbon.CarbonException - on error
      */
-    private void searchArtifacts(String rootDirPath,
-                                 CarbonApplication parentApp) throws CarbonException {
+    private void searchArtifacts(String rootDirPath, CarbonApplication parentApp) throws CarbonException {
         File extractedDir = new File(rootDirPath);
         File[] allFiles = extractedDir.listFiles();
         if (allFiles == null) {
@@ -193,7 +218,6 @@ public class CAppDeployer {
                 return;
             }
             artifact.setExtractedPath(directoryPath);
-//            searchArtifacts(directoryPath, parentApp);
             allArtifacts.add(artifact);
         }
         Artifact appArtifact = parentApp.getAppConfig().getApplicationArtifact();
@@ -231,6 +255,30 @@ public class CAppDeployer {
             return null;
         }
         return artifact;
+    }
+
+    /**
+     * Checks whether the given cApp artifact is complete with all it's dependencies. Recursively
+     * checks all it's dependent artifacts as well..
+     *
+     * @param rootArtifact - artifact to check
+     * @return true if ready, else false
+     */
+    private boolean isArtifactReadyToDeploy(Artifact rootArtifact) {
+        if (rootArtifact == null) {
+            return false;
+        }
+        boolean isReady = true;
+        for (Artifact.Dependency dep : rootArtifact.getDependencies()) {
+            isReady = isArtifactReadyToDeploy(dep.getArtifact());
+            if (!isReady) {
+                return false;
+            }
+        }
+        if (rootArtifact.unresolvedDepCount > 0) {
+            isReady = false;
+        }
+        return isReady;
     }
 
     /**
