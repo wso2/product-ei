@@ -670,24 +670,24 @@ public final class AppDeployerUtils {
     }
 
     public static String getTenantIdString() {
-        PrivilegedCarbonContext carbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
-        return String.valueOf(carbonContext.getTenantId());
+        // multi-tenancy is not supported in micro integrator. hence return super tenant ID
+        return AppDeployerConstants.SUPER_TENANT_ID_STR;
     }
 
     @Deprecated
     public static int getTenantId(AxisConfiguration axisConfig) {
-        PrivilegedCarbonContext carbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
-        return carbonContext.getTenantId();
+        // multi-tenancy is not supported in micro integrator. hence return super tenant ID
+        return AppDeployerConstants.SUPER_TENANT_ID_INT;
     }
 
     public static int getTenantId() {
-        PrivilegedCarbonContext carbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
-        return carbonContext.getTenantId();
+        // multi-tenancy is not supported in micro integrator. hence return super tenant ID
+        return AppDeployerConstants.SUPER_TENANT_ID_INT;
     }
 
     public static String getTenantIdLogString(int tenantId) {
-        return (tenantId != -1 && tenantId != MultitenantConstants.SUPER_TENANT_ID) ?
-                " {tenant-" + tenantId + "}" : " {super-tenant}";
+        // multi-tenancy is not supported in micro integrator. hence return super tenant log string
+        return "{super-tenant}";
     }
 
     public static String computeResourcePath(String basePath, String resourceName) {
