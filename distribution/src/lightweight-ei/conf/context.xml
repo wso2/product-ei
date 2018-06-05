@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2005-2011 WSO2, Inc. (http://wso2.com)
+  ~ Copyright 2018 WSO2, Inc. (http://wso2.com)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
     <!-- comment this out to enable session persistence across Tomcat restarts -->
     <Manager pathname=""/>
 
-    <JarScanner className="org.wso2.carbon.tomcat.ext.scan.CarbonTomcatJarScanner" scanClassPath="true"
+    <JarScanner className="org.wso2.carbon.tomcat.ext.scan.CarbonTomcatJarScanner" scanClassPath="false"
                 scanAllFiles="false" scanAllDirectories="false"/>
 
     <!-- Following are default values. But we specifically add them in kernel, becuase they get overridden in WSO2 AS -->
