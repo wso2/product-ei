@@ -1413,7 +1413,7 @@
         <synapse.version>2.1.7-wso2v62</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v21</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v22</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.2.3.wso2v1</org.apache.httpcomponents.wso2.version>
@@ -1422,23 +1422,23 @@
         <carbon.mediation.version>4.6.79</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.29</carbon.kernel.version>
+        <carbon.kernel.version>4.4.31</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.6.31</carbon.commons.version>
+        <carbon.commons.version>4.6.32</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.7.17</carbon.deployment.version>
-        <carbon-deployment.feature.imp.version>4.7.17</carbon-deployment.feature.imp.version>
+        <carbon.deployment.version>4.7.18</carbon.deployment.version>
+        <carbon-deployment.feature.imp.version>4.7.18</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
         <carbon.registry.version>4.6.34</carbon.registry.version>
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.6</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.11.148</carbon.identity.framework.version>
-        <carbon.identity-inbound-auth-saml2.version>5.2.8</carbon.identity-inbound-auth-saml2.version>
+        <carbon.identity.framework.version>5.11.247</carbon.identity.framework.version>
+        <carbon.identity-inbound-auth-saml2.version>5.2.3</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>5.3.5</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.1.4</carbon.identity-user-ws.version>
 
@@ -1446,14 +1446,14 @@
         <carbon.rule.version>4.4.9</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.55</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.56</carbon-dataservice-hosting.feature.imp.version>
 
         <version.equinox.osgi>3.9.1.v20130814-1242</version.equinox.osgi>
         <version.equinox.osgi.services>3.3.100.v20130513-1956</version.equinox.osgi.services>
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
-        <carbon.analytics.common.version>5.1.40</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.1.41</carbon.analytics.common.version>
 
         <!-- MSF4J version -->
         <!-- MSF4J version should also be updated at /p2-profile/msf4j/pom.xml and /samples/msf4j/pom.xml -->
