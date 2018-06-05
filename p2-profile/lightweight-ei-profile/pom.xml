@@ -225,9 +225,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.publisher.aggregate.feature:${carbon.analytics.common.version}
                                 </featureArtifactDef>-->
-<!--                                <featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.ntask.core.feature:${carbon.commons.version}
-                                </featureArtifactDef>-->
+                                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.ndatasource.datasources.feature:${carbon.commons.version}
                                 </featureArtifactDef>
@@ -249,9 +249,9 @@
 <!--                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.application.mgt.server.feature:${carbon.commons.version}
                                 </featureArtifactDef>-->
-<!--                                <featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.transaction.manager.feature:${carbon.commons.version}
-                                </featureArtifactDef>-->
+                                </featureArtifactDef>
                                 <!--TODO check this -->
 <!--                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.logging.mgt.server.feature:${carbon.commons.version}
@@ -354,12 +354,12 @@
 
 
                                 <!-- Data Services Features -->
-<!--                                <featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.data:org.wso2.carbon.dataservices.server.feature:${carbon-dataservice-hosting.feature.imp.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.data:org.wso2.carbon.dataservices.task.server.feature:${carbon-dataservice-hosting.feature.imp.version}
-                                </featureArtifactDef>-->
+                                </featureArtifactDef>
 
                                 <featureArtifactDef>
                                     org.wso2.ei:org.wso2.carbon.integrator.server.feature:${product.ei.version}
@@ -601,10 +601,10 @@
 
                                 <!-- 3 Carbon Commons -->
                                 <!--Need to remove Registry dependency-->
-<!--                                <feature>
+                                <feature>
                                     <id>org.wso2.carbon.ntask.core.feature.group</id>
                                     <version>${carbon.commons.version}</version>
-                                </feature>-->
+                                </feature>
 <!--                                <feature>
                                     <id>org.wso2.carbon.databridge.datapublisher.feature.group</id>
                                     <version>${carbon.analytics.common.version}</version>
@@ -674,10 +674,10 @@
                                     <id>org.wso2.carbon.deployment.synchronizer.git.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>-->
-<!--                                <feature>
+                                <feature>
                                     <id>org.wso2.carbon.transaction.manager.feature.group</id>
                                     <version>${carbon.commons.version}</version>
-                                </feature>-->
+                                </feature>
 
 <!--                                <feature>
                                     <id>org.wso2.carbon.security.mgt.server.feature.group</id>
@@ -815,7 +815,7 @@
                                     <version>${carbon.mediation.version}</version>
                                 </feature>-->
 
-<!--                                <feature>
+                                <feature>
                                     <id>org.wso2.carbon.dataservices.server.feature.group</id>
                                     <version>${carbon-dataservice-hosting.feature.imp.version}</version>
                                 </feature>
@@ -823,7 +823,7 @@
                                 <feature>
                                     <id>org.wso2.carbon.dataservices.task.server.feature.group</id>
                                     <version>${carbon-dataservice-hosting.feature.imp.version}</version>
-                                </feature>-->
+                                </feature>
 
                                 <feature>
                                     <id>org.wso2.carbon.integrator.server.feature.group</id>
