@@ -22,9 +22,18 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.deployment.Deployer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.synapse.deployers.APIDeployer;
+import org.apache.synapse.deployers.InboundEndpointDeployer;
+import org.apache.synapse.deployers.MessageProcessorDeployer;
+import org.apache.synapse.deployers.MessageStoreDeployer;
+import org.apache.synapse.deployers.TemplateDeployer;
+import org.wso2.carbon.endpoint.EndpointDeployer;
+import org.wso2.carbon.localentry.LocalEntryDeployer;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
+import org.wso2.carbon.mediation.startup.StartupTaskDeployer;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployerConstants;
 import org.wso2.carbon.proxyadmin.ProxyServiceDeployer;
+import org.wso2.carbon.sequences.SequenceDeploymentInterceptor;
 
 import java.util.HashMap;
 
@@ -92,6 +101,15 @@ public class DataHolder {
      * Function to initialize deployers with default deployers. Need to invoke this before adding custom implementations
      */
     public void initializeDefaultSynapseDeployers() {
+        addSynapseDeployer(SynapseAppDeployerConstants.LOCAL_ENTRY_TYPE, new LocalEntryDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.ENDPOINT_TYPE, new EndpointDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.SEQUENCE_TYPE, new SequenceDeploymentInterceptor());
+        addSynapseDeployer(SynapseAppDeployerConstants.TEMPLATE_TYPE, new TemplateDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.TASK_TYPE, new StartupTaskDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.MESSAGE_STORE_TYPE, new MessageStoreDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.MESSAGE_PROCESSOR_TYPE, new MessageProcessorDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.INBOUND_ENDPOINT_TYPE, new InboundEndpointDeployer());
+        addSynapseDeployer(SynapseAppDeployerConstants.API_TYPE, new APIDeployer());
         addSynapseDeployer(SynapseAppDeployerConstants.PROXY_SERVICE_TYPE, new ProxyServiceDeployer());
     }
 
