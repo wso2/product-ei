@@ -283,6 +283,8 @@
                 <exclude>**/wso2server.bat</exclude>
                 <exclude>**/README.txt</exclude>
                 <exclude>**/LICENSE.txt</exclude>
+                <exclude>**/registry.xml</exclude>
+                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
@@ -296,6 +298,7 @@
                 </exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
                 </exclude>
+                <exclude>**/tomcat/carbon/META-INF/context.xml</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
                 </exclude>
                 <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
@@ -315,6 +318,8 @@
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
+                <exclude>**/registry.xml</exclude>
+                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
                 <exclude>**/README.txt</exclude>
@@ -323,6 +328,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/tomcat/carbon/META-INF/context.xml</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
             </excludes>
         </fileSet>
@@ -2763,6 +2769,11 @@
             <source>src/lightweight-ei/conf/web.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/tomcat/carbon/WEB-INF</outputDirectory>
             <destName>web.xml</destName>
+        </file>
+        <file>
+            <source>src/lightweight-ei/conf/context.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/tomcat/carbon/MATA-INF</outputDirectory>
+            <destName>context.xml</destName>
         </file>
         <file>
             <source>src/conf/webapp-mode/web.xml</source>
