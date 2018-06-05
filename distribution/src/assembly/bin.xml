@@ -78,7 +78,7 @@
                 <exclude>**/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/wso2/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/wso2/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
                 <exclude>**/wso2/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
@@ -150,7 +150,7 @@
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
                 </exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
@@ -221,7 +221,7 @@
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
                 </exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
@@ -258,6 +258,78 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/master-datasources.xml</exclude>
+            </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/wso2</exclude>
+                <exclude>**/repository/conf/**</exclude>
+                <exclude>**/repository/components/**</exclude>
+                <exclude>**/wso2/components/**</exclude>
+                <exclude>**/lib/**</exclude>
+                <exclude>**/bin/**</exclude>
+                <exclude>**/conf/axis2/axis2.xml</exclude>
+                <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
+                <exclude>**/conf/synapse.xml</exclude>
+                <exclude>**/log4j.properties</exclude>
+                <exclude>**/services/sample01.aar</exclude>
+                <exclude>**/repository/services/version/**</exclude>
+                <exclude>**/version.txt</exclude>
+                <exclude>**/wso2carbon-version.txt</exclude>
+                <exclude>**/wso2server.bat</exclude>
+                <exclude>**/README.txt</exclude>
+                <exclude>**/LICENSE.txt</exclude>
+                <exclude>**/registry.xml</exclude>
+                <exclude>**/user-mgt.xml</exclude>
+                <exclude>**/release-notes.html</exclude>
+                <exclude>**/carbon.xml</exclude>
+                <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
+                <exclude>**/lib/endorsed/xalan*.jar</exclude>
+                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/registry.xml</exclude>
+                <exclude>**/repository/conf/tomcat/web.xml</exclude>
+                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
+                </exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
+                </exclude>
+                <exclude>**/tomcat/carbon/META-INF/context.xml</exclude>
+                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
+                </exclude>
+                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
+            </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/conf</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <excludes>
+                <exclude>**/wso2</exclude>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/axis2/axis2.xml</exclude>
+                <exclude>**/axis2/tenant-axis2.xml</exclude>
+                <exclude>**/synapse.xml</exclude>
+                <exclude>**/log4j.properties</exclude>
+                <exclude>**/services/sample01.aar</exclude>
+                <exclude>**/repository/services/version/**</exclude>
+                <exclude>**/version.txt</exclude>
+                <exclude>**/registry.xml</exclude>
+                <exclude>**/user-mgt.xml</exclude>
+                <exclude>**/wso2carbon-version.txt</exclude>
+                <exclude>**/wso2server.bat</exclude>
+                <exclude>**/README.txt</exclude>
+                <exclude>**/LICENSE.txt</exclude>
+                <exclude>**/release-notes.html</exclude>
+                <exclude>**/carbon.xml</exclude>
+                <exclude>**/lib/endorsed/xalan*.jar</exclude>
+                <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/tomcat/carbon/META-INF/context.xml</exclude>
+                <exclude>**//tomcat/catalina-server.xml</exclude>
             </excludes>
         </fileSet>
 
@@ -328,6 +400,42 @@
                 <exclude>**/wrapper.conf</exclude>
                 <exclude>build.xml</exclude>
             </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/bin</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/*.bat</exclude>
+                <exclude>**/wrapper.conf</exclude>
+                <exclude>build.xml</exclude>
+            </excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/lightweight-ei/conf</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/bin</outputDirectory>
+            <includes>
+                <include>**.sh</include>
+                <include>**.bat</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/scripts/</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lightweight/bin
+            </outputDirectory>
+            <includes>
+                <include>**/build.xml</include>
+                <include>**/carbondump.bat</include>
+                <include>**/carbondump.sh</include>
+                <include>**/chpasswd.bat</include>
+                <include>**/chpasswd.sh</include>
+                <include>**/tcpmon.bat</include>
+                <include>**/tcpmon.sh</include>
+            </includes>
         </fileSet>
 
         <fileSet>
@@ -917,6 +1025,14 @@
             </includes>
         </fileSet>
         <fileSet>
+            <directory>./src/resources/tomcat</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/tomcat</outputDirectory>
+            <includes>
+                <include>**/catalina-server.xml</include>
+                <include>**/webapp-classloading-environments.xml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>./src/resources</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/lib/endorsed</outputDirectory>
             <includes>
@@ -978,6 +1094,21 @@
             <includes>
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
+        </fileSet>
+        <fileSet>
+            <directory>./src/conf</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <includes>
+                <include>**/cipher-standalone-config.properties</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>
+                ../p2-profile/lightweight-ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity
+            </directory>
+            <outputDirectory>
+                wso2ei-${pom.version}/wso2/lightweight/conf/identity/
+            </outputDirectory>
         </fileSet>
 
 
@@ -1048,23 +1179,6 @@
             </excludes>
         </fileSet>
 
-        <fileSet>
-            <directory>src/conf/synapse-configs</directory>
-            <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/synapse-configs
-            </outputDirectory>
-            <excludes>
-                <exclude>**/empty.txt</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>src/conf/carbonapps</directory>
-            <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/carbonapps
-            </outputDirectory>
-            <excludes>
-                <exclude>empty.txt</exclude>
-            </excludes>
-        </fileSet>
-
         <!--Multitenancy related file -->
         <fileSet>
             <directory>
@@ -1090,6 +1204,22 @@
         <fileSet>
             <directory>src/conf/carbonapps</directory>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/carbonapps
+            </outputDirectory>
+            <excludes>
+                <exclude>empty.txt</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>src/conf/synapse-configs</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/repository/deployment/server/synapse-configs
+            </outputDirectory>
+            <excludes>
+                <exclude>**/empty.txt</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>src/conf/carbonapps</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/repository/deployment/server/carbonapps
             </outputDirectory>
             <excludes>
                 <exclude>empty.txt</exclude>
@@ -1255,7 +1385,7 @@
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
                 </exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
@@ -1300,7 +1430,7 @@
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
                 </exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
@@ -1336,7 +1466,7 @@
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v2.jar</exclude>
+                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
                 </exclude>
                 <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
@@ -1833,6 +1963,13 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/repository/lib</outputDirectory>
             <includes>
                 <include>jline:jline:jar</include>
+            </includes>
+        </dependencySet>
+
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/repository/lib</outputDirectory>
+            <includes>
+                <include>org.wso2.ei:org.wso2.carbon.micro.integrator.server:jar</include>
             </includes>
         </dependencySet>
 
@@ -2546,12 +2683,23 @@
 
         <!-- Broker files: End -->
 
+        <!-- light weight -->
+
+
 
         <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-broker.xml
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-broker.xml
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -2564,8 +2712,24 @@
         </file>
 
         <file>
+            <source>
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/data-bridge/data-agent-config.xml
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/data-bridge</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
             <source>src/conf/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
+            <destName>axis2.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>src/lightweight-ei/conf/axis2.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2584,21 +2748,44 @@
         </file>
 
         <file>
-
             <source>src/conf/web.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <destName>web.xml</destName>
         </file>
+
+<!--        <file>
+            <source>src/conf/web.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/tomcat</outputDirectory>
+            <destName>web.xml</destName>
+        </file>-->
+
         <file>
             <source>src/conf/carbon/web.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat/carbon/WEB-INF</outputDirectory>
             <destName>web.xml</destName>
+        </file>
+
+        <file>
+            <source>src/lightweight-ei/conf/web.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/tomcat/carbon/WEB-INF</outputDirectory>
+            <destName>web.xml</destName>
+        </file>
+        <file>
+            <source>src/lightweight-ei/conf/context.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/tomcat/carbon/MATA-INF</outputDirectory>
+            <destName>context.xml</destName>
         </file>
         <file>
             <source>src/conf/webapp-mode/web.xml</source>
             <outputDirectory>wso2ei-${pom.version}/webapp-mode/WEB-INF</outputDirectory>
             <destName>web.xml</destName>
         </file>
+
+<!--        <file>
+            <source>src/conf/webapp-mode/web.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/webapp-mode/WEB-INF</outputDirectory>
+            <destName>web.xml</destName>
+        </file>-->
         <file>
             <source>src/conf/tenant-axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
@@ -2612,9 +2799,24 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+
+        <file>
+            <source>src/conf/axis2_nhttp.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/axis2</outputDirectory>
+            <destName>axis2_nhttp.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
         <file>
             <source>src/conf/axis2_pt.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
+            <destName>axis2_pt.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/axis2_pt.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/axis2</outputDirectory>
             <destName>axis2_pt.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2625,10 +2827,22 @@
             <destName>axis2_blocking_client.xml</destName>
             <fileMode>644</fileMode>
         </file>
-
+        <file>
+            <source>src/conf/axis2_blocking_client.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/axis2</outputDirectory>
+            <destName>axis2_blocking_client.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
         <file>
             <source>src/conf/log4j.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>log4j.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/lightweight-ei/conf/log4j.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <destName>log4j.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2641,6 +2855,13 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/lightweight-ei/conf/synapse.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <destName>synapse.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/synapse-handlers.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>synapse-handlers.xml</destName>
@@ -2648,8 +2869,22 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/synapse-handlers.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <destName>synapse-handlers.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/datasources.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>datasources.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/datasources.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <destName>datasources.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2677,8 +2912,22 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/security/cipher-text.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/security</outputDirectory>
+            <destName>cipher-text.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/security/cipher-tool.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf/security</outputDirectory>
+            <destName>cipher-tool.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/security/cipher-tool.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/security</outputDirectory>
             <destName>cipher-tool.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2691,8 +2940,22 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/security/secret-conf.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/security</outputDirectory>
+            <destName>secret-conf.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/nhttp.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>nhttp.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/nhttp.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <destName>nhttp.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2705,6 +2968,13 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/passthru-http.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <destName>passthru-http.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/hl7.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>hl7.properties</destName>
@@ -2712,8 +2982,22 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/hl7.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <destName>hl7.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/access-log.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>access-log.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/access-log.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <destName>access-log.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2733,10 +3017,24 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/jndi.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <destName>jndi.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/rule-engine-config.xml
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/rule-engine-config.xml
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -2774,6 +3072,12 @@
         <file>
             <source>src/conf/carbon.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/carbon.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
@@ -2821,10 +3125,23 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/etc/logging-config.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lightweight/conf/etc</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity/identity.xml
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf/identity</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                ../components/org.wso2.carbon.micro.integrator.server/target/org.wso2.carbon.micro.integrator.server-${product.ei.version}.jar
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <!-- Including tasks-config.xml file-->
@@ -2858,12 +3175,27 @@
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-processor.xml
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
 
         <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/output-event-adapters.xml
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/output-event-adapters.xml
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lightweight/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -3576,7 +3908,7 @@
 
         <file>
             <source>
-                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/httpclient_4.3.1.wso2v2.jar
+                ../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/httpclient_4.3.1.wso2v3.jar
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/components/plugins/
             </outputDirectory>
