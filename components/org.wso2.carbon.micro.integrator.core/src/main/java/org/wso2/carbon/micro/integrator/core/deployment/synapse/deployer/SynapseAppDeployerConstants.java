@@ -58,4 +58,6 @@ public class SynapseAppDeployerConstants {
     public static final String FAULT_SEQ_FILE = "fault.xml";
 
     public static final String SYNAPSE_DEPLOYER_REQUIRED_SERVICES = "SYNAPSE_DEPLOYER-RequiredServices";
+
+    public static final String FILE_EXTENSION_XML = ".xml";
 }
