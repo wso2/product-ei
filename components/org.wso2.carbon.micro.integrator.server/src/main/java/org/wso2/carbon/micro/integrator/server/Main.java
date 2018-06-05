@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -66,7 +66,6 @@ public class Main {
     protected static final String P2_DATA_AREA = "eclipse.p2.data.area";
 
     public static void main(String[] args) {
-        System.out.println("88***************************************");
         //Setting Carbon Home
         if (System.getProperty(LauncherConstants.CARBON_HOME) == null) {
             System.setProperty(LauncherConstants.CARBON_HOME, ".");
