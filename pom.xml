@@ -1419,7 +1419,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.81</carbon.mediation.version>
+        <carbon.mediation.version>4.6.83</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.31</carbon.kernel.version>
@@ -1446,7 +1446,7 @@
         <carbon.rule.version>4.4.9</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.57</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.58</carbon-dataservice-hosting.feature.imp.version>
 
         <version.equinox.osgi>3.9.1.v20130814-1242</version.equinox.osgi>
         <version.equinox.osgi.services>3.3.100.v20130513-1956</version.equinox.osgi.services>
@@ -1498,7 +1498,7 @@
         <carbon.analytics.version>1.3.31</carbon.analytics.version>
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.57</carbon.data.version>
+        <carbon.data.version>4.4.58</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
@@ -1541,7 +1541,7 @@
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
         <org.wso2.andes.client.version>3.2.58</org.wso2.andes.client.version>
 
-        <commons-codec.version>1.6</commons-codec.version>
+        <commons-codec.version>1.10</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>
         <commons-digester.version>2.1</commons-digester.version>
         <hawtbuf.version>1.9</hawtbuf.version>
