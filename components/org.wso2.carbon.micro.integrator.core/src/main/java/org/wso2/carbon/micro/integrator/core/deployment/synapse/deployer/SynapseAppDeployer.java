@@ -54,7 +54,6 @@ import org.wso2.carbon.application.deployer.handler.AppDeploymentHandler;
 import org.wso2.carbon.mediation.initializer.ServiceBusConstants;
 import org.wso2.carbon.mediation.initializer.ServiceBusUtils;
 import org.wso2.carbon.mediation.initializer.persistence.MediationPersistenceManager;
-import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.mediation.library.util.LocalEntryUtil;
 import org.wso2.carbon.micro.integrator.core.deployment.DataHolder;
 
