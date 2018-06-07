@@ -2239,6 +2239,12 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/etc/
             </outputDirectory>
         </file>
+
+        <file>
+            <source>src/lightweight-ei/conf/tasks-config.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lightweight/conf/etc/
+            </outputDirectory>
+        </file>
         <file>
             <source>
                 src/scripts/profiles/ciphertool.sh
