@@ -368,6 +368,11 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>org.wso2.carbon.application.deployer.synapse</artifactId>
+                <version>${carbon.mediation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.mediation</groupId>
                 <artifactId>org.wso2.carbon.localentry.stub</artifactId>
                 <version>${carbon.mediation.version}</version>
                 <scope>test</scope>
