@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.CarbonException;
+import org.wso2.carbon.application.deployer.synapse.FileRegistryResourceDeployer;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
@@ -61,6 +62,8 @@ public class AppDeployerServiceComponent {
 
         // Register application deployment handlers
         cAppDeploymentManager.registerDeploymentHandler(new SynapseAppDeployer());
+        cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
+                synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));
 
         // Deploy carbon applications
         try {
