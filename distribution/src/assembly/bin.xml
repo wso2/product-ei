@@ -3781,6 +3781,15 @@
             </outputDirectory>
             <filtered>true</filtered>
         </file>
+        <!--File based Synapse registry for Micro EI-->
+        <file>
+            <source>
+                src/lightweight-ei/conf/registry.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lightweight/repository/deployment/server/synapse-configs/default
+            </outputDirectory>
+            <filtered>true</filtered>
+        </file>
 
         <!-- Cipher Tool Files -->
         <file>
