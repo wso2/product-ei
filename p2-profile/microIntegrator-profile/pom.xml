@@ -30,7 +30,7 @@
 
     <artifactId>microIntegrator-p2-profile</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Enterprise Integrator - Lightweight P2 Profile Generation</name>
+    <name>WSO2 Enterprise Integrator - microIntegrator P2 Profile Generation</name>
     <url>http://www.wso2.org</url>
 
     <dependencies>
@@ -405,7 +405,7 @@
                             <targetPath>
                                 file:${basedir}/target/wso2carbon-core-${carbon.kernel.version}/wso2/components
                             </targetPath>
-                            <profile>lightweight-default</profile>
+                            <profile>microIntegrator-default</profile>
                         </configuration>
                     </execution>
                     <!--END-->
@@ -417,7 +417,7 @@
                             <goal>p2-profile-gen</goal>
                         </goals>
                         <configuration>
-                            <profile>lightweight-default</profile>
+                            <profile>microIntegrator-default</profile>
                             <metadataRepository>file:${basedir}/target/p2-repo</metadataRepository>
                             <artifactRepository>file:${basedir}/target/p2-repo</artifactRepository>
                             <destination>

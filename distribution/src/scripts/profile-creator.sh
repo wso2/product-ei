@@ -46,7 +46,7 @@ echo "	2.Analytics Profile"
 echo "	3.Business Process profile"
 echo "	4.Broker profile"
 echo "	5.Msf4j profile"
-echo "	6.Light weight ESB profile"
+echo "	6.Micro Integrator profile"
 echo "Please enter the desired profile number to create the profile specific distribution."
 read profileNumber
 #Integrator profile
@@ -77,10 +77,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/lightweight
-	rm -rf ${DIR}/../wso2/components/lightweight-default
-	rm -rf ${DIR}/lightweight.bat
-	rm -rf ${DIR}/lightweight.sh
+	rm -rf ${DIR}/../wso2/microIntegrator
+	rm -rf ${DIR}/../wso2/components/microIntegrator-default
+	rm -rf ${DIR}/microIntegrator.bat
+	rm -rf ${DIR}/microIntegrator.sh
 
 	PROFILE="_integrator"
 
@@ -116,10 +116,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/lightweight
-	rm -rf ${DIR}/../wso2/components/lightweight-default
-	rm -rf ${DIR}/lightweight.bat
-	rm -rf ${DIR}/lightweight.sh
+	rm -rf ${DIR}/../wso2/microIntegrator
+	rm -rf ${DIR}/../wso2/components/microIntegrator-default
+	rm -rf ${DIR}/microIntegrator.bat
+	rm -rf ${DIR}/microIntegrator.sh
 
 	PROFILE="_analytics"
 
@@ -153,10 +153,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/lightweight
-	rm -rf ${DIR}/../wso2/components/lightweight-default
-	rm -rf ${DIR}/lightweight.bat
-	rm -rf ${DIR}/lightweight.sh
+	rm -rf ${DIR}/../wso2/microIntegrator
+	rm -rf ${DIR}/../wso2/components/microIntegrator-default
+	rm -rf ${DIR}/microIntegrator.bat
+	rm -rf ${DIR}/microIntegrator.sh
 
 	PROFILE="_businessprocess"
 
@@ -191,10 +191,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/lightweight
-	rm -rf ${DIR}/../wso2/components/lightweight-default
-	rm -rf ${DIR}/lightweight.bat
-	rm -rf ${DIR}/lightweight.sh
+	rm -rf ${DIR}/../wso2/microIntegrator
+	rm -rf ${DIR}/../wso2/components/microIntegrator-default
+	rm -rf ${DIR}/microIntegrator.bat
+	rm -rf ${DIR}/microIntegrator.sh
 
 	PROFILE="_broker"
 
@@ -227,10 +227,10 @@ then
 	rm -rf ${DIR}/broker.sh
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/lightweight
-	rm -rf ${DIR}/../wso2/components/lightweight-default
-	rm -rf ${DIR}/lightweight.bat
-	rm -rf ${DIR}/lightweight.sh
+	rm -rf ${DIR}/../wso2/microIntegrator
+	rm -rf ${DIR}/../wso2/components/microIntegrator-default
+	rm -rf ${DIR}/microIntegrator.bat
+	rm -rf ${DIR}/microIntegrator.sh
 
     PROFILE="_msf4j"
 
@@ -238,7 +238,7 @@ then
 elif [ ${profileNumber} -eq 6 ]
 then
 	echo "Preparing the Integrator profile distribution"
-	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/lightweight-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
+	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/microIntegrator-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove business-process
 	#remove integrator
 	echo "Removing Integrator profile"
@@ -271,7 +271,7 @@ then
 	#remove msf4j
 	rm -rf ${DIR}/../wso2/msf4j
 
-	PROFILE="_lightweight"
+	PROFILE="_microIntegrator"
 
 
 else
