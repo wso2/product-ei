@@ -285,7 +285,7 @@ for i in "$@"; do
 done
 
 if [ "$PROFILE_SELECTED" = false ] ; then
-   NODE_PARAMS="$NODE_PARAMS -Dprofile=lightweight-default"
+   NODE_PARAMS="$NODE_PARAMS -Dprofile=microIntegrator-default"
 fi
 
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
@@ -309,7 +309,7 @@ do
     -Djava.command="$JAVACMD" \
     -Dqpid.conf="/conf/advanced/" \
     -Dcarbon.home="$CARBON_HOME" \
-    -Dlogger.server.name="EI-Lightweight" \
+    -Dlogger.server.name="MicroIntegrator" \
     -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
     -Dcarbon.config.dir.path="$CARBON_HOME/conf" \
     -Dcarbon.repository.dir.path="$CARBON_HOME/repository" \
@@ -323,7 +323,7 @@ do
     -Dei.extendedURIBasedDispatcher=org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler \
     -Djava.util.logging.config.file="$CARBON_HOME/conf/etc/logging-bridge.properties" \
     -Dcomponents.repo="$CARBON_HOME/../components/plugins" \
-    -Dconf.location="$CARBON_HOME/../lightweight/conf" \
+    -Dconf.location="$CARBON_HOME/../microIntegrator/conf" \
     -Dcom.atomikos.icatch.file="$CARBON_HOME/../lib/transactions.properties" \
     -Dcom.atomikos.icatch.hide_init_file_path=true \
     -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false \
