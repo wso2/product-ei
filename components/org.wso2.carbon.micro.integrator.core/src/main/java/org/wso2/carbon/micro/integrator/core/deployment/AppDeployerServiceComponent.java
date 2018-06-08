@@ -62,8 +62,8 @@ public class AppDeployerServiceComponent {
 
         // Register application deployment handlers
         cAppDeploymentManager.registerDeploymentHandler(new SynapseAppDeployer());
-        /*cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
-                synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));*/
+        cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
+                synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));
 
         // Deploy carbon applications
         try {
