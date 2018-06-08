@@ -44,12 +44,12 @@
         <module>org.wso2.carbon.integrator.core</module>
         <module>org.wso2.carbon.micro.integrator.core</module>
         <module>org.wso2.carbon.micro.integrator.server</module>
-        <!--<module>org.wso2.ei.styles</module>-->
-        <!--<module>org.wso2.ei.analytics.styles</module>-->
-        <!--<module>org.wso2.ei.business-process.styles</module>-->
-        <!--<module>org.wso2.ei.broker.styles</module>-->
-        <!--<module>org.wso2.ei.bpmn.analytics.udf</module>-->
-        <!--<module>org.wso2.ei.bpmn.analytics.core</module>-->
-        <!--<module>org.wso2.ei.analytics.elk</module>-->
+        <module>org.wso2.ei.styles</module>
+        <module>org.wso2.ei.analytics.styles</module>
+        <module>org.wso2.ei.business-process.styles</module>
+        <module>org.wso2.ei.broker.styles</module>
+        <module>org.wso2.ei.bpmn.analytics.udf</module>
+        <module>org.wso2.ei.bpmn.analytics.core</module>
+        <module>org.wso2.ei.analytics.elk</module>
     </modules>
 </project>
