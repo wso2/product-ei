@@ -163,7 +163,7 @@
 
     <test name="Misc-tests" preserve-order="true" verbose="2">
         <classes>
-            <class name="org.wso2.carbon.esb.template.HttpEpTemplateWithSystemPropsTestCase"/>
+            <!--<class name="org.wso2.carbon.esb.template.HttpEpTemplateWithSystemPropsTestCase"/>-->
             <class name="org.wso2.carbon.esb.security.policy.UTResponseCode401UTauthFailure"/>
             <class name="org.wso2.carbon.esb.registry.task.ESBJAVA4565TestCase"/>
             <class name="org.wso2.carbon.esb.header.preserve.ESBJAVA4631PreserveContentTypeHeaderTestCase"/>

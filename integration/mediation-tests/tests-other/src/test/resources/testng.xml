@@ -45,16 +45,17 @@
         </packages>
     </test>
 
-    <test name="Test-Multiple-servers" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.test.servers.NewInstanceTestCase"/>
-            <class name="org.wso2.carbon.esb.test.servers.OSGIUnsatisfiedServerBundlesTestCase">
-		<methods>
-                    <exclude name=".*"/>
-                </methods>
-	    </class>
-        </classes>
-    </test>
+    <!-- Disabled due to jenkins failure with "no space left on device" -->
+    <!--<test name="Test-Multiple-servers" preserve-order="true" verbose="2">-->
+        <!--<classes>-->
+            <!--<class name="org.wso2.carbon.esb.test.servers.NewInstanceTestCase"/>-->
+            <!--<class name="org.wso2.carbon.esb.test.servers.OSGIUnsatisfiedServerBundlesTestCase">-->
+		<!--<methods>-->
+                    <!--<exclude name=".*"/>-->
+                <!--</methods>-->
+	    <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
 
     <test name="PostRequest-Test" preserve-order="true" verbose="2">
         <packages>
