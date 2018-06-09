@@ -167,7 +167,7 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
 
     /**
      * Test for suspend action of a transaction (suspend action has not been implemented though it is mentioned in WSO2
-     * docs. https://docs.wso2.com/display/EI620/Transaction+Mediator)
+     * docs. https://docs.wso2.com/display/EI630/Transaction+Mediator)
      *
      * @throws Exception
      */
@@ -185,7 +185,7 @@ public class TransactionMediatorTestCase extends ESBIntegrationTest {
 
     /**
      * Test for suspend and resume actions of a transaction (suspend and resume actiona have not been implemented though
-     * it is mentioned in WSO2 docs. https://docs.wso2.com/display/EI620/Transaction+Mediator)
+     * it is mentioned in WSO2 docs. https://docs.wso2.com/display/EI630/Transaction+Mediator)
      *
      * @throws Exception
      */
