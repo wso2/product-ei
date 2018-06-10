@@ -78,68 +78,68 @@ public class CAppDeploymentManager {
                     String cAppName = file.getName();
                     String targetCAppPath = cAppDir + File.separator + cAppName;
 
-                    // Extract to temporary location
-                    String tempExtractedDirPath = AppDeployerUtils.extractCarbonApp(targetCAppPath);
+                    try {
+                        // Extract to temporary location
+                        String tempExtractedDirPath = AppDeployerUtils.extractCarbonApp(targetCAppPath);
 
-                    // Build the app configuration by providing the artifacts.xml path
-                    ApplicationConfiguration appConfig = new ApplicationConfiguration(tempExtractedDirPath +
-                                    ApplicationConfiguration.ARTIFACTS_XML);
+                        // Build the app configuration by providing the artifacts.xml path
+                        ApplicationConfiguration appConfig = new ApplicationConfiguration(tempExtractedDirPath +
+                                ApplicationConfiguration.ARTIFACTS_XML);
 
-                    // If we don't have features (artifacts) for this server, ignore
-                    if (appConfig.getApplicationArtifact().getDependencies().size() == 0) {
-                        log.warn("No artifacts found to be deployed in this server. " +
-                                "Ignoring Carbon Application : " + cAppName);
-                        return;
-                    }
-
-                    CarbonApplication currentApp = new CarbonApplication();
-                    currentApp.setAppFilePath(targetCAppPath);
-                    currentApp.setExtractedPath(tempExtractedDirPath);
-                    currentApp.setAppConfig(appConfig);
-
-                    // Set App Name
-                    String appName = appConfig.getAppName();
-                    if (appName == null) {
-                        log.warn("No application name found in Carbon Application : " + cAppName + ". Using " +
-                                "the file name as the application name");
-                        appName = cAppName.substring(0, cAppName.lastIndexOf('.'));
-                    }
-                    currentApp.setAppName(appName);
-
-                    // Set App Version
-                    String appVersion = appConfig.getAppVersion();
-                    if (appVersion != null && !("").equals(appVersion)) {
-                        currentApp.setAppVersion(appVersion);
-                    }
-
-                    // deploy sub artifacts of this cApp
-                    this.searchArtifacts(currentApp.getExtractedPath(), currentApp);
-
-                    if (isArtifactReadyToDeploy(currentApp.getAppConfig().getApplicationArtifact())) {
-                        // Now ready to deploy
-                        for (AppDeploymentHandler appDeploymentHandler : appDeploymentHandlers) {
-                            try {
-                                appDeploymentHandler.deployArtifacts(currentApp, axisConfiguration);
-                            } catch (DeploymentException e) {
-                                log.error("Error occurred while deploying the Carbon application : " +
-                                        currentApp.getAppName());
-                            }
+                        // If we don't have features (artifacts) for this server, ignore
+                        if (appConfig.getApplicationArtifact().getDependencies().size() == 0) {
+                            log.warn("No artifacts found to be deployed in this server. " +
+                                    "Ignoring Carbon Application : " + cAppName);
+                            return;
                         }
-                    } else {
-                        log.error("Some dependencies were not satisfied in cApp:" +
-                                currentApp.getAppNameWithVersion() +
-                                "Check whether all dependent artifacts are included in cApp file: " +
-                                targetCAppPath);
-                        FileManipulator.deleteDir(currentApp.getExtractedPath());
-                        return;
+
+                        CarbonApplication currentApp = new CarbonApplication();
+                        currentApp.setAppFilePath(targetCAppPath);
+                        currentApp.setExtractedPath(tempExtractedDirPath);
+                        currentApp.setAppConfig(appConfig);
+
+                        // Set App Name
+                        String appName = appConfig.getAppName();
+                        if (appName == null) {
+                            log.warn("No application name found in Carbon Application : " + cAppName + ". Using " +
+                                    "the file name as the application name");
+                            appName = cAppName.substring(0, cAppName.lastIndexOf('.'));
+                        }
+                        currentApp.setAppName(appName);
+
+                        // Set App Version
+                        String appVersion = appConfig.getAppVersion();
+                        if (appVersion != null && !("").equals(appVersion)) {
+                            currentApp.setAppVersion(appVersion);
+                        }
+
+                        // deploy sub artifacts of this cApp
+                        this.searchArtifacts(currentApp.getExtractedPath(), currentApp);
+
+                        if (isArtifactReadyToDeploy(currentApp.getAppConfig().getApplicationArtifact())) {
+                            // Now ready to deploy
+                            // send the CarbonApplication instance through the handler chain
+                            for (AppDeploymentHandler appDeploymentHandler : appDeploymentHandlers) {
+                                appDeploymentHandler.deployArtifacts(currentApp, axisConfiguration);
+                            }
+                        } else {
+                            log.error("Some dependencies were not satisfied in cApp:" +
+                                    currentApp.getAppNameWithVersion() +
+                                    "Check whether all dependent artifacts are included in cApp file: " +
+                                    targetCAppPath);
+                            FileManipulator.deleteDir(currentApp.getExtractedPath());
+                            return;
+                        }
+
+                        // Deployment Completed
+                        currentApp.setDeploymentCompleted(true);
+                        //this.addCarbonApp(tenantId, currentApp);
+                        log.info("Successfully Deployed Carbon Application : " + currentApp.getAppNameWithVersion() +
+                                AppDeployerUtils.getTenantIdLogString(AppDeployerUtils.getTenantId()));
+
+                    } catch (DeploymentException e) {
+                        log.error("Error occurred while deploying the Carbon application: " + targetCAppPath , e);
                     }
-
-                    // Deployment Completed
-                    currentApp.setDeploymentCompleted(true);
-                    //this.addCarbonApp(tenantId, currentApp);
-                    log.info("Successfully Deployed Carbon Application : " + currentApp.getAppNameWithVersion() +
-                            AppDeployerUtils.getTenantIdLogString(AppDeployerUtils.getTenantId()));
-
                 }
             }
         }
