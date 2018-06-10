@@ -1048,6 +1048,12 @@ public class SynapseAppDeployer implements AppDeploymentHandler {
                     } catch (DeploymentException e) {
                         artifact.setDeploymentStatus(AppDeployerConstants.DEPLOYMENT_STATUS_FAILED);
                         throw e;
+                    } catch (Throwable throwable) {
+                        artifact.setDeploymentStatus(AppDeployerConstants.DEPLOYMENT_STATUS_FAILED);
+                        // Since there can be different deployers, they can throw any error.
+                        // So need to handle unhandled exception has occurred during deployement. Hence catch all and
+                        // wrap it with DeployementException and throw it
+                        throw new DeploymentException(throwable);
                     } finally {
                         //clear the log appender once deployment is finished to avoid appending the
                         //same log to other classes.
