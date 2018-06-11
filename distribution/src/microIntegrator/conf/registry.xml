@@ -17,7 +17,7 @@
   ~ under the License.
   -->
 <!-- Registry declaration of the WSO2 MicroIntegrator -->
-<registry xmlns="http://ws.apache.org/ns/synapse" provider="org.wso2.carbon.mediation.registry.EILightweightRegistry">
+<registry xmlns="http://ws.apache.org/ns/synapse" provider="org.wso2.carbon.mediation.registry.MicroIntegratorRegistry">
     <parameter name="cachableDuration">15000</parameter>
     <!--
         Uncomment below parameters (ConfigRegRoot, GovRegRoot, LocalRegRoot) to configure registry root paths
