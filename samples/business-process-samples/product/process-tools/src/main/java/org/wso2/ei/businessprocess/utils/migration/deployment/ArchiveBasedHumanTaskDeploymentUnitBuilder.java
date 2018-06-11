@@ -161,7 +161,13 @@ public class ArchiveBasedHumanTaskDeploymentUnitBuilder extends HumanTaskDeploym
             zipStream = new ZipInputStream(new FileInputStream(archiveFile));
             ZipEntry entry;
 
+            String canonicalDestPath = new File(humanTaskExtractionLocation).getCanonicalPath();
             while ((entry = zipStream.getNextEntry()) != null) {
+                String canonicalEntryPath = new File(humanTaskExtractionLocation + File.separator +
+                        entry.getName()).getCanonicalPath();
+                if(!canonicalEntryPath.startsWith(canonicalDestPath)){
+                    throw new HumanTaskDeploymentException("Entry is outside of the target dir: " + entry.getName());
+                }
                 if (entry.isDirectory()) {
                     if (!new File(humanTaskExtractionLocation, entry.getName()).mkdirs() &&
                             !new File(humanTaskExtractionLocation, entry.getName()).exists()) {
