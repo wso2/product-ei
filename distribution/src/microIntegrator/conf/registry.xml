@@ -16,10 +16,16 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<!-- Registry declaration of the WSO2 EI -->
-<!--registry xmlns="http://ws.apache.org/ns/synapse" provider="org.wso2.carbon.mediation.registry.WSO2Registry">
-    <parameter name="cachableDuration">15000</parameter>
-</registry-->
+<!-- Registry declaration of the WSO2 MicroIntegrator -->
 <registry xmlns="http://ws.apache.org/ns/synapse" provider="org.wso2.carbon.mediation.registry.EILightweightRegistry">
     <parameter name="cachableDuration">15000</parameter>
+    <!--
+        Uncomment below parameters (ConfigRegRoot, GovRegRoot, LocalRegRoot) to configure registry root paths
+        Default : <EI_HOME>/wso2/microIntegrator/registry/{governance | config | local}
+    -->
+    <!--
+    <parameter name="ConfigRegRoot">{Root directory path for configuration Registry}</parameter>
+    <parameter name="GovRegRoot">{Root directory path for governance Registry}</parameter>
+    <parameter name="LocalRegRoot">{Root directory path for local Registry}</parameter>
+    -->
 </registry>
