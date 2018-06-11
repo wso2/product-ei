@@ -21,4 +21,8 @@ package org.wso2.carbon.micro.integrator.core.deployment;
 public class DeploymentConstants {
 
     public static final String CAPP_DIR_NAME = "carbonapps";
+    public static final String DSS_DIR_NAME = "dataservices";
+
+    public static final String DSS_TYPE_DBS = "dbs";
+    public static final String DSS_TYPE_EXTENSION = ".dbs";
 }
