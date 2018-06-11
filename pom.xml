@@ -1591,7 +1591,6 @@
         <forgetme.tool.version>1.1.19</forgetme.tool.version>
 
         <version.equinox.http.servlet>1.1.400.v20130418-1354</version.equinox.http.servlet>
-        <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.tomcat>7.0.85</version.tomcat>
         <orbit.version.tomcat.jsp.api>${version.tomcat}.wso2v1</orbit.version.tomcat.jsp.api>
         <orbit.version.tomcat.el.api>${version.tomcat}.wso2v1</orbit.version.tomcat.el.api>
@@ -1604,7 +1603,6 @@
         <version.opencsv>1.8.wso2v1</version.opencsv>
         <securevault.version>1.0.0-wso2v2</securevault.version>
         <version.h2.engine>1.3.175.wso2v1</version.h2.engine>
-        <orbit.version.axis2>1.6.1-wso2v23</orbit.version.axis2>
         <orbit.version.jettison>1.3.4.wso2v1</orbit.version.jettison>
         <orbit.version.commons.io>2.4.0.wso2v1</orbit.version.commons.io>
         <orbit.version.commons.pool>1.5.6.wso2v1</orbit.version.commons.pool>
@@ -1627,8 +1625,6 @@
         <orbit.version.commons.httpclient>3.1.0.wso2v6</orbit.version.commons.httpclient>
         <orbit.version.commons.collection>3.2.2.wso2v1</orbit.version.commons.collection>
         <orbit.version.httpcore>4.3.3.wso2v1</orbit.version.httpcore>
-        <version.commons.codec>1.4.0.wso2v1</version.commons.codec>
-        <version.annogen>0.1.0.wso2v1</version.annogen>
         <version.geronimo.saaj.spec>1.0.1.wso2v2</version.geronimo.saaj.spec>
         <orbit.version.poi>3.17.0.wso2v1</orbit.version.poi>
         <orbit.version.poi.scratchpad>3.17.0.wso2v1</orbit.version.poi.scratchpad>
