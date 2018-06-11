@@ -23,10 +23,12 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.CarbonException;
 import org.wso2.carbon.application.deployer.synapse.FileRegistryResourceDeployer;
+import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
 import org.wso2.carbon.utils.ConfigurationContextService;
+import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 
 /**
  * @scr.component name="application.deployer.dscomponent" immediate="true"
@@ -49,6 +51,10 @@ public class AppDeployerServiceComponent {
 
         log.debug("Activating AppDeployerServiceComponent");
 
+        PrivilegedCarbonContext privilegedCarbonContext = PrivilegedCarbonContext
+                .getThreadLocalCarbonContext();
+        privilegedCarbonContext.setTenantDomain(MultitenantConstants.SUPER_TENANT_DOMAIN_NAME);
+        privilegedCarbonContext.setTenantId(MultitenantConstants.SUPER_TENANT_ID);
         // Update DataHolder with SynapseEnvironmentService
         DataHolder.getInstance().setSynapseEnvironmentService(this.synapseEnvironmentService);
         DataHolder.getInstance().setConfigContext(this.configCtx);
