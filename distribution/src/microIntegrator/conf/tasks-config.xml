@@ -30,7 +30,7 @@
      You can explicitly configure task repository class
      FileBasedTaskRepository is supported in only micro ei profile where multitenancy and clustering is disabled
     -->
-    <!--<taskRepositoryClass>org.wso2.carbon.ntask.core.impl.FileBasedTaskRepository</taskRepositoryClass>-->
+    <taskRepositoryClass>org.wso2.carbon.ntask.core.impl.FileBasedTaskRepository</taskRepositoryClass>
 
 
     <!-- 
