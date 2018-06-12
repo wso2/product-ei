@@ -78,6 +78,7 @@
                             <bundles>
                                 <bundleDef>org.wso2.ei:org.wso2.carbon.micro.integrator.core</bundleDef>
                                 <bundleDef>org.apache.ws.security.wso2:wss4j:${wss4j.version}</bundleDef>
+                                <bundleDef>org.wso2.siddhi:siddhi-core:${siddhi.version}</bundleDef>
                                 <!--<bundleDef>org.wso2.ei:org.wso2.carbon.micro.integrator.server</bundleDef>-->
 
                                 <bundleDef>org.wso2.orbit.org.opensaml:opensaml:${opensaml.orbit.version}</bundleDef>

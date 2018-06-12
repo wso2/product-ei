@@ -1287,6 +1287,16 @@
                 <version>${log4j2.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.stream.core</artifactId>
+                <version>${carbon.analytics.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.publisher.core</artifactId>
+                <version>${carbon.analytics.common.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.eclipse.osgi</groupId>
                 <artifactId>org.eclipse.osgi</artifactId>
                 <version>${version.equinox.osgi}</version>
@@ -1495,6 +1505,7 @@
 
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
 
+        <siddhi.version>3.2.3</siddhi.version>
         <!-- Carbon -->
         <carbon.reliable-messaging.version>4.2.0</carbon.reliable-messaging.version>
         <carbon.secVerifier.version>4.2.0</carbon.secVerifier.version>
