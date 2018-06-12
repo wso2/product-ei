@@ -150,11 +150,11 @@ public class DefaultAppDeployer implements AppDeploymentHandler {
                 continue;
             }
 
-            if (!isAccepted(artifact.getType())) {
+            /*if (!isAccepted(artifact.getType())) {
                 log.warn("Can't deploy artifact : " + artifact.getName() + " of type : " +
                         artifact.getType() + ". Required features are not installed in the system");
                 continue;
-            }
+            }*/
 
             List<CappFile> files = artifact.getFiles();
             if (files.size() != 1) {

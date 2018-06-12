@@ -99,6 +99,10 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.feature.mgt.core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.data</groupId>
+            <artifactId>org.wso2.carbon.dataservices.core</artifactId>
+        </dependency>
     </dependencies>
 
 
