@@ -1391,10 +1391,10 @@
         <product.ei.version>6.3.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.65</carbon.business-process.version>
+        <carbon.business-process.version>4.4.67</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
-        <orbit.version.axis2>1.6.1-wso2v26</orbit.version.axis2>
+        <orbit.version.axis2>1.6.1-wso2v27</orbit.version.axis2>
         <orbit.version.ode>1.3.5-wso2v19</orbit.version.ode>
         <org.activiti.wso2.version>5.21.0.wso2v1</org.activiti.wso2.version>
         <orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1
@@ -1404,51 +1404,51 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.46</carbon.messaging.version>
+        <carbon.messaging.version>3.2.47</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.60</andes.version>
+        <andes.version>3.2.62</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
         <!-- Axis2 -->
-        <axis2.wso2.version>1.6.1-wso2v26</axis2.wso2.version>
-        <addressing.version>1.6.1-wso2v26</addressing.version>
+        <axis2.wso2.version>1.6.1-wso2v27</axis2.wso2.version>
+        <addressing.version>1.6.1-wso2v27</addressing.version>
 
         <!-- Axiom -->
         <axiom.api.wso2.version>1.2.11-wso2v11</axiom.api.wso2.version>
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v63</synapse.version>
+        <synapse.version>2.1.7-wso2v64</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v22</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v23</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.86</carbon.mediation.version>
+        <carbon.mediation.version>4.6.87</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.31</carbon.kernel.version>
+        <carbon.kernel.version>4.4.32</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.6.39</carbon.commons.version>
+        <carbon.commons.version>4.6.40</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.7.18</carbon.deployment.version>
-        <carbon-deployment.feature.imp.version>4.7.18</carbon-deployment.feature.imp.version>
+        <carbon.deployment.version>4.7.19</carbon.deployment.version>
+        <carbon-deployment.feature.imp.version>4.7.19</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.6.34</carbon.registry.version>
+        <carbon.registry.version>4.6.35</carbon.registry.version>
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.6</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.11.245</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.11.256</carbon.identity.framework.version>
         <carbon.identity-inbound-auth-saml2.version>5.2.8</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>5.3.5</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.1.4</carbon.identity-user-ws.version>
@@ -1457,7 +1457,7 @@
         <carbon.rule.version>4.4.9</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.62</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.63</carbon-dataservice-hosting.feature.imp.version>
 
         <version.equinox.osgi>3.9.1.v20130814-1242</version.equinox.osgi>
         <version.equinox.osgi.services>3.3.100.v20130513-1956</version.equinox.osgi.services>
@@ -1474,7 +1474,7 @@
         <carbon.multitenancy.version>4.6.11</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
-        <jaggery.version>0.12.8</jaggery.version>
+        <jaggery.version>0.12.9</jaggery.version>
         <jaggery.modules.carbon.version>1.5.5</jaggery.modules.carbon.version>
         <jaggery.modules.process.version>1.5.5</jaggery.modules.process.version>
         <jaggery.modules.i18n.version>1.5.5</jaggery.modules.i18n.version>
@@ -1509,7 +1509,7 @@
         <carbon.analytics.version>1.3.31</carbon.analytics.version>
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.62</carbon.data.version>
+        <carbon.data.version>4.4.63</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
@@ -1550,7 +1550,7 @@
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.eclipse.paho.version>0.4.0</org.eclipse.paho.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-        <org.wso2.andes.client.version>3.2.58</org.wso2.andes.client.version>
+        <org.wso2.andes.client.version>3.2.62</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>
