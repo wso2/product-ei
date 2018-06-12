@@ -19,6 +19,7 @@ package org.wso2.carbon.micro.integrator.core.deployment;
 
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.deployment.DeploymentEngine;
+import org.apache.axis2.deployment.DeploymentException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
@@ -29,6 +30,7 @@ import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.dataservices.core.DBDeployer;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
+import org.wso2.carbon.micro.integrator.core.deployment.artifact.deployer.ArtifactDeploymentManager;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
 import org.wso2.carbon.ntask.core.service.TaskService;
 import org.wso2.carbon.utils.ConfigurationContextService;
@@ -68,30 +70,13 @@ public class AppDeployerServiceComponent {
         DataHolder.getInstance().setSynapseEnvironmentService(this.synapseEnvironmentService);
         DataHolder.getInstance().setConfigContext(this.configCtx);
 
-        // Initialize Tasks Service
-        taskService.serverInitialized();
-
-        // Initialize synapse deployers
-        DataHolder.getInstance().initializeDefaultSynapseDeployers();
-
-
-        //Add the data services deployer to deployment engine
-        DBDeployer dbDeployer = new DBDeployer();
-        dbDeployer.setDirectory(configCtx.getAxisConfiguration().getRepository() + DeploymentConstants.DSS_DIR_NAME);
-        dbDeployer.setExtension(DeploymentConstants.DSS_TYPE_EXTENSION);
-
-        DeploymentEngine deploymentEngine = (DeploymentEngine) configCtx.getAxisConfiguration().getConfigurator();
-        deploymentEngine.addDeployer(dbDeployer, DeploymentConstants.DSS_DIR_NAME, DeploymentConstants.DSS_TYPE_DBS);
-
-        // Initialize micro integrator carbon application deployer
-        log.debug("Initializing carbon application deployment manager");
+        // Initialize deployers
+        ArtifactDeploymentManager artifactDeploymentManager = new ArtifactDeploymentManager(configCtx.getAxisConfiguration());
         CAppDeploymentManager cAppDeploymentManager = new CAppDeploymentManager(configCtx.getAxisConfiguration());
+        initializeDeployers(artifactDeploymentManager, cAppDeploymentManager);
 
-        // Register application deployment handlers
-        cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
-                synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));
-        cAppDeploymentManager.registerDeploymentHandler(new SynapseAppDeployer());
-        cAppDeploymentManager.registerDeploymentHandler(new DefaultAppDeployer());
+        // Deploy artifacts
+        artifactDeploymentManager.deploy();
 
         // Deploy carbon applications
         try {
@@ -99,7 +84,6 @@ public class AppDeployerServiceComponent {
         } catch (CarbonException e) {
             log.error("Error occurred while deploying carbon application", e);
         }
-
     }
 
     protected void deactivate(ComponentContext ctxt) {
@@ -154,4 +138,46 @@ public class AppDeployerServiceComponent {
         this.synapseEnvironmentService = null;
     }
 
+    /**
+     * Function to initialize deployer
+     *
+     * @param artifactDeploymentManager
+     * @param cAppDeploymentManager
+     */
+    private void initializeDeployers(ArtifactDeploymentManager artifactDeploymentManager,
+                                     CAppDeploymentManager cAppDeploymentManager) {
+
+        String artifactRepoPath = configCtx.getAxisConfiguration().getRepository().getPath();
+
+        log.debug("Initializing ArtifactDeploymentManager deployment manager");
+
+        // Create data services deployer
+        DBDeployer dbDeployer = new DBDeployer();
+        dbDeployer.setDirectory(artifactRepoPath + DeploymentConstants.DSS_DIR_NAME);
+        dbDeployer.setExtension(DeploymentConstants.DSS_TYPE_EXTENSION);
+
+        // Register artifact deployers in ArtifactDeploymentManager
+        try {
+            artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.DSS_DIR_NAME, dbDeployer);
+        } catch (DeploymentException e) {
+            log.error("Error occurred while registering data services deployer");
+        }
+
+        // Initialize micro integrator carbon application deployer
+        log.debug("Initializing carbon application deployment manager");
+
+        // Initialize synapse deployers
+        DataHolder.getInstance().initializeDefaultSynapseDeployers();
+
+        // Register deployers in DeploymentEngine (required for CApp deployment)
+        DeploymentEngine deploymentEngine = (DeploymentEngine) configCtx.getAxisConfiguration().getConfigurator();
+        deploymentEngine.addDeployer(dbDeployer, DeploymentConstants.DSS_DIR_NAME, DeploymentConstants.DSS_TYPE_DBS);
+
+        // Register application deployment handlers
+        cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
+                synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));
+        cAppDeploymentManager.registerDeploymentHandler(new SynapseAppDeployer());
+        cAppDeploymentManager.registerDeploymentHandler(new DefaultAppDeployer());
+
+    }
 }
