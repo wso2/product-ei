@@ -31,6 +31,7 @@ import org.wso2.carbon.dataservices.core.DBDeployer;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
 import org.wso2.carbon.micro.integrator.core.deployment.artifact.deployer.ArtifactDeploymentManager;
+import org.wso2.carbon.micro.integrator.core.deployment.internal.DeploymentServiceImpl;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
 import org.wso2.carbon.ntask.core.service.TaskService;
 import org.wso2.carbon.utils.ConfigurationContextService;
@@ -71,7 +72,11 @@ public class AppDeployerServiceComponent {
         DataHolder.getInstance().setConfigContext(this.configCtx);
 
         // Initialize Tasks Service
-        taskService.serverInitialized();
+        if (taskService != null) {
+            taskService.serverInitialized();
+        } else {
+            log.error("Task Service is not set. Unable to initialize task service");
+        }
 
         // Initialize deployers
         ArtifactDeploymentManager artifactDeploymentManager = new ArtifactDeploymentManager(configCtx.getAxisConfiguration());
@@ -87,6 +92,12 @@ public class AppDeployerServiceComponent {
         } catch (CarbonException e) {
             log.error("Error occurred while deploying carbon application", e);
         }
+
+        // Register deployment service. This will allow to activate StartupFinalizerServiceComponent
+        DeploymentService deploymentService = new DeploymentServiceImpl(artifactDeploymentManager, cAppDeploymentManager);
+        ctxt.getBundleContext().registerService(DeploymentService.class.getName(),deploymentService, null);
+
+        log.debug("MicroIntegrator artifact/Capp Deployment completed");
     }
 
     protected void deactivate(ComponentContext ctxt) {

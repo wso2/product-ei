@@ -32,6 +32,7 @@ import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.CarbonConstants;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.ServerStatus;
+import org.wso2.carbon.micro.integrator.core.deployment.DeploymentService;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
@@ -56,6 +57,10 @@ import java.util.TimerTask;
  * @scr.reference name="org.wso2.carbon.configCtx"
  * interface="org.wso2.carbon.utils.ConfigurationContextService" cardinality="1..1"
  * policy="dynamic" bind="setConfigurationContext" unbind="unsetConfigurationContext"
+ * @scr.reference name="org.wso2.carbon.micro.integrator.core.deployment.DeploymentService"
+ * interface="org.wso2.carbon.micro.integrator.core.deployment.DeploymentService"
+ * cardinality="1..1" policy="dynamic" bind="setDeploymentService"
+ * unbind="unsetDeploymentService"
  **/
 public class StartupFinalizerServiceComponent implements ServiceListener {
     private static final Log log = LogFactory.getLog(StartupFinalizerServiceComponent.class);
@@ -239,6 +244,13 @@ public class StartupFinalizerServiceComponent implements ServiceListener {
         this.configCtx = null;
     }
 
+    protected void setDeploymentService(DeploymentService deploymentService) {
+        log.debug("Set DeploymentService");
+    }
+
+    protected void unsetDeploymentService(DeploymentService deploymentService) {
+        log.debug("Unset DeploymentService");
+    }
 
     public synchronized void serviceChanged(ServiceEvent event) {
         if (event.getType() == ServiceEvent.REGISTERED) {
