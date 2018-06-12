@@ -30,9 +30,11 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.CarbonConstants;
+import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.ServerStatus;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.ConfigurationContextService;
+import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -72,7 +74,10 @@ public class StartupFinalizerServiceComponent implements ServiceListener {
         try {
 
             bundleContext = ctxt.getBundleContext();
-
+            PrivilegedCarbonContext privilegedCarbonContext = PrivilegedCarbonContext
+                    .getThreadLocalCarbonContext();
+            privilegedCarbonContext.setTenantDomain(MultitenantConstants.SUPER_TENANT_DOMAIN_NAME);
+            privilegedCarbonContext.setTenantId(MultitenantConstants.SUPER_TENANT_ID);
             populateRequiredServices();
             if (requiredServices.isEmpty()) {
                 completeInitialization(bundleContext);

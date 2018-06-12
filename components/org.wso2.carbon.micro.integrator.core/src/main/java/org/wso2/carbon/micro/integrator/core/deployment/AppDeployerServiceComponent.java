@@ -27,6 +27,7 @@ import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
 import org.wso2.carbon.micro.integrator.core.deployment.synapse.deployer.SynapseAppDeployer;
+import org.wso2.carbon.ntask.core.service.TaskService;
 import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 
@@ -39,6 +40,10 @@ import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
  * interface="org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService"
  * cardinality="1..n" policy="dynamic" bind="setSynapseEnvironmentService"
  * unbind="unsetSynapseEnvironmentService"
+ * @scr.reference name="ntask.service"
+ * interface="org.wso2.carbon.ntask.core.service.TaskService"
+ * cardinality="1..1" policy="dynamic" bind="setTaskService"
+ * unbind="unsetTaskService"
  */
 public class AppDeployerServiceComponent {
 
@@ -46,6 +51,7 @@ public class AppDeployerServiceComponent {
 
     private ConfigurationContext configCtx;
     private SynapseEnvironmentService synapseEnvironmentService;
+    private TaskService taskService;
 
     protected void activate(ComponentContext ctxt) {
 
@@ -58,6 +64,9 @@ public class AppDeployerServiceComponent {
         // Update DataHolder with SynapseEnvironmentService
         DataHolder.getInstance().setSynapseEnvironmentService(this.synapseEnvironmentService);
         DataHolder.getInstance().setConfigContext(this.configCtx);
+
+        // Initialize Tasks Service
+        taskService.serverInitialized();
 
         // Initialize synapse deployers
         DataHolder.getInstance().initializeDefaultSynapseDeployers();
@@ -101,6 +110,14 @@ public class AppDeployerServiceComponent {
     protected void unsetConfigurationContext(ConfigurationContextService configCtx) {
         this.configCtx = null;
     }
+
+    protected void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    protected void unsetTaskService(TaskService taskService) {
+    }
+
 
     /**
      * Receive an event about the creation of a SynapseEnvironment. If this is
