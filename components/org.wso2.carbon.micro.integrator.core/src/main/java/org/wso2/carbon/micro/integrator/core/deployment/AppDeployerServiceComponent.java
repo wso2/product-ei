@@ -70,6 +70,9 @@ public class AppDeployerServiceComponent {
         DataHolder.getInstance().setSynapseEnvironmentService(this.synapseEnvironmentService);
         DataHolder.getInstance().setConfigContext(this.configCtx);
 
+        // Initialize Tasks Service
+        taskService.serverInitialized();
+
         // Initialize deployers
         ArtifactDeploymentManager artifactDeploymentManager = new ArtifactDeploymentManager(configCtx.getAxisConfiguration());
         CAppDeploymentManager cAppDeploymentManager = new CAppDeploymentManager(configCtx.getAxisConfiguration());
