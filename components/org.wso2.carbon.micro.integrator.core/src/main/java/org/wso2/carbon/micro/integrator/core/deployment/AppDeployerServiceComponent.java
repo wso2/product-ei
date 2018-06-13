@@ -41,6 +41,10 @@ import org.wso2.carbon.ntask.core.service.TaskService;
 import org.wso2.carbon.utils.ConfigurationContextService;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
+
 /**
  * @scr.component name="application.deployer.dscomponent" immediate="true"
  * @scr.reference name="org.wso2.carbon.configCtx"
@@ -204,11 +208,20 @@ public class AppDeployerServiceComponent {
             log.error("Error occurred while registering data services deployer");
         }
 
-        try {
-            artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.EVENT_STREAMS_DIR_NAME, eventStreamDeployer);
-            artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.EVENT_PUBLISHERS_DIR_NAME, eventPublisherDeployer);
-        } catch (DeploymentException e) {
-            log.error("Error occurred while registering event streams and publisher deployer");
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream(System.getProperty("conf.location") + File.separator + "synapse.properties")) {
+            properties.load(fis);
+        } catch (Exception e) {
+            log.debug("Retrieving Meta file is failed.");
+        }
+        boolean analyticsEnabled = Boolean.parseBoolean(properties.getProperty("mediation.flow.statistics.enable"));
+        if(analyticsEnabled) {
+            try {
+                artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.EVENT_STREAMS_DIR_NAME, eventStreamDeployer);
+                artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.EVENT_PUBLISHERS_DIR_NAME, eventPublisherDeployer);
+            } catch (DeploymentException e) {
+                log.error("Error occurred while registering event streams and publisher deployer");
+            }
         }
         // Initialize micro integrator carbon application deployer
         log.debug("Initializing carbon application deployment manager");
@@ -220,8 +233,10 @@ public class AppDeployerServiceComponent {
         DeploymentEngine deploymentEngine = (DeploymentEngine) configCtx.getAxisConfiguration().getConfigurator();
         deploymentEngine.addDeployer(dbDeployer, DeploymentConstants.DSS_DIR_NAME, DeploymentConstants.DSS_TYPE_DBS);
 
-        deploymentEngine.addDeployer(eventStreamDeployer, DeploymentConstants.EVENT_STREAMS_DIR_NAME, DeploymentConstants.XML_TYPE_EXTENSION);
-        deploymentEngine.addDeployer(eventPublisherDeployer, DeploymentConstants.EVENT_PUBLISHERS_DIR_NAME, DeploymentConstants.XML_TYPE_EXTENSION);
+        if(analyticsEnabled) {
+            deploymentEngine.addDeployer(eventStreamDeployer, DeploymentConstants.EVENT_STREAMS_DIR_NAME, DeploymentConstants.XML_TYPE_EXTENSION);
+            deploymentEngine.addDeployer(eventPublisherDeployer, DeploymentConstants.EVENT_PUBLISHERS_DIR_NAME, DeploymentConstants.XML_TYPE_EXTENSION);
+        }
         // Register application deployment handlers
         cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
                 synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));
