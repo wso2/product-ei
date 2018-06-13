@@ -46,14 +46,14 @@ rem ----- Only set CARBON_HOME if not already set ----------------------------
 :checkServer
 rem %~sdp0 is expanded pathname of the current script under NT with spaces in the path removed
 set CARBON_HOME=%~sdp0..
-echo "%CARBON_HOME%\wso2\microIntegrator\bin\version.txt"
+echo "%CARBON_HOME%\wso2\micro-integrator\bin\version.txt"
 SET curDrive=%cd:~0,1%
 SET wsasDrive=%CARBON_HOME:~0,1%
 if not "%curDrive%" == "%wsasDrive%" %wsasDrive%:
 
 rem find CARBON_HOME if it does not exist due to either an invalid value passed
 rem by the user or the %0 problem on Windows 9x
-if not exist "%CARBON_HOME%\wso2\microIntegrator\bin\version.txt" goto noServerHome
+if not exist "%CARBON_HOME%\wso2\micro-integrator\bin\version.txt" goto noServerHome
 
 goto startServer
 
@@ -63,7 +63,7 @@ echo %CARBON_HOME%
 goto end
 
 :startServer
-%CARBON_HOME%\wso2\microIntegrator\bin\wso2server.bat %* -Dprofile="microIntegrator-default"
+%CARBON_HOME%\wso2\micro-integrator\bin\wso2server.bat %* -Dprofile="micro-integrator-default"
 
 :end
 goto endlocal

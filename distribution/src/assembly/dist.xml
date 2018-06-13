@@ -77,7 +77,7 @@
         </fileSet>
         <fileSet>
             <directory>
-                ../p2-profile/microIntegrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components
+                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/components
             </directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/components</outputDirectory>
             <excludes>

@@ -40,7 +40,7 @@ IF /I "%profileNumber%" EQU "2" goto Analytics
 IF /I "%profileNumber%" EQU "3" goto BPS
 IF /I "%profileNumber%" EQU "4" goto Broker
 IF /I "%profileNumber%" EQU "5" goto Msf4j
-IF /I "%profileNumber%" EQU "6" goto MicroIntegrator
+IF /I "%profileNumber%" EQU "6" goto micro-integrator
 
 echo Invalid profile identifier.
 goto Exit
@@ -53,7 +53,7 @@ goto Exit
     call :Remove_ANALYTICS
     call :Remove_JARS
     call :Remove_MSF4J
-    call :Remove_MicroIntegrator
+    call :Remove_micro-integrator
     echo Integrator profile created successfully.
 	goto Exit
 
@@ -65,7 +65,7 @@ goto Exit
     call :Remove_ANALYTICS
     call :Remove_JARS
     call :Remove_MSF4J
-    call :Remove_MicroIntegrator
+    call :Remove_micro-integrator
     echo Broker profile created successfully.
     goto Exit
 
@@ -77,11 +77,11 @@ goto Exit
     call :Remove_ANALYTICS
     call :Remove_JARS
     call :Remove_MSF4J
-    call :Remove_MicroIntegrator
+    call :Remove_micro-integrator
     echo Business Process profile created successfully.
     goto Exit
 
-:MicroIntegrator
+:micro-integrator
     echo Preparing the Micro Integrator profile.
     set DEFAULT_BUNDLES=%DIR%..\wso2\components\business-process-default\configuration\org.eclipse.equinox.simpleconfigurator\bundles.info
     call :Remove_BROKER
@@ -180,13 +180,13 @@ goto Exit
     IF EXIST %DIR%\msf4j.sh del %DIR%\msf4j.sh
     goto :eof
 
-:Remove_MicroIntegrator
+:Remove_micro-integrator
     echo Removing Micro Integrator profile
-    IF EXIST %DIR%\..\wso2\microIntegrator @RD /S /Q %DIR%\..\wso2\microIntegrator
-    IF EXIST %DIR%\..\samples\microIntegrator @RD /S /Q %DIR%\..\samples\microIntegrator
-    IF EXIST %DIR%\..\wso2\components\microIntegrator-default @RD /S /Q %DIR%\..\wso2\components\microIntegrator-default
-    IF EXIST %DIR%\microIntegrator.bat del %DIR%\microIntegrator.bat
-    IF EXIST %DIR%\microIntegrator.sh del %DIR%\microIntegrator.sh
+    IF EXIST %DIR%\..\wso2\micro-integrator @RD /S /Q %DIR%\..\wso2\micro-integrator
+    IF EXIST %DIR%\..\samples\micro-integrator @RD /S /Q %DIR%\..\samples\micro-integrator
+    IF EXIST %DIR%\..\wso2\components\micro-integrator-default @RD /S /Q %DIR%\..\wso2\components\micro-integrator-default
+    IF EXIST %DIR%\micro-integrator.bat del %DIR%\micro-integrator.bat
+    IF EXIST %DIR%\micro-integrator.sh del %DIR%\micro-integrator.sh
     goto :eof
 
 :Exit

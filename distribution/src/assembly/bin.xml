@@ -263,7 +263,7 @@
 
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/wso2</exclude>
@@ -307,7 +307,7 @@
 
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <excludes>
                 <exclude>**/wso2</exclude>
                 <exclude>**/*.sh</exclude>
@@ -404,7 +404,7 @@
 
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}/bin</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/bin</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/bin</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
                 <exclude>**/*.bat</exclude>
@@ -414,8 +414,8 @@
         </fileSet>
 
         <fileSet>
-            <directory>src/microIntegrator/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/bin</outputDirectory>
+            <directory>src/micro-integrator/conf</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/bin</outputDirectory>
             <includes>
                 <include>**.sh</include>
                 <include>**.bat</include>
@@ -425,7 +425,7 @@
 
         <fileSet>
             <directory>src/scripts/</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/microIntegrator/bin
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/bin
             </outputDirectory>
             <includes>
                 <include>**/build.xml</include>
@@ -1010,17 +1010,17 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/microIntegrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventpublishers
+                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventpublishers
             </directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/repository/deployment/server/eventpublishers
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/eventpublishers
             </outputDirectory>
         </fileSet>
 
         <fileSet>
             <directory>
-                ../p2-profile/microIntegrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventstreams
+                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventstreams
             </directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/repository/deployment/server/eventstreams
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/eventstreams
             </outputDirectory>
         </fileSet>
 
@@ -1042,7 +1042,7 @@
         </fileSet>
         <fileSet>
             <directory>./src/resources/tomcat</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/tomcat</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat</outputDirectory>
             <includes>
                 <include>**/catalina-server.xml</include>
                 <include>**/webapp-classloading-environments.xml</include>
@@ -1113,17 +1113,17 @@
         </fileSet>
         <fileSet>
             <directory>./src/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <includes>
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>
-                ../p2-profile/microIntegrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity
+                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity
             </directory>
             <outputDirectory>
-                wso2ei-${pom.version}/wso2/microIntegrator/conf/identity/
+                wso2ei-${pom.version}/wso2/micro-integrator/conf/identity/
             </outputDirectory>
         </fileSet>
 
@@ -1227,7 +1227,7 @@
         </fileSet>
         <fileSet>
             <directory>src/conf/synapse-configs</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/repository/deployment/server/synapse-configs
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/synapse-configs
             </outputDirectory>
             <excludes>
                 <exclude>**/empty.txt</exclude>
@@ -1235,7 +1235,7 @@
         </fileSet>
         <fileSet>
             <directory>src/conf/carbonapps</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/repository/deployment/server/carbonapps
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/carbonapps
             </outputDirectory>
             <excludes>
                 <exclude>empty.txt</exclude>
@@ -1983,7 +1983,7 @@
         </dependencySet>
 
         <dependencySet>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/repository/lib</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/lib</outputDirectory>
             <includes>
                 <include>org.wso2.ei:org.wso2.carbon.micro.integrator.server:jar</include>
             </includes>
@@ -2257,8 +2257,8 @@
         </file>
 
         <file>
-            <source>src/microIntegrator/conf/tasks-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/microIntegrator/conf/etc/
+            <source>src/micro-integrator/conf/tasks-config.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/conf/etc/
             </outputDirectory>
         </file>
         <file>
@@ -2721,7 +2721,7 @@
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-broker.xml
             </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -2737,7 +2737,7 @@
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/data-bridge/data-agent-config.xml
             </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/data-bridge</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/data-bridge</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -2750,8 +2750,8 @@
         </file>
 
         <file>
-            <source>src/microIntegrator/conf/axis2.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/axis2</outputDirectory>
+            <source>src/micro-integrator/conf/axis2.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2777,7 +2777,7 @@
 
 <!--        <file>
             <source>src/conf/web.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/tomcat</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat</outputDirectory>
             <destName>web.xml</destName>
         </file>-->
 
@@ -2788,13 +2788,13 @@
         </file>
 
         <file>
-            <source>src/microIntegrator/conf/web.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/tomcat/carbon/WEB-INF</outputDirectory>
+            <source>src/micro-integrator/conf/web.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat/carbon/WEB-INF</outputDirectory>
             <destName>web.xml</destName>
         </file>
         <file>
-            <source>src/microIntegrator/conf/context.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/tomcat/carbon/MATA-INF</outputDirectory>
+            <source>src/micro-integrator/conf/context.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat/carbon/MATA-INF</outputDirectory>
             <destName>context.xml</destName>
         </file>
         <file>
@@ -2805,7 +2805,7 @@
 
 <!--        <file>
             <source>src/conf/webapp-mode/web.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/webapp-mode/WEB-INF</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/webapp-mode/WEB-INF</outputDirectory>
             <destName>web.xml</destName>
         </file>-->
         <file>
@@ -2824,7 +2824,7 @@
 
         <file>
             <source>src/conf/axis2_nhttp.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/axis2</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2_nhttp.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2838,7 +2838,7 @@
         </file>
         <file>
             <source>src/conf/axis2_pt.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/axis2</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2_pt.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2851,7 +2851,7 @@
         </file>
         <file>
             <source>src/conf/axis2_blocking_client.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/axis2</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2_blocking_client.xml</destName>
             <fileMode>644</fileMode>
         </file>
@@ -2863,8 +2863,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/microIntegrator/conf/log4j.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <source>src/micro-integrator/conf/log4j.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>log4j.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2877,8 +2877,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/microIntegrator/conf/synapse.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <source>src/micro-integrator/conf/synapse.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>synapse.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2892,7 +2892,7 @@
         </file>
         <file>
             <source>src/conf/synapse-handlers.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>synapse-handlers.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2906,7 +2906,7 @@
         </file>
         <file>
             <source>src/conf/datasources.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>datasources.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2935,7 +2935,7 @@
         </file>
         <file>
             <source>src/conf/security/cipher-text.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/security</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/security</outputDirectory>
             <destName>cipher-text.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2949,7 +2949,7 @@
         </file>
         <file>
             <source>src/conf/security/cipher-tool.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/security</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/security</outputDirectory>
             <destName>cipher-tool.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2963,7 +2963,7 @@
         </file>
         <file>
             <source>src/conf/security/secret-conf.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/security</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/security</outputDirectory>
             <destName>secret-conf.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2977,7 +2977,7 @@
         </file>
         <file>
             <source>src/conf/nhttp.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>nhttp.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2991,7 +2991,7 @@
         </file>
         <file>
             <source>src/conf/passthru-http.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>passthru-http.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -3005,7 +3005,7 @@
         </file>
         <file>
             <source>src/conf/hl7.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>hl7.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -3019,7 +3019,7 @@
         </file>
         <file>
             <source>src/conf/access-log.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>access-log.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -3040,7 +3040,7 @@
         </file>
         <file>
             <source>src/conf/jndi.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>jndi.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -3056,7 +3056,7 @@
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/rule-engine-config.xml
             </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -3099,7 +3099,7 @@
         </file>
         <file>
             <source>src/conf/carbon.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf/</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
@@ -3148,7 +3148,7 @@
         </file>
         <file>
             <source>src/conf/etc/logging-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/microIntegrator/conf/etc</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/conf/etc</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -3201,7 +3201,7 @@
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-processor.xml
             </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -3217,7 +3217,7 @@
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/output-event-adapters.xml
             </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/microIntegrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -3806,9 +3806,9 @@
         <!--File based Synapse registry for Micro EI-->
         <file>
             <source>
-                src/microIntegrator/conf/registry.xml
+                src/micro-integrator/conf/registry.xml
             </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/microIntegrator/repository/deployment/server/synapse-configs/default
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/repository/deployment/server/synapse-configs/default
             </outputDirectory>
             <filtered>true</filtered>
         </file>
