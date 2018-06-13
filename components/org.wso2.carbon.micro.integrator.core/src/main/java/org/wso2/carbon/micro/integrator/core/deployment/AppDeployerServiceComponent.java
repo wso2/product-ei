@@ -112,7 +112,7 @@ public class AppDeployerServiceComponent {
         DeploymentService deploymentService = new DeploymentServiceImpl(artifactDeploymentManager, cAppDeploymentManager);
         ctxt.getBundleContext().registerService(DeploymentService.class.getName(),deploymentService, null);
 
-        log.debug("micro-integrator artifact/Capp Deployment completed");
+        log.debug("microIntegrator artifact/Capp Deployment completed");
     }
 
     protected void deactivate(ComponentContext ctxt) {
