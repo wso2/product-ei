@@ -28,9 +28,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>microIntegrator-p2-profile</artifactId>
+    <artifactId>micro-integrator-p2-profile</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Enterprise Integrator - microIntegrator P2 Profile Generation</name>
+    <name>WSO2 Enterprise Integrator - micro-integrator P2 Profile Generation</name>
     <url>http://www.wso2.org</url>
 
     <dependencies>
@@ -456,7 +456,7 @@
                             <targetPath>
                                 file:${basedir}/target/wso2carbon-core-${carbon.kernel.version}/wso2/components
                             </targetPath>
-                            <profile>microIntegrator-default</profile>
+                            <profile>micro-integrator-default</profile>
                         </configuration>
                     </execution>
                     <!--END-->
@@ -468,7 +468,7 @@
                             <goal>p2-profile-gen</goal>
                         </goals>
                         <configuration>
-                            <profile>microIntegrator-default</profile>
+                            <profile>micro-integrator-default</profile>
                             <metadataRepository>file:${basedir}/target/p2-repo</metadataRepository>
                             <artifactRepository>file:${basedir}/target/p2-repo</artifactRepository>
                             <destination>

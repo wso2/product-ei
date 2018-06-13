@@ -1,5 +1,5 @@
 #!/bin/sh
-# microIntegrator.sh
+# micro-integrator.sh
 # ----------------------------------------------------------------------------
 #  Copyright 2016 WSO2, Inc. http://www.wso2.org
 #
@@ -55,15 +55,15 @@ PRGDIR=`dirname "$PRG"`
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
 ###########################################################################
-NAME=start-microIntegrator
+NAME=start-micro-integrator
 # Daemon name, where is the actual executable
-microIntegrator_INIT_SCRIPT="$CARBON_HOME/wso2/microIntegrator/bin/wso2server.sh"
+micro-integrator_INIT_SCRIPT="$CARBON_HOME/wso2/micro-integrator/bin/wso2server.sh"
 
 # If the daemon is not there, then exit.
 
-sh $microIntegrator_INIT_SCRIPT $* &
+sh $micro-integrator_INIT_SCRIPT $* &
 
-trap "sh $microIntegrator_INIT_SCRIPT stop; exit;" INT TERM
+trap "sh $micro-integrator_INIT_SCRIPT stop; exit;" INT TERM
 while :
 do
         sleep 60

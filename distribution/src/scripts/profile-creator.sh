@@ -77,10 +77,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/microIntegrator
-	rm -rf ${DIR}/../wso2/components/microIntegrator-default
-	rm -rf ${DIR}/microIntegrator.bat
-	rm -rf ${DIR}/microIntegrator.sh
+	rm -rf ${DIR}/../wso2/micro-integrator
+	rm -rf ${DIR}/../wso2/components/micro-integrator-default
+	rm -rf ${DIR}/micro-integrator.bat
+	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_integrator"
 
@@ -116,10 +116,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/microIntegrator
-	rm -rf ${DIR}/../wso2/components/microIntegrator-default
-	rm -rf ${DIR}/microIntegrator.bat
-	rm -rf ${DIR}/microIntegrator.sh
+	rm -rf ${DIR}/../wso2/micro-integrator
+	rm -rf ${DIR}/../wso2/components/micro-integrator-default
+	rm -rf ${DIR}/micro-integrator.bat
+	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_analytics"
 
@@ -153,10 +153,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/microIntegrator
-	rm -rf ${DIR}/../wso2/components/microIntegrator-default
-	rm -rf ${DIR}/microIntegrator.bat
-	rm -rf ${DIR}/microIntegrator.sh
+	rm -rf ${DIR}/../wso2/micro-integrator
+	rm -rf ${DIR}/../wso2/components/micro-integrator-default
+	rm -rf ${DIR}/micro-integrator.bat
+	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_businessprocess"
 
@@ -191,10 +191,10 @@ then
 	rm -rf ${DIR}/../wso2/msf4j
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/microIntegrator
-	rm -rf ${DIR}/../wso2/components/microIntegrator-default
-	rm -rf ${DIR}/microIntegrator.bat
-	rm -rf ${DIR}/microIntegrator.sh
+	rm -rf ${DIR}/../wso2/micro-integrator
+	rm -rf ${DIR}/../wso2/components/micro-integrator-default
+	rm -rf ${DIR}/micro-integrator.bat
+	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_broker"
 
@@ -227,10 +227,10 @@ then
 	rm -rf ${DIR}/broker.sh
 	#remove light weight esb profile
 	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/microIntegrator
-	rm -rf ${DIR}/../wso2/components/microIntegrator-default
-	rm -rf ${DIR}/microIntegrator.bat
-	rm -rf ${DIR}/microIntegrator.sh
+	rm -rf ${DIR}/../wso2/micro-integrator
+	rm -rf ${DIR}/../wso2/components/micro-integrator-default
+	rm -rf ${DIR}/micro-integrator.bat
+	rm -rf ${DIR}/micro-integrator.sh
 
     PROFILE="_msf4j"
 
@@ -238,7 +238,7 @@ then
 elif [ ${profileNumber} -eq 6 ]
 then
 	echo "Preparing the Integrator profile distribution"
-	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/microIntegrator-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
+	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/micro-integrator-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove business-process
 	#remove integrator
 	echo "Removing Integrator profile"
@@ -271,7 +271,7 @@ then
 	#remove msf4j
 	rm -rf ${DIR}/../wso2/msf4j
 
-	PROFILE="_microIntegrator"
+	PROFILE="_micro-integrator"
 
 
 else
