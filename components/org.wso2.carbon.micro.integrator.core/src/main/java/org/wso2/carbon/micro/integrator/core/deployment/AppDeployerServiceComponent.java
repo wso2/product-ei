@@ -28,6 +28,10 @@ import org.wso2.carbon.application.deployer.handler.DefaultAppDeployer;
 import org.wso2.carbon.application.deployer.synapse.FileRegistryResourceDeployer;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.dataservices.core.DBDeployer;
+import org.wso2.carbon.event.publisher.core.EventPublisherDeployer;
+import org.wso2.carbon.event.publisher.core.EventPublisherService;
+import org.wso2.carbon.event.stream.core.EventStreamDeployer;
+import org.wso2.carbon.event.stream.core.*;
 import org.wso2.carbon.mediation.initializer.services.SynapseEnvironmentService;
 import org.wso2.carbon.micro.integrator.core.deployment.application.deployer.CAppDeploymentManager;
 import org.wso2.carbon.micro.integrator.core.deployment.artifact.deployer.ArtifactDeploymentManager;
@@ -50,6 +54,14 @@ import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
  * interface="org.wso2.carbon.ntask.core.service.TaskService"
  * cardinality="1..1" policy="dynamic" bind="setTaskService"
  * unbind="unsetTaskService"
+ * @scr.reference name="eventstream.service"
+ * interface="org.wso2.carbon.event.stream.core.EventStreamService"
+ * cardinality="1..1" policy="dynamic" bind="setEventStreamService"
+ * unbind="unsetEventStreamService"
+ * @scr.reference name="eventpublisher.service"
+ * interface="org.wso2.carbon.event.publisher.core.EventPublisherService"
+ * cardinality="1..1" policy="dynamic" bind="setEventPublisherService"
+ * unbind="unsetEventPublisherService"
  */
 public class AppDeployerServiceComponent {
 
@@ -129,6 +141,17 @@ public class AppDeployerServiceComponent {
     protected void unsetTaskService(TaskService taskService) {
     }
 
+    protected void setEventStreamService(EventStreamService taskService) {
+    }
+
+    protected void unsetEventStreamService(EventStreamService taskService) {
+    }
+
+    protected void setEventPublisherService(EventPublisherService taskService) {
+    }
+
+    protected void unsetEventPublisherService(EventPublisherService taskService) {
+    }
 
     /**
      * Receive an event about the creation of a SynapseEnvironment. If this is
@@ -170,6 +193,10 @@ public class AppDeployerServiceComponent {
         dbDeployer.setDirectory(artifactRepoPath + DeploymentConstants.DSS_DIR_NAME);
         dbDeployer.setExtension(DeploymentConstants.DSS_TYPE_EXTENSION);
 
+        EventStreamDeployer eventStreamDeployer = new EventStreamDeployer();
+        eventStreamDeployer.init(configCtx);
+        EventPublisherDeployer eventPublisherDeployer = new EventPublisherDeployer();
+        eventPublisherDeployer.init(configCtx);
         // Register artifact deployers in ArtifactDeploymentManager
         try {
             artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.DSS_DIR_NAME, dbDeployer);
@@ -177,6 +204,12 @@ public class AppDeployerServiceComponent {
             log.error("Error occurred while registering data services deployer");
         }
 
+        try {
+            artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.EVENT_STREAMS_DIR_NAME, eventStreamDeployer);
+            artifactDeploymentManager.registerDeployer(artifactRepoPath + DeploymentConstants.EVENT_PUBLISHERS_DIR_NAME, eventPublisherDeployer);
+        } catch (DeploymentException e) {
+            log.error("Error occurred while registering event streams and publisher deployer");
+        }
         // Initialize micro integrator carbon application deployer
         log.debug("Initializing carbon application deployment manager");
 
@@ -187,6 +220,8 @@ public class AppDeployerServiceComponent {
         DeploymentEngine deploymentEngine = (DeploymentEngine) configCtx.getAxisConfiguration().getConfigurator();
         deploymentEngine.addDeployer(dbDeployer, DeploymentConstants.DSS_DIR_NAME, DeploymentConstants.DSS_TYPE_DBS);
 
+        deploymentEngine.addDeployer(eventStreamDeployer, DeploymentConstants.EVENT_STREAMS_DIR_NAME, DeploymentConstants.XML_TYPE_EXTENSION);
+        deploymentEngine.addDeployer(eventPublisherDeployer, DeploymentConstants.EVENT_PUBLISHERS_DIR_NAME, DeploymentConstants.XML_TYPE_EXTENSION);
         // Register application deployment handlers
         cAppDeploymentManager.registerDeploymentHandler(new FileRegistryResourceDeployer(
                 synapseEnvironmentService.getSynapseEnvironment().getSynapseConfiguration().getRegistry()));
