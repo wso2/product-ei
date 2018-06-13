@@ -88,10 +88,9 @@ public class AppDeployerServiceComponent {
         DataHolder.getInstance().setConfigContext(this.configCtx);
 
         // Initialize Tasks Service
-        if (taskService != null) {
+        if (taskService != null && !taskService.isServerInit()) {
+            log.info("Initialize Task Service");
             taskService.serverInitialized();
-        } else {
-            log.error("Task Service is not set. Unable to initialize task service");
         }
 
         // Initialize deployers
