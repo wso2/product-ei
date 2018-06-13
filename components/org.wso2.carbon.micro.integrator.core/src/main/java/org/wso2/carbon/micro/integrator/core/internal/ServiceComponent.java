@@ -216,6 +216,10 @@ public class ServiceComponent {
 
     private void initializeCarbon() {
 
+        PrivilegedCarbonContext privilegedCarbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
+        privilegedCarbonContext.setTenantDomain(MultitenantConstants.SUPER_TENANT_DOMAIN_NAME);
+        privilegedCarbonContext.setTenantId(MultitenantConstants.SUPER_TENANT_ID);
+
         // Reset the SAAJ Interfaces
         System.getProperties().remove("javax.xml.soap.MessageFactory");
         System.getProperties().remove("javax.xml.soap.SOAPConnectionFactory");
@@ -326,6 +330,9 @@ public class ServiceComponent {
                 listenerManager.init(serverConfigContext);
             }
 
+            // Register listener manager. This is to break cyclic dependency between TasksDSComponent,
+            // AppDeployerServiceComponent, StartupFinalizerServiceComponent
+            bundleContext.registerService(ListenerManager.class.getName(), listenerManager, null);
 
             // At this point all the services and modules are deployed
             // Therefore it is time to allows other deployers to be registered.
