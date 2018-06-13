@@ -78,22 +78,18 @@ public class ESBJAVA3689AccessMIMEMessageContentTestCase extends ESBIntegrationT
         httppost.setEntity(reqEntity);
         httpclient.execute(httppost);
 
-        String expectedMsg = "<soapenv:Body>" +
-                "<mediate>" +
-                "<file_type>xml</file_type>" +
-                "<description>Simple HTTP POST request with an attachment.</description>" +
-                "<file_name>attachment.xml</file_name>" +
-                "<data>" +
-                "PG1pbWU+CiAgICA8aWQ+MDAwMTwvaWQ+CiAgICA8bmFtZT5NaW1lIGNvbnRlbnQgYWNjZXNzIHRlc3Q" +
-                "8L25hbWU+CiAgICA8dG9rZW4+d3NvMl9hY2Nlc3NfMDAxPC90b2tlbj4KPC9taW1lPg==" +
-                "</data>" +
-                "</mediate>" +
-                "</soapenv:Body>";
+       
+        String expectedMessage = "<soapenv:Body><mediate><file_type>xml</file_type><description>Simple HTTP POST " +
+                "request with an attachment.</description><file_name>attachment.xml</file_name><data " +
+                "filename=\"attachment" + ""
+                + ".xml\">PG1pbWU+CiAgICA8aWQ+MDAwMTwvaWQ+CiAgICA8bmFtZT5NaW1lIGNvbnRlbnQgYWNjZXNzIHRlc3Q8L25hbWU" +
+                "+CiAgICA8dG9rZW4" + "+d3NvMl9hY2Nlc3NfMDAxPC90b2tlbj4KPC9taW1lPg==</data></mediate></soapenv:Body"
+                + "></soapenv:Envelope>";
 
         LogEvent[] logs = logViewer.getAllSystemLogs();
         boolean LogFound = false;
         for (LogEvent log : logs) {
-            if (log.getMessage().contains(expectedMsg)) {
+            if (log.getMessage().contains(expectedMessage)) {
                 LogFound = true;
                 break;
             }
