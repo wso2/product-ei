@@ -107,12 +107,6 @@
         </classes>
     </test>
 
-    <test name="Class-mediator-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mediator.test.classMediator"/>
-        </packages>
-    </test>
-
     <test name="Message-Processor-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.message.processor.test.forwarding"/>
@@ -162,6 +156,12 @@
     <test name="PublishEvent Mediator Test" preserve-order="true" verbose="2" parallel="false">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.publishevent"/>
+        </packages>
+    </test>
+
+    <test name="Class-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.classMediator"/>
         </packages>
     </test>
 </suite>

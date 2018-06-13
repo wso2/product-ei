@@ -1401,7 +1401,7 @@
         <product.ei.version>6.3.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.67</carbon.business-process.version>
+        <carbon.business-process.version>4.4.68</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v27</orbit.version.axis2>
@@ -1454,7 +1454,7 @@
         <carbon-deployment.feature.imp.version>4.7.19</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.6.35</carbon.registry.version>
+        <carbon.registry.version>4.6.36</carbon.registry.version>
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.6</carbon.identity-inbound-auth-sts.version>
