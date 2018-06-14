@@ -230,7 +230,7 @@ public class StartupFinalizerServiceComponent implements ServiceListener {
             String msg = "Cannot set server to running mode";
             log.error(msg, e);
         }
-        log.info("WSO2 Carbon started in " + startupTime + " sec");
+        log.info("WSO2 Micro Integrator started in " + startupTime + " sec");
         setServerStartUpDurationParam(String.valueOf(startupTime));
 //        System.getProperties().remove(CarbonConstants.START_TIME);
         System.getProperties().remove("setup"); // Clear the setup System property
