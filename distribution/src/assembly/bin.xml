@@ -3098,7 +3098,7 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/carbon.xml</source>
+            <source>src/micro-integrator/conf/carbon.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
