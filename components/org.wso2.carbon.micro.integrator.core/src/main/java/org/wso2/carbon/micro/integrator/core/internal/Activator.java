@@ -68,7 +68,7 @@ public class Activator implements BundleActivator {
             if ((carbonHome = System.getProperty("carbon.home")).equals(".")) {
                 carbonHome = new File(".").getAbsolutePath();
             }
-            log.info("EI Home      : " + carbonHome);
+            log.info("Micro Integrator Home      : " + carbonHome);
 
             if (log.isDebugEnabled()) {
                 log.info("Java Temp Dir    : " + System.getProperty("java.io.tmpdir"));
