@@ -51,11 +51,11 @@ public class IntegratorComponent {
     private static CarbonTomcatService carbonTomcatService;
 
     protected void activate(ComponentContext context) {
-        log.info("Activating Integrator component");
+        log.debug("Activating Integrator component");
     }
 
     protected void deactivate(ComponentContext context) {
-        log.info("Deactivating Integrator component");
+        log.debug("Deactivating Integrator component");
     }
 
     protected void setConfigurationContextService(ConfigurationContextService contextService) {

@@ -39,9 +39,6 @@ public class Activator implements BundleActivator {
 
     private static Log log = LogFactory.getLog(Activator.class);
 
-    private static boolean serverStarted;
-
-
     @Override
     public void start(BundleContext bundleContext) throws Exception {
         try {
@@ -55,10 +52,12 @@ public class Activator implements BundleActivator {
                     .getThreadLocalCarbonContext();
             privilegedCarbonContext.setTenantDomain(MultitenantConstants.SUPER_TENANT_DOMAIN_NAME);
             privilegedCarbonContext.setTenantId(MultitenantConstants.SUPER_TENANT_ID);
-            log.info("Starting WSO2 Micro ESB ...");
+            log.info("Starting WSO2 Micro Integrator ...");
             log.info("Operating System : " + System.getProperty("os.name") + " " +
                     System.getProperty("os.version") + ", " + System.getProperty("os.arch"));
-            log.info("Java Home        : " + System.getProperty("java.home"));
+            if (log.isDebugEnabled()) {
+                log.debug("Java Home        : " + System.getProperty("java.home"));
+            }
             log.info("Java Version     : " + System.getProperty("java.version"));
             log.info("Java VM          : " + System.getProperty("java.vm.name") + " " +
                     System.getProperty("java.vm.version") +
@@ -69,15 +68,16 @@ public class Activator implements BundleActivator {
             if ((carbonHome = System.getProperty("carbon.home")).equals(".")) {
                 carbonHome = new File(".").getAbsolutePath();
             }
+            log.info("Micro Integrator Home      : " + carbonHome);
 
-            log.info("Carbon Home      : " + carbonHome);
-            log.info("Java Temp Dir    : " + System.getProperty("java.io.tmpdir"));
-            log.info("User             : " + System.getProperty("user.name") + ", " +
-                    System.getProperty("user.language") + "-" + System.getProperty("user.country") +
-                    ", " + System.getProperty("user.timezone"));
-
+            if (log.isDebugEnabled()) {
+                log.info("Java Temp Dir    : " + System.getProperty("java.io.tmpdir"));
+                log.info("User             : " + System.getProperty("user.name") + ", " +
+                         System.getProperty("user.language") + "-" + System.getProperty("user.country") +
+                         ", " + System.getProperty("user.timezone"));
+            }
             Security.addProvider(new BouncyCastleProvider());
-            if(log.isDebugEnabled()){
+            if (log.isDebugEnabled()){
                 log.debug("BouncyCastle security provider is successfully registered in JVM.");
             }
             bundleContext.registerService(CarbonCoreInitializedEvent.class.getName(), new CarbonCoreInitializedEventImpl(), null);
@@ -91,7 +91,7 @@ public class Activator implements BundleActivator {
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        log.debug("De-activated ***************************");
+        log.debug("Stopping Micro Integrator");
     }
 
 }
