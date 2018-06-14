@@ -1,6 +1,6 @@
 #!/bin/sh
 # ----------------------------------------------------------------------------
-#  Copyright 2005-2012 WSO2, Inc. http://www.wso2.org
+#  Copyright 2018 WSO2, Inc. http://www.wso2.org
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #  limitations under the License.
 
 # ----------------------------------------------------------------------------
-# Main Script for the WSO2 Carbon Server
+# Main Script for the Micro Integrator
 #
 # Environment Variable Prequisites
 #

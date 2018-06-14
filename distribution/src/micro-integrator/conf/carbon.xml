@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
- Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
     <!--
        Product Name
     -->
-    <Name>WSO2 Enterprise Micro Integrator</Name>
+    <Name>WSO2 Micro Integrator</Name>
 
     <!--
        machine readable unique key to identify each product
@@ -561,10 +561,7 @@
         </Processor>
     </HttpGetRequestProcessors>
 
-    <!-- Deployment Synchronizer Configuration. Enable value to true when running with "svn based" dep sync.
-	In master nodes you need to set both AutoCommit and AutoCheckout to true
-	and in  worker nodes set only AutoCheckout to true.
-    -->
+    <!-- Deployment Synchronizer is not supported in Micro Integrator -->
     <DeploymentSynchronizer>
         <Enabled>false</Enabled>
         <AutoCommit>false</AutoCommit>
@@ -575,16 +572,6 @@
         <SvnPassword>password</SvnPassword>
         <SvnUrlAppendTenantId>true</SvnUrlAppendTenantId>
     </DeploymentSynchronizer>
-
-    <!-- Deployment Synchronizer Configuration. Uncomment the following section when running with "registry based" dep sync.
-        In master nodes you need to set both AutoCommit and AutoCheckout to true
-        and in  worker nodes set only AutoCheckout to true.
-    -->
-    <!--<DeploymentSynchronizer>
-        <Enabled>true</Enabled>
-        <AutoCommit>false</AutoCommit>
-        <AutoCheckout>true</AutoCheckout>
-    </DeploymentSynchronizer>-->
 
     <!-- Mediation persistence configurations. Only valid if mediation features are available i.e. ESB -->
    <MediationConfig>
@@ -608,43 +595,7 @@
     -->
     <RequireCarbonServlet>${require.carbon.servlet}</RequireCarbonServlet>
 
-    <!--
-    Carbon H2 OSGI Configuration
-    By default non of the servers start.
-        name="web" - Start the web server with the H2 Console
-        name="webPort" - The port (default: 8082)
-        name="webAllowOthers" - Allow other computers to connect
-        name="webSSL" - Use encrypted (HTTPS) connections
-        name="tcp" - Start the TCP server
-        name="tcpPort" - The port (default: 9092)
-        name="tcpAllowOthers" - Allow other computers to connect
-        name="tcpSSL" - Use encrypted (SSL) connections
-        name="pg" - Start the PG server
-        name="pgPort"  - The port (default: 5435)
-        name="pgAllowOthers"  - Allow other computers to connect
-        name="trace" - Print additional trace information; for all servers
-        name="baseDir" - The base directory for H2 databases; for all servers  
-    -->
-    <!--H2DatabaseConfiguration>
-        <property name="web" />
-        <property name="webPort">8082</property>
-        <property name="webAllowOthers" />
-        <property name="webSSL" />
-        <property name="tcp" />
-        <property name="tcpPort">9092</property>
-        <property name="tcpAllowOthers" />
-        <property name="tcpSSL" />
-        <property name="pg" />
-        <property name="pgPort">5435</property>
-        <property name="pgAllowOthers" />
-        <property name="trace" />
-        <property name="baseDir">${carbon.home}</property>
-    </H2DatabaseConfiguration-->
-    <!--Disabling statistics reporter by default-->
     <StatisticsReporterDisabled>true</StatisticsReporterDisabled>
-
-    <!-- Enable accessing Admin Console via HTTP -->
-    <!-- EnableHTTPAdminConsole>true</EnableHTTPAdminConsole -->
 
     <!--
        Default Feature Repository of WSO2 Carbon.
@@ -654,26 +605,4 @@
 	    <RepositoryURL>http://product-dist.wso2.com/p2/carbon/releases/wilkes/</RepositoryURL>
     </FeatureRepository>
 
-    <!--
-	Configure API Management
-   -->
-   <APIManagement>
-	
-	<!--Uses the embedded API Manager by default. If you want to use an external 
-	API Manager instance to manage APIs, configure below  externalAPIManager-->
-	
-	<Enabled>true</Enabled>
-	
-	<!--Uncomment and configure API Gateway and 
-	Publisher URLs to use external API Manager instance-->
-	
-	<!--ExternalAPIManager>
-
-		<APIGatewayURL>http://localhost:8281</APIGatewayURL>
-		<APIPublisherURL>http://localhost:8281/publisher</APIPublisherURL>
-
-	</ExternalAPIManager-->
-	
-	<LoadAPIContextsInServerStartup>true</LoadAPIContextsInServerStartup>
-   </APIManagement>
 </Server>

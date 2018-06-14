@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -22,11 +22,6 @@
     <!-- ================================================= -->
     <!--                  Parameters                       -->
     <!-- ================================================= -->
-
-    <!-- Change this to true if you want to enable hot deployment of services -->
-    <parameter name="hotdeployment" locked="false">true</parameter>
-    <!-- Change this to true if you want to enable hot update of services -->
-    <parameter name="hotupdate" locked="false">true</parameter>
 
     <!-- Change this to true if you want to enable MTOM -->
     <parameter name="enableMTOM" locked="false">false</parameter>
@@ -62,8 +57,8 @@
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">WSO2 EI 6.3.0</parameter>
-    <parameter name="server" locked="true">WSO2 EI 6.3.0</parameter>
+    <parameter name="userAgent" locked="true">WSO2 Micro Integrator 6.3.0</parameter>
+    <parameter name="server" locked="true">WSO2 Micro Integrator 6.3.0</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
@@ -105,32 +100,6 @@
     <!-- use this parameter to override autodetected url -->
     <!--<parameter name="httpFrontendHostUrl" locked="false">https://someotherhost/context</parameter>-->
 
-    <!-- ================================================= -->
-    <!--                  Listeners                        -->
-    <!-- ================================================= -->
-
-    <!-- This deployment interceptor will be called whenever before a module is initialized or -->
-    <!-- service is deployed -->
-    <listener class="org.wso2.carbon.micro.integrator.core.init.DeploymentInterceptor"/>
-
-    <!-- ================================================= -->
-    <!--                  Deployers                        -->
-    <!-- ================================================= -->
-
-    <!-- Deployer for the dataservice. -->
-    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>-->
-
-    <!-- Axis1 deployer for Axis2 -->
-    <!--<deployer extension="wsdd" class="org.wso2.carbon.axis1services.Axis1Deployer" directory="axis1services"/>-->
-
-    <!-- POJO service deployer for Jar -->
-    <!--<deployer extension="jar" class="org.apache.axis2.deployment.POJODeployer" directory="pojoservices"/>-->
-
-    <!-- POJO service deployer for Class -->
-    <!--<deployer extension="class" class="org.apache.axis2.deployment.POJODeployer" directory="pojoservices"/>-->
-
-    <!-- JAXWS service deployer -->
-    <!--<deployer extension=".jar" class="org.apache.axis2.jaxws.framework.JAXWSDeployer" directory="servicejars"/>-->
 
     <!-- ================================================= -->
     <!--                Message Receivers                  -->
