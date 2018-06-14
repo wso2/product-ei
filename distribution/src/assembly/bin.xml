@@ -3181,7 +3181,7 @@
             <source>src/scripts/profile-creator.sh</source>
             <outputDirectory>wso2ei-${pom.version}/bin/</outputDirectory>
             <filtered>true</filtered>
-            <fileMode>644</fileMode>
+            <fileMode>755</fileMode>
         </file>
         <file>
             <source>src/scripts/profile-creator.bat</source>
