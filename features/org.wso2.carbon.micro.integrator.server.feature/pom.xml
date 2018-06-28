@@ -78,6 +78,9 @@
                             <bundles>
                                 <bundleDef>org.wso2.ei:org.wso2.carbon.micro.integrator.core</bundleDef>
                                 <bundleDef>org.apache.ws.security.wso2:wss4j:${wss4j.version}</bundleDef>
+                                <bundleDef>org.apache.rampart.wso2:rampart-core:${rampart.wso2.version}</bundleDef>
+                                <bundleDef>org.apache.rampart.wso2:rampart-policy:${rampart.wso2.version}</bundleDef>
+                                <bundleDef>org.apache.rampart.wso2:rampart-trust:${rampart.wso2.version}</bundleDef>
                                 <bundleDef>org.wso2.siddhi:siddhi-core:${siddhi.version}</bundleDef>
                                 <!--<bundleDef>org.wso2.ei:org.wso2.carbon.micro.integrator.server</bundleDef>-->
 
