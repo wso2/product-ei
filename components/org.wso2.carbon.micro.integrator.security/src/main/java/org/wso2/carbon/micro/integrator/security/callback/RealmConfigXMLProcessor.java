@@ -141,37 +141,6 @@ public class RealmConfigXMLProcessor {
         }
     }
 
-    public RealmConfiguration buildTenantRealmConfiguration(InputStream inStream) throws UserStoreException {
-        String message;
-        try {
-            OMElement realmElement = this.preProcessRealmConfig(inStream);
-            RealmConfiguration realmConfig = this.buildTenantRealmConfiguration(realmElement);
-            if (inStream != null) {
-                inStream.close();
-            }
-
-            return realmConfig;
-        } catch (RuntimeException var5) {
-            message = "An unexpected error occurred while building the realm configuration.";
-            if (log.isDebugEnabled()) {
-                log.debug(message, var5);
-            }
-
-            throw new UserStoreException(message, var5);
-        } catch (Exception var6) {
-            message = "Error while reading realm configuration from file";
-            if (log.isDebugEnabled()) {
-                log.debug(message, var6);
-            }
-
-            throw new UserStoreException(message, var6);
-        }
-    }
-
-    private RealmConfiguration buildTenantRealmConfiguration(OMElement realmElement) throws UserStoreException {
-        return this.buildRealmConfiguration(realmElement, false);
-    }
-
     private OMElement preProcessRealmConfig(InputStream inStream) throws CarbonException, XMLStreamException {
         inStream = CarbonUtils.replaceSystemVariablesInXml(inStream);
         StAXOMBuilder builder = new StAXOMBuilder(inStream);
@@ -322,10 +291,6 @@ public class RealmConfigXMLProcessor {
                     realmConfig.addRestrictedDomainForSelfSignUp(restrictedDomains[i].trim().toUpperCase());
                 }
 
-                if (supperTenant && userStoreProperties.get("TenantManager") == null) {
-                    log.error("Required property 'TenantManager' not found for the primary UserStoreManager in user_mgt.xml. Cannot start server!");
-                    throw new UserStoreException("Required property 'TenantManager' not found for the primary UserStoreManager in user_mgt.xml. Cannot start server!");
-                }
             }
 
             adminRoleDomain = (String)userStoreProperties.get("DomainName");
