@@ -320,6 +320,7 @@
                 <exclude>**/version.txt</exclude>
                 <exclude>**/registry.xml</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
+                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/wso2server.bat</exclude>
                 <exclude>**/README.txt</exclude>
                 <exclude>**/LICENSE.txt</exclude>
@@ -2759,6 +2760,13 @@
             <source>src/micro-integrator/conf/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/micro-integrator/conf/user-mgt.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
+            <destName>user-mgt.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
