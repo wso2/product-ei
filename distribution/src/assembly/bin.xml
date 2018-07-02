@@ -319,7 +319,6 @@
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/registry.xml</exclude>
-                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
                 <exclude>**/README.txt</exclude>
@@ -2029,6 +2028,13 @@
         </dependencySet>
         <dependencySet>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/client/modules
+            </outputDirectory>
+            <includes>
+                <include>org.apache.rampart:rampart:mar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/axis2modules
             </outputDirectory>
             <includes>
                 <include>org.apache.rampart:rampart:mar</include>
