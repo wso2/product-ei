@@ -21,7 +21,7 @@ package org.wso2.carbon.micro.integrator.security.callback;
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.core.UserStoreException;
 
-public class LatestCall extends MIPWCallback {
+public class DefaultPasswordCallback extends AbstractPasswordCallback {
 
     @Override
     public RealmConfiguration getRealmConfig(){

@@ -26,7 +26,7 @@ import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
-import org.wso2.carbon.micro.integrator.security.callback.LatestCall;
+import org.wso2.carbon.micro.integrator.security.callback.DefaultPasswordCallback;
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.api.UserStoreException;
 import org.wso2.carbon.user.api.UserStoreManager;
@@ -57,7 +57,7 @@ public class ServiceComponent {
         AxisConfiguration axisConfig = this.configCtx.getAxisConfiguration();
 
         Parameter passwordCallbackParam = new Parameter();
-        LatestCall passwordCallbackClass = new LatestCall();
+        DefaultPasswordCallback passwordCallbackClass = new DefaultPasswordCallback();
         passwordCallbackParam.setName("passwordCallbackRef");
         passwordCallbackParam.setValue(passwordCallbackClass);
 

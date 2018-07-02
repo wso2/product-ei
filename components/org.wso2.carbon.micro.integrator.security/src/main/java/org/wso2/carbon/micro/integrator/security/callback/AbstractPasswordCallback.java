@@ -35,9 +35,9 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-public abstract class MIPWCallback implements CallbackHandler {
+public abstract class AbstractPasswordCallback implements CallbackHandler {
 
-    protected final Log log = LogFactory.getLog(MIPWCallback.class);
+    protected final Log log = LogFactory.getLog(AbstractPasswordCallback.class);
 
     public abstract RealmConfiguration getRealmConfig();
 
