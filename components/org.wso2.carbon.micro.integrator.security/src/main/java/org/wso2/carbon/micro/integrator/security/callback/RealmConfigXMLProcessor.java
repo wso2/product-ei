@@ -83,18 +83,7 @@ public class RealmConfigXMLProcessor {
         OMElement userStoreManagerElement = factory.createOMElement(new QName("UserStoreManager"));
         realmElement.addChild(userStoreManagerElement);
         addPropertyElements(factory, userStoreManagerElement, realmConfig.getUserStoreClass(), realmConfig.getDescription(), realmConfig.getUserStoreProperties());
-        RealmConfiguration secondaryRealmConfiguration = null;
 
-        OMElement authorizerManagerElement;
-        for(secondaryRealmConfiguration = realmConfig.getSecondaryRealmConfig(); secondaryRealmConfiguration != null; secondaryRealmConfiguration = secondaryRealmConfiguration.getSecondaryRealmConfig()) {
-            authorizerManagerElement = factory.createOMElement(new QName("UserStoreManager"));
-            realmElement.addChild(authorizerManagerElement);
-            addPropertyElements(factory, authorizerManagerElement, secondaryRealmConfiguration.getUserStoreClass(), secondaryRealmConfiguration.getDescription(), secondaryRealmConfiguration.getUserStoreProperties());
-        }
-
-        authorizerManagerElement = factory.createOMElement(new QName("AuthorizationManager"));
-        realmElement.addChild(authorizerManagerElement);
-        addPropertyElements(factory, authorizerManagerElement, realmConfig.getAuthorizationManagerClass(), realmConfig.getDescription(), realmConfig.getAuthzProperties());
         return rootElement;
     }
 
@@ -183,7 +172,6 @@ public class RealmConfigXMLProcessor {
     public RealmConfiguration buildRealmConfiguration(OMElement realmElem, boolean supperTenant) throws UserStoreException {
         RealmConfiguration realmConfig = null;
         String userStoreClass = null;
-        String authorizationManagerClass = null;
         String addAdmin = null;
         String adminRoleName = null;
         String adminUserName = null;
@@ -192,7 +180,6 @@ public class RealmConfigXMLProcessor {
         String realmClass = null;
         String description = null;
         Map<String, String> userStoreProperties = null;
-        Map<String, String> authzProperties = null;
         Map<String, String> realmProperties = null;
         boolean passwordsExternallyManaged = false;
         realmClass = realmElem.getAttributeValue(new QName("class"));
@@ -243,9 +230,6 @@ public class RealmConfigXMLProcessor {
 
         adminRoleName = mainConfig.getFirstChildWithName(new QName("AdminRole")).getText().trim();
         everyOneRoleName = mainConfig.getFirstChildWithName(new QName("EveryOneRoleName")).getText().trim();
-        OMElement authzConfig = realmElem.getFirstChildWithName(new QName("AuthorizationManager"));
-        authorizationManagerClass = authzConfig.getAttributeValue(new QName("class")).trim();
-        authzProperties = this.getChildPropertyElements(authzConfig, (SecretResolver)null);
         Iterator<OMElement> iterator = realmElem.getChildrenWithName(new QName("UserStoreManager"));
         RealmConfiguration primaryConfig = null;
         RealmConfiguration tmpConfig = null;
@@ -272,7 +256,6 @@ public class RealmConfigXMLProcessor {
             realmConfig.setRealmClassName(realmClass);
             realmConfig.setUserStoreClass(userStoreClass);
             realmConfig.setDescription(description);
-            realmConfig.setAuthorizationManagerClass(authorizationManagerClass);
             if (primaryConfig == null) {
                 realmConfig.setPrimary(true);
                 realmConfig.setAddAdmin(addAdmin);
@@ -302,7 +285,6 @@ public class RealmConfigXMLProcessor {
                 realmConfig.setAdminRoleName(adminRoleName);
                 realmConfig.setAdminUserName(adminUserName);
                 realmConfig.setUserStoreProperties(userStoreProperties);
-                realmConfig.setAuthzProperties(authzProperties);
                 realmConfig.setRealmProperties(realmProperties);
                 realmConfig.setPasswordsExternallyManaged(passwordsExternallyManaged);
                 realmConfig.addMultipleCredentialProperties(userStoreClass, multipleCredentialsProperties);
