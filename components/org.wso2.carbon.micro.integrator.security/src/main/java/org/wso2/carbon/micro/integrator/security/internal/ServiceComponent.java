@@ -26,6 +26,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.micro.integrator.security.callback.LatestCall;
+import org.wso2.carbon.user.api.RealmConfiguration;
+import org.wso2.carbon.user.api.UserStoreException;
+import org.wso2.carbon.user.api.UserStoreManager;
 import org.wso2.carbon.utils.ConfigurationContextService;
 
 
@@ -61,6 +64,18 @@ public class ServiceComponent {
             axisConfig.addParameter(passwordCallbackParam);
         } catch (AxisFault axisFault) {
             log.error("Failed to set axis configuration parameter ", axisFault);
+        }
+
+        DataHolder dataHolder = DataHolder.getInstance();
+
+        RealmConfiguration config = passwordCallbackClass.getRealmConfig();
+        dataHolder.setRealmConfig(config);
+
+        try {
+            UserStoreManager userStoreManager = (UserStoreManager)passwordCallbackClass.createObjectWithOptions(config.getUserStoreClass(), config);
+            dataHolder.setUserStoreManager(userStoreManager);
+        } catch (UserStoreException e) {
+            log.error("Error on initializing User Store Manager Class", e);
         }
     }
 
