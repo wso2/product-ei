@@ -1,0 +1,14 @@
+map_S_root_S_jsonObject = function(){ 
+var outputjsonObject={};
+
+var count_i_chartfield = 0;
+outputjsonObject =  {};
+outputjsonObject.chartfield =  {};
+
+for(i_chartfield in inputroot.chartfield){
+outputjsonObject.chartfield.chartfield = inputroot.chartfield[i_chartfield].chartfield;
+
+count_i_chartfield++;
+}
+return outputjsonObject;
+};
