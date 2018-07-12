@@ -44,21 +44,18 @@ public class RESTBasicAuthHandler implements Handler {
         Object headers = axis2MessageContext.getProperty(
                 org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);
 
-
-
         if (headers != null && headers instanceof Map) {
             Map headersMap = (Map) headers;
             if (headersMap.get("Authorization") == null) {
                 headersMap.clear();
                 axis2MessageContext.setProperty("HTTP_SC", "401");
                 headersMap.put("WWW-Authenticate", "Basic realm=\"WSO2 EI\"");
-                axis2MessageContext.setProperty("NO_ENTITY_BODY", new Boolean("true"));
+                axis2MessageContext.setProperty("NO_ENTITY_BODY", true);
                 messageContext.setProperty("RESPONSE", "true");
                 messageContext.setTo(null);
                 Axis2Sender.sendBack(messageContext);
                 return false;
-
-
+                
             } else {
                 String authHeader = (String) headersMap.get("Authorization");
                 String credentials = authHeader.substring(6).trim();
@@ -67,7 +64,7 @@ public class RESTBasicAuthHandler implements Handler {
                 } else {
                     headersMap.clear();
                     axis2MessageContext.setProperty("HTTP_SC", "403");
-                    axis2MessageContext.setProperty("NO_ENTITY_BODY", new Boolean("true"));
+                    axis2MessageContext.setProperty("NO_ENTITY_BODY", true);
                     messageContext.setProperty("RESPONSE", "true");
                     messageContext.setTo(null);
                     Axis2Sender.sendBack(messageContext);
