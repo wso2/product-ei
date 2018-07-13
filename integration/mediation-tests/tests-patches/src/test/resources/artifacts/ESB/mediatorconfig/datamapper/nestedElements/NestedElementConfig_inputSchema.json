@@ -1,0 +1,22 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "root",
+  "type" : "object",
+  "properties" : {
+    "chartfield" : {
+      "id" : "http://wso2jsonschema.org/chartfield",
+      "type" : "array",
+      "items" : [ {
+        "id" : "http://wso2jsonschema.org/chartfield/0",
+        "type" : "object",
+        "properties" : {
+          "chartfield" : {
+            "id" : "http://wso2jsonschema.org/chartfield/0/chartfield",
+            "type" : "string"
+          }
+        }
+      } ]
+    }
+  }
+}
