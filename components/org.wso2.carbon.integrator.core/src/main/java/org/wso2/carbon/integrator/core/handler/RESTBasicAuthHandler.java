@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.integrator.core.handler;
 
+import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,26 +47,26 @@ public class RESTBasicAuthHandler implements Handler {
 
         if (headers != null && headers instanceof Map) {
             Map headersMap = (Map) headers;
-            if (headersMap.get("Authorization") == null) {
+            if (headersMap.get(HTTPConstants.HEADER_AUTHORIZATION) == null) {
                 headersMap.clear();
-                axis2MessageContext.setProperty("HTTP_SC", "401");
-                headersMap.put("WWW-Authenticate", "Basic realm=\"WSO2 EI\"");
-                axis2MessageContext.setProperty("NO_ENTITY_BODY", true);
-                messageContext.setProperty("RESPONSE", "true");
+                axis2MessageContext.setProperty(BasicAuthConstants.HTTP_STATUS_CODE, BasicAuthConstants.SC_UNAUTHORIZED);
+                headersMap.put(BasicAuthConstants.WWW_AUTHENTICATE, BasicAuthConstants.WWW_AUTH_METHOD);
+                axis2MessageContext.setProperty(BasicAuthConstants.NO_ENTITY_BODY, true);
+                messageContext.setProperty(BasicAuthConstants.RESPONSE, BasicAuthConstants.TRUE);
                 messageContext.setTo(null);
                 Axis2Sender.sendBack(messageContext);
                 return false;
-                
+
             } else {
-                String authHeader = (String) headersMap.get("Authorization");
+                String authHeader = (String) headersMap.get(HTTPConstants.HEADER_AUTHORIZATION);
                 String credentials = authHeader.substring(6).trim();
                 if (processSecurity(credentials)) {
                     return true;
                 } else {
                     headersMap.clear();
-                    axis2MessageContext.setProperty("HTTP_SC", "403");
-                    axis2MessageContext.setProperty("NO_ENTITY_BODY", true);
-                    messageContext.setProperty("RESPONSE", "true");
+                    axis2MessageContext.setProperty(BasicAuthConstants.HTTP_STATUS_CODE, BasicAuthConstants.SC_FORBIDDEN);
+                    axis2MessageContext.setProperty(BasicAuthConstants.NO_ENTITY_BODY, true);
+                    messageContext.setProperty(BasicAuthConstants.RESPONSE, BasicAuthConstants.TRUE);
                     messageContext.setTo(null);
                     Axis2Sender.sendBack(messageContext);
                     return false;
@@ -77,6 +78,7 @@ public class RESTBasicAuthHandler implements Handler {
 
     @Override
     public boolean handleResponse(MessageContext messageContext) {
+
         return true;
     }
 
@@ -87,10 +89,12 @@ public class RESTBasicAuthHandler implements Handler {
 
     @Override
     public Map getProperties() {
+
         return null;
     }
 
     public boolean processSecurity(String credentials) {
+
         String decodedCredentials = new String(new Base64().decode(credentials.getBytes()));
         String username = decodedCredentials.split(":")[0];
         String password = decodedCredentials.split(":")[1];
