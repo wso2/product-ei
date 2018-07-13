@@ -33,13 +33,15 @@ import org.wso2.carbon.user.core.UserStoreManager;
 
 import java.util.Map;
 
+/**
+ * This class can be added as a handler to enforce Basic Auth
+ */
 public class RESTBasicAuthHandler implements Handler {
 
     private static final Log log = LogFactory.getLog(RESTBasicAuthHandler.class);
 
     @Override
     public boolean handleRequest(MessageContext messageContext) {
-
         org.apache.axis2.context.MessageContext axis2MessageContext
                 = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
         Object headers = axis2MessageContext.getProperty(
@@ -78,23 +80,25 @@ public class RESTBasicAuthHandler implements Handler {
 
     @Override
     public boolean handleResponse(MessageContext messageContext) {
-
         return true;
     }
 
     @Override
     public void addProperty(String s, Object o) {
-
     }
 
     @Override
     public Map getProperties() {
-
         return null;
     }
 
+    /**
+     * This method authenticates credentials
+     *
+     * @param credentials The Basic Auth credentials of the request
+     * @return true if the credentials are authenticated successfully
+     */
     public boolean processSecurity(String credentials) {
-
         String decodedCredentials = new String(new Base64().decode(credentials.getBytes()));
         String username = decodedCredentials.split(":")[0];
         String password = decodedCredentials.split(":")[1];
