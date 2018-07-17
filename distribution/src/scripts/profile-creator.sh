@@ -33,7 +33,7 @@ done
 
 # Get standard environment variables
 DIR=`dirname "$PRG"`
-DISTRIBUTION="wso2ei-6.3.0-SNAPSHOT"
+DISTRIBUTION="wso2ei-${product.ei.version}"
 #get the desired profile
 echo "*************************************************************************************"
 echo "This tool will erase all the files which are not required for the selected profile "
