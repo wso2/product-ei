@@ -64,6 +64,7 @@ public class Main {
     protected static final String OSGI_CONFIGURATION_AREA = "osgi.configuration.area";
     protected static final String OSGI_INSTALL_AREA = "osgi.install.area";
     protected static final String P2_DATA_AREA = "eclipse.p2.data.area";
+    protected static final String ENABLE_EXTENSIONS = "wso2.enableExtensions";
 
     public static void main(String[] args) {
         //Setting Carbon Home
@@ -94,25 +95,6 @@ public class Main {
         writePID(System.getProperty(LauncherConstants.CARBON_HOME));
         processCmdLineArgs(args);
 
-        // set WSO2CarbonProfile as worker if workerNode=true present
-        if ((System.getProperty(LauncherConstants.WORKER_NODE) != null) &&
-                ("true".equals(System.getProperty(LauncherConstants.WORKER_NODE))) &&
-                System.getProperty(LauncherConstants.PROFILE) == null) {
-            File profileDir = new File(Utils.getCarbonComponentRepo() + File.separator + LauncherConstants.WORKER_PROFILE);
-               /*
-                *   Better check profile directory is present or not otherwise osgi will hang
-                * */
-            if (!profileDir.exists()) {
-                log.fatal("OSGi runtime " + LauncherConstants.WORKER_PROFILE + " profile not found");
-                throw new RuntimeException(LauncherConstants.WORKER_PROFILE + " profile not found");
-            }
-            System.setProperty(LauncherConstants.PROFILE, LauncherConstants.WORKER_PROFILE);
-        }
-        //setting default WSO2CarbonProfile as the running Profile if no other Profile is given as an argument
-        if (System.getProperty(LauncherConstants.PROFILE) == null) {
-            System.setProperty(LauncherConstants.PROFILE, LauncherConstants.DEFAULT_CARBON_PROFILE);
-        }
-
         invokeExtensions();
         removeAllAppendersFromCarbon();
         startEquinox();
@@ -139,17 +121,22 @@ public class Main {
      * Invoke the extensions specified in the carbon.xml
      */
     public static void invokeExtensions() {
-        //converting jars found under components/lib and putting them in components/dropins dir
-        new DefaultBundleCreator().perform();
-        new SystemBundleExtensionCreator().perform();
+
+        // disables loading extensions such as patches, libs and ext jars only if the value of
+        // property is false
+        if (System.getProperty(ENABLE_EXTENSIONS) == null ||
+                System.getProperty(ENABLE_EXTENSIONS).equalsIgnoreCase("true")) {
+            //converting jars found under components/lib and putting them in components/dropins dir
+            new DefaultBundleCreator().perform();
+            new SystemBundleExtensionCreator().perform();
+            //copying patched jars to components/plugins dir
+            new PatchInstaller().perform();
+            new LibraryFragmentBundleCreator().perform();
+        }
         new Log4jPropFileFragmentBundleCreator().perform();
-        new LibraryFragmentBundleCreator().perform();
 
         //Add bundles in the dropins directory to the bundles.info file.
         new DropinsBundleDeployer().perform();
-
-        //copying patched jars to components/plugins dir
-        new PatchInstaller().perform();
 
         //rewriting the eclipse.ini file
         new EclipseIniRewriter().perform();
