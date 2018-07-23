@@ -319,8 +319,8 @@
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/registry.xml</exclude>
-                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
+                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/wso2server.bat</exclude>
                 <exclude>**/README.txt</exclude>
                 <exclude>**/LICENSE.txt</exclude>
@@ -2035,6 +2035,13 @@
             </includes>
         </dependencySet>
         <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/axis2modules
+            </outputDirectory>
+            <includes>
+                <include>org.apache.rampart:rampart:mar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
             <outputDirectory>wso2ei-${pom.version}/wso2/lib</outputDirectory>
             <includes>
                 <include>org.apache.sandesha2:sandesha2-core:jar</include>
@@ -2753,6 +2760,13 @@
             <source>src/micro-integrator/conf/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/micro-integrator/conf/user-mgt.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
+            <destName>user-mgt.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
