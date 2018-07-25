@@ -127,6 +127,7 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
+			logViewerClient.clearLogs();
 			addInboundEndpoint(addEndpoint1());
 			boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
 			Assert.assertTrue(isFileRead, "The XML file is not getting read");
@@ -190,6 +191,7 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
 						+ " <parameters>\n"
 						+ " <parameter name=\"interval\">1000</parameter>\n"
+						+ " <parameter name=\"coordination\">false</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.Locking\">disable</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
@@ -232,6 +234,7 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
 						+ " <parameters>\n"
 						+ " <parameter name=\"interval\">1000</parameter>\n"
+						+ " <parameter name=\"coordination\">false</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
 						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
 						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
