@@ -157,12 +157,10 @@ public class VaultTool {
                 Node item = nl.item(i);
                 if (item.hasAttributes()) {
                     String name = item.getAttributes().item(0).getNodeValue();
-                    if (name != null) {
-                        if (name.equalsIgnoreCase(Constants.CONFIG_REGISTRY_PARAM)) {
-                            configRegRoot = item.getTextContent();
-                            if (!configRegRoot.endsWith(File.separator)) {
-                                configRegRoot += File.separator;
-                            }
+                    if (name != null && name.equalsIgnoreCase(Constants.CONFIG_REGISTRY_PARAM)) {
+                        configRegRoot = item.getTextContent();
+                        if (!configRegRoot.endsWith(File.separator)) {
+                            configRegRoot += File.separator;
                         }
                     }
                 }
