@@ -1418,7 +1418,7 @@
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.75</andes.version>
+        <andes.version>3.2.77</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1434,7 +1434,7 @@
         <synapse.version>2.1.7-wso2v77</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v27</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v28</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
@@ -1561,7 +1561,7 @@
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.eclipse.paho.version>0.4.0</org.eclipse.paho.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-        <org.wso2.andes.client.version>3.2.75</org.wso2.andes.client.version>
+        <org.wso2.andes.client.version>3.2.77</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>
