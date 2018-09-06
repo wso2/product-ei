@@ -24,6 +24,7 @@ wso2.carbon:
   ports:
       # port offset
     offset: 0
+  type: wso2-ei-analytics
 
 wso2.transport.http:
   transportProperties:
@@ -45,7 +46,7 @@ wso2.transport.http:
     -
       id: "msf4j-https"
       host: "0.0.0.0"
-      port: 9443
+      port: 9444
       scheme: https
       keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
       keyStorePassword: wso2carbon
@@ -86,8 +87,8 @@ databridge.config:
       type: Thrift
         # Data receiver properties
       properties:
-        tcpPort: '7611'
-        sslPort: '7711'
+        tcpPort: '7612'
+        sslPort: '7712'
 
   -
       # Data receiver configuration
@@ -97,8 +98,8 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: '9611'
-        sslPort: '9711'
+        tcpPort: '9612'
+        sslPort: '9712'
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
         hostName: 0.0.0.0
