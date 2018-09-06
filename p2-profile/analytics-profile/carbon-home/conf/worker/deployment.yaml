@@ -98,8 +98,8 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: '9612'
-        sslPort: '9712'
+        tcpPort: '9611'
+        sslPort: '9711'
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
         hostName: 0.0.0.0
