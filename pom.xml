@@ -1404,7 +1404,7 @@
         <carbon.business-process.version>4.4.75</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
-        <orbit.version.axis2>1.6.1-wso2v27</orbit.version.axis2>
+        <orbit.version.axis2>1.6.1-wso2v28</orbit.version.axis2>
         <orbit.version.ode>1.3.5-wso2v19</orbit.version.ode>
         <org.activiti.wso2.version>5.21.0.wso2v1</org.activiti.wso2.version>
         <orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1
@@ -1423,8 +1423,8 @@
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
         <!-- Axis2 -->
-        <axis2.wso2.version>1.6.1-wso2v27</axis2.wso2.version>
-        <addressing.version>1.6.1-wso2v27</addressing.version>
+        <axis2.wso2.version>1.6.1-wso2v28</axis2.wso2.version>
+        <addressing.version>1.6.1-wso2v28</addressing.version>
 
         <!-- Axiom -->
         <axiom.api.wso2.version>1.2.11-wso2v11</axiom.api.wso2.version>
