@@ -41,7 +41,7 @@
         <siddhi.version>4.2.11</siddhi.version>
 
         <carbon.analytics-common.version>6.0.67</carbon.analytics-common.version>
-        <analytics.solutions.version>1.0.5</analytics.solutions.version>
+        <analytics.solutions.version>1.0.7</analytics.solutions.version>
         <!-- Maven plugins -->
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
         <maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
