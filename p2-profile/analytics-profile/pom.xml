@@ -41,7 +41,7 @@
         <siddhi.version>4.2.17</siddhi.version>
 
         <carbon.analytics-common.version>6.0.68</carbon.analytics-common.version>
-        <analytics.solutions.version>1.0.7</analytics.solutions.version>
+        <analytics.solutions.version>1.0.8</analytics.solutions.version>
         <!-- Maven plugins -->
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
         <maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
@@ -842,12 +842,12 @@
             <version>${carbon.dashboards.version}</version>
             <type>zip</type>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.dashboards.samples</groupId>
-            <artifactId>org.wso2.carbon.dashboards.samples.feature</artifactId>
-            <version>${carbon.dashboards.version}</version>
-            <type>zip</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.dashboards.samples</groupId>-->
+            <!--<artifactId>org.wso2.carbon.dashboards.samples.feature</artifactId>-->
+            <!--<version>${carbon.dashboards.version}</version>-->
+            <!--<type>zip</type>-->
+        <!--</dependency>-->
         <!--Carbon UI Server-->
         <dependency>
             <groupId>org.wso2.carbon.uiserver</groupId>
@@ -1607,10 +1607,10 @@
                                     <id>org.wso2.carbon.dashboards.portal.feature</id>
                                     <version>${carbon.dashboards.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.dashboards.samples.feature</id>
-                                    <version>${carbon.dashboards.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.dashboards.samples.feature</id>-->
+                                    <!--<version>${carbon.dashboards.version}</version>-->
+                                <!--</feature>-->
                                 <!--Status Dashboard-->
                                 <feature>
                                     <id>org.wso2.carbon.status.dashboard.core.feature</id>
@@ -2334,10 +2334,10 @@
                                     <id>org.wso2.carbon.dashboards.portal.feature.group</id>
                                     <version>${carbon.dashboards.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.dashboards.samples.feature</id>
-                                    <version>${carbon.dashboards.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.dashboards.samples.feature</id>-->
+                                    <!--<version>${carbon.dashboards.version}</version>-->
+                                <!--</feature>-->
                                 <!--Status Dahsboard-->
                                 <feature>
                                     <id>org.wso2.carbon.status.dashboard.core.feature.group</id>
