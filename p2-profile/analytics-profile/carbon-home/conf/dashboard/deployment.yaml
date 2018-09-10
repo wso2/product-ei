@@ -226,6 +226,7 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
+
   - name: BUSINESS_RULES_DB
     description: The datasource used for dashboard feature
     jndiConfig:
@@ -299,7 +300,7 @@ wso2.datasources:
         validationTimeout: 30000
         isAutoCommit: false
 
-   - name: Message_Tracing_DB
+  - name: Message_Tracing_DB
     description: "The datasource used for message tracer to store span information."
     jndiConfig:
       name: jdbc/Message_Tracing_DB
