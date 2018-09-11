@@ -83,6 +83,7 @@
                 <exclude>**/wso2/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
+		<exclude>**/wso2/components/features/**</exclude>
             </excludes>
         </fileSet>
 
@@ -344,6 +345,7 @@
                 <exclude>**/*.bat</exclude>
                 <exclude>**/conf/transports/netty-transports.yml</exclude>
                 <exclude>**/bin/kernel-version.txt</exclude>
+		<exclude>**/osgi/features/**</exclude>
             </excludes>
         </fileSet>
 
@@ -1349,8 +1351,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
-
-
+		<exclude>**/wso2/lib/features/**</exclude>
             </excludes>
             <fileMode>644</fileMode>
         </fileSet>
