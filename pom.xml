@@ -1431,7 +1431,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v79</synapse.version>
+        <synapse.version>2.1.7-wso2v80</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v29</axis2.transport.version>
