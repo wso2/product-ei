@@ -435,7 +435,7 @@ public class CarbonServerManager {
                 Paths.get(carbonHome, "wso2", "tmp", scriptName + ".bat").toFile(), "-Dcatalina.base",
                 "-javaagent:" + jacocoAgentFile + "=destfile=" + coverageDumpFilePath + "" + ",append=true,includes="
                         + CodeCoverageUtils.getInclusionJarsPattern(":") + ",excludes=" + CodeCoverageUtils
-                        .getExclusionJarsPattern(":") + " \\");
+                        .getExclusionJarsPattern(":"));
     }
 
 
