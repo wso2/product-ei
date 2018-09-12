@@ -94,7 +94,6 @@ goto Exit
 
 :Analytics
     echo Preparing the Analytics profile.
-    set DEFAULT_BUNDLES=%DIR%..\wso2\components\analytics-default\configuration\org.eclipse.equinox.simpleconfigurator\bundles.info
     call :Remove_BPS
     call :Remove_INTEGRATOR
     call :Remove_BROKER
