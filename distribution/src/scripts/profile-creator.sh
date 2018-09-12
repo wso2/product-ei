@@ -88,7 +88,6 @@ then
 elif [ ${profileNumber} -eq 2 ]
 then
 	echo "Preparing the Analytics profile distribution"
-	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/analytics-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
 	#remove business-process profile
 	echo "Removing Business Process profile"
 	rm -rf ${DIR}/../wso2/business-process
