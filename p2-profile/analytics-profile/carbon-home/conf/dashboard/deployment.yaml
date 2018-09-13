@@ -56,8 +56,8 @@ databridge.config:
       type: Thrift
         # Data receiver properties
       properties:
-        tcpPort: '7612'
-        sslPort: '7712'
+        tcpPort: '7611'
+        sslPort: '7711'
 
   -
       # Data receiver configuration
@@ -67,8 +67,8 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: '9612'
-        sslPort: '9712'
+        tcpPort: '9611'
+        sslPort: '9711'
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
         hostName: 0.0.0.0
@@ -221,12 +221,11 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 20
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
-
   - name: BUSINESS_RULES_DB
     description: The datasource used for dashboard feature
     jndiConfig:
@@ -239,7 +238,24 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 20
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
+  - name: SAMPLE_DB
+    description: Sample datasource used for gadgets generation wizard
+    jndiConfig:
+      name: jdbc/SAMPLE_DB
+      useJndiReference: true
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/SAMPLE_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 10
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
@@ -258,7 +274,7 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 20
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
@@ -276,7 +292,7 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 20
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
@@ -294,12 +310,45 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 10
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
-
+  - name: HTTP_ANALYTICS_DB
+    description: The datasource used for HTTP Analytics dashboard
+    jndiConfig:
+      name: jdbc/HTTP_ANALYTICS_DB
+      useJndiReference: false
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/HTTP_ANALYTICS_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 30
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
+  - name: Twitter_Analytics
+    description: The datasource used for Twitter Analytics dashboard
+    jndiConfig:
+      name: jdbc/Twitter_Analytics
+      useJndiReference: false
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/Twitter_Analytics;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 30
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
   - name: Message_Tracing_DB
     description: "The datasource used for message tracer to store span information."
     jndiConfig:
@@ -311,12 +360,29 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 30
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
         
+  - name: IS_ANALYTICS_DB
+    description: "The data source used for WSO2 IS Analytics statistics"
+    jndiConfig:
+      name: jdbc/IS_ANALYTICS_DB
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 50
+        idleTimeout: 60000
+        validationTimeout: 30000
+        isAutoCommit: false
+
+
   - name: EI_ANALYTICS
     description: "The datasource used for EI Analytics dashboard feature"
     jndiConfig:
@@ -335,6 +401,23 @@ wso2.datasources:
         isAutoCommit: false
 
   #Data source for APIM Analytics
+  - name: APIM_ANALYTICS_DB
+    description: Datasource used for APIM Analytics
+    jndiConfig:
+      name: jdbc/APIM_ANALYTICS_DB
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_STATS_DB;AUTO_SERVER=TRUE'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 50
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
+
 
 wso2.business.rules.manager:
   datasource: BUSINESS_RULES_DB
@@ -363,34 +446,6 @@ wso2.status.dashboard:
   workerAccessCredentials:
     username: 'admin'
     password: 'admin'
-  queries:
-    -
-     mappings:
-        tableCreateQuery:
-        foreignKeyQuery:
-        tableCheckQuery:
-        recordSelectQuery:
-        recordSelectAppMetricsQuery:
-        recordSelectAgregatedAppMetricsQuery:
-        recordSelectWorkerThroughputQuery:
-        recordSelectWorkerAggregateThroughputQuery:
-        recordSelectWorkerMetricsQuery:
-        recordSelectWorkerAggregateMetricsQuery:
-        recordInsertQuery:
-        recordDeleteQuery:
-        selectAppComponentList:
-        selectAppComponentMetrics:
-        selectAppComponentHistory:
-        selectAppComponentAggregatedHistory:
-        doubleType:
-        floatType:
-        integerType:
-        longType:
-        stringType:
-        booleanType:
-
-     type: default
-     version: default
 
 wso2.transport.http:
   transportProperties:
