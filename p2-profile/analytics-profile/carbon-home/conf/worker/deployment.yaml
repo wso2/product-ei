@@ -24,6 +24,7 @@ wso2.carbon:
   ports:
       # port offset
     offset: 0
+    type: wso2-ei-analytics
 
 wso2.transport.http:
   transportProperties:
