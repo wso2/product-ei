@@ -1528,6 +1528,8 @@
 
         <!-- Misc -->
         <!-- TODO: remove after refactor with ndatasource <carbon.datasource.version>4.2.0</carbon.datasource.version>-->
+        <wso2.esb.api.plugin.version>2.1.0</wso2.esb.api.plugin.version>
+        <maven.car.plugin.version>2.1.1</maven.car.plugin.version>
         <carbon.caching.version>4.2.0</carbon.caching.version>
         <esotericsoftware.kryo.version>3.0.3</esotericsoftware.kryo.version>
         <carbon.rm.version>4.2.0</carbon.rm.version>
