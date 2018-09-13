@@ -18,13 +18,26 @@
   ~
   -->
 
-<api context="/admin" name="AdminApi" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET" url-mapping="/proxyservices">
+<api context="/wso2-micro-integrator" name="AdminApi" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" url-mapping="/proxy-services">
         <inSequence>
+            <property name="request" value="get-all-proxy-services" />
             <class name="org.wso2.carbon.micro.integrator.admin.apis.AdminApiHelper"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
+    <resource methods="GET" url-mapping="/apis">
+        <inSequence>
+            <property name="request" value="get-all-apis" />
+            <class name="org.wso2.carbon.micro.integrator.admin.apis.AdminApiHelper"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+
 </api>
