@@ -2885,6 +2885,13 @@
             <fileMode>644</fileMode>
         </file>
 
+        <file>
+            <source>
+                ../components/org.wso2.carbon.micro.integrator.extensions/org.wso2.carbon.micro.integrator.admin.apis/AdminApiCapp/target/org.wso2.carbon.micro.integrator.admin.api_${pom.version}.car
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/carbonapps</outputDirectory>
+        </file>
+
         <!-- ODATA WebApp -->
         <file>
             <source>
