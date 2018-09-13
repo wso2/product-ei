@@ -20,8 +20,14 @@
 
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <parent>
+    <groupId>org.wso2.ei</groupId>
+    <artifactId>org.wso2.carbon.micro.integrator.admin.apis</artifactId>
+    <version>6.4.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.wso2.ei</groupId>
   <artifactId>org.wso2.carbon.micro.integrator.admin.api</artifactId>
   <version>6.4.0-SNAPSHOT</version>
   <packaging>carbon/application</packaging>
@@ -87,7 +93,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-eclipse-plugin</artifactId>
-        <version>2.9</version>
+        <version>${maven.eclipse.plugin.version}</version>
         <configuration>
           <buildcommands />
           <projectnatures>
@@ -98,7 +104,7 @@
       <plugin>
         <groupId>org.wso2.maven</groupId>
         <artifactId>maven-car-plugin</artifactId>
-        <version>2.1.1</version>
+        <version>${maven.car.plugin.version}</version>
         <extensions>true</extensions>
         <executions>
           <execution>
@@ -109,7 +115,7 @@
             </goals>
           </execution>
         </executions>
-        <configuration />
+        <configuration/>
       </plugin>
       <plugin>
         <groupId>org.wso2.maven</groupId>
