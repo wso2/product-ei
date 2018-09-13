@@ -55,6 +55,24 @@ wso2.transport.http:
     -
       id: "http-sender"
 
+siddhi.stores.query.api:
+  transportProperties:
+    -
+      name: "server.bootstrap.socket.timeout"
+      value: 60
+    -
+      name: "client.bootstrap.socket.timeout"
+      value: 60
+    -
+      name: "latency.metrics.enabled"
+      value: true
+
+  listenerConfigurations:
+    -
+      id: "default"
+      host: "0.0.0.0"
+      port: 7370
+
   # Configuration used for the databridge communication
 databridge.config:
     # No of worker threads to consume events
@@ -246,7 +264,7 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 10
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
@@ -263,7 +281,7 @@ wso2.datasources:
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
-        maxPoolSize: 50
+        maxPoolSize: 20
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
