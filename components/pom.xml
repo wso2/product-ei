@@ -52,5 +52,6 @@
         <module>org.wso2.ei.bpmn.analytics.core</module>
         <module>org.wso2.ei.analytics.elk</module>
         <module>org.wso2.carbon.micro.integrator.security</module>
+        <module>org.wso2.carbon.micro.integrator.extensions</module>
     </modules>
 </project>
