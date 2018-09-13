@@ -3125,5 +3125,13 @@
             <fileMode>744</fileMode>
         </file>
 
+        <!--In place Updates-->
+        <file>
+            <source>src/resources/updates/product.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/updates</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
     </files>
 </assembly>
