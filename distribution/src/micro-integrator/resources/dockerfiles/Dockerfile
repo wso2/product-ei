@@ -38,10 +38,8 @@ ARG MICROESB_HOME=${USER_HOME}/${MICROESB_DISTRIBUTION}
 RUN addgroup -S ${USER_GROUP} && adduser -S -G ${USER_GROUP} ${USER}
 
 # Copy mico esb distribution to user's home directory
-#COPY --chown=wso2ei:wso2ei ${FILES}/${MICROESB_DISTRIBUTION} ${MICROESB_HOME}
 COPY ${FILES}/${MICROESB_DISTRIBUTION} ${MICROESB_HOME}
 RUN chown -R wso2ei:wso2ei ${MICROESB_HOME}
-#COPY --chown=wso2ei:wso2ei ${FILES}/carbonapps  ${MICROESB_HOME}/wso2/micro-integrator/repository/deployment/server/carbonapps
 COPY ${FILES}/carbonapps  ${MICROESB_HOME}/wso2/micro-integrator/repository/deployment/server/carbonapps
 
 # set the user and work directory
