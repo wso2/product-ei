@@ -32,7 +32,10 @@ import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import static org.testng.Assert.assertFalse;
@@ -90,7 +93,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
      * @param value
      * @throws Exception
      */
-    private void applyProperty(File srcFile, String key, String value) throws Exception {
+    private void applyProperty(File srcFile, String key, String value) throws IOException {
         FileInputStream fis = null;
         FileOutputStream fos = null;
         String outFileName = srcFile.getName();

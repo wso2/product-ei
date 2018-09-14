@@ -30,7 +30,12 @@ import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.FileReader;
 import java.util.Properties;
 
 import static java.io.File.separator;
@@ -120,7 +125,7 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
      * @param value
      * @throws Exception
      */
-    private void applyProperty(File srcFile, String key, String value) throws Exception {
+    private void applyProperty(File srcFile, String key, String value) throws IOException {
         FileInputStream fis = null;
         FileOutputStream fos = null;
         String outFileName = srcFile.getName();
