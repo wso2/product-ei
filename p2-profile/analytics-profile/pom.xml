@@ -1721,20 +1721,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>materialize-editor</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>generate-runtime</goal>
-                        </goals>
-                        <configuration>
-                            <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
-                            <targetPath>
-                                file:${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2
-                            </targetPath>
-                            <runtime>editor</runtime>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>materialize-dashboard</id>
                         <phase>package</phase>
                         <goals>
