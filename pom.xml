@@ -1355,6 +1355,12 @@
                 <artifactId>org.wso2.carbon.dataservices.core</artifactId>
                 <version>${carbon.data.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1654,6 +1660,7 @@
         <version.eclipse.ecj>4.4.2</version.eclipse.ecj>
         <version.com.google.code.gson>2.3.1</version.com.google.code.gson>
         <bouncycastle.orbit.version>1.52.0.wso2v1</bouncycastle.orbit.version>
+        <awaitility.version>3.1.2</awaitility.version>
     </properties>
 
     <repositories>
