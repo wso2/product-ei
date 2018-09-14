@@ -53,8 +53,8 @@ public class HandlerTest extends ESBIntegrationTest {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(context);
         serverConfigurationManager
-                .copyToComponentDropins(new File(getClass().getResource(LOCATION + File.separator + JAR_NAME).toURI()));
-        copyToComponentConf(getClass().getResource(LOCATION + File.separator + CONF_NAME).getPath(), CONF_NAME);
+                .copyToComponentDropins(new File(getClass().getResource(LOCATION + "/" + JAR_NAME).toURI()));
+        copyToComponentConf(getClass().getResource(LOCATION + "/" + CONF_NAME).getPath(), CONF_NAME);
         serverConfigurationManager.restartForcefully();
         super.init();
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
@@ -118,9 +118,8 @@ public class HandlerTest extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         serverConfigurationManager
-                .removeFromComponentDropins(getClass().getResource(LOCATION + File.separator + JAR_NAME).getPath());
-        removeFromComponentConf(getClass().getResource(LOCATION + File.separator + CONF_NAME).getPath());
+                .removeFromComponentDropins(getClass().getResource(LOCATION + "/" + JAR_NAME).getPath());
+        removeFromComponentConf(getClass().getResource(LOCATION + "/" + CONF_NAME).getPath());
         super.cleanup();
     }
-
 }
