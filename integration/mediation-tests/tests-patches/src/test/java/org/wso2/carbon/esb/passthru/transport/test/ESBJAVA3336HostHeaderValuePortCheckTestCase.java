@@ -91,7 +91,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
      * @param srcFile
      * @param key
      * @param value
-     * @throws Exception
+     * @throws IOException
      */
     private void applyProperty(File srcFile, String key, String value) throws IOException {
         FileInputStream fis = null;

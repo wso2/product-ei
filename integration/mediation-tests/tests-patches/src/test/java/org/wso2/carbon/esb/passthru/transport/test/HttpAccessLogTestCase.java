@@ -123,7 +123,7 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
      * @param srcFile
      * @param key
      * @param value
-     * @throws Exception
+     * @throws IOException
      */
     private void applyProperty(File srcFile, String key, String value) throws IOException {
         FileInputStream fis = null;
