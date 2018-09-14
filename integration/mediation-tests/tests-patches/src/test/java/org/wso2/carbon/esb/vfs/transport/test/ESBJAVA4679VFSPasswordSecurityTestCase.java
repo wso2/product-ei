@@ -86,9 +86,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
         FTPPassword = "pass";
 
         pathToFtpDir = getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "synapseconfig" + File.separator
-                + "vfsTransport" + File.separator).getPath();
+                "/artifacts/ESB/synapseconfig/vfsTransport/").getPath();
 
         // Local folder of the FTP server root
         FTPFolder = new File(pathToFtpDir + "securePasswordFTP");
@@ -101,7 +99,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
         Assert.assertTrue(FTPFolder.mkdir(), "FTP root file folder not created");
 
         // create a directory under FTP server root
-        inputFolder = new File(FTPFolder.getAbsolutePath() + File.separator
+        inputFolder = new File(FTPFolder.getAbsolutePath() + "/"
                                + inputFolderName);
 
         if (inputFolder.exists()) {
@@ -122,11 +120,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
         // gracefully
         serverConfigurationManager = new ServerConfigurationManager(context);
         serverConfigurationManager.applyConfiguration(new File(getClass()
-                                                                       .getResource(
-                                                                               File.separator + "artifacts" + File.separator + "ESB"
-                                                                               + File.separator + "synapseconfig"
-                                                                               + File.separator + "vfsTransport"
-                                                                               + File.separator + "axis2.xml").getPath()));
+                .getResource("/artifacts/ESB/synapseconfig/vfsTransport/axis2.xml").getPath()));
         super.init();
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
                                               getSessionCookie());
@@ -153,8 +147,8 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
 
         //copy SOAP message  into the SFTP server
         String sentMessageFile = "test.xml";
-        File sourceMessage = new File(sampleFileFolder + File.separator + sentMessageFile);
-        File destinationMessage = new File(inputFolder + File.separator + sentMessageFile);
+        File sourceMessage = new File(sampleFileFolder + "/" + sentMessageFile);
+        File destinationMessage = new File(inputFolder + "/" + sentMessageFile);
         copyFile(sourceMessage, destinationMessage);
 
         //Below is encrypted value of "user1:pass" using local wso2carbon.jks TODO if security settings change, will need to change below value as well. Otherwise this test will fail
