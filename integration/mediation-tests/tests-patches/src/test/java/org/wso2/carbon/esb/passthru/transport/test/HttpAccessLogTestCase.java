@@ -126,16 +126,28 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
      * @throws Exception
      */
     private void applyProperty(File srcFile, String key, String value) throws Exception {
-        File destinationFile = new File(srcFile.getName());
-        Properties properties = new Properties();
-        FileInputStream fis = new FileInputStream(srcFile);
-        properties.load(fis);
-        properties.setProperty(key, value);
-        fis.close();
-        FileOutputStream fos = new FileOutputStream(destinationFile);
-        properties.store(fos, null);
-        serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
-        fos.close();
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        String outFileName = srcFile.getName();
+        try {
+            File destinationFile = new File(outFileName);
+            fis = new FileInputStream(srcFile);
+            fos = new FileOutputStream(destinationFile);
+            Properties properties = new Properties();
+            properties.load(fis);
+            properties.setProperty(key, value);
+            properties.store(fos, null);
+            serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
+        } catch (Exception e) {
+            log.error(" File Cannot Find " + e.getMessage());
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+        }
     }
 
     /**
