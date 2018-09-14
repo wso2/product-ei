@@ -93,9 +93,13 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
     private void applyProperty(File srcFile, String key, String value) throws Exception {
         File destinationFile = new File(srcFile.getName());
         Properties properties = new Properties();
-        properties.load(new FileInputStream(srcFile));
+        FileInputStream fis = new FileInputStream(srcFile);
+        properties.load(fis);
         properties.setProperty(key, value);
-        properties.store(new FileOutputStream(destinationFile), null);
+        fis.close();
+        FileOutputStream fos = new FileOutputStream(destinationFile);
+        properties.store(fos, null);
         serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
+        fos.close();
     }
 }
