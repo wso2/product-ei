@@ -18,7 +18,7 @@
 
 package org.wso2.carbon.esb.passthru.transport.test;
 
-import junit.framework.Assert;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -31,10 +31,8 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+
+import java.io.*;
 import java.util.Properties;
 
 import static org.testng.Assert.assertFalse;
@@ -106,7 +104,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
             properties.store(fos, null);
             serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
         } catch (Exception e) {
-            log.error(" File Cannot Find " + e.getMessage());
+            Assert.assertTrue(false, "Exception occured with the message: " + e.getMessage());
         } finally {
             if (fis != null) {
                 fis.close();

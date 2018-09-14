@@ -30,12 +30,7 @@ import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 import static java.io.File.separator;
@@ -139,7 +134,7 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
             properties.store(fos, null);
             serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
         } catch (Exception e) {
-            log.error(" File Cannot Find " + e.getMessage());
+            Assert.assertTrue(false, "Exception occured with the message: " + e.getMessage());
         } finally {
             if (fis != null) {
                 fis.close();
