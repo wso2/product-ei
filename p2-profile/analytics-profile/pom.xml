@@ -37,11 +37,11 @@
 
     <properties>
 
-        <carbon.analytics.version>2.0.419</carbon.analytics.version>
+        <carbon.analytics.version>2.0.421</carbon.analytics.version>
         <siddhi.version>4.2.19</siddhi.version>
 
         <carbon.analytics-common.version>6.0.70</carbon.analytics-common.version>
-        <analytics.solutions.version>1.0.10</analytics.solutions.version>
+        <analytics.solutions.version>1.0.11</analytics.solutions.version>
         <!-- Maven plugins -->
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
         <maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
@@ -86,7 +86,7 @@
 
         <antlr4.runtime.version>4.5.1.wso2v1</antlr4.runtime.version>
         <!--Dashboard-->
-        <carbon.dashboards.version>4.0.37</carbon.dashboards.version>
+        <carbon.dashboards.version>4.0.38</carbon.dashboards.version>
         <carbon.uis.version>0.19.5</carbon.uis.version>
         <maven.exec.plugin.version>1.5.0</maven.exec.plugin.version>
 
@@ -194,16 +194,16 @@
         <siddhi.map.wso2event.version>4.0.16</siddhi.map.wso2event.version>
         <siddhi.map.binary.version>1.0.15</siddhi.map.binary.version>
         <siddhi.map.text.version>1.0.22</siddhi.map.text.version>
-        <siddhi.map.xml.version>4.0.18</siddhi.map.xml.version>
+        <siddhi.map.xml.version>4.0.19</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>1.0.17</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>1.0.12</siddhi.map.csv.version>
 
         <siddhi.store.mongodb.version>1.0.20</siddhi.store.mongodb.version>
-        <siddhi.store.rdbms.version>4.0.34</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>4.0.35</siddhi.store.rdbms.version>
         <siddhi.store.solr.version>1.0.21</siddhi.store.solr.version>
         <siddhi.store.hbase.version>4.0.13</siddhi.store.hbase.version>
         <siddhi.store.cassandra.version>1.0.7</siddhi.store.cassandra.version>
-        <siddhi.store.redis.version>1.0.8</siddhi.store.redis.version>
+        <siddhi.store.redis.version>1.0.9</siddhi.store.redis.version>
         <siddhi.store.elasticsearch.version>1.0.5</siddhi.store.elasticsearch.version>
 
         <siddhi.script.js.version>4.0.14</siddhi.script.js.version>
