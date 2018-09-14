@@ -1440,7 +1440,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.103</carbon.mediation.version>
+        <carbon.mediation.version>4.6.104</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.35</carbon.kernel.version>
@@ -1528,6 +1528,8 @@
 
         <!-- Misc -->
         <!-- TODO: remove after refactor with ndatasource <carbon.datasource.version>4.2.0</carbon.datasource.version>-->
+        <wso2.esb.api.plugin.version>2.1.0</wso2.esb.api.plugin.version>
+        <maven.car.plugin.version>2.1.1</maven.car.plugin.version>
         <carbon.caching.version>4.2.0</carbon.caching.version>
         <esotericsoftware.kryo.version>3.0.3</esotericsoftware.kryo.version>
         <carbon.rm.version>4.2.0</carbon.rm.version>
