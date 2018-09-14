@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
@@ -98,14 +99,15 @@ public class ServerConfigurationManager {
      * backup the current server configuration file
      *
      * @param fileName file name
+     * @throws IOException
      */
     private void backupConfiguration(String fileName) throws IOException {
         //restore backup configuration
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        String confDir = Paths.get(carbonHome ,"conf").toString();
+        String confDir = Paths.get(carbonHome,"conf").toString();
         String AXIS2_XML = "axis2";
         if (fileName.contains(AXIS2_XML)) {
-            confDir = Paths.get(confDir , "axis2" ).toString();
+            confDir = Paths.get(confDir, "axis2").toString();
         }
         originalConfig = Paths.get(confDir,fileName).toFile();
         backUpConfig = Paths.get(confDir , fileName + ".backup").toFile();
@@ -113,7 +115,8 @@ public class ServerConfigurationManager {
         Files.move(originalConfig.toPath(), backUpConfig.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         if (originalConfig.exists()) {
-            throw new IOException("Failed to rename file from " + originalConfig.getName() + "to" + backUpConfig.getName());
+            throw new IOException("Failed to rename file from " + originalConfig.getName() + "to" +
+                    backUpConfig.getName());
         }
 
         configDatas.add(new ConfigData(backUpConfig, originalConfig));
@@ -123,6 +126,7 @@ public class ServerConfigurationManager {
      * Backup a file residing in a cabron server.
      *
      * @param file file residing in server to backup.
+     * @throws IOException
      */
     private void backupConfiguration(File file) throws IOException {
         //restore backup configuration
@@ -132,7 +136,8 @@ public class ServerConfigurationManager {
         Files.move(originalConfig.toPath(), backUpConfig.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         if (originalConfig.exists()) {
-            throw new IOException("Failed to rename file from " + originalConfig.getName() + "to" + backUpConfig.getName());
+            throw new IOException("Failed to rename file from " + originalConfig.getName() + "to" +
+                    backUpConfig.getName());
         }
 
         configDatas.add(new ConfigData(backUpConfig, originalConfig));
@@ -501,7 +506,7 @@ public class ServerConfigurationManager {
      */
     public void copyToComponentDropins(File jar) throws IOException, URISyntaxException {
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        String lib = Paths.get(carbonHome , "dropins").toString();
+        String lib = Paths.get(carbonHome, "dropins").toString();
         FileManager.copyJarFile(jar, lib);
     }
 
@@ -512,7 +517,8 @@ public class ServerConfigurationManager {
      */
     public void removeFromComponentDropins(String fileName) throws IOException, URISyntaxException {
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        File file = Paths.get(carbonHome , "dropins" ,fileName).toFile();
+        URI filePath = Paths.get(carbonHome, "dropins", fileName).toUri();
+        File file = Paths.get(filePath).toFile();
 
         if (file.exists()) {
             FileManager.deleteFile(file.getAbsolutePath());
