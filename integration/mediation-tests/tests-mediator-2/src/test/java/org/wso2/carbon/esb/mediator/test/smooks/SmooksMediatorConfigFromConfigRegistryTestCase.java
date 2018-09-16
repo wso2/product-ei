@@ -54,11 +54,11 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE })
     @Test(groups = {"wso2.esb"}, description = "Transform from a Smook mediator config picked out of config registry")
     public void testSendingToSmooks() throws Exception {
-        String smooksResourceDir = getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath();
+        String smooksResourceDirstr = getClass().getResource("/artifacts/ESB/synapseconfig/smooks/").getFile();
+        File fileSmook = new File(smooksResourceDirstr);
+        String smooksResourceDir = fileSmook.getAbsolutePath();
         Path source = Paths.get(smooksResourceDir, "data.csv");
-        Path destination = Paths.get(smooksResourceDir + "test", "in", "data.csv");
+        Path destination = Paths.get(smooksResourceDir,  "test", "in", "data.csv");
         Files.createDirectories(Paths.get(smooksResourceDir, "test", "in"));
         Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
         /*
@@ -79,6 +79,7 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
 
     }
 
+
     private void uploadResourcesToConfigRegistry() throws Exception {
         resourceAdminServiceClient.addResource(
                 "/_system/config/smooks_config.xml", "application/xml", "xml files",
@@ -95,15 +96,10 @@ public class SmooksMediatorConfigFromConfigRegistryTestCase extends ESBIntegrati
                 + "        <output type=\"xml\"/>\n" + "    </smooks>\n"
                 + "    <property name=\"OUT_ONLY\" value=\"true\"/>\n" + "    <send>\n"
                 + "        <endpoint name=\"FileEpr\">\n" + "            <address uri=\"vfs:file://" + getClass()
-                .getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "out"
-                + File.separator + "config-reg-test-out.xml\" format=\"soap11\"/>\n" + "        </endpoint>\n"
+                .getResource("/artifacts/ESB/synapseconfig/smooks/").getPath() + "test/out/config-reg-test-out.xml\" format=\"soap11\"/>\n" + "        </endpoint>\n"
                 + "    </send>\n" + "    <log level=\"full\"/>\n" + "    </inSequence>\n" + "    </target>\n"
                 + "    <parameter name=\"transport.PollInterval\">1</parameter>\n"
-                + "    <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "in"
-                + File.separator + "</parameter>\n"
+                + "    <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource("/artifacts/ESB/synapseconfig/smooks/").getPath() + "test/in/</parameter>\n"
                 + "    <parameter name=\"transport.vfs.FileNamePattern\">.*\\.csv</parameter>\n"
                 + "    <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" + "</proxy>"));
         isProxyDeployed = true;
