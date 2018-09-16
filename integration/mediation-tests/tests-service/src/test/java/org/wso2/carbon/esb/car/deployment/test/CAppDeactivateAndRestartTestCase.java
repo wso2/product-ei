@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 /**
  * Testcase to test persisting deactivation of vfs proxy deployed using CAPP after restart of the server
@@ -62,8 +63,8 @@ public class CAppDeactivateAndRestartTestCase extends ESBIntegrationTest {
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
         carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName,
-                new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                        + File.separator + "car" + File.separator + carFileName)));
+                new DataHandler(new FileDataSource(new File(getESBResourceLocation() +
+                                                            File.separator + "car" + File.separator + carFileName))));
         log.info(carFileName + " uploaded successfully");
 
         //deactivate proxy service
@@ -128,8 +129,7 @@ public class CAppDeactivateAndRestartTestCase extends ESBIntegrationTest {
         String FTPPassword = "admin";
         int FTPPort = 8085;
 
-        String pathToFtpDir = getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" +
-                File.separator + "synapseconfig" + File.separator + "vfsTransport" + File.separator).getPath();
+        String pathToFtpDir = getClass().getResource("/artifacts/ESB/synapseconfig/vfsTransport/").getPath();
 
         // Local folder of the FTP server root
         File ftpFolder = new File(pathToFtpDir + "FTP_Location" + File.separator);

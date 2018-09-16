@@ -67,6 +67,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.xpath.XPathExpressionException;
@@ -421,9 +422,8 @@ public abstract class ESBIntegrationTest {
 	                                                                                RemoteException {
 		List<LibraryFileItem> uploadLibraryInfoList = new ArrayList<LibraryFileItem>();
 		LibraryFileItem uploadedFileItem = new LibraryFileItem();
-		uploadedFileItem.setDataHandler(new DataHandler(new URL("file:" + File.separator +
-		                                                        File.separator + repoLocation +
-		                                                        File.separator + strFileName)));
+		uploadedFileItem.setDataHandler(new DataHandler(new FileDataSource(new File(repoLocation +
+		                                                        File.separator + strFileName))));
 		uploadedFileItem.setFileName(strFileName);
 		uploadedFileItem.setFileType("zip");
 		uploadLibraryInfoList.add(uploadedFileItem);

@@ -56,6 +56,32 @@ wso2.transport.http:
     -
       id: "http-sender"
 
+siddhi.stores.query.api:
+  transportProperties:
+    -
+      name: "server.bootstrap.socket.timeout"
+      value: 60
+    -
+      name: "client.bootstrap.socket.timeout"
+      value: 60
+    -
+      name: "latency.metrics.enabled"
+      value: true
+
+  listenerConfigurations:
+    -
+      id: "default"
+      host: "0.0.0.0"
+      port: 7070
+    -
+      id: "msf4j-https"
+      host: "0.0.0.0"
+      port: 7443
+      scheme: https
+      keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
+      keyStorePassword: wso2carbon
+      certPass: wso2carbon
+
   # Configuration used for the databridge communication
 databridge.config:
     # No of worker threads to consume events
@@ -304,7 +330,7 @@ wso2.datasources:
           idleTimeout: 60000
           isAutoCommit: false
           jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
-          maxPoolSize: 50
+          maxPoolSize: 10
           password: wso2carbon
           username: wso2carbon
           validationTimeout: 30000
@@ -324,7 +350,7 @@ wso2.datasources:
           username: wso2carbon
           password: wso2carbon
           driverClassName: org.h2.Driver
-          maxPoolSize: 50
+          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -342,11 +368,46 @@ wso2.datasources:
           username: wso2carbon
           password: wso2carbon
           driverClassName: org.h2.Driver
-          maxPoolSize: 50
+          maxPoolSize: 10
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
           isAutoCommit: false
+
+    - name: HTTP_ANALYTICS_DB
+      description: The datasource used for HTTP Analytics dashboard
+      jndiConfig:
+        name: jdbc/HTTP_ANALYTICS_DB
+        useJndiReference: false
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/HTTP_ANALYTICS_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
+          maxPoolSize: 30
+          idleTimeout: 60000
+          connectionTestQuery: SELECT 1
+          validationTimeout: 30000
+          isAutoCommit: false
+#    - name: Twitter_Analytics
+#      description: The datasource used for Twitter Analytics dashboard
+#      jndiConfig:
+#        name: jdbc/Twitter_Analytics
+#        useJndiReference: false
+#      definition:
+#        type: RDBMS
+#        configuration:
+#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/Twitter_Analytics;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE'
+#          username: wso2carbon
+#          password: wso2carbon
+#          driverClassName: org.h2.Driver
+#          maxPoolSize: 30
+#          idleTimeout: 60000
+#          connectionTestQuery: SELECT 1
+#          validationTimeout: 30000
+#          isAutoCommit: false
 
     - name: Message_Tracing_DB
       description: "The datasource used for message tracer to store span information."
@@ -359,7 +420,7 @@ wso2.datasources:
           username: wso2carbon
           password: wso2carbon
           driverClassName: org.h2.Driver
-          maxPoolSize: 50
+          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -381,21 +442,72 @@ wso2.datasources:
           validationTimeout: 30000
           isAutoCommit: false
 
-    - name: GEO_LOCATION_DATA
-      description: "The data source used for geo location database"
-      jndiConfig:
-        name: jdbc/GEO_LOCATION_DATA
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/GEO_LOCATION_DATA;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
-          maxPoolSize: 50
-          idleTimeout: 60000
-          validationTimeout: 30000
-          isAutoCommit: false
+
+#    - name: IS_ANALYTICS_DB
+#      description: "The data source used for WSO2 IS Analytics statistics"
+#      jndiConfig:
+#        name: jdbc/IS_ANALYTICS_DB
+#      definition:
+#        type: RDBMS
+#        configuration:
+#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
+#          username: wso2carbon
+#          password: wso2carbon
+#          driverClassName: org.h2.Driver
+#          maxPoolSize: 50
+#          idleTimeout: 60000
+#          validationTimeout: 30000
+#          isAutoCommit: false
+
+#    - name: GEO_LOCATION_DATA
+#      description: "The data source used for geo location database"
+#      jndiConfig:
+#        name: jdbc/GEO_LOCATION_DATA
+#      definition:
+#        type: RDBMS
+#        configuration:
+#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/GEO_LOCATION_DATA;AUTO_SERVER=TRUE'
+#          username: wso2carbon
+#          password: wso2carbon
+#          driverClassName: org.h2.Driver
+#          maxPoolSize: 50
+#          idleTimeout: 60000
+#          validationTimeout: 30000
+#          isAutoCommit: false
+
+#    - name: APIM_ANALYTICS_DB
+#      description: "The datasource used for APIM statistics aggregated data."
+#      jndiConfig:
+#        name: jdbc/APIM_ANALYTICS_DB
+#      definition:
+#        type: RDBMS
+#        configuration:
+#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_STATS_DB;AUTO_SERVER=TRUE'
+#          username: wso2carbon
+#          password: wso2carbon
+#          driverClassName: org.h2.Driver
+#          maxPoolSize: 50
+#          idleTimeout: 60000
+#          connectionTestQuery: SELECT 1
+#          validationTimeout: 30000
+#          isAutoCommit: false
+
+#    - name: WSO2AM_MGW_ANALYTICS_DB
+#      description: "The datasource used for APIM MGW analytics data."
+#      jndiConfig:
+#        name: jdbc/WSO2AM_MGW_ANALYTICS_DB
+#      definition:
+#        type: RDBMS
+#        configuration:
+#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_MGW_ANALYTICS_DB;AUTO_SERVER=TRUE'
+#          username: wso2carbon
+#          password: wso2carbon
+#          driverClassName: org.h2.Driver
+#          maxPoolSize: 50
+#          idleTimeout: 60000
+#          connectionTestQuery: SELECT 1
+#          validationTimeout: 30000
+#          isAutoCommit: false
 
 siddhi:
   extensions:
@@ -434,17 +546,19 @@ cluster.config:
   # Sample of deployment.config for Two node HA
 #deployment.config:
 #  type: ha
-#  liveSync:
-#    enabled: true
+#  eventSyncServer:
+#    host: localhost
+#    port: 9893
 #    advertisedHost: localhost
-#    advertisedPort: 9090
-#    username: admin
-#    password: admin
-#  outputSyncInterval: 10000
-#  stateSyncGracePeriod: 60000
-#  sinkQueueCapacity: 20000
-#  sourceQueueCapacity: 20000
-#  retryAppSyncPeriod: 60000
+#    advertisedPort: 9893
+#    bossThreads: 10
+#    workerThreads: 10
+#  eventSyncClientPool:
+#    maxActive: 10
+#    maxTotal: 10
+#    maxIdle: 10
+#    maxWait: 60000
+#    minEvictableIdleTimeMillis: 120000
 
   # Sample of deployment.config for Distributed deployment
 #deployment.config:

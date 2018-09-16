@@ -32,6 +32,7 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import java.io.File;
 import java.net.URL;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 /**
  * Test case to ensure Carbon apps (.car files) are deployed before the transport starts.
@@ -56,8 +57,8 @@ public class CARBON16113DeployArtifactsBeforeTransportStarsTestCase extends ESBI
     public void carReDeploymentTest() throws Exception {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         uploadCapp("car-deployment-before-tranaport-start-test_1.0.0.car", new DataHandler(
-                new URL("file:" + File.separator + File.separator + getESBResourceLocation() + File.separator + "car"
-                        + File.separator + "car-deployment-before-tranaport-start-test_1.0.0.car")));
+                new FileDataSource(new File(getESBResourceLocation() + File.separator + "car"
+                        + File.separator + "car-deployment-before-tranaport-start-test_1.0.0.car"))));
         logViewerClient.clearLogs();
         serverConfigurationManager.restartGracefully();
         super.init();

@@ -1027,6 +1027,15 @@
         </fileSet>
 
         <fileSet>
+            <directory>src/micro-integrator/resources/dockerfiles</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/dockerfiles</outputDirectory>
+            <excludes>
+                <exclude>Dockerfile</exclude>
+            </excludes>
+        </fileSet>
+
+
+        <fileSet>
             <directory>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps
             </directory>
@@ -1368,11 +1377,6 @@
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../p2-profile/analytics-profile/carbon-home/conf/editor</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/editor</outputDirectory>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
             <directory>../p2-profile/analytics-profile/carbon-home/conf/dashboard</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/dashboard</outputDirectory>
             <fileMode>644</fileMode>
@@ -1387,11 +1391,6 @@
         <fileSet>
             <directory>../p2-profile/analytics-profile/carbon-home/conf/transports/worker</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/conf/transports</outputDirectory>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>../p2-profile/analytics-profile/carbon-home/conf/transports/editor</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/editor/conf/transports</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
@@ -1455,30 +1454,6 @@
         <fileSet>
             <directory>.</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/simulation-configs</outputDirectory>
-            <excludes>
-                <exclude>*/**</exclude>
-            </excludes>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/editor/deployment/workspace</outputDirectory>
-            <excludes>
-                <exclude>*/**</exclude>
-            </excludes>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/editor/deployment/csv-files</outputDirectory>
-            <excludes>
-                <exclude>*/**</exclude>
-            </excludes>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/editor/deployment/simulation-configs</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -2876,6 +2851,13 @@
             <fileMode>644</fileMode>
         </file>
 
+        <file>
+            <source>
+                ../components/org.wso2.carbon.micro.integrator.extensions/org.wso2.carbon.micro.integrator.admin.apis/AdminApiCapp/target/org.wso2.carbon.micro.integrator.admin.api_${pom.version}.car
+            </source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/carbonapps</outputDirectory>
+        </file>
+
         <!-- ODATA WebApp -->
         <file>
             <source>
@@ -2971,26 +2953,8 @@
                 <fileMode>755</fileMode>
             </file>
             <file>
-                <source>../p2-profile/analytics-profile/carbon-home/runtime/editor/carbon.sh</source>
-                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/editor/bin/</outputDirectory>
-                <filtered>true</filtered>
-                <fileMode>755</fileMode>
-            </file>
-            <file>
-                <source>../p2-profile/analytics-profile/carbon-home/runtime/editor/carbon.bat</source>
-                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/editor/bin/</outputDirectory>
-                <filtered>true</filtered>
-                <fileMode>755</fileMode>
-            </file>
-            <file>
                 <source>../p2-profile/analytics-profile/carbon-home/conf/dashboard/log4j2.xml</source>
                 <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/dashboard/</outputDirectory>
-                <filtered>true</filtered>
-                <fileMode>644</fileMode>
-            </file>
-            <file>
-                <source>../p2-profile/analytics-profile/carbon-home/conf/editor/log4j2.xml</source>
-                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/editor/</outputDirectory>
                 <filtered>true</filtered>
                 <fileMode>644</fileMode>
             </file>
@@ -3123,6 +3087,23 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/conf/datasources</outputDirectory>
             <destName>activiti-datasources.xml</destName>
             <fileMode>744</fileMode>
+        </file>
+
+        <!-- Dockerfile -->
+
+        <file>
+            <source>src/micro-integrator/resources/dockerfiles/Dockerfile</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/dockerfiles/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!--In place Updates-->
+        <file>
+            <source>src/resources/updates/product.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/updates</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
         </file>
 
     </files>

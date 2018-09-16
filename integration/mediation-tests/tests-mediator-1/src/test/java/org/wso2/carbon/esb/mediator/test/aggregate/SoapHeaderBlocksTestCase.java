@@ -11,6 +11,7 @@ import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
@@ -39,8 +40,8 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
         super.init();
         carbonAppUploaderClient = new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         carbonAppUploaderClient.uploadCarbonAppArtifact(carFileNameWithExtension
-                , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                + File.separator + "car" + File.separator + carFileNameWithExtension)));
+                , new DataHandler( new FileDataSource( new File(getESBResourceLocation()
+                + File.separator + "car" + File.separator + carFileNameWithExtension))));
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/requestWithSoapHeaderBlockConfig/synapse.xml");

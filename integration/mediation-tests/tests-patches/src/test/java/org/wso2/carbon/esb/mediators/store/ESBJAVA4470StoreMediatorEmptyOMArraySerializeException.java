@@ -32,6 +32,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 import static org.testng.Assert.assertFalse;
 
@@ -46,9 +47,8 @@ public class ESBJAVA4470StoreMediatorEmptyOMArraySerializeException extends ESBI
         super.init();
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         uploadCapp(carFileName
-                , new DataHandler(new URL("file:" + File.separator + File.separator +
-                getESBResourceLocation() + File.separator + "car" +
-                File.separator + carFileName)));
+                , new DataHandler(new FileDataSource(new File(getESBResourceLocation() + File.separator + "car" +
+                                                            File.separator + carFileName))));
         TimeUnit.SECONDS.sleep(30);
         log.info(carFileName + " uploaded successfully");
     }
