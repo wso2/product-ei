@@ -22,18 +22,15 @@ import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.extensions.servers.ftpserver.FTPServerManager;
-import org.wso2.carbon.automation.extensions.servers.sftpserver.SFTPServer;
 import org.wso2.carbon.base.CarbonBaseUtils;
-import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.servers.SftpServerRunner;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
@@ -41,6 +38,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Paths;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Integration test for https://wso2.org/jira/browse/ESBJAVA-4770
@@ -48,40 +48,30 @@ import java.nio.channels.FileChannel;
  * This sets up a sftp server for the test, hence it requires sudo to run
  *
  * This test will also cover the jira https://wso2.org/jira/browse/ESBJAVA-4768 as well,
- * in that, we need to enable file lockin along with "sftpPathFromRoot=true" which is done in this test case.
+ * in that, we need to enable file locking along with "sftpPathFromRoot=true" which is done in this test case.
  */
 public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBIntegrationTest {
 
     private static final Logger LOGGER = Logger.getLogger(ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase.class);
 
-    private SFTPServer sftpServer;
-    private String FTPUsername;
-    private String FTPPassword;
-    private File FTPFolder;
+    private SftpServerRunner sftpServerRunner;
     private File sampleFileFolder;
     private File inputFolder;
     private File outputFolder;
     private ServerConfigurationManager serverConfigurationManager;
-    private LogViewerClient logViewerClient;
-    private String pathToFtpDir;
-    private int FTPPort = 8085;
+    private int FTPPort = 8005;
     private String inputFolderName = "in";
     private String outputFolderName = "out";
+    private static final String USERNAME = "SFTPUser";
+    private static final String PASSWORD = "SFTP321";
 
     @BeforeClass(alwaysRun = true)
     public void runFTPServer() throws Exception {
 
-        // Username password for the FTP server to be started
-        FTPUsername = "user1";
-        FTPPassword = "pass";
-
-        pathToFtpDir = getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "synapseconfig" + File.separator
-                + "vfsTransport" + File.separator).getPath();
+        String pathToFtpDir = getClass().getResource("/artifacts/ESB/synapseconfig/vfsTransport/").getPath();
 
         // Local folder of the FTP server root
-        FTPFolder = new File(pathToFtpDir + "securePasswordFTP");
+        File FTPFolder = new File(pathToFtpDir + "securePasswordFTP");
         sampleFileFolder = new File(pathToFtpDir);
 
         // create FTP server root folder if not exists
@@ -91,11 +81,9 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
         Assert.assertTrue(FTPFolder.mkdir(), "FTP root file folder not created");
 
         // create a directory under FTP server root
-        inputFolder = new File(FTPFolder.getAbsolutePath() + File.separator
-                               + inputFolderName);
+        inputFolder = new File(FTPFolder.getAbsolutePath() + File.separator + inputFolderName);
         // create a directory under FTP server root
-        outputFolder = new File(FTPFolder.getAbsolutePath() + File.separator
-                               + outputFolderName);
+        outputFolder = new File(FTPFolder.getAbsolutePath() + File.separator + outputFolderName);
 
         if (inputFolder.exists()) {
             FileUtils.deleteDirectory(inputFolder);
@@ -106,44 +94,28 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
         }
 
         Assert.assertTrue(inputFolder.mkdir(), "FTP data /in folder not created");
-
         Assert.assertTrue(outputFolder.mkdir(), "FTP data /in folder not created");
 
         //create and start sftp server which has user name and pass SFTPUser:SFTP321
-        sftpServer = new SFTPServer();
-        sftpServer.start();
-
-
+        sftpServerRunner = new SftpServerRunner(FTPPort, FTPFolder.getAbsolutePath(), USERNAME, PASSWORD);
+        sftpServerRunner.start();
 
         super.init();
-        File jksFile = new File(getClass().getResource(File.separator + "artifacts"
-                                                       + File.separator + "ESB"
-                                                       + File.separator + "synapseconfig"
-                                                       + File.separator + "vfsTransport"
-                                                       + File.separator + "ESBJAVA4770"
-                                                       + File.separator + "vfsKeystore.jks").getPath());
+        File jksFile = new File(getClass().getResource("/artifacts/ESB/synapseconfig/vfsTransport"
+                                                       + "/ESBJAVA4770/vfsKeystore.jks").getPath());
 
-        File destinationJks = new File(CarbonBaseUtils.getCarbonHome() + File.separator + "repository"
-                                       + File.separator + "resources" + File.separator + "security"
-                                       + File.separator + "vfsKeystore.jks");
+        File destinationJks = Paths.get(CarbonBaseUtils.getCarbonHome(),"repository"
+                                                 ,"resources","security","vfsKeystore.jks").toFile();
 
         //copy keystore which contains key with keystrength 2048
         copyFile(jksFile, destinationJks);
 
-        // replace the axis2.xml enabled vfs transfer and restart the ESB server
-        // gracefully
+        // replace the axis2.xml enabled vfs transfer and restart the ESB server gracefully.
         serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getClass()
-                                                                       .getResource(
-                                                                               File.separator + "artifacts" + File.separator + "ESB"
-                                                                               + File.separator + "synapseconfig"
-                                                                               + File.separator + "vfsTransport"
-                                                                               + File.separator + "ESBJAVA4770"
-                                                                               + File.separator + "axis2.xml").getPath()));
+        serverConfigurationManager.applyConfiguration(
+                new File(getClass().getResource("/artifacts/ESB/synapseconfig/"
+                                                + "vfsTransport/ESBJAVA4770/axis2.xml").getPath()));
         super.init();
-        logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
-                                              getSessionCookie());
-
     }
 
     @AfterClass(alwaysRun = true)
@@ -152,17 +124,14 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
             super.cleanup();
         } finally {
             Thread.sleep(3000);
-            sftpServer.stopServer();
-            log.info("FTP Server stopped successfully");
+            sftpServerRunner.stop();
+            log.info("FTP Server stopped successfully.");
             serverConfigurationManager.restoreToLastConfiguration();
-
         }
-
     }
 
     @Test(groups = "wso2.esb", description = "VFS secure password test")
-    public void securePasswordTest()
-            throws XMLStreamException, IOException, InterruptedException, LogViewerLogViewerException {
+    public void securePasswordTest() throws XMLStreamException, IOException {
 
         //copy SOAP message  into the SFTP server
         String sentMessageFile = "test.xml";
@@ -172,8 +141,8 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
 
         //Below is encrypted value of "SFTPUser:SFTP321" using vfsKeystore.jks which has a key with key strength 2048
         String encryptedPass = "qZnz8nFwQGqI1jp5DcjW8mUurphNc9Mj1DH8cGQBYB0p05geEDMQE3mNp3FTGhAhlohzvzuHdymETTEniprVua4PqPoeB1ZOXpCxE2Xy/auq+JSo77uPmPc9Uf3wgx5fhKqSghENwiCeWqAvbiLwyArwpmq4A5PVAuIzjADFwSkIpRxD9VnDlaDr2ovYVfbrwM7Z3DF4w4GJmyeXdswoCiYBZ+t+SJEU8tihzLsO0B3cbYXbzDEDNUVF6lWnokD01Ywp4VcI3FSHI1XwyKeZj1RAtP4YdhqEnUbSnlG3VsMeSgFpjUrnRomVY6/Pw2rq7s19RGgVO+X6JekON1mH2w==";
-        String fileUri = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:8005" + inputFolder + "/?sftpPathFromRoot=true%26transport.vfs.AvoidPermissionCheck=true";//todo check
-        String moveAfterProcess = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:8005" + outputFolder + "/?sftpPathFromRoot=true";//todo check
+        String fileUri = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + inputFolderName + "/?transport.vfs.AvoidPermissionCheck=true";
+        String moveAfterProcess = "sftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort +"/" + outputFolderName + "?transport.vfs.AvoidPermissionCheck=true";
 
         //create VFS transport listener proxy
         String proxy = "<proxy xmlns=\"http://ws.apache.org/ns/synapse\"\n" +
@@ -215,15 +184,10 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
             LOGGER.error("Error while updating the Synapse config", e);
         }
         LOGGER.info("Synapse config updated");
-        Thread.sleep(30000);//Here we can't know whether the proxy polling happened or not, hence only way is to wait and see. Since poll interval is 1,
+        // Here we can't know whether the proxy polling happened or not, hence only way is to wait and see. Since poll interval is 1,
         // this waiting period should suffice. But it may include the time it take to deploy ther service as well.
-
-
         //check whether file is moved to "out" folder
-        final File[] files = outputFolder.listFiles();
-        if (files != null) {
-            Assert.assertEquals(files.length > 0, true);
-        }
+        Awaitility.await().atMost(60, TimeUnit.SECONDS).until(checkForOutputFile(outputFolder));
     }
 
     /**
@@ -250,5 +214,15 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
             IOUtils.closeQuietly(fileInputStream);
             IOUtils.closeQuietly(fileOutputStream);
         }
+    }
+
+    private Callable<Boolean> checkForOutputFile(final File outputFolder) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                File[] files = outputFolder.listFiles();
+                return files != null && files.length > 0;
+            }
+        };
     }
 }
