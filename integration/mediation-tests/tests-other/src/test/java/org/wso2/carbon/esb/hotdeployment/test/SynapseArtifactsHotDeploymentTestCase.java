@@ -36,8 +36,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.Callable;
 
-import org.awaitility.Awaitility.*;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**

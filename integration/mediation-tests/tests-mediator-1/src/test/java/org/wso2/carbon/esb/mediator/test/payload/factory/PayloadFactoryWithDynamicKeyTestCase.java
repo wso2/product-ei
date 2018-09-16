@@ -9,10 +9,12 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 
 import static org.testng.Assert.assertEquals;
@@ -63,10 +65,10 @@ public class PayloadFactoryWithDynamicKeyTestCase extends ESBIntegrationTest {
 
         resourceAdminServiceStub.addResource(
                 "/_system/config/payloadFactory/payload-in.xml", "application/xml", "payload format",
-                new DataHandler(new URL("file://" + getESBResourceLocation() + File.separator +
-                        "mediatorconfig/payload/factory/payload-in.xml")));
-
-
+                new DataHandler(new FileDataSource( new File(getESBResourceLocation() + File.separator +
+                                                            "mediatorconfig" + File.separator + "payload" +
+                                                            File.separator + "factory" + File.separator +
+                                                            "payload-in.xml"))));
     }
 
     private void clearUploadedResource()
