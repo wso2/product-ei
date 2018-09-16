@@ -24,6 +24,7 @@ import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.sshd.SshServer;
 import org.apache.sshd.common.NamedFactory;
+import org.apache.sshd.common.file.virtualfs.VirtualFileSystemFactory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.PublickeyAuthenticator;
 import org.apache.sshd.server.UserAuth;
@@ -67,8 +68,8 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
     private static final String OUTPUT_FOLDER_NAME = "out";
     private static final String MOVE_FOLDER_NAME = "original";
     private static final String STOCK_QUOTE = "http://localhost:9000/services/SimpleStockQuoteService";
+    private static final int FTP_PORT = 9009;
 
-    private SshServer sshd;
     private File inputFolder;
     private File outputFolder;
     private File originalFolder;
@@ -82,13 +83,13 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
 
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager.applyConfiguration(new File(getClass().getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig" + File.separator + "vfsTransport" + File.separator + "axis2.xml").getPath()));
+        serverConfigurationManager.applyConfiguration(new File(getClass().getResource("/artifacts/ESB/synapseconfig/vfsTransport/axis2.xml").getPath()));
         super.init();
 
         carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
 
         setupSftpFolders(carbonHome);
-        setupSftpServer();
+        setupSftpServer(carbonHome);
         Thread.sleep(15000);
     }
 
@@ -103,14 +104,6 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
         File sourceMessage = new File(classLoader.getResource("sftp/" + sentMessageFile).getFile());
         File destinationMessage = new File(inputFolder + File.separator + sentMessageFile);
         copyFile(sourceMessage, destinationMessage);
-
-        //This is required to handle SFTP server root differences
-        if(carbonHome.indexOf("/target") > 0){
-            String[] targetSplit = carbonHome.split("/target");
-            baseDir = targetSplit[targetSplit.length - 1];
-        } else {
-            baseDir = carbonHome;
-        }
 
         String proxy =  "<proxy xmlns=\"http://ws.apache.org/ns/synapse\"\n" +
                 "       name=\"SFTPTestCaseProxy\"\n" +
@@ -131,9 +124,9 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
                 "   <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n" +
                 "   <parameter name=\"transport.PollInterval\">5</parameter>\n" +
                 "   <parameter name=\"transport.vfs.MoveAfterProcess\">vfs:sftp://" + SFTP_USER_NAME +
-                "@localhost:9009"+baseDir +"/out/?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
-                "   <parameter name=\"transport.vfs.FileURI\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:9009"+baseDir +"/in/?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
-                "   <parameter name=\"transport.vfs.MoveAfterFailure\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:9009"+baseDir +"/original/?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
+                "@localhost:" + FTP_PORT + "/" + OUTPUT_FOLDER_NAME + "?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
+                "   <parameter name=\"transport.vfs.FileURI\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:" + FTP_PORT + "/" + INPUT_FOLDER_NAME + "?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
+                "   <parameter name=\"transport.vfs.MoveAfterFailure\">vfs:sftp://" + SFTP_USER_NAME + "@localhost:" + FTP_PORT + "/" + MOVE_FOLDER_NAME + "?transport.vfs.AvoidPermissionCheck=true</parameter>\n" +
                 "   <parameter name=\"transport.vfs.FileNamePattern\">.*\\.xml</parameter>\n" +
                 "   <parameter name=\"transport.vfs.ContentType\">text/xml</parameter>\n" +
                 "   <parameter name=\"transport.vfs.ActionAfterFailure\">MOVE</parameter>\n" +
@@ -155,9 +148,8 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
 
         //check whether the added message was moved to the original folder
         final File[] files = outputFolder.listFiles();
-        if (files != null) {
-            Assert.assertEquals(files.length > 0, true);
-        }
+        Assert.assertNotNull(files);
+        Assert.assertTrue(files.length > 0);
     }
 
     @AfterClass(alwaysRun = true)
@@ -204,28 +196,24 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
 
     /**
      * Starts a SFTP server on port 22
+     * @param carbonHome
      */
-    private void setupSftpServer() {
+    private void setupSftpServer(String carbonHome) {
         SshServer sshd = SshServer.setUpDefaultServer();
-        sshd.setPort(9009);
+        sshd.setPort(FTP_PORT);
         //sshd.setKeyPairProvider(new FileKeyPairProvider(new String[]{"/home/ravi/WORK/SUPPORT/JIRA/SKYTVNZDEV-26/SftpTest/dist/hostkey.ser"}));
         ClassLoader classLoader = getClass().getClassLoader();
         log.info("Using identity file: " + classLoader.getResource("sftp/id_rsa.pub").getFile());
         File file = new File(classLoader.getResource("sftp/id_rsa.pub").getFile());
         sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider(file.getAbsolutePath()));
-        System.out.println(file.getAbsolutePath());
 
         List<NamedFactory<UserAuth>> userAuthFactories = new ArrayList<NamedFactory<UserAuth>>();
         userAuthFactories.add(new UserAuthPublicKey.Factory());
         sshd.setUserAuthFactories(userAuthFactories);
-
+        sshd.setFileSystemFactory(new VirtualFileSystemFactory(carbonHome));
         sshd.setPublickeyAuthenticator(new PublickeyAuthenticator() {
             public boolean authenticate(String username, PublicKey key, ServerSession session) {
-                if ("sftpuser".equals(username)) {
-                    return true;
-                }
-
-                return false;
+                return "sftpuser".equals(username);
             }
         });
 
