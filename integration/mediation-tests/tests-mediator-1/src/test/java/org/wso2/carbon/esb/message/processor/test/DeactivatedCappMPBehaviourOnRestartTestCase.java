@@ -22,6 +22,7 @@ import java.io.File;
 import java.net.URL;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
@@ -60,9 +61,8 @@ public class DeactivatedCappMPBehaviourOnRestartTestCase extends ESBIntegrationT
         axis2Server = new SampleAxis2Server("test_axis2_server_9001.xml");
         axis2Server.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE);
         axis2Server.start();
-        uploadCapp(carFileName, new DataHandler(
-                new URL("file:" + File.separator + File.separator + getESBResourceLocation() + File.separator + "car"
-                        + File.separator + carFileName)));
+        uploadCapp(carFileName, new DataHandler(new FileDataSource(new File(
+                getESBResourceLocation() + File.separator + "car" + File.separator + carFileName))));
         isProxyDeployed(PROXY_SERVICE_NAME);
     }
 

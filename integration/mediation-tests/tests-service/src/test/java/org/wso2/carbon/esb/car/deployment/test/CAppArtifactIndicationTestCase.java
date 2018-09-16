@@ -27,6 +27,7 @@ import org.wso2.esb.integration.common.clients.service.mgt.ServiceAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -48,8 +49,9 @@ public class CAppArtifactIndicationTestCase extends ESBIntegrationTest {
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
         carbonAppUploaderClient.uploadCarbonAppArtifact("esb-artifacts-car_1.0.0.car"
-                , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                                          + File.separator + "car" + File.separator + "esb-artifacts-car_1.0.0.car")));
+                , new DataHandler(new FileDataSource(new File(getESBResourceLocation() +
+                                                                File.separator + "car" + File.separator +
+                                                                "esb-artifacts-car_1.0.0.car"))));
         serviceAdminClient =
                 new ServiceAdminClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
         TimeUnit.SECONDS.sleep(5);

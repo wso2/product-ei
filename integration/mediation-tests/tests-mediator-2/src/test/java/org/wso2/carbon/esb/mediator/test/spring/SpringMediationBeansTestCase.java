@@ -34,6 +34,7 @@ import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 /**
  * Related to https://wso2.org/jira/browse/ESBJAVA-3291
@@ -42,9 +43,7 @@ import javax.activation.DataHandler;
  */
 public class SpringMediationBeansTestCase extends ESBIntegrationTest {
 
-	private final String SPRING_XML_LOCATION = File.separator + "artifacts"
-			+ File.separator + "ESB" + File.separator + "mediatorconfig"
-			+ File.separator + "spring";
+	private final String SPRING_XML_LOCATION =  "/artifacts/ESB/mediatorconfig/spring";
  
 	private LogViewerClient logViewerClient;
 
@@ -54,7 +53,7 @@ public class SpringMediationBeansTestCase extends ESBIntegrationTest {
 		super.init();
 		clearUploadedResource();
 		uploadResourcesToConfigRegistry();
-		loadESBConfigurationFromClasspath(SPRING_XML_LOCATION + File.separator + "spring_mediation_error.xml");
+		loadESBConfigurationFromClasspath(SPRING_XML_LOCATION + "/spring_mediation_error.xml");
 		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
 	}
@@ -111,9 +110,8 @@ public class SpringMediationBeansTestCase extends ESBIntegrationTest {
 		
 		resourceAdminServiceStub.addResource(
 				"/_system/config/spring/spring_bean_for_error_client.xml","application/xml", "spring bean config files",
-                new DataHandler(new URL("file:///" + getClass().getResource(
-                				SPRING_XML_LOCATION + File.separator 
-                				+  "utils/spring_bean_for_error_client.xml").getPath())));
+                new DataHandler(new FileDataSource( new File(getClass().getResource(
+                				SPRING_XML_LOCATION +  "/utils/spring_bean_for_error_client.xml").getPath()))));
 	}
 
 	private void clearUploadedResource() throws InterruptedException,

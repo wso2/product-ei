@@ -33,6 +33,7 @@ import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClie
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -53,8 +54,8 @@ public class XSLTTransformationCarTestCase extends ESBIntegrationTest {
         super.init();
         carbonAppUploaderClient = new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         carbonAppUploaderClient.uploadCarbonAppArtifact("xslt-transformation-car_1.0.0.car"
-                , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                                          + File.separator + "car" + File.separator + "xslt-transformation-car_1.0.0.car")));
+                , new DataHandler(new FileDataSource( new File(getESBResourceLocation()
+                                          + File.separator + "car" + File.separator + "xslt-transformation-car_1.0.0.car"))));
         isCarFileUploaded = true;
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");

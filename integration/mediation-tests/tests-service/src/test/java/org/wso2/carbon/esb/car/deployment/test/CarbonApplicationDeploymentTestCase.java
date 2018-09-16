@@ -30,6 +30,7 @@ import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.net.URL;
 import java.util.Calendar;
@@ -47,8 +48,8 @@ public class CarbonApplicationDeploymentTestCase extends ESBIntegrationTest {
         super.init();
         carbonAppUploaderClient = new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         carbonAppUploaderClient.uploadCarbonAppArtifact("esb-artifacts-car_1.0.0.car"
-                , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                                          + File.separator + "car" + File.separator + "esb-artifacts-car_1.0.0.car")));
+                , new DataHandler(new FileDataSource(new File(getESBResourceLocation() + File.separator +
+                                                            "car" + File.separator + "esb-artifacts-car_1.0.0.car"))));
         isCarFileUploaded = true;
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");

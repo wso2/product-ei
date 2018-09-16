@@ -12,6 +12,7 @@ import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.net.URL;
 import java.util.Calendar;
@@ -44,18 +45,18 @@ public class TaskRedeployWithCappTestCase extends ESBIntegrationTest {
     public void taskRedeployWithCappTest() throws Exception {
         int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
-        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileFullName, new DataHandler(
-                new URL("file:" + File.separator + File.separator + getESBResourceLocation() + File.separator +
-                        "scheduledTask" + File.separator + carFileFullName)));
+        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileFullName, new DataHandler( new FileDataSource( new File
+                (getESBResourceLocation() + File.separator +
+                        "scheduledTask" + File.separator + carFileFullName))));
         isCarFileUploaded = true;
         applicationAdminClient =
                 new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
         TimeUnit.SECONDS.sleep(50);//wait for some tasks to execute
 
-        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileFullName, new DataHandler(
-                new URL("file:" + File.separator + File.separator + getESBResourceLocation() + File.separator +
-                        "scheduledTask" + File.separator + carFileFullName)));
+        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileFullName, new DataHandler( new FileDataSource( new File
+                (getESBResourceLocation() + File.separator +
+                        "scheduledTask" + File.separator + carFileFullName))));
 
         TimeUnit.SECONDS
                 .sleep(150); //10 seconds proxy sleep time * 5 exeutions * 3 seconds interval  : wait for all tasks
