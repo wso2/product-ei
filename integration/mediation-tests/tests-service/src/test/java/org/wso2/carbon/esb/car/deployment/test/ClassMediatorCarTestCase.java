@@ -31,6 +31,7 @@ import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.net.URL;
 import java.util.Calendar;
@@ -55,13 +56,12 @@ public class ClassMediatorCarTestCase extends ESBIntegrationTest {
         super.init();
         carbonAppUploaderClient =
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
-        carbonAppUploaderClient.
-                uploadCarbonAppArtifact(car1FileName,
-                                        new DataHandler(new URL("file:" + File.separator + File.separator +
-                                                                getESBResourceLocation() +
-                                                                File.separator + "car" +
-                                                                File.separator +
-                                                                car1FileName)));
+        carbonAppUploaderClient.uploadCarbonAppArtifact(car1FileName,
+                                        new DataHandler(new FileDataSource(
+                                                new File(getESBResourceLocation() +
+                                                        File.separator + "car" +
+                                                        File.separator +
+                                                        car1FileName))));
         isCarFile1Uploaded = true;
         applicationAdminClient =
                 new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
@@ -112,11 +112,11 @@ public class ClassMediatorCarTestCase extends ESBIntegrationTest {
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         carbonAppUploaderClient.
                 uploadCarbonAppArtifact(car2FileName,
-                                        new DataHandler(new URL("file:" + File.separator + File.separator +
-                                                                getESBResourceLocation() +
-                                                                File.separator + "car" +
-                                                                File.separator +
-                                                                car2FileName)));
+                                        new DataHandler(new FileDataSource(
+                                                new File(getESBResourceLocation() +
+                                                        File.separator + "car" +
+                                                        File.separator +
+                                                        car2FileName))));
         isCarFile2Uploaded = true;
         applicationAdminClient =
                 new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
