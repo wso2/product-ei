@@ -87,13 +87,13 @@ public class RabbitMQInboundTestCase extends ESBIntegrationTest {
     }
 
     /**
-     * Deployes a rabbitmq inbound endpoint with invalid rabbitmq broker configurations and asserts the retries the
+     * Deploys a rabbitmq inbound endpoint with invalid rabbitmq broker configurations and asserts the retries the
      * server makes to re-connect to the broker.
      *
      * @throws Exception if an error occurs while accessing the logViewer client or while deploying the inbound
      *                   endpoint.
      */
-    @Test(groups = {"wso2.esb"}, description = "Test ESB RabbitMQ inbound endpoint deployement with incorrect server "
+    @Test(groups = {"wso2.esb"}, description = "Test ESB RabbitMQ inbound endpoint deployment with incorrect server "
                                                + "port")
     public void testRabbitMQInboundEndpointDeploymentWithInvalidServerConfigs() throws Exception {
         logViewer.clearLogs();

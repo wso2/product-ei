@@ -37,11 +37,11 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This class is to test multiple message listners are running per proxy or not
+ * This class is to test multiple message listeners are running per proxy or not
  */
-public class ESBJAVA4630RabbitMQMultipleListnerTestCase extends ESBIntegrationTest {
+public class ESBJAVA4630RabbitMQMultipleListenerTestCase extends ESBIntegrationTest {
 
-    private static final String RABBIT_MQ_MULTIPLE_LISTNER_PROXY = "RabbitMQMultipleListnerProxy";
+    private static final String RABBIT_MQ_MULTIPLE_LISTNER_PROXY = "RabbitMQMultipleListenerProxy";
     private RabbitMQProducerClient sender;
     private ProxyServiceAdminClient proxyServiceAdminClient;
     private RabbitMQServer rabbitMQServer;
@@ -129,7 +129,7 @@ public class ESBJAVA4630RabbitMQMultipleListnerTestCase extends ESBIntegrationTe
         long afterGettingMessages = System.currentTimeMillis();
         if ((afterGettingMessages - beforeGettingMessages) < 120000) {
             Assert.assertEquals(messages.size(), 150, "Wrong number of messages exist in queue");
-            log.info("ESBJAVA4630RabbitMQMultipleListnerTestCase testRabbitMQQOSConsumer passed");
+            log.info("ESBJAVA4630RabbitMQMultipleListenerTestCase testRabbitMQQOSConsumer passed");
         }
     }
 

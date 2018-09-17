@@ -17,7 +17,7 @@
   -->
 
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="RabbitMQMultipleListnerProxy"
+    <proxy name="RabbitMQMultipleListenerProxy"
            transports="rabbitmq"
            startOnLoad="true"
            trace="disable">
