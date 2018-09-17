@@ -49,7 +49,7 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
 
         Awaitility.await().pollInterval(100, TimeUnit.MILLISECONDS).atMost(
-                MAX_TIME, TimeUnit.SECONDS).until(isCarFileExists(carFileName));
+                MAX_TIME, TimeUnit.SECONDS).until(isCarFileDeployed(carFileName));
 
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/requestWithSoapHeaderBlockConfig/synapse.xml");
         TimeUnit.SECONDS.sleep(5);
@@ -143,7 +143,7 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
         return null;
     }
 
-    private Callable<Boolean> isCarFileExists(final String carFileName) {
+    private Callable<Boolean> isCarFileDeployed(final String carFileName) {
         return new Callable<Boolean>() {
             @Override
             public Boolean call() throws ApplicationAdminExceptionException, RemoteException {
