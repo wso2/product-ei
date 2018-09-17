@@ -19,7 +19,6 @@
 package org.wso2.carbon.esb.mediator.test.aggregate;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.util.AXIOMUtil;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
