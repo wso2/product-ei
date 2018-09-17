@@ -15,15 +15,15 @@
                     </jsonObject>
                 </format>
                 <args>
-                    <arg evaluator="json" expression="$.statePath"></arg>
-                    <arg evaluator="json" expression="$.entry"></arg>
+                    <arg evaluator="json" expression="$.statePath"/>
+                    <arg evaluator="json" expression="$.entry"/>
                 </args>
             </payloadFactory>
-            <property name="messageType" value="application/json" scope="axis2"></property>
-            <respond></respond>
+            <property name="messageType" value="application/json" scope="axis2"/>
+            <respond/>
         </inSequence>
         <outSequence>
-            <send></send>
+            <send/>
         </outSequence>
     </resource>
 </api>

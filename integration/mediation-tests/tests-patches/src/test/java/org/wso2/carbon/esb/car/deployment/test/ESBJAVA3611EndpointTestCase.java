@@ -17,19 +17,21 @@
 package org.wso2.carbon.esb.car.deployment.test;
 
 
-import junit.framework.Assert;
+import org.awaitility.Awaitility;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.application.mgt.synapse.stub.ExceptionException;
 import org.wso2.carbon.application.mgt.synapse.stub.types.carbon.EndpointMetadata;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.io.File;
+import java.rmi.RemoteException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import java.io.File;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 public class ESBJAVA3611EndpointTestCase extends ESBIntegrationTest {
 
@@ -42,26 +44,41 @@ public class ESBJAVA3611EndpointTestCase extends ESBIntegrationTest {
                    , new DataHandler(new FileDataSource(new File(getESBResourceLocation() +
                                                                 File.separator + "car" + File.separator +
                                                                 carFileName))));
-        TimeUnit.SECONDS.sleep(30);
         log.info(carFileName + " uploaded successfully");
     }
 
     @Test(groups = "wso2.esb", enabled = true, description = "Test whether Endpoint get deployed in tenant through  capp")
     public void testEndpointDeployed() throws Exception {
-        Thread.sleep(6000);
-        EndpointMetadata[] endpointMetadatas = getSynapseAppData("ESBCApp_3.2.2").getEndpoints();
-        boolean endpointExist = false;
-        for (EndpointMetadata endpointMetadata : endpointMetadatas) {
-            if (endpointMetadata.getName().equals("Axis2ServiceCSEndPoint")) {
-                endpointExist = true;
-            }
-        }
-        Assert.assertTrue(endpointExist);
+        Awaitility.await().atMost(60, TimeUnit.SECONDS).until(checkEndpointExistence());
     }
 
 
     @AfterTest(alwaysRun = true)
     public void cleanupEnvironment() throws Exception {
         super.cleanup();
+    }
+
+    private Callable<Boolean> checkEndpointExistence() {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                EndpointMetadata[] endpointMetadatas;
+                try {
+                    endpointMetadatas = getSynapseAppData("ESBCApp_3.2.2").getEndpoints();
+                    boolean endpointExist = false;
+                    for (EndpointMetadata endpointMetadata : endpointMetadatas) {
+                        if (endpointMetadata.getName().equals("Axis2ServiceCSEndPoint")) {
+                            endpointExist = true;
+                        }
+                    }
+                    return endpointExist;
+                } catch (RemoteException | ExceptionException e) {
+                    // Since this is invoked periodically by Awaitility debug log is used to log the exception to avoid
+                    // excessive error logging even in the positive test.
+                    log.debug("Error occurred", e);
+                    return false;
+                }
+            }
+        };
     }
 }
