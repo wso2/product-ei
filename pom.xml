@@ -1420,11 +1420,11 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.60</carbon.messaging.version>
+        <carbon.messaging.version>3.2.61</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.78</andes.version>
+        <andes.version>3.2.80</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1446,7 +1446,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.104</carbon.mediation.version>
+        <carbon.mediation.version>4.6.105</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.35</carbon.kernel.version>
@@ -1569,7 +1569,7 @@
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.eclipse.paho.version>0.4.0</org.eclipse.paho.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-        <org.wso2.andes.client.version>3.2.78</org.wso2.andes.client.version>
+        <org.wso2.andes.client.version>3.2.80</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
         <bouncycastle.version>1.52</bouncycastle.version>

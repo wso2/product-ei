@@ -14,7 +14,8 @@ These integration capabilities are further powered by the capabilities of the WS
 Key features of WSO2 EI @product.version@
 ==================================
 
-See the online WSO2 EI documentation for more information on product features: https://docs.wso2.com/display/EI630/WSO2+Enterprise+Integrator+Documentation
+See the online WSO2 EI documentation for more information on product features: https://docs.wso2
+.com/display/EI640/WSO2+Enterprise+Integrator+Documentation
 
 
 Installation & Running

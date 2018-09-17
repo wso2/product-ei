@@ -63,7 +63,7 @@ echo %CARBON_HOME%
 goto end
 
 :startServer
-%CARBON_HOME%\wso2\analytics\wso2\dashboard\bin\carbon.bat %* -Dprofile="default"
+%CARBON_HOME%\wso2\analytics\bin\dashboard.bat %* -Dprofile="default"
 
 :end
 goto endlocal
