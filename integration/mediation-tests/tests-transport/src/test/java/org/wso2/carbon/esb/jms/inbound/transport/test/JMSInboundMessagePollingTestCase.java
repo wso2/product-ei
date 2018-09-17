@@ -36,7 +36,6 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
 import javax.activation.DataHandler;
 import java.io.File;
@@ -49,12 +48,9 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 	private LogViewerClient logViewerClient = null;
 	private ServerConfigurationManager serverConfigurationManager;
 	private InboundAdminClient inboundAdminClient;
-	private ActiveMQServer activeMQServer = new ActiveMQServer();
-
 
 	@BeforeClass(alwaysRun = true)
 	protected void init() throws Exception {
-		activeMQServer.startJMSBroker();
 		super.init();
 		serverConfigurationManager =
 				new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
@@ -105,7 +101,6 @@ public class JMSInboundMessagePollingTestCase extends ESBIntegrationTest{
 	@AfterClass(alwaysRun = true)
 	public void destroy() throws Exception {
 		super.cleanup();
-		activeMQServer.stopJMSBroker();
 	}
 
 	/**

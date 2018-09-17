@@ -42,11 +42,9 @@ import static org.testng.Assert.assertNotNull;
 public class JMSInboundTransportTestCase extends ESBIntegrationTest {
 	private ServerConfigurationManager serverConfigurationManager;
 	private InboundAdminClient inboundAdminClient;
-	private ActiveMQServer activeMQServer = new ActiveMQServer();
 
 	@BeforeClass(alwaysRun = true)
 	protected void init() throws Exception {
-		activeMQServer.startJMSBroker();
 		super.init();
 		serverConfigurationManager =
 				new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
@@ -83,7 +81,6 @@ public class JMSInboundTransportTestCase extends ESBIntegrationTest {
 	@AfterClass(alwaysRun = true)
 	public void destroy() throws Exception {
 		super.cleanup();
-		activeMQServer.stopJMSBroker();
 	}
 
 	private OMElement addEndpoint1() throws Exception {

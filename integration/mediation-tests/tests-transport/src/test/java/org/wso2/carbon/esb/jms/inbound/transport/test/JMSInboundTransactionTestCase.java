@@ -40,13 +40,11 @@ import javax.xml.stream.XMLStreamException;
 public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
 
     private LogViewerClient logViewerClient = null;
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
     String message;
 
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
 
-        activeMQServer.startJMSBroker();
         super.init();
 
         verifySequenceExistence("jmsInboundEpTransactionRollbackTestInSequence");
@@ -138,7 +136,6 @@ public class JMSInboundTransactionTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBroker();
 
     }
 

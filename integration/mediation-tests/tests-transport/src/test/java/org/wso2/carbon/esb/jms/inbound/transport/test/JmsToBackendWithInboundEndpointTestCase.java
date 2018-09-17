@@ -37,11 +37,9 @@ import java.io.File;
 public class JmsToBackendWithInboundEndpointTestCase extends ESBIntegrationTest {
 
     private static final String QUEUE_NAME = "jmsQueueToHttpWithInboundEndpointTestCase";
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
-        activeMQServer.startJMSBroker();
         super.init();
 
         verifySequenceExistence("jmsQueueToHttpWithInboundEPSendInSequence");
@@ -79,7 +77,6 @@ public class JmsToBackendWithInboundEndpointTestCase extends ESBIntegrationTest 
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBroker();
     }
 
     /**
