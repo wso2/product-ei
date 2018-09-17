@@ -27,9 +27,9 @@ import org.wso2.carbon.esb.jms.utils.JMSBroker;
 import org.wso2.carbon.esb.mqtt.utils.MQTTTestClient;
 import org.wso2.carbon.esb.mqtt.utils.QualityOfService;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.esb.integration.common.extensions.jmsserver.ActiveMQServerExtension;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
-
 
 import java.io.File;
 
@@ -47,6 +47,7 @@ public class MQTTInboundMessagePollingTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
+        ActiveMQServerExtension.stopMQServer();
         activeMQServer = new JMSBroker("MQTTBroker", JMSBrokerConfigurationProvider.getInstance()
                 .getTransportConnectors());
         activeMQServer.start();
@@ -54,7 +55,7 @@ public class MQTTInboundMessagePollingTestCase extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mqtt"
                         + File.separator + "inbound" + File.separator + "transport" + File.separator
-                        + "simple_mqtt_inboud_transport_config");
+                        + "simple_mqtt_inboud_transport_config.xml");
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewerClient.clearLogs();
     }
@@ -88,6 +89,7 @@ public class MQTTInboundMessagePollingTestCase extends ESBIntegrationTest {
     public void destroy() throws Exception {
         super.cleanup();
         activeMQServer.stop();
+        ActiveMQServerExtension.startMQServer();
     }
 
 }

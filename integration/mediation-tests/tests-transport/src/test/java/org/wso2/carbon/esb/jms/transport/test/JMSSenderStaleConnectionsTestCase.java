@@ -24,9 +24,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
 import org.wso2.carbon.esb.jms.utils.JMSBroker;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.esb.integration.common.extensions.jmsserver.ActiveMQServerExtension;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
@@ -76,9 +78,9 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
         }
 
         /* restart the JMS broker */
-        ActiveMQServer activeMQServer = JMSBrokerManager.getActiveMQServer();
-        activeMQServer.stopJMSBroker();
-        activeMQServer.startJMSBroker();
+        JMSBrokerController activeMQServer = ActiveMQServerExtension.getJMSBrokerController();
+        activeMQServer.stop();
+        activeMQServer.start();
 
         /* send another message after broker restart */
         client.sendRobust(Utils.getStockQuoteRequest("JMS"),

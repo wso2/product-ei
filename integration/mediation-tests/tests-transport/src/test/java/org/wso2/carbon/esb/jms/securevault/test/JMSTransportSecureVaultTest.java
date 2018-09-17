@@ -55,10 +55,6 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
     private static final String PROXY_NAME = "JMSSecureVaultTestProxy";
 
     /**
-     * The embedded broker instance used for the test.
-     */
-    private JMSBroker activeMQBroker;
-    /**
      * The simple authentication plugin for the broker to require logging in.
      */
     private SimpleAuthenticationPlugin simpleAuthenticationPlugin;
@@ -123,14 +119,11 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test JMS transport using parameters secured using SecureVault")
     public void testJMSTransportWithSecureVault() throws InterruptedException {
         try {
-            activeMQBroker = new JMSBroker("localhost", getJMSBrokerConfiguration());
             simpleAuthenticationPlugin = new SimpleAuthenticationPlugin();
             simpleAuthenticationPlugin.setAnonymousAccessAllowed(false);
             List<AuthenticationUser> users = new ArrayList<AuthenticationUser>();
             users.add(new AuthenticationUser("system", "manager", "users,admins"));
             simpleAuthenticationPlugin.setUsers(users);
-            boolean isBrokerStarted = activeMQBroker.startWithPlugins(new BrokerPlugin[]{simpleAuthenticationPlugin});
-            Assert.assertTrue(isBrokerStarted, "ActiveMQ broker is not started");
             OMElement payload = axis2Client.createPlaceOrderRequest(100.0, 7500, "JMS");
             axis2Client.sendRobust(getProxyServiceURLHttp(PROXY_NAME), null, "placeOrder", payload);
         } catch (SecurityException e) {
@@ -144,7 +137,6 @@ public class JMSTransportSecureVaultTest extends ESBIntegrationTest {
     public void cleanup() throws Exception {
         try {
             super.cleanup();
-            activeMQBroker.stop();
         } finally {
             serverConfigurationManager.restoreToLastConfiguration();
             serverConfigurationManager = null;

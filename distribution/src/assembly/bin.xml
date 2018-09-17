@@ -2853,7 +2853,7 @@
 
         <file>
             <source>
-                ../components/org.wso2.carbon.micro.integrator.extensions/org.wso2.carbon.micro.integrator.admin.apis/AdminApiCapp/target/org.wso2.carbon.micro.integrator.admin.api_${pom.version}.car
+                src/micro-integrator/resources/capps/org.wso2.carbon.micro.integrator.admin.api_1.0.0.car
             </source>
             <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/carbonapps</outputDirectory>
         </file>

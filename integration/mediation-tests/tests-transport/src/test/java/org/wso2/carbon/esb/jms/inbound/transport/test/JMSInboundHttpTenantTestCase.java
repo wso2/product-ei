@@ -47,12 +47,10 @@ public class JMSInboundHttpTenantTestCase extends ESBIntegrationTest {
     private final String TENANT2 = "abc";
     private final String TENANT1_INBOUND_EP = "JMSTenant1InboundEp";
     private final String TENANT2_INBOUND_EP = "JMSTenant2InboundEp";
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
 
-        activeMQServer.startJMSBroker();
         OMElement synapse;
         super.init(TENANT1, "user1");
         inboundAdminClient1 = new InboundAdminClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
@@ -99,7 +97,6 @@ public class JMSInboundHttpTenantTestCase extends ESBIntegrationTest {
             inboundAdminClient1.removeInboundEndpoint(TENANT1_INBOUND_EP);
             inboundAdminClient2.removeInboundEndpoint(TENANT2_INBOUND_EP);
         } finally {
-            activeMQServer.stopJMSBroker();
         }
     }
 
