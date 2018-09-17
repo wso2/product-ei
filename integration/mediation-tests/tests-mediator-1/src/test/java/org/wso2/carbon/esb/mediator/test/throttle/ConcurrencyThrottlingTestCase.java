@@ -69,7 +69,7 @@ public class ConcurrencyThrottlingTestCase extends ESBIntegrationTest {
     public void testPolicy() throws InterruptedException {
         startClients();
 
-        Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(60, TimeUnit.SECONDS).until(isMaxConcurrentClients(clientsDone.getCount()));
+        Awaitility.await().pollInterval(1000, TimeUnit.MILLISECONDS).atMost(120, TimeUnit.SECONDS).until(isMaxConcurrentClients(clientsDone.getCount()));
 
         for (Object aList : list) {
             if (aList.toString().equals("Access Granted")) {

@@ -17,7 +17,6 @@
 */
 package org.wso2.carbon.esb.mediator.test.throttle;
 
-import org.awaitility.Awaitility;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -29,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -71,10 +68,12 @@ public class ConcurrencyAndRequestThrottlingTestRequest extends ESBIntegrationTe
     //use file system registry
     @Test(groups = "wso2.esb",
           description = "Use of both concurrency throttling and request rate based throttling- Throttle Request Massages", enabled = false)
-    public void testConcurrencyAndRequestBasedPolicyThrottlingRequest() {
+    public void testConcurrencyAndRequestBasedPolicyThrottlingRequest()
+            throws InterruptedException {
         startClients();
-
-        Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(60, TimeUnit.SECONDS).until(isMaxConcurrentClients(clientsDone.getCount()));
+        while (clientsDone.getCount() < CONCURRENT_CLIENTS) {
+            Thread.sleep(1000);
+        }
 
         for (Object aList : list) {
             if (aList.toString().equals("Access Granted")) {
@@ -128,15 +127,6 @@ public class ConcurrencyAndRequestThrottlingTestRequest extends ESBIntegrationTe
             }
             aliveCount++;
         }
-    }
-
-    private Callable<Boolean> isMaxConcurrentClients(final int clientCount) {
-        return new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return clientCount < CONCURRENT_CLIENTS;
-            }
-        };
     }
 
 }
