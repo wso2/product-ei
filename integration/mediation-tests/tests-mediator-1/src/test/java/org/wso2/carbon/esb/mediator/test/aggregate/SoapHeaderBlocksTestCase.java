@@ -48,8 +48,8 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
                 + File.separator + "car" + File.separator + carFileNameWithExtension))));
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
 
-        Awaitility.await().pollInterval(100, TimeUnit.MILLISECONDS).atMost(
-                MAX_TIME, TimeUnit.SECONDS).until(isCarFileDeployed(carFileName));
+        Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(MAX_TIME, TimeUnit.SECONDS).
+                until(isCarFileDeployed(carFileName));
 
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/requestWithSoapHeaderBlockConfig/synapse.xml");
         TimeUnit.SECONDS.sleep(5);

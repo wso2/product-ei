@@ -222,8 +222,9 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
         if (ArrayUtils.contains(sequenceAdminServiceClient.getDynamicSequences(), "conf:/filters/dynamic_seq1")) {
             sequenceAdminServiceClient.deleteDynamicSequence("conf:/filters/dynamic_seq1");
 
-            Awaitility.await().atMost(60, TimeUnit.SECONDS).until(dynamicSequenceExists(
-                    sequenceAdminServiceClient.getDynamicSequences(), "conf:/filters/dynamic_seq1"));
+            Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(
+                    60, TimeUnit.SECONDS).until(dynamicSequenceExists(sequenceAdminServiceClient.
+                    getDynamicSequences(), "conf:/filters/dynamic_seq1"));
         }
         sequenceAdminServiceClient.addDynamicSequence("conf:filters/dynamic_seq1", setEndpoints(omElement));
         //load it to esb
