@@ -46,11 +46,9 @@ import javax.naming.InitialContext;
 public class JmsTypeHeaderInboundEndpointTestCase extends ESBIntegrationTest {
 
     private static final String QUEUE_NAME = "jmsTypeHeaderInboundEndpointTestCase";
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
-        activeMQServer.startJMSBroker();
         super.init();
 
         verifySequenceExistence("jmsTypeHeaderInboundEPSendInSequence");
@@ -88,7 +86,6 @@ public class JmsTypeHeaderInboundEndpointTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBroker();
     }
 
     /**

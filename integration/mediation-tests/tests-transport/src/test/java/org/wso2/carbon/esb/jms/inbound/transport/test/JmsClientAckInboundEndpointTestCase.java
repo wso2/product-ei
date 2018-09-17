@@ -40,11 +40,9 @@ import java.io.File;
 public class JmsClientAckInboundEndpointTestCase extends ESBIntegrationTest {
 
     private static final String QUEUE_NAME = "jmsQueueClientAckInboundEndpointTestCase";
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     @BeforeClass(alwaysRun = true)
     public void initialize() throws Exception {
-        activeMQServer.startJMSBroker();
         super.init();
 
         verifySequenceExistence("jmsClientAckInboundEPSendInSequence");
@@ -82,7 +80,6 @@ public class JmsClientAckInboundEndpointTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void deleteService() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBroker();
     }
 
     /**

@@ -27,7 +27,7 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 
 public class ActiveMQServerExtension extends ExecutionListenerExtension {
     private static final Log log = LogFactory.getLog(ActiveMQServerExtension.class);
-    private JMSBrokerController activeMqBroker;
+    private static JMSBrokerController activeMqBroker;
 
     @Override
     public void initiate() throws AutomationFrameworkException {
@@ -52,5 +52,18 @@ public class ActiveMQServerExtension extends ExecutionListenerExtension {
 
     private JMSBrokerConfiguration getJMSBrokerConfiguration() {
         return JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration();
+    }
+
+    public static JMSBrokerController getJMSBrokerController() {
+        return activeMqBroker;
+    }
+
+    public static void startMQServer() {
+        activeMqBroker.start();
+    }
+
+    public static void stopMQServer() {
+        activeMqBroker.stop();
+
     }
 }
