@@ -17,6 +17,7 @@
 */
 package org.wso2.carbon.esb.mediator.test.throttle;
 
+import org.awaitility.Awaitility;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -68,9 +71,8 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
     public void testConcurrencyAndRequestBasedPolicyThrottlingConcurrency()
             throws InterruptedException {
         startClients();
-        while (clientsDone.getCount() < CONCURRENT_CLIENTS) {
-            Thread.sleep(1000);
-        }
+
+        Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(60, TimeUnit.SECONDS).until(isMaxConcurrentClients(clientsDone.getCount()));
 
         for (Object aList : list) {
             if (aList.toString().equals("Access Granted")) {
@@ -120,6 +122,15 @@ public class ConcurrencyAndRequestThrottlingTestConcurrency extends ESBIntegrati
             }
             aliveCount++;
         }
+    }
+
+    private Callable<Boolean> isMaxConcurrentClients(final int clientCount) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                return clientCount < CONCURRENT_CLIENTS;
+            }
+        };
     }
 
 }
