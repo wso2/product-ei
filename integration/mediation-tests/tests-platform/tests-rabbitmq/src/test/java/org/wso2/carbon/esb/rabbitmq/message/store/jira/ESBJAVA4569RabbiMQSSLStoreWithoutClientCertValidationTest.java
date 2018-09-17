@@ -96,7 +96,6 @@ public class ESBJAVA4569RabbiMQSSLStoreWithoutClientCertValidationTest extends E
     @Test(groups = {"wso2.esb"}, description = "RabbitMQ message store support for SSL(without client certificate validation)" )
     public void testRabbitMQMessageStore() throws Exception {
 
-
         HttpResponse response = httpClient.doPost(url, headers, payload, "application/json");
         if (response.getStatusLine().getStatusCode() == 200 || response.getStatusLine().getStatusCode() == 202) {
             assertTrue(true);
@@ -118,9 +117,6 @@ public class ESBJAVA4569RabbiMQSSLStoreWithoutClientCertValidationTest extends E
             Assert.assertTrue(false);
         }
 
-//        String result = consumeWithoutCertificate();
-
-//        Assert.assertTrue(result.contains("jms@yomail.com"));
     }
 
     @AfterClass(alwaysRun = true)

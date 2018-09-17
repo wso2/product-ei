@@ -22,8 +22,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
-import org.wso2.carbon.endpoint.stub.types.EndpointAdminEndpointAdminException;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
@@ -31,10 +29,8 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.FileManager;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 /**
  * Test class to test a synapse handler.
@@ -64,8 +60,7 @@ public class HandlerTest extends ESBIntegrationTest {
     @Test(groups = { "wso2.esb" },
           description = "Sending a Message Via proxy to check synapse handler logs")
     public void testSynapseHandlerExecution()
-            throws IOException, EndpointAdminEndpointAdminException, LoginAuthenticationExceptionException,
-            XMLStreamException, LogViewerLogViewerException {
+            throws IOException, LogViewerLogViewerException {
         boolean requestInStatus = false;
         boolean requestOutStatus = false;
         boolean responseInStatus = false;
@@ -103,13 +98,13 @@ public class HandlerTest extends ESBIntegrationTest {
 
     }
 
-    private void copyToComponentConf(String sourcePath, String fileName) throws IOException, URISyntaxException {
+    private void copyToComponentConf(String sourcePath, String fileName) throws IOException {
         String carbonHome = System.getProperty("carbon.home");
         String targetPath = carbonHome + File.separator + "conf";
         FileManager.copyResourceToFileSystem(sourcePath, targetPath, fileName);
     }
 
-    private void removeFromComponentConf(String fileName) throws IOException, URISyntaxException {
+    private void removeFromComponentConf(String fileName) {
         String carbonHome = System.getProperty("carbon.home");
         String filePath = carbonHome + File.separator + "conf" + File.separator + fileName;
         FileManager.deleteFile(filePath);
@@ -118,7 +113,7 @@ public class HandlerTest extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         serverConfigurationManager
-                .removeFromComponentDropins(getClass().getResource(LOCATION + "/" + JAR_NAME).getPath());
+                .removeFromComponentDropins(JAR_NAME);
         removeFromComponentConf(getClass().getResource(LOCATION + "/" + CONF_NAME).getPath());
         super.cleanup();
     }
