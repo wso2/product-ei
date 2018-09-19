@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.jms.transport.test;
 
 import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -28,26 +29,37 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 
 public class JMSMapMessageTestCase extends ESBIntegrationTest {
+
+    private List<Message> messages = new ArrayList<>();
+    private int NUM_OF_MESSAGES = 3;
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
         OMElement synapse = esbUtils.loadResource("/artifacts/ESB/jms/transport/jms_map_message_proxy_service.xml");
         updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
+
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isServiceDeployed("JmsProxy"));
     }
 
     @Test(groups = {"wso2.esb"}, description = "Test proxy service with jms transport")
     public void testJMSProxy() throws Exception {
 
         JMSQueueMessageProducer sender = new JMSQueueMessageProducer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
-        Thread.sleep(10000);
         String queueName = "JmsProxy";
         try {
             sender.connect(queueName);
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 sender.pushMessage("<?xml version='1.0' encoding='UTF-8'?>" +
                                    "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" +
                                    " xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">" +
@@ -67,12 +79,15 @@ public class JMSMapMessageTestCase extends ESBIntegrationTest {
             sender.disconnect();
         }
 
-        Thread.sleep(10000);
         JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
         try {
             consumer.connect("target");
-            for (int i = 0; i < 3; i++) {
-                Message msg  = consumer.popRawMessage();
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isMessagesConsumed(consumer));
+            for (int i = 0; messages.size() < NUM_OF_MESSAGES; i++) {
+                Message msg  = messages.get(i);
                 if (msg != null) {
                     log.info("Message in queue " + msg);
                     if(!(msg instanceof MapMessage)){
@@ -94,5 +109,27 @@ public class JMSMapMessageTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
+    }
+
+    private Callable<Boolean> isMessagesConsumed(final JMSQueueMessageConsumer consumer) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                Message msg = consumer.popRawMessage();
+                if (msg instanceof MapMessage) {
+                    messages.add(msg);
+                }
+                return messages.size() == NUM_OF_MESSAGES;
+            }
+        };
+    }
+
+    private Callable<Boolean> isServiceDeployed(final String proxyName) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return isProxySuccesfullyDeployed(proxyName);
+            }
+        };
     }
 }

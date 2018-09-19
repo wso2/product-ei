@@ -292,6 +292,11 @@ public abstract class ESBIntegrationTest {
 		esbUtils.addInboundEndpoint(contextUrls.getBackEndUrl(), sessionCookie, inboundEndpoint);
 	}
 
+	protected boolean isInboundEndpointDeployed(OMElement inboundEndpoint) throws Exception {
+		String inboundName = inboundEndpoint.getAttributeValue(new QName("name"));
+		return esbUtils.isInboundEndpointExist(contextUrls.getBackEndUrl(), sessionCookie, inboundName);
+	}
+
 	protected void isInboundUndeployed(String inboundEndpoint) throws Exception {
 		try {
 			esbUtils.isInboundEndpointUndeployed(contextUrls.getBackEndUrl(), sessionCookie, inboundEndpoint);
@@ -356,12 +361,25 @@ public abstract class ESBIntegrationTest {
 		                                           proxyServiceName), "Proxy Deployment failed or time out");
 	}
 
+	protected boolean isProxyDeployed(OMElement omElement) throws Exception {
+		String proxyName = omElement.getAttributeValue(new QName("name"));
+		return esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName);
+	}
+
+    protected boolean isProxySuccesfullyDeployed(String proxyName) throws Exception {
+        return esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName);
+    }
+
 	protected void isEndpointDeployed(String endpointName) throws Exception {
 		Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie,
 		                                           endpointName), "Endpoint Deployment failed or time out");
 	}
 
+    protected boolean isEndpointDeployed(OMElement omElement) throws Exception {
 
+        String endpointName = omElement.getAttributeValue(new QName("name"));
+        return esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName);
+    }
 
 	protected void isLocalEntryDeployed(String localEntryName) throws Exception {
 		Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie,
@@ -417,6 +435,11 @@ public abstract class ESBIntegrationTest {
 		}
 		sequencesList.add(sequenceName);
 	}
+
+	protected boolean isSequenceDeployed(OMElement sequenceConfig) throws RemoteException, SequenceEditorException {
+        String sequenceName = sequenceConfig.getAttributeValue(new QName("name"));
+        return esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, sequenceName);
+    }
 
 	protected  void uploadConnector(String repoLocation, String strFileName) throws MalformedURLException,
 	                                                                                RemoteException {

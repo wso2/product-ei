@@ -1,6 +1,7 @@
 package org.wso2.carbon.esb.http.inbound.transport.test;
 
 import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -13,6 +14,10 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
@@ -95,15 +100,30 @@ public class HttpInboundDispatchTestCase extends ESBIntegrationTest {
     public void inboundHttpTenantDispatchTests() throws Exception {
         super.init(TestUserMode.TENANT_ADMIN);
 
-        addSequence(getArtifactConfig("tenant/sequences", "main.xml"));
-        addSequence(getArtifactConfig("tenant/sequences", "fault.xml"));
-        addSequence(getArtifactConfig("tenant/sequences", "tenant.xml"));
+        List<OMElement> seqList = new ArrayList<>();
+        seqList.add(getArtifactConfig("tenant/sequences", "main.xml"));
+        seqList.add(getArtifactConfig("tenant/sequences", "fault.xml"));
+        seqList.add(getArtifactConfig("tenant/sequences", "tenant.xml"));
+        addSequence(seqList.get(0));
+        addSequence(seqList.get(1));
+        addSequence(seqList.get(2));
 
-        addApi(getArtifactConfig("tenant/api", "tenantAPI.xml"));
-        addProxyService(getArtifactConfig("tenant/proxy-services", "TestProxy.xml"));
-        addInboundEndpoint(getArtifactConfig("tenant/inbound-endpoints", "ie1.xml"));
+        List<OMElement> apiList = new ArrayList<>();
+        apiList.add(getArtifactConfig("tenant/api", "tenantAPI.xml"));
+        addApi(apiList.get(0));
 
-        Thread.sleep(15000);
+        List<OMElement> proxyList = new ArrayList<>();
+        proxyList.add(getArtifactConfig("tenant/proxy-services", "TestProxy.xml"));
+        addProxyService(proxyList.get(0));
+
+        List<OMElement> inboundList = new ArrayList<>();
+        inboundList.add(getArtifactConfig("tenant/inbound-endpoints", "ie1.xml"));
+        addInboundEndpoint(inboundList.get(0));
+
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(300, TimeUnit.SECONDS)
+                  .until(isServiceDeployed(seqList, inboundList, proxyList));
         logViewerClient.clearLogs();
 
         axis2Client.sendSimpleStockQuoteRequest("http://localhost:9090/t/wso2.com/tenantAPI", null, "WSO2");
@@ -163,5 +183,34 @@ public class HttpInboundDispatchTestCase extends ESBIntegrationTest {
         }
 
         return logFound;
+    }
+
+    private Callable<Boolean> isServiceDeployed(final List<OMElement> omSeqList, final List<OMElement> omInboundList,
+                                                final List<OMElement> omproxyList) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                boolean isServicesDeployed;
+                for(OMElement seqElement : omSeqList) {
+                    isServicesDeployed = isSequenceDeployed(seqElement);
+                    if (!isServicesDeployed) {
+                        return false;
+                    }
+                }
+                for(OMElement inElement : omInboundList) {
+                    isServicesDeployed = isInboundEndpointDeployed(inElement);
+                    if (!isServicesDeployed) {
+                        return false;
+                    }
+                }
+                for(OMElement proxyElement : omproxyList) {
+                    isServicesDeployed = isProxyDeployed(proxyElement);
+                    if (!isServicesDeployed) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
     }
 }
