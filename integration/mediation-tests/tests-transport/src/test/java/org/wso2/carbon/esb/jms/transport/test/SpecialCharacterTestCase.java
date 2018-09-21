@@ -22,6 +22,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;
+import org.awaitility.Awaitility;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -29,6 +30,7 @@ import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.extensions.servers.httpserver.RequestInterceptor;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpServer;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageConsumer;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
@@ -40,6 +42,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertTrue;
 
@@ -56,8 +60,10 @@ public class SpecialCharacterTestCase extends ESBIntegrationTest {
     public void init() throws Exception {
         httpServer = new SimpleHttpServer(8097, new Properties());
         httpServer.start();
-        Thread.sleep(5000);
-
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isStarted());
         interceptor = new TestRequestInterceptor();
         httpServer.getRequestHandler().setInterceptor(interceptor);
 
@@ -117,5 +123,14 @@ public class SpecialCharacterTestCase extends ESBIntegrationTest {
 
             httpServer.stop();
         }
+    }
+
+    private Callable<Boolean> isStarted() {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return httpServer.isStarted();
+            }
+        };
     }
 }

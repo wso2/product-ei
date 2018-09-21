@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.vfs.transport.test;
 
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -34,6 +35,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertTrue;
 
@@ -163,8 +166,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
-
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("WSO2 Company"));
@@ -191,7 +196,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -218,8 +226,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.txt");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
-
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -245,7 +255,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.txt");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await().
+                    pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
             Assert.assertTrue(!outfile.exists());
         } finally {
             deleteFile(targetFile);
@@ -269,8 +282,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.txt");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
-
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -297,11 +312,17 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(1000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
             Assert.assertTrue(!outfile.exists());
 
-            Thread.sleep(31000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -330,8 +351,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -365,8 +389,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -398,8 +425,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.txt");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -427,8 +457,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out123@wso2_text.txt");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -455,8 +488,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "response.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("andun@wso2.com"));
@@ -484,8 +520,15 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File originalFile = new File(pathToVfsDir + "test" + File.separator + "failure" + File.separator + "fail.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(originalFile));
             Assert.assertTrue(!outfile.exists());
 
             Assert.assertTrue(originalFile.exists());
@@ -549,8 +592,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File originalFile = new File(pathToVfsDir + "test" + File.separator + "failure" + File.separator + "fail.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
             Assert.assertTrue(!outfile.exists());
             Assert.assertTrue(!originalFile.exists());
             Assert.assertFalse(new File(pathToVfsDir + "test" + File.separator + "in" + File.separator +
@@ -597,7 +643,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
 
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
@@ -626,7 +676,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
 
             Assert.assertTrue(!outfile.exists());
         } finally {
@@ -652,7 +705,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
             //The poll interval will be set to 300s here,
 
             Assert.assertTrue(!outfile.exists());
@@ -680,8 +737,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File originalFile = new File(pathToVfsDir + "test" + File.separator + "original" + File.separator + "test.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
-
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("WSO2 Company"));
@@ -713,8 +772,18 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File originalFile = new File(pathToVfsDir + "test" + File.separator + "failure" + File.separator + "fail.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
-
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(originalFile));
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(targetFile));
             Assert.assertTrue(!outfile.exists());
             Assert.assertTrue(!originalFile.exists());
             Assert.assertTrue(!targetFile.exists());
@@ -744,7 +813,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File originalFile = new File(pathToVfsDir + "test" + File.separator + "processed" + File.separator + "test.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
 
             Assert.assertFalse(outfile.exists(), "Out put file found");
             Assert.assertFalse(originalFile.exists(), "Input file moved even if file processing is failed");
@@ -773,7 +845,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File originalFileAfterProcessed = new File(pathToVfsDir + "test" + File.separator + "processed" + File.separator + "test.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
 
             Assert.assertTrue(outfile.exists(), "out put file not found");
             String vfsOut = FileUtils.readFileToString(outfile);
@@ -808,7 +883,18 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
                                  "fail.xml.lock");*/
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(originalFile));
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(targetFile));
 
             Assert.assertFalse(outfile.exists(), "Out put file found");
             Assert.assertTrue(originalFile.exists(), "Input file not moved even if failure happens while building message");
@@ -842,8 +928,11 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         FileUtils.cleanDirectory(new File(pathToVfsDir + "test" + File.separator + "in"));
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(4000);
 
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outfile));
             Assert.assertTrue(outfile.exists());
             String vfsOut = FileUtils.readFileToString(outfile);
             Assert.assertTrue(vfsOut.contains("WSO2 Company"));
@@ -870,7 +959,10 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
         File outfile = new File(pathToVfsDir + "test" + File.separator + "out" + File.separator + "out.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outfile));
             Assert.assertTrue(!outfile.exists());
         } finally {
             deleteFile(targetFile);
@@ -1509,6 +1601,24 @@ public class VFSTransportTestCase extends ESBIntegrationTest {
 
     private boolean deleteFile(File file) throws IOException {
         return file.exists() && file.delete();
+    }
+
+    private Callable<Boolean> isFileExist(final File file) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return file.exists();
+            }
+        };
+    }
+
+    private Callable<Boolean> isFileNotExist(final File file) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return !file.exists();
+            }
+        };
     }
 }
 

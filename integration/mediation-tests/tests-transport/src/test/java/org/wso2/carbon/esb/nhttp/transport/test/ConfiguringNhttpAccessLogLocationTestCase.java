@@ -16,6 +16,8 @@
 
 package org.wso2.carbon.esb.nhttp.transport.test;
 
+import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -34,7 +36,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import static java.io.File.separator;
 
@@ -73,7 +78,10 @@ public class ConfiguringNhttpAccessLogLocationTestCase extends ESBIntegrationTes
 
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/nhttp_transport/nhttp_test_synapse.xml");
-        Thread.sleep(30000);
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(300, TimeUnit.SECONDS)
+                  .until(isServiceDeployed("NhttpLogsTestProxy"));
     }
 
     /**
@@ -137,5 +145,16 @@ public class ConfiguringNhttpAccessLogLocationTestCase extends ESBIntegrationTes
             serverConfigurationManager = null;
             nhttpLogDir = null;
         }
+    }
+
+    private Callable<Boolean> isServiceDeployed(final String proxyName) {
+
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+
+                return isProxySuccesfullyDeployed(proxyName);
+            }
+        };
     }
 }

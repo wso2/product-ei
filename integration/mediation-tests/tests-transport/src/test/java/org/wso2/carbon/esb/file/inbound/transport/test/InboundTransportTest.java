@@ -19,10 +19,13 @@ package org.wso2.carbon.esb.file.inbound.transport.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -116,7 +119,10 @@ public class InboundTransportTest extends ESBIntegrationTest {
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint4());
-            Thread.sleep(2000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(targetFile));
 
             Assert.assertTrue(targetFile.exists(), "Invalid file processed");
         } finally {
@@ -131,23 +137,18 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint File name with special chars URI Test case")
     public void testInboundEndpointFileName_SpecialChars() throws Exception {
 
-        boolean fileProcessed = false;
-
         File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
         File targetFolder = new File(inboundFileListeningFolder + File.separator + "spcChar");
         File targetFile = new File(targetFolder + File.separator + "test123@wso2_xml.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint5());
-            for (int i = 0; i < 10; i++) {
-                if (!targetFile.exists()) {
-                    fileProcessed = true;
-                    break;
-                }
-                Thread.sleep(1000);
-            }
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(targetFile));
 
-            Assert.assertTrue(fileProcessed, "File not processed");
+            Assert.assertTrue(!targetFile.exists(), "File not processed");
         } finally {
             deleteFile(targetFile);
             deleteFile(targetFolder);
@@ -182,22 +183,17 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint Content type not specified Test case")
     public void testInboundEndpointContentTypeNotSpecified() throws Exception {
 
-        boolean fileProcessed = false;
         File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
         File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
         File targetFile = new File(targetFolder + File.separator + "in.xml");
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint7());
-            for (int i = 0; i < 10; i++) {
-                if (!targetFile.exists()) {
-                    fileProcessed = true;
-                    break;
-                }
-                Thread.sleep(1000);
-            }
-
-            Assert.assertTrue(fileProcessed, "File not processed");
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(targetFile));
+            Assert.assertTrue(!targetFile.exists(), "File not processed");
         } finally {
             deleteFile(targetFile);
         }
@@ -209,7 +205,6 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint move after process Test case")
     public void testInboundEndpointMoveAfterProcess() throws Exception {
 
-        boolean fileProcessed = false;
         File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
         File targetFolder = new File(inboundFileListeningFolder + File.separator + "move");
         File targetFile = new File(targetFolder + File.separator + "test.xml");
@@ -225,17 +220,14 @@ public class InboundTransportTest extends ESBIntegrationTest {
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint8());
-            for (int i = 0; i < 10; i++) {
-                if (!targetFile.exists()) {
-                    fileProcessed = true;
-                    break;
-                }
-                Thread.sleep(1000);
-            }
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(targetFile));
             // input file should be moved to processed directory after
             // processing the input file
             Assert.assertTrue(processedFile.exists(), "Input file is not moved after processing the file");
-            Assert.assertTrue(fileProcessed, "Input file is exist after processing the input file");
+            Assert.assertTrue(!targetFile.exists(), "Input file is exist after processing the input file");
         } finally {
             deleteFile(targetFolder);
             deleteFile(processedFile);
@@ -366,5 +358,23 @@ public class InboundTransportTest extends ESBIntegrationTest {
 
     private boolean deleteFile(File file) throws IOException {
         return file.exists() && file.delete();
+    }
+
+    private Callable<Boolean> isFileExist(final File file) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return file.exists();
+            }
+        };
+    }
+
+    private Callable<Boolean> isFileNotExist(final File file) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return !file.exists();
+            }
+        };
     }
 }

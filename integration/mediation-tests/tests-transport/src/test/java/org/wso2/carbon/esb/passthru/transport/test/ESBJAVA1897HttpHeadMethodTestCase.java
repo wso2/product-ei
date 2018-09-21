@@ -22,6 +22,7 @@ import org.apache.axiom.om.OMElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.awaitility.Awaitility;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -32,6 +33,9 @@ import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import java.io.File;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -63,12 +67,15 @@ public class ESBJAVA1897HttpHeadMethodTestCase extends  ESBIntegrationTest{
         relativePath = relativePath.replaceAll("[\\\\/]", File.separator);
         OMElement proxyConfig = util.loadResource(relativePath);
         addProxyService(proxyConfig);
-        
+
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isDeployed(proxyConfig));
     }
 
     @Test(groups = "wso2.esb", description = "test to verify that the HTTP HEAD method works with PTT.")
 	public void testHttpHeadMethod() throws Exception {
-    	Thread.sleep(5000);
     	String restURL = (getProxyServiceURLHttp(SERVICE_NAME)) + "/students";
     	DefaultHttpClient httpclient = new DefaultHttpClient();
     	HttpHead httpHead = new HttpHead(restURL);
@@ -88,5 +95,14 @@ public class ESBJAVA1897HttpHeadMethodTestCase extends  ESBIntegrationTest{
             axis2Server1.stop();
         }
         super.cleanup();
+    }
+
+    private Callable<Boolean> isDeployed(final OMElement omElement) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return isProxyDeployed(omElement);
+            }
+        };
     }
 }
