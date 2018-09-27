@@ -41,7 +41,7 @@ import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 
 public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
     private Log log = LogFactory.getLog(ESBJAVA2283ReturnContentTypeTestCase.class);
-	private HttpServer server = null;
+	
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -56,6 +56,7 @@ public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "test return content type")
     public void testReturnContentType() throws Exception {
 	    int port = 8089;
+		HttpServer server = null;
 	    String contentType = "text/xml";
 	    server = HttpServer.create(new InetSocketAddress(port), 0);
 	    server.createContext("/gettest", new MyHandler());
@@ -77,7 +78,7 @@ public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
 	                 "Expected content type doesn't match");
 	    assertEquals(response.getStatusLine().getStatusCode(), 200, "response code doesn't match");
 
-	    server.stop(0);
+	    server.stop(5);
     }
 
 	private class MyHandler implements HttpHandler {

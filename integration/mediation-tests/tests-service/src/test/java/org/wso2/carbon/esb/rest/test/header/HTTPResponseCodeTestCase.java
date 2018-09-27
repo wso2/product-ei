@@ -43,7 +43,6 @@ import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(HTTPResponseCodeTestCase.class);
-    private HttpServer server = null;
     private int responseCode;
 
     @BeforeClass(alwaysRun = true)
@@ -63,6 +62,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
         this.responseCode = responseCode;
         //Starting backend server
         int port = 8089;
+        HttpServer server = null;
         server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/gettest", new ResponseHandler());
         server.setExecutor(null); // creates a default executor
@@ -79,7 +79,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
             sendRequest(url, contentType);
         }
 
-        server.stop(0);
+        server.stop(5);
 
     }
 

@@ -45,7 +45,6 @@ import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 
 public class ContentTypeTestCase extends ESBIntegrationTest {
     private Log log = LogFactory.getLog(ContentTypeTestCase.class);
-	private HttpServer server = null;
 	public static String contentType;
 
 	@BeforeClass(alwaysRun = true)
@@ -62,6 +61,7 @@ public class ContentTypeTestCase extends ESBIntegrationTest {
     public void testReturnContentType(String dataProviderContentType) throws Exception {
 	    contentType = dataProviderContentType;
 	    int port = 8089;
+		HttpServer server = null;
 	    server = HttpServer.create(new InetSocketAddress(port), 0);
 	    server.createContext("/gettest", new MyHandler());
 	    server.setExecutor(null); // creates a default executor
@@ -81,7 +81,7 @@ public class ContentTypeTestCase extends ESBIntegrationTest {
 	    assertEquals(response.getFirstHeader("Content-Type").getValue(), contentType, "Expected content type doesn't match");
 	    assertEquals(response.getStatusLine().getStatusCode(), 200, "response code doesn't match");
 
-	    server.stop(0);
+	    server.stop(5);
     }
 
 	private class MyHandler implements HttpHandler {
