@@ -62,8 +62,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
         this.responseCode = responseCode;
         //Starting backend server
         int port = 8089;
-        HttpServer server = null;
-        server = HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/gettest", new ResponseHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
