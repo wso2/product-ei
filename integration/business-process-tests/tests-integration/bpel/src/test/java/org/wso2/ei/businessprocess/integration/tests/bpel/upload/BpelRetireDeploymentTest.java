@@ -19,19 +19,22 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.upload;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
+import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
+import org.wso2.carbon.bpel.stub.mgt.types.LimitedInstanceInfoType;
 import org.wso2.ei.businessprocess.integration.common.clients.bpel.BpelInstanceManagementClient;
 import org.wso2.ei.businessprocess.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.ei.businessprocess.integration.common.clients.bpel.BpelProcessManagementClient;
 import org.wso2.ei.businessprocess.integration.common.utils.BPSMasterTest;
 import org.wso2.ei.businessprocess.integration.common.utils.RequestSender;
-import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
-import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
-import org.wso2.carbon.bpel.stub.mgt.types.LimitedInstanceInfoType;
 
 import java.rmi.RemoteException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class BpelRetireDeploymentTest extends BPSMasterTest {
 
@@ -65,7 +68,12 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
     public void testRetireClient() throws Exception {
         // wait till the uploaded process deploy
         deployArtifact();
-        Thread.sleep(20000);
+
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isServiceDeployed("HelloWorld-retire"));
+
         String processId = bpelProcessManagementClient.getProcessId("HelloWorld-retire");
         String status = bpelProcessManagementClient.getStatus(processId);
         Assert.assertTrue(status.equals("RETIRED".toUpperCase()), "Process State is still Active");
@@ -76,5 +84,18 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
             LogoutAuthenticationExceptionException {
         bpelPackageManagementClient.undeployBPEL("HelloWorld-retire");
         this.loginLogoutClient.logout();
+    }
+
+    private Callable<Boolean> isServiceDeployed(final String packageName) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (bpelProcessManagementClient.getProcessId(packageName) != null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
     }
 }
