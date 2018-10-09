@@ -135,17 +135,22 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
             fos = new FileOutputStream(destinationFile);
             Properties properties = new Properties();
             properties.load(fis);
-            fis.close();
+            if (fis != null) {
+                fis.close();
+            }
             properties.setProperty(key, value);
             properties.store(fos, null);
             fos.flush();
-            fos.close();
             serverConfigurationManager.applyConfigurationWithoutRestart(destinationFile);
         } catch (Exception e) {
             Assert.assertTrue(false, "Exception occured with the message: " + e.getMessage());
         } finally {
-            fis = null;
-            fos = null;
+            if (fis != null) {
+                fis.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
         }
     }
 
