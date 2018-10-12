@@ -103,9 +103,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
             fos = new FileOutputStream(destinationFile);
             Properties properties = new Properties();
             properties.load(fis);
-            if (fis != null) {
-                fis.close();
-            }
+            fis.close();
             properties.setProperty(key, value);
             properties.store(fos, null);
             fos.flush();
