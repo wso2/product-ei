@@ -46,6 +46,8 @@ import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(ESBJAVA2283ReturnContentTypeTestCase.class);
+    private static final int HTTP_STATUS_OK = 200;
+    private static final int PORT = 8089;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -61,8 +63,7 @@ public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
     @Test(groups = {"wso2.esb"}, description = "test return content type")
     public void testReturnContentType() throws Exception {
 
-        int port = 8089;
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
         String contentType = "text/xml";
         server.createContext("/gettest", new MyHandler());
         server.setExecutor(null); // creates a default executor
@@ -81,7 +82,7 @@ public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
 
         assertEquals(response.getFirstHeader("Content-Type").getValue(), contentType,
                 "Expected content type doesn't match");
-        assertEquals(response.getStatusLine().getStatusCode(), 200, "response code doesn't match");
+        assertEquals(response.getStatusLine().getStatusCode(), HTTP_STATUS_OK, "response code doesn't match");
 
         server.stop(5);
     }
@@ -93,7 +94,7 @@ public class ESBJAVA2283ReturnContentTypeTestCase extends ESBIntegrationTest {
             Headers h = t.getResponseHeaders();
             h.add("Content-Type", "text/xml");
             String response = "This is the test case for ESBJAVA-2283";
-            t.sendResponseHeaders(200, response.length());
+            t.sendResponseHeaders(HTTP_STATUS_OK, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
             os.close();

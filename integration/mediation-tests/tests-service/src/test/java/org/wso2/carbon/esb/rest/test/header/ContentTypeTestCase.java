@@ -50,6 +50,8 @@ public class ContentTypeTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(ContentTypeTestCase.class);
     public static String contentType;
+    private static final int HTTP_STATUS_OK = 200;
+    private static final int PORT = 8089;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -66,8 +68,7 @@ public class ContentTypeTestCase extends ESBIntegrationTest {
     public void testReturnContentType(String dataProviderContentType) throws Exception {
 
         contentType = dataProviderContentType;
-        int port = 8089;
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/gettest", new MyHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
@@ -84,7 +85,7 @@ public class ContentTypeTestCase extends ESBIntegrationTest {
         log.info(response.getStatusLine().getStatusCode());
 
         assertEquals(response.getFirstHeader("Content-Type").getValue(), contentType, "Expected content type doesn't match");
-        assertEquals(response.getStatusLine().getStatusCode(), 200, "response code doesn't match");
+        assertEquals(response.getStatusLine().getStatusCode(), HTTP_STATUS_OK, "response code doesn't match");
 
         server.stop(5);
     }
@@ -96,7 +97,7 @@ public class ContentTypeTestCase extends ESBIntegrationTest {
             Headers h = t.getResponseHeaders();
             h.add("Content-Type", contentType);
             String response = "This Content type test case";
-            t.sendResponseHeaders(200, response.length());
+            t.sendResponseHeaders(HTTP_STATUS_OK, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
             os.close();

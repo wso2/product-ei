@@ -44,6 +44,8 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(HTTPResponseCodeTestCase.class);
     private int responseCode;
+    private static final int PORT = 8089;
+
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -61,8 +63,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
             int responseCode) throws Exception {
         this.responseCode = responseCode;
         //Starting backend server
-        int port = 8089;
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/gettest", new ResponseHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
