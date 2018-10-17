@@ -19,38 +19,44 @@
 package org.wso2.carbon.esb.mediator.test.classMediator;
 
 import org.apache.axiom.om.OMElement;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
-
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import javax.xml.namespace.QName;
 import java.io.File;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationTest {
+    private static final Log log = LogFactory.getLog(PropertyPersistenceDeletingAndAddingTstCase.class);
     private static final String CLASS_JAR_FIVE_PROPERTIES="org.wso2.carbon.test.mediator.stockmediator-v1.0.jar";
     private static final String CLASS_JAR_FOUR_PROPERTIES="org.wso2.carbon.test.mediator.stockmediator-v1.0.2.jar";
     private static final String JAR_LOCATION= "/artifacts/ESB/jar";
 
+    private static final String osname = System.getProperty("os.name").toLowerCase().toString();
     private ServerConfigurationManager serverConfigurationManager;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+        if (!(osname.contains("windows"))) {
 
-        super.init();
-        serverConfigurationManager=new ServerConfigurationManager(context);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FIVE_PROPERTIES).toURI()));
-        serverConfigurationManager.restartGracefully();
+            super.init();
+            serverConfigurationManager = new ServerConfigurationManager(context);
+            serverConfigurationManager.copyToComponentLib
+                    (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FIVE_PROPERTIES).toURI()));
+            serverConfigurationManager.restartGracefully();
 
-        super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
+            super.init();
+            loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_five_properties.xml");
+        } else {
+            log.info("Skip the test execution in Windows. [Unable to delete dropins in Winodws]");
+        }
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
@@ -58,18 +64,18 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
     @Test(groups = {"wso2.esb","localOnly"}, description = "Class Mediator " +
                                                            " -Class mediator property persistence -deleting and adding different properties")
     public void testMediationPersistenceDeletingAndAdding() throws Exception {
+        if (!(osname.contains("windows"))) {
+            OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
 
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "WSO2");
+            String lastPrice=response.getFirstElement()
+                    .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
+            assertNotNull(lastPrice, "Fault: response message 'last' price null");
 
-        String lastPrice=response.getFirstElement()
-                .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
-        assertNotNull(lastPrice, "Fault: response message 'last' price null");
+            String symbol=response.getFirstElement()
+                    .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
+            assertEquals(symbol, "WSO2", "Fault: value 'symbol' mismatched");
 
-        String symbol=response.getFirstElement()
-                .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
-        assertEquals(symbol, "WSO2", "Fault: value 'symbol' mismatched");
-
-        //TODO Log Assertion
+            //TODO Log Assertion
         /*
         INFO - StockQuoteMediator Starting Mediation -ClassMediator
         INFO - StockQuoteMediator Initialized with User:[esb user]
@@ -83,29 +89,28 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
         Deleting User and email   refer: https://wso2.org/jira/browse/TA-532           param 5
          */
 
+            serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
+            serverConfigurationManager.copyToComponentLib
+                    (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FOUR_PROPERTIES).toURI()));
+            loadSampleESBConfiguration(0);
+            /* waiting for the new config file to be written to the disk */
+            Thread.sleep(10000);
+            serverConfigurationManager.restartGracefully();
 
-        serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FOUR_PROPERTIES).toURI()));
-        loadSampleESBConfiguration(0);
-        /* waiting for the new config file to be written to the disk */
-        Thread.sleep(10000);
-        serverConfigurationManager.restartGracefully();
+            super.init();
+            loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_four_properties.xml");
 
-        super.init();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/class/class_property_persistence_four_properties.xml");
+            response=axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "IBM");
 
-        response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "IBM");
+            lastPrice=response.getFirstElement()
+                    .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
+            assertNotNull(lastPrice, "Fault: response message 'last' price null");
 
-        lastPrice=response.getFirstElement()
-                .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
-        assertNotNull(lastPrice, "Fault: response message 'last' price null");
+            symbol=response.getFirstElement()
+                    .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
+            assertEquals(symbol, "IBM", "Fault: value 'symbol' mismatched");
 
-        symbol=response.getFirstElement()
-                .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
-        assertEquals(symbol, "IBM", "Fault: value 'symbol' mismatched");
-
-        //TODO Log Assertion
+            //TODO Log Assertion
         /*
         INFO - StockQuoteMediator Starting Mediation -ClassMediator
         INFO - StockQuoteMediator Massage Id:
@@ -118,13 +123,19 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
         added "servicesDeduction"  refer: https://wso2.org/jira/browse/TA-532            param 4
          */
 
+        } else {
+            log.info("Skip the test execution in Windows. [Unable to delete dropins in Winodws]");
+        }
     }
 
-
     @AfterClass(alwaysRun = true)
-    public void destroy() throws Exception{
-        super.cleanup();
-        serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FOUR_PROPERTIES);
-        serverConfigurationManager=null;
+    public void destroy() throws Exception {
+        if (!(osname.contains("windows"))) {
+            super.cleanup();
+            serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FOUR_PROPERTIES);
+            serverConfigurationManager = null;
+        } else {
+            log.info("Skip the test execution in Windows. [Unable to delete dropins in Winodws]");
+        }
     }
 }
