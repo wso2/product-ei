@@ -45,25 +45,12 @@ public class ESBJAVA3546CAppProxyOnLoadTestCase extends ESBIntegrationTest {
         }
     }
 
-    @Test(groups = {"wso2.esb"}, description = "proxy service with startOnLoad=false deployed " +
-                                               "from car file but inactive")
+    @Test(groups = {"wso2.esb"},
+          description = "proxy service with startOnLoad=false deployed from car file but inactive",
+          expectedExceptions = AxisFault.class)
     public void startOnLoadFalseProxyTest() throws Exception {
-        boolean falseResponseReceived = false;
-
-        try {
-            axis2Client.sendSimpleStockQuoteRequest(
-                    "http://127.0.0.1:8480/services/InactiveProxy",
-                    null,
-                    "IBM");
-        } catch (AxisFault axisFault) {
-            //Exception received with inactive service error - deployed service is inactive
-            // as expected
-            falseResponseReceived = true;
-            log.info("Test Success Since Service Invocation Failed > " + axisFault.getMessage(),
-                     axisFault);
-        } finally {
-            Assert.assertTrue("startOnLoad=false proxy invocation test failed", falseResponseReceived);
-        }
+            axis2Client.sendSimpleStockQuoteRequest("http://127.0.0.1:8480/services/InactiveProxy",
+                                                    null, "IBM");
     }
 
     @AfterTest(alwaysRun = true)

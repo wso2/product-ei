@@ -17,13 +17,6 @@
  */
 package org.wso2.carbon.esb.security.policy;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
-import javax.activation.DataHandler;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
@@ -34,19 +27,25 @@ import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+
 public class ESBJAVA3899_PolicyReferenceInWSDLBindingsTestCase extends ESBIntegrationTest {
-	String carFileName = "SecurityPolicyWSDLBindingCapp_1.0.0.car";
+	private String carFileName = "SecurityPolicyWSDLBindingCapp_1.0.0.car";
 
 	@BeforeClass
 	protected void init() throws Exception {
 		super.init();
 		uploadResourcesToConfigRegistry();
-		uploadCapp(carFileName, new DataHandler(new URL("file:" + File.separator + File.separator +
-		                                                getESBResourceLocation() + File.separator +
-		                                                "car" + File.separator + carFileName)));
+
+		String cappPath = Paths.get(getESBResourceLocation(), "car", carFileName).toString();
+		uploadCapp(carFileName, new DataHandler(new FileDataSource(new File(cappPath))));
 		TimeUnit.SECONDS.sleep(5);
 		log.info(carFileName + " uploaded successfully");
-
 	}
 
 	@Test(groups = "wso2.esb", description = "Verify whether the WSDL Bindings contain Policyreference element when security policy is added via capp.")
@@ -64,18 +63,16 @@ public class ESBJAVA3899_PolicyReferenceInWSDLBindingsTestCase extends ESBIntegr
 	}
 
 	private void uploadResourcesToConfigRegistry() throws Exception {
-		ResourceAdminServiceClient resourceAdminServiceStub =
-		                                                      new ResourceAdminServiceClient(
+		ResourceAdminServiceClient resourceAdminServiceStub = new ResourceAdminServiceClient(
 		                                                                                     contextUrls.getBackEndUrl(),
 		                                                                                     getSessionCookie());
 
+		String resourcePath =
+				Paths.get(getESBResourceLocation(), "security", "ESBJAVA3899", "server-policy.xml").toString();
 		resourceAdminServiceStub.addResource("/_system/config/repository/server-policy.xml",
 		                                     "application/xml",
 		                                     "policy file",
-		                                     new DataHandler(
-		                                                     new URL("file:///" +
-		                                                             getESBResourceLocation() +
-		                                                             "/security/ESBJAVA3899/server-policy.xml")));
+											new DataHandler(new FileDataSource(new File(resourcePath))));
 		Thread.sleep(4000);
 	}
 
@@ -83,5 +80,4 @@ public class ESBJAVA3899_PolicyReferenceInWSDLBindingsTestCase extends ESBIntegr
 	public void destroy() throws Exception {
 		super.cleanup();
 	}
-
 }

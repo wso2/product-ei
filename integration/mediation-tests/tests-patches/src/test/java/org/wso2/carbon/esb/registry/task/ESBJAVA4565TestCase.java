@@ -30,7 +30,10 @@ import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClie
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 
 /**
  * ESBJAVA-4565
@@ -49,9 +52,9 @@ public class ESBJAVA4565TestCase extends ESBIntegrationTest {
         resourceAdminServiceStub =
                 new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
+        String ftpXmlPath = Paths.get(getESBResourceLocation(), "registry", "ftp.xml").toString();
         resourceAdminServiceStub.addResource(REGISTRY_ARTIFACT, "application/xml", "FTP Test account details",
-                new DataHandler(new URL("file:///" + getESBResourceLocation() +
-                                        "/registry/ftp.xml")));
+                                             new DataHandler(new FileDataSource(new File(ftpXmlPath))));
 
         OMElement task = AXIOMUtil.stringToOM("<task:task xmlns:task=\"http://www.wso2.org/products/wso2commons/tasks\"\n" +
                                               "           name=\"TestTask\"\n" +
