@@ -247,4 +247,10 @@
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.EI1222JSONSecuredServiceWithXMLCharacterTestCase"/>
         </classes>
     </test>
+
+    <test name="DSS-datasources-tests" parallel="false" verbose="2">
+        <classes>
+            <class name="org.wso2.ei.dataservice.integration.test.datasource.DataSourceAddAndCheckAfterServerStartupTestCase"/>
+        </classes>
+    </test>
 </suite>
