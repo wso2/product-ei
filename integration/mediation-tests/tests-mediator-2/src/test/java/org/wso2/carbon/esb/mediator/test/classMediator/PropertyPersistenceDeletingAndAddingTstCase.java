@@ -26,10 +26,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
+import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import javax.xml.namespace.QName;
 import java.io.File;
+import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Callable;
+import org.awaitility.Awaitility;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -68,33 +74,41 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
             OMElement response = axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(), null, "WSO2");
 
             String lastPrice=response.getFirstElement()
-                    .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
+                                     .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
             assertNotNull(lastPrice, "Fault: response message 'last' price null");
 
             String symbol=response.getFirstElement()
-                    .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
+                                  .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
             assertEquals(symbol, "WSO2", "Fault: value 'symbol' mismatched");
 
-            //TODO Log Assertion
-        /*
-        INFO - StockQuoteMediator Starting Mediation -ClassMediator
-        INFO - StockQuoteMediator Initialized with User:[esb user]
-        INFO - StockQuoteMediator E-MAIL:[user@wso2.org]
-        INFO - StockQuoteMediator Massage Id:
-        INFO - StockQuoteMediator Original price:
-        INFO - StockQuoteMediator Discounted price:
-        INFO - StockQuoteMediator After taxed price:
-        INFO - StockQuoteMediator Logged....
+            /*
+            INFO - StockQuoteMediator Starting Mediation -ClassMediator
+            INFO - StockQuoteMediator Initialized with User:[esb user]
+            INFO - StockQuoteMediator E-MAIL:[user@wso2.org]
+            INFO - StockQuoteMediator Massage Id:
+            INFO - StockQuoteMediator Original price:
+            INFO - StockQuoteMediator Discounted price:
+            INFO - StockQuoteMediator After taxed price:
+            INFO - StockQuoteMediator Logged....
 
-        Deleting User and email   refer: https://wso2.org/jira/browse/TA-532           param 5
-         */
+            Deleting User and email   refer: https://wso2.org/jira/browse/TA-532           param 5
+            */
 
             serverConfigurationManager.removeFromComponentLib(CLASS_JAR_FIVE_PROPERTIES);
             serverConfigurationManager.copyToComponentLib
                     (new File(getClass().getResource(JAR_LOCATION + File.separator + CLASS_JAR_FOUR_PROPERTIES).toURI()));
             loadSampleESBConfiguration(0);
+
+            String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
+            String filePath = Paths.get(carbonHome, "lib", CLASS_JAR_FOUR_PROPERTIES).toString();
+            File jarFile = new File(filePath);
+
+            Awaitility.await()
+                    .pollInterval(50, TimeUnit.MILLISECONDS)
+                    .atMost(10000, TimeUnit.MILLISECONDS)
+                    .until(isFileWrittenInDisk(jarFile));
+
             /* waiting for the new config file to be written to the disk */
-            Thread.sleep(10000);
             serverConfigurationManager.restartGracefully();
 
             super.init();
@@ -103,29 +117,41 @@ public class PropertyPersistenceDeletingAndAddingTstCase extends ESBIntegrationT
             response=axis2Client.sendSimpleStockQuoteRequest(getMainSequenceURL(),null, "IBM");
 
             lastPrice=response.getFirstElement()
-                    .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
+                              .getFirstChildWithName(new QName("http://services.samples/xsd","last")).getText();
             assertNotNull(lastPrice, "Fault: response message 'last' price null");
 
             symbol=response.getFirstElement()
-                    .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
+                           .getFirstChildWithName(new QName("http://services.samples/xsd","symbol")).getText();
             assertEquals(symbol, "IBM", "Fault: value 'symbol' mismatched");
 
-            //TODO Log Assertion
-        /*
-        INFO - StockQuoteMediator Starting Mediation -ClassMediator
-        INFO - StockQuoteMediator Massage Id:
-        INFO - StockQuoteMediator Original price:
-        INFO - StockQuoteMediator Discounted price:
-        INFO - StockQuoteMediator After taxed price:
-        INFO - StockQuoteMediator Final price:              //added
-        INFO - StockQuoteMediator Logged....
+            /*
+            INFO - StockQuoteMediator Starting Mediation -ClassMediator
+            INFO - StockQuoteMediator Massage Id:
+            INFO - StockQuoteMediator Original price:
+            INFO - StockQuoteMediator Discounted price:
+            INFO - StockQuoteMediator After taxed price:
+            INFO - StockQuoteMediator Final price:              //added
+            INFO - StockQuoteMediator Logged....
 
-        added "servicesDeduction"  refer: https://wso2.org/jira/browse/TA-532            param 4
-         */
+            added "servicesDeduction"  refer: https://wso2.org/jira/browse/TA-532            param 4
+             */
 
         } else {
             log.info("Skip the test execution in Windows. [Unable to delete dropins in Winodws]");
         }
+    }
+
+    private Callable<Boolean> isFileWrittenInDisk(final File jar) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (jar.exists()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
     }
 
     @AfterClass(alwaysRun = true)
