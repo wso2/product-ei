@@ -1,4 +1,21 @@
-### Introduction to Content-Based Routing
+## Introduction
 
-The Content-Based Router (CBR) reads the content of a message and routes it to a specific recipient based on its content. This approach is useful when an implementation of a specific logical function is distributed across multiple physical systems.
+<<-- Diagram that depict the scenario - if available -->>
 
+## Business use case narrative
+
+## Persona
+
+## Implementation
+
+### Prerequisites
+
+### Development 
+
+#### Sample configuration
+
+### Deployment
+
+### Testing and acceptance criteria
+
+## See also
