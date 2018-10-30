@@ -75,7 +75,7 @@ public class BpelVersioningTest extends BPSMasterTest {
     public void getVersion() throws RemoteException, XMLStreamException, InterruptedException,
             ProcessManagementException {
 
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         List<String> processBefore = bpelProcessManagementClient.getProcessInfoList("HelloWorld2");
         activeStatus = new LinkedList<String>();
         for (String processid : processBefore) {
@@ -110,7 +110,7 @@ public class BpelVersioningTest extends BPSMasterTest {
         uploadBpelForTest("HelloWorld2", artifactLocation);
         List<String> processAfter = null;
         for (int a = 0; a <= 10; a++) {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
             processAfter = bpelProcessManagementClient.getProcessInfoList("HelloWorld2");
             if (bpelProcessManagementClient.getStatus(activeStatus.get(0)).equals(ProcessStatus.RETIRED.toString()))
                 break;
