@@ -7,22 +7,26 @@
 ## When to use this approach
 
 The most common message transformation use case is reconstructing the entire message payload according to the required format of the service/client. 
-We can use the PayloadFactory Mediator to do the transformation in this use case, if we know that the structure of the new payload is simple, which means the message format is fixed, and only a few parameters are extracted from the original message. 
-If the original message has repetitive segments and if you want to transform each of those segment into a new format with repetitive segments, you can use the For-Each Mediator together with the PayloadFactory mediator.
+We can use the PayloadFactory Mediator to do the transformation in this use case, if we know that the structure of the new payload is simple, 
+which means the message format is fixed, and only a few parameters are extracted from the original message. 
+If the original message has repetitive segments and if you want to transform each of those segment into a new format with repetitive segments, 
+you can use the For-Each Mediator together with the PayloadFactory mediator.
 
 ## Sample use case
-Exposing a SOAP web service as a REST API by doing a SOAP to JSON conversion. 
+Here we have a SOAP service which gives out the information of a city taking the zip code as the input.  
+We are going to expose this SOAP web service as a REST API by doing a SOAP to JSON conversion.
 
-## Prerequisites
+### Prerequisites
 A REST client like cURL to invoke the ESB API.
 
-## Development 
+### Development 
 
-### Sample configuration
+#### Sample configuration
 
 REST API Configuration
 
-The API resource is configured with an URI-Template and parameterized to get the ZIP code. A request payload is constructed with a given zip code. Also, ‘SOAPAction’ which is a mandatory header for SOAP 1.1 is set before invoking the endpoint. Once the response is received, it is sent back to the client by converting the XML message to a JSON message using the PayloadFactory mediator.
+The API resource is configured with an URI-Template and parameterized to get the ZIP code. 
+A request payload is constructed with a given zip code. Also, ‘SOAPAction’ which is a mandatory header for SOAP 1.1 is set before invoking the endpoint. Once the response is received, it is sent back to the client by converting the XML message to a JSON message using the PayloadFactory mediator.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -110,13 +114,13 @@ curl http://localhost:8280/city/lookup/60601
 
 
 ### Observability
-N/A
+
 
 ### Maintenance tips
-N/A
+
 
 ### APIs
-N/A
 
-### See Also
+
+## See Also
 
