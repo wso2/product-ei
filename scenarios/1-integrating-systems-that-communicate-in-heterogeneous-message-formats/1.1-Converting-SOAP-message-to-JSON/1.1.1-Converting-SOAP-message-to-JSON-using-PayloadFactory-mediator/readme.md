@@ -1,25 +1,25 @@
-#1.1.1 Converting SOAP message to JSON using PayloadFactory mediator
+# 1.1.1 Converting SOAP message to JSON using PayloadFactory mediator
 
 
 ![SOAP to JSON conversion](images/SOAP-to-JSON.png)
 
 
-##When to use this approach
+## When to use this approach
 
 The most common message transformation use case is reconstructing the entire message payload according to the required format of the service/client. We can use the PayloadFactory Mediator to do the transformation in this use case, if we know that the structure of the new payload is simple, which means the message format is fixed, and only a few parameters are extracted from the original message. 
 If the original message has repetitive segments and if you want to transform each of those segment into a new format with repetitive segments, you can use the For-Each Mediator together with the PayloadFactory mediator.
 
 
-##Sample use case
+## Sample use case
 Exposing a SOAP web service as a REST API by doing a SOAP to JSON conversion. 
 
 
-##Prerequisites
+## Prerequisites
 A REST client like cURL to invoke the ESB API.
 
-##Development 
+## Development 
 
-###Sample configuration
+### Sample configuration
 
 REST API Configuration
 
@@ -93,12 +93,12 @@ Endpoint Configuration
 ```
 
 
-###Deployment
+### Deployment
 Single node ESB deployment.
 <<Need to give instructions on how to deploy>> 
 
 
-###Testing and acceptance criteria
+### Testing and acceptance criteria
     
 Invoke the service with the following request. Use an HTTP client like cURL.
 
@@ -111,14 +111,14 @@ curl http://localhost:8280/city/lookup/60601
 - Handling well formed SOAP message with incomplete information
 
 
-###Observability
+### Observability
 N/A
 
-###Maintenance tips
+### Maintenance tips
 N/A
 
-###APIs
+### APIs
 N/A
 
-###See Also
+### See Also
 
