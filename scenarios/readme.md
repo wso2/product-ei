@@ -1,0 +1,1 @@
+[1. Integrating systems that communicate in heterogeneous message formats](https://github.com/wso2/product-ei/tree/scenarios-docs/scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats)
