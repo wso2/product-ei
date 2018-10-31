@@ -6,13 +6,12 @@
 
 ## When to use this approach
 
-The most common message transformation use case is reconstructing the entire message payload according to the required format of the service/client. We can use the PayloadFactory Mediator to do the transformation in this use case, if we know that the structure of the new payload is simple, which means the message format is fixed, and only a few parameters are extracted from the original message. 
+The most common message transformation use case is reconstructing the entire message payload according to the required format of the service/client. 
+We can use the PayloadFactory Mediator to do the transformation in this use case, if we know that the structure of the new payload is simple, which means the message format is fixed, and only a few parameters are extracted from the original message. 
 If the original message has repetitive segments and if you want to transform each of those segment into a new format with repetitive segments, you can use the For-Each Mediator together with the PayloadFactory mediator.
-
 
 ## Sample use case
 Exposing a SOAP web service as a REST API by doing a SOAP to JSON conversion. 
-
 
 ## Prerequisites
 A REST client like cURL to invoke the ESB API.
