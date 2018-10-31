@@ -14,5 +14,5 @@ This allows the systems to communicate with each other without depending on the 
 Developer 
 
 ## Sub-Scenarios
-- 1.1 Converting SOAP message to JSON 
+- [1.1 Converting SOAP message to JSON](https://github.com/wso2/product-ei/tree/scenarios-docs/scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.1-converting-soap-to-json)
 - 1.2 Converting POX message to JSON
