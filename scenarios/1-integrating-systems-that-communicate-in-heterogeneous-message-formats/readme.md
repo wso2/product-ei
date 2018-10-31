@@ -1,6 +1,6 @@
 # 1. Integrating systems that communicate in heterogeneous message formats
 
-## Business use-case narrative
+## Business use case narrative
 
 Integration of systems that communicate in various message formats is a common scenario in enterprise integration. 
 To do this kind of integrations, message formats of the systems need to be converted into compatible formats.

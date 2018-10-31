@@ -94,7 +94,6 @@ Endpoint Configuration
 
 ### Deployment
 Single node ESB deployment.
-<< Need to give instructions on how to deploy >> 
 
 
 ### Testing and acceptance criteria
