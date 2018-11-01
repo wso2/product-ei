@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="ESBTestSuite" duration-ms="62503" started-at="2018-11-01T22:13:54Z" finished-at="2018-11-01T22:14:56Z">
+    <groups>
+    </groups>
+    <test name="ProxyService-Test" duration-ms="62503" started-at="2018-11-01T22:13:54Z" finished-at="2018-11-01T22:14:56Z">
+      <class name="org.wso2.carbon.esb.endpoint.test.ScenarioSampleTest">
+        <test-method status="PASS" signature="init()" name="init" is-config="true" duration-ms="60788" started-at="2018-11-01T22:13:54Z" finished-at="2018-11-01T22:14:55Z">
+        </test-method>
+        <test-method status="PASS" signature="testMessageTransformation()" name="testMessageTransformation" duration-ms="1423" started-at="2018-11-01T22:14:55Z" description="1.1.1.1" finished-at="2018-11-01T22:14:56Z">
+        </test-method>
+        <test-method status="PASS" signature="testMessageTransformationForInvalidCode()" name="testMessageTransformationForInvalidCode" duration-ms="284" started-at="2018-11-01T22:14:56Z" description="1.1.1.2" finished-at="2018-11-01T22:14:56Z">
+        </test-method>
+        <test-method status="PASS" signature="close()" name="close" is-config="true" duration-ms="0" started-at="2018-11-01T22:14:56Z" description="Test HTTP the transformation" finished-at="2018-11-01T22:14:56Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>
