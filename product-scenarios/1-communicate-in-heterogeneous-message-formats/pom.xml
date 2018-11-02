@@ -19,39 +19,126 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <parent>
-        <groupId>org.wso2.ei</groupId>
-        <artifactId>wso2ei-parent</artifactId>
-        <version>6.4.0</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
     <artifactId>integrations</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Integration Tests</name>
     <url>http://wso2.org</url>
+    <groupId>org.wso2.ei</groupId>
+    <version>6.4.0</version>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>1.1-convert-soap-messages-to-json</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>mediation-tests-profile</id>
-            <activation>
-                <property>
-                    <name>mediation.integration.test.profile</name>
-                </property>
-            </activation>
-            <modules>
-                <module>1.1-convert-soap-messages-to-json</module>
-            </modules>
-        </profile>
-    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.wso2.maven</groupId>
+                <artifactId>carbon-p2-plugin</artifactId>
+                <version>${carbon.p2.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <product.ei.version>6.4.0</product.ei.version>
+        <axis2.wso2.version>1.6.1-wso2v20</axis2.wso2.version>
+        <commons.logging.version>1.1</commons.logging.version>
+        <carbon.kernel.version>4.4.36</carbon.kernel.version>
+        <carbon.mediation.version>4.6.105</carbon.mediation.version>
+        <org.testng.version>6.1.1</org.testng.version>
+        <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
+        <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
+    </properties>
+
+    <modules>
+        <module>1.1-convert-soap-messages-to-json</module>
+    </modules>
+
+    <repositories>
+        <!-- WSO2 released artifact repository -->
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 Releases Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <!-- WSO2 Snapshot artifact repository -->
+        <repository>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+    </repositories>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons.logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2</artifactId>
+                <version>1.6.2</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-kernel</artifactId>
+                <version>1.6.1-wso2v20</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>org.wso2.carbon.task</artifactId>
+                <version>${carbon.mediation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${org.testng.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.automationutils</groupId>
+                <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
+                <version>${automation.framework.utils.version}</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

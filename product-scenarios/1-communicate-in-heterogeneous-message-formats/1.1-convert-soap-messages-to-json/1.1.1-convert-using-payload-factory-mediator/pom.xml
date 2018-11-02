@@ -106,6 +106,7 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>admin-clients</artifactId>
+            <version>6.4.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -117,6 +118,7 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>integration-test-utils</artifactId>
+            <version>6.4.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -127,15 +129,48 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>service-samples</artifactId>
+            <version>6.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>automation-extensions</artifactId>
+            <version>6.4.0</version>
         </dependency>
         <!-- Jacoco Dependency-->
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
+            <version>0.7.5.201505241946</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-kernel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.mediation</groupId>
+            <artifactId>org.wso2.carbon.task</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.automationutils</groupId>
+            <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
