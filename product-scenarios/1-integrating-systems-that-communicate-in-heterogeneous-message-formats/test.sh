@@ -10,5 +10,5 @@ mvn clean install
 
 echo "Copying surefire-reports to data bucket"
 
-cp -r 1.1-convert-soap-messages-to-json/1.1.1-convert-using-payload-factory-mediator/target/surefire-reports ${DIR}
+cp -r 1.1-converting-soap-to-json/1.1.1-soap-to-json-using-payloadfactory-mediator/target/surefire-reports ${DIR}
 ls ${DIR}

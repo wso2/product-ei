@@ -21,18 +21,18 @@
 
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>integrations</artifactId>
+        <artifactId>heterogeneous-message-formats-tests</artifactId>
         <version>6.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>mediation-integration</artifactId>
-    <name>WSO2 Enterprise Integrator - Mediation Integration Tests</name>
+    <artifactId>soap-to-json-tests</artifactId>
+    <name>Converting SOAP to JSON</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>1.1.1-convert-using-payload-factory-mediator</module>
+        <module>1.1.1-soap-to-json-using-payloadfactory-mediator</module>
     </modules>
 
 </project>

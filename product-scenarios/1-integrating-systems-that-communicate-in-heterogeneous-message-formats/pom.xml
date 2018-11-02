@@ -20,9 +20,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>integrations</artifactId>
+    <artifactId>heterogeneous-message-formats-tests</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Enterprise Integrator - Integration Tests</name>
+    <name>Integrating Systems that Communicate in Heterogeneous Message Formats</name>
     <url>http://wso2.org</url>
     <groupId>org.wso2.ei</groupId>
     <version>6.4.0</version>
@@ -59,7 +59,7 @@
     </properties>
 
     <modules>
-        <module>1.1-convert-soap-messages-to-json</module>
+        <module>1.1-converting-soap-to-json</module>
     </modules>
 
     <repositories>
