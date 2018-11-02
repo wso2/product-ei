@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite hostname="Dilmis-MacBook-Pro.local" name="org.wso2.carbon.esb.endpoint.test.ScenarioSampleTest" tests="2" failures="0" timestamp="1 Nov 2018 16:44:57 GMT" time="62.503" errors="0">
-  <testcase name="testMessageTransformation" time="1.423" classname="org.wso2.carbon.esb.endpoint.test.ScenarioSampleTest"/>
-  <testcase name="testMessageTransformationForInvalidCode" time="0.284" classname="org.wso2.carbon.esb.endpoint.test.ScenarioSampleTest"/>
-</testsuite>
