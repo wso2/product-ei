@@ -101,7 +101,7 @@ Dependent repository:carbon-business-process
 #### carbon-business-process
 
 Repository URL <https://github.com/wso2/carbon-business-process>  
-Comtains the modules implementing BPEL, BPMN and WS-Human Tasks capabilities for business-process profile
+Contains the modules implementing BPEL, BPMN and WS-Human Tasks capabilities for business-process profile.
 Dependent repository:product-ei
 
 ### Message Broker profile
