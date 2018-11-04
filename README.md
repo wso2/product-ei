@@ -81,7 +81,7 @@ Dependent repository:carbon-mediation
 #### carbon-mediation
 
 Repository URL <https://github.com/wso2/carbon-mediation>  
-Implements more functionality on top of wso2-synapse.
+Implements more functionality on top of wso2-synapse.  
 Dependent repository:product-ei
 
 #### carbon-data
