@@ -62,31 +62,31 @@ Following is some of the most important dependency repositories used within prod
 
 #### wso2-axis2-transports
 
-Repository URL <https://github.com/wso2/wso2-axis2-transports>
+Repository URL <https://github.com/wso2/wso2-axis2-transports>  
 This repository contains additional transport implementations.
 Dependent repositories:wso2-syanspe
 
 #### wso2-commons-vfs
 
-Repository URL <https://github.com/wso2/wso2-commons-vfs>
+Repository URL <https://github.com/wso2/wso2-commons-vfs>  
 This contains the forked apache commons vfs library. Provides file processing capabilities to ESB
 Dependent repositories:wso2-syanspe
 
 #### wso2 synapse
 
-Repository URL <https://github.com/wso2/wso2-synapse>
+Repository URL <https://github.com/wso2/wso2-synapse>  
 Provides most of the ESB functionality to WSO2 Enterprise Service Bus
 Dependent repositories:carbon-mediation
 
 #### carbon-mediation
 
-Repository URL <https://github.com/wso2/carbon-mediation>
+Repository URL <https://github.com/wso2/carbon-mediation>  
 Implements more functionality on top of wso2-synapse
 Dependent repository:product-ei
 
 #### carbon-data
 
-Repository URL <https://github.com/wso2/carbon-data>
+Repository URL <https://github.com/wso2/carbon-data>    
 Provides data services functionality  
 Dependent repository:product-ei
 
@@ -94,13 +94,13 @@ Dependent repository:product-ei
 
 #### wso2-ode
 
-Repository URL <https://github.com/wso2/wso2-ode>
+Repository URL <https://github.com/wso2/wso2-ode>  
 Fork of apache ode project. Provides BPEL execution capability
 Dependent repository:carbon-business-process
 
 #### carbon-business-process
 
-Repository URL <https://github.com/wso2/carbon-business-process>
+Repository URL <https://github.com/wso2/carbon-business-process>  
 Comtains the modules implementing BPEL, BPMN and WS-Human Tasks capabilities for business-process profile
 Dependent repository:product-ei
 
@@ -108,25 +108,25 @@ Dependent repository:product-ei
 
 #### andes
 
-Repository URL <https://github.com/wso2/andes>
+Repository URL <https://github.com/wso2/andes>  
 Provides message brokering functionality
 Dependent repository:carbon-business-messaging
 
 #### carbon-messaging
 
-Repository URL <https://github.com/wso2/carbon-business-messaging/>
+Repository URL <https://github.com/wso2/carbon-business-messaging/>  
 Builds more capabilities on top of andes
 Dependent repository:product-ei
 
 ### Analytics profile
 
-Repository URL <https://github.com/wso2/carbon-analytics>
+Repository URL <https://github.com/wso2/carbon-analytics>  
 Includes the functionalities provided in wso2-analytics platform
 Dependent repositories:product-ei
 
 ### Microservices/MSF4J profile
 
-Repository URL <https://github.com/wso2/msf4j>
+Repository URL <https://github.com/wso2/msf4j>  
 Microservices implementation framework for java
 
 
