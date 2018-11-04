@@ -56,7 +56,7 @@ WSO2 Enterprise Integrator product respository has number of other repository de
 
 ### Dependency repositories
 
-You can use ``maven clean install`` command to build any of the below listed dependency repositories.
+Following is some of the most important dependency repositories used within product-ei. You can use ``maven clean install`` command to build any of the below listed dependency repositories.
 
 ### Integrator/ESB profile
 
@@ -82,6 +82,12 @@ Dependent repositories:carbon-mediation
 
 Repository URL <https://github.com/wso2/carbon-mediation>
 Implements more functionality on top of wso2-synapse
+Dependent repository:product-ei
+
+#### carbon-data
+
+Repository URL <https://github.com/wso2/carbon-data>
+Provides data services functionality  
 Dependent repository:product-ei
 
 ### Business Process profile
