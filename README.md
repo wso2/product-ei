@@ -52,42 +52,42 @@ For example, you need to download the certificate with thumbprint ***97817950D81
 
 ## Building Product EI with dependency repositories
 
-WSO2 Enterprise Integrator product respository has number of other repository dependencies. Hence if want to make a change to one of these repositories and get that changes included in the product ei, you will have to first make your changes to the dependency repository, build the dependency repository and then update that repository version within product ei or corresponding parent repositories. Following is a brief description of the dependency repositories used within WSO2 Enterprise Integrator.
+WSO2 Enterprise Integrator product respository has number of other repository dependencies. Hence if want to make a change to one of these repositories and get that changes included in the product ei, you will have to first make your changes to the dependency repository, build the dependency repository and then update that repository version within product ei or corresponding parent repositories. 
 
 ### Dependency repositories
 
-Following is some of the most important dependency repositories used within product-ei. You can use ``maven clean install`` command to build any of the below listed dependency repositories.
+Following are some of the important dependency repositories used within product-ei. You can use ``maven clean install`` command to build any of the below listed dependency repositories.
 
 ### Integrator/ESB profile
 
 #### wso2-axis2-transports
 
 Repository URL <https://github.com/wso2/wso2-axis2-transports>  
-This repository contains additional transport implementations.
-Dependent repositories:wso2-syanspe
+This repository contains additional transport implementations.  
+Dependent repository:wso2-syanspe
 
 #### wso2-commons-vfs
 
 Repository URL <https://github.com/wso2/wso2-commons-vfs>  
-This contains the forked apache commons vfs library. Provides file processing capabilities to ESB
-Dependent repositories:wso2-syanspe
+This contains the forked apache commons vfs library. Provides file processing capabilities to ESB.  
+Dependent repository:wso2-syanspe
 
 #### wso2 synapse
 
 Repository URL <https://github.com/wso2/wso2-synapse>  
-Provides most of the ESB functionality to WSO2 Enterprise Service Bus
-Dependent repositories:carbon-mediation
+Provides most of the ESB functionality to WSO2 Enterprise Service Bus.  
+Dependent repository:carbon-mediation
 
 #### carbon-mediation
 
 Repository URL <https://github.com/wso2/carbon-mediation>  
-Implements more functionality on top of wso2-synapse
+Implements more functionality on top of wso2-synapse.  
 Dependent repository:product-ei
 
 #### carbon-data
 
 Repository URL <https://github.com/wso2/carbon-data>    
-Provides data services functionality  
+Provides data services functionality.  
 Dependent repository:product-ei
 
 ### Business Process profile
@@ -95,13 +95,13 @@ Dependent repository:product-ei
 #### wso2-ode
 
 Repository URL <https://github.com/wso2/wso2-ode>  
-Fork of apache ode project. Provides BPEL execution capability
+Fork of apache ode project. Provides BPEL execution capability.  
 Dependent repository:carbon-business-process
 
 #### carbon-business-process
 
 Repository URL <https://github.com/wso2/carbon-business-process>  
-Comtains the modules implementing BPEL, BPMN and WS-Human Tasks capabilities for business-process profile
+Contains the modules implementing BPEL, BPMN and WS-Human Tasks capabilities for business-process profile.  
 Dependent repository:product-ei
 
 ### Message Broker profile
@@ -109,19 +109,19 @@ Dependent repository:product-ei
 #### andes
 
 Repository URL <https://github.com/wso2/andes>  
-Provides message brokering functionality
+Provides message brokering functionality.  
 Dependent repository:carbon-business-messaging
 
 #### carbon-messaging
 
 Repository URL <https://github.com/wso2/carbon-business-messaging/>  
-Builds more capabilities on top of andes
+Builds more capabilities on top of andes.  
 Dependent repository:product-ei
 
 ### Analytics profile
 
 Repository URL <https://github.com/wso2/carbon-analytics>  
-Includes the functionalities provided in wso2-analytics platform
+Includes the functionalities provided in wso2-analytics platform.  
 Dependent repositories:product-ei
 
 ### Microservices/MSF4J profile
