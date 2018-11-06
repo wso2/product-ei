@@ -425,6 +425,24 @@ cluster.config:
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
 
+# Authentication configuration
+auth.configs:
+  type: 'local'        # Type of the IdP client used
+  userManager:
+    adminRole: admin   # Admin role which is granted all permissions
+    userStore:         # User store
+      users:
+       -
+         user:
+           username: admin
+           password: YWRtaW4=
+           roles: 1
+      roles:
+       -
+         role:
+           id: 1
+           displayName: admin
+
   # Sample of deployment.config for Two node HA
 #deployment.config:
 #  type: ha
