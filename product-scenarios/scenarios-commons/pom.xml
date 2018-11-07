@@ -56,6 +56,7 @@
         <org.testng.version>6.1.1</org.testng.version>
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
+        <awaitility.version>3.1.2</awaitility.version>
     </properties>
 
 
@@ -115,6 +116,10 @@
             <groupId>org.wso2.ei</groupId>
             <artifactId>integration-test-utils</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -138,6 +143,11 @@
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>integration-test-utils</artifactId>
                 <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
