@@ -59,7 +59,8 @@
     </properties>
 
     <modules>
-        <!--<module>1.1-converting-soap-to-json</module>-->
+        <module>scenario_01-test-artifacts</module>
+        <module>1.1-converting-soap-to-json</module>
         <module>1.2-converting-json-to-soap</module>
     </modules>
 
@@ -101,6 +102,19 @@
             </releases>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <id>wso2-nexus</id>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

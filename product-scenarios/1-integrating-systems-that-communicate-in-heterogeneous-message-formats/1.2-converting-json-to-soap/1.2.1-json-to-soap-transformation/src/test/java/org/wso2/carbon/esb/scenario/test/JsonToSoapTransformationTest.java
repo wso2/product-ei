@@ -18,9 +18,7 @@ public class JsonToSoapTransformationTest extends ScenarioTestBase {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        //Deploy artifact
-        proxyName = addProxyService(esbUtils.loadResource("artifacts" + File.separator +
-                "ESB/synapse-configs/proxy-services/testProxy.xml"));
+
     }
 
     @Test(description = "1.3.1.1", enabled = true)
@@ -30,7 +28,5 @@ public class JsonToSoapTransformationTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup")
     public void cleanup() throws Exception {
-        //Cleanup artifacts
-        deleteProxyService(proxyName);
     }
 }

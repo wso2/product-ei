@@ -18,22 +18,23 @@
 
 package org.wso2.carbon.esb.scenario.test.common;
 
-import org.apache.axiom.om.OMElement;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
-import org.wso2.carbon.automation.engine.context.beans.ContextUrls;
-import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
+import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
+import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 
-import javax.xml.namespace.QName;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.Properties;
 
 public class ScenarioTestBase {
@@ -56,11 +57,9 @@ public class ScenarioTestBase {
     protected Properties infraProperties;
     protected String backendURL;
     protected String sessionCookie;
-    protected ESBTestCaseUtils esbUtils;
-    protected ContextUrls contextUrls = new ContextUrls();
 
-
-    private List<String> proxyServicesList = null;
+    protected CarbonAppUploaderClient carbonAppUploaderClient = null;
+    protected ApplicationAdminClient applicationAdminClient = null;
 
     /**
      * Initialize testcase
@@ -72,16 +71,11 @@ public class ScenarioTestBase {
         setKeyStoreProperties();
 
         backendURL = infraProperties.getProperty(CARBON_SERVER_URL) + "/";
-        //set back end admin service URL
-        contextUrls.setServiceUrl(backendURL);
-        contextUrls.setBackEndUrl(backendURL);
 
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
         sessionCookie = authenticatorClient.login("admin", "admin", getServerHost());
         log.info("The Backend service URL : " + backendURL + ". session cookie: " + sessionCookie);
-
-        esbUtils = new ESBTestCaseUtils();
     }
 
     /**
@@ -106,6 +100,34 @@ public class ScenarioTestBase {
         return props;
     }
 
+    /**
+     * Function to upload carbon application
+     *
+     * @param carFileName
+     * @return
+     * @throws RemoteException
+     */
+    public boolean deployCarbonApplication(String carFileName) throws Exception {
+
+        carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+        DataHandler dh = new DataHandler(new FileDataSource(new File(resourceLocation + File.separator + "artifacts" +
+                File.separator + carFileName + ".car")));
+        // Upload carbon application
+        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
+
+        applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+        // Wait for Capp to sync
+        // TODO fix properly
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            log.error("Error occurred while waiting");
+        }
+        Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
+
+        return true;
+    }
+
     private static void loadProperties(Path propsFile, Properties props) {
         String msg = "Deployment property file not found: ";
         if (!Files.exists(propsFile)) {
@@ -127,51 +149,6 @@ public class ScenarioTestBase {
     }
 
 
-    /**
-     * UTILITY FUNCTIONS
-     */
-
-    /**
-     * Function to add proxy
-     *
-     * @param proxyConfig
-     * @throws Exception
-     */
-    protected String addProxyService(OMElement proxyConfig) throws Exception {
-
-        String proxyName = proxyConfig.getAttributeValue(new QName("name"));
-        if (esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, proxyName)) {
-            esbUtils.deleteProxyService(contextUrls.getBackEndUrl(), sessionCookie, proxyName);
-        }
-        if (proxyServicesList == null) {
-            proxyServicesList = new ArrayList<String>();
-        }
-        proxyServicesList.add(proxyName);
-        esbUtils.addProxyService(contextUrls.getBackEndUrl(), sessionCookie, proxyConfig);
-
-        return proxyName;
-    }
-
-    /**
-     * Function to remove deployed proxy
-     *
-     * @param proxyServiceName
-     * @throws Exception
-     */
-    protected void deleteProxyService(String proxyServiceName) throws Exception {
-        if (esbUtils.isProxyServiceExist(contextUrls.getBackEndUrl(), sessionCookie, proxyServiceName)) {
-            esbUtils.deleteProxyService(contextUrls.getBackEndUrl(), sessionCookie, proxyServiceName);
-            Assert.assertTrue(esbUtils.isProxyUnDeployed(contextUrls.getBackEndUrl(), sessionCookie,
-                    proxyServiceName), "Proxy Deletion failed or time out");
-        }
-        if (proxyServicesList != null) {
-            proxyServicesList.remove(proxyServiceName);
-        }
-    }
-
-
-
-
 
     private String getServerHost() {
         String bucketLocation = System.getenv("DATA_BUCKET_LOCATION");
@@ -185,6 +162,33 @@ public class ScenarioTestBase {
         }
         log.info("Backend URL is set as : " + url);
         return url;
+    }
+
+    // TODO Fix this with awaitality
+    private boolean isCarFileDeployed(String carFileName) throws Exception {
+
+        log.info("waiting " + ARTIFACT_DEPLOYMENT_WAIT_TIME_MS + " millis for car deployment " + carFileName);
+        boolean isCarFileDeployed = false;
+        Calendar startTime = Calendar.getInstance();
+        long time;
+        while ((time = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())) <
+                ARTIFACT_DEPLOYMENT_WAIT_TIME_MS) {
+            String[] applicationList = applicationAdminClient.listAllApplications();
+            if (applicationList != null) {
+                if (ArrayUtils.contains(applicationList, carFileName)) {
+                    isCarFileDeployed = true;
+                    log.info("car file deployed in " + time + " mills");
+                    return isCarFileDeployed;
+                }
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                //ignore
+            }
+        }
+        return isCarFileDeployed;
     }
 
 }
