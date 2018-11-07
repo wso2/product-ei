@@ -7,6 +7,8 @@ DIR=$2
 export DATA_BUCKET_LOCATION=$DIR
 
 mvn clean install
+#mvn clean install -Dmaven.surefire.debug test
+#mvn clean install -Dmaven.repo.local=/Users/milindaperera/Downloads/TEMP/tempMVNRepo
 
 echo "Copying surefire-reports to data bucket"
 
