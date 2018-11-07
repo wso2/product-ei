@@ -43,6 +43,7 @@
                 <module>mediation-tests</module>
                 <module>business-process-tests</module>
                 <module>dataservice-hosting-tests</module>
+                <module>broker-tests</module>
             </modules>
         </profile>
         <profile>
@@ -81,6 +82,17 @@
                 <module>mediation-tests/tests-common/admin-clients</module>
                 <module>mediation-tests/tests-common/integration-test-utils</module>
                 <module>dataservice-hosting-tests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>broker-tests-profile</id>
+            <activation>
+                <property>
+                    <name>broker.integration.test.profile</name>
+                </property>
+            </activation>
+            <modules>
+                <module>broker-tests</module>
             </modules>
         </profile>
     </profiles>

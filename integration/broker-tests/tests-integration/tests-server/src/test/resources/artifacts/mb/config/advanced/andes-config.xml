@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+  ~ Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<broker>
+    <prefix>${ANDES_HOME}</prefix>
+    <work>${QPID_WORK}</work>
+    <conf>${prefix}</conf>
+
+    <plugin-directory>${ANDES_HOME}/lib/plugins</plugin-directory>
+    <cache-directory>${QPID_WORK}/cache</cache-directory>
+
+    <connector>
+        <!-- To enable SSL edit the keystorePath and keystorePassword
+	     and set enabled to true.
+             To disasble Non-SSL port set sslOnly to true -->
+        <ssl>
+            <enabled>true</enabled>
+            <sslOnly>false</sslOnly>
+            <keystorePath>repository/resources/security/wso2carbon.jks</keystorePath>
+            <keystorePassword>wso2carbon</keystorePassword>
+            <truststorePath>repository/resources/security/client-truststore.jks</truststorePath>
+            <truststorePassword>wso2carbon</truststorePassword>
+        </ssl>
+        <qpidnio>false</qpidnio>
+        <protectio>
+            <enabled>false</enabled>
+            <readBufferLimitSize>262144</readBufferLimitSize>
+            <writeBufferLimitSize>262144</writeBufferLimitSize>
+        </protectio>
+        <transport>nio</transport>
+        <port>5672</port>
+        <sslport>8672</sslport>
+        <socketReceiveBuffer>32768</socketReceiveBuffer>
+        <socketSendBuffer>32768</socketSendBuffer>
+    </connector>
+    <management>
+        <enabled>true</enabled>
+        <jmxport>8999</jmxport>
+        <ssl>
+            <enabled>false</enabled>
+            <!-- Update below path to your keystore location, or run the bin/create-example-ssl-stores(.sh|.bat)
+                 script from within the etc/ folder to generate an example store with self-signed cert -->
+            <keyStorePath>${conf}/qpid.keystore</keyStorePath>
+            <keyStorePassword>password</keyStorePassword>
+        </ssl>
+    </management>
+    <advanced>
+        <filterchain enableExecutorPool="true"/>
+        <enablePooledAllocator>false</enablePooledAllocator>
+        <enableDirectBuffers>false</enableDirectBuffers>
+        <framesize>65535</framesize>
+        <compressBufferOnQueue>false</compressBufferOnQueue>
+        <enableJMSXUserID>false</enableJMSXUserID>
+        <locale>en_US</locale>
+    </advanced>
+
+    <security>
+        <pd-auth-manager>
+            <principal-database>
+
+                <class>org.wso2.carbon.andes.authentication.andes.CarbonBasedPrincipalDatabase</class>
+                <!--attributes>
+                    <attribute>
+                        <name>name</name>
+                        <value>carbon-user-store</value>
+                    </attribute>
+                </attributes-->
+            </principal-database>
+        </pd-auth-manager>
+
+        <msg-auth>false</msg-auth>
+    </security>
+
+    <virtualhosts>${conf}/andes-virtualhosts.xml</virtualhosts>
+
+    <hector>
+        <!-- Set load balance mechanism for Hector client in MB. Accepted values as DynamicLoadBalancingPolicy,LeastActiveBalancingPolicy and RoundRobinBalancingPolicy -->
+        <loadBalancingPolicy>DynamicLoadBalancingPolicy</loadBalancingPolicy>
+        <maxWaitTimeWhenExhausted>4000</maxWaitTimeWhenExhausted>
+        <maxActive>4000</maxActive>
+        <useHostTimeoutTracker>true</useHostTimeoutTracker> <!-- default is false -->
+        <hostTimeoutCounter>10</hostTimeoutCounter>  <!-- default is 10-->
+        <hostTimeoutSuspensionDurationInSeconds>10</hostTimeoutSuspensionDurationInSeconds> <!--default is 10 -->
+    </hector>
+
+    <heartbeat>
+        <delay>0</delay>
+        <timeoutFactor>2.0</timeoutFactor>
+    </heartbeat>
+    <queue>
+        <auto_register>true</auto_register>
+        <!-- Enable this into 'true' will activate the queue message counters and message count of each queue
+             wil be displayed in the admin console by default. When this is 'false' message count can be read from
+             console on user demand-->
+        <viewMessageCounts>false</viewMessageCounts>
+    </queue>
+
+    <status-updates>ON</status-updates>
+    <clustering>
+
+        <enabled>true</enabled>
+        <!--To enable External Cassandra server ? true|false-->
+        <externalCassandraServerRequired>true</externalCassandraServerRequired>
+        <!--To enable External Zookeeper server ? true|false -->
+        <externalZookeeperServerRequired>false</externalZookeeperServerRequired>
+        <GlobalQueueCount>10</GlobalQueueCount>
+        <coordination>
+            <!-- Apache Zookeeper Address -->
+            <ZooKeeperConnection>127.0.0.1:2181</ZooKeeperConnection>
+            <!-- Format yyyy-MM-dd HH:mm:ss -->
+            <ReferenceTime>2012-02-29 08:08:08</ReferenceTime>
+        </coordination>
+        <tuning>
+            <messageBatchSizes>
+                <!-- message delivery from server to the client will be paused temporarily if number of delivered but unacknowledged message count reaches this size.
+                Should be set considering message consume rate-->
+                <maxNumberOfUnackedMessages>1000</maxNumberOfUnackedMessages>
+
+                <!-- Maximum number of undelivered messages that can have in memory. Increasing this value
+                increase the possibility of out of memory scenario but performance will be improved-->
+                <maxNumberOfReadButUndeliveredMessages>1000</maxNumberOfReadButUndeliveredMessages>
+
+                <!--Message Batch size moved to  Subscriber queues from the Global Queue at once. Increasing this values
+                increase the chance of breaking in order delivery guarantee but performance will be improved-->
+                <messageBatchSizeForSubscribersQueues>20</messageBatchSizeForSubscribersQueues>
+
+                <!--Message Batch size Taken in to memory for a one time to deliver to subscribers -->
+                <messageBatchSizeForSubscribers>
+                    <!--initially this value will be taken as the batch size of messages to read into memory. This should be a value between man and min values below-->
+                    <default>50</default>
+                    <!--dynamically broker will increase batch size upto this value if there are many messages. Consider size of a message when increasing-->
+                    <max>300</max>
+                    <!--broker will try to read at least this number of messages into memory-->
+                    <min>20</min>
+                </messageBatchSizeForSubscribers>
+
+                <!--Maximum number of message taken it to memory when transering from interal queues to subscriber queues.
+                We need to increase the memory allocation from the broker if we are to increase this.Increasing this will increase the consumer throughout-->
+                <globalQueueWorkerMessageBatchSize>700</globalQueueWorkerMessageBatchSize>
+
+                <!--Max number of Messages chunks to buffer before message contents are written to the cassandra -->
+                <contentPublisherMessageBatchSize>200</contentPublisherMessageBatchSize>
+
+                <!--Max number of Messages meta data to buffer before message Meta data are written to the cassandra -->
+                <medataDatePublisherMessageBatchSize>200</medataDatePublisherMessageBatchSize>
+
+                <!--Maximumu number of messages to be fetched using andes message browser when browsing queues-->
+                <messageBatchSizeForBrowserSubscriptions>200</messageBatchSizeForBrowserSubscriptions>
+
+            </messageBatchSizes>
+            <threading>
+                <!-- This the the Thread pool size which will be used by the Sender Task to send messages asynchronously
+                to the subscriber.  You will have to consider the value of parameter messageBatchSizeForSubscribers
+                when configuring this pool size -->
+                <flusherPoolSize>10</flusherPoolSize>
+
+                <!-- This is the Thread pool size which will be used by the internal Queue copy Task to move messages to from Global Queue to
+                Node queue in Cassandra tables. Make this to a higher number if there are lots of subscriptions to the system at a given time.
+	            -->
+                <internalSequentialThreadPoolSize>5</internalSequentialThreadPoolSize>
+
+                <!-- This is the Thread pool size which will be used by the Andes core to schedule its internal parallel tasks -->
+                <andesInternalParallelThreadPoolSize>50</andesInternalParallelThreadPoolSize>
+
+                <!-- This is the Thread pool size which will be used by the queue delivery workers.
+                 Make this to a higher number if there are lots of unique queues to the system at a given time. -->
+                <publisherPoolSize>50</publisherPoolSize>
+            </threading>
+            <waitTimes>
+                <!-- Time (in miliseconds) to wait until older messages in queues start being delivered-->
+                <queueMsgDeliveryCurserResetTimeInterval>60000</queueMsgDeliveryCurserResetTimeInterval>
+
+                <!-- Max wait time(in seconds)  for a acknowledgement for Batch of messages that that is sent from
+                subscribers -->
+                <maxAckWaitTimeForBatch>120</maxAckWaitTimeForBatch>
+
+                <!--Running interval for queue worker in milliseconds -->
+                <queueWorkerInterval>500</queueWorkerInterval>
+
+                <!-- PubSub message removal Task interval. This is the time interval that the messages
+                in PubSub scenarios will be removed -->
+                <pubSubMessageRemovalTaskInterval>5000</pubSubMessageRemovalTaskInterval>
+
+                <!-- This is the Task interval(milli seconds) for the content removal task which will remove
+                    the actual message content from the store in the background. If the message rate is very high users
+                    can set this to a lower value -->
+                <contentRemovalTaskInterval>4000</contentRemovalTaskInterval>
+
+                <!--Time to wait before removing a message from the store in PubSub implementation (in milliseconds)-->
+                <contentRemovalTimeDifference>600000</contentRemovalTimeDifference>
+
+                <!-- The Running interval for Topic Publisher Task  -->
+                <topicPublisherTaskInterval>1000</topicPublisherTaskInterval>
+
+                <!-- Virtual host sync interval seconds in for the Virtual host syncing Task which will sync the
+                Virtual host details across the cluster -->
+                <virtualHostSyncTaskInterval>3600</virtualHostSyncTaskInterval>
+            </waitTimes>
+            <!--Broker will drop the message after the configured number of delivery attempts for each message.-->
+            <maximumNumberOfMessageDeliveryAttempts>10</maximumNumberOfMessageDeliveryAttempts>
+            <flowControl>
+                <memoryBased>
+                    <memoryCheckInterval>20000</memoryCheckInterval>
+                    <globalMemoryThresholdRatio>0.4</globalMemoryThresholdRatio>
+                    <globalMemoryRecoveryThresholdRatio>0.5</globalMemoryRecoveryThresholdRatio>
+                </memoryBased>
+                <connectionBased>
+                    <perConnectionMessageThreshold>1000</perConnectionMessageThreshold>
+                </connectionBased>
+            </flowControl>
+        </tuning>
+
+    </clustering>
+
+</broker>
+
