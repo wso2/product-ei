@@ -21,7 +21,7 @@ package org.wso2.carbon.esb.scenario.test.common;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.testng.Assert;
+import org.awaitility.Awaitility;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 
@@ -34,8 +34,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
-import java.util.Calendar;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class ScenarioTestBase {
 
@@ -107,25 +108,23 @@ public class ScenarioTestBase {
      * @return
      * @throws RemoteException
      */
-    public boolean deployCarbonApplication(String carFileName) throws Exception {
+    public void deployCarbonApplication(String carFileName) throws RemoteException {
+
+        String cappFilePath = resourceLocation + File.separator + "artifacts" +
+                File.separator + carFileName + ".car";
 
         carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
-        DataHandler dh = new DataHandler(new FileDataSource(new File(resourceLocation + File.separator + "artifacts" +
-                File.separator + carFileName + ".car")));
+        DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
         // Upload carbon application
         carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
 
         applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
-        // Wait for Capp to sync
-        // TODO fix properly
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
-            log.error("Error occurred while waiting");
-        }
-        Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
 
-        return true;
+        // Wait for Capp to sync
+        Awaitility.await()
+                .pollInterval(500, TimeUnit.MILLISECONDS)
+                .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                .until(isCAppDeployed(applicationAdminClient, carFileName));
     }
 
     private static void loadProperties(Path propsFile, Properties props) {
@@ -164,31 +163,21 @@ public class ScenarioTestBase {
         return url;
     }
 
-    // TODO Fix this with awaitality
-    private boolean isCarFileDeployed(String carFileName) throws Exception {
 
-        log.info("waiting " + ARTIFACT_DEPLOYMENT_WAIT_TIME_MS + " millis for car deployment " + carFileName);
-        boolean isCarFileDeployed = false;
-        Calendar startTime = Calendar.getInstance();
-        long time;
-        while ((time = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())) <
-                ARTIFACT_DEPLOYMENT_WAIT_TIME_MS) {
-            String[] applicationList = applicationAdminClient.listAllApplications();
-            if (applicationList != null) {
-                if (ArrayUtils.contains(applicationList, carFileName)) {
-                    isCarFileDeployed = true;
-                    log.info("car file deployed in " + time + " mills");
-                    return isCarFileDeployed;
+    private Callable <Boolean> isCAppDeployed(final ApplicationAdminClient applicationAdminClient, final String cAppName) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                String[] applicationList = applicationAdminClient.listAllApplications();
+                if (applicationList != null) {
+                    if (ArrayUtils.contains(applicationList, cAppName)) {
+                        log.info("Carbon Application : " + cAppName + " Successfully deployed");
+                        return true;
+                    }
                 }
+                return false;
             }
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                //ignore
-            }
-        }
-        return isCarFileDeployed;
+        };
     }
 
 }
