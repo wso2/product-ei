@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
@@ -17,7 +17,9 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.wso2.ei</groupId>
@@ -26,13 +28,15 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>soap-to-json-tests</artifactId>
-    <name>Converting SOAP to JSON</name>
+    <artifactId>scenario_01-test-artifacts</artifactId>
+    <name>Scenario 01 artifacts</name>
     <packaging>pom</packaging>
+    <url>http://wso2.org</url>
+
 
     <modules>
-        <module>1.1.1-soap-to-json-using-payloadfactory-mediator</module>
+        <module>scenario_01-synapse-config</module>
+        <module>scenario_01-synapse-compositeApplication</module>
     </modules>
 
 </project>

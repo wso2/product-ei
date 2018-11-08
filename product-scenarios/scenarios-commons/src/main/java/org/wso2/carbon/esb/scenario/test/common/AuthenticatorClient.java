@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb.endpoint.test;
+package org.wso2.carbon.esb.scenario.test.common;
 
 import org.apache.axis2.client.Stub;
 import org.apache.axis2.context.ServiceContext;

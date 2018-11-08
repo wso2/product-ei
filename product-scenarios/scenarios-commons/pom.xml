@@ -20,9 +20,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>heterogeneous-message-formats-tests</artifactId>
-    <packaging>pom</packaging>
-    <name>Integrating Systems that Communicate in Heterogeneous Message Formats</name>
+    <artifactId>scenarios-commons</artifactId>
+    <packaging>jar</packaging>
+    <name>Integration test scenarios commons</name>
     <url>http://wso2.org</url>
     <groupId>org.wso2.ei</groupId>
     <version>6.4.0</version>
@@ -56,13 +56,9 @@
         <org.testng.version>6.1.1</org.testng.version>
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
+        <awaitility.version>3.1.2</awaitility.version>
     </properties>
 
-    <modules>
-        <module>scenario_01-test-artifacts</module>
-        <module>1.1-converting-soap-to-json</module>
-        <module>1.2-converting-json-to-soap</module>
-    </modules>
 
     <repositories>
         <!-- WSO2 released artifact repository -->
@@ -102,19 +98,29 @@
             </releases>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-            <id>wso2-nexus</id>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
+    <dependencies>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.automationutils</groupId>
+            <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>integration-test-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+        </dependency>
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -123,30 +129,9 @@
                 <version>${commons.logging.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.axis2</groupId>
-                <artifactId>axis2</artifactId>
-                <version>1.6.2</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.axis2</groupId>
-                <artifactId>axis2-kernel</artifactId>
-                <version>1.6.1-wso2v20</version>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
                 <version>${carbon.kernel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.mediation</groupId>
-                <artifactId>org.wso2.carbon.task</artifactId>
-                <version>${carbon.mediation.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${org.testng.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.automationutils</groupId>
@@ -156,8 +141,13 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
-                <artifactId>scenarios-commons</artifactId>
+                <artifactId>integration-test-utils</artifactId>
                 <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
