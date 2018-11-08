@@ -38,8 +38,8 @@
         <module>tests-common/integration-tests-utils</module>
         <module>tests-common/platform-tests-utils</module>
         <module>tests-integration</module>
-        <module>tests-ui-integration</module>
-        <module>tests-platform</module>
+        <!--<module>tests-ui-integration</module>-->
+        <!--<module>tests-platform</module>-->
     </modules>
 
     <dependencies>
@@ -66,6 +66,10 @@
         <dependency>
             <groupId>org.wso2.carbon.messaging</groupId>
             <artifactId>org.wso2.carbon.andes.stub</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.automationutils</groupId>
+            <artifactId>org.wso2.carbon.integration.common.extensions</artifactId>
         </dependency>
     </dependencies>
 

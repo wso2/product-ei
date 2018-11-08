@@ -92,6 +92,7 @@
                 </property>
             </activation>
             <modules>
+                <module>automation-extensions</module>
                 <module>broker-tests</module>
             </modules>
         </profile>

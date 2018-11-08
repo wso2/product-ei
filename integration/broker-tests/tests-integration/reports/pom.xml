@@ -57,7 +57,7 @@
                             <arguments>
                                 <argument>-Dbasedir=${basedir}</argument>
                                 <argument>
-                                    -Dcarbon.zip=${basedir}/../../../distribution/target/wso2mb-${project.version}.zip
+                                    -Dcarbon.zip=${basedir}/../../../../distribution/target/wso2ei-${product.ei.version}.zip
                                 </argument>
                                 <argument>-Dinstr.file=${basedir}/src/main/resources/instrumentation.txt</argument>
                                 <argument>-Dfilters.file=${basedir}/src/main/resources/filters.txt</argument>
@@ -100,7 +100,7 @@
                             <arguments>
                                 <argument>-Dbasedir=${basedir}</argument>
                                 <argument>
-                                    -Dcarbon.zip=${basedir}/../../../distribution/target/wso2mb-${project.version}.zip
+                                    -Dcarbon.zip=${basedir}/../../../../distribution/target/wso2ei-${product.ei.version}.zip
                                 </argument>
                                 <argument>-Dinstr.file=${basedir}/src/main/resources/instrumentation.txt</argument>
                                 <argument>-Dfilters.file=${basedir}/src/main/resources/filters.txt</argument>

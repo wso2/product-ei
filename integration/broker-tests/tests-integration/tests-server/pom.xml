@@ -35,7 +35,7 @@
                         <property>
                             <name>carbon.zip</name>
                             <value>
-                                ${basedir}/../../../distribution/target/wso2mb-${product.mb.version}.zip
+                                ${basedir}/../../../../distribution/target/wso2ei-${project.version}.zip
                             </value>
                         </property>
                         <property>
@@ -95,9 +95,9 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.wso2.mb</groupId>
-                                    <artifactId>wso2mb</artifactId>
-                                    <version>${product.mb.version}</version>
+                                    <groupId>org.wso2.ei</groupId>
+                                    <artifactId>wso2ei</artifactId>
+                                    <version>${product.ei.version}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${basedir}/target/tobeCopied/</outputDirectory>
@@ -154,7 +154,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2mb-${product.mb.version}/repository/resources/security/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/repository/resources/security/
                                     </directory>
                                     <includes>
                                         <include>**/*.jks</include>
@@ -175,7 +175,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2mb-${product.mb.version}/repository/conf/axis2/
+                                        ${basedir}/target/tobeCopied/wso2ei-${product.ei.version}/wso2/broker/conf/axis2/
                                     </directory>
                                     <includes>
                                         <include>**/*.xml</include>
@@ -196,7 +196,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${basedir}/target/tobeCopied/wso2mb-${product.mb.version}/repository/deployment/client/modules
+                                        ${basedir}/target/tobeCopied/wso2ei-${project.version}/wso2/broker/repository/deployment/client/modules
                                     </directory>
                                     <includes>
                                         <include>**/*.mar</include>
@@ -236,12 +236,12 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.wso2.mb</groupId>
-            <artifactId>org.wso2.mb.integration.common.utils</artifactId>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.mb.integration.common.utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.mb</groupId>
-            <artifactId>org.wso2.mb.integration.common.clients</artifactId>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.mb.integration.common.clients</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.automationutils</groupId>
@@ -286,6 +286,10 @@
         <dependency>
             <groupId>org.wso2.carbon.metrics</groupId>
             <artifactId>org.wso2.carbon.metrics.impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>automation-extensions</artifactId>
         </dependency>
     </dependencies>
 </project>

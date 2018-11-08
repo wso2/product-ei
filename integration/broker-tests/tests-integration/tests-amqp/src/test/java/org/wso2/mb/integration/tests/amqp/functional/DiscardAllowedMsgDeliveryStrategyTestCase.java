@@ -19,7 +19,7 @@
 package org.wso2.mb.integration.tests.amqp.functional;
 
 import org.apache.commons.configuration.ConfigurationException;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

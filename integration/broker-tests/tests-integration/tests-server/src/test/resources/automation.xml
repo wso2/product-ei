@@ -190,16 +190,18 @@
         <!--<className>org.wso2.carbon.automation.extentions.servers.wso2server.Wso2ServerExtention</className>-->
         <platformExecutionManager>
             <extentionClasses>
-	<class>
-		<name>org.wso2.carbon.automation.extensions.servers.carbonserver.CarbonServerExtension</name>
-		<parameter name="-DportOffset" value="1300" />
-		<!--<parameter name="cmdArg" value="debug 5005" />-->
-	</class>
-	<class>
-		<name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>
-		<!--<parameter name="-DportOffset" value="0" />-->
-		<!--<parameter name="cmdArg" value="debug 5005" />-->
-	</class>
+                <class>
+                    <!--<name>org.wso2.esb.integration.common.extensions.carbonserver.CarbonServerExtension</name>-->
+                    <name>org.wso2.esb.integration.common.extensions.carbonserver.CarbonServerExtension</name>
+                    <parameter name="-DportOffset" value="1300" />
+                    <parameter name="runtimePath" value="wso2/broker/bin"/>
+                    <parameter name="startupScript" value="wso2server" />
+                </class>
+                <class>
+                    <name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>
+                    <!--<parameter name="-DportOffset" value="0" />-->
+                    <!--<parameter name="cmdArg" value="debug 5005" />-->
+                </class>
             </extentionClasses>
         </platformExecutionManager>
 

@@ -20,8 +20,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.wso2.mb</groupId>
-            <artifactId>org.wso2.mb.integration.common.clients</artifactId>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>org.wso2.ei.mb.integration.common.clients</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

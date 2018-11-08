@@ -1390,11 +1390,6 @@
                 <version>${org.apache.commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.mb</groupId>
-                <artifactId>org.wso2.mb.integration.common.clients</artifactId>
-                <version>${product.mb.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-jxpath</groupId>
                 <artifactId>commons-jxpath</artifactId>
                 <version>${apache.commons.jxpath.version}</version>
@@ -1417,11 +1412,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.wso2.mb</groupId>
-                <artifactId>org.wso2.mb.integration.common.utils</artifactId>
-                <version>${product.mb.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.carbon.metrics</groupId>
                 <artifactId>org.wso2.carbon.metrics.view.ui</artifactId>
                 <version>${carbon.metrics.version}</version>
@@ -1442,9 +1432,19 @@
                 <version>${carbon.metrics.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.mb</groupId>
-                <artifactId>org.wso2.mb.platform.common.utils</artifactId>
-                <version>${product.mb.version}</version>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.integration.common.utils</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.integration.common.clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.platform.common.utils</artifactId>
+                <version>${product.ei.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
