@@ -63,7 +63,7 @@ public class SingleTopicPublishSubscribeTestCase extends MBIntegrationBaseTest {
     }
 
     /**
-     * 1. Creates a topic name "hasith".
+     * 1. Creates a topic name "hasitha".
      * 2. Subscriber subscribes to "hasitha" topic.
      * 3. Publisher publishes messages to "hasitha" topic.
      *

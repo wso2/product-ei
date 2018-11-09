@@ -96,7 +96,8 @@ public class DLCMessageExpiryTestCase extends MBIntegrationBaseTest {
             URISyntaxException, AutomationUtilException {
         super.serverManager = new ServerConfigurationManager(automationContext);
         String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() +
-                File.separator + "repository" + File.separator + "conf" + File.separator + "broker.xml";
+                                            File.separator + "wso2" + File.separator + "broker" + File.separator +
+                                            "conf" + File.separator + "broker.xml";
         ConfigurationEditor configurationEditor = new ConfigurationEditor(defaultMBConfigurationPath);
         configurationEditor.updateProperty(AndesConfiguration.PERFORMANCE_TUNING_PRE_DELIVERY_EXPIRY_DELETION_INTERVAL,
                 "60");

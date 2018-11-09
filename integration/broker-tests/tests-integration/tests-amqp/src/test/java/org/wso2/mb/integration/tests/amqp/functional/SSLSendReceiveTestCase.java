@@ -35,6 +35,7 @@ import org.wso2.mb.integration.common.utils.backend.MBIntegrationBaseTest;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
 import javax.xml.xpath.XPathExpressionException;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -81,9 +82,9 @@ public class SSLSendReceiveTestCase extends MBIntegrationBaseTest {
                    AndesClientException, XPathExpressionException {
         // Creating ssl connection string elements
         // The following keystore path and truststore path should be as follows regardless the OS(platform).
-        String keyStorePath = System.getProperty("carbon.home").replace("\\", "/") + "/repository/resources/security/" +
+        String keyStorePath = System.getProperty("carbon.home").replace("\\", "/") + "/wso2/broker/repository/resources/security/" +
                               "wso2carbon.jks";
-        String trustStorePath = System.getProperty("carbon.home").replace("\\", "/") + "/repository/resources/" +
+        String trustStorePath = System.getProperty("carbon.home").replace("\\", "/") + "/wso2/broker/repository/resources/" +
                                 "security/client-truststore.jks";
         String keyStorePassword = "wso2carbon";
         String trustStorePassword = "wso2carbon";
@@ -145,8 +146,8 @@ public class SSLSendReceiveTestCase extends MBIntegrationBaseTest {
             AndesClientException, XPathExpressionException {
         // Creating ssl connection string elements
         // The following truststore path should be as follows regardless the OS(platform).
-        String trustStorePath = System.getProperty("carbon.home").replace("\\", "/") + "/repository/resources/" +
-                                "security/client-truststore.jks";
+        String trustStorePath = System.getProperty("carbon.home").replace("\\", "/") +
+                                "/wso2/broker/repository/resources/" + "security/client-truststore.jks";
         String trustStorePassword = "wso2carbon";
 
         // Creating a consumer client configuration

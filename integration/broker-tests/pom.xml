@@ -38,7 +38,7 @@
         <module>tests-common/integration-tests-utils</module>
         <module>tests-common/platform-tests-utils</module>
         <module>tests-integration</module>
-        <!--<module>tests-ui-integration</module>-->
+        <module>tests-ui-integration</module>
         <!--<module>tests-platform</module>-->
     </modules>
 

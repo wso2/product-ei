@@ -89,8 +89,9 @@ public class LZ4CompressionTestCase extends MBIntegrationBaseTest {
             AutomationUtilException {
 
         super.serverManager = new ServerConfigurationManager(automationContext);
-        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() +
-                File.separator + "repository" + File.separator + "conf" + File.separator + "broker.xml";
+        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "wso2" +
+                                            File.separator + "broker" + File.separator + "conf" + File.separator +
+                                            "broker.xml";
 
         ConfigurationEditor configurationEditor = new ConfigurationEditor(defaultMBConfigurationPath);
 

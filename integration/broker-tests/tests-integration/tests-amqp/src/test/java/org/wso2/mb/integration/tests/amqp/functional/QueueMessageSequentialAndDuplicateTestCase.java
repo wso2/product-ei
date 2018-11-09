@@ -61,7 +61,7 @@ public class QueueMessageSequentialAndDuplicateTestCase extends MBIntegrationBas
      * 2. Check if messages were received in order
      * 3. Check if there are any duplicates
      *
-      * @throws AndesClientConfigurationException
+     * @throws AndesClientConfigurationException
      * @throws JMSException
      * @throws NamingException
      * @throws IOException

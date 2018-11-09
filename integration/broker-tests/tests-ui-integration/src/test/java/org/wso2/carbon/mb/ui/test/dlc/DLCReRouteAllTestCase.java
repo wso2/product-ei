@@ -94,12 +94,12 @@ public class DLCReRouteAllTestCase extends MBIntegrationUiBaseTest {
         super.init();
 
         super.serverManager = new ServerConfigurationManager(mbServer);
-        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "repository" +
-                                            File.separator + "conf" + File.separator + "broker.xml";
+        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "wso2" +
+                                            File.separator + "broker" + File.separator + "conf" + File.separator +
+                                            "broker.xml";
         ConfigurationEditor configurationEditor = new ConfigurationEditor(defaultMBConfigurationPath);
         // Changing "maximumRedeliveryAttempts" value to "2" in broker.xml
         configurationEditor.updateProperty(AndesConfiguration.TRANSPORTS_AMQP_MAXIMUM_REDELIVERY_ATTEMPTS, "1");
-        configurationEditor.updateProperty(AndesConfiguration.MANAGEMENT_CONSOLE_ALLOW_REREOUTE_ALL_IN_DLC, "true");
         // Restarting server
         configurationEditor.applyUpdatedConfigurationAndRestartServer(serverManager);
     }

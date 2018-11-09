@@ -84,8 +84,9 @@ public class RedeliveryDelayTestCase extends MBIntegrationBaseTest {
 
         // Updating the redelivery attempts to 1 to speed up the test case.
         super.serverManager = new ServerConfigurationManager(automationContext);
-        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "repository" +
-                                            File.separator + "conf" + File.separator + "broker.xml";
+        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "wso2" +
+                                            File.separator + "broker" + File.separator + "conf" + File.separator +
+                                            "broker.xml";
         ConfigurationEditor configurationEditor = new ConfigurationEditor(defaultMBConfigurationPath);
 
         // Changing "maximumRedeliveryAttempts" value to "1" in broker.xml

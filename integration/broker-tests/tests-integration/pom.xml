@@ -15,9 +15,9 @@
 
     <modules>
         <module>tests-amqp</module>
-        <!--<module>tests-server</module>-->
+        <module>tests-server</module>
+        <module>tests-patches</module>
         <!--<module>reports</module>-->
-        <!--<module>tests-patches</module>-->
     </modules>
 
 </project>

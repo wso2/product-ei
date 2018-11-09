@@ -72,8 +72,9 @@ public class DurableTopicSubscriptionWithSameClientIdTestCase extends MBIntegrat
         super.serverManager.applyConfiguration(new File(FrameworkPathUtil.getSystemResourceLocation() + File.separator +
                 "artifacts" + File.separator + "mb" + File.separator + "config" + File.separator +
                 "allowSharedTopicSubscriptionsConfig" + File.separator + "broker.xml"),
-                new File(ServerConfigurationManager.getCarbonHome() + File.separator + "repository" + File.separator +
-                                                                "conf" + File.separator + "broker.xml"), true, true);
+                new File(ServerConfigurationManager.getCarbonHome() + File.separator + "wso2" +
+                         File.separator + "broker" + File.separator + "conf" + File.separator + "broker.xml"),
+                                               true, true);
 
     }
 

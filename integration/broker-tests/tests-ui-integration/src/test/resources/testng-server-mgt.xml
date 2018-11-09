@@ -50,7 +50,6 @@
             <class name="org.wso2.carbon.mb.ui.test.permissions.TopicPermissionTestCase"/>
             <class name="org.wso2.carbon.mb.ui.test.queues.QueueDeleteWithSubscriber"/>
             <class name="org.wso2.carbon.mb.ui.test.topic.SharedDurableSubscriptionTestCase"/>
-            <class name="org.wso2.carbon.mb.ui.test.topic.TopicTenantTestCase"/>
             <class name="org.wso2.carbon.mb.ui.test.subscriptions.SubscriptionSearchTestCase"/>
         </classes>
     </test>
