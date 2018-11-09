@@ -56,6 +56,8 @@
         <org.testng.version>6.1.1</org.testng.version>
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
+        <org.json.version>20080701</org.json.version>
+        <net.sf.flexjson.version>2.1</net.sf.flexjson.version>
     </properties>
 
     <modules>
@@ -158,6 +160,16 @@
                 <groupId>org.wso2.ei</groupId>
                 <artifactId>scenarios-commons</artifactId>
                 <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${org.json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.flexjson</groupId>
+                <artifactId>flexjson</artifactId>
+                <version>${net.sf.flexjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

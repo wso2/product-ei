@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>1.1-converting-soap-to-json</artifactId>
         <version>6.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>1.1.1-convert-using-payload-factory-mediator</artifactId>
-    <name>SOAP to JSON Using Payload Factory Mediator</name>
+    <artifactId>1.1.2-convert-using-messagetype-property</artifactId>
+    <version>6.4.0</version>
+
     <packaging>jar</packaging>
+
     <build>
         <plugins>
             <plugin>
@@ -26,6 +31,12 @@
                     <systemProperties>
                         <property>
                             <name>test.resources.dir</name>
+                            <value>
+                                ${basedir}/src/test/resources/
+                            </value>
+                        </property>
+                        <property>
+                            <name>framework.resource.location</name>
                             <value>
                                 ${basedir}/src/test/resources/
                             </value>
@@ -128,11 +139,6 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.ei</groupId>
-            <artifactId>service-samples</artifactId>
-            <version>6.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.ei</groupId>
             <artifactId>automation-extensions</artifactId>
             <version>6.4.0</version>
         </dependency>
@@ -147,31 +153,31 @@
             <artifactId>commons-logging</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-kernel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.mediation</groupId>
-            <artifactId>org.wso2.carbon.task</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.automationutils</groupId>
-            <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
-            <scope>compile</scope>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>scenarios-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>scenarios-commons</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.flexjson</groupId>
+            <artifactId>flexjson</artifactId>
         </dependency>
     </dependencies>
-
 </project>
