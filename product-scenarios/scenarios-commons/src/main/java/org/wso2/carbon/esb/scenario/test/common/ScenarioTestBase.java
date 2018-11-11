@@ -22,18 +22,31 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
+import org.w3c.dom.Document;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
+import org.xml.sax.SAXException;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +70,7 @@ public class ScenarioTestBase {
 
     protected Properties infraProperties;
     protected String backendURL;
+    protected String esbHttpUrl;
     protected String sessionCookie;
 
     protected CarbonAppUploaderClient carbonAppUploaderClient = null;
@@ -180,4 +194,33 @@ public class ScenarioTestBase {
         };
     }
 
+    protected String getStringFromDocument(Document doc) throws TransformerException {
+        DOMSource domSource = new DOMSource(doc);
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.transform(domSource, result);
+        return writer.toString();
+    }
+
+    protected List<String> getListOfFiles(File filePath){
+        File[] listOfFiles = filePath.listFiles();
+        List<String> fileNames = new ArrayList<>();
+
+        for (File file:listOfFiles) {
+            if (file.isFile()) {
+                fileNames.add(file.getName());
+            }
+        }
+        return fileNames;
+    }
+
+    protected String getXmlContent (File folderName) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(folderName);
+        String fileContent = getStringFromDocument(doc);
+        return fileContent;
+    }
 }
