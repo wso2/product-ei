@@ -18,11 +18,11 @@
 
 package org.wso2.carbon.esb.scenario.test.common;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
 import org.w3c.dom.Document;
+import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.xml.sax.SAXException;
@@ -65,13 +65,22 @@ public class ScenarioTestBase {
     public static final String ESB_HTTP_URL = "ESBHttpUrl";
     public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
 
+    /*
+     *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
+     *  If true, test case will deploy the CApp
+     *  If false, infra will take care CApp deployment
+     */
+    public static final String STANDALONE_DEPLOYMENT = "StandaloneDeployment";
+
     protected static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
     protected static final String resourceLocation = System.getProperty("test.resources.dir");
 
     protected Properties infraProperties;
     protected String backendURL;
-    protected String esbHttpUrl;
+    protected String serviceURL;
+    protected String securedServiceURL;
     protected String sessionCookie;
+    protected boolean standaloneMode;
 
     protected CarbonAppUploaderClient carbonAppUploaderClient = null;
     protected ApplicationAdminClient applicationAdminClient = null;
@@ -83,14 +92,25 @@ public class ScenarioTestBase {
      */
     public void init() throws Exception {
         infraProperties = getDeploymentProperties();
-        setKeyStoreProperties();
 
-        backendURL = infraProperties.getProperty(CARBON_SERVER_URL) + "/";
+        backendURL = infraProperties.getProperty(CARBON_SERVER_URL) +
+                (infraProperties.getProperty(CARBON_SERVER_URL).endsWith("/") ? "" : "/");
+        serviceURL = infraProperties.getProperty(ESB_HTTP_URL) +
+                (infraProperties.getProperty(ESB_HTTP_URL).endsWith("/") ? "" : "/");
+        securedServiceURL = infraProperties.getProperty(ESB_HTTPS_URL) +
+                (infraProperties.getProperty(ESB_HTTPS_URL).endsWith("/") ? "" : "/");
+
+        standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
+
+        setKeyStoreProperties();
 
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
         sessionCookie = authenticatorClient.login("admin", "admin", getServerHost());
+
+        log.info("Service URL: " + serviceURL + " | Secured Service URL: " + securedServiceURL);
         log.info("The Backend service URL : " + backendURL + ". session cookie: " + sessionCookie);
+
     }
 
     /**
@@ -115,6 +135,23 @@ public class ScenarioTestBase {
         return props;
     }
 
+
+    public String getApiInvocationURLHttp(String resourcePath) {
+        return serviceURL + (resourcePath.startsWith("/") ? "" : "/") + resourcePath;
+    }
+
+    public String getApiInvocationURLHttps(String resourcePath) {
+        return securedServiceURL + (resourcePath.startsWith("/") ? "" : "/") + resourcePath;
+    }
+
+    protected String getProxyServiceURLHttp(String proxyServiceName) {
+        return serviceURL + "services" + (proxyServiceName.startsWith("/") ? "" : "/") + proxyServiceName;
+    }
+
+    protected String getProxyServiceURLHttps(String proxyServiceName) {
+        return securedServiceURL + "services" + (proxyServiceName.startsWith("/") ? "" : "/") + proxyServiceName;
+    }
+
     /**
      * Function to upload carbon application
      *
@@ -124,21 +161,43 @@ public class ScenarioTestBase {
      */
     public void deployCarbonApplication(String carFileName) throws RemoteException {
 
-        String cappFilePath = resourceLocation + File.separator + "artifacts" +
-                File.separator + carFileName + ".car";
+        if (standaloneMode) {
+            // If standalone mode, deploy the CAPP to the server
+            String cappFilePath = resourceLocation + File.separator + "artifacts" +
+                    File.separator + carFileName + ".car";
 
-        carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
-        DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
-        // Upload carbon application
-        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
+            carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
+            // Upload carbon application
+            carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
 
-        applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
 
-        // Wait for Capp to sync
+            // Wait for Capp to sync
+            log.info("Waiting for Carbon Application deployment ..");
+            Awaitility.await()
+                    .pollInterval(500, TimeUnit.MILLISECONDS)
+                    .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                    .until(isCAppDeployed(applicationAdminClient, carFileName));
+        }
+    }
+
+    /**
+     * Function to undeploy carbon application
+     *
+     * @param applicationName
+     * @throws ApplicationAdminExceptionException
+     * @throws RemoteException
+     */
+    public void undeployCarbonApplication(String applicationName)
+            throws ApplicationAdminExceptionException, RemoteException {
+        applicationAdminClient.deleteApplication(applicationName);
+
+        // Wait for Capp to undeploy
         Awaitility.await()
                 .pollInterval(500, TimeUnit.MILLISECONDS)
                 .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
-                .until(isCAppDeployed(applicationAdminClient, carFileName));
+                .until(isCAppUnDeployed(applicationAdminClient, applicationName));
     }
 
     private static void loadProperties(Path propsFile, Properties props) {
@@ -182,14 +241,37 @@ public class ScenarioTestBase {
         return new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
+                log.info("Check CApp deployment : " + cAppName);
                 String[] applicationList = applicationAdminClient.listAllApplications();
                 if (applicationList != null) {
-                    if (ArrayUtils.contains(applicationList, cAppName)) {
-                        log.info("Carbon Application : " + cAppName + " Successfully deployed");
-                        return true;
+                    for (String app : applicationList) {
+                        if (app.equals(cAppName)) {
+                            log.info("Carbon Application : " + cAppName + " Successfully deployed");
+                            return true;
+                        }
                     }
                 }
                 return false;
+            }
+        };
+    }
+
+    private Callable <Boolean> isCAppUnDeployed(final ApplicationAdminClient applicationAdminClient, final String cAppName) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                log.info("Check CApp un-deployment : " + cAppName);
+                boolean undeployed = true;
+                String[] applicationList = applicationAdminClient.listAllApplications();
+                if (applicationList != null) {
+                    for (String app : applicationList) {
+                        if (app.equals(cAppName)) {
+                            undeployed = false;
+                        }
+                    }
+                }
+                if (undeployed) log.info("Carbon Application : " + cAppName + " Successfully un-deployed");
+                return undeployed;
             }
         };
     }
