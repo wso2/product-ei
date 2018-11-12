@@ -1366,7 +1366,7 @@
             <dependency>
                 <groupId>org.wso2.andes.wso2</groupId>
                 <artifactId>andes</artifactId>
-                <version>${andes.version}</version>
+                <version>${org.wso2.andes.client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.messaging</groupId>
@@ -1748,7 +1748,6 @@
         <awaitility.version>3.1.2</awaitility.version>
 
         <!--MB Integration Tests-->
-        <eclipse.paho.mqtt.client.version>1.0.2</eclipse.paho.mqtt.client.version>
         <commons.configuration.version>1.10</commons.configuration.version>
         <org.apache.commons.version>3.3.2</org.apache.commons.version>
         <carbon.um.ws.version>5.0.8</carbon.um.ws.version>

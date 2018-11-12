@@ -1,12 +1,12 @@
 <!--
-  ~ Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
   ~ in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing,
   ~ software distributed under the License is distributed on an
@@ -46,14 +46,6 @@
             <class name="org.wso2.mb.platform.tests.clustering.durable.topic.DurableTopicMessageDeliveringTestCase"/>
             <class name="org.wso2.mb.platform.tests.clustering.durable.topic.DurableTopicSubscriptionTestCase"/>
             <class name="org.wso2.mb.platform.tests.clustering.topic.TopicClusterTestCase"/>
-
-            <!-- MQTT Test Cases -->
-             <class name="org.wso2.mb.platform.tests.clustering.mqtt.ClusteredSecurityTestCase"/>
-             <class name="org.wso2.mb.platform.tests.clustering.mqtt.MQTTClusterTestCase"/>
-             <class name="org.wso2.mb.platform.tests.clustering.mqtt.LZ4CompressCompatibilityMQTTClusterTestCase"/>
-             <class name="org.wso2.mb.platform.tests.clustering.mqtt.RetainClusterTestCase"/>
-             <class name="org.wso2.mb.platform.tests.clustering.MixedQueueTopicTestCase"/>
-             <!--Running the commented cases resulted in OOM-->
         </classes>
     </test>
 </suite>
