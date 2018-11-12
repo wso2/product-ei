@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/jsontosoap" name="JsonToSoap" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST PUT GET" url-mapping="/usingXSLT/*">
+        <inSequence>
+            <log level="full">
+                <property name="MESSAGE" value="Request Received"/>
+            </log>
+            <sequence key="SEQ_JsonToXMLTransformation"/>
+            <send>
+                <endpoint key="EP_StockQuote"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <xslt key="out_transform"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+</api>
