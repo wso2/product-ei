@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="JsonToSoap" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/JsonToSoap.xml</file>
-    </artifact>
-</artifacts>

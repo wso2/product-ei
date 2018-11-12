@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<api context="/jsontosoap" name="JsonToSoap" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST PUT GET" url-mapping="/usingXSLT/*">
-        <inSequence/>
-        <outSequence/>
-        <faultSequence/>
-    </resource>
-</api>
