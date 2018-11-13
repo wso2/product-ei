@@ -37,7 +37,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -280,16 +282,17 @@ public class ScenarioTestBase {
         };
     }
 
-    protected List<Object[]> getRequestResponseList(String folderName) throws Exception {
-        File requestFolder = new File(getClass().getResource(File.separator + "source_files" +
-                                                             File.separator + folderName +
-                                                             File.separator + "request").getPath());
-        File responseFolder = new File(getClass().getResource(File.separator + "source_files" +
-                                                              File.separator + folderName +
-                                                              File.separator + "response").getPath());
+    protected List<Object[]> getRequestResponseList(String testCase) throws Exception {
+        String relativeRequestFolderLocation = File.separator + "source_files" +
+                                       File.separator + testCase +
+                                       File.separator + "request";
 
-        List<String> requestFiles = getListOfFiles(requestFolder);
-        List<String> responseFiles = getListOfFiles(responseFolder);
+        String relativeResponseFolderLocation = File.separator + "source_files" +
+                                        File.separator + testCase +
+                                        File.separator + "response";
+
+        List<String> requestFiles = getListOfFiles(relativeRequestFolderLocation);
+        List<String> responseFiles = getListOfFiles(relativeResponseFolderLocation);
 
         java.util.Collections.sort(requestFiles, Collator.getInstance());
         java.util.Collections.sort(responseFiles, Collator.getInstance());
@@ -299,19 +302,12 @@ public class ScenarioTestBase {
 
 
         for (String file : requestFiles) {
-            File fileLocation = new File(getClass().getResource(File.separator + "source_files" +
-                                                                File.separator + folderName +
-                                                                File.separator + "request" +
-                                                                File.separator + file).getPath());
-            String fileContent = getXmlContent(fileLocation);
+            String fileContent = getFileContent(relativeRequestFolderLocation, file);
             requestArray.add(fileContent);
         }
 
         for (String file : responseFiles) {
-            String fileContent = readFile( getClass().getResource(File.separator + "source_files" +
-                                                                  File.separator + folderName +
-                                                                  File.separator + "response" +
-                                                                  File.separator + file).getPath());
+            String fileContent = getFileContent(relativeResponseFolderLocation, file);
             responseArray.add(fileContent);
         }
 
@@ -324,17 +320,8 @@ public class ScenarioTestBase {
         return requestResponseList;
     }
 
-    private String getStringFromDocument(Document doc) throws TransformerException {
-        DOMSource domSource = new DOMSource(doc);
-        StringWriter writer = new StringWriter();
-        StreamResult result = new StreamResult(writer);
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-        transformer.transform(domSource, result);
-        return writer.toString();
-    }
-
-    private List<String> getListOfFiles(File filePath) {
+    private List<String> getListOfFiles(String folderLocation) {
+        File filePath = new File(getClass().getResource(folderLocation).getPath());
         File[] listOfFiles = filePath.listFiles();
         List<String> fileNames = new ArrayList<>();
 
@@ -346,10 +333,22 @@ public class ScenarioTestBase {
         return fileNames;
     }
 
-    private String getXmlContent (File folderName) throws ParserConfigurationException, IOException, SAXException, TransformerException {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(folderName);
-        return getStringFromDocument(doc);
+    private String getFileContent (String folderLocation, String fileName) throws IOException {
+        File fileLocation = new File( getClass().getResource(folderLocation + File.separator + fileName).getPath());
+
+        final BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))));
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                sb.append(currentLine);
+            }
+        } finally {
+            br.close();
+        }
+
+        return sb.toString();
     }
 }
+

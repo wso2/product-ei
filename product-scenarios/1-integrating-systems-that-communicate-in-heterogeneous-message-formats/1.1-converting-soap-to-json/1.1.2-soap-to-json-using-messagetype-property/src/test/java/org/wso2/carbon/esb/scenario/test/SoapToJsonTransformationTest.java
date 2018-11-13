@@ -40,6 +40,22 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
         Assert.assertEquals(expectedString, actualString);
     }
 
+    @Test(description = "1.1.2.2", enabled = true, dataProvider = "1.1.2.2")
+    public void convertMalformedSoapToJson(String request, String expectedResponse) throws Exception {
+        SimpleHttpClient httpClient = new SimpleHttpClient();
+
+        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, null, request, "application/xml");
+        String responsePayload = httpClient.getResponsePayload(httpResponse);
+
+        JSONObject jsonExpectedResponse = new JSONObject(expectedResponse);
+        JSONObject jsonActualResponse = new JSONObject(responsePayload);
+
+        String expectedString = jsonExpectedResponse.toString();
+        String actualString = jsonActualResponse.toString();
+
+        Assert.assertEquals(expectedString, actualString);
+    }
+
     @AfterClass(description = "Server Cleanup")
     public void cleanup() throws Exception {
 
@@ -47,8 +63,13 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
 
     @DataProvider(name = "1.1.2.1")
     public Iterator<Object[]> soapToJson_1_1_2_1() throws Exception {
-        String folderName = "1.1.2.1";
-        return getRequestResponseList(folderName).iterator();
+        String testCase = "1.1.2.1";
+        return getRequestResponseList(testCase).iterator();
     }
 
+    @DataProvider(name = "1.1.2.2")
+    public Iterator<Object[]> soapToJson_1_1_2_2() throws Exception {
+        String testCase = "1.1.2.2";
+        return getRequestResponseList(testCase).iterator();
+    }
 }
