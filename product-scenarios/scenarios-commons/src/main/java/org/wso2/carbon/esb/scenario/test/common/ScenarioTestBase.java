@@ -37,7 +37,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -45,11 +47,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+
+import static org.wso2.esb.integration.common.utils.common.FileManager.readFile;
 
 public class ScenarioTestBase {
 
@@ -77,6 +82,7 @@ public class ScenarioTestBase {
 
     protected Properties infraProperties;
     protected String backendURL;
+    protected String esbHttpUrl;
     protected String serviceURL;
     protected String securedServiceURL;
     protected String sessionCookie;
@@ -137,11 +143,11 @@ public class ScenarioTestBase {
 
 
     public String getApiInvocationURLHttp(String resourcePath) {
-        return serviceURL + (resourcePath.startsWith("/") ? "" : "/") + resourcePath;
+        return serviceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
     public String getApiInvocationURLHttps(String resourcePath) {
-        return securedServiceURL + (resourcePath.startsWith("/") ? "" : "/") + resourcePath;
+        return securedServiceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
     protected String getProxyServiceURLHttp(String proxyServiceName) {
@@ -276,17 +282,46 @@ public class ScenarioTestBase {
         };
     }
 
-    protected String getStringFromDocument(Document doc) throws TransformerException {
-        DOMSource domSource = new DOMSource(doc);
-        StringWriter writer = new StringWriter();
-        StreamResult result = new StreamResult(writer);
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-        transformer.transform(domSource, result);
-        return writer.toString();
+    protected List<Object[]> getRequestResponseList(String testCase) throws Exception {
+        String relativeRequestFolderLocation = File.separator + "source_files" +
+                                       File.separator + testCase +
+                                       File.separator + "request";
+
+        String relativeResponseFolderLocation = File.separator + "source_files" +
+                                        File.separator + testCase +
+                                        File.separator + "response";
+
+        List<String> requestFiles = getListOfFiles(relativeRequestFolderLocation);
+        List<String> responseFiles = getListOfFiles(relativeResponseFolderLocation);
+
+        java.util.Collections.sort(requestFiles, Collator.getInstance());
+        java.util.Collections.sort(responseFiles, Collator.getInstance());
+
+        ArrayList<String> requestArray = new ArrayList();
+        ArrayList<String> responseArray = new ArrayList();
+
+
+        for (String file : requestFiles) {
+            String fileContent = getFileContent(relativeRequestFolderLocation, file);
+            requestArray.add(fileContent);
+        }
+
+        for (String file : responseFiles) {
+            String fileContent = getFileContent(relativeResponseFolderLocation, file);
+            responseArray.add(fileContent);
+        }
+
+        List<Object[]> requestResponseList = new ArrayList<>();
+
+        for (int i = 0; i < requestArray.size(); i++) {
+            String[] tmp = { requestArray.get(i) , responseArray.get(i) };
+            requestResponseList.add(tmp);
+        }
+        return requestResponseList;
     }
 
-    protected List<String> getListOfFiles(File filePath){
+    private List<String> getListOfFiles(String folderLocation) {
+        File filePath = new File(getClass().getResource(folderLocation).getPath());
         File[] listOfFiles = filePath.listFiles();
         List<String> fileNames = new ArrayList<>();
 
@@ -298,11 +333,22 @@ public class ScenarioTestBase {
         return fileNames;
     }
 
-    protected String getXmlContent (File folderName) throws ParserConfigurationException, IOException, SAXException, TransformerException {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(folderName);
-        String fileContent = getStringFromDocument(doc);
-        return fileContent;
+    private String getFileContent (String folderLocation, String fileName) throws IOException {
+        File fileLocation = new File( getClass().getResource(folderLocation + File.separator + fileName).getPath());
+
+        final BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))));
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                sb.append(currentLine);
+            }
+        } finally {
+            br.close();
+        }
+
+        return sb.toString();
     }
 }
+
