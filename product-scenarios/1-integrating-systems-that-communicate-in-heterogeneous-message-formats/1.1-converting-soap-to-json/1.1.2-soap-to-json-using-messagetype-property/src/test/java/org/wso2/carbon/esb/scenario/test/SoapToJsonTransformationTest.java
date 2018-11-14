@@ -20,7 +20,7 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        proxyServiceUrl = infraProperties.getProperty(ESB_HTTP_URL) + "/" + "ToJSON";
+        proxyServiceUrl = getProxyServiceURLHttp("ToJSON");
         deployCarbonApplication(carFileName);
     }
 
@@ -58,7 +58,7 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup")
     public void cleanup() throws Exception {
-
+        undeployCarbonApplication(carFileName);
     }
 
     @DataProvider(name = "1.1.2.1")

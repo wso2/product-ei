@@ -143,11 +143,11 @@ public class ScenarioTestBase {
 
 
     public String getApiInvocationURLHttp(String resourcePath) {
-        return serviceURL + (resourcePath.startsWith("/") ? "" : "/") + resourcePath;
+        return serviceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
     public String getApiInvocationURLHttps(String resourcePath) {
-        return securedServiceURL + (resourcePath.startsWith("/") ? "" : "/") + resourcePath;
+        return securedServiceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
     protected String getProxyServiceURLHttp(String proxyServiceName) {
