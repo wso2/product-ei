@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="ESBTestSuite" parallel="false">
-    <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
-        <classes>
-            <class name="org.wso2.carbon.esb.scenario.test.JsonToSoapTransformationTest"/>
-        </classes>
-    </test>
-</suite>

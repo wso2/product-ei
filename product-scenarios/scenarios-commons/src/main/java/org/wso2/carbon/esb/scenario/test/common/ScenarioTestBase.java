@@ -197,13 +197,16 @@ public class ScenarioTestBase {
      */
     public void undeployCarbonApplication(String applicationName)
             throws ApplicationAdminExceptionException, RemoteException {
-        applicationAdminClient.deleteApplication(applicationName);
+        if (standaloneMode) {
+            applicationAdminClient.deleteApplication(applicationName);
 
-        // Wait for Capp to undeploy
-        Awaitility.await()
-                .pollInterval(500, TimeUnit.MILLISECONDS)
-                .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
-                .until(isCAppUnDeployed(applicationAdminClient, applicationName));
+            // Wait for Capp to undeploy
+            Awaitility.await()
+                      .pollInterval(500, TimeUnit.MILLISECONDS)
+                      .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                      .until(isCAppUnDeployed(applicationAdminClient, applicationName));
+        }
+
     }
 
     private static void loadProperties(Path propsFile, Properties props) {
