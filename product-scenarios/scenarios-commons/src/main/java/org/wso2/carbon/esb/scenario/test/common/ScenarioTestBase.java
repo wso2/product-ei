@@ -95,7 +95,9 @@ public class ScenarioTestBase {
         securedServiceURL = infraProperties.getProperty(ESB_HTTPS_URL) +
                 (infraProperties.getProperty(ESB_HTTPS_URL).endsWith("/") ? "" : "/");
 
-        standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
+        //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
+        // TODO
+        standaloneMode = true;
 
         setKeyStoreProperties();
 
