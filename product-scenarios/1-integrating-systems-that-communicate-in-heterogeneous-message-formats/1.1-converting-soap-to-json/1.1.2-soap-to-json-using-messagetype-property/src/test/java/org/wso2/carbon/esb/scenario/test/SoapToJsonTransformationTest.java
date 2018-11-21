@@ -70,10 +70,8 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
         Assert.assertEquals(expectedString, actualString);
     }
 
-    @AfterClass(description = "Server Cleanup")
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
-        Thread.sleep(60000);
-        undeployCarbonApplication(carFileName);
     }
 
     @DataProvider(name = "1.1.2.1")
