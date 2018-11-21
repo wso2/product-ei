@@ -62,7 +62,6 @@
 
     <modules>
         <module>1.1-converting-soap-to-json</module>
-        <module>1.2-converting-json-to-soap</module>
         <module>1.3-converting-json-to-soap</module>
     </modules>
 
