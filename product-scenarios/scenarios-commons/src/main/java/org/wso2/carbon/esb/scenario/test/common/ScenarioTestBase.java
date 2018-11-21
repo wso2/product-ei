@@ -21,28 +21,17 @@ package org.wso2.carbon.esb.scenario.test.common;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
-import org.w3c.dom.Document;
 import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
-import org.xml.sax.SAXException;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,8 +43,6 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import static org.wso2.esb.integration.common.utils.common.FileManager.readFile;
-
 public class ScenarioTestBase {
 
     private static final String INPUTS_LOCATION = System.getenv("DATA_BUCKET_LOCATION");
@@ -63,7 +50,7 @@ public class ScenarioTestBase {
     private static final String DEPLOYMENT_PROPERTIES = "deployment.properties";
     private static final String JOB_PROPERTIES = "testplan-props.properties";
 
-    private static final Log log = LogFactory.getLog(ScenarioTestBase.class);
+    public static final Log log = LogFactory.getLog(ScenarioTestBase.class);
 
     public static final String MGT_CONSOLE_URL = "MgtConsoleUrl";
     public static final String CARBON_SERVER_URL = "CarbonServerUrl";
@@ -97,6 +84,8 @@ public class ScenarioTestBase {
      * @throws Exception
      */
     public void init() throws Exception {
+        log.info("Started Executing Scenario TestBase ");
+
         infraProperties = getDeploymentProperties();
 
         backendURL = infraProperties.getProperty(CARBON_SERVER_URL) +
