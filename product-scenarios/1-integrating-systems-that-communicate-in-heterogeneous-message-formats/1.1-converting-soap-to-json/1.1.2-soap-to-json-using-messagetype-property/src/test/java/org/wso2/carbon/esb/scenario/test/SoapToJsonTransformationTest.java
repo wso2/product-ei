@@ -37,6 +37,8 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
 
         log.info("Actual response received 1.1.2.1: " + responsePayload);
 
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "SOAP to JSON transformation failed");
+
         JSONObject jsonExpectedResponse = new JSONObject(expectedResponse);
         JSONObject jsonActualResponse = new JSONObject(responsePayload.trim());
 
@@ -70,6 +72,7 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup")
     public void cleanup() throws Exception {
+        Thread.sleep(60000);
         undeployCarbonApplication(carFileName);
     }
 

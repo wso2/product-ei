@@ -1,55 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<api context="/city" name="CityInformationAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET" uri-template="/lookup/{zipCode}">
-        <inSequence>
-            <payloadFactory description="Build SOAP request payload" media-type="xml">
-                <format>
-                    <tem:LookupCity xmlns:tem="http://tempuri.org">
-                        <tem:zip>$1</tem:zip>
-                    </tem:LookupCity>
-                </format>
-                <args>
-                    <arg evaluator="xml" expression="get-property('uri.var.zipCode')"/>
-                </args>
-            </payloadFactory>
-            <header description="Set SOAPAction header" name="Action" scope="default" value="http://tempuri.org/SOAP.Demo.LookupCity"/>
-            <property action="remove" description="Avoid appending resource to endpoint URL" name="REST_URL_POSTFIX" scope="axis2"/>
-            <send description="Send Request Payload to SOAP endpoint">
-                <endpoint key="CityLookupEP"/>
-            </send>
-        </inSequence>
-        <outSequence>
-            <payloadFactory description="Build Response Payload in JSON format" media-type="json">
-                <format>{
-                    "LookupCityResult": {
-                    "City": "$1",
-                    "State": "$2",
-                    "Zip": $3
-                    }
-                    }</format>
-                <args>
-                    <arg evaluator="xml" expression="//tem:LookupCityResult/tem:City" xmlns:tem="http://tempuri.org"/>
-                    <arg evaluator="xml" expression="//tem:LookupCityResult/tem:State" xmlns:tem="http://tempuri.org"/>
-                    <arg evaluator="xml" expression="//tem:LookupCityResult/tem:Zip" xmlns:tem="http://tempuri.org"/>
-                </args>
-            </payloadFactory>
-            <respond description="Respond to client"/>
-        </outSequence>
-        <faultSequence>
-            <payloadFactory description="" media-type="json">
-                <format>{
-                    "Error": {
-                    "message": "Error while processing the request",
-                    "code": "$1",
-                    "description": "$2"
-                    }
-                    }</format>
-                <args>
-                    <arg evaluator="xml" expression="$ctx:ERROR_CODE"/>
-                    <arg evaluator="xml" expression="$ctx:ERROR_MESSAGE"/>
-                </args>
-            </payloadFactory>
-            <respond/>
-        </faultSequence>
-    </resource>
-</api>
+<?xml version="1.0"?>
+
+<soap:Envelope
+        xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+        soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+    <soap:Body>
+        <m:GetPrice xmlns:m="https://www.w3schools.com/prices">
+            <m:Item>Apples</m:Item>
+        </m:GetPrice>
+    </soap:Body>
+
+</soap:Envelope>
