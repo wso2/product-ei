@@ -18,7 +18,7 @@ set -o xtrace
 
 HOME=`pwd`
 TEST_SCRIPT=test.sh
-SUREFIRE_DIR="test-outputs/scenarios"
+SUREFIRE_DIR="scenarios"
 
 function usage()
 {
@@ -94,5 +94,5 @@ ${MAVEN_OPTS} -fae -B -f pom.xml
 #=============== Copy Surefire Reports ===========================================
 
 echo "Copying surefire-reports to ${OUTPUT_DIR}"
-
+mkdir -p ${OUTPUT_DIR}/${SUREFIRE_DIR}
 find ${HOME}/* -name "surefire-reports" -exec cp --parents -r {} ${OUTPUT_DIR}/${SUREFIRE_DIR} \;
