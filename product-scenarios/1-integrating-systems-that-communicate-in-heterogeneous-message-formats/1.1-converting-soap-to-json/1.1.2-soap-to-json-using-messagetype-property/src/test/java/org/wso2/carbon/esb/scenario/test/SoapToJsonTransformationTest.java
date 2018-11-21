@@ -35,7 +35,7 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
         HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, null, request, "application/xml");
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
-        log.info("Actual response received : " + responsePayload);
+        log.info("Actual response received 1.1.2.1: " + responsePayload);
 
         JSONObject jsonExpectedResponse = new JSONObject(expectedResponse);
         JSONObject jsonActualResponse = new JSONObject(responsePayload.trim());
@@ -52,8 +52,12 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
 
+        log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
+
         HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, null, request, "application/xml");
         String responsePayload = httpClient.getResponsePayload(httpResponse);
+
+        log.info("Actual response received 1.1.2.2: " + responsePayload);
 
         JSONObject jsonExpectedResponse = new JSONObject(expectedResponse);
         JSONObject jsonActualResponse = new JSONObject(responsePayload.trim());
