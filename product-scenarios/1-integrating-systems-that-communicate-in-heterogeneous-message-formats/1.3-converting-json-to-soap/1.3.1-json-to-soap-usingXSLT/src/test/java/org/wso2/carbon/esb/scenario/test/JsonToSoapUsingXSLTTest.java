@@ -49,7 +49,5 @@ public class JsonToSoapUsingXSLTTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
-        Thread.sleep(60000);
-        undeployCarbonApplication(cappName);
     }
 }
