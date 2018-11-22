@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="EP_StockQuote" xmlns="http://ws.apache.org/ns/synapse">
-    <address format="soap11" uri="http://wso2.product.scenario.org:8080/axis2/services/SimpleStockQuoteService"/>
+    <address format="soap11" uri="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService"/>
 </endpoint>
