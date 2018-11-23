@@ -1,4 +1,4 @@
-# 1.6.3.1 Replace a value of the incoming message using enrich mediator
+# 1.6.3 Replace a value of the incoming message using enrich mediator
 
 ## When to use
 The Enrich Mediator can process a message based on a given source configuration and then perform the specified action on the message by using the target configuration. It is often used to do slight modifications to the payload. There are main three target actions as “Replace”, “Child” and “Sibling”. In this scenario we focus on replacing a value of the incoming payload. 
@@ -141,20 +141,20 @@ This is supported in all the EI and ESB versions
 
 ## Test cases
 
-| ID          | Summary                                                                                                        |
-| ------------|:---------------------------------------------------------------------------------------------------------:     |
-| 1.6.3.1.1   | Replacing body of payload using source defined by property                                                   |
-| 1.6.3.1.2   | Replacing target message by source defined through custom xpath                                              |
-| 1.6.3.1.3   | Replacing body of payload using source body                                                                  |
-| 1.6.3.1.4   | Replacing target message defined through xpath by source body                                                |
-| 1.6.3.1.5   | Replacing target message defined through xpath by source property                                            |
-| 1.6.3.1.6   | Replacing target message defined through xpath by source inline content                                      |
-| 1.6.3.1.7   | Replacing target message defined through xpath by source inline content loaded from configuration registry   |
-| 1.6.3.1.8   | Replacing target message defined through xpath by source inline content loaded from governance registry      |
-| 1.6.3.1.9   | Replacing a payload using content defined as local entry using inline                                        |   
-| 1.6.3.1.10  | Replacing target message by source defined through custom get property                                       |
-| 1.6.3.1.11  | Replacing body of payload using source defined inline through local entry                                    |
-| 1.6.3.1.12  | Replacing body of payload using source defined inline through governance registry                            |
-| 1.6.3.1.13  | Replacing body of payload using source defined inline through configuration registry                         |
-| 1.6.3.1.14  | Source envelope replacing target message property                                                            |
+| ID        | Summary                                                                                                    |
+| ----------|:---------------------------------------------------------------------------------------------------------: |
+| 1.6.3.1   | Replacing body of payload using source defined by property                                                   |
+| 1.6.3.2   | Replacing target message by source defined through custom xpath                                              |
+| 1.6.3.3   | Replacing body of payload using source body                                                                  |
+| 1.6.3.4   | Replacing target message defined through xpath by source body                                                |
+| 1.6.3.5   | Replacing target message defined through xpath by source property                                            |
+| 1.6.3.6   | Replacing target message defined through xpath by source inline content                                      |
+| 1.6.3.7   | Replacing target message defined through xpath by source inline content loaded from configuration registry   |
+| 1.6.3.8   | Replacing target message defined through xpath by source inline content loaded from governance registry      |
+| 1.6.3.9   | Replacing a payload using content defined as local entry using inline                                        |   
+| 1.6.3.10  | Replacing target message by source defined through custom get property                                       |
+| 1.6.3.11  | Replacing body of payload using source defined inline through local entry                                    |
+| 1.6.3.12  | Replacing body of payload using source defined inline through governance registry                            |
+| 1.6.3.13  | Replacing body of payload using source defined inline through configuration registry                         |
+| 1.6.3.14  | Source envelope replacing target message property                                                            |
 
