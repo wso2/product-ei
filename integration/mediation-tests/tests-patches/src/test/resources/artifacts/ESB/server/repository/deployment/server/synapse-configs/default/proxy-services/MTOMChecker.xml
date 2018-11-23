@@ -13,14 +13,14 @@
             <header name="Action" value="uploadFileUsingMTOM"/>
             <send>
                 <endpoint>
-                    <address uri="http://localhost:9001/services/MTOMSwASampleService"/>
+                    <address uri="http://localhost:9001/services/MTOMSwASampleService" optimize="mtom"/>
                 </endpoint>
             </send>
         </inSequence>
         <outSequence>
+            <property name="enableMTOM" value="true" scope="axis2"/>
             <send/>
         </outSequence>
     </target>
-    <parameter name="enableMTOM">true</parameter>
     <description/>
 </proxy>
