@@ -156,7 +156,7 @@ public class ScenarioTestBase {
      * @return
      * @throws RemoteException
      */
-    public void deployCarbonApplication(String carFileName) throws RemoteException {
+    public void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
 
         if (standaloneMode) {
             // If standalone mode, deploy the CAPP to the server
@@ -167,6 +167,9 @@ public class ScenarioTestBase {
             DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
             // Upload carbon application
             carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
+
+            //TODO - This thread sleep is added temporarily to wait until the ESB Instances sync in the cluster
+            Thread.sleep(120000);
 
             applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
 
