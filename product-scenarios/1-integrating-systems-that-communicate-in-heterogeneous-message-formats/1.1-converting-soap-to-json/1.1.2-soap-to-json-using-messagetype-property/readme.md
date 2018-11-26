@@ -1,4 +1,4 @@
-# 1.1.1 Converting SOAP message to JSON using MessageType property
+# 1.1.2 Converting SOAP message to JSON using MessageType property
 
 
 ![SOAP to JSON conversion](images/SOAP-to-JSON.png)
@@ -99,6 +99,6 @@ This is supported in all the EI and ESB versions
 
 | ID        | Summary                                       |
 | ----------|:---------------------------------------------:|
-| 1.1.1.1   | Processing expected SOAP message (Happy path) |
-| 1.1.1.2   | Handling malformed SOAP message               |
-| 1.1.1.3   | Handling large sized SOAP message             |
+| 1.1.2.1   | Processing expected SOAP message (Happy path) |
+| 1.1.2.2   | Handling malformed SOAP message               |
+| 1.1.2.3   | Handling large sized SOAP message             |
