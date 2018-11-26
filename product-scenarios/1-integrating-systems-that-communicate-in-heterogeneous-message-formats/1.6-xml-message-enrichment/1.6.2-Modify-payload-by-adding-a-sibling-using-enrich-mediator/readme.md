@@ -162,17 +162,17 @@ This is supported in all the EI and ESB versions
 
 | ID        | Summary                                                                                                    |
 | ----------|:---------------------------------------------------------------------------------------------------------: |
-| 1.6.1.1   | Adding sibling to message body source defined by xpath                                                     |
-| 1.6.1.2   | Adding entire message body to target body as sibling                                              		     |
-| 1.6.1.3   | Adding source property to the target body as sibling                                                       |
-| 1.6.1.4   | Adding source inline content to the target body as sibling                                                 |
-| 1.6.1.5   | Adding source inline content from configuration registry to the target body as sibling                     |
-| 1.6.1.6   | Adding source inline content from governance registry to the target body as sibling                        |
-| 1.6.1.7   | Adding sibling to target message body source defined by xpath   						                               |
-| 1.6.1.8   | Adding sibling to target message body using source body     											                         |
-| 1.6.1.9   | Adding sibling to target message body using source property                                      				   |   
-| 1.6.1.10  | Adding sibling to target message body using source inline content                                       	 |
-| 1.6.1.11  | Adding sibling to target message body using source inline content from configuration registry              |
-| 1.6.1.12  | Adding sibling to target message body using source inline content from governance registry                 |           
+| 1.6.2.1   | Adding sibling to message body source defined by xpath                                                     |
+| 1.6.2.2   | Adding entire message body to target body as sibling                                              		     |
+| 1.6.2.3   | Adding source property to the target body as sibling                                                       |
+| 1.6.2.4   | Adding source inline content to the target body as sibling                                                 |
+| 1.6.2.5   | Adding source inline content from configuration registry to the target body as sibling                     |
+| 1.6.2.6   | Adding source inline content from governance registry to the target body as sibling                        |
+| 1.6.2.7   | Adding sibling to target message body source defined by xpath   						                               |
+| 1.6.2.8   | Adding sibling to target message body using source body     											                         |
+| 1.6.2.9   | Adding sibling to target message body using source property                                      				   |   
+| 1.6.2.10  | Adding sibling to target message body using source inline content                                       	 |
+| 1.6.2.11  | Adding sibling to target message body using source inline content from configuration registry              |
+| 1.6.2.12  | Adding sibling to target message body using source inline content from governance registry                 |           
                      
 
