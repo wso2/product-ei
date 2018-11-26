@@ -175,4 +175,7 @@ Standard way of deploying a proxy service is by packaging the proxy service as a
 
 
 ## Test cases
-
+|      ID       | Summary |
+| ------------- | ------------- |
+| 4.1.1.2.1	| Expose back-end soap service with different operation name, SOAP Action, namespaces and request/response payloads|
+| 4.1.1.2.2	| Expose back-end soap service with different operation name, SOAP Action, namespaces and request/response payloads disable operation validation by setting "disableOperationValidation" property to true|
