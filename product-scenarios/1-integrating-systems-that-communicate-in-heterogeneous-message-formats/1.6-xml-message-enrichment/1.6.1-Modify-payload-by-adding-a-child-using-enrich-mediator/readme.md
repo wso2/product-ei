@@ -97,6 +97,7 @@ Create the following sequence and add to the proxy service.
 ```
 
 Invoke the getQuote service with the following payload. Use an SOAP client like SOAP UI. 
+Proxy: http://localhost:8280/services/Enrich2
 
 ```
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
