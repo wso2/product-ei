@@ -45,11 +45,14 @@ This slight modification to the payload can be done using enrich mediator.
 
 mediator
 ```
+<?xml version="1.0" encoding="UTF-8"?>
 <enrich xmlns="http://ws.apache.org/ns/synapse">
-<source clone="true" type="inline">
-<xsd:symbol xmlns:xsd="http://services.samples/xsd">WSO2</xsd:symbol>
-</source>
-<target xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples" action="replace" type="custom" xpath="//ser:getQuote/ser:request/xsd:symbol"></target>
+    <source clone="true" type="inline">
+        <xsd:symbol xmlns:xsd="http://services.samples/xsd">WSO2</xsd:symbol>
+    </source>
+    <target action="replace" type="custom"
+        xmlns:ser="http://services.samples"
+        xmlns:xsd="http://services.samples/xsd" xpath="//ser:getQuote/ser:request/xsd:symbol"/>
 </enrich>
 ```
 
@@ -64,26 +67,32 @@ Create the following sequence and add to the proxy service.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="Enrich" transports="https,http" statistics="disable" trace="disable" startOnLoad="true">
-<target>
-<inSequence>
-<log level="full"/>
- 
-<enrich xmlns="http://ws.apache.org/ns/synapse">
-<source clone="true" type="inline">
-<xsd:symbol xmlns:xsd="http://services.samples/xsd">WSO2</xsd:symbol>
-</source>
-<target xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples" action="replace" type="custom" xpath="//ser:getQuote/ser:request/xsd:symbol"></target>
-</enrich>
- 
-<log level="full"/>
-</inSequence>
-<endpoint>
-<address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-</endpoint>
-</target>
-<description/>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="Enrich"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
+   <target>
+      <inSequence>
+         <log level="full"/>
+         <enrich>
+            <source clone="true" type="inline">
+               <xsd:symbol xmlns:xsd="http://services.samples/xsd">WSO2</xsd:symbol>
+            </source>
+            <target xmlns:xsd="http://services.samples/xsd"
+                    xmlns:ser="http://services.samples"
+                    xpath="//ser:getQuote/ser:request/xsd:symbol"/>
+         </enrich>
+         <log level="full"/>
+      </inSequence>
+      <endpoint>
+         <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+      </endpoint>
+   </target>
+   <description/>
 </proxy>
+                                
 ```
 
 Invoke the getQuote service with the following payload. Use an SOAP client like SOAP UI. 
@@ -107,24 +116,31 @@ Above proxy will Replace the symbol value with the 'WSO2' beofore sending the me
 
 
 ```
-[2014-02-03 03:48:39,215] INFO – LogMediator To: /services/Enrich, WSAction: urn:getQuote, SOAPAction: urn:getQuote, MessageID: urn:uuid:607c2842-a7fc-4de3-84d8-3853c3e32134, Direction: request, Envelope: <?xml version=”1.0″ encoding=”utf-8″?><soapenv:Envelope xmlns:soapenv=”http://schemas.xmlsoap.org/soap/envelope/&#8221; xmlns:xsd=”http://services.samples/xsd&#8221; xmlns:ser=”http://services.samples”><soapenv:Body&gt;
-<ser:getQuote>
-<!–Optional:–>
-<ser:request>
-<!–Optional:–>
-<xsd:symbol>IBM</xsd:symbol>
-</ser:request>
-</ser:getQuote>
-</soapenv:Body></soapenv:Envelope>
-[2014-02-03 03:48:39,273] INFO – LogMediator To: /services/Enrich, WSAction: urn:getQuote, SOAPAction: urn:getQuote, MessageID: urn:uuid:607c2842-a7fc-4de3-84d8-3853c3e32134, Direction: request, Envelope: <?xml version=”1.0″ encoding=”utf-8″?><soapenv:Envelope xmlns:soapenv=”http://schemas.xmlsoap.org/soap/envelope/&#8221; xmlns:xsd=”http://services.samples/xsd&#8221; xmlns:ser=”http://services.samples”><soapenv:Body&gt;
-<ser:getQuote>
-<!–Optional:–>
-<ser:request>
-<!–Optional:–>
-<xsd:symbol>WSO2</xsd:symbol>
-</ser:request>
-</ser:getQuote>
-</soapenv:Body></soapenv:Envelope>
+[2018-11-26 15:55:17,993] [EI-Core]  INFO - LogMediator To: /services/Enrich, WSAction: urn:getQuote, SOAPAction: urn:getQuote, MessageID: urn:uuid:f1a530cd-0557-48f6-b3ed-da1e65d5751c, Direction: request, Envelope: <?xml version='1.0' encoding='utf-8'?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples"><soap:Body>
+      <ser:getQuote>
+         <!--Optional:-->
+         <ser:request>
+            <!--Optional:-->
+            <xsd:symbol>IBM</xsd:symbol>
+         </ser:request>
+      </ser:getQuote>
+   </soap:Body></soap:Envelope>
+[2018-11-26 15:55:17,994] [EI-Core] DEBUG - LogMediator End : Log mediator
+[2018-11-26 15:55:17,994] [EI-Core] DEBUG - SequenceMediator Building message. Sequence <SequenceMediator> is content aware
+[2018-11-26 15:55:17,995] [EI-Core] DEBUG - EnrichMediator Start : Enrich mediator
+[2018-11-26 15:55:17,996] [EI-Core] DEBUG - EnrichMediator End : Enrich mediator
+[2018-11-26 15:55:17,996] [EI-Core] DEBUG - SequenceMediator Building message. Sequence <SequenceMediator> is content aware
+[2018-11-26 15:55:17,996] [EI-Core] DEBUG - LogMediator Start : Log mediator
+[2018-11-26 15:55:17,996] [EI-Core]  INFO - LogMediator To: /services/Enrich, WSAction: urn:getQuote, SOAPAction: urn:getQuote, MessageID: urn:uuid:f1a530cd-0557-48f6-b3ed-da1e65d5751c, Direction: request, Envelope: <?xml version='1.0' encoding='utf-8'?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples"><soap:Body>
+      <ser:getQuote>
+         <!--Optional:-->
+         <ser:request>
+            <!--Optional:-->
+            <xsd:symbol>WSO2</xsd:symbol>
+         </ser:request>
+      </ser:getQuote>
+   </soap:Body></soap:Envelope>
+[2018-11-26 15:55:17,997] [EI-Core] DEBUG - LogMediator End : Log mediator
 ```
 
 ## Deployment guidelines
