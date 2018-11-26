@@ -1,0 +1,2 @@
+org.wso2.carbon.andes*
+org.dna*
