@@ -23,7 +23,7 @@ original payload
 </soapenv:Envelope>
 ```
 
-Before sending this to the endpoind, we need to modify this payload by adding a child element to <ser:request> element. The child element will be <xsd:symbol>SUN</xsd:symbol>
+Before sending this to the endpoind, we need to modify this payload by adding a child element to ```<ser:request>``` element. The child element will be ```<xsd:symbol>SUN</xsd:symbol>```
 
 Required payload
 ```
