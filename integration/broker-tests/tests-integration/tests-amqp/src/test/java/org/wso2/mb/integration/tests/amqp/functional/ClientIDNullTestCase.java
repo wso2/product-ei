@@ -1,0 +1,220 @@
+/*
+ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.wso2.mb.integration.tests.amqp.functional;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.mb.integration.common.utils.JMSClientHelper;
+import org.wso2.mb.integration.common.utils.backend.MBIntegrationBaseTest;
+
+import java.util.concurrent.TimeUnit;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.XAConnection;
+import javax.jms.XAConnectionFactory;
+import javax.jms.XASession;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.transaction.xa.XAException;
+import javax.transaction.xa.XAResource;
+import javax.transaction.xa.Xid;
+import javax.xml.xpath.XPathExpressionException;
+
+/**
+ * Test basic queue topic scenarios with null client ID
+ */
+public class ClientIDNullTestCase extends MBIntegrationBaseTest {
+
+    /**
+     * Initializing test case
+     *
+     * @throws XPathExpressionException
+     */
+    @BeforeClass
+    public void prepare() throws XPathExpressionException {
+        super.init(TestUserMode.SUPER_TENANT_USER);
+    }
+
+    /**
+     * Tests if committing a published message works correctly without a client ID.Steps are,
+     *    1. Using a distributed transaction a message is published to a queue and committed
+     *    2. Subscribe to the published queue and see if the message is received.
+     */
+    @Test(groups = { "wso2.mb", "dtx" })
+    public void performDtxClientQueuePublishTestCase()
+            throws NamingException, JMSException, XAException, XPathExpressionException {
+        String queueName = "ClientIDNullTestCaseDtxPerformClientQueuePublishTestCase";
+
+        InitialContext initialContext = JMSClientHelper.createInitialContextBuilder("admin",
+                                                                                    "admin",
+                                                                                    "localhost",
+                                                                                    getAMQPPort())
+                                                       .withNoClientId()
+                                                       .withQueue(queueName)
+                                                       .build();
+
+        // Publish to queue and rollback
+        XAConnectionFactory connectionFactory = (XAConnectionFactory) initialContext
+                .lookup(JMSClientHelper.QUEUE_XA_CONNECTION_FACTORY);
+
+        XAConnection xaConnection = connectionFactory.createXAConnection();
+        xaConnection.start();
+        XASession xaSession = xaConnection.createXASession();
+
+        XAResource xaResource = xaSession.getXAResource();
+        Session session = xaSession.getSession();
+
+        Destination xaTestQueue = (Destination) initialContext.lookup(queueName);
+        session.createQueue(queueName);
+        MessageProducer producer = session.createProducer(xaTestQueue);
+
+        Xid xid = JMSClientHelper.getNewXid();
+
+        xaResource.start(xid, XAResource.TMNOFLAGS);
+        producer.send(session.createTextMessage("Test 1"));
+        xaResource.end(xid, XAResource.TMSUCCESS);
+
+        int ret = xaResource.prepare(xid);
+        Assert.assertEquals(ret, XAResource.XA_OK, "Dtx.prepare was not successful.");
+
+        xaResource.commit(xid, false);
+
+        session.close();
+        xaConnection.close();
+
+        // subscribe and see if the message is received
+        ConnectionFactory queueConnectionFactory = (ConnectionFactory) initialContext
+                .lookup(JMSClientHelper.QUEUE_CONNECTION_FACTORY);
+        Connection queueConnection = queueConnectionFactory.createConnection();
+        queueConnection.start();
+        Session queueSession = queueConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        MessageConsumer messageConsumer = queueSession.createConsumer(xaTestQueue);
+
+        // wait 5 seconds
+        Message receive = messageConsumer.receive(5000);
+        Assert.assertNotNull(receive, "Message was not received.");
+
+        queueConnection.close();
+    }
+
+    /**
+     * Tests if sending and receiving queue message works correctly without a client ID.Steps are,
+     *    1. Using a non transacted session to publish a message to queue
+     *    2. Subscribe to the published queue and see if the message is received.
+     */
+    @Test(groups = { "wso2.mb", "dtx" })
+    public void performClientQueueTestCase()
+            throws NamingException, JMSException, XAException, XPathExpressionException, InterruptedException {
+        String queueName = "ClientIDNullTestCasePerformClientQueueTestCase";
+
+        InitialContext initialContext = JMSClientHelper.createInitialContextBuilder("admin",
+                                                                                    "admin",
+                                                                                    "localhost",
+                                                                                    getAMQPPort())
+                                                       .withNoClientId()
+                                                       .withQueue(queueName)
+                                                       .build();
+
+        // Publish to queue and rollback
+        ConnectionFactory connectionFactory = (ConnectionFactory) initialContext
+                .lookup(JMSClientHelper.QUEUE_CONNECTION_FACTORY);
+
+        Connection connection = connectionFactory.createConnection();
+        connection.start();
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+        Destination xaTestQueue = (Destination) initialContext.lookup(queueName);
+        session.createQueue(queueName);
+        MessageProducer producer = session.createProducer(xaTestQueue);
+
+        producer.send(session.createTextMessage("Test 1"));
+
+        session.close();
+        connection.close();
+
+        TimeUnit.SECONDS.sleep(10);
+
+        // subscribe and see if the message is received
+        Connection subscriber = connectionFactory.createConnection();
+        subscriber.start();
+        Session queueSession = subscriber.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        MessageConsumer messageConsumer = queueSession.createConsumer(xaTestQueue);
+
+        // wait 5 seconds
+        Message receive = messageConsumer.receive(5000);
+        Assert.assertNotNull(receive, "Message was not received.");
+
+        subscriber.close();
+    }
+
+    /**
+     * Tests if sending and receiving topic message works correctly without a client ID.Steps are,
+     *    1. Using a non transacted session to publish a message to queue
+     *    2. Subscribe to the published queue and see if the message is received.
+     */
+    @Test(groups = { "wso2.mb", "dtx" })
+    public void performClientTopicTestCase()
+            throws NamingException, JMSException, XAException, XPathExpressionException, InterruptedException {
+        String topicName = "ClientIDNullTestCasePerformClientTopicTestCase";
+
+        InitialContext initialContext = JMSClientHelper.createInitialContextBuilder("admin",
+                                                                                    "admin",
+                                                                                    "localhost",
+                                                                                    getAMQPPort())
+                                                       .withNoClientId()
+                                                       .withTopic(topicName) .build();
+
+        // Publish to queue and rollback
+        ConnectionFactory connectionFactory = (ConnectionFactory) initialContext
+                .lookup(JMSClientHelper.QUEUE_CONNECTION_FACTORY);
+        Destination xaTestQueue = (Destination) initialContext.lookup(topicName);
+
+        // subscribe and see if the message is received
+        Connection subscriberConnection = connectionFactory.createConnection();
+        subscriberConnection.start();
+        Session subscriberSession = subscriberConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        MessageConsumer messageConsumer = subscriberSession.createConsumer(xaTestQueue);
+
+        Connection publisherConnection = connectionFactory.createConnection();
+        publisherConnection.start();
+        Session publisherSession = publisherConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        MessageProducer producer = publisherSession.createProducer(xaTestQueue);
+        producer.send(publisherSession.createTextMessage("Test 1"));
+
+        publisherSession.close();
+        publisherConnection.close();
+
+        TimeUnit.SECONDS.sleep(10);
+
+        // wait 5 seconds
+        Message receive = messageConsumer.receive(5000);
+        Assert.assertNotNull(receive, "Message was not received.");
+
+        subscriberConnection.close();
+    }
+
+}

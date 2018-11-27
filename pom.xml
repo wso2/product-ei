@@ -28,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
-    <version>6.5.0-m1-SNAPSHOT</version>
+    <version>6.5.0-m3-SNAPSHOT</version>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
@@ -1361,6 +1361,91 @@
                 <version>${awaitility.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <!--MB Integration tests related dependencies-->
+            <dependency>
+                <groupId>org.wso2.andes.wso2</groupId>
+                <artifactId>andes</artifactId>
+                <version>${org.wso2.andes.client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.messaging</groupId>
+                <artifactId>org.wso2.carbon.andes.event.stub</artifactId>
+                <version>${carbon.messaging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.messaging</groupId>
+                <artifactId>org.wso2.carbon.andes.stub</artifactId>
+                <version>${carbon.messaging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons.configuration.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${org.apache.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-jxpath</groupId>
+                <artifactId>commons-jxpath</artifactId>
+                <version>${apache.commons.jxpath.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>slf4j.wso2</groupId>
+                <artifactId>slf4j</artifactId>
+                <version>${slf4j.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.identity</groupId>
+                <artifactId>org.wso2.carbon.um.ws.api.stub</artifactId>
+                <version>${carbon.um.ws.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.view.ui</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.data.service.stub</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.manager</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.impl</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.integration.common.utils</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.integration.common.clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.mb.platform.common.utils</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1404,7 +1489,7 @@
 
         <!--Product Version-->
 
-        <product.ei.version>6.5.0-m1-SNAPSHOT</product.ei.version>
+        <product.ei.version>6.5.0-m3-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
         <carbon.business-process.version>4.4.79</carbon.business-process.version>
@@ -1422,7 +1507,7 @@
         <!--MB-->
         <carbon.messaging.version>3.2.62</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
-        <product.mb.version>3.1.0</product.mb.version>
+        <product.mb.version>3.2.0</product.mb.version>
         <jline.version>1.0</jline.version>
         <andes.version>3.2.82</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
@@ -1437,7 +1522,7 @@
         <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v80</synapse.version>
+        <synapse.version>2.1.7-wso2v82</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v30</axis2.transport.version>
@@ -1446,7 +1531,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.105</carbon.mediation.version>
+        <carbon.mediation.version>4.6.106</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.36</carbon.kernel.version>
@@ -1526,7 +1611,7 @@
         <carbon.analytics.version>1.3.31</carbon.analytics.version>
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.80</carbon.data.version>
+        <carbon.data.version>4.4.82</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
@@ -1661,6 +1746,13 @@
         <version.com.google.code.gson>2.3.1</version.com.google.code.gson>
         <bouncycastle.orbit.version>1.52.0.wso2v1</bouncycastle.orbit.version>
         <awaitility.version>3.1.2</awaitility.version>
+
+        <!--MB Integration Tests-->
+        <commons.configuration.version>1.10</commons.configuration.version>
+        <org.apache.commons.version>3.3.2</org.apache.commons.version>
+        <carbon.um.ws.version>5.0.8</carbon.um.ws.version>
+        <guava.version>19.0</guava.version>
+        <apache.commons.jxpath.version>1.3</apache.commons.jxpath.version>
     </properties>
 
     <repositories>

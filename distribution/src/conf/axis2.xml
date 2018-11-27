@@ -56,7 +56,7 @@
 
     <!--If turned on with use the Accept header of the request to determine the contentType of the
     response-->
-    <parameter name="httpContentNegotiation">true</parameter>
+    <parameter name="httpContentNegotiation">false</parameter>
 
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>

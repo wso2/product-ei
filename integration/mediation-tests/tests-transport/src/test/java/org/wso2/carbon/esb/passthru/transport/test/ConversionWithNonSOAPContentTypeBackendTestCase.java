@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.passthru.transport.test;
 
 import org.apache.http.HttpResponse;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -26,11 +27,13 @@ import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.AvailabilityPollingUtils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class tests the scenario of sending back response when client sends a SOAP1.1 request and when there is a
@@ -85,7 +88,11 @@ public class ConversionWithNonSOAPContentTypeBackendTestCase extends ESBIntegrat
         try {
             cleanup();
         } finally {
-            Thread.sleep(3000);
+            Awaitility.await()
+                              .pollInterval(500, TimeUnit.MILLISECONDS)
+                              .atMost(120000, TimeUnit.MILLISECONDS)
+                              .until(AvailabilityPollingUtils.isProxyNotAvailable("SOAP11ProxyService",
+                                      contextUrls.getBackEndUrl(), sessionCookie));
             serverManager.restoreToLastConfiguration();
             serverManager = null;
         }
