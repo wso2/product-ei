@@ -20,7 +20,7 @@ take the business content of this message and send this content Out in a complet
 
 - [2.1-HTTP-to-HTTP-protocol-translation](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.1-HTTP-to-HTTP-protocol-translation)
 - [2.2-JMS-to-HTTP-protocol-translation-EI-as-JMS-consumer](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.2-JMS-to-HTTP-protocol-translation-EI-as-JMS-consumer)
-- [2.3-HTTP to-JMS-protocol-translation-EI-as-JMS producer](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.3-HTTP to-JMS-protocol-translation-EI-as-JMS producer)
+- [2.3-HTTP-to-JMS-protocol-translation-EI-as-JMS-producer](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.3-HTTP-to-JMS-protocol-translation-EI-as-JMS-producer)
 - [2.4-Switching-from-TCP-to-HTTP-or-HTTPS](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.4-Switching-from-TCP-to-HTTP-or-HTTPS)
 - [2.5-Switching-from-UDP-to-HTTP-or-HTTPS](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.5-Switching-from-UDP-to-HTTP-or-HTTPS)
 - [2.6-JMS-Synchronous-Invocations](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/2-Bridging-systems-that-communicate-in-different-protocols/2.6-JMS-Synchronous-Invocations)
