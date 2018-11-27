@@ -1507,7 +1507,7 @@
         <!--MB-->
         <carbon.messaging.version>3.2.62</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
-        <product.mb.version>3.2.0</product.mb.version>
+        <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
         <andes.version>3.2.82</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
