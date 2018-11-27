@@ -9,17 +9,18 @@ Assume that we have our original payload to be sent as below.
 
 original payload
 ```
+<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
-<soapenv:Header/>
-<soapenv:Body>
-<ser:getQuote>
-<!--Optional:-->
-<ser:request>
-<!--Optional:-->
-<xsd:symbol>IBM</xsd:symbol>
-</ser:request>
-</ser:getQuote>
-</soapenv:Body>
+   <soapenv:Header />
+   <soapenv:Body>
+      <ser:getQuote>
+         <!--Optional:-->
+         <ser:request>
+            <!--Optional:-->
+            <xsd:symbol>IBM</xsd:symbol>
+         </ser:request>
+      </ser:getQuote>
+   </soapenv:Body>
 </soapenv:Envelope>
 ```
 
@@ -27,17 +28,18 @@ Before sending this to the endpoind, we need to modify this payload by replacing
 
 Required payload
 ```
+<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
-<soapenv:Header/>
-<soapenv:Body>
-<ser:getQuote>
-<!--Optional:-->
-<ser:request>
-<!--Optional:-->
-<xsd:symbol>WSO2</xsd:symbol>
-</ser:request>
-</ser:getQuote>
-</soapenv:Body>
+   <soapenv:Header />
+   <soapenv:Body>
+      <ser:getQuote>
+         <!--Optional:-->
+         <ser:request>
+            <!--Optional:-->
+            <xsd:symbol>WSO2</xsd:symbol>
+         </ser:request>
+      </ser:getQuote>
+   </soapenv:Body>
 </soapenv:Envelope>
 ```
 
@@ -57,7 +59,7 @@ mediator
 ```
 
 ## Prerequisites
-SimpleStockQuote Service needs to have deployed. 
+N/A 
 
 ## Development guidelines
 
@@ -67,56 +69,33 @@ Create the following sequence and add to the proxy service.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="Enrich"
-       startOnLoad="true"
-       statistics="disable"
-       trace="disable"
-       transports="http,https">
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="Enrich" startOnLoad="true" statistics="disable" trace="disable" transports="http,https">
    <target>
       <inSequence>
-         <log level="full"/>
+         <log level="full" />
          <enrich>
             <source clone="true" type="inline">
                <xsd:symbol xmlns:xsd="http://services.samples/xsd">WSO2</xsd:symbol>
             </source>
-            <target xmlns:xsd="http://services.samples/xsd"
-                    xmlns:ser="http://services.samples"
-                    xpath="//ser:getQuote/ser:request/xsd:symbol"/>
+            <target xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd" xpath="//ser:getQuote/ser:request/xsd:symbol" />
          </enrich>
-         <log level="full"/>
+         <log level="full" />
+         <respond />
       </inSequence>
-      <endpoint>
-         <address uri="http://localhost:9000/services/SimpleStockQuoteService"/>
-      </endpoint>
    </target>
-   <description/>
+   <description />
 </proxy>
                                 
 ```
 
 Invoke the getQuote service with the following payload. Use an SOAP client like SOAP UI. 
+Proxy: http://localhost:8280/services/Enrich
 
 ```
+<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
-<soapenv:Header/>
-<soapenv:Body>
-<ser:getQuote>
-<!--Optional:-->
-<ser:request>
-<!--Optional:-->
-<xsd:symbol>IBM</xsd:symbol>
-</ser:request>
-</ser:getQuote>
-</soapenv:Body>
-</soapenv:Envelope>
-```
-
-Above proxy will Replace the symbol value with the 'WSO2' beofore sending the message to the endpoint. Below is the log when the proxy is called. You can see the symbol value of the incoming message 'IBM' is replaced with 'WSO2'. The logger mediator before the enrich mediator show the symbol as IBM, but after the enrich mediator symbol has changed to WSO2.
-
-
-```
-[2018-11-26 15:55:17,993] [EI-Core]  INFO - LogMediator To: /services/Enrich, WSAction: urn:getQuote, SOAPAction: urn:getQuote, MessageID: urn:uuid:f1a530cd-0557-48f6-b3ed-da1e65d5751c, Direction: request, Envelope: <?xml version='1.0' encoding='utf-8'?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples"><soap:Body>
+   <soapenv:Header />
+   <soapenv:Body>
       <ser:getQuote>
          <!--Optional:-->
          <ser:request>
@@ -124,14 +103,17 @@ Above proxy will Replace the symbol value with the 'WSO2' beofore sending the me
             <xsd:symbol>IBM</xsd:symbol>
          </ser:request>
       </ser:getQuote>
-   </soap:Body></soap:Envelope>
-[2018-11-26 15:55:17,994] [EI-Core] DEBUG - LogMediator End : Log mediator
-[2018-11-26 15:55:17,994] [EI-Core] DEBUG - SequenceMediator Building message. Sequence <SequenceMediator> is content aware
-[2018-11-26 15:55:17,995] [EI-Core] DEBUG - EnrichMediator Start : Enrich mediator
-[2018-11-26 15:55:17,996] [EI-Core] DEBUG - EnrichMediator End : Enrich mediator
-[2018-11-26 15:55:17,996] [EI-Core] DEBUG - SequenceMediator Building message. Sequence <SequenceMediator> is content aware
-[2018-11-26 15:55:17,996] [EI-Core] DEBUG - LogMediator Start : Log mediator
-[2018-11-26 15:55:17,996] [EI-Core]  INFO - LogMediator To: /services/Enrich, WSAction: urn:getQuote, SOAPAction: urn:getQuote, MessageID: urn:uuid:f1a530cd-0557-48f6-b3ed-da1e65d5751c, Direction: request, Envelope: <?xml version='1.0' encoding='utf-8'?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples"><soap:Body>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+Above proxy will Replace the symbol value with the 'WSO2' beofore sending the message to the endpoint. You will see the following response which is the actual request enriched.
+
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd">
+   <soap:Body>
       <ser:getQuote>
          <!--Optional:-->
          <ser:request>
@@ -139,8 +121,8 @@ Above proxy will Replace the symbol value with the 'WSO2' beofore sending the me
             <xsd:symbol>WSO2</xsd:symbol>
          </ser:request>
       </ser:getQuote>
-   </soap:Body></soap:Envelope>
-[2018-11-26 15:55:17,997] [EI-Core] DEBUG - LogMediator End : Log mediator
+   </soap:Body>
+</soap:Envelope>
 ```
 
 ## Deployment guidelines
