@@ -31,7 +31,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2analytics-profile</artifactId>
-    <version>6.5.0-m2-SNAPSHOT</version>
+    <version>6.5.0-m3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>&gt;WSO2 Enterprise Integrator - Analytics Profile Generation</name>
 

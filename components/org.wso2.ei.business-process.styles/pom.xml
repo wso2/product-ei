@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>ei-component-parent</artifactId>
-        <version>6.5.0-m2-SNAPSHOT</version>
+        <version>6.5.0-m3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

@@ -28,7 +28,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-webapp-samples</artifactId>
-    <version>6.5.0-m2-SNAPSHOT</version>
+    <version>6.5.0-m3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 Enterprise Integrator - Web App Samples</name>
     <url>http://wso2.org/projects/appserver/java</url>

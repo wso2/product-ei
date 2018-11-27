@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>org.wso2.carbon.ei.tests.platform</artifactId>
-        <version>6.5.0-m2-SNAPSHOT</version>
+        <version>6.5.0-m3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
