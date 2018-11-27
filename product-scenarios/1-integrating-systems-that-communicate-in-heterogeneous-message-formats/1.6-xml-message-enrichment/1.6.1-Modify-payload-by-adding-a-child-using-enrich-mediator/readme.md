@@ -63,7 +63,7 @@ mediator
 ```
 
 ## Prerequisites
-SimpleStockQuote Service needs to have deployed. 
+N/A
 
 ## Development guidelines
 
@@ -110,7 +110,7 @@ Proxy: http://localhost:8280/services/Enrich2
 </soapenv:Envelope>
 ```
 
-Above proxy will add the child element <xsd:symbol>SUN</xsd:symbol> to the <ser:request> element before the payload is sent to the endpoint. Below is the log when the proxy is called. You can see the child element has been added after the Enrich2 proxy is called.  
+Above proxy will add the child element ```<xsd:symbol>SUN</xsd:symbol>``` to the ```<ser:request>``` element before the payload is sent to the endpoint. 
 
 The request before enrich mediator is invoked. 
 
@@ -129,7 +129,7 @@ The request before enrich mediator is invoked.
 </soap:Envelope>
 ```
 
-Actual request sent to endpoint after the enrich mediator is invoked. 
+You will see the following respond which is the actual request enriched. 
 ```
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
    <soap:Body>
