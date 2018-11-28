@@ -16,3 +16,4 @@ Developer
 ## Sub-Scenarios
 - [1.1 Converting SOAP message to JSON](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.1-converting-soap-to-json)
 - 1.2 Converting POX message to JSON
+- [1.3 Converting JSON message to SOAP](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.3-converting-json-to-soap)
