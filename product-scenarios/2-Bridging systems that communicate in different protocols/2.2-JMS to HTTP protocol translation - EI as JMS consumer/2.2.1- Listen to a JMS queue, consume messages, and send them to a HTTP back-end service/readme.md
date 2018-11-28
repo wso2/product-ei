@@ -12,12 +12,12 @@ In this sections walk you through the steps to configure the ESB to listen to a 
 
 ## Pre-requisites
 
-- Configure WSO2 ESB with Apache ActiveMQ, and set up the JMS listener. For instructions, see [Configure with ActiveMQ] (https://docs.wso2.com/display/ESB500/Configure+with+ActiveMQ/).
+- Configure WSO2 ESB with Apache ActiveMQ, and set up the JMS listener. For instructions, see [Configure with ActiveMQ](https://docs.wso2.com/display/ESB500/Configure+with+ActiveMQ).
 - Start the ESB server.
 
 ## Development guidelines
 
--Create a proxy service with the following configuration. For information on how to create a proxy service, see [Creating a Proxy Service](https://docs.wso2.com/display/ESB500/Adding+a+Proxy+Service).
+- Create a proxy service with the following configuration. For information on how to create a proxy service, see [Creating a Proxy Service](https://docs.wso2.com/display/ESB500/Adding+a+Proxy+Service).
 
 ```xml
 <proxy xmlns="http://ws.apache.org/ns/synapse" name="JMStoHTTPStockQuoteProxy" transports="jms">
