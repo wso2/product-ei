@@ -11,8 +11,9 @@ In this sections walk you through the steps to configure the ESB to listen to a 
 ## Supported versions
 
 ## Pre-requisites
-    -Configure WSO2 ESB with Apache ActiveMQ, and set up the JMS listener. For instructions, see [Configure with ActiveMQ](https://docs.wso2.com/display/ESB500/Configure+with+ActiveMQ).
-    -Start the ESB server.
+
+    - Configure WSO2 ESB with Apache ActiveMQ, and set up the JMS listener. For instructions, see [Configure with ActiveMQ](https://docs.wso2.com/display/ESB500/Configure+with+ActiveMQ).
+    - Start the ESB server.
 
 ## Development guidelines
 
