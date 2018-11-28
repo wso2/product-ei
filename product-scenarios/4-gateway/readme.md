@@ -17,11 +17,11 @@ Pre-processing steps typically consist of message validation, filtering, and tra
 
 
 ## Sub-Scenarios
-- [4.1	Extend the reach for existing applications / legacy applications](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/4-gateway/4.1-Extend-the-reach-for-existing-or-legacy-applications)
-- [4.2	ESB as the security gateway](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/4-gateway/4.2-ESB-as-the-security-gateway)
-- [4.3	Using ESB as caching layer](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/4-gateway/4.3-Using-ESB-as-caching-layer)
-- [4.4	Protecting back-end by request throttling](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/4-gateway/4.4-Protecting-back-end-by-request-throttling)
-- [4.5	Request validation](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/4-gateway/4.5-Request-validation)
-- [4.6	Request load balancing](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/4-gateway/4.6-Request-load-balancing)
+- [4.1	Extend the reach for existing applications / legacy applications](4.1-Extend-the-reach-for-existing-or-legacy-applications)
+- [4.2	ESB as the security gateway](4.2-ESB-as-the-security-gateway)
+- [4.3	Using ESB as caching layer](4.3-Using-ESB-as-caching-layer)
+- [4.4	Protecting back-end by request throttling](4.4-Protecting-back-end-by-request-throttling)
+- [4.5	Request validation](4.5-Request-validation)
+- [4.6	Request load balancing](4.6-Request-load-balancing)
 
 

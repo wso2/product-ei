@@ -19,7 +19,6 @@ request to one of the two recipients according to the message's content.
 
 Reference : [Routing Requests Based on Message Content](https://docs.wso2.com/display/EI610/Routing+Requests+Based+on+Message+Content)
 
-
 ## Sub-Scenarios
 - [5.1 Route based on the content of the messages](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/5-Route-messages-between-systems/5.1-Route-based-on-the-content-of-the-messages)
 - [5.3 Load balance messages among two or more systems](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/5-Route-messages-between-systems/5.3-Load-balance-messages-among-two-or-more-systems)

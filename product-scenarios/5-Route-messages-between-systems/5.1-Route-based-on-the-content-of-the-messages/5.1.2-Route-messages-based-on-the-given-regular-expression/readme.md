@@ -12,4 +12,3 @@ Using the Filter and switch mediator you can give regular expression and route t
 - [5.1.1.3 Using filter mediator on given xpath](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/5-Route-messages-between-systems/5.1-Route-based-on-the-content-of-the-messages/5.1.1-Route-messages-based-on-the-given-Xpath/5.1.1.3-Using-filter-mediator-on-given-xpath)
 - [5.1.1.4 Using filter mediator on given xpath with namespace](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/5-Route-messages-between-systems/5.1-Route-based-on-the-content-of-the-messages/5.1.1-Route-messages-based-on-the-given-Xpath/5.1.1.4-Using-filter-mediator-on-given-xpath-with-namespace)
 
-

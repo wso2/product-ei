@@ -8,12 +8,6 @@ the returned string within each case statement.
 
 ![message-routing](images/message-routing.png)
 
-
-
-
-
-
-
 Given below is the syntax of this mediator.
 
 ```
@@ -27,7 +21,6 @@ Given below is the syntax of this mediator.
 </switch>
 
 ```
-
 Reference : [Switch Mediator](https://docs.wso2.com/display/EI610/Switch+Mediator)
 
 ## Sample use-case
