@@ -15,6 +15,8 @@ Suppose a financial service company that wants to expose a set of business funct
 If we have a certain stock that we are interested in, we can get the stock quote of that stock by providing its name.
   
 We are going to expose this SOAP web service as a REST API by doing a JSON to SOAP conversion.
+In this use case we can use [Property mediator](https://docs.wso2.com/display/EI640/Property+Mediator) to transform 
+JSON message to SOAP.
 
 ## Prerequisites
 A REST client like cURL to invoke the ESB API.
@@ -141,16 +143,15 @@ http://localhost:8280/services/JSONProxy
 * We can create the api in Management Console and deploy.
 
 ## Supported versions
-
 This is supported in all the EI and ESB versions
 
 ## Test cases
 
-| ID        | Summary                                                    |
-| ----------|:----------------------------------------------------------:|
-| 1.3.2.1   | Processing expected JSON message (Happy path)              |
-| 1.3.2.2   | Transformation of a JSON message with special characters   |
-| 1.3.2.3   | Handling malformed JSON message                            |
-| 1.3.2.4   | Handling JSON message with attachments (MTOM)              |
-| 1.3.2.5   | Using payload stored in the registry as the source payload |
-| 1.3.2.6   | Handling JSON message with single element arrays           |
+| ID        | Summary                                                   |
+| ----------|:---------------------------------------------------------:|
+| 1.3.2.1   | Converting a valid JSON message to SOAP ( Happy Path )    |
+| 1.3.2.2   | Transformation of a JSON message with special characters  |
+| 1.3.2.3   | Handling malformed JSON messages                          |
+| 1.3.2.4   | Converting a JSON message with attachments (MTOM)         |
+| 1.3.2.5   | Use payload stored in the registry as the source payload  |
+| 1.3.2.6   | Converting JSON with single element arrays                |
