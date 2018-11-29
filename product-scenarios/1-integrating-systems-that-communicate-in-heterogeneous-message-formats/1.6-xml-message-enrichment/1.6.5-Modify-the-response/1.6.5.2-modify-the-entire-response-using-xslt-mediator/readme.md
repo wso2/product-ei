@@ -1,0 +1,1 @@
+1.6.5.2 Modify the entire response using xslt mediator
