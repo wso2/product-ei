@@ -23,17 +23,4 @@ outputcompany.offices.usoffice.address = customFunction(inputcompany.name,CONCAT
 return outputcompany;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 customFunction = function(in1,in2){ return (in1 + in2);};
