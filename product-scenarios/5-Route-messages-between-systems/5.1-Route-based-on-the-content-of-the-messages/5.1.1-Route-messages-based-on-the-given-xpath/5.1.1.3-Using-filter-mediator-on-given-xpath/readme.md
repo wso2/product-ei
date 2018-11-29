@@ -8,6 +8,9 @@ There are two modes of operation
 - Specifies the XPath (boolean expression), return true or false
 - XPath will be matched against the regular expression return true or false
 
+
+![Message Filtering](images/Filter-message.png)
+
 Given below is the syntax of this mediator.
 
 ```
@@ -16,6 +19,8 @@ Given below is the syntax of this mediator.
 </filter>
 
 ```
+
+Reference : [Filter Mediator](https://docs.wso2.com/display/EI610/Filter+Mediator)
 
 ## Sample use-case
 

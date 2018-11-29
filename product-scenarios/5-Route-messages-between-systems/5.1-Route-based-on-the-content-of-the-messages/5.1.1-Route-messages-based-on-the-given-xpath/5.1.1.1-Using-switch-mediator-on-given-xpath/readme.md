@@ -1,10 +1,12 @@
-# 5.1.1.1-Using-switch-mediator-on-given-xpath
+# 5.1.1.1-Using Switch mediator on given xpath
 
 ## When to use
 
 Switch mediator behaves similar to the conventional switch-case statements available in any programming language.
 Basically you can retrieve a string by calling an Xpath or JSON path query and manipulate your message by matching
 the returned string within each case statement.
+
+![message-routing](images/message-routing.png)
 
 Given below is the syntax of this mediator.
 
@@ -19,6 +21,7 @@ Given below is the syntax of this mediator.
 </switch>
 
 ```
+Reference : [Switch Mediator](https://docs.wso2.com/display/EI610/Switch+Mediator)
 
 ## Sample use-case
 
