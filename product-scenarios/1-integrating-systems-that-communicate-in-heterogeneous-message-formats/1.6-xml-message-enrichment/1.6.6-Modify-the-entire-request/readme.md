@@ -1,7 +1,7 @@
 # 1.6.6 Modify the entire request
 
 ## When to use
-We can use WSO2 XSLT mediator to transform the entire request which is sent from backend before it sent to the backend. 
+We can use WSO2 XSLT mediator to transform the entire request which is sent from EI before it sent to the backend. 
 
 ## Sample use case
 The use case is as follows, WSO2 EI will get a request as shown in “Current Message”. ESB needs to transform this message before sending to the backend service. The backend service require the message to be in “Required Message” format.
