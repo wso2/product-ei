@@ -179,14 +179,14 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
     }
 
 	/**
-	 *
 	 * @throws Exception exceptions during execution
 	 */
 	@Test(groups = {"wso2.esb"}, description = "Datamapper simple one to one xml to xml " +
 											   "conversion using xslt transformation")
 	public void testOneToOneXmlToXmlUsingXSLT() throws Exception {
 		uploadResourcesToGovernanceRegistryWithXSLTStyleSheet(REGISTRY_ROOT_PATH + "xml_to_xml_using_xslt/",
-															  ARTIFACT_ROOT_PATH + "xml_to_xml_using_xslt" + File.separator);
+															  ARTIFACT_ROOT_PATH + "xml_to_xml_using_xslt" + File
+																	  .separator);
 
 		String request = "   <company>\n" +
 						 "      <name>WSO2</name>\n" +
@@ -236,14 +236,14 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
 	}
 
 	/**
-	 *
 	 * @throws Exception exceptions during execution
 	 */
 	@Test(groups = {"wso2.esb"}, description = "Datamapper simple one to one xml to xml conversion when xslt "
 											   + "stylesheet available but not xslt compatible")
 	public void testOneToOneXmlToXmlNotXSLTCompatible() throws Exception {
 		uploadResourcesToGovernanceRegistryWithXSLTStyleSheet(REGISTRY_ROOT_PATH + "xml_to_xml_not_xslt_compatible/",
-															  ARTIFACT_ROOT_PATH + "xml_to_xml_not_xslt_compatible" + File.separator);
+															  ARTIFACT_ROOT_PATH + "xml_to_xml_not_xslt_compatible" +
+															  File.separator);
 
 		String request = "   <company>\n" +
 						 "      <name>WSO2</name>\n" +

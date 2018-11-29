@@ -22,12 +22,12 @@ import org.testng.annotations.BeforeClass;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import javax.activation.DataHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.activation.DataHandler;
 
 public class DataMapperIntegrationTest extends ESBIntegrationTest {
 
@@ -86,7 +86,7 @@ public class DataMapperIntegrationTest extends ESBIntegrationTest {
 	}
 
 	protected void uploadResourcesToGovernanceRegistryWithXSLTStyleSheet(String registryRoot, String
-			artifactRoot)	throws Exception {
+			artifactRoot) throws Exception {
 		resourceAdminServiceClient.addCollection("/_system/governance/", registryRoot, "", "");
 		resourceAdminServiceClient.addResource("/_system/governance/" + registryRoot + "testMap.js", "text/plain", "",
 											   new DataHandler(new URL("file:///" + getClass()
