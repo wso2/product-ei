@@ -323,20 +323,20 @@ wso2.securevault:
 wso2.datasources:
   dataSources:
     -
+      name: WSO2_CLUSTER_DB
+      description: "The datasource used by cluster coordinators in HA deployment"
       definition:
+        type: RDBMS
         configuration:
           connectionTestQuery: "SELECT 1"
           driverClassName: org.h2.Driver
           idleTimeout: 60000
           isAutoCommit: false
-          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CLUSTER_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE"
           maxPoolSize: 10
           password: wso2carbon
           username: wso2carbon
           validationTimeout: 30000
-        type: RDBMS
-      description: "The datasource used for registry and user manager"
-      name: WSO2_CARBON_DB
 
     # carbon metrics data source
     - name: WSO2_METRICS_DB
@@ -374,58 +374,6 @@ wso2.datasources:
           validationTimeout: 30000
           isAutoCommit: false
 
-    - name: HTTP_ANALYTICS_DB
-      description: The datasource used for HTTP Analytics dashboard
-      jndiConfig:
-        name: jdbc/HTTP_ANALYTICS_DB
-        useJndiReference: false
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/HTTP_ANALYTICS_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
-          maxPoolSize: 30
-          idleTimeout: 60000
-          connectionTestQuery: SELECT 1
-          validationTimeout: 30000
-          isAutoCommit: false
-#    - name: Twitter_Analytics
-#      description: The datasource used for Twitter Analytics dashboard
-#      jndiConfig:
-#        name: jdbc/Twitter_Analytics
-#        useJndiReference: false
-#      definition:
-#        type: RDBMS
-#        configuration:
-#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/Twitter_Analytics;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE'
-#          username: wso2carbon
-#          password: wso2carbon
-#          driverClassName: org.h2.Driver
-#          maxPoolSize: 30
-#          idleTimeout: 60000
-#          connectionTestQuery: SELECT 1
-#          validationTimeout: 30000
-#          isAutoCommit: false
-
-    - name: Message_Tracing_DB
-      description: "The datasource used for message tracer to store span information."
-      jndiConfig:
-        name: jdbc/Message_Tracing_DB
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
-          maxPoolSize: 30
-          idleTimeout: 60000
-          connectionTestQuery: SELECT 1
-          validationTimeout: 30000
-          isAutoCommit: false
-
     - name: EI_ANALYTICS
       description: "The datasource used for EI Analytics dashboard feature"
       jndiConfig:
@@ -442,72 +390,6 @@ wso2.datasources:
           validationTimeout: 30000
           isAutoCommit: false
 
-
-#    - name: IS_ANALYTICS_DB
-#      description: "The data source used for WSO2 IS Analytics statistics"
-#      jndiConfig:
-#        name: jdbc/IS_ANALYTICS_DB
-#      definition:
-#        type: RDBMS
-#        configuration:
-#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
-#          username: wso2carbon
-#          password: wso2carbon
-#          driverClassName: org.h2.Driver
-#          maxPoolSize: 50
-#          idleTimeout: 60000
-#          validationTimeout: 30000
-#          isAutoCommit: false
-
-#    - name: GEO_LOCATION_DATA
-#      description: "The data source used for geo location database"
-#      jndiConfig:
-#        name: jdbc/GEO_LOCATION_DATA
-#      definition:
-#        type: RDBMS
-#        configuration:
-#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/GEO_LOCATION_DATA;AUTO_SERVER=TRUE'
-#          username: wso2carbon
-#          password: wso2carbon
-#          driverClassName: org.h2.Driver
-#          maxPoolSize: 50
-#          idleTimeout: 60000
-#          validationTimeout: 30000
-#          isAutoCommit: false
-
-#    - name: APIM_ANALYTICS_DB
-#      description: "The datasource used for APIM statistics aggregated data."
-#      jndiConfig:
-#        name: jdbc/APIM_ANALYTICS_DB
-#      definition:
-#        type: RDBMS
-#        configuration:
-#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_STATS_DB;AUTO_SERVER=TRUE'
-#          username: wso2carbon
-#          password: wso2carbon
-#          driverClassName: org.h2.Driver
-#          maxPoolSize: 50
-#          idleTimeout: 60000
-#          connectionTestQuery: SELECT 1
-#          validationTimeout: 30000
-#          isAutoCommit: false
-
-#    - name: WSO2AM_MGW_ANALYTICS_DB
-#      description: "The datasource used for APIM MGW analytics data."
-#      jndiConfig:
-#        name: jdbc/WSO2AM_MGW_ANALYTICS_DB
-#      definition:
-#        type: RDBMS
-#        configuration:
-#          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_MGW_ANALYTICS_DB;AUTO_SERVER=TRUE'
-#          username: wso2carbon
-#          password: wso2carbon
-#          driverClassName: org.h2.Driver
-#          maxPoolSize: 50
-#          idleTimeout: 60000
-#          connectionTestQuery: SELECT 1
-#          validationTimeout: 30000
-#          isAutoCommit: false
 
 siddhi:
   extensions:
@@ -538,10 +420,28 @@ cluster.config:
   groupId:  sp
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
-    datasource: WSO2_CARBON_DB
+    datasource: WSO2_CLUSTER_DB
     heartbeatInterval: 1000
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
+
+# Authentication configuration
+auth.configs:
+  type: 'local'        # Type of the IdP client used
+  userManager:
+    adminRole: admin   # Admin role which is granted all permissions
+    userStore:         # User store
+      users:
+       -
+         user:
+           username: admin
+           password: YWRtaW4=
+           roles: 1
+      roles:
+       -
+         role:
+           id: 1
+           displayName: admin
 
   # Sample of deployment.config for Two node HA
 #deployment.config:
