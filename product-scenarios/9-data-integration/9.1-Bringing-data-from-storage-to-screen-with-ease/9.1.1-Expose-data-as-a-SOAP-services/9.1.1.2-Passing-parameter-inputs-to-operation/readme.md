@@ -1,17 +1,17 @@
-# 9.1.1.1 Basic CRUD operations
+# 9.1.1.2 Passing parameter inputs to operation
 
 ## Business use case narrative
 
-In this scenario, data resides in a datasource are exposed as a SOAP with basic CRUD operations (Insert, Select, Update 
-and Delete). 
+In this scenario, the input parameters for a query is passed to execute the query in the request rather than define that
+in the service deployment time.
 
 ## When to use
-This approach can be used to expose data resides in a datasource using CRUD operations. In this usecase the data is exposed
-as a SOAP service.
+This approach can be used to execute database queries by passing parameters in the request it self in the runtime, 
+rather than configuring in the deployment time.
 
 ## Sample use-case
-In this sample data service insert, read, edit and delete operations on data in an RDBMS datasource are exposed as a 
-SOAP operations.
+In this sample data service SQL queries on data in an RDBMS datasource can be executed as
+a SOAP operations by passing parameters in the request.
 
 ```xml
 <data name="RDBMSSample" serviceNamespace="http://ws.wso2.org/dataservice/samples/rdbms_sample">
@@ -25,16 +25,6 @@ SOAP operations.
       <property name="org.wso2.ws.dataservice.autocommit">false</property>
       <property name="org.wso2.ws.dataservice.validation_query"/>
    </config>
-   <query id="selectEmployeeQuery" useConfig="default">
-      <sql>select  * from Employees</sql>
-      <result element="employees" rowName="employee">
-         <element column="employeeNumber" name="employeeNumber-name" xsdType="string"/>
-         <element column="lastName" name="lastName" xsdType="string"/>
-         <element column="firstName" name="firstName" xsdType="string"/>
-         <element column="email" name="email" xsdType="string"/>
-         <element column="salary" name="salary" xsdType="string"/>
-      </result>
-   </query>
    <query id="setEmployeeSalaryQuery" useConfig="default">
       <sql>update Employees set salary=:salary where employeeNumber=:employeeNumber</sql>
       <param name="salary" ordinal="1" paramType="SCALAR" sqlType="DOUBLE" type="IN"/>
@@ -52,9 +42,6 @@ SOAP operations.
       <sql>delete from Employees where employeeNumber=:employeeNumber</sql>
       <param name="employeeNumber" ordinal="1" paramType="SCALAR" sqlType="INTEGER" type="IN"/>
    </query>
-   <operation name="selectEmployee">
-      <call-query href="selectEmployeeQuery"/>
-   </operation>
    <operation name="setEmployeeSalary">
       <call-query href="setEmployeeSalaryQuery">
          <with-param name="employeeNumber" query-param="employeeNumber"/>
@@ -139,7 +126,9 @@ Standard way of deploying a data service is by packaging the data service as a C
 
 |      ID       | Summary |
 | ------------- | ------------- |
-| 9.1.1.1.1     | Insert data to a table |
-| 9.1.1.1.2     | Edit data in a table |
-| 9.1.1.1.3     | Read data from a table |
-| 9.1.1.1.4     | Delete data from a table |
+| 9.1.1.2.1     | Add input mapping to a insert query to insert values passed in the request |
+| 9.1.1.2.2     | Add input mapping to a update query to update a values passed in the request |
+| 9.1.1.2.3     | Add input mapping to a select query to filter data based on the values passed in the request |
+| 9.1.1.2.4     | Add input mapping to a delete query to filter data based on the values passed in the request |
+| 9.1.1.2.5     | Return generated keys |
+| 9.1.1.2.6     | Return updated row count |

@@ -1,7 +1,6 @@
 # 5.1.1.4 Using Filter Mediator on given Xpath with namespace
 
-##When to use
-
+## When to use
 If you need to provide an Xpath that has namespace, you can add it as a namespace in Filter mediator.
 
 Given below is the syntax of how to add the it with namespace.
@@ -13,19 +12,19 @@ Given below is the syntax of how to add the it with namespace.
 
 ```
 
-##Sample use-case
+## Sample use-case
 
 
-##Pre-requisites
+## Pre-requisites
 
 
-##Development guidelines
+## Development guidelines
 
 
-##Deployment guidelines
+## Deployment guidelines
 
 
-##Test cases
+## Test cases
 
 | Test Case ID  |                        Test Case	               |                                Test Description                |
 | ------------- | ------------------------------------------------ | ---------------------------------------------------------------|
