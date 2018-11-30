@@ -49,3 +49,4 @@ Standard way of deploying a data service is by packaging the data service as a C
 | 9.1.2.10.12    | User defined data type as an output parameter in JSON |
 | 9.1.2.10.13    | Timestamp data type as input parameter in XML |
 | 9.1.2.10.14    | Timestamp data type as input parameter in JSON |
+| 9.1.2.10.15    | JSON mapping with data types (ex: $int) |
