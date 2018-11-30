@@ -116,7 +116,6 @@ The response will be as below after the response is enriched.
 </soapenv:Envelope>
 ```
 
-
 ## Deployment guidelines
 
 * We can simply deploy by copying the CAR archive into <EI_HOME>/repository/deployment/server/carbonapps directory, and it will be deployed.
