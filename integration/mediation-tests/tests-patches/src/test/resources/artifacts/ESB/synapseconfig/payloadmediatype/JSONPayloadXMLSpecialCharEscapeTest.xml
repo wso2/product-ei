@@ -46,7 +46,7 @@
                 <log level="full"/>
                 <property name="messageType" scope="axis2" value="application/json"/>
                 <property name="ContentType" scope="axis2" value="application/json"/>
-                <payloadFactory media-type="json">
+                <payloadFactory media-type="json" escapeXmlChars="true">
                     <format>$1</format>
                     <args>
                         <arg evaluator="json" expression="$.text"/>
