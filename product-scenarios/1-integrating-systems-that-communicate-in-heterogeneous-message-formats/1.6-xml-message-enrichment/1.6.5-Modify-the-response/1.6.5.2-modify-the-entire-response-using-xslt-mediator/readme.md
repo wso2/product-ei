@@ -1,10 +1,10 @@
 # 1.6.5.2 Modify the entire response using xslt mediator
 
 ## When to use
-We can use WSO2 XSLT mediator to modify a selected element in the response which is sent from backend. 
+We can use WSO2 XSLT mediator to modify the entire response which is sent from backend. 
 
 ## Sample use case
-The use case is as follows, WSO2 EI will get a request and it will be sent to the backend. Once it gets the response, selected elements of the response will be modified and displayed to the user. 
+The use case is as follows, WSO2 EI will get a request and it will be sent to the backend. Once it gets the response, the entire response will be modified and displayed to the user. 
 
 Request payload
 ```
