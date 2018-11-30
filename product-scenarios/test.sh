@@ -18,7 +18,6 @@ set -o xtrace
 
 HOME=`pwd`
 TEST_SCRIPT=test.sh
-SUREFIRE_DIR="scenarios"
 
 function usage()
 {
@@ -84,13 +83,13 @@ export DATA_BUCKET_LOCATION=${INPUT_DIR}
 
 #=============== Execute Scenarios ===============================================
 
-
 mvn clean install -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
--fae -B -f pom.xml
+-fae -B -f ./pom.xml
 
 
 #=============== Copy Surefire Reports ===========================================
 
 echo "Copying surefire-reports to ${OUTPUT_DIR}"
-mkdir -p ${OUTPUT_DIR}/${SUREFIRE_DIR}
-find . -name "surefire-reports" -exec cp --parents -r {} ${OUTPUT_DIR}/${SUREFIRE_DIR} \;
+
+mkdir -p ${OUTPUT_DIR}
+find ./* -name "surefire-reports" -exec cp --parents -r {} ${OUTPUT_DIR} \;
