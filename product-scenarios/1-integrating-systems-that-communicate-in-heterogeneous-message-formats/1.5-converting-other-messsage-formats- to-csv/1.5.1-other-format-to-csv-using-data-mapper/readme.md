@@ -1,9 +1,10 @@
-# 1.1.2 Converting SOAP message to JSON using MessageType property
+# 1.5.1 Converting Other message formats to CSV using Data Mapper Mediator
 
 
 ## When to use
 The reconstruction of entire message payload is needed when required format of Client and Service are different. 
-In this use case we can use [Property mediator](https://docs.wso2.com/display/EI640/Property+Mediator) to transform SOAP response to JSON.
+In this use case we can switch between CSV and other message formats such as XML, JSON and other CSV formats 
+using the [Data Mapper Mediator](https://docs.wso2.com/display/EI640/Data+Mapper+Mediator)
 
 
 ## Sample use case
@@ -21,13 +22,16 @@ A REST client like cURL to invoke the ESB API.
 
 * We can create the api in Management Console and deploy.
 
+## REST API
+
+
 ## Supported versions
+
 This is supported in all the EI and ESB versions
 
 ## Test cases
 
-| ID        | Summary                                                |
-| ----------|:------------------------------------------------------:|
-| 1.1.2.1   | Converting a valid SOAP message to JSON ( Happy Path ) |
-| 1.1.2.2   | Handling malformed SOAP messages                       |
-| 1.1.2.3   | Converting large sized SOAP message to JSON            |
+| ID        | Summary                             |
+| ----------|:-----------------------------------:|
+| 1.5.1.1   | Converting XML to CSV               |
+| 1.5.1.2   | Converting JSON to CSV              |

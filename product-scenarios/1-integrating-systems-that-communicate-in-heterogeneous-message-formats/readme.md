@@ -15,5 +15,10 @@ Developer
 
 ## Sub-Scenarios
 - [1.1 Converting SOAP message to JSON](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.1-converting-soap-to-json)
-- 1.2 Converting POX message to JSON
+- [1.2 Converting POX message to JSON](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.2-converting-pox-to-json)
 - [1.3 Converting JSON message to SOAP](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.3-converting-json-to-soap)
+- [1.4 Converting CSV message to Other message formats (XML, JSON, CSV)](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.4-converting-csv-to-other-messsage-formats)
+- [1.5 Converting Other message formats (XML, JSON) message to CSV](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.5-converting-other-messsage-formats-%20to-csv)
+- [1.6 XML Message enrichment (SOAP and POX)](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/1-integrating-systems-that-communicate-in-heterogeneous-message-formats/1.6-xml-message-enrichment)
+- 1.7 JSON Message enrichment
+- 1.8 Plain/Text Message enrichment
