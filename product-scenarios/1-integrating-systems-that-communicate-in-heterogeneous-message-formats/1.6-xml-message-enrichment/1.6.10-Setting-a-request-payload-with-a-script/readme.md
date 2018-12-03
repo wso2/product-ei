@@ -108,7 +108,11 @@ Proxy: http://localhost:8280/services/scriptProxy
  
 ```
 
+<<<<<<< HEAD
 The response will be as below after the request is enriched. 
+=======
+The response will be as below after the response is enriched. 
+>>>>>>> 9d89483e... add 1.6.10-Setting-a-request-payload-with-a-script
 
 ```
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
