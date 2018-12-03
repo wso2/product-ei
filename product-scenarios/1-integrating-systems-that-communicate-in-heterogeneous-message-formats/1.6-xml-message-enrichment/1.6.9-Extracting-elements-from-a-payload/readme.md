@@ -181,7 +181,7 @@ Proxy: http://localhost:8280/services/Proxy1
  
 ```
 
-The response will be as below after the response is enriched. 
+The response will be as below after the request is enriched. 
 
 ```
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
