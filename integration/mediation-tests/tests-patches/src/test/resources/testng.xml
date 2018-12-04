@@ -57,7 +57,7 @@
             <class name="org.wso2.carbon.esb.mediators.clone.ESBJAVA4913HandleExceptionTest"/>
             <class name="org.wso2.carbon.esb.mediators.aggregate.ESBJAVA5103CorrelateOnExpressionTestCase"/>
             <class name="org.wso2.carbon.esb.mediators.cache.DistributedCachingHeaderSerializationTestcase"/>
-            <class name="org.wso2.carbon.esb.mediators.cache.ESBJAVA4318Testcase"/>
+            <!--class name="org.wso2.carbon.esb.mediators.cache.ESBJAVA4318Testcase"/-->
             <class name="org.wso2.carbon.esb.mediators.rule.ESBJAVA2506RuleFetchFromRegistryFailsForTheFirstTime"/>
         </classes>
     </test>
