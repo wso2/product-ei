@@ -1,0 +1,128 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "company",
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "id" : "http://wso2jsonschema.org/name",
+      "type" : "string"
+    },
+    "usoffice" : {
+      "id" : "http://wso2jsonschema.org/usoffice",
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "id" : "http://wso2jsonschema.org/usoffice/address",
+          "type" : "object",
+          "properties" : {
+            "no" : {
+              "id" : "http://wso2jsonschema.org/usoffice/address/no",
+              "type" : "number"
+            },
+            "street" : {
+              "id" : "http://wso2jsonschema.org/usoffice/address/street",
+              "type" : "string"
+            },
+            "city" : {
+              "id" : "http://wso2jsonschema.org/usoffice/address/city",
+              "type" : "string"
+            },
+            "code" : {
+              "id" : "http://wso2jsonschema.org/usoffice/address/code",
+              "type" : "number"
+            },
+            "country" : {
+              "id" : "http://wso2jsonschema.org/usoffice/address/country",
+              "type" : "string"
+            }
+          }
+        },
+        "phone" : {
+          "id" : "http://wso2jsonschema.org/usoffice/phone",
+          "type" : "string"
+        },
+        "fax" : {
+          "id" : "http://wso2jsonschema.org/usoffice/fax",
+          "type" : "string"
+        }
+      }
+    },
+    "europeoffice" : {
+      "id" : "http://wso2jsonschema.org/europeoffice",
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "id" : "http://wso2jsonschema.org/europeoffice/address",
+          "type" : "object",
+          "properties" : {
+            "no" : {
+              "id" : "http://wso2jsonschema.org/europeoffice/address/no",
+              "type" : "string"
+            },
+            "street" : {
+              "id" : "http://wso2jsonschema.org/europeoffice/address/street",
+              "type" : "string"
+            },
+            "city" : {
+              "id" : "http://wso2jsonschema.org/europeoffice/address/city",
+              "type" : "string"
+            },
+            "code" : {
+              "id" : "http://wso2jsonschema.org/europeoffice/address/code",
+              "type" : "string"
+            },
+            "country" : {
+              "id" : "http://wso2jsonschema.org/europeoffice/address/country",
+              "type" : "string"
+            }
+          }
+        },
+        "phone" : {
+          "id" : "http://wso2jsonschema.org/europeoffice/phone",
+          "type" : "string"
+        }
+      }
+    },
+    "asiaoffice" : {
+      "id" : "http://wso2jsonschema.org/asiaoffice",
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "id" : "http://wso2jsonschema.org/asiaoffice/address",
+          "type" : "object",
+          "properties" : {
+            "no" : {
+              "id" : "http://wso2jsonschema.org/asiaoffice/address/no",
+              "type" : "number"
+            },
+            "street" : {
+              "id" : "http://wso2jsonschema.org/asiaoffice/address/street",
+              "type" : "string"
+            },
+            "city" : {
+              "id" : "http://wso2jsonschema.org/asiaoffice/address/city",
+              "type" : "string"
+            },
+            "code" : {
+              "id" : "http://wso2jsonschema.org/asiaoffice/address/code",
+              "type" : "number"
+            },
+            "country" : {
+              "id" : "http://wso2jsonschema.org/asiaoffice/address/country",
+              "type" : "string"
+            }
+          }
+        },
+        "phone" : {
+          "id" : "http://wso2jsonschema.org/asiaoffice/phone",
+          "type" : "string"
+        },
+        "fax" : {
+          "id" : "http://wso2jsonschema.org/asiaoffice/fax",
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

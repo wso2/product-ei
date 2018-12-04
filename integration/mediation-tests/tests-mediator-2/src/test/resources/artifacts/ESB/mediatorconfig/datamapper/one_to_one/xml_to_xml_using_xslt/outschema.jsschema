@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "title":"company",
+  "properties": {
+    "offices": {
+      "id": "http://jsonschema.net/offices",
+      "type": "object",
+      "properties": {
+        "usoffice": {
+          "id": "http://jsonschema.net/offices/usoffice",
+          "type": "object",
+          "properties": {
+            "address": {
+              "id": "http://jsonschema.net/offices/usoffice/address",
+              "type": "string"
+            },
+            "phone": {
+              "id": "http://jsonschema.net/offices/usoffice/phone",
+              "type": "string"
+            },
+            "fax": {
+              "id": "http://jsonschema.net/offices/usoffice/fax",
+              "type": "string"
+            }
+          },
+          "required": [
+            "address",
+            "phone",
+            "fax"
+          ]
+        },
+        "europeoffice": {
+          "id": "http://jsonschema.net/offices/europeoffice",
+          "type": "object",
+          "properties": {
+            "address": {
+              "id": "http://jsonschema.net/offices/europeoffice/address",
+              "type": "string"
+            },
+            "phone": {
+              "id": "http://jsonschema.net/offices/europeoffice/phone",
+              "type": "string"
+            },
+            "fax": {
+              "id": "http://jsonschema.net/offices/europeoffice/fax",
+              "type": "string"
+            }
+          }
+        },
+        "asiaoffice": {
+          "id": "http://jsonschema.net/offices/asiaoffice",
+          "type": "object",
+          "properties": {
+            "address": {
+              "id": "http://jsonschema.net/offices/asiaoffice/address",
+              "type": "string"
+            },
+            "phone": {
+              "id": "http://jsonschema.net/offices/asiaoffice/phone",
+              "type": "string"
+            },
+            "fax": {
+              "id": "http://jsonschema.net/offices/asiaoffice/fax",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "usoffice",
+        "europeoffice",
+        "asiaoffice"
+      ]
+    }
+  },
+  "required": [
+    "offices"
+  ]
+}

@@ -178,5 +178,118 @@ public class DataMapperSimpleTestCase extends DataMapperIntegrationTest {
         Assert.assertEquals(response,expectedResponse);
     }
 
+	/**
+	 * @throws Exception exceptions during execution
+	 */
+	@Test(groups = {"wso2.esb"}, description = "Datamapper simple one to one xml to xml " +
+											   "conversion using xslt transformation")
+	public void testOneToOneXmlToXmlUsingXSLT() throws Exception {
+		uploadResourcesToGovernanceRegistryWithXSLTStyleSheet(REGISTRY_ROOT_PATH + "xml_to_xml_using_xslt/",
+															  ARTIFACT_ROOT_PATH + "xml_to_xml_using_xslt" + File
+																	  .separator);
+
+		String request = "   <company>\n" +
+						 "      <name>WSO2</name>\n" +
+						 "      <usoffice>\n" +
+						 "         <address>\n" +
+						 "            <no>787</no>\n" +
+						 "            <street>Castro Street,Mountain View</street>\n" +
+						 "            <city>CA</city>\n" +
+						 "            <code>94041</code>\n" +
+						 "            <country>US</country>\n" +
+						 "         </address>\n" +
+						 "         <phone> +1 650 745 4499</phone>\n" +
+						 "         <fax> +1 408 689 4328</fax>\n" +
+						 "      </usoffice>\n" +
+						 "      <europeoffice>\n" +
+						 "         <address>\n" +
+						 "            <no>2-6 </no>\n" +
+						 "            <street>Boundary Row</street>\n" +
+						 "            <city>London</city>\n" +
+						 "            <code>SE1 8HP</code>\n" +
+						 "            <country>UK</country>\n" +
+						 "         </address>\n" +
+						 "         <phone>+44 203 318 6025</phone>\n" +
+						 "      </europeoffice>\n" +
+						 "      <asiaoffice>\n" +
+						 "         <address>\n" +
+						 "            <no>20</no>\n" +
+						 "            <street>Palm Grove</street>\n" +
+						 "            <city>Colombo 03</city>\n" +
+						 "            <code>10003</code>\n" +
+						 "            <country>LKA</country>\n" +
+						 "         </address>\n" +
+						 "         <phone>+94 11 214 5345</phone>\n" +
+						 "         <fax>+94 11 2145300</fax>\n" +
+						 "      </asiaoffice>\n" +
+						 "   </company>\n";
+		String response = sendRequest(getProxyServiceURLHttp
+											  ("dataMapperOneToOneXmlToXmlUsingXSLTTestProxy"),
+									  request, "text/xml");
+		Assert.assertEquals(response,
+							"<company><offices><asiaoffice><fax> +1 408 689 4328</fax><phone> +1 650 745 " +
+							"4499</phone><address>WSO220Colombo " +
+							"03</address></asiaoffice><europeoffice><fax>+94 11 " +
+							"2145300</fax><phone>+94 11 214 5345</phone><address>WSO220Colombo " +
+							"03</address></europeoffice><usoffice><phone>+44 203 318 " +
+							"6025</phone><address>WSO2787CA</address></usoffice></offices></company>");
+	}
+
+	/**
+	 * @throws Exception exceptions during execution
+	 */
+	@Test(groups = {"wso2.esb"}, description = "Datamapper simple one to one xml to xml conversion when xslt "
+											   + "stylesheet available but not xslt compatible")
+	public void testOneToOneXmlToXmlNotXSLTCompatible() throws Exception {
+		uploadResourcesToGovernanceRegistryWithXSLTStyleSheet(REGISTRY_ROOT_PATH + "xml_to_xml_not_xslt_compatible/",
+															  ARTIFACT_ROOT_PATH + "xml_to_xml_not_xslt_compatible" +
+															  File.separator);
+
+		String request = "   <company>\n" +
+						 "      <name>WSO2</name>\n" +
+						 "      <usoffice>\n" +
+						 "         <address>\n" +
+						 "            <no>787</no>\n" +
+						 "            <street>Castro Street,Mountain View</street>\n" +
+						 "            <city>CA</city>\n" +
+						 "            <code>94041</code>\n" +
+						 "            <country>US</country>\n" +
+						 "         </address>\n" +
+						 "         <phone> +1 650 745 4499</phone>\n" +
+						 "         <fax> +1 408 689 4328</fax>\n" +
+						 "      </usoffice>\n" +
+						 "      <europeoffice>\n" +
+						 "         <address>\n" +
+						 "            <no>2-6 </no>\n" +
+						 "            <street>Boundary Row</street>\n" +
+						 "            <city>London</city>\n" +
+						 "            <code>SE1 8HP</code>\n" +
+						 "            <country>UK</country>\n" +
+						 "         </address>\n" +
+						 "         <phone>+44 203 318 6025</phone>\n" +
+						 "      </europeoffice>\n" +
+						 "      <asiaoffice>\n" +
+						 "         <address>\n" +
+						 "            <no>20</no>\n" +
+						 "            <street>Palm Grove</street>\n" +
+						 "            <city>Colombo 03</city>\n" +
+						 "            <code>10003</code>\n" +
+						 "            <country>LKA</country>\n" +
+						 "         </address>\n" +
+						 "         <phone>+94 11 214 5345</phone>\n" +
+						 "         <fax>+94 11 2145300</fax>\n" +
+						 "      </asiaoffice>\n" +
+						 "   </company>\n";
+		String response = sendRequest(getProxyServiceURLHttp
+											  ("dataMapperOneToOneXmlToXmlNotXSLTCompatibleTestProxy"),
+									  request, "text/xml");
+		Assert.assertEquals(response,
+							"<company><offices><asiaoffice><fax> +1 408 689 4328</fax><phone> +1 650 745 " +
+							"4499</phone><address>WSO220Colombo " +
+							"03</address></asiaoffice><europeoffice><fax>+94 11 " +
+							"2145300</fax><phone>+94 11 214 5345</phone><address>WSO220Colombo " +
+							"03</address></europeoffice><usoffice><phone>+44 203 318 " +
+							"6025</phone><address>WSO2787CA</address></usoffice></offices></company>");
+	}
 
 }
