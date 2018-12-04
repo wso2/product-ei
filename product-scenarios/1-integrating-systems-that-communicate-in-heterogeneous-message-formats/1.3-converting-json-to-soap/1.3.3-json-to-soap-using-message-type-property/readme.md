@@ -1,8 +1,5 @@
-# 1.3.3 Converting JSON message to SOAP using MessageType Property 
 
-
-![SOAP to JSON conversion](images/JSON-to-SOAP.png)
-
+# 1.3.3 Converting JSON message to SOAP using MessageType property
 
 ## When to use
 The reconstruction of entire message payload is needed when required format of Client and Service are different. 
@@ -31,8 +28,8 @@ This is supported in all the EI and ESB versions
 
 ## Test cases
 
-| ID        | Summary                                       |
-| ----------|:---------------------------------------------:|
-| 1.3.3.1   | Processing expected JSON message (Happy path) |
-| 1.3.3.2   | Handling JSON message with special characters |
-| 1.3.3.3   | Handling malformed JSON message               |
+| ID        | Summary                                                  |
+| ----------|:--------------------------------------------------------:|
+| 1.3.3.1   | Converting a valid JSON message to SOAP ( Happy Path )   |
+| 1.3.3.2   | Transformation of a JSON message with special characters |
+| 1.3.3.3   | Handling malformed JSON messages                         |
