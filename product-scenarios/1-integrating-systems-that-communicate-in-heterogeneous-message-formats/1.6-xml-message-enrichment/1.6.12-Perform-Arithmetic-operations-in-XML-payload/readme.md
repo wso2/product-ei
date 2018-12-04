@@ -5,7 +5,7 @@ Data Mapper mediator is a data mapping solution that can be integrated into a me
 
 ## Sample use case
 This use case focusses on performing addition of two numbers using datamapper mediator. 
-<img src="images/datamapper-mediator" alt="Performing Arithmetic operations using datamapper mediator"> 
+![1.6.12-Performing Arithmetic operations using datamapper mediator](images/datamapper-mediator.png)
 
 
 ## Prerequisites
