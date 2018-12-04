@@ -55,12 +55,12 @@ ResultAdd.xml
 14. Right-click on the top title bar of the Output box and, click Load Output. 
 15. Click the file system link in Select resource from, select the XML file you saved in your local file system in step 13, and click Open.  
 16. Do the mapping as preferred using operators as shown in the example below.  
-![1.6.12-Datamapping configuration of add operation](images/addNumbers)
+![1.6.12-Datamapping configuration of add operation](images/addNumbers.png)
 
 17. Press Ctrl+S keys in each tab, to save all the configurations. 
 18. Login to WSO2 EI Management Console and deploy the carbon application to WSO2 EI. 
 19. Click Main, and then click APIs in the Service Bus menu. You view the deployed  REST API invocation URL as shown below.  
-![1.6.12-Deployed API](images/api)
+![1.6.12-Deployed API](images/api.png)
 
 API 'AddOperation' is as below. 
 
@@ -86,7 +86,7 @@ API 'AddOperation' is as below.
     Body: raw xml/application
     Message: Enter the input
 
-    ![1.6.12-Postman Request](images/postman-req)
+    ![1.6.12-Postman Request](images/postman-req.png)
 
 
 The response will be as below. 
