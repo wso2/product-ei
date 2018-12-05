@@ -107,7 +107,6 @@ Proxy: http://localhost:8280/services/scriptProxy
 </soap:Envelope>
  
 ```
-
 The response will be as below after the request is enriched. 
 
 ```
