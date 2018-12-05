@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.esb.scenario.test.common;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
@@ -279,14 +280,21 @@ public class ScenarioTestBase {
         };
     }
 
-    protected List<Object[]> getRequestResponseList(String testCase) throws Exception {
-        String relativeRequestFolderLocation = File.separator + "source_files" +
+    /**
+     * Get the list of request,response and header of the each testcase
+     *
+     * @param testCase - the name of the testCase. Please follow the common conventions to store request and response files
+     * @return - List of Arrays consisting request, response and header.
+     * @throws IOException - if and error occurs file extracting the file content
+     */
+    protected List<Object[]> getRequestResponseHeaderList(String testCase) throws IOException {
+        String relativeRequestFolderLocation = File.separator + ScenarioConstants.SOURCE_FILES +
                                        File.separator + testCase +
-                                       File.separator + "request";
+                                       File.separator + ScenarioConstants.REQUEST;
 
-        String relativeResponseFolderLocation = File.separator + "source_files" +
+        String relativeResponseFolderLocation = File.separator + ScenarioConstants.SOURCE_FILES +
                                         File.separator + testCase +
-                                        File.separator + "response";
+                                        File.separator + ScenarioConstants.RESPONSE;
 
         List<String> requestFiles = getListOfFiles(relativeRequestFolderLocation);
         List<String> responseFiles = getListOfFiles(relativeResponseFolderLocation);
@@ -296,11 +304,14 @@ public class ScenarioTestBase {
 
         ArrayList<String> requestArray = new ArrayList();
         ArrayList<String> responseArray = new ArrayList();
+        ArrayList<String> headerArray = new ArrayList();
 
 
         for (String file : requestFiles) {
             String fileContent = getFileContent(relativeRequestFolderLocation, file);
             requestArray.add(fileContent);
+            String header = FilenameUtils.removeExtension(file);
+            headerArray.add(header);
         }
 
         for (String file : responseFiles) {
@@ -311,7 +322,7 @@ public class ScenarioTestBase {
         List<Object[]> requestResponseList = new ArrayList<>();
 
         for (int i = 0; i < requestArray.size(); i++) {
-            String[] tmp = { requestArray.get(i) , responseArray.get(i) };
+            String[] tmp = { requestArray.get(i) , responseArray.get(i) , headerArray.get(i)};
             requestResponseList.add(tmp);
         }
         return requestResponseList;

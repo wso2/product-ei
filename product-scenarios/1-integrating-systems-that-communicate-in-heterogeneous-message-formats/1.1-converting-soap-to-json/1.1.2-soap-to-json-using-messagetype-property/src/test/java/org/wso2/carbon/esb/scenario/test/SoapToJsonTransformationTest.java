@@ -7,10 +7,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.scenario.test.common.HttpConstants;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class SoapToJsonTransformationTest extends ScenarioTestBase {
 
@@ -25,14 +29,16 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
     }
 
     @Test(description = "1.1.2.1", enabled = true, dataProvider = "1.1.2.1")
-    public void convertValidSoapToJson(String request, String expectedResponse) throws Exception {
+    public void convertValidSoapToJson(String request, String expectedResponse, String header) throws Exception {
         log.info("Executing test case 1.1.2.1");
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
 
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
 
-        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, null, request, "application/xml");
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, header);
+        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
         log.info("Actual response received 1.1.2.1: " + responsePayload);
@@ -49,14 +55,17 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
     }
 
     @Test(description = "1.1.2.2", enabled = true, dataProvider = "1.1.2.2")
-    public void convertMalformedSoapToJson(String request, String expectedResponse) throws Exception {
+    public void convertMalformedSoapToJson(String request, String expectedResponse, String header) throws Exception {
         log.info("Executing test case 1.1.2.2");
 
         SimpleHttpClient httpClient = new SimpleHttpClient();
 
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
 
-        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, null, request, "application/xml");
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, header);
+
+        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
         log.info("Actual response received 1.1.2.2: " + responsePayload);
@@ -77,12 +86,12 @@ public class SoapToJsonTransformationTest extends ScenarioTestBase {
     @DataProvider(name = "1.1.2.1")
     public Iterator<Object[]> soapToJson_1_1_2_1() throws Exception {
         String testCase = "1.1.2.1";
-        return getRequestResponseList(testCase).iterator();
+        return getRequestResponseHeaderList(testCase).iterator();
     }
 
     @DataProvider(name = "1.1.2.2")
     public Iterator<Object[]> soapToJson_1_1_2_2() throws Exception {
         String testCase = "1.1.2.2";
-        return getRequestResponseList(testCase).iterator();
+        return getRequestResponseHeaderList(testCase).iterator();
     }
 }
