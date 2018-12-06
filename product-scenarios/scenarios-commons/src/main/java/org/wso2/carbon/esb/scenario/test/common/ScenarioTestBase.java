@@ -97,7 +97,7 @@ public class ScenarioTestBase {
                 (infraProperties.getProperty(ESB_HTTPS_URL).endsWith("/") ? "" : "/");
 
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
-        // TODO
+        // TODO : remove this once test environment is stable
         standaloneMode = true;
 
         setKeyStoreProperties();
@@ -109,6 +109,13 @@ public class ScenarioTestBase {
         log.info("Service URL: " + serviceURL + " | Secured Service URL: " + securedServiceURL);
         log.info("The Backend service URL : " + backendURL + ". session cookie: " + sessionCookie);
 
+    }
+
+    /**
+     * Perform cleanup
+     * @throws Exception
+     */
+    public void cleanup() throws Exception {
     }
 
     /**
@@ -169,8 +176,11 @@ public class ScenarioTestBase {
             // Upload carbon application
             carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
 
-            //TODO - This thread sleep is added temporarily to wait until the ESB Instances sync in the cluster
-            Thread.sleep(120000);
+            //TODO - This thread sleep is added temporarily to wait until the ESB Instances sync in the cluster in clustered test environment
+            if (!Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT))) {
+                log.info("Waiting for artifacts synchronized across cluster nodes");
+                Thread.sleep(120000);
+            }
 
             applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
 
