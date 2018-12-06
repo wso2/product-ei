@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="EP_JSONEndpoint" xmlns="http://ws.apache.org/ns/synapse">
+    <http method="post" uri-template="http://52.23.200.142:9090/eiTests/JSONEndpoint"/>
+</endpoint>
