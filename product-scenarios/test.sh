@@ -82,6 +82,9 @@ echo "output directory : ${OUTPUT_DIR}"
 export DATA_BUCKET_LOCATION=${INPUT_DIR}
 
 #=============== Execute Scenarios ===============================================
+echo "Wait for manual testing"
+sleep 3600
+echo "Finish waiting manual testing"
 
 mvn clean install -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
 -fae -B -f ./pom.xml
