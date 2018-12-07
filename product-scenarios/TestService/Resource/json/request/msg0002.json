@@ -1,0 +1,12 @@
+{
+  "ModelPropertyLists": [
+    {
+      "ObjectType": "Project",
+      "Properties": "Companies,Name"
+    },
+    {
+      "ObjectType": "Company",
+      "Properties": "Name"
+    }
+  ]
+}
