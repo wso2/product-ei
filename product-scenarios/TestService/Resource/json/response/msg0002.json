@@ -1,0 +1,25 @@
+[
+  {
+    "Companies": [],
+    "Id": "1311b157-972c-43a4-9c8f-2a99737c31b6",
+    "IdExternal": null
+  },
+  {
+    "Companies": [
+      {
+        "IsActive": true,
+        "CustomFieldValue_Id": "bbb662d5-12d1-493d-9dd0-f15debe5cb0a",
+        "Name": "Our Company",
+        "Id": "bdcede2d-0d12-4e60-a13c-a2f4423c1a16",
+        "IdExternal": null
+      },
+      {
+        "IsActive": true,
+        "CustomFieldValue_Id": "fefd0592-9c3d-44b5-9d4f-d1eae0158f6e",
+        "Name": "Client A",
+        "Id": "1e66c298-d5d0-4e85-9a88-f07605b7f40f",
+        "IdExternal": null
+      }
+    ]
+  }
+    ]

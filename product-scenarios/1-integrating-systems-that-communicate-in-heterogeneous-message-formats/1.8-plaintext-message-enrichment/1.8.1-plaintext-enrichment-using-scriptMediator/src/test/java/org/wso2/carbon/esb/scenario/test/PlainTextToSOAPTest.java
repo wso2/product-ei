@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 public class PlainTextToSOAPTest extends ScenarioTestBase {
 
-    private final String carFileName = "scenario_1.8-synapse-configCompositeApplication_1.0.0.car";
+    private final String carFileName = "scenario_1.8-synapse-configCompositeApplication_1.0.0";
     private String proxyServiceUrl;
     private final String textRequestToSend = "WSO2 cooperation is a good company";
     //enrichment done by backend server
