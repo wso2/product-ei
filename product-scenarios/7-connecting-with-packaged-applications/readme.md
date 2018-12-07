@@ -1,4 +1,4 @@
-# 7. Connecting with Packaged applications
+# 7. Connecting with Packaged Applications
 
 ## Business use case narrative
 
@@ -6,6 +6,9 @@ Packaged applications such as SAP, PeopleSoft, Salesforce drive today's business
 the breed. Such applications often use dedicated protocols to customize the communication with these systems and 
 others in order to provide best customer experience along the way of being the best of the kind. It has hence become a 
 necessity of enterprise integration providers to support these custom interactions out of the box.
+
+![Connecting with Packaged Applications](images/sap_integration.png)
+
 
 ## Persona
 Developer 
