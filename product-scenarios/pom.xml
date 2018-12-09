@@ -49,7 +49,7 @@
 
     <properties>
         <product.ei.version>6.4.0</product.ei.version>
-        <axis2.wso2.version>1.6.1-wso2v20</axis2.wso2.version>
+        <axis2.wso2.version>1.6.1-wso2v28</axis2.wso2.version>
         <commons.logging.version>1.1</commons.logging.version>
         <carbon.kernel.version>4.4.36</carbon.kernel.version>
         <carbon.mediation.version>4.6.105</carbon.mediation.version>
@@ -65,6 +65,7 @@
     <modules>
         <module>scenarios-commons</module>
         <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
+        <module>4-gateway</module>
         <module>7-connecting-with-packaged-applications</module>
     </modules>
 
@@ -169,6 +170,16 @@
                 <version>${product.ei.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>admin-clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>automation-extensions</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
@@ -194,6 +205,17 @@
                 <artifactId>commons-lang</artifactId>
                 <version>${commons.lang.version}</version>
                 <scope>compile</scope>
+            </dependency>
+            <!-- Jacoco Dependency-->
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>0.7.5.201505241946</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.wso2</groupId>
+                <artifactId>axis2</artifactId>
+                <version>${axis2.wso2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
