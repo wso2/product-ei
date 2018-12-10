@@ -67,6 +67,7 @@
         <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
         <module>4-gateway</module>
         <module>7-connecting-with-packaged-applications</module>
+        <module>3-connecting-web-apis_cloud_services</module>
     </modules>
 
     <repositories>
