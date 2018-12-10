@@ -34,6 +34,7 @@
     <modules>
         <module>1.1.1-soap-to-json-using-payloadfactory-mediator</module>
         <module>1.1.2-soap-to-json-using-messagetype-property</module>
+        <module>1.1.3-soap-to-json-using-data-mapper</module>
     </modules>
 
 </project>
