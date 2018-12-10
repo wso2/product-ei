@@ -27,8 +27,9 @@ decisions and sending processed information to other systems over different comm
 
 The WSO2 ESB / EI has capabilities to achieve above.
 
+![File Processing](images/file_processing.png)
 
 ## Sub-Scenarios
 - [10.1 Simple file movement between two systems](10.1-simple-file-movement-between-two-systems)
 - [10.2 File movement with file processing between two systems](10.2-file-movement-with-file-processing-between-two-systems)
-- [10.3 Unlock the valuable business data stored in files](10.3-unlock-the-valuable-business-data-stored-in-files)
+- [10.3 Mask valuable business data stored in files](10.3-mask-valuable-business-data-stored-in-files)
