@@ -158,12 +158,11 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         String getSubResponse = getSubstitute(USER4);
         JSONObject jsonResponse = new JSONObject(getSubResponse);
         Assert.assertTrue("null".equals(jsonResponse.getString("endTime")), "Add sub with endTime null");
-        Thread.sleep(2 * 60 * 1000); // need to wait till activation time passed
 
         //task should be assigned to user1, user4 should have no tasks
         Awaitility.await()
                 .pollInterval(50, TimeUnit.MILLISECONDS)
-                .atMost(180000, TimeUnit.MILLISECONDS)
+                .atMost(300000, TimeUnit.MILLISECONDS)
                 .until(isTaskRemoveFromUser(USER4));
 
         JSONObject user4TasksJson = findTasksWithGivenAssignee(USER4);
