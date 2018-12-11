@@ -1,5 +1,5 @@
 1. [Integrating systems that communicate in heterogeneous message formats](1-integrating-systems-that-communicate-in-heterogeneous-message-formats)
-2. [Bridging systems that communicate in different protocols (Protocol translation)](2-Bridging-systems-that-communicate-in-different-protocols)
+2. [Bridging systems that communicate in different protocols (Protocol translation)](2-bridging-systems-that-communicate-in-different-protocols)
 3. [Connecting Web APIs / Cloud services]()
 4. [Gateway](4-gateway)
 5. [Route messages between systems](5-Route-messages-between-systems)

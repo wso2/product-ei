@@ -64,9 +64,10 @@
 
     <modules>
         <module>scenarios-commons</module>
-        <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
-        <module>4-gateway</module>
-        <module>7-connecting-with-packaged-applications</module>
+        <!--<module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>-->
+        <module>2-bridging-systems-that-communicate-in-different-protocols</module>
+        <!--<module>4-gateway</module>-->
+        <!--<module>7-connecting-with-packaged-applications</module>-->
     </modules>
 
     <repositories>
