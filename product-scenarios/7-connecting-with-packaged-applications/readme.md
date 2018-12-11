@@ -12,3 +12,4 @@ Developer
 
 ## Sub-Scenarios
 - [7.1 Connecting with SAP](7.1-connecting-with-SAP)
+- [7.2 Connecting with Salesforce](../3-connecting-web-apis-cloud-services/3.1-connect-with-cloud-applications/3.1.2-manage-salesforce-operations)
