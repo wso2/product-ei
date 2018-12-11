@@ -2,7 +2,7 @@
 <suite name="ESBTestSuite" parallel="false">
     <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.esb.scenario.test.PlainTextToSOAPTest"/>
+            <class name="org.wso2.carbon.esb.scenario.test.PlainTextEnrichmentTest"/>
         </classes>
     </test>
 </suite>

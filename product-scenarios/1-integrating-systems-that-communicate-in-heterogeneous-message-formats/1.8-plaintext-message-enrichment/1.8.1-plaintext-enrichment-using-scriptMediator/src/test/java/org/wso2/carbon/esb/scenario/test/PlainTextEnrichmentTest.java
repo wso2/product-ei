@@ -32,9 +32,9 @@ import java.io.IOException;
  * This test is to send a plain test message to a EI proxy service. The proxy service will modify the plaintext
  * message and send to backend service. Backend service will respond with a plaintext message.
  */
-public class PlainTextToSOAPTest extends ScenarioTestBase {
+public class PlainTextEnrichmentTest extends ScenarioTestBase {
 
-    private final String carFileName = "scenario_1.8-synapse-configCompositeApplication_1.0.0";
+    private final String carFileName = "scenario_1_8-synapse-configCompositeApplication_1.0.0";
     private String proxyServiceUrl;
     private final String textRequestToSend = "WSO2 cooperation is a good company";
     //enrichment done by backend server
