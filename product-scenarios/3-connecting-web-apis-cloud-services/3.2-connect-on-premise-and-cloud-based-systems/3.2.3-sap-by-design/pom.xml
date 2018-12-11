@@ -21,20 +21,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>3-connecting-web-apis_cloud_services</artifactId>
+        <artifactId>3.2-connect-on-premise-and-cloud-based-systems</artifactId>
         <groupId>org.wso2.ei</groupId>
         <version>6.4.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>3.1-integrate-with-cloud-applications</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>3.1.1-send-receive-manage-emails-from-gmail</module>
-        <module>3.1.2-manage-salesforce-operations</module>
-        <module>3.1.3-work-with-amazon-s3</module>
-        <module>3.1.4-work-with-microsoft-azure-storage</module>
-    </modules>
+    <artifactId>3.2.3-sap-by-design</artifactId>
 
 
 </project>

@@ -28,6 +28,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>3.2-connect-on-premise-and-cloud-based-systems</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>3.2.1-file-connector</module>
+        <module>3.2.2-kafka-connector</module>
+        <module>3.2.3-sap-by-design</module>
+        <module>3.2.4-db-event-listener</module>
+        <module>3.2.5-ldap-connector</module>
+    </modules>
 
 
 </project>
