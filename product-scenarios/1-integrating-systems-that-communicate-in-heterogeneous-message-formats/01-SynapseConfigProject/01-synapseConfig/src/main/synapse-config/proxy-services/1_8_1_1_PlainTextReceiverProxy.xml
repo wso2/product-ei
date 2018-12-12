@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_8_1_1_PlainTextReceiverProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <sequence key="fullLogSeq"/>
+            <sequence key="1_8_1_1_textmessageEnrichSeq"/>
+            <sequence key="fullLogSeq"/>
+            <sequence description="" key="callTextEndpointSeq"/>
+            <sequence key="fullLogSeq"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
