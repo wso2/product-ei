@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="Plaintext_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/Plaintext_EP.xml</file>
+    </artifact>
+    <artifact name="SOAP_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/SOAP_EP.xml</file>
+    </artifact>
+    <artifact name="1_8_1_1_PlainTextReceiverProxy" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_8_1_1_PlainTextReceiverProxy.xml</file>
+    </artifact>
+    <artifact name="callSoapSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callSoapSeq.xml</file>
+    </artifact>
+    <artifact name="callTextEndpointSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callTextEndpointSeq.xml</file>
+    </artifact>
+    <artifact name="fullLogSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/fullLogSeq.xml</file>
+    </artifact>
+</artifacts>
