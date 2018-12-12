@@ -28,7 +28,7 @@ public class SendMediatorTest extends ScenarioTestBase{
         deployCarbonApplication(carFileName);
     }
 
-    @Test(description = "2.1.1.3 test case execution process started", enabled = true, dataProvider = "2.1.1.3")
+    @Test(description = "2.1.1.3 Testcase", enabled = true, dataProvider = "2.1.1.3")
     public void  httpEndpointViaSendMediator(String request, String expectedResponse, String header) throws Exception {
         log.info("Executing test case 2.1.1.3");
         SimpleHttpClient httpClient = new SimpleHttpClient();
