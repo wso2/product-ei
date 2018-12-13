@@ -26,6 +26,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
+import org.wso2.carbon.esb.scenario.test.common.StringUtil;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
