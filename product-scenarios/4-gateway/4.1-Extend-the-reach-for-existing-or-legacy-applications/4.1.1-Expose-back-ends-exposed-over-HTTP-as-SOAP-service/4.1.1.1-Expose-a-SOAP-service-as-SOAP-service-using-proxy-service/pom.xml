@@ -56,14 +56,14 @@
                             <!-- Directory containing carbon applications -->
                             <name>test.resources.carbonApplications.dir</name>
                             <value>
-                                ${basedir}/../../resources/artifacts/
+                                ${basedir}/../../../04-SynapseConfigProject/04-synapseConfigCompositeApplication/target/
                             </value>
                         </property>
                         <property>
                             <!-- Related carbon applications (comma separated) to deploy -->
                             <name>test.resources.carbonApplications.list</name>
                             <value>
-                                scenario_4_1-synapse-configCompositeApplication_1.0.0
+                                04-synapseConfigCompositeApplication_1.0.0
                             </value>
                         </property>
                         <property>
