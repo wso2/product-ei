@@ -43,13 +43,9 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
 
     private static final Log log = LogFactory.getLog(ExposeSOAPasSOAPTest.class);
 
-    private static final String cappNameWithVersion = "scenario_4_1-synapse-configCompositeApplication_1.0.0";
-    private String cappName = "scenario_4_1-synapse-configCompositeApplication";
-
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        deployCarbonApplication(cappNameWithVersion);
     }
 
     @Test(description = "4.1.1.1.1 Front the back-end using pass-through proxy template")
@@ -60,8 +56,6 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
-        //TODO perform capp undeployment: temporarily disabled till test environment stabilization
-        undeployCarbonApplication(cappName);
     }
 
     private void invokeSOAPProxyAndAssert(String url) throws IOException, XMLStreamException {
