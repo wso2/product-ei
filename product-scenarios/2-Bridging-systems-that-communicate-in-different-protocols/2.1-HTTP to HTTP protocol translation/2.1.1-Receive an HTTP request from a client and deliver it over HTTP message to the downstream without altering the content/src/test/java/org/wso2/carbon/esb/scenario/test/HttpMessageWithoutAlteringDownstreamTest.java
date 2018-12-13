@@ -36,12 +36,10 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         headers.put(ScenarioConstants.MESSAGE_ID, header);
         HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
-        log.info("Actual response received 2.1.1.7: " + responsePayload);
-        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
-    }
 
-    @AfterClass(description = "Server Cleanup", alwaysRun = true)
-    public void cleanup() throws Exception {
+        log.info("Actual response received 2.1.1.7: " + responsePayload);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
     }
 
     @DataProvider(name = "2.1.1.7")
@@ -49,4 +47,5 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         String testCase = "2.1.1.7";
         return getRequestResponseHeaderList(testCase).iterator();
     }
+
 }
