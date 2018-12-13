@@ -202,7 +202,6 @@ public class TestPrepExecutionListener implements IExecutionListener {
 
     private boolean checkCAppDeployed(ApplicationAdminClient applicationAdminClient, final String cAppName)
             throws ApplicationAdminExceptionException, RemoteException {
-        log.info("Check CApp deployment : " + cAppName);
         String[] applicationList = applicationAdminClient.listAllApplications();
         if (applicationList != null) {
             for (String app : applicationList) {
@@ -220,15 +219,7 @@ public class TestPrepExecutionListener implements IExecutionListener {
             public Boolean call() throws Exception {
 
                 log.info("Check CApp un-deployment : " + cAppName);
-                boolean undeployed = true;
-                String[] applicationList = applicationAdminClient.listAllApplications();
-                if (applicationList != null) {
-                    for (String app : applicationList) {
-                        if (app.equals(cAppName)) {
-                            undeployed = false;
-                        }
-                    }
-                }
+                boolean undeployed = !checkCAppDeployed(applicationAdminClient, cAppName);
                 if (undeployed) log.info("Carbon Application : " + cAppName + " Successfully un-deployed");
                 return undeployed;
             }
