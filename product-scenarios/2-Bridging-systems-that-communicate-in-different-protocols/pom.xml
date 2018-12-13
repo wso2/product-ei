@@ -35,11 +35,4 @@
         <module>2.1-HTTP to HTTP protocol translation</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.wso2.ei</groupId>
-            <artifactId>scenarios-commons</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>

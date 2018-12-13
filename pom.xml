@@ -29,6 +29,26 @@
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
     <version>6.5.0-m2-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.axis2.wso2</groupId>
+            <artifactId>axis2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.automationutils</groupId>
+            <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
