@@ -14,9 +14,9 @@ If you use RabbitMQ as the broker and using AMQP related APIs to communicate, yo
 
 ## Sample use case
 
-ESB will receive a HTTP message (a SOAP message), and place it in a RabbitMQ MQ queue. Then ESB will poll messages of 
-that queue and get the message and invoke the backend service. The reliability is handled by different Acknowledgement 
-methods. 
+Integrator will receive a HTTP message (a SOAP message), and place it in a RabbitMQ MQ queue. Then the integrator will 
+poll messages of that queue and get the message and invoke the backend service. The reliability is handled by different 
+Acknowledgement methods. 
 
 ## Prerequisites
 

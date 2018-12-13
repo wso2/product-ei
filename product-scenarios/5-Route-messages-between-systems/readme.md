@@ -2,18 +2,19 @@
 
 ## Business use case narrative
 
-The Message Routing is for reads the content of a message and routes it to a specific recipient based on its content.
-A message router is concerned only with redirecting messages. When there is an incoming message into WSO2 Enterprise Integrator,
-it is able to determine and route the message to the recipient. Routing can also be done based on some component of the message.
+Message Routing is related to reading the content of a message and routing it to a specific recipient based on its 
+content. A message router is concerned only with redirecting messages. When there is an incoming message into WSO2  
+Enterprise Integrator, it is able to determine and route the message to the recipient. Routing can also be done based
+on some component of the message.
 
 As an example, if there is a function that pass incoming request on the correct service
-is distributed over to multiple systems, an incoming request needs to be passed on the correct service,
-based on the requested content. In such a scenarios, message router is useful. Requests going through the Enterprise Integrator
-are called messages, and message mediation is the main part of an ESB. The Switch and filter mediators of the ESB are route the
-Messages between systems.
+is distributed over to multiple systems, an incoming request needs to be passed on the correct service
+based on the requested content. message router becomes quite useful in such scenarios. Requests going through the 
+Enterprise Integrator are called messages, and message mediation is the main part of an integrator. The Switch and 
+filter mediators of the ESB profile of WSO2EI are specifically designed for routing messages between systems.
 
-The following diagram shows the Message Router's behavior. When it receives a request message, reads it and routes the
-request to one of the two recipients according to the message's content.
+The following diagram shows the Message Router's behavior. When it receives a request, the router reads it and forwards
+the request to one of the two recipients according to the content of the message.
 
 ![5-Message-Router-behavior](images/Message-Router-behavior.png)
 

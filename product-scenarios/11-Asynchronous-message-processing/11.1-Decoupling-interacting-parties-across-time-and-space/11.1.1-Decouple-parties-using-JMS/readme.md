@@ -9,7 +9,7 @@ messaging provider and achieve the requirement.
 
 ## Sample use case
 
-ESB will receive a HTTP message (a SOAP message), and place it in a Active MQ queue. Then ESB will poll messages of 
+EI will receive a HTTP message (a SOAP message), and place it in a Active MQ queue. Then EI will poll messages of 
 that queue and get the message and invoke the backend service. The reliability is handled by different Acknowledgement 
 methods. 
 

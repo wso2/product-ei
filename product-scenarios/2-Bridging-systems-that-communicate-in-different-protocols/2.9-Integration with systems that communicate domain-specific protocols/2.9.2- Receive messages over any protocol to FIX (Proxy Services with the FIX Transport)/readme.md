@@ -10,15 +10,18 @@ In this sections walk you through the FIX (Financial Information eXchange) trans
 
 ## Pre-requisites
 
-- You will need the two sample FIX applications that come with Quickfix/J (Banzai and Executor). Configure the two applications to establish sessions with the ESB. 
-- For information on setting up Quickfix/J, see [Configuring WSO2 Enterprise Integrator to use the FIX transport](https://docs.wso2.com/display/ESB500/Setting+Up+the+ESB+Samples).
+- You will need the two sample FIX applications that come with Quickfix/J (Banzai and Executor). Configure the two 
+applications to establish sessions with the integrator. 
+- For information on setting up Quickfix/J, see [Configuring WSO2 Enterprise Integrator to use the FIX transport](https://docs.wso2.com/display/EI640/Setting+Up+the+ESB+Samples).
 - Start Banzai and Executor.
 - Enable FIX transport in the Synapse axis2.xml. 
 - Configure Synapse for FIX samples. 
-- Open the <ESB_HOME>/repository/samples/synapse_sample_257.xml file and make sure that transport.fix.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Also make sure that transport.fix. InitiatorConfigURL property points to the synapse-sender.cfg file you created. Once done, you can start the Synapse configuration
-- Send an order request from Banzai to the ESB.
+- Open the <EI_HOME>/samples/service-bus/synapse_sample_257.xml file and make sure that transport.fix
+.AcceptorConfigURL property points to the fix-synapse.cfg file you created. Also make sure that transport.fix. InitiatorConfigURL property points to the synapse-sender.cfg file you created. Once done, you can start the Synapse configuration
+- Send an order request from Banzai to the EI.
 
-WSO2 ESB will create a session with an Executor and forward the order request. The responses coming from the Executor will be sent back to Banzai.
+WSO2 EI will create a session with an Executor and forward the order request. The responses coming from the Executor 
+will be sent back to Banzai.
 
 ```xml
 
@@ -51,7 +54,8 @@ Configuring Sample FIX Applications
 
 If you use a binary distribution of Quickfix/J, the two samples and their configuration files are all packed to a single JAR file called quickfixj-examples.jar. You will have to extract the JAR file, modify the configuration files and pack them to a JAR file again under the same name.
 
-You can pass the new configuration file as a command line parameter too, in that case you do not need to modify the quickfixj-examples.jar. You can copy the config files from <ESB_HOME>/repository/samples/resources/fix folder to $QFJ_HOME/etc folder. Execute the sample apps from <QFJ_HOME>/bin," "./banzai.sh/bat ../etc/banzai.cfg executor.sh/bat ../etc/executor.cfg.
+You can pass the new configuration file as a command line parameter too, in that case you do not need to modify the 
+quickfixj-examples.jar. You can copy the config files from <EI_HOME>/samples/service-bus/resources/fix folder to $QFJ_HOME/etc folder. Execute the sample apps from <QFJ_HOME>/bin," "./banzai.sh/bat ../etc/banzai.cfg executor.sh/bat ../etc/executor.cfg.
 
 Locate and edit the FIX configuration file of Executor to be as follows. This file is usually named executor.cfg.
 
@@ -100,7 +104,8 @@ Setting up FIX Transport
 
 To run the FIX samples used in this guide, you need a local Quickfix/J installation (http://www.quickfixj.org). Download Quickfix/J from: http://www.quickfixj.org/downloads.
 
-To enable the FIX transport for samples, first you must deploy the Quickfix/J libraries into the repository/components/lib directory of the ESB. Generally the  following libraries should be deployed into the ESB.
+To enable the FIX transport for samples, first you must deploy the Quickfix/J libraries into the <EI_HOME>/lib directory
+ of the EI. Generally the  following libraries should be deployed into the EI.
 
 ```xml
     quickfixj-core-1.4.0.jar
@@ -115,7 +120,10 @@ To enable the FIX transport for samples, first you must deploy the Quickfix/J li
     slf4j-api-1.5.3.jar
 ```
 
-Then uncomment the FIX transport sender and FIX transport receiver configurations in the repository/conf/axis2.xml. Simply locate and uncomment the FIXTransportSender and FIXTransportListener sample configurations. Alternatively if the FIX transport management bundle is in use, you can enable the FIX transport listener and the sender from the WSO2 ESB management console. Login to the console and navigate to "Transports" on management menu. Scroll down to locate the sections related to the FIX transport. Simply click on the "Enable" links to enable the FIX listener and the sender.
+Then uncomment the FIX transport sender and FIX transport receiver configurations in the <EI_HOME>/conf/axis2.xml. 
+Simply locate and uncomment the FIXTransportSender and FIXTransportListener sample configurations. Alternatively if 
+the FIX transport management bundle is in use, you can enable the FIX transport listener and the sender from the WSO2 EI
+management console. Login to the console and navigate to "Transports" on management menu. Scroll down to locate the sections related to the FIX transport. Simply click on the "Enable" links to enable the FIX listener and the sender.
 
 
 ## REST API (if available)

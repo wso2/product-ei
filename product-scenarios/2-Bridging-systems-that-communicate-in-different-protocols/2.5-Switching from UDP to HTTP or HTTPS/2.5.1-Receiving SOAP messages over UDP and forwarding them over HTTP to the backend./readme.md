@@ -10,7 +10,8 @@ Receive SOAP messages over UDP and forwarding them over HTTP to the backend.
 
 ## Pre-requisites
 
-- [Configure Synapse to use the UDP transport](https://docs.wso2.com/display/EI611/Setting+Up+the+ESB+Samples#SettingUptheESBSamples-ConfigureWSO2ESBforUDPTransport).The sample Axis2 client should also be setup to send UDP requests.
+- [Configure Synapse to use the UDP transport](https://docs.wso2.com/display/EI640/Setting+Up+the+ESB+Samples#SettingUptheESBSamples-ConfigureWSO2ESBforUDPTransport).The sample 
+Axis2 client should also be setup to send UDP requests.
 - Start Synpase.
 - Start Axis2 server with SimpleStockService deployed.
 
@@ -39,7 +40,7 @@ N/A
         </target>
         <parameter name="transport.udp.port">9999</parameter>
         <parameter name="transport.udp.contentType">text/xml</parameter>
-        <publishWSDL uri="file:repository/conf/sample/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
 </definitions>
 ```

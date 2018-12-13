@@ -1,17 +1,20 @@
-# 2.6.1 ESB proxy pick messages from ClientReq queue, send to backend then  response is available in BERes queue response message send to the client in synchronous manner. 
+# 2.6.1 Proxy pick messages from ClientReq queue, send to backend then  response is available in BERes queue response
+ message send to the client in synchronous manner. 
 
 
 ## When to use
-ESB proxy pick messages from ClientReq queue, send to backend then  response is available in BERes queue response message send to the client in synchronous manner. 
+Proxy pick messages from ClientReq queue, send to backend then  response is available in BERes queue response message
+ send to the client in synchronous manner. 
 
-The following diagram depicts quad-channel JMS synchronous invocations of the WSO2 ESB.
+The following diagram depicts quad-channel JMS synchronous invocations of the WSO2 EI.
 
  ![Quad-channel--synchronous-JMS](images/Quad-channel--synchronous-JMS.png)
 
  The message flow of the above sample configuration is as follows:
 
 - The JMSReplyTo property of the JMS message is set to ClientRes. Therefore, the client sends a JMS message to the ClientReq queue.
-- The transport.jms.ReplyDestination value is set to BERes. This enables the WSO2 ESB proxy to pick messages from ClientReq queue, and send to BEReq queue.
+- The transport.jms.ReplyDestination value is set to BERes. This enables the WSO2 EI proxy to pick messages from 
+ClientReq queue, and send to BEReq queue.
 - The back-end picks messages from the BEReq queue, processes and places response messages to BERes queue.
 - Once a response is available in BERes queue, the proxy service picks it and sends back to ClientRes queue.
 - The client picks it as the response message.
@@ -24,7 +27,7 @@ The following diagram depicts quad-channel JMS synchronous invocations of the WS
 Follow the steps below to set the prerequisites up before you start.
 
   1. Download and set up Apache ActiveMQ. For instructions, see Installation Prerequisites. 
-  2. Copy the following client libraries from the <AMQ_HOME>/lib directory to the <ESB_HOME>/repository/components/lib directory.   
+  2. Copy the following client libraries from the <AMQ_HOME>/lib directory to the <EI_HOME>/lib directory.   
          ActiveMQ 5.8.0 and above   
             activemq-broker-5.8.0.jar
             activemq-client-5.8.0.jar
@@ -37,12 +40,13 @@ Follow the steps below to set the prerequisites up before you start.
             geronimo-j2ee-management_1.0_spec-1.0.jar
             geronimo-jms_1.1_spec-1.1.1.jar
             
-   3. Add the following properties to the <ESB_HOME>/repository/conf/jndi.properties file. For more information, see Setting up WSO2 ESB and ActiveMQ.
+   3. Add the following properties to the <EI_HOME>/conf/jndi.properties file. For more information, see Setting up 
+   WSO2 EI and ActiveMQ.
       queue.ClientReq = ClientReq
       queue.BEReq = BEReq
       queue.BERes = BERes
       
-   4. Uncomment the following sections in the <ESB_HOME>/repository/conf/axis2/axis2.xml file.
+   4. Uncomment the following sections in the <EI_HOME>/conf/axis2/axis2.xml file.
       a.To enable the JMS transport sender:
       
           <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/>   
@@ -78,7 +82,7 @@ Follow the steps below to set the prerequisites up before you start.
   
   - Sample configuration
   
-  Following is a sample configuration of WSO2 ESB for quad-channel JMS synchronous invocations.
+  Following is a sample configuration of WSO2 EI for quad-channel JMS synchronous invocations.
   Example Code 
   
   ```xml
