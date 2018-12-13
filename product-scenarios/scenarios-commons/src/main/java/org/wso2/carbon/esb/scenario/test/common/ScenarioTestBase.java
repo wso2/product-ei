@@ -22,6 +22,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
+import org.testng.SkipException;
 import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
@@ -39,6 +40,7 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -58,12 +60,14 @@ public class ScenarioTestBase {
 
     protected static final String resourceLocation = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
 
+    public static final String PRODUCT_VERSION = "ProductVersion";
     protected Properties infraProperties;
     protected String backendURL;
     protected String serviceURL;
     protected String securedServiceURL;
     protected String sessionCookie;
     protected boolean standaloneMode;
+    protected String runningProductVersion;
 
     protected CarbonAppUploaderClient carbonAppUploaderClient = null;
     protected ApplicationAdminClient applicationAdminClient = null;
@@ -84,6 +88,7 @@ public class ScenarioTestBase {
                 (infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL).endsWith("/") ? "" : "/");
         securedServiceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL) +
                 (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL).endsWith("/") ? "" : "/");
+        runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
 
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
@@ -98,6 +103,25 @@ public class ScenarioTestBase {
         log.info("Service URL: " + serviceURL + " | Secured Service URL: " + securedServiceURL);
         log.info("The Backend service URL : " + backendURL + ". session cookie: " + sessionCookie);
 
+    }
+
+    /**
+     * Validates if the test case is one that should be executed on the running product version.
+     * <p>
+     * All test methods of the test case will be skipped if it is not compatible with the running version. This is
+     * introduced to cater tests introduced for fixes done as patches for released product versions as they may only
+     * be valid for the product version for which the fix was done for.
+     *
+     * @param compatibleVersions product versions that the test is compatible with
+     */
+    protected void validateCompatibleProductVersions(String... compatibleVersions) {
+        if (!Arrays.asList(compatibleVersions).contains(runningProductVersion)) {
+            String errorMessage = "Skipping test: " + this.getClass().getName() + " due to version mismatch. Running "
+                                  + "product version: " + runningProductVersion + ", Allowed versions: "
+                                  + Arrays.toString(compatibleVersions);
+            log.warn(errorMessage);
+            throw new SkipException(errorMessage);
+        }
     }
 
     /**

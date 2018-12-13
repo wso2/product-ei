@@ -27,6 +27,16 @@ public class ScenarioConstants {
     public static final String REQUEST = "request";
     public static final String RESPONSE = "response";
     public static final String MESSAGE_ID = "messageId";
+    public static final String VERSION_490 = "ESB-4.9.0";
+    public static final String VERSION_500 = "ESB-5.0.0";
+    public static final String VERSION_600 = "EI-6.0.0";
+    public static final String VERSION_610 = "EI-6.1.0";
+    public static final String VERSION_611 = "EI-6.1.1";
+    public static final String VERSION_620 = "EI-6.2.0";
+    public static final String VERSION_630 = "EI-6.3.0";
+    public static final String VERSION_640 = "EI-6.4.0";
+    public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
+
 
     /**
      *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not

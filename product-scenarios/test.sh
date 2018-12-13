@@ -83,9 +83,25 @@ export DATA_BUCKET_LOCATION=${INPUT_DIR}
 
 #=============== Execute Scenarios ===============================================
 
-mvn clean install -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
--fae -B -f ./pom.xml
+#Retreive product version
 
+IFS='=' read -r -a array <<< "$(head -n 1 infrastructure.properties)"
+key=${array[0]}
+if [ $key = "ProductVersion" ]
+then
+    productVersion=${array[1]}
+    case ${productVersion} in
+        ESB-4.9.0|ESB-5.0.0|EI-6.0.0|EI-6.1.0|EI-6.1.1|EI-6.2.0|EI-6.3.0|EI-6.4.0|EI-6.5.0-SNAPSHOT)
+            echo "Executing tests for the product version: $productVersion"
+            mvn clean install -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+             -fae -B -f ./pom.xml ;;
+        *)
+            echo "Unknown product version: " ${productVersion} "read from infrastructure.properties. Aborting the execution.";;
+    esac
+
+else
+    echo "infrastructure.properties file does not contain the product version. Aborting the execution."
+fi
 
 #=============== Copy Surefire Reports ===========================================
 
