@@ -33,6 +33,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>04-SynapseConfigProject/04-synapseConfig</module>
+        <module>04-SynapseConfigProject/04-synapseConfigCompositeApplication</module>
         <module>4.1-Extend-the-reach-for-existing-or-legacy-applications</module>
     </modules>
     
