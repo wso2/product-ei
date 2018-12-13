@@ -18,10 +18,24 @@
 
 package org.wso2.carbon.esb.scenario.test.common;
 
-public class HttpConstants {
+/**
+ * Contains various string utility methods
+ */
+public class StringUtil {
 
-    public static final String MEDIA_TYPE_APPLICATION_XML = "application/xml";
-    public static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
-    public static final String MEDIA_TYPE_TEXT_PLAIN = "text/plain";
+    /**
+     * Function to trim white spaces, tabs, new lines in between xml tags
+     *
+     * @param xmlString - The xml String to trim white spaces, tabs and new lines
+     * @return - the xml string without white spaces, tabs and new lines
+     */
 
+    public static String trimTabsSpaceNewLinesBetweenXMLTags(String xmlString){
+
+        return xmlString.replaceAll("(?!>\\s+</)(>\\s+<)", "><")
+                        .replaceAll("(?!>\\t+</)(>\\t+<)", "><")
+                        .replaceAll("(?!> </)(> <)", "><")
+                        .replaceAll("(?!>\\n+</)(>\\n+<)", "><");
+
+    }
 }
