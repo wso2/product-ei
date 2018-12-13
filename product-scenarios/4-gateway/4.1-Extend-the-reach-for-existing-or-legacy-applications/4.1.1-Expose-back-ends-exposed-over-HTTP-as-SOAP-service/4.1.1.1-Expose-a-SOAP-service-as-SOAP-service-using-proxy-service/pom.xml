@@ -25,6 +25,7 @@
         <groupId>org.wso2.ei</groupId>
         <artifactId>4.1.1-Expose-back-ends-exposed-over-HTTP-as-SOAP-service</artifactId>
         <version>6.4.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>4.1.1.1-Expose-a-SOAP-service-as-SOAP-service-using-proxy-service</artifactId>
@@ -45,15 +46,25 @@
                     </suiteXmlFiles>
                     <systemProperties>
                         <property>
+                            <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
                             <name>test.resources.dir</name>
                             <value>
                                 ${basedir}/../../resources/
                             </value>
                         </property>
                         <property>
-                            <name>framework.resource.location</name>
+                            <!-- Directory containing carbon applications -->
+                            <name>test.resources.carbonApplications.dir</name>
                             <value>
-                                ${basedir}/src/test/resources/
+                                ${basedir}/../../resources/artifacts/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- Related carbon applications (comma separated) to deploy -->
+                            <name>test.resources.carbonApplications.list</name>
+                            <value>
+                                scenario_4_1-synapse-configCompositeApplication_1.0.0,
+                                scenario_1_3-synapse-configCompositeApplication_1.0.0
                             </value>
                         </property>
                         <property>
@@ -68,9 +79,6 @@
                         </property>
                         <sec.verifier.dir>${basedir}/target/security-verifier/</sec.verifier.dir>
                         <maven.test.haltafterfailure>false</maven.test.haltafterfailure>
-                        <carbon.zip>
-                            ${basedir}/../../../distribution/target/wso2ei-${product.ei.version}.zip
-                        </carbon.zip>
                         <instr.file>${basedir}/../coverage-report/instrumentation.txt</instr.file>
                         <filters.file>${basedir}/../coverage-report/filters.txt</filters.file>
                     </systemProperties>

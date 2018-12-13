@@ -17,6 +17,9 @@
   -->
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="ESBTestSuite" parallel="false">
+    <listeners>
+        <listener class-name="org.wso2.carbon.esb.scenario.test.common.testng.listeners.TestExecutionListener"/>
+    </listeners>
     <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
             <class name="org.wso2.carbon.esb.scenario.test.ExposeSOAPasSOAPTest"/>

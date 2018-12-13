@@ -44,6 +44,9 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This is the base class of scenario test classes.
+ */
 public class ScenarioTestBase {
 
     private static final String INPUTS_LOCATION = System.getenv("DATA_BUCKET_LOCATION");
@@ -53,24 +56,10 @@ public class ScenarioTestBase {
 
     public static final Log log = LogFactory.getLog(ScenarioTestBase.class);
 
-    public static final String MGT_CONSOLE_URL = "MgtConsoleUrl";
-    public static final String CARBON_SERVER_URL = "CarbonServerUrl";
-    public static final String ESB_HTTP_URL = "ESBHttpUrl";
-    public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
-
-    /*
-     *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
-     *  If true, test case will deploy the CApp
-     *  If false, infra will take care CApp deployment
-     */
-    public static final String STANDALONE_DEPLOYMENT = "StandaloneDeployment";
-
-    protected static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
-    protected static final String resourceLocation = System.getProperty("test.resources.dir");
+    protected static final String resourceLocation = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
 
     protected Properties infraProperties;
     protected String backendURL;
-    protected String esbHttpUrl;
     protected String serviceURL;
     protected String securedServiceURL;
     protected String sessionCookie;
@@ -89,12 +78,12 @@ public class ScenarioTestBase {
 
         infraProperties = getDeploymentProperties();
 
-        backendURL = infraProperties.getProperty(CARBON_SERVER_URL) +
-                (infraProperties.getProperty(CARBON_SERVER_URL).endsWith("/") ? "" : "/");
-        serviceURL = infraProperties.getProperty(ESB_HTTP_URL) +
-                (infraProperties.getProperty(ESB_HTTP_URL).endsWith("/") ? "" : "/");
-        securedServiceURL = infraProperties.getProperty(ESB_HTTPS_URL) +
-                (infraProperties.getProperty(ESB_HTTPS_URL).endsWith("/") ? "" : "/");
+        backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL) +
+                (infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL).endsWith("/") ? "" : "/");
+        serviceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL) +
+                (infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL).endsWith("/") ? "" : "/");
+        securedServiceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL) +
+                (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL).endsWith("/") ? "" : "/");
 
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
@@ -171,24 +160,28 @@ public class ScenarioTestBase {
             String cappFilePath = resourceLocation + File.separator + "artifacts" +
                     File.separator + carFileName + ".car";
 
-            carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            if (carbonAppUploaderClient == null) {
+                carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            }
             DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
             // Upload carbon application
             carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
 
             //TODO - This thread sleep is added temporarily to wait until the ESB Instances sync in the cluster in clustered test environment
-            if (!Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT))) {
+            if (!Boolean.valueOf(infraProperties.getProperty(ScenarioConstants.STANDALONE_DEPLOYMENT))) {
                 log.info("Waiting for artifacts synchronized across cluster nodes");
                 Thread.sleep(120000);
             }
 
-            applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            if (applicationAdminClient == null) {
+                applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            }
 
             // Wait for Capp to sync
             log.info("Waiting for Carbon Application deployment ..");
             Awaitility.await()
                     .pollInterval(500, TimeUnit.MILLISECONDS)
-                    .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                    .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                     .until(isCAppDeployed(applicationAdminClient, carFileName));
         }
     }
@@ -208,7 +201,7 @@ public class ScenarioTestBase {
             // Wait for Capp to undeploy
             Awaitility.await()
                       .pollInterval(500, TimeUnit.MILLISECONDS)
-                      .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                      .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                       .until(isCAppUnDeployed(applicationAdminClient, applicationName));
         }
 
@@ -237,9 +230,7 @@ public class ScenarioTestBase {
 
 
     private String getServerHost() {
-        String bucketLocation = System.getenv("DATA_BUCKET_LOCATION");
-        log.info("Data Bucket location is set : " + bucketLocation);
-        String url = infraProperties.getProperty(MGT_CONSOLE_URL);
+        String url = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
         if (url != null && url.contains("/")) {
             url = url.split("/")[2].split(":")[0];
         } else
