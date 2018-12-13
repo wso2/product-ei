@@ -3,14 +3,18 @@
 ## When to use
 Proxy service receives an HTTP request, it publishes that request in a JMS queue. Another proxy service subscribes to messages published in this queue and forwards them to a back-end. Response received to client vice versa.
  
-A JMS synchronous invocation takes place when a JMS producer receives a response to a JMS request produced by it when invoked. WSO2 ESB uses an internal JMS correlation ID to correlate the request and the response. See [JMS Request/Reply Example](https://www.enterpriseintegrationpatterns.com/patterns/messaging/RequestReplyJmsExample.html) for more information.
+A JMS synchronous invocation takes place when a JMS producer receives a response to a JMS request produced by it when
+ invoked. WSO2 EI uses an internal JMS correlation ID to correlate the request and the response. See [JMS 
+ Request/Reply Example](https://www.enterpriseintegrationpatterns.com/patterns/messaging/RequestReplyJmsExample.html) for more information.
 
 JMS synchronous invocations are further explained in the following use case. 
 
 ![Quad-channel--synchronous-JMS](images/JMS_Synchronous_Invocations.png )
 
-When the proxy service named SMSSenderProxy receives an HTTP request, it publishes that request in a JMS queue named SMSStore. Another proxy service named SMSForwardProxy subscribes to messages published in this queue and forwards them to a back-end service named SimpleStockQuoteService. When this back-end service returns an HTTP response, internal ESB logic
-is used to save that message as a JMS message in a JMS queue named SMSReceiveNotification. Then this response is taken from the SMSReceiveNotification queue and delivered to the client as an HTTP message using internal ESB logic.
+When the proxy service named SMSSenderProxy receives an HTTP request, it publishes that request in a JMS queue named SMSStore. Another proxy service named SMSForwardProxy subscribes to messages published in this queue and forwards them to a back-end service named SimpleStockQuoteService. When this back-end service returns an HTTP response, internal logic
+is used to save that message as a JMS message in a JMS queue named SMSReceiveNotification. Then this response is 
+taken from the SMSReceiveNotification queue and delivered to the client as an HTTP message using internal integrator 
+logic.
  
 ## Sample use-case
 
@@ -18,10 +22,12 @@ is used to save that message as a JMS message in a JMS queue named SMSReceiveNot
 
 ## Pre-requisites
 
-Before executing this use case, the following steps need to be carried out. See Integrating WSO2 ESB in MB Documentation for detailed instructions.
+Before executing this use case, the following steps need to be carried out. See Integrating WSO2 EI in MB 
+Documentation for detailed instructions.
 
 - WSO2 MB should be installed and set up. See Setting up WSO2 Message Broker.
-- WSO2 ESB should installed and set up. See Setting up WSO2 ESB. Specific entries that are required to be added to the <ESB_HOME>/repository/conf/jndi.properties file for this use case are as follows. 
+- WSO2 EI should installed and set up. See Setting up WSO2 EI. Specific entries that are required to be added to the 
+<EI_HOME>/conf/jndi.properties file for this use case are as follows. 
 
 Configuring the JMS publisher
 
@@ -45,7 +51,7 @@ Configure a proxy service named SMSSenderProxy as shown below to accept messages
          <send/>
       </outSequence>
       <endpoint>
-         <address uri="jms:/SMSStore?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.wso2.andes.jndi.PropertiesFileInitialContextFactory&amp;java.naming.provider.url=repository/conf/jndi.properties&amp;transport.jms.DestinationType=queue&amp;transport.jms.ReplyDestination=SMSReceiveNotificationStore"/>
+         <address uri="jms:/SMSStore?transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory&amp;java.naming.factory.initial=org.wso2.andes.jndi.PropertiesFileInitialContextFactory&amp;java.naming.provider.url=conf/jndi.properties&amp;transport.jms.DestinationType=queue&amp;transport.jms.ReplyDestination=SMSReceiveNotificationStore"/>
       </endpoint>
    </target>
    <description/>
@@ -94,14 +100,15 @@ Start the back-end service
 
 The back-end service is started as follows.
 
-- Execute the following command from the <ESB_HOME>/samples/axis2Server directory.
+- Execute the following command from the <EI_HOME>/samples/axis2Server directory.
 - For Windows: axis2server.bat
 - For Linux: axis2server.sh
-- Execute the ant command from <ESB_HOME>/samples/axis2Server/src/SimpleStockQuoteService directory.
+- Execute the ant command from <EI_HOME>/samples/axis2Server/src/SimpleStockQuoteService directory.
 
 Invoke the JMS publisher
 
-Execute the following command from the <ESB_HOME>/sample/axis2Client  directory to invoke the SMSSenderProxy proxy service you defined as the JMS publisher.
+Execute the following command from the <EI_HOME>/sample/axis2Client  directory to invoke the SMSSenderProxy proxy 
+service you defined as the JMS publisher.
 ```xml
 ant stockquote -Daddurl=http://localhost:8280/services/SMSSenderProxy -Dsymbol=IBM
 ```

@@ -8,7 +8,7 @@ This improves the maintainability of applications.
 
 ![Message-Endpoint](images/Message-Endpoint.png)
 
-This is an approach of how these endpoint can be add with a routing mediators in ESB.
+This is an approach of how these endpoint can be add with a routing mediators in WSO2 Enterprise integrator.
 Given below is the syntax of how we can call an endpoint inside a switch mediator.
 Inside switch mediator there is a Send mediator that routes the message to the endpoint indicated by the address URI.
 

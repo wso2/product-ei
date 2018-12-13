@@ -2,9 +2,10 @@
 
 ## Business use case narrative
 
-ESB has to offer a wide range of integration capabilities from simple message routing to complicated systems which use integrated solutions.
-Different applications typically use different protocols for communication. Therefore, for two systems to successfully communicate,
-we should translate the protocol (that pass from one system) to the protocol compatible with the receiving application.
+The enterprise integrator has to offer a wide range of integration capabilities from simple message routing to 
+complicated systems which use integrated solutions. Different applications typically use different protocols for  
+communication. Therefore, for two systems to successfully communicate, we should translate the protocol (that pass  
+from one system) to the protocol compatible with the receiving application.
 
 
 A useful feature of the WSO2 Enterprise Integrator is the ability to switch protocols.
