@@ -3,7 +3,10 @@
     <target>
         <inSequence>
             <sequence key="fullLogSeq"/>
-            <sequence key="1_8_1_1_textmessageEnrichSeq"/>
+            <script language="js"><![CDATA[var symbol = mc.getPayloadXML();
+print("printing symbol " + symbol);
+symbol = symbol + " to work in";
+mc.setPayloadXML(<text xmlns="http://ws.apache.org/commons/ns/payload">{symbol}</text>);]]></script>
             <sequence key="fullLogSeq"/>
             <sequence description="" key="callTextEndpointSeq"/>
             <sequence key="fullLogSeq"/>
