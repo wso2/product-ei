@@ -41,9 +41,9 @@ import javax.activation.FileDataSource;
  * TestNG execution listener for perform test execution preparation
  * - deploy carbon applications if not already deployed
  */
-public class TestExecutionListener implements IExecutionListener {
+public class TestPrepExecutionListener implements IExecutionListener {
 
-    private static final Log log = LogFactory.getLog(TestExecutionListener.class);
+    private static final Log log = LogFactory.getLog(TestPrepExecutionListener.class);
     private boolean standaloneMode = false;
     private String backendURL;
     private String mgtConsoleUrl;
@@ -98,7 +98,7 @@ public class TestExecutionListener implements IExecutionListener {
 
     @Override
     public void onExecutionFinish() {
-        log.info("#onExecutionFinish");
+        //Nothing to do yet
     }
 
     /**
