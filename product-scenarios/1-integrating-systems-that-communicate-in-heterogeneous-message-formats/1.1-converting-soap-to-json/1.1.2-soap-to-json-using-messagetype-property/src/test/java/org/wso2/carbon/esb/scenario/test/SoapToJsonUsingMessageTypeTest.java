@@ -68,10 +68,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
                                                       HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
-        log.info("Actual response received 1.1.2.1: " + responsePayload);
-
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "SOAP to JSON transformation failed");
-
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                             StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
                             "Actual Response and Expected Response mismatch!");
@@ -91,10 +88,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
                                                       HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
-        log.info("Actual response received 1.1.2.2: " + responsePayload);
-
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 500, "SOAP to JSON transformation failed");
-
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                             StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
                             "Actual Response and Expected Response mismatch!");
@@ -114,10 +108,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
                                                       HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
-        log.info("Actual response received 1.1.2.3: " + responsePayload);
-
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "SOAP to JSON transformation failed");
-
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                             StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
                             "Actual Response and Expected Response mismatch!");
