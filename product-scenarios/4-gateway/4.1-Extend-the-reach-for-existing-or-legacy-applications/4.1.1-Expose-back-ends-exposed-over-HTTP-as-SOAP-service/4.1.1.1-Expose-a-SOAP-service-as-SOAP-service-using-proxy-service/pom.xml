@@ -63,8 +63,7 @@
                             <!-- Related carbon applications (comma separated) to deploy -->
                             <name>test.resources.carbonApplications.list</name>
                             <value>
-                                scenario_4_1-synapse-configCompositeApplication_1.0.0,
-                                scenario_1_3-synapse-configCompositeApplication_1.0.0
+                                scenario_4_1-synapse-configCompositeApplication_1.0.0
                             </value>
                         </property>
                         <property>
