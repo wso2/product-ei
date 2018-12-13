@@ -28,7 +28,6 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>1.8-plaintext-message-enrichment</artifactId>
-    <name>Plain text message enrichment</name>
     <packaging>pom</packaging>
 
     <modules>
