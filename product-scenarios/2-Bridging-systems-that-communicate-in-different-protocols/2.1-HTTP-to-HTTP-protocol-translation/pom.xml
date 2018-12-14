@@ -32,7 +32,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>2.1.1-Receive an HTTP request from a client and deliver it over HTTP message to the downstream without altering the content</module>
+        <module>2.1.1-http-to-http-passthrough</module>
     </modules>
 
 </project>

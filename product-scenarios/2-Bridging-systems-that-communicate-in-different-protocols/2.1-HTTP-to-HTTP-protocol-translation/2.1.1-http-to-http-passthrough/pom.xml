@@ -27,7 +27,7 @@
         <version>6.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>2.1.1-receive-an-http-request-from-a-client-and-deliver-it-over-http-message-to-the-downstream-without-altering-the-content</artifactId>
+    <artifactId>2.1.1-http-to-http-passthrough</artifactId>
     <version>6.4.0</version>
 
     <packaging>jar</packaging>
