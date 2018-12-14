@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/1_1_1_soap_to_json_using_payload_factory" name="1_1_1_soap_to_json_using_payload_factory"
+<api context="/1_1_1_API_soap_to_json_using_payload_factory" name="1_1_1_API_soap_to_json_using_payload_factory"
      xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST">
         <inSequence>

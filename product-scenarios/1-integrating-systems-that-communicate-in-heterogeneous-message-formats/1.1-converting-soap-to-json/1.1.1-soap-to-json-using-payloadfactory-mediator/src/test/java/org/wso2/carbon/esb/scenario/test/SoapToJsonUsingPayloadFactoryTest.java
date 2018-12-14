@@ -43,7 +43,7 @@ public class SoapToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
 
     private String cappNameWithVersion = "approach_1_1_1_synapse_configCompositeApplication_1.0.0";
     private String cappName = "approach_1_1_1_synapse_configCompositeApplication";
-    private String apiName = "1_1_1_soap_to_json_using_payload_factory";
+    private String apiName = "1_1_1_API_soap_to_json_using_payload_factory";
     private String apiInvocationUrl;
 
 
@@ -51,7 +51,6 @@ public class SoapToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
     public void init() throws Exception {
         super.init();
         apiInvocationUrl = getApiInvocationURLHttp(apiName);
-        deployCarbonApplication(cappNameWithVersion);
     }
 
     @Test(description = "1.1.1.1-Valid Soap To Json transformation Using Payload Factory Mediator", enabled = true,
