@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-// Test http message to the downstream without altering the content
+/**
+ * Class with tests - Receive an HTTP request from a client and deliver it over HTTP message to the
+ * downstream without altering the content
+ */
 public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
     private final String carFileName = "2_1_1_7_httpToHttpProtocolTranslationCompositeApplication_1.0.0";
     private String proxyServiceUrl;
@@ -23,7 +26,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        proxyServiceUrl = getProxyServiceURLHttp("2_1_1_7_httpToHttpProtocolTranslationProxy\n");
+        proxyServiceUrl = getProxyServiceURLHttp("2_1_1_7_httpToHttpProtocolTranslationProxy");
         deployCarbonApplication(carFileName);
     }
 
