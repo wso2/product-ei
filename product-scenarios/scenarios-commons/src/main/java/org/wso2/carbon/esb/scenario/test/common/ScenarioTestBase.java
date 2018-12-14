@@ -58,38 +58,29 @@ public class ScenarioTestBase {
 
     public static final Log log = LogFactory.getLog(ScenarioTestBase.class);
 
-    protected static final String resourceLocation = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
+    private static final String RESOURCE_LOCATION = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
 
-    public static final String PRODUCT_VERSION = "ProductVersion";
-    protected Properties infraProperties;
-    protected String backendURL;
-    protected String serviceURL;
-    protected String securedServiceURL;
-    protected String sessionCookie;
-    protected boolean standaloneMode;
-    protected String runningProductVersion;
+    private static final String PRODUCT_VERSION = "ProductVersion";
+    private static Properties infraProperties;
+    private static String backendURL;
+    private static String serviceURL;
+    private static String securedServiceURL;
+    private String sessionCookie;
+    private boolean standaloneMode;
+    private static String runningProductVersion;
 
-    protected CarbonAppUploaderClient carbonAppUploaderClient = null;
-    protected ApplicationAdminClient applicationAdminClient = null;
+    private CarbonAppUploaderClient carbonAppUploaderClient = null;
+    private ApplicationAdminClient applicationAdminClient = null;
 
     /**
      * Initialize testcase
      *
-     * @throws Exception
+     * @throws Exception if the logging in fails
      */
     public void init() throws Exception {
         log.info("Started Executing Scenario TestBase ");
 
-        infraProperties = getDeploymentProperties();
-
-        backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL) +
-                (infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL).endsWith("/") ? "" : "/");
-        serviceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL) +
-                (infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL).endsWith("/") ? "" : "/");
-        securedServiceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL) +
-                (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL).endsWith("/") ? "" : "/");
-        runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
-
+        configureUrls();
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
         standaloneMode = true;
@@ -125,8 +116,9 @@ public class ScenarioTestBase {
     }
 
     /**
-     * Perform cleanup
-     * @throws Exception
+     * Perform cleanup.
+     *
+     * @throws Exception if an error occurs while performing clean up task
      */
     public void cleanup() throws Exception {
     }
@@ -154,7 +146,7 @@ public class ScenarioTestBase {
     }
 
 
-    public String getApiInvocationURLHttp(String resourcePath) {
+    protected String getApiInvocationURLHttp(String resourcePath) {
         return serviceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
@@ -173,16 +165,15 @@ public class ScenarioTestBase {
     /**
      * Function to upload carbon application
      *
-     * @param carFileName
-     * @return
-     * @throws RemoteException
+     * @param carFileName the name of the carbon application to be deployed
+     * @throws RemoteException if the admin client becomes unable to connect to the admin service
      */
-    public void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
+    protected void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
 
         if (standaloneMode) {
             // If standalone mode, deploy the CAPP to the server
-            String cappFilePath = resourceLocation + File.separator + "artifacts" +
-                    File.separator + carFileName + ".car";
+            String cappFilePath = RESOURCE_LOCATION + File.separator + "artifacts" +
+                                  File.separator + carFileName + ".car";
 
             if (carbonAppUploaderClient == null) {
                 carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
@@ -213,9 +204,9 @@ public class ScenarioTestBase {
     /**
      * Function to undeploy carbon application
      *
-     * @param applicationName
-     * @throws ApplicationAdminExceptionException
-     * @throws RemoteException
+     * @param applicationName name of the Carbon application to be undeployed
+     * @throws ApplicationAdminExceptionException if an error occurs while undeploying carbon application
+     * @throws RemoteException                    if the admin client becomes unable to connect to the service
      */
     public void undeployCarbonApplication(String applicationName)
             throws ApplicationAdminExceptionException, RemoteException {
@@ -245,8 +236,8 @@ public class ScenarioTestBase {
         }
     }
 
-    protected void setKeyStoreProperties() {
-        System.setProperty("javax.net.ssl.trustStore", resourceLocation + "/keystores/wso2carbon.jks");
+    private void setKeyStoreProperties() {
+        System.setProperty("javax.net.ssl.trustStore", RESOURCE_LOCATION + "/keystores/wso2carbon.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
     }
@@ -358,30 +349,44 @@ public class ScenarioTestBase {
         File[] listOfFiles = filePath.listFiles();
         List<String> fileNames = new ArrayList<>();
 
-        for (File file:listOfFiles) {
-            if (file.isFile()) {
-                fileNames.add(file.getName());
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    fileNames.add(file.getName());
+                }
             }
         }
         return fileNames;
     }
 
-    private String getFileContent (String folderLocation, String fileName) throws IOException {
-        File fileLocation = new File( getClass().getResource(folderLocation + File.separator + fileName).getPath());
+    private String getFileContent(String folderLocation, String fileName) throws IOException {
+        File fileLocation = new File(getClass().getResource(folderLocation + File.separator + fileName).getPath());
 
-        final BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))));
         StringBuilder sb = new StringBuilder();
 
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))))) {
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 sb.append(currentLine);
             }
-        } finally {
-            br.close();
         }
 
         return sb.toString();
     }
+
+    private static synchronized void configureUrls() {
+        if (null == infraProperties) {
+            infraProperties = getDeploymentProperties();
+            backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL)
+                         + (infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL).endsWith("/") ? "" : "/");
+            serviceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL)
+                         + (infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL).endsWith("/") ? "" : "/");
+            securedServiceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
+                                + (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
+                                                  .endsWith("/") ? "" : "/");
+            runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
+        }
+    }
+
 }
 
