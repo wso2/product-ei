@@ -22,9 +22,10 @@ import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.HttpConstants;
+import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
+import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
-import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
+import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 
 import java.io.IOException;
 
@@ -51,17 +52,18 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
 
     @Test(description = "1.8.1 - plaintext enrichment using script mediator")
     public void convertPlainTextMessageToSOAP() throws IOException {
-        SimpleHttpClient httpClient = new SimpleHttpClient();
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
-        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, null,
-                textRequestToSend, HttpConstants.MEDIA_TYPE_TEXT_PLAIN);
-        String responsePayload = httpClient.getResponsePayload(httpResponse);
-        log.info("Actual response received 1.8.1: " + responsePayload);
+
+        //create a REST client and send the payload to proxy
+        RESTClient restClient = new RESTClient();
+        HttpResponse httpResponse = restClient.doPost(proxyServiceUrl , textRequestToSend,
+                HttpConstants.MEDIA_TYPE_TEXT_PLAIN);
+        String responsePayload = HTTPUtils.getResponsePayload(httpResponse);
 
         String expectedString = serverAppended + textRequestToSend + enrichment;
 
         Assert.assertEquals(responsePayload, expectedString);
-        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200,
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(httpResponse), 200,
                 "plaintext enrichment failed");
 
     }

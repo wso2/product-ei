@@ -6,14 +6,19 @@ Receive SOAP messages over TCP and forwarding them over HTTP to the backend.
  
 ## Sample use-case
 
-TCP is not an application layer protocol. Hence there are no application level headers available in the requests. ESB has to simply read the XML content coming through the socket and dispatch it to the right proxy service based on the information available in the message payload itself. The TCP transport is capable of dispatching requests based on addressing headers or the first element in the SOAP body. In this sample, we will get the sample client to send WS-Addressing headers in the request. Therefore the dispatching will take place based on the addressing header values.
+TCP is not an application layer protocol. Hence there are no application level headers available in the requests. EI 
+has to simply read the XML content coming through the socket and dispatch it to the right proxy service based on the 
+information available in the message payload itself. The TCP transport is capable of dispatching requests based on  
+addressing headers or the first element in the SOAP body. In this sample, we will get the sample client to send  
+WS-Addressing headers in the request. Therefore the dispatching will take place based on the addressing header values.
 
 
 ## Supported versions
 
 ## Pre-requisites
 
-- Configure ESB to use the TCP transport and configure sample Axis2 client to send TCP requests. See here for details on how to do this.
+- Configure EI to use the TCP transport and configure sample Axis2 client to send TCP requests. See here for details 
+on how to do this.
 - Start Synpase using [sample](https://docs.wso2.com/pages/viewpage.action?pageId=103322226).
 - Start Axis2 server with SimpleStockService deployed.
 

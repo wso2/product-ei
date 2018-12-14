@@ -22,6 +22,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
+import org.testng.SkipException;
 import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
@@ -39,11 +40,15 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This is the base class of scenario test classes.
+ */
 public class ScenarioTestBase {
 
     private static final String INPUTS_LOCATION = System.getenv("DATA_BUCKET_LOCATION");
@@ -53,49 +58,29 @@ public class ScenarioTestBase {
 
     public static final Log log = LogFactory.getLog(ScenarioTestBase.class);
 
-    public static final String MGT_CONSOLE_URL = "MgtConsoleUrl";
-    public static final String CARBON_SERVER_URL = "CarbonServerUrl";
-    public static final String ESB_HTTP_URL = "ESBHttpUrl";
-    public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
+    private static final String RESOURCE_LOCATION = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
 
-    /*
-     *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
-     *  If true, test case will deploy the CApp
-     *  If false, infra will take care CApp deployment
-     */
-    public static final String STANDALONE_DEPLOYMENT = "StandaloneDeployment";
+    private static final String PRODUCT_VERSION = "ProductVersion";
+    private static Properties infraProperties;
+    private static String backendURL;
+    private static String serviceURL;
+    private static String securedServiceURL;
+    private String sessionCookie;
+    private boolean standaloneMode;
+    private static String runningProductVersion;
 
-    protected static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
-    protected static final String resourceLocation = System.getProperty("test.resources.dir");
-
-    protected Properties infraProperties;
-    protected String backendURL;
-    protected String esbHttpUrl;
-    protected String serviceURL;
-    protected String securedServiceURL;
-    protected String sessionCookie;
-    protected boolean standaloneMode;
-
-    protected CarbonAppUploaderClient carbonAppUploaderClient = null;
-    protected ApplicationAdminClient applicationAdminClient = null;
+    private CarbonAppUploaderClient carbonAppUploaderClient = null;
+    private ApplicationAdminClient applicationAdminClient = null;
 
     /**
      * Initialize testcase
      *
-     * @throws Exception
+     * @throws Exception if the logging in fails
      */
     public void init() throws Exception {
         log.info("Started Executing Scenario TestBase ");
 
-        infraProperties = getDeploymentProperties();
-
-        backendURL = infraProperties.getProperty(CARBON_SERVER_URL) +
-                (infraProperties.getProperty(CARBON_SERVER_URL).endsWith("/") ? "" : "/");
-        serviceURL = infraProperties.getProperty(ESB_HTTP_URL) +
-                (infraProperties.getProperty(ESB_HTTP_URL).endsWith("/") ? "" : "/");
-        securedServiceURL = infraProperties.getProperty(ESB_HTTPS_URL) +
-                (infraProperties.getProperty(ESB_HTTPS_URL).endsWith("/") ? "" : "/");
-
+        configureUrls();
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
         standaloneMode = true;
@@ -112,8 +97,28 @@ public class ScenarioTestBase {
     }
 
     /**
-     * Perform cleanup
-     * @throws Exception
+     * Validates if the test case is one that should be executed on the running product version.
+     * <p>
+     * All test methods of the test case will be skipped if it is not compatible with the running version. This is
+     * introduced to cater tests introduced for fixes done as patches for released product versions as they may only
+     * be valid for the product version for which the fix was done for.
+     *
+     * @param compatibleVersions product versions that the test is compatible with
+     */
+    protected void validateCompatibleProductVersions(String... compatibleVersions) {
+        if (!Arrays.asList(compatibleVersions).contains(runningProductVersion)) {
+            String errorMessage = "Skipping test: " + this.getClass().getName() + " due to version mismatch. Running "
+                                  + "product version: " + runningProductVersion + ", Allowed versions: "
+                                  + Arrays.toString(compatibleVersions);
+            log.warn(errorMessage);
+            throw new SkipException(errorMessage);
+        }
+    }
+
+    /**
+     * Perform cleanup.
+     *
+     * @throws Exception if an error occurs while performing clean up task
      */
     public void cleanup() throws Exception {
     }
@@ -141,7 +146,7 @@ public class ScenarioTestBase {
     }
 
 
-    public String getApiInvocationURLHttp(String resourcePath) {
+    protected String getApiInvocationURLHttp(String resourcePath) {
         return serviceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
@@ -160,35 +165,38 @@ public class ScenarioTestBase {
     /**
      * Function to upload carbon application
      *
-     * @param carFileName
-     * @return
-     * @throws RemoteException
+     * @param carFileName the name of the carbon application to be deployed
+     * @throws RemoteException if the admin client becomes unable to connect to the admin service
      */
-    public void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
+    protected void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
 
         if (standaloneMode) {
             // If standalone mode, deploy the CAPP to the server
-            String cappFilePath = resourceLocation + File.separator + "artifacts" +
-                    File.separator + carFileName + ".car";
+            String cappFilePath = RESOURCE_LOCATION + File.separator + "artifacts" +
+                                  File.separator + carFileName + ".car";
 
-            carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            if (carbonAppUploaderClient == null) {
+                carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            }
             DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
             // Upload carbon application
             carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
 
             //TODO - This thread sleep is added temporarily to wait until the ESB Instances sync in the cluster in clustered test environment
-            if (!Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT))) {
+            if (!Boolean.valueOf(infraProperties.getProperty(ScenarioConstants.STANDALONE_DEPLOYMENT))) {
                 log.info("Waiting for artifacts synchronized across cluster nodes");
                 Thread.sleep(120000);
             }
 
-            applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            if (applicationAdminClient == null) {
+                applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            }
 
             // Wait for Capp to sync
             log.info("Waiting for Carbon Application deployment ..");
             Awaitility.await()
                     .pollInterval(500, TimeUnit.MILLISECONDS)
-                    .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                    .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                     .until(isCAppDeployed(applicationAdminClient, carFileName));
         }
     }
@@ -196,9 +204,9 @@ public class ScenarioTestBase {
     /**
      * Function to undeploy carbon application
      *
-     * @param applicationName
-     * @throws ApplicationAdminExceptionException
-     * @throws RemoteException
+     * @param applicationName name of the Carbon application to be undeployed
+     * @throws ApplicationAdminExceptionException if an error occurs while undeploying carbon application
+     * @throws RemoteException                    if the admin client becomes unable to connect to the service
      */
     public void undeployCarbonApplication(String applicationName)
             throws ApplicationAdminExceptionException, RemoteException {
@@ -208,7 +216,7 @@ public class ScenarioTestBase {
             // Wait for Capp to undeploy
             Awaitility.await()
                       .pollInterval(500, TimeUnit.MILLISECONDS)
-                      .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                      .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                       .until(isCAppUnDeployed(applicationAdminClient, applicationName));
         }
 
@@ -228,8 +236,8 @@ public class ScenarioTestBase {
         }
     }
 
-    protected void setKeyStoreProperties() {
-        System.setProperty("javax.net.ssl.trustStore", resourceLocation + "/keystores/wso2carbon.jks");
+    private void setKeyStoreProperties() {
+        System.setProperty("javax.net.ssl.trustStore", RESOURCE_LOCATION + "/keystores/wso2carbon.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
     }
@@ -237,9 +245,7 @@ public class ScenarioTestBase {
 
 
     private String getServerHost() {
-        String bucketLocation = System.getenv("DATA_BUCKET_LOCATION");
-        log.info("Data Bucket location is set : " + bucketLocation);
-        String url = infraProperties.getProperty(MGT_CONSOLE_URL);
+        String url = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
         if (url != null && url.contains("/")) {
             url = url.split("/")[2].split(":")[0];
         } else
@@ -343,30 +349,44 @@ public class ScenarioTestBase {
         File[] listOfFiles = filePath.listFiles();
         List<String> fileNames = new ArrayList<>();
 
-        for (File file:listOfFiles) {
-            if (file.isFile()) {
-                fileNames.add(file.getName());
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    fileNames.add(file.getName());
+                }
             }
         }
         return fileNames;
     }
 
-    private String getFileContent (String folderLocation, String fileName) throws IOException {
-        File fileLocation = new File( getClass().getResource(folderLocation + File.separator + fileName).getPath());
+    private String getFileContent(String folderLocation, String fileName) throws IOException {
+        File fileLocation = new File(getClass().getResource(folderLocation + File.separator + fileName).getPath());
 
-        final BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))));
         StringBuilder sb = new StringBuilder();
 
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))))) {
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 sb.append(currentLine);
             }
-        } finally {
-            br.close();
         }
 
         return sb.toString();
     }
+
+    private static synchronized void configureUrls() {
+        if (null == infraProperties) {
+            infraProperties = getDeploymentProperties();
+            backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL)
+                         + (infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL).endsWith("/") ? "" : "/");
+            serviceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL)
+                         + (infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL).endsWith("/") ? "" : "/");
+            securedServiceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
+                                + (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
+                                                  .endsWith("/") ? "" : "/");
+            runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
+        }
+    }
+
 }
 

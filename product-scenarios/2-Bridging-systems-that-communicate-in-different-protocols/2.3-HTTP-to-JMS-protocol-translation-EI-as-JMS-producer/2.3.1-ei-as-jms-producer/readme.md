@@ -3,7 +3,8 @@
 ![EI as JMS consumer](images/JMS-producer   .png)
 
 ## When to use
-In this sections walk you through the steps to configure the ESB to listen to a HTTP and send them to JMS queue by using  ActiveMQ and JMS sender.
+In this sections walk you through the steps to configure EI to listen to a HTTP and send them to JMS queue by 
+using  ActiveMQ and JMS sender.
 
 ## Sample use-case
 --sample use-case
@@ -12,8 +13,9 @@ In this sections walk you through the steps to configure the ESB to listen to a 
 
 ## Pre-requisites
 
-- Configure WSO2 ESB with Apache ActiveMQ, and set up the JMS listener. For instructions, see [Configure with ActiveMQ](https://docs.wso2.com/display/ESB500/Configure+with+ActiveMQ).
-- Start the ESB server.
+- Configure WSO2 EI with Apache ActiveMQ, and set up the JMS listener. For instructions, see [Configure with ActiveMQ]
+(https://docs.wso2.com/display/EI640/Configure+with+ActiveMQ).
+- Start the EI server.
 
 ## Development guidelines
 

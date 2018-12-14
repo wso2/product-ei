@@ -11,7 +11,7 @@ VFS transport listener will pick the file from the directory in the FTP server a
 ## Pre-requisites
 - You will need access to an FTP server and an SMTP server to try this sample.
 - Start the Axis2 server and deploy the SimpleStockQuoteService if not already done.
-- Enable mail transport sender in the ESB axis2.xml.
+- Enable mail transport sender in the axis2.xml inside <EI_HOME>/conf.
 - Create a new test directory in the FTP server. Open <EI_HOME>/samples/service-bus/synapse_sample_255.xml and edit the following values. Change the transport.vfs.FileURI parameter value point to the test directory at the FTP server. Change the outSequence endpoint address URI email address to a working email address. Values you have to change are marked with "<!--CHANGE-->".
 - Start the Synapse configuration numbered 255: wso2esb-samples.sh -sn 255
 - Copy <EI_HOME>/samples/service-bus/resources/vfs/test.xml to the ftp directory given in transport.vfs.FileURI below.
@@ -39,7 +39,7 @@ VFS transport listener will pick the file from the directory in the FTP server a
                 </send>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
 </definitions>
 ```

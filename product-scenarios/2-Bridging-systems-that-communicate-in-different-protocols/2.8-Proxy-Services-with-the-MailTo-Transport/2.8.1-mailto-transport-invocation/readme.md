@@ -12,8 +12,10 @@ MailTo transport supports sending messages (E-Mail) over SMTP and receiving mess
 
 - You will need access to an e-mail account.
 - Start the Axis2 server and deploy the SimpleStockQuoteService if not already done.
-- Enable the mail transport listener in the ESB axis2.xml. Simply uncomment the relevant transport receiver entry in the file.
-- Enable mail transport sender in the ESB axis2.xml. See [MailTo transport](https://docs.wso2.com/display/EI620/MailTo+Transport) for details.
+- Enable the mail transport listener in the axis2.xml located inside <EI_HOME>/conf. Simply uncomment the relevant 
+  transport receiver entry in the file.
+- Enable mail transport sender in the axis2.xml located in <EI_HOME>/conf. See [MailTo transport](https://docs.wso2
+.com/display/EI640/MailTo+Transport) for details.
 - Start the Synapse configuration.
 - Send a plain/text e-mail (Make sure you switch to Plain text mode when you are composing the email) with the following body and any custom Subject from your mail account to the mail address synapse.demo.1@gmail.com.
 
@@ -64,7 +66,7 @@ MailTo transport supports sending messages (E-Mail) over SMTP and receiving mess
                 <send/>
             </outSequence>
         </target>
-        <publishWSDL uri="file:repository/samples/resources/proxy/sample_proxy_1.wsdl"/>
+        <publishWSDL uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     </proxy>
 </definitions>
 ```

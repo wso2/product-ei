@@ -27,9 +27,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.HttpConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
+import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
 import java.io.IOException;
@@ -63,8 +63,6 @@ public class JsonToSoapUsingPayloadFactoryTest extends ScenarioTestBase {
         headers.put(ScenarioConstants.MESSAGE_ID, header);
         HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
-
-        log.info("Actual response received 1.3.2.1: " + responsePayload);
 
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "JSON to SOAP transformation failed");
 

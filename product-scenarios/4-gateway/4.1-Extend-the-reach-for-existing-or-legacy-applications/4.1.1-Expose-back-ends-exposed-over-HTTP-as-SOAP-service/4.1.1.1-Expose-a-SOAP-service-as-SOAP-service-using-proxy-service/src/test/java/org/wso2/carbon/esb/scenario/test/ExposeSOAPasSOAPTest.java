@@ -28,6 +28,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
+import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
+import org.wso2.carbon.esb.scenario.test.common.http.SOAPClient;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
 import java.io.IOException;
@@ -43,13 +45,9 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
 
     private static final Log log = LogFactory.getLog(ExposeSOAPasSOAPTest.class);
 
-    private static final String cappNameWithVersion = "scenario_4_1-synapse-configCompositeApplication_1.0.0";
-    private String cappName = "scenario_4_1-synapse-configCompositeApplication";
-
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        deployCarbonApplication(cappNameWithVersion);
     }
 
     @Test(description = "4.1.1.1.1 Front the back-end using pass-through proxy template")
@@ -60,16 +58,9 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
-        //TODO perform capp undeployment: temporarily disabled till test environment stabilization
-        undeployCarbonApplication(cappName);
     }
 
     private void invokeSOAPProxyAndAssert(String url) throws IOException, XMLStreamException {
-        SimpleHttpClient httpClient = new SimpleHttpClient();
-
-        Map<String, String> headers = new HashMap<String, String>(1);
-        headers.put("SOAPAction","urn:getQuote");
-
         String payload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                 "xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
                 "   <soapenv:Header/>\n" +
@@ -82,10 +73,12 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
 
-        HttpResponse response =  httpClient.doPost(url, headers, payload, HTTPConstants.MEDIA_TYPE_TEXT_XML);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200, "Response failed");
+        SOAPClient soapClient = new SOAPClient();
+        HttpResponse response = soapClient.sendSimpleSOAPMessage(url,payload, "urn:getQuote");
 
-        OMElement respElement = AXIOMUtil.stringToOM(httpClient.getResponsePayload(response));
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement respElement = HTTPUtils.getOMFromResponse(response);
         OMElement symbolElement = respElement.getFirstElement().getFirstElement().getFirstElement().
                 getFirstChildWithName(new QName("http://services.samples/xsd","symbol"));
 
