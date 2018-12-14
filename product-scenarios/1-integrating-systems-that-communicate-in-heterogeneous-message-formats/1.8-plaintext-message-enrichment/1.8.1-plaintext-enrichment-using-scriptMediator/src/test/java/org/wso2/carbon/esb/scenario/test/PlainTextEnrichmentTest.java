@@ -60,8 +60,6 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
                 HttpConstants.MEDIA_TYPE_TEXT_PLAIN);
         String responsePayload = HTTPUtils.getResponsePayload(httpResponse);
 
-        log.info("Actual response received 1.8.1: " + responsePayload);
-
         String expectedString = serverAppended + textRequestToSend + enrichment;
 
         Assert.assertEquals(responsePayload, expectedString);

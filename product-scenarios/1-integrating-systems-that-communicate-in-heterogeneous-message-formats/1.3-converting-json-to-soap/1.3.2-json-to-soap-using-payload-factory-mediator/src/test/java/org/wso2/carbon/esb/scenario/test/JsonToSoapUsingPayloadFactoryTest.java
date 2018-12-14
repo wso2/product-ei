@@ -64,8 +64,6 @@ public class JsonToSoapUsingPayloadFactoryTest extends ScenarioTestBase {
         HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
-        log.info("Actual response received 1.3.2.1: " + responsePayload);
-
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "JSON to SOAP transformation failed");
 
         JSONObject jsonExpectedResponse = new JSONObject(expectedResponse);
