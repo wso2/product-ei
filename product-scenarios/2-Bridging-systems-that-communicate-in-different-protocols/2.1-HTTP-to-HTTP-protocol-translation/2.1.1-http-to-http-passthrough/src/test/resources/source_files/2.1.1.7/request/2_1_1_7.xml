@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body>
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://services.samples/xsd" xmlns:ser="http://services.samples">
         <soap:Header/>
         <soap:Body>
@@ -10,5 +9,3 @@
             </ser:getQuote>
         </soap:Body>
     </soap:Envelope>
-</soapenv:Body>
-</soapenv:Envelope>

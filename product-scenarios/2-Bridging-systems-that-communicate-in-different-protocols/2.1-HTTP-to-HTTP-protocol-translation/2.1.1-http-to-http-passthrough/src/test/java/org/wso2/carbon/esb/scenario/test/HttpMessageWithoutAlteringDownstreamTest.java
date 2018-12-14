@@ -1,12 +1,30 @@
+/*
+ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.carbon.esb.scenario.test;
 
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.HttpConstants;
+import org.wso2.carbon.esb.scenario.test.common.StringUtil;
+import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
@@ -40,9 +58,10 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
         String responsePayload = httpClient.getResponsePayload(httpResponse);
 
-        log.info("Actual response received 2.1.1.7: " + responsePayload);
-
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
+        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
+                 StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
+                "Actual Response and Expected Response mismatch!");
     }
 
     @DataProvider(name = "2.1.1.7")
