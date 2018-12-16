@@ -52,6 +52,7 @@ public class BpelVersioningTest extends BPSMasterTest {
     BpelPackageManagementClient bpelPackageManagementClient;
     BpelProcessManagementClient bpelProcessManagementClient;
     BpelInstanceManagementClient bpelInstanceManagementClient;
+    private final int MAX_TIME = 1000;
 
     private RequestSender requestSender;
     private LinkedList<String> activeStatus;
@@ -80,7 +81,7 @@ public class BpelVersioningTest extends BPSMasterTest {
 
         Awaitility.await()
                 .pollInterval(50, TimeUnit.MILLISECONDS)
-                .atMost(100, TimeUnit.SECONDS)
+                .atMost(MAX_TIME, TimeUnit.SECONDS)
                 .until(isInforListAvailable("HelloWorld2"));
         List<String> processBefore = bpelProcessManagementClient.getProcessInfoList("HelloWorld2");
         activeStatus = new LinkedList<String>();
@@ -119,13 +120,13 @@ public class BpelVersioningTest extends BPSMasterTest {
 
             Awaitility.await()
                     .pollInterval(50, TimeUnit.MILLISECONDS)
-                    .atMost(1000, TimeUnit.SECONDS)
+                    .atMost(MAX_TIME, TimeUnit.SECONDS)
                     .until(isInforListAvailable("HelloWorld2"));
             processAfter = bpelProcessManagementClient.getProcessInfoList("HelloWorld2");
 
             Awaitility.await()
                     .pollInterval(20, TimeUnit.MILLISECONDS)
-                    .atMost(1000, TimeUnit.SECONDS)
+                    .atMost(MAX_TIME, TimeUnit.SECONDS)
                     .until(isProcessRetired());
             if (bpelProcessManagementClient.getStatus(activeStatus.get(0)).equals(ProcessStatus.RETIRED.toString()))
                 break;
@@ -161,9 +162,8 @@ public class BpelVersioningTest extends BPSMasterTest {
             public Boolean call() throws Exception {
                 if (bpelProcessManagementClient.getProcessInfoList(packageName) != null) {
                     return true;
-                } else {
-                    return false;
                 }
+                    return false;
             }
         };
     }
@@ -174,9 +174,8 @@ public class BpelVersioningTest extends BPSMasterTest {
             public Boolean call() throws Exception {
                 if (bpelProcessManagementClient.getStatus(activeStatus.get(0)).equals(ProcessStatus.RETIRED.toString())) {
                     return true;
-                } else {
-                    return false;
                 }
+                    return false;
             }
         };
     }
