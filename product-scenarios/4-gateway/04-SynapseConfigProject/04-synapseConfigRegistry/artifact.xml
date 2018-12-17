@@ -1,1 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><artifacts/>
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="SimpleStockQuoteService_wsdl" groupId="org.wso2.ei.product-scenarios.scenario_04.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>SimpleStockQuoteService.wsdl</file>
+            <path>/_system/config/scenario/tests/resource/wsdl</path>
+            <mediaType>application/wsdl+xml</mediaType>
+        </item>
+    </artifact>
+</artifacts>

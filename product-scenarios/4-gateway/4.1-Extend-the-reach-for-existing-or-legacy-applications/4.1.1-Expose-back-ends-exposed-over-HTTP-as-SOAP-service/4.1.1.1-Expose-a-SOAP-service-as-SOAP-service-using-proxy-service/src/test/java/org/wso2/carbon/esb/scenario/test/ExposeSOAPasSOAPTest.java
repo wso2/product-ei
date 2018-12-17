@@ -18,8 +18,6 @@
 package org.wso2.carbon.esb.scenario.test;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.util.AXIOMUtil;
-import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
@@ -29,12 +27,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
+import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 import org.wso2.carbon.esb.scenario.test.common.http.SOAPClient;
-import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 
@@ -52,7 +48,63 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
 
     @Test(description = "4.1.1.1.1 Front the back-end using pass-through proxy template")
     public void testPassThroughProxyTemplate() throws IOException, XMLStreamException {
-        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_Proxy_SimplePassThroughTemplate"));
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_1_Proxy_SimplePassThroughTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.2 Front the back-end using custom proxy template")
+    public void testCustomProxyTemplate() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_2_Proxy_SimpleCustomTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.3 Front the back-end using Log Forward proxy template")
+    public void testLogAndForwardTemplate() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_3_Proxy_SimpleLogForwardTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.4 Front the back-end using WSDL-Based proxy proxy template")
+    public void testWSDLTemplate() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.5 Front the back-end using proxy specifying service URL using named endpoint within " +
+            "endpoint tag")
+    public void testPassThroughWithNamedEP() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_5_Proxy_PassThroughWithNamedEP"));
+    }
+
+    @Test(description = "4.1.1.1.6 Front the back-end using specifying service URL using named endpoint via \"endpoint\" " +
+            "attribute in target tag")
+    public void testPassThroughEPinTarget() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_6_Proxy_PassThroughProxyEPinTarget"));
+    }
+
+
+    @Test(description = "4.1.1.1.7 Publishing WSDL of the service by loading from the registry")
+    public void testPublishingWSDLFromRegistry() throws IOException, XMLStreamException {
+        String wsdlDoc = "SimpleStockQuoteService";
+        String url = getProxyServiceURLHttp("4_1_1_1_7_Proxy_PublishWSDLFromRegistry");
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+
+        Assert.assertEquals(responseOM.getFirstChildWithName(new QName("http://schemas.xmlsoap.org/wsdl/",
+                "documentation")).getText(), wsdlDoc, "WSDL from the proxy differ from expected");
+
+    }
+
+    @Test(description = "4.1.1.1.8 Publishing WSDL of the service by loading from uri")
+    public void testPublishingWSDLFromURL() throws IOException, XMLStreamException {
+        String wsdlDoc = "SimpleStockQuoteService";
+        String url = getProxyServiceURLHttp("4_1_1_1_8_Proxy_PublishWSDLFromURL");
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+
+        Assert.assertEquals(responseOM.getFirstChildWithName(new QName("http://schemas.xmlsoap.org/wsdl/",
+                "documentation")).getText(), wsdlDoc, "WSDL from the proxy differ from expected");
+
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
