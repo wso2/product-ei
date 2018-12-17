@@ -19,6 +19,7 @@
 package org.wso2.esb.integration.common.utils.servers.axis2;
 
 import org.apache.axis2.AxisFault;
+import org.awaitility.Awaitility;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
 import org.apache.axis2.deployment.DeploymentEngine;
@@ -30,8 +31,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.params.CoreConnectionPNames;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.utils.ServerConstants;
+import org.wso2.esb.integration.common.utils.common.AvailabilityPollingUtils;
 
 import java.io.*;
+import java.util.concurrent.TimeUnit;
 
 public class SampleAxis2Server implements BackendServer {
 
@@ -51,6 +54,9 @@ public class SampleAxis2Server implements BackendServer {
     private ListenerManager listenerManager;
     private boolean started;
     String repositoryPath = null;
+
+    private static final int MAX_WAIT_TIME = 120000;
+    private static final int MIN_WAIT_TIME = 500;
 
     public SampleAxis2Server() {
         this("test_axis2_server_9000.xml");
@@ -92,6 +98,22 @@ public class SampleAxis2Server implements BackendServer {
         } catch (InterruptedException ignored) {
 
         }
+        started = true;
+    }
+
+    public void start(int port) throws Exception {
+        log.info("Starting sample Axis2 server");
+        //To set the socket can be bound even though a previous connection is still in a timeout state.
+        if (System.getProperty(CoreConnectionPNames.SO_REUSEADDR) == null) {
+            System.setProperty(CoreConnectionPNames.SO_REUSEADDR, "true");
+        }
+        listenerManager = new ListenerManager();
+        listenerManager.init(cfgCtx);
+        listenerManager.start();
+        Awaitility.await()
+                  .pollInterval(MIN_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .until(AvailabilityPollingUtils.isHostAvailable("localhost", port));
         started = true;
     }
 

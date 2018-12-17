@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.samples.test.endpoint;
 
 import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -27,9 +28,11 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.ConnectionData;
 import org.wso2.carbon.automation.test.utils.tcpmon.client.TCPMonListener;
 import org.wso2.esb.integration.common.clients.mediation.SynapseConfigAdminClient;
+import org.wso2.esb.integration.common.utils.common.AvailabilityPollingUtils;
 import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
 
+import java.util.concurrent.TimeUnit;
 /**
  * Sample 62: Routing a Message to a Dynamic List of Recipients and Aggregating Responses
  */
@@ -43,9 +46,30 @@ public class Sample62TestCase extends ESBSampleIntegrationTest {
 	private TCPMonListener listener2;
 	private TCPMonListener listener3;
 
+	private static final int MAX_WAIT_TIME = 120000;
+	private static final int MIN_WAIT_TIME = 500;
+	private static final int MAX_WAIT_TIMEUPDATE = 200000;
+	private static final int MIN_WAIT_TIME_UPDATE = 100000;
+	private static final int POLLING_INTERVAL = 500;
+
+
 	@BeforeClass(alwaysRun = true)
 	public void setEnvironment() throws Exception {
 		super.init();
+
+		Awaitility.await()
+				  .pollInterval(POLLING_INTERVAL, TimeUnit.MILLISECONDS)
+				  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+				  .until(AvailabilityPollingUtils.isPortClosed("localhost", 9100));
+		Awaitility.await()
+				  .pollInterval(POLLING_INTERVAL, TimeUnit.MILLISECONDS)
+				  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+				  .until(AvailabilityPollingUtils.isPortClosed("localhost", 9200));
+		Awaitility.await()
+				  .pollInterval(POLLING_INTERVAL, TimeUnit.MILLISECONDS)
+				  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+				  .until(AvailabilityPollingUtils.isPortClosed("localhost", 9300));
+
 		loadSampleESBConfiguration(62);
 
 		axis2Server1 = new SampleAxis2Server("test_axis2_server_9001.xml");
@@ -56,9 +80,9 @@ public class Sample62TestCase extends ESBSampleIntegrationTest {
 		axis2Server2.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE_2);
 		axis2Server3.deployService(SampleAxis2Server.SIMPLE_STOCK_QUOTE_SERVICE_3);
 
-		axis2Server1.start();
-		axis2Server2.start();
-		axis2Server3.start();
+		axis2Server1.start(9001);
+		axis2Server2.start(9002);
+		axis2Server3.start(9003);
 
 		listener1 = new TCPMonListener(9100, "localhost", 9001);
 		listener2 = new TCPMonListener(9200, "localhost", 9002);
@@ -69,13 +93,34 @@ public class Sample62TestCase extends ESBSampleIntegrationTest {
 		String config = synapseConfigAdminClient.getConfiguration();
 		config = config.replace("9001", "9100").replace("9002", "9200").replace("9003", "9300");
 		config = config.replace("//m0:getQuoteResponse", "//m0:getSimpleQuoteResponse");
-		synapseConfigAdminClient.updateConfiguration(config);
+
+		Awaitility.await()
+                  .pollInterval(MIN_WAIT_TIME_UPDATE, TimeUnit.MILLISECONDS)
+                  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .until(AvailabilityPollingUtils.isUpdated(synapseConfigAdminClient, config));
 
 		listener1.start();
 		listener2.start();
 		listener3.start();
 
-	}
+        Awaitility.await()
+                  .pollInterval(MIN_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .pollInterval(POLLING_INTERVAL, TimeUnit.MILLISECONDS)
+                  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .until(AvailabilityPollingUtils.isHostAvailable("localhost", 9100));
+        Awaitility.await()
+                  .pollInterval(MIN_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .pollInterval(POLLING_INTERVAL, TimeUnit.MILLISECONDS)
+                  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .until(AvailabilityPollingUtils.isHostAvailable("localhost", 9200));
+        Awaitility.await()
+                  .pollInterval(MIN_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .pollInterval(POLLING_INTERVAL, TimeUnit.MILLISECONDS)
+                  .atMost(MAX_WAIT_TIME, TimeUnit.MILLISECONDS)
+                  .until(AvailabilityPollingUtils.isHostAvailable("localhost", 9300));
+
+
+    }
 
 	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	@Test(groups = { "wso2.esb" },
@@ -83,13 +128,10 @@ public class Sample62TestCase extends ESBSampleIntegrationTest {
 	public void testRoutingMessagesAndAggregatingResponses() throws Exception {
 
 		OMElement response = axis2Client.sendSimpleQuoteRequest("http://localhost:8480/", null, "WSO2");
-		System.out.println(response.toString());
 
 		Assert.assertTrue(response.toString().contains("getSimpleQuoteResponse"),
 		                  "GetSimpleQuoteResponse not found");
 		Assert.assertTrue(response.toString().contains("WSO2 Company"), "WSO2 Company not found");
-
-		Thread.sleep(3000);
 
 		boolean is9001Called = isAxisServiceCalled(listener1);
 		boolean is9002Called = isAxisServiceCalled(listener2);
