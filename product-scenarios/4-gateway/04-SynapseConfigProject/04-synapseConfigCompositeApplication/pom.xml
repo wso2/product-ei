@@ -9,13 +9,83 @@
   <name>04-synapseConfigCompositeApplication</name>
   <description>04-synapseConfigCompositeApplication</description>
   <properties>
-    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_Proxy_SimplePassThroughTemplate>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_Proxy_SimplePassThroughTemplate>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_1_Proxy_SimplePassThroughTemplate>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_1_Proxy_SimplePassThroughTemplate>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,datasource/datasource=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_5_Proxy_PassThroughWithNamedEP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_5_Proxy_PassThroughWithNamedEP>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_3_Proxy_SimpleLogForwardTemplate>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_3_Proxy_SimpleLogForwardTemplate>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_7_Proxy_PublishWSDLFromRegistry>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_7_Proxy_PublishWSDLFromRegistry>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_8_Proxy_PublishWSDLFromURL>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_8_Proxy_PublishWSDLFromURL>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_6_Proxy_PassThroughProxyEPinTarget>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_6_Proxy_PassThroughProxyEPinTarget>
+    <org.wso2.ei.product-scenarios.scenario_04.endpoint_._EP_SimpleStockQuoteService>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.endpoint_._EP_SimpleStockQuoteService>
+    <org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_2_Proxy_SimpleCustomTemplate>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.proxy-service_._4_1_1_1_2_Proxy_SimpleCustomTemplate>
+    <org.wso2.ei.product-scenarios.scenario_04.sequence_._Seq_fullLog>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_04.sequence_._Seq_fullLog>
+    <org.wso2.ei.product-scenarios.scenario_04.resource_._SimpleStockQuoteService_wsdl>capp/EnterpriseIntegrator</org.wso2.ei.product-scenarios.scenario_04.resource_._SimpleStockQuoteService_wsdl>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
-      <artifactId>4_1_1_1_Proxy_SimplePassThroughTemplate</artifactId>
+      <artifactId>4_1_1_1_1_Proxy_SimplePassThroughTemplate</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.endpoint</groupId>
+      <artifactId>EP_SimpleStockQuoteService</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_2_Proxy_SimpleCustomTemplate</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.sequence</groupId>
+      <artifactId>Seq_fullLog</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_3_Proxy_SimpleLogForwardTemplate</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_5_Proxy_PassThroughWithNamedEP</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_6_Proxy_PassThroughProxyEPinTarget</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.resource</groupId>
+      <artifactId>SimpleStockQuoteService_wsdl</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_7_Proxy_PublishWSDLFromRegistry</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_04.proxy-service</groupId>
+      <artifactId>4_1_1_1_8_Proxy_PublishWSDLFromURL</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
