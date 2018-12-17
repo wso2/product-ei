@@ -20,12 +20,15 @@ package org.wso2.esb.integration.common.utils.servers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.esb.integration.common.utils.exception.ESBIntegrationTestException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 class WireMonitor extends Thread {
     private Log log = LogFactory.getLog(WireMonitor.class);
@@ -34,7 +37,9 @@ class WireMonitor extends Thread {
     private ServerSocket providerSocket;
     private Socket connection = null;
     private WireMonitorServer trigger;
+    private CountDownLatch countDownLatch;
     private boolean started;
+
 
     public void run() {
         try {
@@ -43,6 +48,7 @@ class WireMonitor extends Thread {
 
             log.info("WireMonitor Server started on port " + port);
             log.info("Waiting for connection");
+            this.countDownLatch.countDown();
             started = true;
             connection = providerSocket.accept();
             log.info("Connection received from " + connection.getInetAddress().getHostName());
@@ -104,8 +110,21 @@ class WireMonitor extends Thread {
     }
 
     public WireMonitor(int listenPort, WireMonitorServer trigger) {
+        this.countDownLatch = new CountDownLatch(1);
         port = listenPort;
         this.trigger = trigger;
+    }
+    public void awaitStartServer() throws ESBIntegrationTestException {
+        try {
+            if (!this.countDownLatch.await(60, TimeUnit.SECONDS)) {
+                throw new ESBIntegrationTestException(
+                        "Error while waiting to create Wire monitor socket due to timeout");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new ESBIntegrationTestException(
+                    "Error while waiting to create Wire monitor socket due to interrupted exception ", e);
+        }
     }
 
     /**

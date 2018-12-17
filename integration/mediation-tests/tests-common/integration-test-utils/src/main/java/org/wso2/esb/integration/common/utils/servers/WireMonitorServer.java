@@ -20,6 +20,7 @@ package org.wso2.esb.integration.common.utils.servers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.esb.integration.common.utils.exception.ESBIntegrationTestException;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,21 +44,12 @@ public class WireMonitorServer {
         this.port = port;
     }
 
-    public void start() {
+    public void start() throws ESBIntegrationTestException {
         response = "";
         WireMonitor wireMonitor = new WireMonitor(port, this);
         wireMonitor.start();
-        while (!wireMonitor.isStarted()) {
-            try {
-                //wait until the wire monitor is started
-                TimeUnit.MILLISECONDS.sleep(100);
-                log.info("Waiting for wire monitor to start...");
-            } catch (InterruptedException e) {
-                //Continue looping until the server is started
-            }
+        wireMonitor.awaitStartServer();
         }
-    }
-
 
     /**
      * Wait until response is received and returns

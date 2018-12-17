@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.mediator.test.property;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.esb.integration.common.utils.exception.ESBIntegrationTestException;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
@@ -47,7 +48,7 @@ public class PropertyIntegrationPRESERVE_WS_ADDRESSINGPropertyTest extends ESBIn
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
     @Test(groups = "wso2.esb", description = "Test-PRESERVE_WS_ADDRESSING Property")
-    public void testPRESERVE_WS_ADDRESSINGProperty() {
+    public void testPRESERVE_WS_ADDRESSINGProperty() throws ESBIntegrationTestException {
 
         wireServer.start();
         try {
