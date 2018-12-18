@@ -44,7 +44,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
 
     private String cappNameWithVersion = "approach_1_1_2_synapse_configCompositeApplication_1.0.0";
     private String cappName = "approach_1_1_2_synapse_configCompositeApplication";
-    private String proxyServiceName = "1_1_2_soap_to_json_using_message_type";
+    private String proxyServiceName = "1_1_2_Proxy_soap_to_json_using_message_type";
     private String proxyServiceUrl;
 
 
@@ -52,7 +52,6 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
     public void init() throws Exception {
         super.init();
         proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
-        deployCarbonApplication(cappNameWithVersion);
     }
 
     @Test(description = "1.1.2.1-Valid Soap To Json transformation Using MessageType property", enabled = true,

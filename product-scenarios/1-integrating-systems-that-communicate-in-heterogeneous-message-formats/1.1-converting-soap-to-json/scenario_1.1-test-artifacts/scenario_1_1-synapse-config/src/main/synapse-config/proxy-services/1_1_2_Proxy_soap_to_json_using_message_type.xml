@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy name="1_1_2_soap_to_json_using_message_type" startOnLoad="true" transports="http https"
+<proxy name="1_1_2_Proxy_soap_to_json_using_message_type" startOnLoad="true" transports="http https"
        xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>

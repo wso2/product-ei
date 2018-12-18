@@ -46,8 +46,7 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        proxyServiceUrl = getProxyServiceURLHttp("1_8_1_1_PlainTextReceiverProxy");
-        deployCarbonApplication(carFileName);
+        proxyServiceUrl = getProxyServiceURLHttp("1_8_1_1_Proxy_PlainTextReceiver");
     }
 
     @Test(description = "1.8.1 - plaintext enrichment using script mediator")

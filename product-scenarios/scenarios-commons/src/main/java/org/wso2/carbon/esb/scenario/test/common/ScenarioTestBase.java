@@ -65,6 +65,7 @@ public class ScenarioTestBase {
     private static String backendURL;
     private static String serviceURL;
     private static String securedServiceURL;
+    private static String mgtConsoleURL;
     private String sessionCookie;
     private boolean standaloneMode;
     private static String runningProductVersion;
@@ -374,7 +375,7 @@ public class ScenarioTestBase {
         return sb.toString();
     }
 
-    private static synchronized void configureUrls() {
+    public static synchronized void configureUrls() {
         if (null == infraProperties) {
             infraProperties = getDeploymentProperties();
             backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL)
@@ -385,8 +386,16 @@ public class ScenarioTestBase {
                                 + (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
                                                   .endsWith("/") ? "" : "/");
             runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
+            mgtConsoleURL = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
         }
     }
 
+    public static String getBackendURL() {
+        return backendURL;
+    }
+
+    public static String getMgtConsoleURL() {
+        return mgtConsoleURL;
+    }
 }
 

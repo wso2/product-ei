@@ -62,6 +62,7 @@ public class TestPrepExecutionListener implements IExecutionListener {
     public void onExecutionStart() {
 
         infraProperties = ScenarioTestBase.getDeploymentProperties();
+        ScenarioTestBase.configureUrls();
         // TODO : uncomment this once test environment is stable and remove hardcoded value
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(ScenarioConstants.STANDALONE_DEPLOYMENT));
         standaloneMode = true;
@@ -70,9 +71,8 @@ public class TestPrepExecutionListener implements IExecutionListener {
             log.info("Test execution standalone mode : " + standaloneMode);
             String carbonAppListStr = System.getProperty(ScenarioConstants.TEST_RESOURCES_CARBON_APPLICATIONS_LIST);
 
-            backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL) +
-                    (infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL).endsWith("/") ? "" : "/");
-            mgtConsoleUrl = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
+            backendURL = ScenarioTestBase.getBackendURL();
+            mgtConsoleUrl = ScenarioTestBase.getMgtConsoleURL();
 
             setKeyStoreProperties();
 

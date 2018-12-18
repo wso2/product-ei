@@ -38,7 +38,7 @@
         <module>01-synapseConfigCompositeApplication</module>
 
         <!--Scenario Specific CAR Applications -->
-        <module>1_8-synapse-configCompositeApplication</module>
+        <!--<module>1_8-synapse-configCompositeApplication</module>-->
     </modules>
 
 </project>
