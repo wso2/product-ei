@@ -17,7 +17,6 @@ to find the 'MessageProcessorAdminService.java' class.
 Once you define your function, you will have to generate the MessageProcessorAdminServiceStub file. 
 
 ### 2. Generating the MessageProcessorAdminServiceStub using WSDL
->>>>>>> b5f8970ecfd0d35afd13d602e394fcf485658020:gh-docs/message-processor/Admin_Services.md
 To generate the stub file, the WSDL file in `<repo-home>/service-stubs/mediation-admin/org.wso2.carbon.message.processor.stub/`
 needs to be edited and then built to generate the stub. 
 
