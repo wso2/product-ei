@@ -1,10 +1,14 @@
+<<<<<<< HEAD:gh-docs/Admin_Services.md
 # How to create admin-services
 Admin Services generally follow the following steps. Here, the Message Processor has been considered as an example
+=======
+# How to create admin-services for the Message Processor
+>>>>>>> b5f8970ecfd0d35afd13d602e394fcf485658020:gh-docs/message-processor/Admin_Services.md
 
 ### Creation Flow
 
 1. Define your Admin Service function
-2. Generate the stub using wsdl
+2. Generate the stub using WSDL
 3. Define function in MessageProcessorAdminServiceClient to call Admin Service function
 4. Call the function from the Message Processor UI jsp
 
@@ -16,7 +20,11 @@ to find the 'MessageProcessorAdminService.java' class.
 
 Once you define your function, you will have to generate the MessageProcessorAdminServiceStub file. 
 
+<<<<<<< HEAD:gh-docs/Admin_Services.md
 ### 2. Generating the MessageProcessorAdminServiceStub using wsdl 
+=======
+### 2. Generating the MessageProcessorAdminServiceStub using WSDL
+>>>>>>> b5f8970ecfd0d35afd13d602e394fcf485658020:gh-docs/message-processor/Admin_Services.md
 To generate the stub file, the WSDL file in `<repo-home>/service-stubs/mediation-admin/org.wso2.carbon.message.processor.stub/`
 needs to be edited and then built to generate the stub. 
 
@@ -26,7 +34,7 @@ needs to be edited and then built to generate the stub.
  
  2. Copy the generated '.jar' file found in `<repo-home>/components/mediation-admin/org.wso2.carbon.message.processor/target/org.wso2.carbon.message.processor-4.6.106-SNAPSHOT.jar`
  
- 3. Paste the '.jar' file into the 'patches' folder in the product-ui 
+ 3. Create a 'patch9999' folder in 'patches' directory and Paste the '.jar' file into it.
  
  4. Run 'sh integrator.sh -DosgiConsole' from the product-ui 'bin' folder and list the admin services using 
  'listAdminServices' command
@@ -56,4 +64,8 @@ the client object defined in the jsp.
     
     MessageProcessorAdminServiceClient client = new MessageProcessorAdminServiceClient(cookie,url,configContext);
 ```
+<<<<<<< HEAD:gh-docs/Admin_Services.md
            
+=======
+           
+>>>>>>> b5f8970ecfd0d35afd13d602e394fcf485658020:gh-docs/message-processor/Admin_Services.md
