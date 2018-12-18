@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<soapenv:Header/>
+<soapenv:Body>
+    <root>
+        <appointment_date>2025-04-02</appointment_date>
+        <doctor>thomas collins</doctor>
+        <hospital>grand oak community hospital</hospital>
+    </root>
+</soapenv:Body>
+</soapenv:Envelope>

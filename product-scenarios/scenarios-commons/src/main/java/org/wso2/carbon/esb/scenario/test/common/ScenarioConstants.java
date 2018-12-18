@@ -46,6 +46,8 @@ public class ScenarioConstants {
     public static final String STANDALONE_DEPLOYMENT = "StandaloneDeployment";
 
     public static final String TEST_RESOURCES_DIR = "test.resources.dir";
+    public static final String COMMON_RESOURCES_DIR = "common.resources.dir";
+
     public static final String TEST_RESOURCES_CARBON_APPLICATIONS_LIST = "test.resources.carbonApplications.list";
     public static final String TEST_RESOURCES_CARBON_APPLICATIONS_DIR = "test.resources.carbonApplications.dir";
 

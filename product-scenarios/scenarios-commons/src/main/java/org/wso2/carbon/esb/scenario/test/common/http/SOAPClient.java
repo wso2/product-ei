@@ -109,6 +109,12 @@ public class SOAPClient {
         HttpUriRequest request = new HttpPost(url);
         HTTPUtils.setHTTPHeader(SOAP_ACTION, action, request);
 
+        if(headers != null) {
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                HTTPUtils.setHTTPHeader(header.getKey(),header.getValue(), request);
+            }
+        }
+
         final boolean zip = headers != null && "gzip".equals(headers.get(HttpHeaders.CONTENT_ENCODING));
 
         HttpEntityEnclosingRequest entityEncReq = (HttpEntityEnclosingRequest) request;

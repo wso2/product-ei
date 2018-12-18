@@ -23,4 +23,16 @@
     <artifact name="1_1_2_Proxy_soap_to_json_using_message_type" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_1_2_Proxy_soap_to_json_using_message_type.xml</file>
     </artifact>
+    <artifact name="POX_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/POX_EP.xml</file>
+    </artifact>
+    <artifact name="callPOXEndpointSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callPOXEndpointSeq.xml</file>
+    </artifact>
+    <artifact name="1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild.xml</file>
+    </artifact>
+    <artifact name="1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild.xml</file>
+    </artifact>
 </artifacts>
