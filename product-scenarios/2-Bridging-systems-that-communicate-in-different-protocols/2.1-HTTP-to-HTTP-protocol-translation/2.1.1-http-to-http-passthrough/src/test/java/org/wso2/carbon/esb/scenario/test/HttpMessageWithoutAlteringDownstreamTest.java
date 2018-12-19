@@ -40,7 +40,6 @@ import java.util.Map;
 public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
     private final String carFileName = "2_1_1_HttpMessageWithoutAlteringDownstreamTestCompositeApplication_1.0.0";
 
-
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
