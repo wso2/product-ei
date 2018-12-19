@@ -38,18 +38,92 @@ import java.util.Map;
  * downstream without altering the content
  */
 public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
-    private final String carFileName = "2_1_1_7_httpToHttpProtocolTranslationCompositeApplication_1.0.0";
-    private String proxyServiceUrl;
+    private final String carFileName = "2_1_1_HttpMessageWithoutAlteringDownstreamTestCompositeApplication_1.0.0";
+
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        proxyServiceUrl = getProxyServiceURLHttp("2_1_1_7_httpToHttpProtocolTranslationProxy");
         deployCarbonApplication(carFileName);
+    }
+
+    @Test(description = "2.1.1.1", enabled = true, dataProvider = "2.1.1.1")
+    public void  httpEndpointViaCallMediatorNonBlockingMode(String request, String expectedResponse, String header) throws Exception {
+        String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_1_HttpMessageWithoutAlteringDownstreamTestProxy");
+
+        log.info("Executing test case 2.1.1.1");
+        SimpleHttpClient httpClient = new SimpleHttpClient();
+        log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, header);
+        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
+        String responsePayload = httpClient.getResponsePayload(httpResponse);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
+        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
+                StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
+                "Actual Response and Expected Response mismatch!");
+    }
+
+// TODO: Need to fix : https://github.com/wso2/product-ei/issues/3015
+//    @Test(description = "2.1.1.2", enabled = true, dataProvider = "2.1.1.2")
+//    public void  httpEndpointViaCallMediatorBlockingMode(String request, String expectedResponse, String header) throws Exception {
+//        String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_2_HttpMessageWithoutAlteringDownstreamTestProxy");
+//
+//        log.info("Executing test case 2.1.1.2");
+//        SimpleHttpClient httpClient = new SimpleHttpClient();
+//        log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
+//        Map<String, String> headers = new HashMap<String, String>();
+//        headers.put(ScenarioConstants.MESSAGE_ID, header);
+//        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
+//        String responsePayload = httpClient.getResponsePayload(httpResponse);
+//
+//        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
+//        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
+//                StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
+//                "Actual Response and Expected Response mismatch!");
+//    }
+
+    @Test(description = "2.1.1.3", enabled = true, dataProvider = "2.1.1.3")
+    public void  httpEndpointViaSendMediatorTohttpEp(String request, String expectedResponse, String header) throws Exception {
+        String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_3_HttpMessageWithoutAlteringDownstreamTestProxy");
+
+        log.info("Executing test case 2.1.1.3");
+        SimpleHttpClient httpClient = new SimpleHttpClient();
+        log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, header);
+        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
+        String responsePayload = httpClient.getResponsePayload(httpResponse);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
+        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
+                StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
+                "Actual Response and Expected Response mismatch!");
+    }
+
+    @Test(description = "2.1.1.5", enabled = true, dataProvider = "2.1.1.5")
+    public void  addressEndpointViaCallMediatorNonBlockingMode(String request, String expectedResponse, String header) throws Exception {
+        String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_5_HttpMessageWithoutAlteringDownstreamTestProxy");
+
+        log.info("Executing test case 2.1.1.5");
+        SimpleHttpClient httpClient = new SimpleHttpClient();
+        log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, header);
+        HttpResponse httpResponse = httpClient.doPost(proxyServiceUrl, headers, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML);
+        String responsePayload = httpClient.getResponsePayload(httpResponse);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
+        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
+                StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
+                "Actual Response and Expected Response mismatch!");
     }
 
     @Test(description = "2.1.1.7", enabled = true, dataProvider = "2.1.1.7")
     public void  httpEndpointViaSendMediator(String request, String expectedResponse, String header) throws Exception {
+        String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_7_HttpMessageWithoutAlteringDownstreamTestProxy");
+
         log.info("Executing test case 2.1.1.7");
         SimpleHttpClient httpClient = new SimpleHttpClient();
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
@@ -62,6 +136,30 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                  StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
                 "Actual Response and Expected Response mismatch!");
+    }
+
+    @DataProvider(name = "2.1.1.1")
+    public Iterator<Object[]> http_2_1_1_1() throws Exception {
+        String testCase = "2.1.1.1";
+        return getRequestResponseHeaderList(testCase).iterator();
+    }
+
+//    @DataProvider(name = "2.1.1.2")
+//    public Iterator<Object[]> http_2_1_1_2() throws Exception {
+//        String testCase = "2.1.1.2";
+//        return getRequestResponseHeaderList(testCase).iterator();
+//    }
+
+    @DataProvider(name = "2.1.1.3")
+    public Iterator<Object[]> http_2_1_1_3() throws Exception {
+        String testCase = "2.1.1.3";
+        return getRequestResponseHeaderList(testCase).iterator();
+    }
+
+    @DataProvider(name = "2.1.1.5")
+    public Iterator<Object[]> http_2_1_1_5() throws Exception {
+        String testCase = "2.1.1.5";
+        return getRequestResponseHeaderList(testCase).iterator();
     }
 
     @DataProvider(name = "2.1.1.7")
