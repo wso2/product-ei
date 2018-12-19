@@ -48,7 +48,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         deployCarbonApplication(carFileName);
     }
 
-    @Test(description = "2.1.1.7 Testcase", enabled = true, dataProvider = "2.1.1.7")
+    @Test(description = "2.1.1.7", enabled = true, dataProvider = "2.1.1.7")
     public void  httpEndpointViaSendMediator(String request, String expectedResponse, String header) throws Exception {
         log.info("Executing test case 2.1.1.7");
         SimpleHttpClient httpClient = new SimpleHttpClient();
