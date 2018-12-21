@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb.scenario.test.common.Utils;
+package org.wso2.carbon.esb.scenario.test.common.utils;
 
-public class XMLUtils {
+public class JsonUtils {
 }

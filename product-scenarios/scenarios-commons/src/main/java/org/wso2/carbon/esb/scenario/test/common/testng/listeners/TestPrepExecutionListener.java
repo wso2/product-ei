@@ -53,6 +53,8 @@ public class TestPrepExecutionListener implements IExecutionListener {
     private ApplicationAdminClient applicationAdminClient = null;
 
     private static final String resourceLocation = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
+    private static final String commonResourcesDir = System.getProperty(ScenarioConstants.COMMON_RESOURCES_DIR);
+
     private static final String carbonApplicationsDir =
             System.getProperty(ScenarioConstants.TEST_RESOURCES_CARBON_APPLICATIONS_DIR);
 
@@ -174,7 +176,7 @@ public class TestPrepExecutionListener implements IExecutionListener {
     }
 
     private void setKeyStoreProperties() {
-        System.setProperty("javax.net.ssl.trustStore", resourceLocation + "/keystores/wso2carbon.jks");
+        System.setProperty("javax.net.ssl.trustStore", commonResourcesDir + "/keystores/wso2carbon.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
     }

@@ -58,7 +58,9 @@ public class ScenarioTestBase {
 
     public static final Log log = LogFactory.getLog(ScenarioTestBase.class);
 
-    private static final String RESOURCE_LOCATION = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
+    protected static final String testResourcesDir = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
+
+    protected static final String commonResourcesDir = System.getProperty(ScenarioConstants.COMMON_RESOURCES_DIR);
 
     private static final String PRODUCT_VERSION = "ProductVersion";
     private static Properties infraProperties;
@@ -173,8 +175,8 @@ public class ScenarioTestBase {
 
         if (standaloneMode) {
             // If standalone mode, deploy the CAPP to the server
-            String cappFilePath = RESOURCE_LOCATION + File.separator + "artifacts" +
-                                  File.separator + carFileName + ".car";
+            String cappFilePath = testResourcesDir + File.separator + "artifacts" +
+                    File.separator + carFileName + ".car";
 
             if (carbonAppUploaderClient == null) {
                 carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
@@ -237,8 +239,8 @@ public class ScenarioTestBase {
         }
     }
 
-    private void setKeyStoreProperties() {
-        System.setProperty("javax.net.ssl.trustStore", RESOURCE_LOCATION + "/keystores/wso2carbon.jks");
+    protected void setKeyStoreProperties() {
+        System.setProperty("javax.net.ssl.trustStore", commonResourcesDir + "/keystores/wso2carbon.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
     }

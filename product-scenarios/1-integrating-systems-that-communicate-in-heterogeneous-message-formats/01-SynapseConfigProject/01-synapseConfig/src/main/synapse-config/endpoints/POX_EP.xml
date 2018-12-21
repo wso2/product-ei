@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="POX_EP" xmlns="http://ws.apache.org/ns/synapse">
+    <address uri="http://52.23.200.142:9090/eiTests/XMLEndpoint"/>
+</endpoint>
