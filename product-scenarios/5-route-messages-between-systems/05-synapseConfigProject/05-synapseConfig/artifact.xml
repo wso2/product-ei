@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="05_EP_SOAP" groupId="org.wso2.ei.product-scenarios.scenario_05.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/05_EP_SOAP.xml</file>
+    </artifact>
+    <artifact name="05_EP_SOAP2" groupId="org.wso2.ei.product-scenarios.scenario_05.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/05_EP_SOAP2.xml</file>
+    </artifact>
+    <artifact name="5_3_1_1_API_load_balance_group_test" groupId="org.wso2.ei.product-scenarios.scenario_05.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/5_3_1_1_API_load_balance_group_test.xml</file>
+    </artifact>
+</artifacts>

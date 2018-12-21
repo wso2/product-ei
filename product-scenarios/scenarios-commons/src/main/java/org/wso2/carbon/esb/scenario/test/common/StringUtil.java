@@ -38,4 +38,17 @@ public class StringUtil {
                         .replaceAll("(?!>\\n+</)(>\\n+<)", "><");
 
     }
+
+    /**
+     * Function to trim white spaces, tabs and new lines between json objects
+     *
+     * @param jsonString - The json String to trim white spaces, tabs and new lines
+     * @return - the json string without white spaces, tabs and new lines
+     */
+
+    public static String trimTabsSpaceNewLinesBetweenJsonTags(String jsonString) {
+        return jsonString.replaceAll(" ", "")
+                         .replaceAll("\\n", "")
+                         .replaceAll("\\t", "");
+    }
 }
