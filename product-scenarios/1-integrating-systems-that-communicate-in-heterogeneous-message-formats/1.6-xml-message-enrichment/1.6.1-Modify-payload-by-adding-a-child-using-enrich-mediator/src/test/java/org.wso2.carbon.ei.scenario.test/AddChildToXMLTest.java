@@ -72,7 +72,7 @@ public class AddChildToXMLTest extends ScenarioTestBase {
 
 
     @Test(description = "1.6.1.2 - [SOAP > POX] enrich xpath element a child of the body")
-    public void testPassThroughProxyTemplate() throws IOException, XMLStreamException {
+    public void testAddingXpathElementAsChild() throws IOException, XMLStreamException {
 
         String url = getProxyServiceURLHttp("1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild");
 
@@ -85,6 +85,44 @@ public class AddChildToXMLTest extends ScenarioTestBase {
         HttpResponse response = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
 
         String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_1_2.xml");
+
+        assertResponse(response, expectedResponse);
+    }
+
+
+    @Test(description = "1.6.1.3 - [SOAP > POX] enrich a new payload using body of incoming message")
+    public void testEnrichingNewPayloadUsingBody() throws IOException, XMLStreamException {
+
+        String url = getProxyServiceURLHttp("1_6_1_3_Proxy_SoapToPoxEnrichBodyToNewpayload");
+
+        String request = FileUtils.readFile(sourcesFilePath  + File.separator + "request_1_6_1_3.xml");
+
+        Map<String, String> headers = new HashMap<>(1);
+        headers.put(ScenarioConstants.MESSAGE_ID, "1_6_1_3");
+
+        SOAPClient soapClient = new SOAPClient();
+        HttpResponse response = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
+
+        String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_1_3.xml");
+
+        assertResponse(response, expectedResponse);
+    }
+
+
+    @Test(description = "1.6.1.4 - [SOAP > POX] enrich payload using static payload of a property")
+    public void testEnrichingPayloadWithStaticPayload() throws IOException, XMLStreamException {
+
+        String url = getProxyServiceURLHttp("1_6_1_4_Proxy_SoapToPoxEnrichBodyWithProperty");
+
+        String request = FileUtils.readFile(sourcesFilePath  + File.separator + "request_1_6_1_4.xml");
+
+        Map<String, String> headers = new HashMap<>(1);
+        headers.put(ScenarioConstants.MESSAGE_ID, "1_6_1_4");
+
+        SOAPClient soapClient = new SOAPClient();
+        HttpResponse response = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
+
+        String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_1_4.xml");
 
         assertResponse(response, expectedResponse);
     }

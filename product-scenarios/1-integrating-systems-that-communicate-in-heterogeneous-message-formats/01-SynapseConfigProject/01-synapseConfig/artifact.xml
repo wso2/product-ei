@@ -35,4 +35,10 @@
     <artifact name="1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild.xml</file>
     </artifact>
+    <artifact name="1_6_1_3_Proxy_SoapToPoxEnrichBodyToNewpayload" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_3_Proxy_SoapToPoxEnrichBodyToNewpayload.xml</file>
+    </artifact>
+    <artifact name="1_6_1_4_Proxy_SoapToPoxEnrichBodyWithProperty" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_4_Proxy_SoapToPoxEnrichBodyWithProperty.xml</file>
+    </artifact>
 </artifacts>

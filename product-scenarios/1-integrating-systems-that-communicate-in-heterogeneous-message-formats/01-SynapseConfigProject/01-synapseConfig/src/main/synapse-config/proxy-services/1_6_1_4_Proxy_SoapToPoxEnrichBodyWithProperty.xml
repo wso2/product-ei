@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_1_4_Proxy_SoapToPoxEnrichBodyWithProperty" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log>
+                <property name="STATUS" value="Calling 1_6_1_4 proxy service"/>
+            </log>
+            <property name="ORGINAL_PAYLOAD" scope="default">
+                <patients xmlns="">
+                    <patient>
+                        <address>California</address>
+                        <dob>1990-03-19</dob>
+                        <email>johndoe@gmail.com</email>
+                        <name>John Doe</name>
+                        <phone>8770586755</phone>
+                        <ssn>234-23-525</ssn>
+                    </patient>
+                </patients>
+            </property>
+            <enrich>
+                <source clone="true" property="ORGINAL_PAYLOAD" type="property"/>
+                <target action="child" xpath="//hospital"/>
+            </enrich>
+            <sequence key="callPOXEndpointSeq"/>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

@@ -1,0 +1,11 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Body>
+        <hospital>
+            <doctors>
+                <doctor>
+                    <name>Collings</name>
+                </doctor>
+            </doctors>
+        </hospital>
+    </soapenv:Body>
+</soapenv:Envelope>
