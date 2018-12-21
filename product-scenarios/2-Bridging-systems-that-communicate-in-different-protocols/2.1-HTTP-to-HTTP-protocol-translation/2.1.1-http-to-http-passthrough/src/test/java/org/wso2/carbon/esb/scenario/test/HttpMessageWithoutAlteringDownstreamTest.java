@@ -60,7 +60,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                 StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                "Actual Response and Expected Response mismatch!");
+                "Actual Response and Expected Response mismatch");
     }
 
 /* TODO: Need to fix : https://github.com/wso2/product-ei/issues/3015
@@ -78,7 +78,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                 StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                "Actual Response and Expected Response mismatch!");
+                "Actual Response and Expected Response mismatch");
     }*/
 
     @Test(description = "2.1.1.3-Send message HTTP endpoint via send mediator", enabled = true, dataProvider = "2.1.1.3")
@@ -95,7 +95,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                 StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                "Actual Response and Expected Response mismatch!");
+                "Actual Response and Expected Response mismatch");
     }
 
     @Test(description = "2.1.1.5-Send message address endpoint via call mediator in non-blocking mode", enabled = true, dataProvider = "2.1.1.5")
@@ -112,7 +112,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                 StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                "Actual Response and Expected Response mismatch!");
+                "Actual Response and Expected Response mismatch");
     }
 
     @Test(description = "2.1.1.7-Send message HTTP endpoint via send mediator to address endpoint", enabled = true, dataProvider = "2.1.1.7")
@@ -129,7 +129,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "HTTP to HTTP transformation failed");
         Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
                  StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                "Actual Response and Expected Response mismatch!");
+                "Actual Response and Expected Response mismatch");
     }
 
     @DataProvider(name = "2.1.1.1")
