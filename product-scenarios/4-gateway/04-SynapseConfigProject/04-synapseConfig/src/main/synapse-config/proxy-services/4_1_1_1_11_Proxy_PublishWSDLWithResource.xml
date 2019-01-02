@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="4_1_1_1_11_Proxy_PublishWSDLWithResource" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <endpoint key="EP_SimpleStockQuoteService"/>
+        <inSequence/>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <publishWSDL key="conf:scenario/tests/resource/wsdl/SimpleStockQuoteServiceWithImports.wsdl" preservePolicy="true">
+        <resource key="gov:scenario/tests/resource/wsdl/schema/SimpleStockQuoteSchema2.xsd" location="SimpleStockQuoteSchema2.xsd"/>
+        <resource key="gov:scenario/tests/resource/wsdl/schema/SimpleStockQuoteSchema.xsd" location="SimpleStockQuoteSchema.xsd"/>
+    </publishWSDL>
+</proxy>

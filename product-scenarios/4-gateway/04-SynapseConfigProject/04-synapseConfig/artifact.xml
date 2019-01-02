@@ -29,4 +29,16 @@
     <artifact name="4_1_1_1_8_Proxy_PublishWSDLFromURL" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/4_1_1_1_8_Proxy_PublishWSDLFromURL.xml</file>
     </artifact>
+    <artifact name="4_1_1_1_10_Proxy_PublishWSDLInline" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/4_1_1_1_10_Proxy_PublishWSDLInline.xml</file>
+    </artifact>
+    <artifact name="4_1_1_1_11_Proxy_PublishWSDLWithResource" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/4_1_1_1_11_Proxy_PublishWSDLWithResource.xml</file>
+    </artifact>
+    <artifact name="4_1_1_1_13_Proxy_UseOriginalWSDL" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/4_1_1_1_13_Proxy_UseOriginalWSDL.xml</file>
+    </artifact>
+    <artifact name="4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress.xml</file>
+    </artifact>
 </artifacts>
