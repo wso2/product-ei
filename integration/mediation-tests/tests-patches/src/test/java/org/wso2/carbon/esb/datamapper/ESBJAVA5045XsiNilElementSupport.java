@@ -30,7 +30,10 @@ import java.io.File;
  */
 public class ESBJAVA5045XsiNilElementSupport extends DataMapperIntegrationTest {
 
-    private final String DM_ARTIFACT_ROOT_PATH = "/artifacts/ESB/mediatorconfig/datamapper/multiplePrefix/";
+    private static final String FORWARD_SLASH = "/";
+    private final String DM_ARTIFACT_ROOT_PATH = FORWARD_SLASH + "artifacts" + FORWARD_SLASH + "ESB" + FORWARD_SLASH +
+                                                 "mediatorconfig" + FORWARD_SLASH + "datamapper" + FORWARD_SLASH +
+                                                 "multiplePrefix" + FORWARD_SLASH;
     private final String DM_REGISTRY_ROOT_PATH = "datamapper/";
 
     @Test(groups = {"wso2.esb"}, description = "Datamapper : test support for xsi:nil attribute in elements")
