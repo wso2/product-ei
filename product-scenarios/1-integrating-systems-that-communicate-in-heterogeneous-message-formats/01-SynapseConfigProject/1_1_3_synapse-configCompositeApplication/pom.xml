@@ -3,17 +3,43 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wso2.ei.product-scenarios.scenario_01</groupId>
-  <artifactId>1_1_2-synapse-configCompositeApplication</artifactId>
+  <artifactId>1_1_3_synapse-configCompositeApplication</artifactId>
   <version>1.0.0</version>
   <packaging>carbon/application</packaging>
-  <name>1_1_2-synapse-configCompositeApplication</name>
-  <description>1_1_2-synapse-configCompositeApplication</description>
+  <name>1_1_3_synapse-configCompositeApplication</name>
+  <description>1_1_3_synapse-configCompositeApplication</description>
   <properties>
-    <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_2_Proxy_soap_to_json_using_message_type>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_2_Proxy_soap_to_json_using_message_type>
-    <org.wso2.ei.product-scenarios.scenario_01.endpoint_._JSON_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._JSON_EP>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_xsltStyleSheet>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_outputSchema>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,datasource/datasource=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_3_Proxy_soap_to_json_using_data_mapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_3_Proxy_soap_to_json_using_data_mapper>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_outputSchema>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_inputSchema>
+    <org.wso2.ei.product-scenarios.scenario_01.endpoint_._JSON_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._JSON_EP>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_inputSchema>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
+      <artifactId>1_1_3_Proxy_soap_to_json_using_data_mapper</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_json_to_soap_inputSchema</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_soap_to_json</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.endpoint</groupId>
       <artifactId>JSON_EP</artifactId>
@@ -21,10 +47,40 @@
       <type>xml</type>
     </dependency>
     <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
-      <artifactId>1_1_2_Proxy_soap_to_json_using_message_type</artifactId>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_soap_to_json_xsltStyleSheet</artifactId>
       <version>1.0.0</version>
-      <type>xml</type>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_json_to_soap</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_soap_to_json_outputSchema</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_json_to_soap_xsltStyleSheet</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_soap_to_json_inputSchema</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_convert_json_to_soap_outputSchema</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
     </dependency>
   </dependencies>
   <repositories>

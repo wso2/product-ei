@@ -18,21 +18,14 @@
 
 package org.wso2.carbon.esb.scenario.test;
 
-import org.apache.http.HttpResponse;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
-import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
+import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
-import org.wso2.carbon.esb.scenario.test.common.StringUtil;
-import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * This test class is to test SOAP to JSON Transformation using Data Mapper Mediator. Once a SOAP request is sent to
@@ -42,93 +35,87 @@ import java.util.Map;
 
 public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
 
-    private String cappNameWithVersion = "approach_1_1_3_synapse_configCompositeApplication_1.0.0";
-    private String cappName = "approach_1_1_3_synapse_configCompositeApplication";
-    private String apiName = "1_1_3_API_soap_to_json_using_data_mapper";
-    private String apiInvocationUrl;
+    private String proxyServiceName = "1_1_3_Proxy_soap_to_json_using_data_mapper";
+    private String proxyServiceUrl;
 
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        apiInvocationUrl = getApiInvocationURLHttp(apiName);
-        deployCarbonApplication(cappNameWithVersion);
+        proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
+        log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
     }
 
-    @Test(description = "1.1.3.1-Valid Soap To Json transformation Using Data Mapper", enabled = true,
-          dataProvider = "1.1.3.1")
-    public void convertValidSoapToJsonUsingDataMapper(String request, String expectedResponse, String header)
-            throws Exception {
-        log.info("apiInvocationUrl is set as : " + apiInvocationUrl);
+    @Test(description = "1.1.3.1-Valid Soap To Json transformation Using Data Mapper", enabled = true)
+    public void convertValidSoapToJsonUsingDataMapper() throws Exception {
+        String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                         "    <soapenv:Body>\n" +
+                         "        <breakfast_menu>\n" +
+                         "            <food>\n" +
+                         "                <name>Berry-Berry Belgian Waffles</name>\n" +
+                         "                <price>$8.95</price>\n" +
+                         "                <description>Light Belgian waffles covered with an assortment of fresh " +
+                         "berries and whipped cream</description>\n" +
+                         "                <calories>900</calories>\n" +
+                         "                <orgin>Belgian</orgin>\n" +
+                         "                <veg>true</veg>\n" +
+                         "            </food>\n" +
+                         "        </breakfast_menu>\n" +
+                         "    </soapenv:Body>\n" +
+                         "</soapenv:Envelope>";
 
-        SimpleHttpClient httpClient = new SimpleHttpClient();
+        String expectedResponse = "<?xml version='1.0' encoding='UTF-8'?>" +
+                                  "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+                                  "<soapenv:Body><breakfast_menu><food><name>Berry-Berry Belgian Waffles</name>" +
+                                  "<price>$8.95</price><description>Light Belgian waffles covered with an assortment " +
+                                  "of fresh berries and whipped cream</description><calories>900</calories>" +
+                                  "<orgin>Belgian</orgin><veg>true</veg></food></breakfast_menu>" +
+                                  "</soapenv:Body></soapenv:Envelope>";
 
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put(ScenarioConstants.MESSAGE_ID, header);
-        HttpResponse httpResponse = httpClient.doPost(apiInvocationUrl, headers, request,
-                                                      HttpConstants.MEDIA_TYPE_APPLICATION_XML);
-        String responsePayload = httpClient.getResponsePayload(httpResponse);
+        String header = "1_1_3_1_1";
 
-        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "SOAP to JSON transformation failed");
-        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
-                            StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                            "Actual Response and Expected Response mismatch!");
+        HTTPUtils.invokeSoapActionAndAssert(proxyServiceUrl, request, header, expectedResponse,
+                                         200, "urn:mediate",
+                                         "Valid Soap To Json transformation Using Data Mapper");
     }
 
-    @Test(description = "1.1.3.2-Malformed Soap To Json transformation Using Data Mapper", enabled = true,
-          dataProvider = "1.1.3.2")
-    public void convertMalformedValidSoapToJsonUsingDataMapper(String request, String expectedResponse, String header)
-            throws Exception {
-        log.info("apiInvocationUrl is set as : " + apiInvocationUrl);
+    @Test(description = "1.1.3.2-Malformed Soap To Json transformation Using Data Mapper", enabled = true)
+    public void convertMalformedValidSoapToJsonUsingDataMapper() throws Exception {
+        String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                         "    <soapenv:Body>\n" +
+                         "        <breakfast_menu>\n" +
+                         "            <food>\n" +
+                         "            <name>Berry-Berry Belgian Waffles</name>\n" +
+                         "            <price>$8.95</price>\n" +
+                         "            <description>Light Belgian waffles covered with an assortment of fresh berries " +
+                         "and whipped cream</description>\n" +
+                         "            <calories>900</calories>\n" +
+                         "            <orgin>Belgian</orgin>\n" +
+                         "            <veg>true</veg>\n" +
+                         "        </breakfast_menu>\n" +
+                         "    </soapenv:Body>\n" +
+                         "</soapenv:Envelope>";
 
-        SimpleHttpClient httpClient = new SimpleHttpClient();
+        String header = "1_1_3_2_1";
 
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put(ScenarioConstants.MESSAGE_ID, header);
-        HttpResponse httpResponse = httpClient.doPost(apiInvocationUrl, headers, request,
-                                                      HttpConstants.MEDIA_TYPE_APPLICATION_XML);
-        String responsePayload = httpClient.getResponsePayload(httpResponse);
-
-        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 500, "SOAP to JSON transformation failed");
-        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
-                            StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                            "Actual Response and Expected Response mismatch!");
+        String responseSubstring = "<faultstring>Could not build full log message: com.ctc.wstx.exc.WstxParsingException:" +
+                               " Unexpected close tag &lt;/breakfast_menu>; expected &lt;/food>.</faultstring>";
+        HTTPUtils.invokeSoapActionAndCheckContains(proxyServiceUrl, request, header, responseSubstring, 500,
+                                                   "urn:mediate",
+                                                   "Malformed Soap To Json transformation Using Data Mapper");
     }
 
     @Test(description = "1.1.3.3-Large Soap To Json transformation Using Data Mapper", enabled = true,
           dataProvider = "1.1.3.3")
     public void convertLargeSoapToJsonUsingDataMapper(String request, String expectedResponse, String header)
             throws Exception {
-        log.info("apiInvocationUrl is set as : " + apiInvocationUrl);
-
-        SimpleHttpClient httpClient = new SimpleHttpClient();
-
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put(ScenarioConstants.MESSAGE_ID, header);
-        HttpResponse httpResponse = httpClient.doPost(apiInvocationUrl, headers, request,
-                                                      HttpConstants.MEDIA_TYPE_APPLICATION_XML);
-        String responsePayload = httpClient.getResponsePayload(httpResponse);
-
-        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200, "SOAP to JSON transformation failed");
-        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(expectedResponse),
-                            StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload),
-                            "Actual Response and Expected Response mismatch!");
+        HTTPUtils.invokeSoapActionAndAssert(proxyServiceUrl, request, header, expectedResponse,
+                                         200, "urn:mediate",
+                                         "Large Soap To Json transformation Using Data Mapper");
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
-    }
-
-    @DataProvider(name = "1.1.3.1")
-    public Iterator<Object[]> soapToJson_1_1_3_1() throws Exception {
-        String testCase = "1.1.3.1";
-        return getRequestResponseHeaderList(testCase).iterator();
-    }
-
-    @DataProvider(name = "1.1.3.2")
-    public Iterator<Object[]> soapToJson_1_1_3_2() throws Exception {
-        String testCase = "1.1.3.2";
-        return getRequestResponseHeaderList(testCase).iterator();
     }
 
     @DataProvider(name = "1.1.3.3")
