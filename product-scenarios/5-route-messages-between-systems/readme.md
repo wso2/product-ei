@@ -12,7 +12,9 @@ The following diagram shows the behavior of a message router. A request received
 
 ![5-Message-Router-behavior](images/Message-Router-behavior.png)
 
-Reference : [Routing Requests Based on Message Content](https://docs.wso2.com/display/EI610/Routing+Requests+Based+on+Message+Content)
+References
+- [Routing Requests Based on Message Content](https://docs.wso2.com/display/EI640/Routing+Requests+Based+on+Message+Content)
+- [Enterprise Integration Patterns - Message Routing](https://docs.wso2.com/display/IntegrationPatterns/Message+Routing)
 
 ## Sub-Scenarios
 - [5.1 Route based on the content of the messages](https://github.com/wso2/product-ei/tree/product-scenarios/product-scenarios/5-Route-messages-between-systems/5.1-Route-based-on-the-content-of-the-messages)

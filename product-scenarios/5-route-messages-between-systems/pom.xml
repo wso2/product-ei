@@ -57,17 +57,10 @@
                                 ${basedir}/../../../resources/
                             </value>
                         </property>
-
                         <property>
                             <name>test.resources.dir</name>
                             <value>
                                 ${basedir}/src/test/resources/
-                            </value>
-                        </property>
-                        <property>
-                            <name>server.list</name>
-                            <value>
-                                ESB
                             </value>
                         </property>
                         <property>
@@ -90,9 +83,6 @@
                         </property>
                         <sec.verifier.dir>${basedir}/target/security-verifier/</sec.verifier.dir>
                         <maven.test.haltafterfailure>false</maven.test.haltafterfailure>
-                        <!--<carbon.zip>-->
-                            <!--${basedir}/../distribution/target/wso2ei-${product.ei.version}.zip-->
-                        <!--</carbon.zip>-->
                         <instr.file>${basedir}/coverage-report/instrumentation.txt</instr.file>
                         <filters.file>${basedir}/coverage-report/filters.txt</filters.file>
                     </systemProperties>

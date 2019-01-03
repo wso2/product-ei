@@ -42,8 +42,6 @@ import java.util.Map;
  */
 public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBase {
 
-    private String apiInvocationUrl;
-
     private final String[] responses = new String[]{"{\"name\": \"John\",\"age\": 30,\"server\": 1,\"cars\": "
                                                     + "{\"car1\": \"Ford\",\"car2\": \"BMW\",\"car3\": \"Fiat\"}}",
                                                     "{\"name\": \"John\",\"age\": 30,\"server\": 2,\"cars\": "
@@ -54,8 +52,6 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
     @BeforeClass()
     public void init() throws Exception {
         super.init();
-        String apiName = "5_3_1_1_API_load_balance_group_test";
-        apiInvocationUrl = getApiInvocationURLHttp(apiName);
     }
 
     /**
@@ -63,9 +59,40 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1-Test load balance endpoint group with two endpoints and default configurations")
+    @Test(description = "5.3.1.1.1-Test load balance endpoint group with two endpoints and default configurations")
     public void testLoadBalanceEndpointGroup() throws Exception {
+        testLoadBalanceGroup("5_3_1_1_1_API_load_balance_group_test");
+    }
 
+    /**
+     * Tests a load balance endpoint group with two endpoints and policy set to roundRobin.
+     *
+     * @throws Exception if any error occurs during the execution of the test
+     */
+    @Test(description = "5.3.1.1.2-Test load balance endpoint group with two endpoints and policy set to roundRobin")
+    public void testLoadBalanceEndpointGroupWithPolicyRoundRobin() throws Exception {
+        testLoadBalanceGroup("5_3_1_1_2_API_load_balance_group_define_policy_test");
+    }
+
+    /**
+     * Tests a load balance endpoint group with two endpoints and default configurations.
+     *
+     * @throws Exception if any error occurs during the execution of the test
+     */
+    @Test(description = "5.3.1.1.3-Test load balance endpoint group with two endpoints and policy/algorithm not "
+                        + "defined")
+    public void testLoadBalanceEndpointGroupWithNoPolicyNoAlgorithm() throws Exception {
+        testLoadBalanceGroup("5_3_1_1_3_API_load_balance_group_define_nothing");
+    }
+
+    /**
+     * Sends a request to the provided API with a load balance endpoint group.
+     *
+     * @param apiInvocationUrl the api to be invoked
+     * @throws IOException if an error occurs while invoking the exception
+     */
+    private void testLoadBalanceGroup(String apiInvocationUrl) throws IOException {
+        apiInvocationUrl = getApiInvocationURLHttp(apiInvocationUrl);
         for (int i = 0; i < 2; i++) {
             SimpleHttpClient httpClient = new SimpleHttpClient();
 

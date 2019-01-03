@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/5_3_1_1_API_load_balance_group_test" name="5_3_1_1_API_load_balance_group_test" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/5_3_1_1_2_API_load_balance_group_define_policy_test" name="5_3_1_1_2_API_load_balance_group_define_policy_test" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST">
         <inSequence>
             <call>
                 <endpoint name="{ep.name}">
-                    <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+                    <loadbalance policy="roundRobin">
                         <endpoint key="05_EP_SOAP"/>
                         <endpoint key="05_EP_SOAP2"/>
                     </loadbalance>
