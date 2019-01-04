@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/5_3_1_1_3_API_load_balance_group_define_nothing" name="5_3_1_1_3_API_load_balance_group_define_nothing" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST">
+        <inSequence>
+            <call>
+                <endpoint name="{ep.name}">
+                    <loadbalance>
+                        <endpoint key="05_EP_SOAP"/>
+                        <endpoint key="05_EP_SOAP2"/>
+                    </loadbalance>
+                </endpoint>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

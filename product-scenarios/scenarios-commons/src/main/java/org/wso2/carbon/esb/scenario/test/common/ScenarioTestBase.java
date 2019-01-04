@@ -307,47 +307,20 @@ public class ScenarioTestBase {
      * @throws IOException - if and error occurs file extracting the file content
      */
     protected List<Object[]> getRequestResponseHeaderList(String testCase) throws IOException {
-        String relativeRequestFolderLocation = File.separator + ScenarioConstants.SOURCE_FILES +
-                                       File.separator + testCase +
-                                       File.separator + ScenarioConstants.REQUEST;
 
-        String relativeResponseFolderLocation = File.separator + ScenarioConstants.SOURCE_FILES +
-                                        File.separator + testCase +
-                                        File.separator + ScenarioConstants.RESPONSE;
-
-        List<String> requestFiles = getListOfFiles(relativeRequestFolderLocation);
-        List<String> responseFiles = getListOfFiles(relativeResponseFolderLocation);
-
-        java.util.Collections.sort(requestFiles, Collator.getInstance());
-        java.util.Collections.sort(responseFiles, Collator.getInstance());
-
-        ArrayList<String> requestArray = new ArrayList();
-        ArrayList<String> responseArray = new ArrayList();
-        ArrayList<String> headerArray = new ArrayList();
-
-
-        for (String file : requestFiles) {
-            String fileContent = getFileContent(relativeRequestFolderLocation, file);
-            requestArray.add(fileContent);
-            String header = FilenameUtils.removeExtension(file);
-            headerArray.add(header);
-        }
-
-        for (String file : responseFiles) {
-            String fileContent = getFileContent(relativeResponseFolderLocation, file);
-            responseArray.add(fileContent);
-        }
+        List<Request> requests = extractRequests(testCase);
+        List<String> responses = extractResponses(testCase);
 
         List<Object[]> requestResponseList = new ArrayList<>();
 
-        for (int i = 0; i < requestArray.size(); i++) {
-            String[] tmp = { requestArray.get(i) , responseArray.get(i) , headerArray.get(i)};
+        for (int i = 0; i < requests.size(); i++) {
+            String[] tmp = {requests.get(i).getPayload(), responses.get(i), requests.get(i).getMessageIdHeader()};
             requestResponseList.add(tmp);
         }
         return requestResponseList;
     }
 
-    private List<String> getListOfFiles(String folderLocation) {
+    protected List<String> getListOfFiles(String folderLocation) {
         File filePath = new File(getClass().getResource(folderLocation).getPath());
         File[] listOfFiles = filePath.listFiles();
         List<String> fileNames = new ArrayList<>();
@@ -362,7 +335,7 @@ public class ScenarioTestBase {
         return fileNames;
     }
 
-    private String getFileContent(String folderLocation, String fileName) throws IOException {
+    protected String getFileContent(String folderLocation, String fileName) throws IOException {
         File fileLocation = new File(getClass().getResource(folderLocation + File.separator + fileName).getPath());
 
         StringBuilder sb = new StringBuilder();
@@ -398,6 +371,42 @@ public class ScenarioTestBase {
 
     public static String getMgtConsoleURL() {
         return mgtConsoleURL;
+    }
+
+    private String appendSourceFolder(String testCase, String relativeSourceFolderPath) {
+        return File.separator + ScenarioConstants.SOURCE_FILES + File.separator + testCase + File.separator
+               + relativeSourceFolderPath;
+    }
+
+    private List<String> getFilesFromSourceDirectory(String relativePath) {
+        List<String> requestFiles = getListOfFiles(relativePath);
+        java.util.Collections.sort(requestFiles, Collator.getInstance());
+        return requestFiles;
+    }
+
+    protected List<Request> extractRequests(String testCase) throws IOException {
+        String relativeRequestFolderLocation = appendSourceFolder(testCase, ScenarioConstants.REQUEST);
+        List<String> requestFiles = getFilesFromSourceDirectory(relativeRequestFolderLocation);
+        ArrayList<Request> requestArray = new ArrayList();
+
+        for (String file : requestFiles) {
+            String fileContent = getFileContent(relativeRequestFolderLocation, file);
+            String header = FilenameUtils.removeExtension(file);
+            requestArray.add(new Request(fileContent, header));
+        }
+        return requestArray;
+    }
+
+    protected List<String> extractResponses(String testCase) throws IOException {
+
+        String relativeResponseFolderLocation = appendSourceFolder(testCase, ScenarioConstants.RESPONSE);
+        List<String> responseFiles = getFilesFromSourceDirectory(relativeResponseFolderLocation);
+        ArrayList<String> responseArray = new ArrayList();
+        for (String file : responseFiles) {
+            String fileContent = getFileContent(relativeResponseFolderLocation, file);
+            responseArray.add(fileContent);
+        }
+        return responseArray;
     }
 }
 
