@@ -6,14 +6,13 @@
             <log level="custom">
                 <property expression="json-eval('$')" name="JSON_VALUE"/>
             </log>
-            <property action="remove" description="Avoid appending resource to endpoint URL" name="REST_URL_POSTFIX" scope="axis2"/>
-            <send description="Send Request Payload to SOAP endpoint">
-                <endpoint name="EP_JSONEndpoint">
-                    <http method="post" uri-template="http://52.23.200.142:9090/eiTests/JSONEndpoint"/>
-                </endpoint>
+            <send>
+                <endpoint key="JSON_EP"/>
             </send>
         </inSequence>
         <outSequence>
+            <!-- This log full is added in order to make content aware -->
+            <log level="full"/>
             <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
             <respond description="Respond to client"/>
         </outSequence>

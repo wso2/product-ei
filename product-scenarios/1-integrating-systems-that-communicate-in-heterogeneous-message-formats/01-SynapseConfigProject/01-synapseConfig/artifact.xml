@@ -14,9 +14,6 @@
     <artifact name="fullLogSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/fullLogSeq.xml</file>
     </artifact>
-    <artifact name="1_1_1_API_soap_to_json_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_1_1_API_soap_to_json_using_payload_factory.xml</file>
-    </artifact>
     <artifact name="1_8_1_1_Proxy_PlainTextReceiver" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_8_1_1_Proxy_PlainTextReceiver.xml</file>
     </artifact>
@@ -34,5 +31,14 @@
     </artifact>
     <artifact name="1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild.xml</file>
+    </artifact>
+    <artifact name="JSON_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/JSON_EP.xml</file>
+    </artifact>
+    <artifact name="1_1_1_Proxy_soap_to_json_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_1_1_Proxy_soap_to_json_using_payload_factory.xml</file>
+    </artifact>
+    <artifact name="1_1_3_Proxy_soap_to_json_using_data_mapper" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_1_3_Proxy_soap_to_json_using_data_mapper.xml</file>
     </artifact>
 </artifacts>

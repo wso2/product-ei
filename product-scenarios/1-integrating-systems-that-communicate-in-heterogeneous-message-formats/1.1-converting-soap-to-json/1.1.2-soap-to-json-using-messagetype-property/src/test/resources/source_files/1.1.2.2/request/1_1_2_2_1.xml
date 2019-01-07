@@ -1,10 +1,8 @@
-<?xml version = "1.0"?>
-<SOAP-ENV:Envelope
-   xmlns:SOAP-ENV = "http://www.w3.org/2001/12/soap-envelope"
-   SOAP-ENV:encodingStyle = "http://www.w3.org/2001/12/soap-encoding">
-
-   <SOAP-ENV:Body xmlns:m = "http://www.xyz.org/quotations">
-      <m:GetQuotation>
-         <m:QuotationsName>MiscroSoft</m:QuotationsName>
-   </SOAP-ENV:Body>
-</SOAP-ENV:Envelope>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <getQuote xmlns="http://services.samples">
+      <request>
+         <symbol>WSO2</symbol>
+      </request>
+   </soapenv:Body>
+</soapenv:Envelope>
