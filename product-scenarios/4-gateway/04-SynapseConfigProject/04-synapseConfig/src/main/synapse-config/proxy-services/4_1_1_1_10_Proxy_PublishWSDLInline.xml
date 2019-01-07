@@ -344,13 +344,13 @@
             </wsdl:binding>
             <wsdl:service name="SimpleStockQuoteService">
                 <wsdl:port binding="ns:SimpleStockQuoteServiceSoap11Binding" name="SimpleStockQuoteServiceHttpSoap11Endpoint">
-                    <soap:address location="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap11Endpoint/"/>
+                    <soap:address location="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap11Endpoint/"/>
                 </wsdl:port>
                 <wsdl:port binding="ns:SimpleStockQuoteServiceSoap12Binding" name="SimpleStockQuoteServiceHttpSoap12Endpoint">
-                    <soap12:address location="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap12Endpoint/"/>
+                    <soap12:address location="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap12Endpoint/"/>
                 </wsdl:port>
                 <wsdl:port binding="ns:SimpleStockQuoteServiceHttpBinding" name="SimpleStockQuoteServiceHttpEndpoint">
-                    <http:address location="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpEndpoint/"/>
+                    <http:address location="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpEndpoint/"/>
                 </wsdl:port>
             </wsdl:service>
         </wsdl:definitions>

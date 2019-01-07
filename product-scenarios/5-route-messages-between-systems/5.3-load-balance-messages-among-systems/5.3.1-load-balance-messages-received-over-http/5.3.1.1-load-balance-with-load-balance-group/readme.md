@@ -16,10 +16,10 @@
          <endpoint name="{ep.name}">
            <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
              <endpoint>
-               <address uri="http://52.23.200.142:9090/eiTests/JSONEndpoint"/>
+               <address uri="http://ei-backend.scenarios.wso2.org:9090/eiTests/JSONEndpoint"/>
              </endpoint>
              <endpoint>
-               <address uri="http://52.23.200.142:9090/eiTests/JSONEndpoint"/>
+               <address uri="http://ei-backend.scenarios.wso2.org:9090/eiTests/JSONEndpoint"/>
              </endpoint>
            </loadbalance>
          </endpoint>

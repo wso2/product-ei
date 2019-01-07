@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="Plaintext_EP" xmlns="http://ws.apache.org/ns/synapse">
-    <address uri="http://54.162.248.147:9090/eiTests/textEndpoint">
+    <address uri="http://ei-backend.scenarios.wso2.org:9090/eiTests/textEndpoint">
         <timeout>
             <responseAction>fault</responseAction>
         </timeout>
