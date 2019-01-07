@@ -20,6 +20,7 @@ package org.wso2.ei.businessprocess.integration.tests.bpel.upload;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -41,6 +42,8 @@ import java.io.File;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class BpelVersioningTest extends BPSMasterTest {
 
@@ -49,6 +52,7 @@ public class BpelVersioningTest extends BPSMasterTest {
     BpelPackageManagementClient bpelPackageManagementClient;
     BpelProcessManagementClient bpelProcessManagementClient;
     BpelInstanceManagementClient bpelInstanceManagementClient;
+    private final int MAX_TIME = 1000;
 
     private RequestSender requestSender;
     private LinkedList<String> activeStatus;
@@ -75,7 +79,10 @@ public class BpelVersioningTest extends BPSMasterTest {
     public void getVersion() throws RemoteException, XMLStreamException, InterruptedException,
             ProcessManagementException {
 
-        Thread.sleep(5000);
+        Awaitility.await()
+                .pollInterval(50, TimeUnit.MILLISECONDS)
+                .atMost(MAX_TIME, TimeUnit.SECONDS)
+                .until(isInforListAvailable("HelloWorld2"));
         List<String> processBefore = bpelProcessManagementClient.getProcessInfoList("HelloWorld2");
         activeStatus = new LinkedList<String>();
         for (String processid : processBefore) {
@@ -110,8 +117,17 @@ public class BpelVersioningTest extends BPSMasterTest {
         uploadBpelForTest("HelloWorld2", artifactLocation);
         List<String> processAfter = null;
         for (int a = 0; a <= 10; a++) {
-            Thread.sleep(5000);
+
+            Awaitility.await()
+                    .pollInterval(50, TimeUnit.MILLISECONDS)
+                    .atMost(MAX_TIME, TimeUnit.SECONDS)
+                    .until(isInforListAvailable("HelloWorld2"));
             processAfter = bpelProcessManagementClient.getProcessInfoList("HelloWorld2");
+
+            Awaitility.await()
+                    .pollInterval(20, TimeUnit.MILLISECONDS)
+                    .atMost(MAX_TIME, TimeUnit.SECONDS)
+                    .until(isProcessRetired());
             if (bpelProcessManagementClient.getStatus(activeStatus.get(0)).equals(ProcessStatus.RETIRED.toString()))
                 break;
         }
@@ -125,7 +141,7 @@ public class BpelVersioningTest extends BPSMasterTest {
         for (String processInfo : processAfter) {
             if (bpelProcessManagementClient.getStatus(processInfo).equals("ACTIVE")) {
                 for (String process : activeStatus) {
-                    Assert.assertFalse(process.equals(processInfo), "Versioning failed : Previous Version " + processInfo + "is still active");
+                    Assert.assertFalse(process.equals(processInfo), "Versioning failed : Previous Version " + processInfo + " is still active");
                 }
             }
         }
@@ -140,5 +156,28 @@ public class BpelVersioningTest extends BPSMasterTest {
         this.loginLogoutClient.logout();
     }
 
+    private Callable<Boolean> isInforListAvailable(final String packageName) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (bpelProcessManagementClient.getProcessInfoList(packageName) != null) {
+                    return true;
+                }
+                    return false;
+            }
+        };
+    }
+
+    private Callable<Boolean> isProcessRetired() {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (bpelProcessManagementClient.getStatus(activeStatus.get(0)).equals(ProcessStatus.RETIRED.toString())) {
+                    return true;
+                }
+                    return false;
+            }
+        };
+    }
 
 }

@@ -71,7 +71,7 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
 
         Awaitility.await()
                   .pollInterval(50, TimeUnit.MILLISECONDS)
-                  .atMost(60, TimeUnit.SECONDS)
+                  .atMost(150, TimeUnit.SECONDS)
                   .until(isServiceDeployed("HelloWorld-retire"));
 
         String processId = bpelProcessManagementClient.getProcessId("HelloWorld-retire");
