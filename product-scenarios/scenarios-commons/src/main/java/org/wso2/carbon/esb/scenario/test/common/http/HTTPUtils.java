@@ -25,9 +25,15 @@ import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 
+import org.testng.Assert;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
+import org.wso2.carbon.esb.scenario.test.common.StringUtil;
+import org.wso2.carbon.esb.scenario.test.common.utils.XMLUtils;
+
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -122,4 +128,61 @@ public class HTTPUtils {
         return headerVal;
     }
 
+    /**
+     * Invoke SOAP Action and Assert
+     *
+     * @param serviceUrl proxy service url
+     * @param request the request to transform
+     * @param messageId messageId to be set as headers
+     * @param expectedResponse expected response from the after transformation
+     * @param statusCode expected status code
+     * @param soapAction SOAP Action
+     * @param testcaseName testcase name to be logged during a test failure
+     * @throws IOException
+     */
+    public static void invokeSoapActionAndAssert(String serviceUrl, String request, String messageId,
+                                                 String expectedResponse, int statusCode, String soapAction,
+                                                 String testcaseName) throws IOException, XMLStreamException {
+        SOAPClient soapClient = new SOAPClient();
+
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, messageId);
+
+        HttpResponse httpResponse = soapClient.sendSimpleSOAPMessage(serviceUrl, request, soapAction, headers);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
+        OMElement respElement = HTTPUtils.getOMFromResponse(httpResponse);
+        Assert.assertNotNull(respElement, "Invalid response");
+        boolean compareResponse = XMLUtils.compareOMElements(XMLUtils.StringASOM(expectedResponse), respElement);
+        Assert.assertTrue(compareResponse,
+                          "Actual Response and Expected Response mismatch in test case : " + messageId);
+    }
+
+    /**
+     * Invoke SOAP Action and Assert for String contains
+     *
+     * @param serviceUrl proxy service url
+     * @param request the request to transform
+     * @param messageId messageId to be set as headers
+     * @param responseSubstring String Element to check whether the response contains
+     * @param statusCode expected status code
+     * @param soapAction SOAP Action
+     * @param testcaseName testcase name to be logged during a test failure
+     * @throws IOException
+     */
+    public static void invokeSoapActionAndCheckContains(String serviceUrl, String request, String messageId,
+                                                        String responseSubstring, int statusCode,
+                                                        String soapAction, String testcaseName) throws IOException {
+        SOAPClient soapClient = new SOAPClient();
+
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, messageId);
+
+        HttpResponse httpResponse = soapClient.sendSimpleSOAPMessage(serviceUrl, request, soapAction, headers);
+        String responsePayload = HTTPUtils.getResponsePayload(httpResponse);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
+        Assert.assertTrue(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload).contains(responseSubstring),
+                          "Actual Response and Expected Response mismatch in test case : " + messageId);
+    }
 }

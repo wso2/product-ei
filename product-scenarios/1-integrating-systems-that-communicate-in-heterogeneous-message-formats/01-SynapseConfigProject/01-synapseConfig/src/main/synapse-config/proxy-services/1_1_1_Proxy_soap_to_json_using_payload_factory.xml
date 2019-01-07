@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/1_1_1_API_soap_to_json_using_payload_factory" name="1_1_1_API_soap_to_json_using_payload_factory"
-     xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST">
+<proxy name="1_1_1_Proxy_soap_to_json_using_payload_factory" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
         <inSequence>
             <payloadFactory description="Build Response Payload in JSON format" media-type="json">
                 <format>{ "LookupCity": {"Zip": $1}}</format>
                 <args>
-                    <arg xmlns:tem="http://tempuri.org" evaluator="xml" expression="//tem:LookupCity/tem:Zip"/>
+                    <arg evaluator="xml" expression="//tem:LookupCity/tem:Zip" xmlns:tem="http://tempuri.org"/>
                 </args>
             </payloadFactory>
-            <send description="Send Request Payload to SOAP endpoint">
-                <endpoint key="EP_JSONEndpoint"/>
+            <send>
+                <endpoint key="JSON_EP"/>
             </send>
         </inSequence>
         <outSequence>
@@ -38,15 +37,15 @@
         </outSequence>
         <faultSequence>
             <makefault version="soap11">
-                <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
-                      expression="get-property('ERROR_CODE')"/>
+                <code expression="get-property('ERROR_CODE')" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
                 <reason expression="get-property('ERROR_MESSAGE')"/>
             </makefault>
+            <header action="remove" name="To" scope="default"/>
             <log level="full">
                 <property name="FAULT_HIT" value="Fault sequence hit..."/>
             </log>
             <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
             <respond/>
         </faultSequence>
-    </resource>
-</api>
+    </target>
+</proxy>

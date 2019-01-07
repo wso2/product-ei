@@ -1,0 +1,32 @@
+map_S_menu_S_Envelope = function(){ 
+var outputsoapenv_Envelope={};
+
+var count_i_item = 0;
+outputsoapenv_Envelope =  {};
+outputsoapenv_Envelope.soapenv_Body =  {};
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu =  {};
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food =  [];
+
+for(i_item in inputmenu.item){
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item] =  {};
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item].name = inputmenu.item[i_item].name;
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item].price = inputmenu.item[i_item].price;
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item].description = inputmenu.item[i_item].description;
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item].calories = inputmenu.item[i_item].calories;
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item].orgin = inputmenu.item[i_item].orgin;
+outputsoapenv_Envelope.soapenv_Body.breakfast_menu.food[count_i_item].veg = inputmenu.item[i_item].veg;
+
+count_i_item++;
+}
+return outputsoapenv_Envelope;
+};
+
+
+
+
+
+
+
+
+
+

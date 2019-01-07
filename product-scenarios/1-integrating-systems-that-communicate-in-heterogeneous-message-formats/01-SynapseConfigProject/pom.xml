@@ -32,8 +32,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!--TODO: when a registry artifact is added please enable-->
-        <!--<module>01-synapseConfigRegistry</module>-->
+        <module>01-synapseConfigRegistry</module>
         <module>01-synapseConfig</module>
         <module>01-synapseConfigCompositeApplication</module>
 

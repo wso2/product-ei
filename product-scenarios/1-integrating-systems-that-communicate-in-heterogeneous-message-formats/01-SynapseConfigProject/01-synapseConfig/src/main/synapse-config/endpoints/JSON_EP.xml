@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<endpoint name="SOAP_EP" xmlns="http://ws.apache.org/ns/synapse">
-    <address uri="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService">
+<endpoint name="JSON_EP" xmlns="http://ws.apache.org/ns/synapse">
+    <http method="post" uri-template="http://54.162.248.147:9090/eiTests/JSONEndpoint">
         <timeout>
             <responseAction>fault</responseAction>
         </timeout>
@@ -13,5 +13,5 @@
         <markForSuspension>
             <errorCodes>-1</errorCodes>
         </markForSuspension>
-    </address>
+    </http>
 </endpoint>
