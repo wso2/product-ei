@@ -111,10 +111,10 @@ This is supported in all the EI and ESB versions
 
 ## Test cases
 
-| ID        | Summary                                     |
-| ----------|:------------------------------------------: |
-| 1.6.4.1   | Using enrich mediator                       |
-| 1.6.4.2   | Using XSLT mediator                         |
-| 1.6.4.3   | Using script mediator                       |
+| ID        | Summary                                            |
+| ----------|:--------------------------------------------------:|
+| 1.6.4.1   | Remove content of an element using enrich mediator |
+| 1.6.4.2   | Using XSLT mediator                                |
+| 1.6.4.3   | Remove an element using script mediator            |
                                                            
 
