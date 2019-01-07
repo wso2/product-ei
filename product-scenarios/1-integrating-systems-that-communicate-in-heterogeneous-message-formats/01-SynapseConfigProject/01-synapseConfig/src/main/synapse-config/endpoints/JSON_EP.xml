@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="JSON_EP" xmlns="http://ws.apache.org/ns/synapse">
-    <http method="post" uri-template="http://54.162.248.147:9090/eiTests/JSONEndpoint">
+    <http method="post" uri-template="http://ei-backend.scenarios.wso2.org:9090/eiTests/JSONEndpoint">
         <timeout>
             <responseAction>fault</responseAction>
         </timeout>
