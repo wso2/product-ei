@@ -2,7 +2,7 @@
 <proxy name="4_1_1_1_3_Proxy_SimpleLogForwardTemplate" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <endpoint name="endpoint_urn_uuid_6f63ce93-1945-42ac-9bc7-75ad24ae56b9">
-            <address uri="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService"/>
+            <address uri="http://52.55.18.122:8080/axis2/services/SimpleStockQuoteService"/>
         </endpoint>
         <inSequence>
             <log level="full"/>

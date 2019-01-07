@@ -215,13 +215,13 @@
     </wsdl:binding>
     <wsdl:service name="SimpleStockQuoteService">
         <wsdl:port name="SimpleStockQuoteServiceHttpSoap11Endpoint" binding="ns:SimpleStockQuoteServiceSoap11Binding">
-            <soap:address location="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap11Endpoint/"/>
+            <soap:address location="http://52.55.18.122:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap11Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="SimpleStockQuoteServiceHttpSoap12Endpoint" binding="ns:SimpleStockQuoteServiceSoap12Binding">
-            <soap12:address location="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap12Endpoint/"/>
+            <soap12:address location="http://52.55.18.122:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpSoap12Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="SimpleStockQuoteServiceHttpEndpoint" binding="ns:SimpleStockQuoteServiceHttpBinding">
-            <http:address location="http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpEndpoint/"/>
+            <http:address location="http://52.55.18.122:8080/axis2/services/SimpleStockQuoteService.SimpleStockQuoteServiceHttpEndpoint/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

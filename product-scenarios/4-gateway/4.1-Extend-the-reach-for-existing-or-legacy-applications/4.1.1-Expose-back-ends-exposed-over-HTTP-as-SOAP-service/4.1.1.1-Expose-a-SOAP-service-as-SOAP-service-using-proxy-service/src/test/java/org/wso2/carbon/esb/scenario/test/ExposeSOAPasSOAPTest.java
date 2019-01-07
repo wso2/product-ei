@@ -179,7 +179,7 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
             "setting \"modifyUserWSDLPortAddress\" to false")
     public void testPublishingWSDLModifyUserWSDLPortAddres() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress");
-        String backendURL = "http://52.23.200.142:8080/axis2/services/SimpleStockQuoteService";
+        String backendURL = "http://52.55.18.122:8080/axis2/services/SimpleStockQuoteService";
 
         RESTClient restClient = new RESTClient();
         HttpResponse response = restClient.doGet(url + "?wsdl", null);
