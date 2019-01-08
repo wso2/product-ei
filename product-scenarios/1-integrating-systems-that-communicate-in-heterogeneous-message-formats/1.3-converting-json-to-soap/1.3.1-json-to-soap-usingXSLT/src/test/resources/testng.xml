@@ -18,6 +18,13 @@
   -->
 
 <suite name="ESBTestSuite" parallel="false">
+    <listeners>
+        <!-- TestPrepExecutionListener : TestNG execution listener for perform test execution preparation -->
+        <listener class-name="org.wso2.carbon.esb.scenario.test.common.testng.listeners.TestPrepExecutionListener"/>
+
+        <!-- TestLoggingListener : Test listener to log test execution events -->
+        <listener class-name="org.wso2.carbon.esb.scenario.test.common.testng.listeners.TestLoggingListener"/>
+    </listeners>
     <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
             <class name="org.wso2.carbon.esb.scenario.test.JsonToSoapUsingXSLTTest"/>
