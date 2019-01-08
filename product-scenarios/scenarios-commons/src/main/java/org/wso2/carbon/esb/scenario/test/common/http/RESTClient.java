@@ -40,6 +40,7 @@ import org.apache.http.protocol.HttpContext;
 import org.wso2.esb.integration.common.utils.HttpDeleteWithEntity;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;

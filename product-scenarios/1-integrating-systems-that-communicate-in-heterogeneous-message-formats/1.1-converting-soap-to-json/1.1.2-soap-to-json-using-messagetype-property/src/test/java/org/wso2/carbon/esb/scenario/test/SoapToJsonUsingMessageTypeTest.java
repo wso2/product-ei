@@ -101,7 +101,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
                                                    "Malformed Soap to Json Transformation Using MessageType property");
     }
 
-    @Test(description = "1.1.2.3-Large Soap to Json Using MessageType property", enabled = true,
+    @Test(description = "1.1.2.3-Large Soap to Json Using MessageType property", enabled = false,
           dataProvider = "1.1.2.3")
     public void convertLargeSoapToJsonUsingMessageType(String request, String expectedResponse, String header)
             throws Exception {

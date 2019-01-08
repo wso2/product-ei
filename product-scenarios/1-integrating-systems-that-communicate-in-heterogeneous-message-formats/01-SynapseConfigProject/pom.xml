@@ -35,9 +35,6 @@
         <module>01-synapseConfigRegistry</module>
         <module>01-synapseConfig</module>
         <module>01-synapseConfigCompositeApplication</module>
-
-        <!--Scenario Specific CAR Applications should go here, if needs to be built-->
-
     </modules>
 
 </project>

@@ -105,7 +105,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
                                                    "Malformed Soap To Json transformation Using Data Mapper");
     }
 
-    @Test(description = "1.1.3.3-Large Soap To Json transformation Using Data Mapper", enabled = true,
+    @Test(description = "1.1.3.3-Large Soap To Json transformation Using Data Mapper", enabled = false,
           dataProvider = "1.1.3.3")
     public void convertLargeSoapToJsonUsingDataMapper(String request, String expectedResponse, String header)
             throws Exception {

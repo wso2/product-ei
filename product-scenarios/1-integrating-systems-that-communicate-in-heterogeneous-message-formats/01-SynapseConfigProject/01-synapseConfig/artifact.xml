@@ -41,4 +41,16 @@
     <artifact name="1_1_3_Proxy_soap_to_json_using_data_mapper" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_1_3_Proxy_soap_to_json_using_data_mapper.xml</file>
     </artifact>
+    <artifact name="1_3_1_API_json_to_soap_using_xslt" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_3_1_API_json_to_soap_using_xslt.xml</file>
+    </artifact>
+    <artifact name="in_transform" groupId="org.wso2.ei.product-scenarios.scenario_01.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/in_transform.xml</file>
+    </artifact>
+    <artifact name="out_transform" groupId="org.wso2.ei.product-scenarios.scenario_01.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/out_transform.xml</file>
+    </artifact>
+    <artifact name="1_3_2_API_json_to_soap_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_3_2_API_json_to_soap_using_payload_factory.xml</file>
+    </artifact>
 </artifacts>
