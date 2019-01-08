@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header />
+    <soapenv:Body>
+        <BANK_TR>
+            <TIMESTAMP>1437038356</TIMESTAMP>
+            <TRANSACTION_ID>TR10035918373588</TRANSACTION_ID>
+            <TRANSACTION_TYPE>ONLINE</TRANSACTION_TYPE>
+            <BANKCODE>BNK001</BANKCODE>
+            <PROCESSED>TRUE</PROCESSED>
+        </BANK_TR>
+    </soapenv:Body>
+</soapenv:Envelope>
