@@ -88,8 +88,6 @@ public class ScenarioTestBase {
         // TODO : remove this once test environment is stable
         standaloneMode = true;
 
-        setKeyStoreProperties();
-
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
         sessionCookie = authenticatorClient.login("admin", "admin", getServerHost());
@@ -239,14 +237,6 @@ public class ScenarioTestBase {
         }
     }
 
-    protected void setKeyStoreProperties() {
-        System.setProperty("javax.net.ssl.trustStore", commonResourcesDir + "/keystores/wso2carbon.jks");
-        System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
-        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
-    }
-
-
-
     private String getServerHost() {
         String url = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
         if (url != null && url.contains("/")) {
@@ -258,7 +248,6 @@ public class ScenarioTestBase {
         log.info("Backend URL is set as : " + url);
         return url;
     }
-
 
     private Callable <Boolean> isCAppDeployed(final ApplicationAdminClient applicationAdminClient, final String cAppName) {
         return new Callable<Boolean>() {
