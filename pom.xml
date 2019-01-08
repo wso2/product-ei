@@ -1431,6 +1431,16 @@
                 <version>${slf4j.wso2.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.orbit.javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${org.wso2.orbit.javax.xml.bind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.carbon.identity</groupId>
                 <artifactId>org.wso2.carbon.um.ws.api.stub</artifactId>
                 <version>${carbon.um.ws.version}</version>
@@ -1625,7 +1635,7 @@
         <neethi.orbit.version>2.0.4.wso2v4</neethi.orbit.version>
         <rampart.mar.version>${rampart.wso2.version}</rampart.mar.version>
 
-        <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
+        <carbon.p2.plugin.version>5.1.2</carbon.p2.plugin.version>
 
         <siddhi.version>3.2.3</siddhi.version>
         <!-- Carbon -->
@@ -1675,6 +1685,8 @@
         <org.springframework.ws.wso2.version>3.1.0.wso2v1</org.springframework.ws.wso2.version>
         <org.wso2.json.version>3.0.0.wso2v1</org.wso2.json.version>
         <groovy.version>1.1-rc-1</groovy.version>
+        <org.wso2.orbit.javax.xml.bind.version>2.3.1.wso2v1</org.wso2.orbit.javax.xml.bind.version>
+        <version.junit>4.11</version.junit>
         <org.jruby.version>1.3.0</org.jruby.version>
         <org.testng.version>6.1.1</org.testng.version>
         <mysql.connector.version>5.1.6</mysql.connector.version>
@@ -1701,9 +1713,9 @@
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <jettison.orbit.version>1.3.4.wso2v1</jettison.orbit.version>
         <operadriver.version>0.8.1</operadriver.version>
-        <selenium.version>2.40.0</selenium.version>
+        <selenium.version>3.141.59</selenium.version>
         <slf4j.version>1.7.21</slf4j.version>
-        <activemq.version>5.9.1</activemq.version>
+        <activemq.version>5.15.8</activemq.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
         <fasterxml.jackson.version>2.9.8.wso2v1</fasterxml.jackson.version>
@@ -1718,7 +1730,7 @@
         <maven.build.helper.plugin.version>1.8</maven.build.helper.plugin.version>
         <maven.xmlbeans-maven-plugin.plugin.version>2.3.3</maven.xmlbeans-maven-plugin.plugin.version>
         <maven.docker.plugin.version>0.22.1</maven.docker.plugin.version>
-        <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
+        <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
         <greenmail.version>1.3</greenmail.version>
         <opensaml.orbit.version>2.6.4.wso2v5</opensaml.orbit.version>
@@ -1819,8 +1831,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
