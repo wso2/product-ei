@@ -25,7 +25,10 @@ import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 
+import org.json.JSONObject;
+
 import org.testng.Assert;
+
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.StringUtil;
 import org.wso2.carbon.esb.scenario.test.common.utils.XMLUtils;
@@ -184,5 +187,22 @@ public class HTTPUtils {
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
         Assert.assertTrue(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload).contains(responseSubstring),
                           "Actual Response and Expected Response mismatch in test case : " + messageId);
+    }
+
+    /**
+     * Invoke API and returns response
+     *
+     * @param url api invocation url
+     * @param request the request to transform
+     * @param contentType content-type of the request
+     * @return extracted payload from the returned http Response
+     * @throws IOException
+     */
+
+    public static JSONObject invokeApiAndGetResponse(String url, String request, String contentType) throws IOException {
+        RESTClient restClient = new RESTClient();
+        HttpResponse httpResponse = restClient.doPost(url, request, contentType);
+        String responsePayload = restClient.getResponsePayload(httpResponse);
+        return new JSONObject(responsePayload);
     }
 }

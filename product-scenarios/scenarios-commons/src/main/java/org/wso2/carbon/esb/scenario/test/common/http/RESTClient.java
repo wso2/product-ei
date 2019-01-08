@@ -40,6 +40,7 @@ import org.apache.http.protocol.HttpContext;
 import org.wso2.esb.integration.common.utils.HttpDeleteWithEntity;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
@@ -240,6 +241,27 @@ public class RESTClient {
         }
         entityEncReq.setEntity(ent);
         return httpclient.execute(request);
+    }
+
+    /**
+     * Extracts the payload from a HTTP response
+     *
+     * @param httpResponse HttpResponse instance to be extracted
+     * @return Content payload
+     * @throws IOException If an error occurs while reading from the response
+     */
+    public String getResponsePayload(HttpResponse httpResponse) throws IOException {
+        if (httpResponse.getEntity() != null) {
+            InputStream in = httpResponse.getEntity().getContent();
+            int length;
+            byte[] tmp = new byte[2048];
+            StringBuilder buffer = new StringBuilder();
+            while ((length = in.read(tmp)) != -1) {
+                buffer.append(new String(tmp, 0, length));
+            }
+            return buffer.toString();
+        }
+        return null;
     }
 
     /**
