@@ -92,22 +92,47 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      * @throws IOException if an error occurs while invoking the exception
      */
     private void testLoadBalanceGroup(String apiInvocationUrl) throws IOException {
-        apiInvocationUrl = getApiInvocationURLHttp(apiInvocationUrl);
-        for (int i = 0; i < 2; i++) {
-            SimpleHttpClient httpClient = new SimpleHttpClient();
 
-            Map<String, String> headers = new HashMap<>();
-            headers.put(ScenarioConstants.MESSAGE_ID, LOAD_BALANCE_MESSAGE_HEADER);
-            HttpResponse httpResponse = httpClient.doPost(apiInvocationUrl, headers,
-                                                          ScenarioConstants.BASIC_JSON_MESSAGE,
-                                                          HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
-            String responsePayload = httpClient.getResponsePayload(httpResponse);
-            Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200,
-                                "Load balance test failed, incorrect response code received");
-            Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responsePayload),
-                                StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responses[i]),
-                                "Actual Response and Expected Response mismatch!");
+        //Asserts that the first response was forwarded to server 1
+        String responsePayload = getResponse(apiInvocationUrl);
+        Assert.assertEquals(StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responsePayload),
+                            StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responses[0]),
+                            "Actual Response and Expected Response mismatch!");
+
+        /*Asserts the second response. In the case of a standalone deployment this should be forwarded to server2.
+        But in a 2 node cluster, this will still be sent to server1 by the second EI node.
+         */
+        boolean expectedResponseReceived = false;
+        String responsePayload2 = "";
+        for (int i = 0; i < 2; i++) {
+            responsePayload2 = getResponse(apiInvocationUrl);
+            if (StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responses[1])
+                          .equals(StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responsePayload2))) {
+                expectedResponseReceived = true;
+                break;
+            } else if (!StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responses[0])
+                                  .equals(StringUtil.trimTabsSpaceNewLinesBetweenJsonTags(responsePayload2))) {
+                Assert.fail("Unexpected response received. Expected: " + responses[1] + " or " + responses[0]
+                            + ", actual: " + responsePayload);
+
+            }
         }
+        Assert.assertTrue(expectedResponseReceived, "Expected response not received. Expected: "
+                                                    + responses[1] + ", actual: " + responsePayload2);
+    }
+
+    private String getResponse(String apiInvocationUrl) throws IOException {
+        apiInvocationUrl = getApiInvocationURLHttp(apiInvocationUrl);
+        SimpleHttpClient httpClient = new SimpleHttpClient();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put(ScenarioConstants.MESSAGE_ID, LOAD_BALANCE_MESSAGE_HEADER);
+        HttpResponse httpResponse = httpClient.doPost(apiInvocationUrl, headers,
+                                                      ScenarioConstants.BASIC_JSON_MESSAGE,
+                                                      HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200,
+                            "Load balance test failed, incorrect response code received");
+        return httpClient.getResponsePayload(httpResponse);
     }
 
 }
