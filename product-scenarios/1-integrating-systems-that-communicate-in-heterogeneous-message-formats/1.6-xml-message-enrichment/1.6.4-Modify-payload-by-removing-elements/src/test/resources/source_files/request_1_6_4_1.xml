@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header />
+    <soapenv:Body>
+        <company>WSO2</company>
+        <first_name>Jay</first_name>
+        <last_name>Cleark</last_name>
+    </soapenv:Body>
+</soapenv:Envelope>
