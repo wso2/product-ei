@@ -1,0 +1,1 @@
+<?xml version='1.0' encoding='utf-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><jsonObject><getQuote><request><symbol>WSO2</symbol></request></getQuote></jsonObject></soapenv:Body></soapenv:Envelope>

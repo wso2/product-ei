@@ -12,7 +12,7 @@ function close(io:CharacterChannel characterChannel) {
 }
 
 public function validateJSON(json requestPayload, string messageId) returns boolean {
-    string presetFilePath = "./Resource/json/request/" + messageId + ".json";
+    string presetFilePath = "./resources/json/request/" + messageId + ".json";
     json definedJson = getJSON(presetFilePath);
     boolean result = compareJSON(definedJson, requestPayload);
 
@@ -62,7 +62,7 @@ function getJSON(string path) returns json {
 }
 
 public function getResponseJSON(string messageId) returns json {
-    string responseFilePath = "./Resource/json/response/" + messageId + ".json";
+    string responseFilePath = "./resources/json/response/" + messageId + ".json";
     json responseJson = getJSON(responseFilePath);
     return responseJson;
 }

@@ -1,0 +1,13 @@
+{
+  "patient": {
+    "name": "John Doe",
+    "dob": "1990-03-19",
+    "ssn": "234-23-525",
+    "address": "California",
+    "phone": "8770586755",
+    "email": "johndoe@gmail.com"
+  },
+  "doctor": "thomas collins",
+  "hospital": "grand oak community hospital",
+  "appointment_date": "2025-04-02"
+}
