@@ -1,0 +1,15 @@
+{
+    "Envelope":
+    {
+        "Body":
+        {
+            "getQuote":
+            {
+                "request":
+                {
+                    "symbol": "WSO2"
+                }
+            }
+        }
+    }
+}

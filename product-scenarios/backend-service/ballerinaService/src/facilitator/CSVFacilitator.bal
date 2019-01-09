@@ -29,7 +29,7 @@ function closeReadableCSVChannel(io:CSVChannel csvChannel) {
 }
 
 public function validateCSV(string csvData, string messageId) returns boolean {
-    string presetFilePath = "./Resource/csv/request/" + messageId + ".csv";
+    string presetFilePath = "./resources/csv/request/" + messageId + ".csv";
     io:CSVChannel csvChannel = io:openCsvFile(presetFilePath);
     string[] csvRecords = csvData.split("\n");
     boolean result;
@@ -74,7 +74,7 @@ public function validateCSV(string csvData, string messageId) returns boolean {
 }
 
 public function getCSVResponse(string messageId) returns string {
-    string responseFilePath = "./Resource/csv/response/" + messageId + ".csv";
+    string responseFilePath = "./resources/csv/response/" + messageId + ".csv";
     io:CSVChannel csvChannel = io:openCsvFile(responseFilePath);
     string responseString = "";
 

@@ -4,7 +4,7 @@ import ballerina/streams;
 
 
 public function validateXML(xml requestPayload, string messageId) returns boolean{
-    string presetFilePath = "./Resource/xml/request/"+messageId+".xml";
+    string presetFilePath = "./resources/xml/request/"+messageId+".xml";
     xml definedXml = getXML(presetFilePath);
     boolean result = compareXML(definedXml, requestPayload);
     return result;
@@ -39,7 +39,7 @@ function compareXML(xml original, xml request) returns boolean {
 }
 
 public function getResponseXML(string messageId) returns xml {
-    string responseFilePath = "./Resource/xml/response/" + messageId + ".xml";
+    string responseFilePath = "./resources/xml/response/" + messageId + ".xml";
     xml responseXML = getXML(responseFilePath);
     return responseXML;
 }

@@ -1,0 +1,22 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Body>
+        <ns:getQuoteResponse xmlns:ns="http://services.samples">
+            <ns:return xmlns:ax21="http://services.samples/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ax21:GetQuoteResponse">
+                <ax21:change>3.961306710115824</ax21:change>
+                <ax21:earnings>-9.474775008224704</ax21:earnings>
+                <ax21:high>157.6906144430487</ax21:high>
+                <ax21:last>152.24464430136305</ax21:last>
+                <ax21:lastTradeTimestamp>Fri Nov 30 14:05:46 IST 2018</ax21:lastTradeTimestamp>
+                <ax21:low>158.97317787701516</ax21:low>
+                <ax21:marketCap>5.498486260437736E7</ax21:marketCap>
+                <ax21:name>WSO2 Company</ax21:name>
+                <ax21:open>-150.4303028558359</ax21:open>
+                <ax21:peRatio>25.43149084018825</ax21:peRatio>
+                <ax21:percentageChange>-2.746033637119583</ax21:percentageChange>
+                <ax21:prevClose>-144.2555785394889</ax21:prevClose>
+                <ax21:symbol>WSO2</ax21:symbol>
+                <ax21:volume>15328</ax21:volume>
+            </ns:return>
+        </ns:getQuoteResponse>
+    </soapenv:Body>
+</soapenv:Envelope>
