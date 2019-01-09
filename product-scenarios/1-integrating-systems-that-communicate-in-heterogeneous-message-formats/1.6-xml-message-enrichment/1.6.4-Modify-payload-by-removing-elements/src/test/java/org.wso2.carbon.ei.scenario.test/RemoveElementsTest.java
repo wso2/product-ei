@@ -29,74 +29,78 @@ import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.carbon.esb.scenario.test.common.http.SOAPClient;
-import org.wso2.carbon.esb.scenario.test.common.utils.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.stream.XMLStreamException;
 
-//This test is to verify if payload can be modified by removing an element using script mediator.
 public class RemoveElementsTest extends ScenarioTestBase {
 
-    private String sourcesFilePath;
     private static final Log log = LogFactory.getLog(RemoveElementsTest.class);
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        sourcesFilePath = testResourcesDir + File.separator + "source_files";
     }
 
+    //This test is to verify if payload can be modified by removing an element using script mediator.
     @Test(description = "1.6.4.1-Modify-payload-by-removing-elements-using-script-mediator")
     public void RemoveElementsUsingScriptMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_1_Proxy_RemoveElements_ScriptMediator");
-        log.info("url is: " + url);
 
-        String request = FileUtils.readFile(sourcesFilePath + File.separator + "request_1_6_4_1.xml");
+        String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "    <soapenv:Header />\n" + "    <soapenv:Body>\n" + "        <company>WSO2</company>\n"
+                + "        <first_name>Jay</first_name>\n" + "        <last_name>Cleark</last_name>\n"
+                + "    </soapenv:Body>\n" + "</soapenv:Envelope>";
+
+        String expectedResponse = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "    <soapenv:Header/>\n" + "    <soapenv:Body>\n" + "        <first_name>Jay</first_name>\n"
+                + "        <last_name>Cleark</last_name>\n" + "    </soapenv:Body>\n" + "</soapenv:Envelope>";
+
         Map<String, String> headers = new HashMap<>(1);
         headers.put(ScenarioConstants.MESSAGE_ID, "1_6_4_1");
 
         //create a SOAP client and send the payload to proxy
         SOAPClient soapClient = new SOAPClient();
-        HTTPUtils httpUtils = new HTTPUtils();
-
         HttpResponse actualResponse = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
-        log.info("actual response is: \n" + actualResponse);
+        String payload = HTTPUtils.getResponsePayload(actualResponse);
+        String actualPayload = payload.substring(38).replaceAll("\n[ \t]*\n", "\n");
 
-        String Payload = httpUtils.getResponsePayload(actualResponse);
-        String actualPayload = Payload.substring(38).replaceAll("\n[ \t]*\n", "\n");
-        log.info("Actual enriched payload: " + actualPayload);
-
-        String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_4_1.xml");
-        log.info("Expected Response: " + expectedResponse);
-        Assert.assertEquals(actualPayload, expectedResponse);
+        Assert.assertEquals(actualPayload, expectedResponse, "The payload is not properly enriched");
     }
 
     //This test is to verify if payload can be modified by removing content of an element using enrich mediator.
     @Test(description = "1.6.4.2-Modify-payload-by-removing-content-of-elements-using-enrich-mediator")
     public void RemoveContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator");
-        log.info("url is: " + url);
 
-        String request = FileUtils.readFile(sourcesFilePath + File.separator + "request_1_6_4_2.xml");
+        String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "   <soapenv:Header />\n" + "   <soapenv:Body>\n" + "      <BANK_TR>\n"
+                + "         <TIMESTAMP>1437038356</TIMESTAMP>\n"
+                + "         <TRANSACTION_ID>TR10035918373588</TRANSACTION_ID>\n"
+                + "         <TRANSACTION_TYPE>ONLINE</TRANSACTION_TYPE>\n" + "         <BANKCODE>BNK001</BANKCODE>\n"
+                + "         <PROCESSED>TRUE</PROCESSED>\n" + "      </BANK_TR>\n" + "   </soapenv:Body>\n"
+                + "</soapenv:Envelope>";
+
+        String expectedResponse =
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" + "<soapenv:Body>\n"
+                        + "      <BANK_TR>\n" + "         <TIMESTAMP>1437038356</TIMESTAMP>\n"
+                        + "         <TRANSACTION_ID>TR10035918373588</TRANSACTION_ID>\n"
+                        + "         <TRANSACTION_TYPE>ONLINE</TRANSACTION_TYPE>\n"
+                        + "         <BANKCODE>BNK001</BANKCODE>\n" + "         <PROCESSED/>\n" + "      </BANK_TR>\n"
+                        + "   </soapenv:Body>" + "</soapenv:Envelope>";
+        log.info("Expected Response: " + expectedResponse);
+
         Map<String, String> headers = new HashMap<>(1);
         headers.put(ScenarioConstants.MESSAGE_ID, "1_6_4_2");
 
         //create a SOAP client and send the payload to proxy
         SOAPClient soapClient = new SOAPClient();
-        HTTPUtils httpUtils = new HTTPUtils();
-
         HttpResponse actualResponse = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
-        log.info("actual response is: \n" + actualResponse);
+        String payload = HTTPUtils.getResponsePayload(actualResponse);
+        String actualPayload = payload.substring(38);
 
-        String Payload = httpUtils.getResponsePayload(actualResponse);
-        String actualPayload = Payload.substring(38).replaceAll("\n[ \t]*\n", "\n");
-        log.info("Actual enriched payload: " + actualPayload);
-
-        String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_4_2.xml");
-        log.info("Expected Response: " + expectedResponse);
         Assert.assertEquals(actualPayload, expectedResponse);
     }
 
@@ -107,3 +111,4 @@ public class RemoveElementsTest extends ScenarioTestBase {
     }
 
 }
+

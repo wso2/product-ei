@@ -35,8 +35,9 @@
         <module>01-SynapseConfigProject</module>
         <module>1.1-converting-soap-to-json</module>
         <module>1.3-converting-json-to-soap</module>
-        <module>1.6-xml-message-enrichment/1.6.1-Modify-payload-by-adding-a-child-using-enrich-mediator</module>
+        <module>1.6-xml-message-enrichment</module>
         <module>1.8-plaintext-message-enrichment</module>
+
     </modules>
 
     <dependencies>
