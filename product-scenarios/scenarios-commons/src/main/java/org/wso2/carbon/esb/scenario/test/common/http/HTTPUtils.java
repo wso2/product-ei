@@ -154,11 +154,12 @@ public class HTTPUtils {
         HttpResponse httpResponse = soapClient.sendSimpleSOAPMessage(serviceUrl, request, soapAction, headers);
 
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
-        OMElement respElement = HTTPUtils.getOMFromResponse(httpResponse);
-        Assert.assertNotNull(respElement, "Invalid response");
-        boolean compareResponse = XMLUtils.compareOMElements(XMLUtils.StringASOM(expectedResponse), respElement);
-        Assert.assertTrue(compareResponse,
-                          "Actual Response and Expected Response mismatch in test case : " + messageId);
+        OMElement actualOMResponse = HTTPUtils.getOMFromResponse(httpResponse);
+        OMElement expectedOMResponse = XMLUtils.StringASOM(expectedResponse);
+        Assert.assertNotNull(actualOMResponse, "Invalid response");
+        boolean compareResponse = XMLUtils.compareOMElements(expectedOMResponse, actualOMResponse);
+        Assert.assertTrue(compareResponse,"Expected : <" + expectedResponse + "> but was <" + actualOMResponse
+                                          + "> in test case : " + messageId);
     }
 
     /**
@@ -186,7 +187,8 @@ public class HTTPUtils {
 
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
         Assert.assertTrue(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload).contains(responseSubstring),
-                          "Actual Response and Expected Response mismatch in test case : " + messageId);
+                          "\""+ responseSubstring + "\" does not contain in actual Response Recieved : <" +
+                          responsePayload + "> in test case : " + messageId);
     }
 
     /**
