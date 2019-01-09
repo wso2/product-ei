@@ -37,10 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.xml.stream.XMLStreamException;
 
-/**
- * This test is to verify if payload can be modified by removing an element using script mediator.
- */
-
+//This test is to verify if payload can be modified by removing an element using script mediator.
 public class RemoveElementsTest extends ScenarioTestBase {
 
     private String sourcesFilePath;
@@ -53,7 +50,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
     }
 
     @Test(description = "1.6.4.1-Modify-payload-by-removing-elements-using-script-mediator")
-    public void RemoveElementsUsingScriptMediator() throws IOException, XMLStreamException{
+    public void RemoveElementsUsingScriptMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_1_Proxy_RemoveElements_ScriptMediator");
         log.info("url is: " + url);
 
@@ -63,25 +60,23 @@ public class RemoveElementsTest extends ScenarioTestBase {
 
         //create a SOAP client and send the payload to proxy
         SOAPClient soapClient = new SOAPClient();
-        HTTPUtils httpUtils=new HTTPUtils();
+        HTTPUtils httpUtils = new HTTPUtils();
 
         HttpResponse actualResponse = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
-        log.info("actual response is: \n"+actualResponse);
+        log.info("actual response is: \n" + actualResponse);
 
         String Payload = httpUtils.getResponsePayload(actualResponse);
         String actualPayload = Payload.substring(38).replaceAll("\n[ \t]*\n", "\n");
-        log.info("Actual enriched payload: "+actualPayload);
+        log.info("Actual enriched payload: " + actualPayload);
 
         String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_4_1.xml");
-        log.info("Expected Response: "+expectedResponse);
-        Assert.assertEquals(actualPayload,expectedResponse);
+        log.info("Expected Response: " + expectedResponse);
+        Assert.assertEquals(actualPayload, expectedResponse);
     }
 
-    /**
-     * This test is to verify if payload can be modified by removing content of an element using enrich mediator.
-     */
+    //This test is to verify if payload can be modified by removing content of an element using enrich mediator.
     @Test(description = "1.6.4.2-Modify-payload-by-removing-content-of-elements-using-enrich-mediator")
-    public void RemoveContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException{
+    public void RemoveContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator");
         log.info("url is: " + url);
 
@@ -91,21 +86,22 @@ public class RemoveElementsTest extends ScenarioTestBase {
 
         //create a SOAP client and send the payload to proxy
         SOAPClient soapClient = new SOAPClient();
-        HTTPUtils httpUtils=new HTTPUtils();
+        HTTPUtils httpUtils = new HTTPUtils();
 
         HttpResponse actualResponse = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
-        log.info("actual response is: \n"+actualResponse);
+        log.info("actual response is: \n" + actualResponse);
 
         String Payload = httpUtils.getResponsePayload(actualResponse);
         String actualPayload = Payload.substring(38).replaceAll("\n[ \t]*\n", "\n");
-        log.info("Actual enriched payload: "+actualPayload);
+        log.info("Actual enriched payload: " + actualPayload);
 
         String expectedResponse = FileUtils.readFile(sourcesFilePath + File.separator + "response_1_6_4_2.xml");
-        log.info("Expected Response: "+expectedResponse);
-        Assert.assertEquals(actualPayload,expectedResponse);
+        log.info("Expected Response: " + expectedResponse);
+        Assert.assertEquals(actualPayload, expectedResponse);
     }
 
-    @AfterClass(description = "Server Cleanup", alwaysRun = true)
+    @AfterClass(description = "Server Cleanup",
+                alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
     }
