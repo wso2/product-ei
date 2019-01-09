@@ -18,26 +18,22 @@
 
 package org.wso2.carbon.ei.scenario.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpResponse;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
-import org.wso2.carbon.esb.scenario.test.common.http.SOAPClient;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.xml.stream.XMLStreamException;
 
+/**
+ * This class is to test if xml payload can be enriched before it goes to the backend server by removing elements in
+ * various ways, such as removing elements completely, removing contents of elements and etc. They can be
+ * achieved using script mediator, xslt mediator and enrich mediator.
+ */
 public class RemoveElementsTest extends ScenarioTestBase {
-
-    private static final Log log = LogFactory.getLog(RemoveElementsTest.class);
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -49,25 +45,29 @@ public class RemoveElementsTest extends ScenarioTestBase {
     public void RemoveElementsUsingScriptMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_1_Proxy_RemoveElements_ScriptMediator");
 
-        String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                + "    <soapenv:Header />\n" + "    <soapenv:Body>\n" + "        <company>WSO2</company>\n"
-                + "        <first_name>Jay</first_name>\n" + "        <last_name>Cleark</last_name>\n"
-                + "    </soapenv:Body>\n" + "</soapenv:Envelope>";
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "   <soapenv:Header />\n"
+                + "   <soapenv:Body>\n"
+                + "      <company>WSO2</company>\n"
+                + "      <first_name>Jay</first_name>\n"
+                + "      <last_name>Cleark</last_name>\n"
+                + "   </soapenv:Body>\n"
+                + "</soapenv:Envelope>";
 
-        String expectedResponse = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                + "    <soapenv:Header/>\n" + "    <soapenv:Body>\n" + "        <first_name>Jay</first_name>\n"
-                + "        <last_name>Cleark</last_name>\n" + "    </soapenv:Body>\n" + "</soapenv:Envelope>";
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "   <soapenv:Header />\n"
+                + "   <soapenv:Body>\n"
+                + "      <first_name>Jay</first_name>\n"
+                + "      <last_name>Cleark</last_name>\n"
+                + "   </soapenv:Body>\n"
+                + "</soapenv:Envelope>";
 
-        Map<String, String> headers = new HashMap<>(1);
-        headers.put(ScenarioConstants.MESSAGE_ID, "1_6_4_1");
-
-        //create a SOAP client and send the payload to proxy
-        SOAPClient soapClient = new SOAPClient();
-        HttpResponse actualResponse = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
-        String payload = HTTPUtils.getResponsePayload(actualResponse);
-        String actualPayload = payload.substring(38).replaceAll("\n[ \t]*\n", "\n");
-
-        Assert.assertEquals(actualPayload, expectedResponse, "The payload is not properly enriched");
+        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+                "urn:mediate", "RemoveElementsUsingScriptMediator");
     }
 
     //This test is to verify if payload can be modified by removing content of an element using enrich mediator.
@@ -75,33 +75,35 @@ public class RemoveElementsTest extends ScenarioTestBase {
     public void RemoveContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator");
 
-        String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                + "   <soapenv:Header />\n" + "   <soapenv:Body>\n" + "      <BANK_TR>\n"
+        String request =
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                + "   <soapenv:Header />\n"
+                + "   <soapenv:Body>\n"
+                + "      <BANK_TR>\n"
                 + "         <TIMESTAMP>1437038356</TIMESTAMP>\n"
                 + "         <TRANSACTION_ID>TR10035918373588</TRANSACTION_ID>\n"
-                + "         <TRANSACTION_TYPE>ONLINE</TRANSACTION_TYPE>\n" + "         <BANKCODE>BNK001</BANKCODE>\n"
-                + "         <PROCESSED>TRUE</PROCESSED>\n" + "      </BANK_TR>\n" + "   </soapenv:Body>\n"
+                + "         <TRANSACTION_TYPE>ONLINE</TRANSACTION_TYPE>\n"
+                + "         <BANKCODE>BNK001</BANKCODE>\n"
+                + "         <PROCESSED>TRUE</PROCESSED>\n"
+                + "      </BANK_TR>\n"
+                + "   </soapenv:Body>\n"
                 + "</soapenv:Envelope>";
 
         String expectedResponse =
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" + "<soapenv:Body>\n"
-                        + "      <BANK_TR>\n" + "         <TIMESTAMP>1437038356</TIMESTAMP>\n"
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">"
+                        + "<soapenv:Body>\n"
+                        + "      <BANK_TR>\n"
+                        + "         <TIMESTAMP>1437038356</TIMESTAMP>\n"
                         + "         <TRANSACTION_ID>TR10035918373588</TRANSACTION_ID>\n"
                         + "         <TRANSACTION_TYPE>ONLINE</TRANSACTION_TYPE>\n"
-                        + "         <BANKCODE>BNK001</BANKCODE>\n" + "         <PROCESSED/>\n" + "      </BANK_TR>\n"
-                        + "   </soapenv:Body>" + "</soapenv:Envelope>";
-        log.info("Expected Response: " + expectedResponse);
+                        + "         <BANKCODE>BNK001</BANKCODE>\n"
+                        + "         <PROCESSED/>\n"
+                        + "      </BANK_TR>\n"
+                        + "   </soapenv:Body>"
+                        + "</soapenv:Envelope>";
 
-        Map<String, String> headers = new HashMap<>(1);
-        headers.put(ScenarioConstants.MESSAGE_ID, "1_6_4_2");
-
-        //create a SOAP client and send the payload to proxy
-        SOAPClient soapClient = new SOAPClient();
-        HttpResponse actualResponse = soapClient.sendSimpleSOAPMessage(url, request, "urn:mediate", headers);
-        String payload = HTTPUtils.getResponsePayload(actualResponse);
-        String actualPayload = payload.substring(38);
-
-        Assert.assertEquals(actualPayload, expectedResponse, "The payload is not properly enriched");
+        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+                "urn:mediate", "RemoveContentOfElementUsingEnrichMediator");
     }
 
     @AfterClass(description = "Server Cleanup",
