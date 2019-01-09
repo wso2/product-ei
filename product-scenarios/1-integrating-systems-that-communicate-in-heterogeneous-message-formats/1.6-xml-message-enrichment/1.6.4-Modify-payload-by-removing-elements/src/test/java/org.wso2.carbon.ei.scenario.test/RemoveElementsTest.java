@@ -101,7 +101,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
         String payload = HTTPUtils.getResponsePayload(actualResponse);
         String actualPayload = payload.substring(38);
 
-        Assert.assertEquals(actualPayload, expectedResponse);
+        Assert.assertEquals(actualPayload, expectedResponse, "The payload is not properly enriched");
     }
 
     @AfterClass(description = "Server Cleanup",
