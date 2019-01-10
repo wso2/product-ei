@@ -1,0 +1,52 @@
+#!/bin/bash
+
+BASE_DIR=~/
+REST_SERVICE1_LOCATION=$BASE_DIR/RestService1
+REST_SERVICE2_LOCATION=$BASE_DIR/RestService2
+BALLERINA_LOCATION=$BASE_DIR/product-ei/product-scenarios/backend-service/ballerinaService
+BALLERINA_SRC_LOCATION=$BALLERINA_LOCATION/src
+BALLERINA_RESOURCE_LOCATION=$BALLERINA_LOCATION/resources
+cd $BASE_DIR
+
+#check if git is installed
+LIST_GIT=$(dpkg -l  git)
+echo "$LIST_GIT"
+if [[ $LIST_GIT == *"no packages found matching"* ]]; then
+  echo "git is not currently installed, hence installing git"
+  apt-get update
+  apt-get install git
+  echo "Successfully installed git"
+else
+  echo "git is already insalled"
+fi
+
+git clone --single-branch --branch product-scenarios https://github.com/wso2/product-ei.git
+echo "cloned branch product-scenarios https://github.com/wso2/product-ei.git"
+
+#Building the ballerina service
+cd $BALLERINA_SRC_LOCATION
+ballerina build
+echo "Built ballerina service"
+
+mkdir $REST_SERVICE1_LOCATION
+mkdir $REST_SERVICE2_LOCATION
+
+cp $BALLERINA_SRC_LOCATION/target/testServices.balx $REST_SERVICE1_LOCATION/
+cp $BALLERINA_SRC_LOCATION/target/testServices.balx $REST_SERVICE2_LOCATION/
+
+cp -r $BALLERINA_RESOURCE_LOCATION $REST_SERVICE1_LOCATION/
+cp -r $BALLERINA_RESOURCE_LOCATION $REST_SERVICE2_LOCATION/
+
+#Modify resource folder in test service2 to contain the loadBalanceMsg with server:2
+sed -i 's/\"server\"\:1/\"server\"\:2/g' $REST_SERVICE2_LOCATION/resources/json/response/loadBalanceMsg.json 
+
+PORT1=9090
+nohup ballerina run -e port=$PORT1 $REST_SERVICE1_LOCATION/testServices.balx > $REST_SERVICE1_LOCATION/service.log &
+echo "started rest service1 on port: " $PORT1
+
+PORT2=9091
+nohup ballerina run -e port=$PORT2 $REST_SERVICE2_LOCATION/testServices.balx > $REST_SERVICE2_LOCATION/service.log &
+echo "started rest service2 on port: " $PORT2
+
+rm -rf $BASE_DIR/product-ei
+#Removed product-ei repository
