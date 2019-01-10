@@ -3,6 +3,9 @@
     <target>
         <inSequence>
             <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <log level="custom">
+                <property expression="json-eval($)" name="JSON_VALUE"/>
+            </log>
             <send>
                 <endpoint key="JSON_EP"/>
             </send>
