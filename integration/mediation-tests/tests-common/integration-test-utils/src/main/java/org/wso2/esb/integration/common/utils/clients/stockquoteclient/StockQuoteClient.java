@@ -41,6 +41,7 @@ import java.util.List;
 public class StockQuoteClient {
 
     private static final Log log = LogFactory.getLog(StockQuoteClient.class);
+    private final int MAX_TIME = 60000;
 
     private List<Header> httpHeaders = new ArrayList<Header>();
 
@@ -280,7 +281,7 @@ public class StockQuoteClient {
         if (httpHeaders.size() > 0) {
             options.setProperty(HTTPConstants.HTTP_HEADERS, httpHeaders);
         }
-        options.setTimeOutInMilliSeconds(45000);
+        options.setTimeOutInMilliSeconds(MAX_TIME);
       /*  options.setProperty(HTTPConstants.CHUNKED, Constants.VALUE_FALSE);
         options.setProperty(Constants.Configuration.MESSAGE_TYPE,HTTPConstants.MEDIA_TYPE_APPLICATION_ECHO_XML);
         options.setProperty(Constants.Configuration.DISABLE_SOAP_ACTION,Boolean.TRUE);*/
