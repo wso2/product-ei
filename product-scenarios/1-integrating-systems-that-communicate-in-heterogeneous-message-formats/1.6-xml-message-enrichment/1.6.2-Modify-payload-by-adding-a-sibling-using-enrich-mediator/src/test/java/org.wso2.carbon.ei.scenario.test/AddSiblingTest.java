@@ -70,6 +70,45 @@ public class AddSiblingTest extends ScenarioTestBase {
                 "urn:mediate", "AddSiblingInline");
     }
 
+    //This test is to verify if payload can be modified by adding sibling elements inline to the payload.
+    @Test(description = "Adding an inline content as a sibling to the message body")
+    public void AddSiblingMessageBodyStoredInProperty() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty");
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n"
+                        + "   <soapenv:Header />\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <ser:getQuote>\n"
+                        + "         <!--Optional:-->\n"
+                        + "         <ser:request>\n"
+                        + "            <!--Optional:-->\n"
+                        + "            <xsd:symbol>WSO2</xsd:symbol>\n"
+                        + "         </ser:request>\n"
+                        + "      </ser:getQuote>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <ser:getQuote>\n"
+                        + "         <!--Optional:-->\n"
+                        + "         <ser:request>\n"
+                        + "            <!--Optional:-->\n"
+                        + "            <xsd:symbol>WSO2</xsd:symbol>\n"
+                        + "            <productid>IC002</productid>\n"
+                        + "         </ser:request>\n"
+                        + "      </ser:getQuote>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+                "urn:mediate", "AddSiblingMessageBodyStoredInProperty");
+    }
+
     @AfterClass(description = "Server Cleanup",
                 alwaysRun = true)
     public void cleanup() throws Exception {
