@@ -206,4 +206,67 @@ public class HTTPUtils {
         String responsePayload = getResponsePayload(httpResponse);
         return new JSONObject(responsePayload);
     }
+
+    /**
+     * Invoke a pox action and assert
+     *
+     * @param serviceUrl proxy service url
+     * @param request the request to transform
+     * @param contentType content-type of the request
+     * @param messageId message id to be sent a header
+     * @param expectedResponse expected response after transformation
+     * @param statusCode expected status code
+     * @param testcaseName testcase name to be logged during a test failure
+     * @throws IOException
+     * @throws XMLStreamException
+     */
+    public static void invokePoxEndpointAndAssert(String serviceUrl, String request, String contentType, String messageId,
+                                               String expectedResponse, int statusCode, String testcaseName)
+            throws IOException, XMLStreamException {
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, messageId);
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse httpResponse = restClient.doPost(serviceUrl, headers, request, contentType);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
+
+        OMElement actualOMResponse = HTTPUtils.getOMFromResponse(httpResponse);
+        OMElement expectedOMResponse = XMLUtils.StringASOM(expectedResponse);
+
+        Assert.assertNotNull(actualOMResponse, "Invalid response");
+
+        boolean compareResponse = XMLUtils.compareOMElements(expectedOMResponse, actualOMResponse);
+        Assert.assertTrue(compareResponse,"Expected : <" + expectedResponse + "> but was <" + actualOMResponse
+                                          + "> in test case : " + messageId);
+    }
+
+    /**
+     * Invoke pox action and check contains
+     *
+     * @param serviceUrl proxy service url
+     * @param request the request to transform
+     * @param contentType content-type of the request
+     * @param messageId message id to be sent a header
+     * @param responseSubstring String Element to check whether the response contains
+     * @param statusCode expected status code
+     * @param testcaseName testcase name to be logged during a test failure
+     * @throws IOException
+     */
+    public static void invokePoxEndpointAndCheckContains(String serviceUrl, String request, String contentType,
+                                                       String messageId, String responseSubstring, int statusCode,
+                                                       String testcaseName) throws IOException {
+        RESTClient restClient = new RESTClient();
+
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, messageId);
+
+        HttpResponse httpResponse = restClient.doPost(serviceUrl, headers, request, contentType);
+        String responsePayload = getResponsePayload(httpResponse);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
+        Assert.assertTrue(StringUtil.trimTabsSpaceNewLinesBetweenXMLTags(responsePayload).contains(responseSubstring),
+                          "\""+ responseSubstring + "\" does not contain in actual Response Recieved : <" +
+                          responsePayload + "> in test case : " + messageId);
+    }
 }

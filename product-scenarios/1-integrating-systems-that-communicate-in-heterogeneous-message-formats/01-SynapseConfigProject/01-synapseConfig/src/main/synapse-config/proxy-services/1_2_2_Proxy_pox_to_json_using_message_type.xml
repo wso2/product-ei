@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_2_2_Proxy_pox_to_json_using_message_type" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <log level="custom">
+                <property expression="json-eval($)" name="JSON_VALUE"/>
+            </log>
+            <send description="Send Request Payload to JSON endpoint">
+                <endpoint key="JSON_EP"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+            <respond description="Respond to client"/>
+        </outSequence>
+        <faultSequence>
+            <makefault version="pox">
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <log level="full">
+                <property name="FAULT_HIT" value="Fault sequence hit..."/>
+            </log>
+            <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+            <respond/>
+        </faultSequence>
+    </target>
+</proxy>
