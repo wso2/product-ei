@@ -4,7 +4,7 @@
         <inSequence>
             <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <log level="custom">
-                <property expression="json-eval('$')" name="JSON_VALUE"/>
+                <property expression="json-eval($)" name="JSON_VALUE"/>
             </log>
             <send>
                 <endpoint key="JSON_EP"/>
@@ -13,8 +13,12 @@
         <outSequence>
             <!-- This log full is added in order to make content aware -->
             <log level="full"/>
-            <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
-            <respond description="Respond to client"/>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+            <!-- This log is added to build the SOAP response -->
+            <log>
+                <property expression="//getQuoteResponse" name="quoteResponse"/>
+            </log>
+            <respond/>
         </outSequence>
         <faultSequence>
             <makefault version="soap11">
