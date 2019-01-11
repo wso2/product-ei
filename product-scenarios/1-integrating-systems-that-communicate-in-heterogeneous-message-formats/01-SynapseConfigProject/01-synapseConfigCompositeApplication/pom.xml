@@ -25,6 +25,8 @@
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_outputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_1_Proxy_Add_Sibling_Inline>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_1_Proxy_Add_Sibling_Inline>
+    <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty>
+    <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_3_Proxy_Add_Sibling_toTargetBody>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_3_Proxy_Add_Sibling_toTargetBody>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_2_Proxy_soap_to_json_using_message_type>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_2_Proxy_soap_to_json_using_message_type>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._callSoapSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._callSoapSeq>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_3_Proxy_soap_to_json_using_data_mapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_3_Proxy_soap_to_json_using_data_mapper>
@@ -175,7 +177,14 @@
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
+      <artifactId>1_6_2_3_Proxy_Add_Sibling_toTargetBody</artifactId>
       <artifactId>1_6_2_2_Proxy_Add_Sibling_xpath</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
+      <artifactId>1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
