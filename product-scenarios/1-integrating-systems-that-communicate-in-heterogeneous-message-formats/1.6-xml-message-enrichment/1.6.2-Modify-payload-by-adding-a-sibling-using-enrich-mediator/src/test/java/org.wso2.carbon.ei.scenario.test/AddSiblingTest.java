@@ -40,7 +40,7 @@ public class AddSiblingTest extends ScenarioTestBase {
     }
 
     //This test is to verify if payload can be modified by adding sibling elements inline to the payload.
-    @Test(description = "Adding an inline content as a sibling to the message body")
+    @Test(description = "1.6.2.1 - Adding an inline content as a sibling to the message body")
     public void AddSiblingInline() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_1_Proxy_Add_Sibling_Inline");
 
@@ -70,8 +70,8 @@ public class AddSiblingTest extends ScenarioTestBase {
                 "urn:mediate", "AddSiblingInline");
     }
 
-    //This test is to verify if payload can be modified by adding sibling elements inline to the payload.
-    @Test(description = "Adding an inline content as a sibling to the message body")
+    //This test is to verify if payload can be modified by adding a payload stored in a property as a sibling to the message body.
+    @Test(description = "1.6.2.4 - Adding a payload stored in a property as a sibling to the message body")
     public void AddSiblingMessageBodyStoredInProperty() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty");
 
