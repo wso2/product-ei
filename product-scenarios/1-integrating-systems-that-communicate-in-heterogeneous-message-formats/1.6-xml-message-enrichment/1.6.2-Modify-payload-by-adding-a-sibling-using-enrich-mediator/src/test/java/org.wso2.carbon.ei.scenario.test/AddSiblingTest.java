@@ -40,7 +40,7 @@ public class AddSiblingTest extends ScenarioTestBase {
     }
 
     //This test is to verify if payload can be modified by adding sibling elements inline to the payload.
-    @Test(description = "Adding an inline content as a sibling to the message body")
+    @Test(description = "1.6.2.1 - Adding an inline content as a sibling to the message body")
     public void AddSiblingInline() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_1_Proxy_Add_Sibling_Inline");
 
@@ -71,7 +71,7 @@ public class AddSiblingTest extends ScenarioTestBase {
     }
 
     //This test is to verify if payload can be modified by adding sibling elements defined by xpath to the payload.
-    @Test(description = "Adding an inline content as a sibling to the message body")
+    @Test(description = "1.6.2.2 - Adding an element defined by a xpath as a sibling to message body")
     public void AddSiblingXpath() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_2_Proxy_Add_Sibling_xpath");
 
