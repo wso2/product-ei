@@ -59,4 +59,7 @@
     <artifact name="1_6_2_3_Proxy_Add_Sibling_toTargetBody" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_2_3_Proxy_Add_Sibling_toTargetBody.xml</file>
     </artifact>
+    <artifact name="1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty.xml</file>
+    </artifact>
 </artifacts>
