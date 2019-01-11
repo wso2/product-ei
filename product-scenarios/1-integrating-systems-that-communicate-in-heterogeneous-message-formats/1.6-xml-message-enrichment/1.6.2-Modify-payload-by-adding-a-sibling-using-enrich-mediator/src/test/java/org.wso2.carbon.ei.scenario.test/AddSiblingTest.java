@@ -70,7 +70,7 @@ public class AddSiblingTest extends ScenarioTestBase {
                 "urn:mediate", "AddSiblingInline");
     }
 
-    //This test is to verify if payload can be modified by adding current message body as the sibling to the resulting message body.
+  //This test is to verify if payload can be modified by adding current message body as the sibling to the resulting message body.
     @Test(description = "1.6.2.3 - Adding current message body as a sibling to the resulting message body")
     public void AddSiblingToTargetBody() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_3_Proxy_Add_Sibling_toTargetBody");
