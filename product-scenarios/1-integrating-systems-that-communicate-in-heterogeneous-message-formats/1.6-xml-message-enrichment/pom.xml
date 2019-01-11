@@ -31,9 +31,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>1.6.1-modify-payload-by-adding-a-child-using-enrich-mediator</module>
-        <module>1.6.4-Modify-payload-by-removing-elements</module>
+        <module>1.6.1-Modify-payload-by-adding-a-child-using-enrich-mediator</module>
         <module>1.6.2-Modify-payload-by-adding-a-sibling-using-enrich-mediator</module>
+        <module>1.6.4-Modify-payload-by-removing-elements</module>
     </modules>
 
 </project>
