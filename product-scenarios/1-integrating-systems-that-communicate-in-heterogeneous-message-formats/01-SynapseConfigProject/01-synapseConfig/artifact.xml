@@ -58,5 +58,7 @@
     </artifact>
     <artifact name="1_6_4_1_Proxy_RemoveElements_ScriptMediator" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_4_1_Proxy_RemoveElements_ScriptMediator.xml</file>
+    <artifact name="1_6_2_1_Proxy_Add_Sibling_Inline" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_2_1_Proxy_Add_Sibling_Inline.xml</file>
     </artifact>
 </artifacts>

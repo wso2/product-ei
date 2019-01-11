@@ -20,12 +20,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>1.1-converting-soap-to-json</artifactId>
+        <artifactId>1.6-xml-message-enrichment</artifactId>
         <version>6.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>1.1.1-convert-using-payload-factory-mediator</artifactId>
+    <artifactId>1.6.2-Modify-payload-by-adding-a-sibling-using-enrich-mediator</artifactId>
     <packaging>jar</packaging>
     <build>
         <plugins>
