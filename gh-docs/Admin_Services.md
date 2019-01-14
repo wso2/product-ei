@@ -1,5 +1,5 @@
 # How to create admin-services
-Admin Services generally follow the following steps. Here, the Message Processor has been considered as an example
+When creating Admin Services you would generally follow the same set of steps. In this instance, the Message Processor is used as an example.
 
 ### Creation Flow
 
