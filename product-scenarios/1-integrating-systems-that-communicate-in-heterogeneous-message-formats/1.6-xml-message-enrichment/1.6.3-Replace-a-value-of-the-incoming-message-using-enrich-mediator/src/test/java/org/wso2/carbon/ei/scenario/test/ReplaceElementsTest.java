@@ -49,15 +49,10 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
                         + "   <soapenv:Body>\n"
                         + "      <sam:placeOrder>\n"
-                        + "         <!--Optional:-->\n"
                         + "         <sam:order>\n"
-                        + "            <!--Optional:-->\n"
                         + "            <xsd:price>12</xsd:price>\n"
-                        + "            <!--Optional:-->\n"
                         + "            <xsd:productid>IC002</xsd:productid>\n"
-                        + "            <!--Optional:-->\n"
                         + "            <xsd:quantity>2</xsd:quantity>\n"
-                        + "            <!--Optional:-->\n"
                         + "            <xsd:reference>ref</xsd:reference>\n"
                         + "         </sam:order>\n"
                         + "      </sam:placeOrder>\n"
@@ -69,13 +64,9 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
                         + "   <soapenv:Body>\n"
                         + "      <sam:order>\n"
-                        + "         <!--Optional:-->\n"
                         + "         <xsd:price>12</xsd:price>\n"
-                        + "         <!--Optional:-->\n"
                         + "         <xsd:productid>IC002</xsd:productid>\n"
-                        + "         <!--Optional:-->\n"
                         + "         <xsd:quantity>2</xsd:quantity>\n"
-                        + "         <!--Optional:-->\n"
                         + "         <xsd:reference>ref</xsd:reference>\n"
                         + "      </sam:order>\n"
                         + "   </soapenv:Body>\n"
@@ -83,6 +74,52 @@ public class ReplaceElementsTest extends ScenarioTestBase {
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
                 "urn:mediate", "ReplaceMessageBodyUsingPayloadStoredInProperty");
+    }
+
+    //This test is to verify if payload can be modified by replacing the target message defined through xpath by source body
+    @Test(description = "1.6.3.2 - Replacing target message defined through xpath by source body")
+    public void ReplaceTargetBySourceBodyDefinedThoughXpath() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_2_Proxy_replace_targetBySourceBodyDefinedThroughXpath");
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <sam:placeOrder>\n"
+                        + "         <sam:order>\n"
+                        + "            <xsd:price>12</xsd:price>\n"
+                        + "            <xsd:productid>IC002</xsd:productid>\n"
+                        + "            <xsd:quantity>2</xsd:quantity>\n"
+                        + "            <xsd:reference>ref</xsd:reference>\n"
+                        + "         </sam:order>\n"
+                        + "      </sam:placeOrder>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <sam:placeOrder>\n"
+                        + "         <sam:order>\n"
+                        + "            <sam:placeOrder>\n"
+                        + "               <sam:order>\n"
+                        + "                  <xsd:price>12</xsd:price>\n"
+                        + "                  <xsd:productid>IC002</xsd:productid>\n"
+                        + "                  <xsd:quantity>2</xsd:quantity>\n"
+                        + "                  <xsd:reference>ref</xsd:reference>\n"
+                        + "               </sam:order>\n"
+                        + "            </sam:placeOrder>\n"
+                        + "            <xsd:productid>IC002</xsd:productid>\n"
+                        + "            <xsd:quantity>2</xsd:quantity>\n"
+                        + "            <xsd:reference>ref</xsd:reference>\n"
+                        + "         </sam:order>\n"
+                        + "      </sam:placeOrder>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+                "urn:mediate", "ReplaceTargetBySourceBodyDefinedThoughXpath");
     }
 
     @AfterClass(description = "Server Cleanup",
