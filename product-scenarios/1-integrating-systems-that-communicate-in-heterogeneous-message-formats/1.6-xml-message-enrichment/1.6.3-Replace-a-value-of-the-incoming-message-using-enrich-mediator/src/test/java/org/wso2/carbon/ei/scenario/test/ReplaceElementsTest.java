@@ -122,6 +122,73 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                 "urn:mediate", "ReplaceTargetBySourceBodyDefinedThoughXpath");
     }
 
+    //This test is to verify if payload can be modified by replacing the target message defined through xpath by source property
+    @Test(description = "1.6.3.3 - Replacing target message defined through xpath by source property")
+    public void ReplaceTargetDefinedThroughXpathBySourceProperty() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty");
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <sam:placeOrder>\n"
+                        + "         <sam:order>\n"
+                        + "            <xsd:price>12</xsd:price>\n"
+                        + "            <xsd:productid>IC002</xsd:productid>\n"
+                        + "            <xsd:quantity>2</xsd:quantity>\n"
+                        + "            <xsd:reference>ref</xsd:reference>\n"
+                        + "         </sam:order>\n"
+                        + "      </sam:placeOrder>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <sam:placeOrder>\n"
+                        + "         <xsd:price>12</xsd:price>\n"
+                        + "      </sam:placeOrder>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+                "urn:mediate", "ReplaceTargetBySourceBodyDefinedThoughXpath");
+    }
+
+    //This test is to verify if payload can be modified by replacing target message defined through xpath by source inline content
+    @Test(description = "1.6.3.4 - Replacing target message defined through xpath by source inline content")
+    public void ReplaceTargetDefinedThroughXpathBySourceInlineContent() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent");
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <sam:placeOrder>\n"
+                        + "         <sam:order>\n"
+                        + "            <xsd:price>12</xsd:price>\n"
+                        + "            <xsd:productid>IC002</xsd:productid>\n"
+                        + "            <xsd:quantity>2</xsd:quantity>\n"
+                        + "            <xsd:reference>ref</xsd:reference>\n"
+                        + "         </sam:order>\n"
+                        + "      </sam:placeOrder>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <manufacture>Nike</manufacture>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+                "urn:mediate", "ReplaceTargetDefinedThroughXpathBySourceInlineContent");
+    }
+
+
     @AfterClass(description = "Server Cleanup",
                 alwaysRun = true)
     public void cleanup() throws Exception {
