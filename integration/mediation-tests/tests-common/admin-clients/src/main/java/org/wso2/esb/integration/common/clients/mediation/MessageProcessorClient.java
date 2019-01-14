@@ -121,5 +121,21 @@ public class MessageProcessorClient {
         return messageProcessorAdminServiceStub.isActive(processorName);
     }
 
+    /**
+     * Check the functionality of the getMessage function
+     * @param processorName name of Processor
+     * @return message stored in the subscribed queue
+     * @throws RemoteException
+     */
+    public String getMessage(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.getMessage(processorName);
+    }
 
+    public void popMessage(String processorName) throws RemoteException {
+        messageProcessorAdminServiceStub.popMessage(processorName);
+    }
+
+    public void popAndEnqueueMessage(String processorName, String storeName) throws RemoteException {
+        messageProcessorAdminServiceStub.popAndEnqueueMessage(processorName,storeName);
+    }
 }
