@@ -2,7 +2,6 @@
 <proxy name="1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
-            <log level="full"/>
             <enrich>
                 <source clone="true" xmlns:sam="http://sample.wso2.org" xmlns:xsd="http://sample.wso2.org/xsd" xpath="//sam:placeOrder/sam:order/xsd:price"/>
                 <target property="testProperty" type="property"/>
@@ -11,7 +10,6 @@
                 <source clone="true" property="testProperty" type="property"/>
                 <target xmlns:sam="http://sample.wso2.org" xpath="//sam:placeOrder/sam:order"/>
             </enrich>
-            <log level="full"/>
             <respond/>
         </inSequence>
         <outSequence/>

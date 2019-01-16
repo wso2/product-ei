@@ -34,7 +34,7 @@ import javax.xml.stream.XMLStreamException;
  */
 public class ReplaceElementsTest extends ScenarioTestBase {
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeClass
     public void init() throws Exception {
         super.init();
     }

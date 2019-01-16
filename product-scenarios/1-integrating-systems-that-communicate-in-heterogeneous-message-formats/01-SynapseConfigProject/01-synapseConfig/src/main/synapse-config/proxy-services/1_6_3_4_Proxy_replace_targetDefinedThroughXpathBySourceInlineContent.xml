@@ -2,14 +2,12 @@
 <proxy name="1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
-            <log level="full"/>
             <enrich>
                 <source clone="true" type="inline">
                     <manufacture xmlns="">Nike</manufacture>
                 </source>
                 <target type="body"/>
             </enrich>
-            <log level="full"/>
             <respond/>
         </inSequence>
         <outSequence/>

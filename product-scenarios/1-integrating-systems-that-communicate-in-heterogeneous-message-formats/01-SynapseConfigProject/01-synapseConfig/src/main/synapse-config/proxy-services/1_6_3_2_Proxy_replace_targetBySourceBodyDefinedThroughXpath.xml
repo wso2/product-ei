@@ -2,12 +2,10 @@
 <proxy name="1_6_3_2_Proxy_replace_targetBySourceBodyDefinedThroughXpath" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
-            <log level="full"/>
             <enrich>
                 <source clone="true" type="body"/>
                 <target xmlns:sam="http://sample.wso2.org" xmlns:xsd="http://sample.wso2.org/xsd" xpath="//sam:placeOrder/sam:order/xsd:price"/>
             </enrich>
-            <log level="full"/>
             <respond/>
         </inSequence>
         <outSequence/>
