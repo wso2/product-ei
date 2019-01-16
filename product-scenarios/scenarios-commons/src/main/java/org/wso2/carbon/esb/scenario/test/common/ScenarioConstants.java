@@ -37,6 +37,19 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
+    public static final String SOAP_REUEST_1_6_3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+            + "   <soapenv:Body>\n"
+            + "      <sam:placeOrder>\n"
+            + "         <sam:order>\n"
+            + "            <xsd:price>12</xsd:price>\n"
+            + "            <xsd:productid>IC002</xsd:productid>\n"
+            + "            <xsd:quantity>2</xsd:quantity>\n"
+            + "            <xsd:reference>ref</xsd:reference>\n"
+            + "         </sam:order>\n"
+            + "      </sam:placeOrder>\n"
+            + "   </soapenv:Body>\n"
+            + "</soapenv:Envelope>";
 
 
     /**
@@ -60,4 +73,5 @@ public class ScenarioConstants {
     public static final String CAPP_EXTENSION = ".car";
 
     public static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
+
 }

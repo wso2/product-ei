@@ -44,21 +44,6 @@ public class ReplaceElementsTest extends ScenarioTestBase {
     public void ReplaceMessageBodyUsingPayloadStoredInProperty() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_3_1_Proxy_replace_messageBody_usingPayloadStoredInProperty");
 
-        String request =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
-                        + "   <soapenv:Body>\n"
-                        + "      <sam:placeOrder>\n"
-                        + "         <sam:order>\n"
-                        + "            <xsd:price>12</xsd:price>\n"
-                        + "            <xsd:productid>IC002</xsd:productid>\n"
-                        + "            <xsd:quantity>2</xsd:quantity>\n"
-                        + "            <xsd:reference>ref</xsd:reference>\n"
-                        + "         </sam:order>\n"
-                        + "      </sam:placeOrder>\n"
-                        + "   </soapenv:Body>\n"
-                        + "</soapenv:Envelope>";
-
         String expectedResponse =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
@@ -72,7 +57,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, ScenarioConstants.SOAP_REUEST_1_6_3, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
                 "urn:mediate", "ReplaceMessageBodyUsingPayloadStoredInProperty");
     }
 
@@ -80,21 +65,6 @@ public class ReplaceElementsTest extends ScenarioTestBase {
     @Test(description = "1.6.3.2 - Replacing target message defined through xpath by source body")
     public void ReplaceTargetBySourceBodyDefinedThoughXpath() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_3_2_Proxy_replace_targetBySourceBodyDefinedThroughXpath");
-
-        String request =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
-                        + "   <soapenv:Body>\n"
-                        + "      <sam:placeOrder>\n"
-                        + "         <sam:order>\n"
-                        + "            <xsd:price>12</xsd:price>\n"
-                        + "            <xsd:productid>IC002</xsd:productid>\n"
-                        + "            <xsd:quantity>2</xsd:quantity>\n"
-                        + "            <xsd:reference>ref</xsd:reference>\n"
-                        + "         </sam:order>\n"
-                        + "      </sam:placeOrder>\n"
-                        + "   </soapenv:Body>\n"
-                        + "</soapenv:Envelope>";
 
         String expectedResponse =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -118,7 +88,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, ScenarioConstants.SOAP_REUEST_1_6_3, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
                 "urn:mediate", "ReplaceTargetBySourceBodyDefinedThoughXpath");
     }
 
@@ -126,21 +96,6 @@ public class ReplaceElementsTest extends ScenarioTestBase {
     @Test(description = "1.6.3.3 - Replacing target message defined through xpath by source property")
     public void ReplaceTargetDefinedThroughXpathBySourceProperty() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty");
-
-        String request =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
-                        + "   <soapenv:Body>\n"
-                        + "      <sam:placeOrder>\n"
-                        + "         <sam:order>\n"
-                        + "            <xsd:price>12</xsd:price>\n"
-                        + "            <xsd:productid>IC002</xsd:productid>\n"
-                        + "            <xsd:quantity>2</xsd:quantity>\n"
-                        + "            <xsd:reference>ref</xsd:reference>\n"
-                        + "         </sam:order>\n"
-                        + "      </sam:placeOrder>\n"
-                        + "   </soapenv:Body>\n"
-                        + "</soapenv:Envelope>";
 
         String expectedResponse =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -152,7 +107,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, ScenarioConstants.SOAP_REUEST_1_6_3, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
                 "urn:mediate", "ReplaceTargetBySourceBodyDefinedThoughXpath");
     }
 
@@ -160,21 +115,6 @@ public class ReplaceElementsTest extends ScenarioTestBase {
     @Test(description = "1.6.3.4 - Replacing target message defined through xpath by source inline content")
     public void ReplaceTargetDefinedThroughXpathBySourceInlineContent() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent");
-
-        String request =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
-                        + "   <soapenv:Body>\n"
-                        + "      <sam:placeOrder>\n"
-                        + "         <sam:order>\n"
-                        + "            <xsd:price>12</xsd:price>\n"
-                        + "            <xsd:productid>IC002</xsd:productid>\n"
-                        + "            <xsd:quantity>2</xsd:quantity>\n"
-                        + "            <xsd:reference>ref</xsd:reference>\n"
-                        + "         </sam:order>\n"
-                        + "      </sam:placeOrder>\n"
-                        + "   </soapenv:Body>\n"
-                        + "</soapenv:Envelope>";
 
         String expectedResponse =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -184,7 +124,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, ScenarioConstants.SOAP_REUEST_1_6_3, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
                 "urn:mediate", "ReplaceTargetDefinedThroughXpathBySourceInlineContent");
     }
 
