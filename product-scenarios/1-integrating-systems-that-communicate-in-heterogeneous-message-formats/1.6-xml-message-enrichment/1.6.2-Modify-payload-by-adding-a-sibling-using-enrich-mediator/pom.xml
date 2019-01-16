@@ -17,22 +17,16 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>1.1-converting-soap-to-json</artifactId>
+        <artifactId>1.6-xml-message-enrichment</artifactId>
         <version>6.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>1.1.3-convert-using-data-mapper</artifactId>
-    <version>6.4.0</version>
-
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>1.6.2-Modify-payload-by-adding-a-sibling-using-enrich-mediator</artifactId>
     <packaging>jar</packaging>
-
     <build>
         <plugins>
             <plugin>
@@ -126,6 +120,23 @@
             <artifactId>commons-logging</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-kernel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.mediation</groupId>
+            <artifactId>org.wso2.carbon.task</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
@@ -143,4 +154,5 @@
             <artifactId>json</artifactId>
         </dependency>
     </dependencies>
+
 </project>
