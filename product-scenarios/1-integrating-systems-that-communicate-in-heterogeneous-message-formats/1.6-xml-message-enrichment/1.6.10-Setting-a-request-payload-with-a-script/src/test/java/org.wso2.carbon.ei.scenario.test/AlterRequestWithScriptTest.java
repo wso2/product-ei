@@ -31,41 +31,41 @@ import javax.xml.stream.XMLStreamException;
  //This class is to test if xml payload can be enriched before it goes to the backend server by using script mediator.
 public class AlterRequestWithScriptTest extends ScenarioTestBase {
 
-    @BeforeClass
-    public void init() throws Exception {
-        super.init();
-    }
+     private  String request =
+             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                     + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                     + "   <soap:Header />\n"
+                     + "   <soap:Body>\n"
+                     + "      <employees>\n"
+                     + "         <employee>\n"
+                     + "            <age>25</age>\n"
+                     + "            <firstName>John</firstName>\n"
+                     + "            <lastName>Doe</lastName>\n"
+                     + "         </employee>\n"
+                     + "         <employee>\n"
+                     + "            <age>45</age>\n"
+                     + "            <firstName>Anna</firstName>\n"
+                     + "            <lastName>Smith</lastName>\n"
+                     + "         </employee>\n"
+                     + "         <employee>\n"
+                     + "            <age>35</age>\n"
+                     + "            <firstName>Peter</firstName>\n"
+                     + "            <lastName>Jones</lastName>\n"
+                     + "         </employee>\n"
+                     + "      </employees>\n"
+                     + "   </soap:Body>\n"
+                     + "</soap:Envelope>";
 
-    //This test is to verify if payload can be modified by an inline groovy script.
+     @BeforeClass
+     public void init() throws Exception {
+        super.init();
+     }
+
+    //This test is to verify if payload can be modified by removing first element using inline groovy script.
     @Test(description = "1.6.10.1 - Alter a payload by using a script mediator with inline groovy script")
     public void AlterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript");
         String testCaseID = "1.6.10.1";
-        String request =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                        + "   <soap:Header />\n"
-                        + "   <soap:Body>\n"
-                        + "      <employees>\n"
-                        + "         <employee>\n"
-                        + "            <age>25</age>\n"
-                        + "            <firstName>John</firstName>\n"
-                        + "            <lastName>Doe</lastName>\n"
-                        + "         </employee>\n"
-                        + "         <employee>\n"
-                        + "            <age>45</age>\n"
-                        + "            <firstName>Anna</firstName>\n"
-                        + "            <lastName>Smith</lastName>\n"
-                        + "         </employee>\n"
-                        + "         <employee>\n"
-                        + "            <age>35</age>\n"
-                        + "            <firstName>Peter</firstName>\n"
-                        + "            <lastName>Jones</lastName>\n"
-                        + "         </employee>\n"
-                        + "      </employees>\n"
-                        + "   </soap:Body>\n"
-                        + "</soap:Envelope>";
-
         String expectedResponse =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -89,6 +89,35 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
         HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
                 "urn:mediate", "AlterPayloadByInlineGroovyScript");
     }
+
+     //This test is to verify if payload can be modified by removing the last element using inline javascript.
+     @Test(description = "1.6.10.2 - Alter a payload by using a script mediator with inline javascript")
+     public void AlterPayloadByInlineJavaScript() throws IOException, XMLStreamException {
+         String url = getProxyServiceURLHttp("1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript");
+         String testCaseID = "1.6.10.2";
+         String expectedResponse =
+                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                         + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                         + "   <soap:Header />\n"
+                         + "   <soap:Body>\n"
+                         + "      <employees>\n"
+                         + "         <employee>\n"
+                         + "            <age>25</age>\n"
+                         + "            <firstName>John</firstName>\n"
+                         + "            <lastName>Doe</lastName>\n"
+                         + "         </employee>\n"
+                         + "         <employee>\n"
+                         + "            <age>45</age>\n"
+                         + "            <firstName>Anna</firstName>\n"
+                         + "            <lastName>Smith</lastName>\n"
+                         + "         </employee>\n"
+                         + "      </employees>\n"
+                         + "   </soap:Body>\n"
+                         + "</soap:Envelope>";
+
+         HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+                 "urn:mediate", "AlterPayloadByInlineJavaScript");
+     }
 
     @AfterClass(description = "Server Cleanup",
                 alwaysRun = true)

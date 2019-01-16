@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <script language="js"><![CDATA[var payload = mc.getPayloadXML();
+var length = payload.employee.length();
+ delete payload.employee[length-1];
+ mc.setPayloadXML(payload);]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
