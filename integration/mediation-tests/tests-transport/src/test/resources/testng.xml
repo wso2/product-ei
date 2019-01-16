@@ -21,6 +21,13 @@
         </classes>
     </test>
 
+    <test name="ViewPopRedirectTests" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.jms.ViewPopRedirectTests.RedirectTest"/>
+            <class name="org.wso2.carbon.esb.jms.ViewPopRedirectTests.ViewPopTest"/>
+        </classes>
+    </test>
+
     <test name="passthru-Transport-Test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.passthru.transport.test.CheckAuthHeaderOrderTestCase"/>
