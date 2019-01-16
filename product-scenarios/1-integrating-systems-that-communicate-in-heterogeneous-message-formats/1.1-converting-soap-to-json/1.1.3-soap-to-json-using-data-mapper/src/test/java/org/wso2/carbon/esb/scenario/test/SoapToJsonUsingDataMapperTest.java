@@ -116,6 +116,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
+        super.cleanup();
     }
 
     @DataProvider(name = "1.1.3.3")

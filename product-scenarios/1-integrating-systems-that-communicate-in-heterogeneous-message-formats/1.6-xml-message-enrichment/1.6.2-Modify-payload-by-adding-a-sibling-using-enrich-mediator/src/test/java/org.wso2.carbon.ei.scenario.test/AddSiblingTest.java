@@ -154,8 +154,7 @@ public class AddSiblingTest extends ScenarioTestBase {
                 "urn:mediate", "AddSiblingMessageBodyStoredInProperty");
     }
 
-    @AfterClass(description = "Server Cleanup",
-                alwaysRun = true)
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
     }

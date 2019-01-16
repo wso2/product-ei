@@ -20,6 +20,7 @@ package org.wso2.carbon.ei.scenario.test;
 
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -83,6 +84,11 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
                         + "defined")
     public void testLoadBalanceEndpointGroupWithNoPolicyNoAlgorithm() throws Exception {
         testLoadBalanceGroup("5_3_1_1_3_API_load_balance_group_define_nothing");
+    }
+
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
+    public void cleanup() throws Exception {
+        super.cleanup();
     }
 
     /**
