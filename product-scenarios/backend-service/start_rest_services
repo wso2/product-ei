@@ -1,9 +1,12 @@
 #!/bin/bash
 
 BASE_DIR=~/
+TOMCAT_HOME=$BASE_DIR/apache-tomcat-8.5.37
 REST_SERVICE1_LOCATION=$BASE_DIR/RestService1
 REST_SERVICE2_LOCATION=$BASE_DIR/RestService2
-BALLERINA_LOCATION=$BASE_DIR/product-ei/product-scenarios/backend-service/ballerinaService
+STOCK_QUOTE_SERVICE_LOCATION=$TOMCAT_HOME/webapps/
+BACKEND_LOCATION=$BASE_DIR/product-ei/product-scenarios/backend-service
+BALLERINA_LOCATION=$BACKEND_LOCATION/ballerinaService
 BALLERINA_SRC_LOCATION=$BALLERINA_LOCATION/src
 BALLERINA_RESOURCE_LOCATION=$BALLERINA_LOCATION/resources
 cd $BASE_DIR
@@ -20,7 +23,7 @@ else
   echo "git is already insalled"
 fi
 
-git clone --single-branch --branch product-scenarios https://github.com/wso2/product-ei.git
+git clone --single-branch --branch backend-bkp https://github.com/sdkottegoda/product-ei.git
 echo "cloned branch product-scenarios https://github.com/wso2/product-ei.git"
 
 #Building the ballerina service
@@ -38,7 +41,7 @@ cp -r $BALLERINA_RESOURCE_LOCATION $REST_SERVICE1_LOCATION/
 cp -r $BALLERINA_RESOURCE_LOCATION $REST_SERVICE2_LOCATION/
 
 #Modify resource folder in test service2 to contain the loadBalanceMsg with server:2
-sed -i 's/\"server\"\:1/\"server\"\:2/g' $REST_SERVICE2_LOCATION/resources/json/response/loadBalanceMsg.json 
+sed -i 's/\"server\"\:1/\"server\"\:2/g' $REST_SERVICE2_LOCATION/resources/json/response/loadBalanceMsg.json
 
 PORT1=9090
 nohup ballerina run -e port=$PORT1 $REST_SERVICE1_LOCATION/testServices.balx > $REST_SERVICE1_LOCATION/service.log &
@@ -48,5 +51,13 @@ PORT2=9091
 nohup ballerina run -e port=$PORT2 $REST_SERVICE2_LOCATION/testServices.balx > $REST_SERVICE2_LOCATION/service.log &
 echo "started rest service2 on port: " $PORT2
 
+#Copying the stockQuote service
+sh $TOMCAT_HOME/bin/shutdown.sh
+echo "Tomcat shut down"
+rm -r $TOMCAT_HOME/webapps/axis2*
+cp $BACKEND_LOCATION/stockQuoteService/axis2.war $TOMCAT_HOME/webapps/
+sh $TOMCAT_HOME/bin/startup.sh
+echo "started stock quote service"
+
 rm -rf $BASE_DIR/product-ei
-#Removed product-ei repository
+echo "Removed product-ei repository"
