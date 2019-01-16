@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <script language="groovy"><![CDATA[import groovy.util.XmlSlurper;
+import groovy.xml.MarkupBuilder;
+import groovy.xml.StreamingMarkupBuilder;
+
+def payload = mc.getPayloadXML();
+def rootNode = new XmlSlurper().parseText(payload);
+rootNode.children().findAll{it.age.text().toInteger() < 30 }.replaceNode {};
+ 
+mc.setPayloadXML(groovy.xml.XmlUtil.serialize(rootNode));]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
