@@ -37,7 +37,7 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
-    public static final String SOAP_REUEST_1_6_3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+    public static final String SIMPLE_QUOTE_PLACEORDER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
             + "   <soapenv:Body>\n"
             + "      <sam:placeOrder>\n"
