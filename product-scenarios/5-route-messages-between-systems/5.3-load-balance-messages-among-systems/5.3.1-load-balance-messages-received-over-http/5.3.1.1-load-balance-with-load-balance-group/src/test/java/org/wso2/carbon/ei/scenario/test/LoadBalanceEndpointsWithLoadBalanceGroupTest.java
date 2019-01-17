@@ -21,9 +21,7 @@ package org.wso2.carbon.ei.scenario.test;
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.Request;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.carbon.esb.scenario.test.common.StringUtil;
@@ -31,10 +29,7 @@ import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +46,7 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
 
     @BeforeClass()
     public void init() throws Exception {
+        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490);
         super.init();
     }
 
