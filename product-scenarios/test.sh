@@ -84,12 +84,12 @@ export DATA_BUCKET_LOCATION=${INPUT_DIR}
 #=============== Execute Scenarios ===============================================
 
 #Retreive product version
+PRODUCT_VERSION_FOUND=false
 while IFS= read -r line
 do
   IFS='=' tokens=( $line )
   key=${tokens[0]}
   value=${tokens[1]}
-  PRODUCT_VERSION_FOUND=false
   if [ "$key" = "ProductVersion" ]; then
     productVersion=${tokens[1]}
     case ${productVersion} in
