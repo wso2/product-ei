@@ -42,6 +42,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -104,13 +105,15 @@ public class ScenarioTestBase {
      * introduced to cater tests introduced for fixes done as patches for released product versions as they may only
      * be valid for the product version for which the fix was done for.
      *
-     * @param compatibleVersions product versions that the test is compatible with
+     * @param incompatibleVersions product versions that the test is not compatible with
      */
-    protected void validateCompatibleProductVersions(String... compatibleVersions) {
-        if (!Arrays.asList(compatibleVersions).contains(runningProductVersion)) {
-            String errorMessage = "Skipping test: " + this.getClass().getName() + " due to version mismatch. Running "
-                                  + "product version: " + runningProductVersion + ", Allowed versions: "
-                                  + Arrays.toString(compatibleVersions);
+    protected void skipTestsForIncompatibleProductVersions(String... incompatibleVersions) {
+        //running product version can be null if the property is not in deployment properties
+        if (null != runningProductVersion && Arrays.asList(incompatibleVersions).contains(runningProductVersion)) {
+            String errorMessage =
+                    "Skipping test: " + this.getClass().getName() + " due to version mismatch. Running "
+                    + "product version: " + runningProductVersion + ", Non allowed versions: "
+                    + Arrays.toString(incompatibleVersions);
             log.warn(errorMessage);
             throw new SkipException(errorMessage);
         }

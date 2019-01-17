@@ -84,23 +84,31 @@ export DATA_BUCKET_LOCATION=${INPUT_DIR}
 #=============== Execute Scenarios ===============================================
 
 #Retreive product version
-
-IFS='=' read -r -a array <<< "$(head -n 1 infrastructure.properties)"
-key=${array[0]}
-if [ $key = "ProductVersion" ]
-then
-    productVersion=${array[1]}
+while IFS= read -r line
+do
+  IFS='=' tokens=( $line )
+  key=${tokens[0]}
+  value=${tokens[1]}
+  PRODUCT_VERSION_FOUND=false
+  if [ "$key" = "ProductVersion" ]; then
+    productVersion=${tokens[1]}
     case ${productVersion} in
         ESB-4.9.0|ESB-5.0.0|EI-6.0.0|EI-6.1.0|EI-6.1.1|EI-6.2.0|EI-6.3.0|EI-6.4.0|EI-6.5.0-SNAPSHOT)
             echo "Executing tests for the product version: $productVersion"
             mvn clean install -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
              -fae -B -f ./pom.xml ;;
         *)
-            echo "Unknown product version: " ${productVersion} "read from infrastructure.properties. Aborting the execution.";;
+            echo "Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
     esac
+    PRODUCT_VERSION_FOUND=true
+    break
+  fi
+done < "${INPUT_DIR}/deployment.properties"
 
-else
-    echo "infrastructure.properties file does not contain the product version. Aborting the execution."
+if ! $PRODUCT_VERSION_FOUND ; then
+    echo "deployment.properties file does not contain the product version. Executing the default suite ."
+    mvn clean install -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+    -fae -B -f ./pom.xml
 fi
 
 #=============== Copy Surefire Reports ===========================================
