@@ -1,0 +1,6 @@
+<m0:getQuote xmlns:m0="http://services.samples/xsd">
+   <m0:request>
+      <?xml-multiple symbol?>
+      <m0:symbol>IBM</m0:symbol>
+   </m0:request>
+</m0:getQuote>
