@@ -1,0 +1,7 @@
+<jsonObject>
+    <getQuote>
+        <request>
+            <symbol>IBM</symbol>
+        </request>
+    </getQuote>
+</jsonObject>
