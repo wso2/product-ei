@@ -62,7 +62,7 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
      }
 
     //This test is to verify if payload can be modified by removing first element using inline groovy script.
-    @Test(description = "1.6.10.1 - Alter a payload by using a script mediator with inline groovy script")
+    @Test(description = "1.6.10.1")
     public void AlterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript");
         String testCaseID = "1.6.10.1";
@@ -91,7 +91,7 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
     }
 
      //This test is to verify if payload can be modified by removing the last element using inline javascript.
-     @Test(description = "1.6.10.2 - Alter a payload by using a script mediator with inline javascript")
+     @Test(description = "1.6.10.2")
      public void AlterPayloadByInlineJavaScript() throws IOException, XMLStreamException {
          String url = getProxyServiceURLHttp("1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript");
          String testCaseID = "1.6.10.2";
