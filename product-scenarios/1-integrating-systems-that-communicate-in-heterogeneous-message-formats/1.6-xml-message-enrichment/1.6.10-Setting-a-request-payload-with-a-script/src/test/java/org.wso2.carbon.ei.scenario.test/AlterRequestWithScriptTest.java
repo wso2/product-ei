@@ -62,8 +62,9 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
      }
 
     //This test is to verify if payload can be modified by removing first element using inline groovy script.
-    @Test(description = "1.6.10.1")
-    public void AlterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
+    // This testcase has been disabled since we need to manually paste the groovy-all-dependency jar into $EI_HOME/lib.
+    @Test(description = "1.6.10.1",enabled = false)
+    public void alterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript");
         String testCaseID = "1.6.10.1";
         String expectedResponse =
@@ -87,12 +88,12 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
                         + "</soap:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
-                "urn:mediate", "AlterPayloadByInlineGroovyScript");
+                "urn:mediate", "alterPayloadByInlineGroovyScript");
     }
 
      //This test is to verify if payload can be modified by removing the last element using inline javascript.
      @Test(description = "1.6.10.2")
-     public void AlterPayloadByInlineJavaScript() throws IOException, XMLStreamException {
+     public void alterPayloadByInlineJavaScript() throws IOException, XMLStreamException {
          String url = getProxyServiceURLHttp("1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript");
          String testCaseID = "1.6.10.2";
          String expectedResponse =
@@ -116,7 +117,7 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
                          + "</soap:Envelope>";
 
          HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
-                 "urn:mediate", "AlterPayloadByInlineJavaScript");
+                 "urn:mediate", "alterPayloadByInlineJavaScript");
      }
 
     @AfterClass(description = "Server Cleanup",
