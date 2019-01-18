@@ -22,6 +22,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
+import org.testng.SkipException;
 import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
@@ -39,11 +40,15 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This is the base class of scenario test classes.
+ */
 public class ScenarioTestBase {
 
     private static final String INPUTS_LOCATION = System.getenv("DATA_BUCKET_LOCATION");
@@ -53,54 +58,35 @@ public class ScenarioTestBase {
 
     public static final Log log = LogFactory.getLog(ScenarioTestBase.class);
 
-    public static final String MGT_CONSOLE_URL = "MgtConsoleUrl";
-    public static final String CARBON_SERVER_URL = "CarbonServerUrl";
-    public static final String ESB_HTTP_URL = "ESBHttpUrl";
-    public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
+    protected static final String testResourcesDir = System.getProperty(ScenarioConstants.TEST_RESOURCES_DIR);
 
-    /*
-     *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
-     *  If true, test case will deploy the CApp
-     *  If false, infra will take care CApp deployment
-     */
-    public static final String STANDALONE_DEPLOYMENT = "StandaloneDeployment";
+    protected static final String commonResourcesDir = System.getProperty(ScenarioConstants.COMMON_RESOURCES_DIR);
 
-    protected static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
-    protected static final String resourceLocation = System.getProperty("test.resources.dir");
+    private static final String PRODUCT_VERSION = "ProductVersion";
+    private static Properties infraProperties;
+    private static String backendURL;
+    private static String serviceURL;
+    private static String securedServiceURL;
+    private static String mgtConsoleURL;
+    private String sessionCookie;
+    private boolean standaloneMode;
+    private static String runningProductVersion;
 
-    protected Properties infraProperties;
-    protected String backendURL;
-    protected String esbHttpUrl;
-    protected String serviceURL;
-    protected String securedServiceURL;
-    protected String sessionCookie;
-    protected boolean standaloneMode;
-
-    protected CarbonAppUploaderClient carbonAppUploaderClient = null;
-    protected ApplicationAdminClient applicationAdminClient = null;
+    private CarbonAppUploaderClient carbonAppUploaderClient = null;
+    private ApplicationAdminClient applicationAdminClient = null;
 
     /**
      * Initialize testcase
      *
-     * @throws Exception
+     * @throws Exception if the logging in fails
      */
     public void init() throws Exception {
         log.info("Started Executing Scenario TestBase ");
 
-        infraProperties = getDeploymentProperties();
-
-        backendURL = infraProperties.getProperty(CARBON_SERVER_URL) +
-                (infraProperties.getProperty(CARBON_SERVER_URL).endsWith("/") ? "" : "/");
-        serviceURL = infraProperties.getProperty(ESB_HTTP_URL) +
-                (infraProperties.getProperty(ESB_HTTP_URL).endsWith("/") ? "" : "/");
-        securedServiceURL = infraProperties.getProperty(ESB_HTTPS_URL) +
-                (infraProperties.getProperty(ESB_HTTPS_URL).endsWith("/") ? "" : "/");
-
+        configureUrls();
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
         standaloneMode = true;
-
-        setKeyStoreProperties();
 
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
@@ -112,8 +98,28 @@ public class ScenarioTestBase {
     }
 
     /**
-     * Perform cleanup
-     * @throws Exception
+     * Validates if the test case is one that should be executed on the running product version.
+     * <p>
+     * All test methods of the test case will be skipped if it is not compatible with the running version. This is
+     * introduced to cater tests introduced for fixes done as patches for released product versions as they may only
+     * be valid for the product version for which the fix was done for.
+     *
+     * @param compatibleVersions product versions that the test is compatible with
+     */
+    protected void validateCompatibleProductVersions(String... compatibleVersions) {
+        if (!Arrays.asList(compatibleVersions).contains(runningProductVersion)) {
+            String errorMessage = "Skipping test: " + this.getClass().getName() + " due to version mismatch. Running "
+                                  + "product version: " + runningProductVersion + ", Allowed versions: "
+                                  + Arrays.toString(compatibleVersions);
+            log.warn(errorMessage);
+            throw new SkipException(errorMessage);
+        }
+    }
+
+    /**
+     * Perform cleanup.
+     *
+     * @throws Exception if an error occurs while performing clean up task
      */
     public void cleanup() throws Exception {
     }
@@ -141,7 +147,7 @@ public class ScenarioTestBase {
     }
 
 
-    public String getApiInvocationURLHttp(String resourcePath) {
+    protected String getApiInvocationURLHttp(String resourcePath) {
         return serviceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
     }
 
@@ -160,35 +166,38 @@ public class ScenarioTestBase {
     /**
      * Function to upload carbon application
      *
-     * @param carFileName
-     * @return
-     * @throws RemoteException
+     * @param carFileName the name of the carbon application to be deployed
+     * @throws RemoteException if the admin client becomes unable to connect to the admin service
      */
-    public void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
+    protected void deployCarbonApplication(String carFileName) throws RemoteException, InterruptedException {
 
         if (standaloneMode) {
             // If standalone mode, deploy the CAPP to the server
-            String cappFilePath = resourceLocation + File.separator + "artifacts" +
+            String cappFilePath = testResourcesDir + File.separator + "artifacts" +
                     File.separator + carFileName + ".car";
 
-            carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            if (carbonAppUploaderClient == null) {
+                carbonAppUploaderClient = new CarbonAppUploaderClient(backendURL, sessionCookie);
+            }
             DataHandler dh = new DataHandler(new FileDataSource(new File(cappFilePath)));
             // Upload carbon application
             carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + ".car", dh);
 
             //TODO - This thread sleep is added temporarily to wait until the ESB Instances sync in the cluster in clustered test environment
-            if (!Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT))) {
+            if (!Boolean.valueOf(infraProperties.getProperty(ScenarioConstants.STANDALONE_DEPLOYMENT))) {
                 log.info("Waiting for artifacts synchronized across cluster nodes");
                 Thread.sleep(120000);
             }
 
-            applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            if (applicationAdminClient == null) {
+                applicationAdminClient = new ApplicationAdminClient(backendURL, sessionCookie);
+            }
 
             // Wait for Capp to sync
             log.info("Waiting for Carbon Application deployment ..");
             Awaitility.await()
                     .pollInterval(500, TimeUnit.MILLISECONDS)
-                    .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                    .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                     .until(isCAppDeployed(applicationAdminClient, carFileName));
         }
     }
@@ -196,9 +205,9 @@ public class ScenarioTestBase {
     /**
      * Function to undeploy carbon application
      *
-     * @param applicationName
-     * @throws ApplicationAdminExceptionException
-     * @throws RemoteException
+     * @param applicationName name of the Carbon application to be undeployed
+     * @throws ApplicationAdminExceptionException if an error occurs while undeploying carbon application
+     * @throws RemoteException                    if the admin client becomes unable to connect to the service
      */
     public void undeployCarbonApplication(String applicationName)
             throws ApplicationAdminExceptionException, RemoteException {
@@ -208,7 +217,7 @@ public class ScenarioTestBase {
             // Wait for Capp to undeploy
             Awaitility.await()
                       .pollInterval(500, TimeUnit.MILLISECONDS)
-                      .atMost(ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
+                      .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                       .until(isCAppUnDeployed(applicationAdminClient, applicationName));
         }
 
@@ -228,18 +237,8 @@ public class ScenarioTestBase {
         }
     }
 
-    protected void setKeyStoreProperties() {
-        System.setProperty("javax.net.ssl.trustStore", resourceLocation + "/keystores/wso2carbon.jks");
-        System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
-        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
-    }
-
-
-
     private String getServerHost() {
-        String bucketLocation = System.getenv("DATA_BUCKET_LOCATION");
-        log.info("Data Bucket location is set : " + bucketLocation);
-        String url = infraProperties.getProperty(MGT_CONSOLE_URL);
+        String url = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
         if (url != null && url.contains("/")) {
             url = url.split("/")[2].split(":")[0];
         } else
@@ -249,7 +248,6 @@ public class ScenarioTestBase {
         log.info("Backend URL is set as : " + url);
         return url;
     }
-
 
     private Callable <Boolean> isCAppDeployed(final ApplicationAdminClient applicationAdminClient, final String cAppName) {
         return new Callable<Boolean>() {
@@ -298,75 +296,106 @@ public class ScenarioTestBase {
      * @throws IOException - if and error occurs file extracting the file content
      */
     protected List<Object[]> getRequestResponseHeaderList(String testCase) throws IOException {
-        String relativeRequestFolderLocation = File.separator + ScenarioConstants.SOURCE_FILES +
-                                       File.separator + testCase +
-                                       File.separator + ScenarioConstants.REQUEST;
 
-        String relativeResponseFolderLocation = File.separator + ScenarioConstants.SOURCE_FILES +
-                                        File.separator + testCase +
-                                        File.separator + ScenarioConstants.RESPONSE;
-
-        List<String> requestFiles = getListOfFiles(relativeRequestFolderLocation);
-        List<String> responseFiles = getListOfFiles(relativeResponseFolderLocation);
-
-        java.util.Collections.sort(requestFiles, Collator.getInstance());
-        java.util.Collections.sort(responseFiles, Collator.getInstance());
-
-        ArrayList<String> requestArray = new ArrayList();
-        ArrayList<String> responseArray = new ArrayList();
-        ArrayList<String> headerArray = new ArrayList();
-
-
-        for (String file : requestFiles) {
-            String fileContent = getFileContent(relativeRequestFolderLocation, file);
-            requestArray.add(fileContent);
-            String header = FilenameUtils.removeExtension(file);
-            headerArray.add(header);
-        }
-
-        for (String file : responseFiles) {
-            String fileContent = getFileContent(relativeResponseFolderLocation, file);
-            responseArray.add(fileContent);
-        }
+        List<Request> requests = extractRequests(testCase);
+        List<String> responses = extractResponses(testCase);
 
         List<Object[]> requestResponseList = new ArrayList<>();
 
-        for (int i = 0; i < requestArray.size(); i++) {
-            String[] tmp = { requestArray.get(i) , responseArray.get(i) , headerArray.get(i)};
+        for (int i = 0; i < requests.size(); i++) {
+            String[] tmp = {requests.get(i).getPayload(), responses.get(i), requests.get(i).getMessageIdHeader()};
             requestResponseList.add(tmp);
         }
         return requestResponseList;
     }
 
-    private List<String> getListOfFiles(String folderLocation) {
+    protected List<String> getListOfFiles(String folderLocation) {
         File filePath = new File(getClass().getResource(folderLocation).getPath());
         File[] listOfFiles = filePath.listFiles();
         List<String> fileNames = new ArrayList<>();
 
-        for (File file:listOfFiles) {
-            if (file.isFile()) {
-                fileNames.add(file.getName());
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    fileNames.add(file.getName());
+                }
             }
         }
         return fileNames;
     }
 
-    private String getFileContent (String folderLocation, String fileName) throws IOException {
-        File fileLocation = new File( getClass().getResource(folderLocation + File.separator + fileName).getPath());
+    protected String getFileContent(String folderLocation, String fileName) throws IOException {
+        File fileLocation = new File(getClass().getResource(folderLocation + File.separator + fileName).getPath());
 
-        final BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))));
         StringBuilder sb = new StringBuilder();
 
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(String.valueOf(fileLocation))))) {
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 sb.append(currentLine);
             }
-        } finally {
-            br.close();
         }
 
         return sb.toString();
+    }
+
+    public static synchronized void configureUrls() {
+        if (null == infraProperties) {
+            infraProperties = getDeploymentProperties();
+            backendURL = infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL)
+                         + (infraProperties.getProperty(ScenarioConstants.CARBON_SERVER_URL).endsWith("/") ? "" : "/");
+            serviceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL)
+                         + (infraProperties.getProperty(ScenarioConstants.ESB_HTTP_URL).endsWith("/") ? "" : "/");
+            securedServiceURL = infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
+                                + (infraProperties.getProperty(ScenarioConstants.ESB_HTTPS_URL)
+                                                  .endsWith("/") ? "" : "/");
+            runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
+            mgtConsoleURL = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
+        }
+    }
+
+    public static String getBackendURL() {
+        return backendURL;
+    }
+
+    public static String getMgtConsoleURL() {
+        return mgtConsoleURL;
+    }
+
+    private String appendSourceFolder(String testCase, String relativeSourceFolderPath) {
+        return File.separator + ScenarioConstants.SOURCE_FILES + File.separator + testCase + File.separator
+               + relativeSourceFolderPath;
+    }
+
+    private List<String> getFilesFromSourceDirectory(String relativePath) {
+        List<String> requestFiles = getListOfFiles(relativePath);
+        java.util.Collections.sort(requestFiles, Collator.getInstance());
+        return requestFiles;
+    }
+
+    protected List<Request> extractRequests(String testCase) throws IOException {
+        String relativeRequestFolderLocation = appendSourceFolder(testCase, ScenarioConstants.REQUEST);
+        List<String> requestFiles = getFilesFromSourceDirectory(relativeRequestFolderLocation);
+        ArrayList<Request> requestArray = new ArrayList();
+
+        for (String file : requestFiles) {
+            String fileContent = getFileContent(relativeRequestFolderLocation, file);
+            String header = FilenameUtils.removeExtension(file);
+            requestArray.add(new Request(fileContent, header));
+        }
+        return requestArray;
+    }
+
+    protected List<String> extractResponses(String testCase) throws IOException {
+
+        String relativeResponseFolderLocation = appendSourceFolder(testCase, ScenarioConstants.RESPONSE);
+        List<String> responseFiles = getFilesFromSourceDirectory(relativeResponseFolderLocation);
+        ArrayList<String> responseArray = new ArrayList();
+        for (String file : responseFiles) {
+            String fileContent = getFileContent(relativeResponseFolderLocation, file);
+            responseArray.add(fileContent);
+        }
+        return responseArray;
     }
 }
 

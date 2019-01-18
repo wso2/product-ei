@@ -34,7 +34,6 @@
 
     <modules>
         <module>4.1.1-Expose-back-ends-exposed-over-HTTP-as-SOAP-service</module>
-        <module>scenario_1.4-test-artifacts</module>
     </modules>
     
 </project>

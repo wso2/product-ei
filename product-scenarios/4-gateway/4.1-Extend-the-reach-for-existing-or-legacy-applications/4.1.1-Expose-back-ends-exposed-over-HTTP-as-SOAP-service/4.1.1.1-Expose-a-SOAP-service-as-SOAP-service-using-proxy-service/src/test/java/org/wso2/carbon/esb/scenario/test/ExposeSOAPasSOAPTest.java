@@ -17,9 +17,8 @@
  */
 package org.wso2.carbon.esb.scenario.test;
 
+import org.apache.axiom.om.OMAttribute;
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.util.AXIOMUtil;
-import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
@@ -28,11 +27,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
-import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
+import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
+import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
+import org.wso2.carbon.esb.scenario.test.common.http.SOAPClient;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 
@@ -42,34 +45,172 @@ import javax.xml.stream.XMLStreamException;
 public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
 
     private static final Log log = LogFactory.getLog(ExposeSOAPasSOAPTest.class);
+    private static final String WSDL_NS = "http://schemas.xmlsoap.org/wsdl/";
 
-    private static final String cappNameWithVersion = "scenario_4_1-synapse-configCompositeApplication_1.0.0";
-    private String cappName = "scenario_4_1-synapse-configCompositeApplication";
-
-    @BeforeClass(alwaysRun = true)
+    @BeforeClass(description = "Test init")
     public void init() throws Exception {
         super.init();
-        deployCarbonApplication(cappNameWithVersion);
     }
 
     @Test(description = "4.1.1.1.1 Front the back-end using pass-through proxy template")
     public void testPassThroughProxyTemplate() throws IOException, XMLStreamException {
-        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_Proxy_SimplePassThroughTemplate"));
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_1_Proxy_SimplePassThroughTemplate"));
     }
 
-    @AfterClass(description = "Server Cleanup", alwaysRun = true)
+    @Test(description = "4.1.1.1.2 Front the back-end using custom proxy template")
+    public void testCustomProxyTemplate() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_2_Proxy_SimpleCustomTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.3 Front the back-end using Log Forward proxy template")
+    public void testLogAndForwardTemplate() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_3_Proxy_SimpleLogForwardTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.4 Front the back-end using WSDL-Based proxy proxy template")
+    public void testWSDLTemplate() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate"));
+    }
+
+    @Test(description = "4.1.1.1.5 Front the back-end using proxy specifying service URL using named endpoint within " +
+            "endpoint tag")
+    public void testPassThroughWithNamedEP() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_5_Proxy_PassThroughWithNamedEP"));
+    }
+
+    @Test(description = "4.1.1.1.6 Front the back-end using specifying service URL using named endpoint via \"endpoint\" " +
+            "attribute in target tag")
+    public void testPassThroughEPinTarget() throws IOException, XMLStreamException {
+        invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_6_Proxy_PassThroughProxyEPinTarget"));
+    }
+
+    @Test(description = "4.1.1.1.7 Publishing WSDL of the service by loading from the registry")
+    public void testPublishingWSDLFromRegistry() throws IOException, XMLStreamException {
+        String wsdlDoc = "SimpleStockQuoteService From Registry";
+        String url = getProxyServiceURLHttp("4_1_1_1_7_Proxy_PublishWSDLFromRegistry");
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+        Assert.assertEquals(responseOM.getFirstChildWithName(new QName(WSDL_NS, "documentation")).getText(),
+                wsdlDoc, "WSDL from the proxy differ from expected");
+    }
+
+    @Test(description = "4.1.1.1.8 Publishing WSDL of the service by loading from uri")
+    public void testPublishingWSDLFromURL() throws IOException, XMLStreamException {
+        String wsdlDoc = "SimpleStockQuoteService";
+        String url = getProxyServiceURLHttp("4_1_1_1_8_Proxy_PublishWSDLFromURL");
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+        Assert.assertEquals(responseOM.getFirstChildWithName(new QName(WSDL_NS, "documentation")).getText(),
+                wsdlDoc, "WSDL from the proxy differ from expected");
+    }
+
+    @Test(description = "4.1.1.1.10 Publishing WSDL of the service by providing the WSDL inline")
+    public void testPublishingWSDLInLine() throws IOException, XMLStreamException {
+        String wsdlDoc = "SimpleStockQuoteService InLine";
+        String url = getProxyServiceURLHttp("4_1_1_1_10_Proxy_PublishWSDLInline");
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+        Assert.assertEquals(responseOM.getFirstChildWithName(new QName(WSDL_NS, "documentation")).getText(),
+                wsdlDoc, "WSDL from the proxy differ from expected");
+    }
+
+    @Test(description = "4.1.1.1.11 Publishing WSDL of the service by providing the WSDL inline")
+    public void testPublishingWSDLWithResourcesFromReg() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("4_1_1_1_11_Proxy_PublishWSDLWithResource");
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+        Iterator schemas = responseOM.getFirstChildWithName(new QName(WSDL_NS, "types")).
+                getChildrenWithName(new QName("http://www.w3.org/2001/XMLSchema", "schema"));
+
+        if (schemas != null) {
+            String[] nsStrArray = {"http://services.samples", "http://services.samples/xsd"};
+            List<String> nsArrList = new ArrayList<String>(Arrays.asList(nsStrArray));
+
+            while (schemas.hasNext()) {
+                OMElement schemaElement = (OMElement) schemas.next();
+                OMAttribute targetNs = schemaElement.getAttribute(new QName("targetNamespace"));
+                nsArrList.remove(targetNs.getAttributeValue());
+            }
+
+            Assert.assertTrue(nsArrList.isEmpty(), "Imported schemas not available");
+            return;
+        }
+        Assert.fail("Unable to find schema elements in the WSDL");
+    }
+
+    @Test(description = "4.1.1.1.13 Publishing original WSDL instead of generated WSDL by the proxy service by " +
+            "setting \"useOriginalwsdl\" to true")
+    public void testPublishingWSDLUseOriginalwsdl() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("4_1_1_1_13_Proxy_UseOriginalWSDL");
+        String originalServiceName = "SimpleStockQuoteService";
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+        OMElement serviceElement = responseOM.getFirstChildWithName(new QName(WSDL_NS, "service"));
+        Assert.assertNotNull(serviceElement, "Unable to extract service element from WSDL");
+
+        OMAttribute serviceNameAttr = serviceElement.getAttribute(new QName("name"));
+        Assert.assertNotNull(serviceNameAttr, "Unable to extract service name attribute");
+        Assert.assertEquals(serviceNameAttr.getAttributeValue(), originalServiceName, "Original Service name not " +
+                "available");
+    }
+
+    @Test(description = "4.1.1.1.14 Publishing original WSDL instead of generated WSDL by the proxy service by " +
+            "setting \"useOriginalwsdl\" to true and disable updating the port address by " +
+            "setting \"modifyUserWSDLPortAddress\" to false")
+    public void testPublishingWSDLModifyUserWSDLPortAddres() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress");
+        String backendURL = "http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService";
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doGet(url + "?wsdl", null);
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement responseOM = HTTPUtils.getOMFromResponse(response);
+        OMElement serviceElement = responseOM.getFirstChildWithName(new QName(WSDL_NS, "service"));
+        Assert.assertNotNull(serviceElement, "Unable to extract service element from WSDL");
+
+        OMElement portElement = serviceElement.getFirstChildWithName(new QName(WSDL_NS, "port"));
+        Assert.assertNotNull(portElement, "Unable to extract port element from WSDL");
+
+        if (portElement.getFirstElement() != null) {
+            Assert.assertEquals(portElement.getFirstElement().getLocalName(), "address", "address not available under " +
+                    "port in the WSDL");
+            OMAttribute locationAttr = portElement.getFirstElement().getAttribute(new QName("location"));
+            Assert.assertTrue(locationAttr.getAttributeValue().trim().startsWith(backendURL), "Service location " +
+                    "modified by the EI");
+            return;
+        }
+        Assert.fail("Expected \"address\" element not found under port tag");
+    }
+
+
+
+    @AfterClass(description = "Server Cleanup")
     public void cleanup() throws Exception {
         super.cleanup();
-        //TODO perform capp undeployment: temporarily disabled till test environment stabilization
-        undeployCarbonApplication(cappName);
     }
 
     private void invokeSOAPProxyAndAssert(String url) throws IOException, XMLStreamException {
-        SimpleHttpClient httpClient = new SimpleHttpClient();
-
-        Map<String, String> headers = new HashMap<String, String>(1);
-        headers.put("SOAPAction","urn:getQuote");
-
         String payload = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                 "xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n" +
                 "   <soapenv:Header/>\n" +
@@ -82,10 +223,12 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
 
-        HttpResponse response =  httpClient.doPost(url, headers, payload, HTTPConstants.MEDIA_TYPE_TEXT_XML);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200, "Response failed");
+        SOAPClient soapClient = new SOAPClient();
+        HttpResponse response = soapClient.sendSimpleSOAPMessage(url,payload, "urn:getQuote");
 
-        OMElement respElement = AXIOMUtil.stringToOM(httpClient.getResponsePayload(response));
+        Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
+
+        OMElement respElement = HTTPUtils.getOMFromResponse(response);
         OMElement symbolElement = respElement.getFirstElement().getFirstElement().getFirstElement().
                 getFirstChildWithName(new QName("http://services.samples/xsd","symbol"));
 

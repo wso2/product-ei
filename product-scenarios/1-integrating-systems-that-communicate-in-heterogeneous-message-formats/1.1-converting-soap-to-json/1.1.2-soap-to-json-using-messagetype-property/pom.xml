@@ -37,48 +37,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12.4</version>
-                <inherited>false</inherited>
-                <configuration>
-                    <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=128m</argLine>
-                    <disableXmlReport>false</disableXmlReport>
-                    <parallel>false</parallel>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                    <systemProperties>
-                        <property>
-                            <name>test.resources.dir</name>
-                            <value>
-                                ${basedir}/src/test/resources/
-                            </value>
-                        </property>
-                        <property>
-                            <name>framework.resource.location</name>
-                            <value>
-                                ${basedir}/src/test/resources/
-                            </value>
-                        </property>
-                        <property>
-                            <name>server.list</name>
-                            <value>
-                                ESB
-                            </value>
-                        </property>
-                        <property>
-                            <name>usedefaultlisteners</name>
-                            <value>false</value>
-                        </property>
-                        <sec.verifier.dir>${basedir}/target/security-verifier/</sec.verifier.dir>
-                        <maven.test.haltafterfailure>false</maven.test.haltafterfailure>
-                        <carbon.zip>
-                            ${basedir}/../../../distribution/target/wso2ei-${product.ei.version}.zip
-                        </carbon.zip>
-                        <instr.file>${basedir}/../coverage-report/instrumentation.txt</instr.file>
-                        <filters.file>${basedir}/../coverage-report/filters.txt</filters.file>
-                    </systemProperties>
-                    <workingDirectory>${basedir}/target</workingDirectory>
-                </configuration>
+                <inherited>true</inherited>
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -135,7 +94,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>admin-clients</artifactId>
-            <version>6.4.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -147,7 +105,6 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>integration-test-utils</artifactId>
-            <version>6.4.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon.mediation</groupId>
@@ -158,13 +115,11 @@
         <dependency>
             <groupId>org.wso2.ei</groupId>
             <artifactId>automation-extensions</artifactId>
-            <version>6.4.0</version>
         </dependency>
         <!-- Jacoco Dependency-->
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
-            <version>0.7.5.201505241946</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>

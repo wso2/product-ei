@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="4_1_1_1_8_Proxy_PublishWSDLFromURL" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <endpoint key="EP_SimpleStockQuoteService"/>
+        <inSequence/>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <publishWSDL preservePolicy="true" uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService?wsdl"/>
+</proxy>

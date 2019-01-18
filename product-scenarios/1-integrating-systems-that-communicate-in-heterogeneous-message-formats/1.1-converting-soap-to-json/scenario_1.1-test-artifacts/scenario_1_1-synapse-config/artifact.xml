@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="EP_JSONEndpoint" groupId="org.wso2.ei.product-scenarios.scenario_1_1.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/endpoints/EP_JSONEndpoint.xml</file>
-    </artifact>
-    <artifact name="1_1_2_soap_to_json_using_message_type" groupId="org.wso2.ei.product-scenarios.scenario_1_1.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/1_1_2_soap_to_json_using_message_type.xml</file>
-    </artifact>
-</artifacts>
