@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_3_1_Proxy_replace_messageBody_usingPayloadStoredInProperty" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property expression="//sam:placeOrder/sam:order" name="testProperty" scope="default" type="OM" xmlns:sam="http://sample.wso2.org"/>
+            <enrich>
+                <source clone="false" property="testProperty" type="property"/>
+                <target type="body"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
