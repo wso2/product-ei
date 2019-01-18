@@ -1,0 +1,17 @@
+<jsonObject>
+    <LookupCityResults>
+        <Zip>35801</Zip>
+        <City>Huntsville</City>
+        <State>Alabama</State>
+    </LookupCityResults>
+    <LookupCityResults>
+        <Zip>85001</Zip>
+        <City>Phoenix</City>
+        <State>Arizona</State>
+    </LookupCityResults>
+    <LookupCityResults>
+        <Zip>99501</Zip>
+        <City>Anchorage</City>
+        <State>Alaska</State>
+    </LookupCityResults>
+</jsonObject>
