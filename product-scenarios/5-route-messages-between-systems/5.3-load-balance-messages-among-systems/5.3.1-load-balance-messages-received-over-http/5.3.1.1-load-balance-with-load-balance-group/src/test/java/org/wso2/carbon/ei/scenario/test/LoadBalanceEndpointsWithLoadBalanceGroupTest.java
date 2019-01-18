@@ -46,8 +46,9 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
 
     @BeforeClass()
     public void init() throws Exception {
-        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490, ScenarioConstants.VERSION_600,
-                                                ScenarioConstants.VERSION_610, ScenarioConstants.VERSION_611);
+        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490, ScenarioConstants.VERSION_500,
+                                                ScenarioConstants.VERSION_600, ScenarioConstants.VERSION_610,
+                                                ScenarioConstants.VERSION_611);
         super.init();
     }
 
