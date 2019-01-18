@@ -66,6 +66,13 @@
         <item>
             <file>config_1.6.3.6.xml</file>
             <path>/_system/config/custom</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1.6.3.5_xml" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>config_1.6.3.5.xml</file>
+            <path>/_system/governance/custom</path>
             <mediaType>application/xml</mediaType>
         </item>
     </artifact>
