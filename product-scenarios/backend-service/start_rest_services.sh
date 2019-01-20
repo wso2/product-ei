@@ -142,8 +142,8 @@ if [[ $START_REST1 -eq 0 ]] || [[ $START_REST2 -eq 0 ]] || [[ $START_STOCK_QUOTE
       echo "git is already installed"
     fi
 
-    git clone --single-branch --branch product-scenarios https://github.com/wso2/product-ei.git
-    echo "cloned branch product-scenarios https://github.com/wso2/product-ei.git"
+    git clone --single-branch --branch product-scenarios-dev https://github.com/wso2/product-ei.git
+    echo "cloned branch product-scenarios-dev https://github.com/wso2/product-ei.git"
 
     if [[ $START_REST1 -eq 0 ]] || [[ $START_REST2 -eq 0 ]]; then
         #Building the ballerina service
@@ -187,4 +187,7 @@ echo "############################################# Started Services ###########
 rm -rf $SERVICES_DIR/product-ei
 echo "Removed product-ei repository"
 
+cd
+./schedule_sync_resources.sh
+echo "scheduled task to sync resources"
 
