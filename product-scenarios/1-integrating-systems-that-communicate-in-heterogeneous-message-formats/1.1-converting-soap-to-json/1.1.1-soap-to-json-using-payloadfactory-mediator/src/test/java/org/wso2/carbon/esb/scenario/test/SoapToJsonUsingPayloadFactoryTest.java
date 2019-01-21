@@ -41,7 +41,7 @@ public class SoapToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
     }
 
-    @Test(description = "1.1.1.1-Valid Soap To Json transformation Using Payload Factory Mediator", enabled = true)
+    @Test(description = "1.1.1.1")
     public void convertValidSoapToJsonUsingPayloadFactory() throws Exception {
         String request ="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                         "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' " +
@@ -69,7 +69,7 @@ public class SoapToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
                                             "Valid Soap To Json transformation Using Payload Factory Mediator");
     }
 
-    @Test(description = "1.1.1.2-Malformed Soap to Json Transformation Using Payload Factory Mediator", enabled = true)
+    @Test(description = "1.1.1.2")
     public void convertMalformedSoapToJsonUsingPayloadfactory() throws Exception {
         String request = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                          "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' " +

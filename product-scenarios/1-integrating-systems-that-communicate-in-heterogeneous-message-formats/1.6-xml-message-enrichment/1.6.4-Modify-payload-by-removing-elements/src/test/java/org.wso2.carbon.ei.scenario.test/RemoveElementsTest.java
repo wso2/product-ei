@@ -41,7 +41,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
     }
 
     //This test is to verify if payload can be modified by removing an element using script mediator.
-    @Test(description = "1.6.4.1-Modify-payload-by-removing-elements-using-script-mediator")
+    @Test(description = "1.6.4.1")
     public void RemoveElementsUsingScriptMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_1_Proxy_RemoveElements_ScriptMediator");
 
@@ -71,7 +71,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
     }
 
     //This test is to verify if payload can be modified by removing content of an element using enrich mediator.
-    @Test(description = "1.6.4.2-Modify-payload-by-removing-content-of-elements-using-enrich-mediator")
+    @Test(description = "1.6.4.2")
     public void RemoveContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator");
 

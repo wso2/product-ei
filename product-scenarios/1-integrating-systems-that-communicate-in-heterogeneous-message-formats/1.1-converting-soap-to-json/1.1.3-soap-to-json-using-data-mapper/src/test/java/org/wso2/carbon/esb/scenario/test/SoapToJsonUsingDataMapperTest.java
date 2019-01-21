@@ -46,7 +46,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
     }
 
-    @Test(description = "1.1.3.1-Valid Soap To Json transformation Using Data Mapper", enabled = true)
+    @Test(description = "1.1.3.1")
     public void convertValidSoapToJsonUsingDataMapper() throws Exception {
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                          "    <soapenv:Body>\n" +
@@ -79,7 +79,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
                                          "Valid Soap To Json transformation Using Data Mapper");
     }
 
-    @Test(description = "1.1.3.2-Malformed Soap To Json transformation Using Data Mapper", enabled = true)
+    @Test(description = "1.1.3.2")
     public void convertMalformedValidSoapToJsonUsingDataMapper() throws Exception {
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                          "    <soapenv:Body>\n" +
@@ -105,8 +105,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
                                                    "Malformed Soap To Json transformation Using Data Mapper");
     }
 
-    @Test(description = "1.1.3.3-Large Soap To Json transformation Using Data Mapper", enabled = false,
-          dataProvider = "1.1.3.3")
+    @Test(description = "1.1.3.3", enabled = false, dataProvider = "1.1.3.3")
     public void convertLargeSoapToJsonUsingDataMapper(String request, String expectedResponse, String header)
             throws Exception {
         HTTPUtils.invokeSoapActionAndAssert(proxyServiceUrl, request, header, expectedResponse,

@@ -52,39 +52,37 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
         super.init();
     }
 
-    @Test(description = "4.1.1.1.1 Front the back-end using pass-through proxy template")
+    @Test(description = "4.1.1.1.1")
     public void testPassThroughProxyTemplate() throws IOException, XMLStreamException {
         invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_1_Proxy_SimplePassThroughTemplate"));
     }
 
-    @Test(description = "4.1.1.1.2 Front the back-end using custom proxy template")
+    @Test(description = "4.1.1.1.2")
     public void testCustomProxyTemplate() throws IOException, XMLStreamException {
         invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_2_Proxy_SimpleCustomTemplate"));
     }
 
-    @Test(description = "4.1.1.1.3 Front the back-end using Log Forward proxy template")
+    @Test(description = "4.1.1.1.3")
     public void testLogAndForwardTemplate() throws IOException, XMLStreamException {
         invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_3_Proxy_SimpleLogForwardTemplate"));
     }
 
-    @Test(description = "4.1.1.1.4 Front the back-end using WSDL-Based proxy proxy template")
+    @Test(description = "4.1.1.1.4")
     public void testWSDLTemplate() throws IOException, XMLStreamException {
         invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate"));
     }
 
-    @Test(description = "4.1.1.1.5 Front the back-end using proxy specifying service URL using named endpoint within " +
-            "endpoint tag")
+    @Test(description = "4.1.1.1.5")
     public void testPassThroughWithNamedEP() throws IOException, XMLStreamException {
         invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_5_Proxy_PassThroughWithNamedEP"));
     }
 
-    @Test(description = "4.1.1.1.6 Front the back-end using specifying service URL using named endpoint via \"endpoint\" " +
-            "attribute in target tag")
+    @Test(description = "4.1.1.1.6")
     public void testPassThroughEPinTarget() throws IOException, XMLStreamException {
         invokeSOAPProxyAndAssert(getProxyServiceURLHttp("4_1_1_1_6_Proxy_PassThroughProxyEPinTarget"));
     }
 
-    @Test(description = "4.1.1.1.7 Publishing WSDL of the service by loading from the registry")
+    @Test(description = "4.1.1.1.7")
     public void testPublishingWSDLFromRegistry() throws IOException, XMLStreamException {
         String wsdlDoc = "SimpleStockQuoteService From Registry";
         String url = getProxyServiceURLHttp("4_1_1_1_7_Proxy_PublishWSDLFromRegistry");
@@ -98,7 +96,7 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
                 wsdlDoc, "WSDL from the proxy differ from expected");
     }
 
-    @Test(description = "4.1.1.1.8 Publishing WSDL of the service by loading from uri")
+    @Test(description = "4.1.1.1.8")
     public void testPublishingWSDLFromURL() throws IOException, XMLStreamException {
         String wsdlDoc = "SimpleStockQuoteService";
         String url = getProxyServiceURLHttp("4_1_1_1_8_Proxy_PublishWSDLFromURL");
@@ -112,7 +110,7 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
                 wsdlDoc, "WSDL from the proxy differ from expected");
     }
 
-    @Test(description = "4.1.1.1.10 Publishing WSDL of the service by providing the WSDL inline")
+    @Test(description = "4.1.1.1.10")
     public void testPublishingWSDLInLine() throws IOException, XMLStreamException {
         String wsdlDoc = "SimpleStockQuoteService InLine";
         String url = getProxyServiceURLHttp("4_1_1_1_10_Proxy_PublishWSDLInline");
@@ -126,7 +124,7 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
                 wsdlDoc, "WSDL from the proxy differ from expected");
     }
 
-    @Test(description = "4.1.1.1.11 Publishing WSDL of the service by providing the WSDL inline")
+    @Test(description = "4.1.1.1.11")
     public void testPublishingWSDLWithResourcesFromReg() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("4_1_1_1_11_Proxy_PublishWSDLWithResource");
 
@@ -154,8 +152,7 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
         Assert.fail("Unable to find schema elements in the WSDL");
     }
 
-    @Test(description = "4.1.1.1.13 Publishing original WSDL instead of generated WSDL by the proxy service by " +
-            "setting \"useOriginalwsdl\" to true")
+    @Test(description = "4.1.1.1.13")
     public void testPublishingWSDLUseOriginalwsdl() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("4_1_1_1_13_Proxy_UseOriginalWSDL");
         String originalServiceName = "SimpleStockQuoteService";
@@ -174,9 +171,7 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
                 "available");
     }
 
-    @Test(description = "4.1.1.1.14 Publishing original WSDL instead of generated WSDL by the proxy service by " +
-            "setting \"useOriginalwsdl\" to true and disable updating the port address by " +
-            "setting \"modifyUserWSDLPortAddress\" to false")
+    @Test(description = "4.1.1.1.14")
     public void testPublishingWSDLModifyUserWSDLPortAddres() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress");
         String backendURL = "http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService";
@@ -202,8 +197,6 @@ public class ExposeSOAPasSOAPTest extends ScenarioTestBase {
         }
         Assert.fail("Expected \"address\" element not found under port tag");
     }
-
-
 
     @AfterClass(description = "Server Cleanup")
     public void cleanup() throws Exception {

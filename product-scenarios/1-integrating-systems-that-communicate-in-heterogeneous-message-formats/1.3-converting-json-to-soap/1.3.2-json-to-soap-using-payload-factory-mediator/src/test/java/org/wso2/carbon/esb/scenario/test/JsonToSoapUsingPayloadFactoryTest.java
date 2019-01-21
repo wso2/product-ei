@@ -36,7 +36,7 @@ public class JsonToSoapUsingPayloadFactoryTest extends ScenarioTestBase {
         super.init();
     }
 
-    @Test(description = "1.3.2.1-Valid JSON to SOAP transformation Using Payload Factory Mediator", enabled = true)
+    @Test(description = "1.3.2.1")
     public void validJsonToSoapTransformation() throws IOException {
         String request = "{\"getQuote\":{\"request\":{\"symbol\":\"WSO2\"}}}";
         String messageId = "1.3.2.1";

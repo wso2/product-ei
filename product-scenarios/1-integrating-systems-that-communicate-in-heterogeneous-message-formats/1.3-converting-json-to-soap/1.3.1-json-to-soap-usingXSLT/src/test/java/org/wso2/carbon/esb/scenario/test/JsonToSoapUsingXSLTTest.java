@@ -40,7 +40,7 @@ public class JsonToSoapUsingXSLTTest extends ScenarioTestBase {
         super.init();
     }
 
-    @Test(description = "1.3.1.1", enabled = true)
+    @Test(description = "1.3.1.1")
     public void testMessageTransformation() throws IOException {
         String request = "{\"getQuote\":{\"request\":{\"symbol\":\"WSO2\"}}}";
         String messageId = "1.3.1.1";
