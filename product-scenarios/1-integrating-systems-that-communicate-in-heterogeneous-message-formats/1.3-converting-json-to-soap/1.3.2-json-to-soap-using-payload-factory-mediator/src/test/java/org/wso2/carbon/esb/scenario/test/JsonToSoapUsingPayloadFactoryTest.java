@@ -50,7 +50,7 @@ public class JsonToSoapUsingPayloadFactoryTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
-
+        super.cleanup();
     }
 
 }

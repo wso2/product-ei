@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.scenario.test;
 
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
@@ -65,5 +66,10 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
         Assert.assertEquals(HTTPUtils.getHTTPResponseCode(httpResponse), 200,
                 "plaintext enrichment failed");
 
+    }
+
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
+    public void cleanup() throws Exception {
+        super.cleanup();
     }
 }

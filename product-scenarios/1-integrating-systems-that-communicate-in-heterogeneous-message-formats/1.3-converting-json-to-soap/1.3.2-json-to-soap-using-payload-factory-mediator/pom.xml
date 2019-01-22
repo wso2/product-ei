@@ -52,22 +52,6 @@
                             <includeArtifactIds>org.jacoco.agent</includeArtifactIds>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>copy-jar-dependencies</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/src/test/resources/artifacts/ESB/jar
-                            </outputDirectory>
-                            <includeTypes>jar</includeTypes>
-                            <includeArtifactIds>
-                                groovy-all,jruby-complete,mysql-connector-java,activemq-core,geronimo-j2ee-management_1.1_spec,geronimo-jms_1.1_spec
-                            </includeArtifactIds>
-                            <excludeTransitive>true</excludeTransitive>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
