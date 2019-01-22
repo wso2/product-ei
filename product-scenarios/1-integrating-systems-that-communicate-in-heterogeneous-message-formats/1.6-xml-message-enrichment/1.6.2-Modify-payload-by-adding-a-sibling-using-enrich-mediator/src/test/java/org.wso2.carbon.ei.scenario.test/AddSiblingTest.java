@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
-
- *      http://www.apache.org/licenses/LICENSE-2.0
-
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -72,7 +72,7 @@ public class AddSiblingTest extends ScenarioTestBase {
 
     //This test is to verify if payload can be modified by adding sibling elements defined by xpath to the payload.
     @Test(description = "1.6.2.2")
-    public void AddSiblingXpath() throws IOException, XMLStreamException {
+    public void addSiblingXpath() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_2_Proxy_Add_Sibling_xpath");
         String testcaseID = "1.6.2.2";
         String request =
@@ -161,7 +161,6 @@ public class AddSiblingTest extends ScenarioTestBase {
     @Test(description = "1.6.2.4")
     public void AddSiblingMessageBodyStoredInProperty() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty");
-
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ser=\"http://services.samples\" xmlns:xsd=\"http://services.samples/xsd\">\n"
@@ -196,8 +195,7 @@ public class AddSiblingTest extends ScenarioTestBase {
                 "urn:mediate", "AddSiblingMessageBodyStoredInProperty");
     }
 
-    @AfterClass(description = "Server Cleanup",
-                alwaysRun = true)
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
     }

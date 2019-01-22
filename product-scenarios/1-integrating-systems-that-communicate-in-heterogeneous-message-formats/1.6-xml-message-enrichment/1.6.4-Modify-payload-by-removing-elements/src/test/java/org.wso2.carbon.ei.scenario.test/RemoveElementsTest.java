@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
-
- *      http://www.apache.org/licenses/LICENSE-2.0
-
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -42,7 +42,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
 
     //This test is to verify if payload can be modified by removing an element using script mediator.
     @Test(description = "1.6.4.1")
-    public void RemoveElementsUsingScriptMediator() throws IOException, XMLStreamException {
+    public void removeElementsUsingScriptMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_1_Proxy_RemoveElements_ScriptMediator");
 
         String request =
@@ -72,7 +72,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
 
     //This test is to verify if payload can be modified by removing content of an element using enrich mediator.
     @Test(description = "1.6.4.2")
-    public void RemoveContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException {
+    public void removeContentOfElementUsingEnrichMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator");
 
         String request =
