@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Body>
+        <ns:userDetails xmlns:ns="http://tempuri.org">
+            <ns:userName>Shadow:):)</ns:userName>
+            <ns:userId>1</ns:userId>
+            <ns:age>32</ns:age>
+            <ns:city>Colombo</ns:city>
+        </ns:userDetails>
+    </soapenv:Body>
+</soapenv:Envelope>

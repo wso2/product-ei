@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:s='http://www.w3.org/2001/XMLSchema'>
+    <SOAP-ENV:Body>
+        <LookupCityRequest xmlns="http://tempuri.org">
+            <LookupCity>
+                <Zip>60601</Zip>
+            </LookupCity>
+        </LookupCityRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
