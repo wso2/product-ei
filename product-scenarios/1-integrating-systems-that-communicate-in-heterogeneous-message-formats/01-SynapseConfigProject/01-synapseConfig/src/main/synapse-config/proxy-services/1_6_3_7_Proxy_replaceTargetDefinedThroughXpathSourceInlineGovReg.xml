@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy name="1_6_3_7_Proxy_replace_targetDefinedThroughXpathSourceInlineGovReg" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+<proxy name="1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
             <enrich>
