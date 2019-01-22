@@ -7,5 +7,5 @@ addDate() {
 }
 
 echo '*/10 * * * * ./sync_resources.sh >> sync_task.log' | crontab -
-echo "scheduled task to run at 0200h daily"
+echo "scheduled task to run every 10 minutes"
 
