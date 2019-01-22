@@ -45,7 +45,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
         proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
     }
 
-    @Test(description = "1.1.2.1-Valid Soap To Json transformation Using MessageType property", enabled = true)
+    @Test(description = "1.1.2.1")
     public void convertValidSoapToJsonUsingMessageType() throws Exception {
 
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
@@ -79,7 +79,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
                                             "Valid Soap To Json transformation Using MessageType property");
     }
 
-    @Test(description = "1.1.2.2-Malformed Soap to Json Using MessageType property", enabled = true)
+    @Test(description = "1.1.2.2")
     public void convertMalformedSoapToJsonUsingMessageType() throws Exception {
 
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
@@ -101,8 +101,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
                                                    "Malformed Soap to Json Transformation Using MessageType property");
     }
 
-    @Test(description = "1.1.2.3-Large Soap to Json Using MessageType property", enabled = false,
-          dataProvider = "1.1.2.3")
+    @Test(description = "1.1.2.3", enabled = false, dataProvider = "1.1.2.3")
     public void convertLargeSoapToJsonUsingMessageType(String request, String expectedResponse, String header)
             throws Exception {
         HTTPUtils.invokeSoapActionAndAssert(proxyServiceUrl, request, header, expectedResponse,

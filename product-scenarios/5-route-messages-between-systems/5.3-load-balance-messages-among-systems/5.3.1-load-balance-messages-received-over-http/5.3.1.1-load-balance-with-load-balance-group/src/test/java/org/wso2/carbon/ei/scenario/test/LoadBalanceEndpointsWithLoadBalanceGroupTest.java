@@ -58,7 +58,7 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1.1-Test load balance endpoint group with two endpoints and default configurations")
+    @Test(description = "5.3.1.1.1")
     public void testLoadBalanceEndpointGroup() throws Exception {
         testLoadBalanceGroup("5_3_1_1_1_API_load_balance_group_test");
     }
@@ -68,7 +68,7 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1.2-Test load balance endpoint group with two endpoints and policy set to roundRobin")
+    @Test(description = "5.3.1.1.2")
     public void testLoadBalanceEndpointGroupWithPolicyRoundRobin() throws Exception {
         testLoadBalanceGroup("5_3_1_1_2_API_load_balance_group_define_policy_test");
     }
@@ -78,8 +78,7 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1.3-Test load balance endpoint group with two endpoints and policy/algorithm not "
-                        + "defined")
+    @Test(description = "5.3.1.1.3")
     public void testLoadBalanceEndpointGroupWithNoPolicyNoAlgorithm() throws Exception {
         testLoadBalanceGroup("5_3_1_1_3_API_load_balance_group_define_nothing");
     }

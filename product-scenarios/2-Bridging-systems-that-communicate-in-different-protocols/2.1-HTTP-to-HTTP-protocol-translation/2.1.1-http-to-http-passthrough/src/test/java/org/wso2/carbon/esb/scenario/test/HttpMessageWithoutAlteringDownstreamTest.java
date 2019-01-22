@@ -46,7 +46,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         deployCarbonApplication(carFileName);
     }
 
-    @Test(description = "2.1.1.1-Send message HTTP endpoint via call mediator in non-blocking mode", enabled = true, dataProvider = "2.1.1.1")
+    @Test(description = "2.1.1.1", dataProvider = "2.1.1.1")
     public void  httpEndpointViaCallMediatorNonBlockingMode(String request, String expectedResponse, String header) throws Exception {
         String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_1_HttpMessageWithoutAlteringDownstreamTestProxy");
 
@@ -81,7 +81,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
                 "Actual Response and Expected Response mismatch");
     }*/
 
-    @Test(description = "2.1.1.3-Send message HTTP endpoint via send mediator", enabled = true, dataProvider = "2.1.1.3")
+    @Test(description = "2.1.1.3", dataProvider = "2.1.1.3")
     public void  httpEndpointViaSendMediatorTohttpEp(String request, String expectedResponse, String header) throws Exception {
         String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_3_HttpMessageWithoutAlteringDownstreamTestProxy");
 
@@ -98,7 +98,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
                 "Actual Response and Expected Response mismatch");
     }
 
-    @Test(description = "2.1.1.5-Send message address endpoint via call mediator in non-blocking mode", enabled = true, dataProvider = "2.1.1.5")
+    @Test(description = "2.1.1.5", dataProvider = "2.1.1.5")
     public void  addressEndpointViaCallMediatorNonBlockingMode(String request, String expectedResponse, String header) throws Exception {
         String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_5_HttpMessageWithoutAlteringDownstreamTestProxy");
 
@@ -115,7 +115,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
                 "Actual Response and Expected Response mismatch");
     }
 
-    @Test(description = "2.1.1.7-Send message HTTP endpoint via send mediator to address endpoint", enabled = true, dataProvider = "2.1.1.7")
+    @Test(description = "2.1.1.7", dataProvider = "2.1.1.7")
     public void  httpEndpointViaSendMediator(String request, String expectedResponse, String header) throws Exception {
         String proxyServiceUrl = getProxyServiceURLHttp("2_1_1_7_HttpMessageWithoutAlteringDownstreamTestProxy");
 

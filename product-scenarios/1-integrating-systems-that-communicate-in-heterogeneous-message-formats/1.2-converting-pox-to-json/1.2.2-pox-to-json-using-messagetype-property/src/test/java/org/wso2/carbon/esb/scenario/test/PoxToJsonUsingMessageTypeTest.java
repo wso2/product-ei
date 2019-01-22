@@ -53,14 +53,14 @@ public class PoxToJsonUsingMessageTypeTest extends ScenarioTestBase {
         proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
     }
 
-    @Test(description = "1.2.2.1-Valid Pox To Json transformation Using MessageType property", enabled = true, dataProvider = "1.2.2.1")
+    @Test(description = "1.2.2.1", dataProvider = "1.2.2.1")
     public void convertValidPoxToJsonUsingMessageType(String request, String expectedResponse, String header) throws Exception {
         HTTPUtils.invokePoxEndpointAndAssert(proxyServiceUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
                                            header, expectedResponse, 200,
                                            "Valid Pox To Json transformation Using MessageType property");
     }
 
-    @Test(description = "1.2.2.2-Malformed Pox To Json transformation Using MessageType property", enabled = true)
+    @Test(description = "1.2.2.2")
     public void convertMalformedPoxToJsonUsingMessageType() throws Exception {
 
         String request = "<m0:getQuote xmlns:m0=\"http://services.samples/xsd\">\n" +

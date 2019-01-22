@@ -50,7 +50,7 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
         proxyServiceUrl = getProxyServiceURLHttp("1_8_1_1_Proxy_PlainTextReceiver");
     }
 
-    @Test(description = "1.8.1 - plaintext enrichment using script mediator")
+    @Test(description = "1.8.1.1")
     public void convertPlainTextMessageToSOAP() throws IOException {
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
 
