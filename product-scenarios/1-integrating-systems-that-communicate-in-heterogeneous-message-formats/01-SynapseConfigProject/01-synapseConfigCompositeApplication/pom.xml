@@ -110,12 +110,6 @@
       <type>zip</type>
     </dependency>
     <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
-      <artifactId>1_6_3_6_Proxy_replace_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
       <artifactId>config_1.6.3.6_xml</artifactId>
       <version>1.0.0</version>
