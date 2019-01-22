@@ -34,7 +34,20 @@
     <modules>
         <module>01-synapseConfigRegistry</module>
         <module>01-synapseConfig</module>
-        <module>01-synapseConfigCompositeApplication</module>
     </modules>
+    <profiles>
+        <profile>
+            <id>profile_general</id>
+            <modules>
+                <module>01-synapseConfigCompositeApplication</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>profile_490</id>
+            <modules>
+                <module>01-synapseConfigCompositeApplication_490</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
