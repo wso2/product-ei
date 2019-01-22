@@ -20,6 +20,7 @@ package org.wso2.carbon.ei.scenario.test;
 
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
@@ -46,8 +47,9 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
 
     @BeforeClass()
     public void init() throws Exception {
-        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490, ScenarioConstants.VERSION_600,
-                                                ScenarioConstants.VERSION_610, ScenarioConstants.VERSION_611);
+        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490, ScenarioConstants.VERSION_500,
+                                                ScenarioConstants.VERSION_600, ScenarioConstants.VERSION_610,
+                                                ScenarioConstants.VERSION_611);
         super.init();
     }
 
@@ -56,7 +58,7 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1.1-Test load balance endpoint group with two endpoints and default configurations")
+    @Test(description = "5.3.1.1.1")
     public void testLoadBalanceEndpointGroup() throws Exception {
         testLoadBalanceGroup("5_3_1_1_1_API_load_balance_group_test");
     }
@@ -66,7 +68,7 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1.2-Test load balance endpoint group with two endpoints and policy set to roundRobin")
+    @Test(description = "5.3.1.1.2")
     public void testLoadBalanceEndpointGroupWithPolicyRoundRobin() throws Exception {
         testLoadBalanceGroup("5_3_1_1_2_API_load_balance_group_define_policy_test");
     }
@@ -76,10 +78,14 @@ public class LoadBalanceEndpointsWithLoadBalanceGroupTest extends ScenarioTestBa
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "5.3.1.1.3-Test load balance endpoint group with two endpoints and policy/algorithm not "
-                        + "defined")
+    @Test(description = "5.3.1.1.3")
     public void testLoadBalanceEndpointGroupWithNoPolicyNoAlgorithm() throws Exception {
         testLoadBalanceGroup("5_3_1_1_3_API_load_balance_group_define_nothing");
+    }
+
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
+    public void cleanup() throws Exception {
+        super.cleanup();
     }
 
     /**

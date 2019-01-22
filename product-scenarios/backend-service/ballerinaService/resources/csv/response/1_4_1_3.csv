@@ -1,0 +1,3 @@
+root/appointmentNumber,root/confirmed,root/doctor/availability,root/doctor/category,root/doctor/fee,root/doctor/hospital,root/doctor/name,root/fee,root/patient/address,root/patient/dob,root/patient/email,root/patient/name,root/patient/phone,root/patient/ssn
+33,false,9.00 a.m - 11.00 a.m,surgery,7000,grand oak community hospital,thomas collins,7000,California,1990-03-19,johndoe@gmail.com,John Doe,8770586755,234-23-525
+

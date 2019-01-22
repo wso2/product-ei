@@ -22,6 +22,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 
@@ -41,12 +42,15 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
+        // WSO2 ESB 4.9.0 does not support Datamapper mediator
+        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490);
+
         super.init();
         proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
     }
 
-    @Test(description = "1.1.3.1-Valid Soap To Json transformation Using Data Mapper", enabled = true)
+    @Test(description = "1.1.3.1")
     public void convertValidSoapToJsonUsingDataMapper() throws Exception {
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                          "    <soapenv:Body>\n" +
@@ -79,7 +83,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
                                          "Valid Soap To Json transformation Using Data Mapper");
     }
 
-    @Test(description = "1.1.3.2-Malformed Soap To Json transformation Using Data Mapper", enabled = true)
+    @Test(description = "1.1.3.2")
     public void convertMalformedValidSoapToJsonUsingDataMapper() throws Exception {
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                          "    <soapenv:Body>\n" +
@@ -105,8 +109,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
                                                    "Malformed Soap To Json transformation Using Data Mapper");
     }
 
-    @Test(description = "1.1.3.3-Large Soap To Json transformation Using Data Mapper", enabled = false,
-          dataProvider = "1.1.3.3")
+    @Test(description = "1.1.3.3", enabled = false, dataProvider = "1.1.3.3")
     public void convertLargeSoapToJsonUsingDataMapper(String request, String expectedResponse, String header)
             throws Exception {
         HTTPUtils.invokeSoapActionAndAssert(proxyServiceUrl, request, header, expectedResponse,
@@ -116,6 +119,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
+        super.cleanup();
     }
 
     @DataProvider(name = "1.1.3.3")

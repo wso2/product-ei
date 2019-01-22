@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
-
- *      http://www.apache.org/licenses/LICENSE-2.0
-
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -33,7 +33,7 @@ import javax.xml.stream.XMLStreamException;
  */
 public class ReplaceElementsTest extends ScenarioTestBase {
 
-    private String request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+    private static final String REQUEST_1_6_3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
             + "   <soapenv:Body>\n"
             + "      <sam:placeOrder>\n"
@@ -70,7 +70,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200,
                 "urn:mediate", "replaceMessageBodyUsingPayloadStoredInProperty");
     }
 
@@ -101,7 +101,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200,
                 "urn:mediate", "replaceTargetBySourceBodyDefinedThoughXpath");
     }
 
@@ -120,7 +120,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200,
                 "urn:mediate", "replaceTargetDefinedThroughXpathBySourceProperty");
     }
 
@@ -137,13 +137,45 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200,
                 "urn:mediate", "replaceTargetDefinedThroughXpathBySourceInlineContent");
     }
 
+    //This test is to verify if payload can be modified by replacing body of payload using source defined inline through configuration registry
+    @Test(description = "1.6.3.6")
+    public void replaceBodyOfPayloadUsingSourceDefinedInlineConfReg() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg");
+        String testCaseID = "1.6.3.6";
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <manufacture>Nike</manufacture>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
 
-    @AfterClass(description = "Server Cleanup",
-                alwaysRun = true)
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200,
+                "urn:mediate", "replaceBodyOfPayloadUsingSourceDefinedInlineConfReg");
+    }
+
+    //This test is to verify if payload can be modified by replacing target message defined through xpath by source inline content loaded from gov reg
+    @Test(description = "1.6.3.7")
+    public void replaceTargetDefinedThroughXpathBySourceInlineGovReg() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg");
+        log.info("url is :" + url);
+        String testCaseID = "1.6.3.7";
+        String expectedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://services.samples/xsd\">\n"
+                + "   <soap:Body>\n"
+                + "      <sam:placeOrder>\n"
+                + "         <manufacturer>Nike</manufacturer>\n"
+                + "      </sam:placeOrder>\n"
+                + "   </soap:Body>\n"
+                + "</soap:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200, "urn:mediate",
+                "replaceTargetDefinedThroughXpathBySourceInlineGovReg");
+    }
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
     }

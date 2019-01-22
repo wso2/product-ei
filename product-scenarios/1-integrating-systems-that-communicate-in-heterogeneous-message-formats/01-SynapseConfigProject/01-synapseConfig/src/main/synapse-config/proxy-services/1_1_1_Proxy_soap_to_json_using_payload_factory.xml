@@ -33,6 +33,7 @@
                     <arg evaluator="json" expression="$.LookupCityResult.Zip"/>
                 </args>
             </payloadFactory>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
             <respond description="Respond to client"/>
         </outSequence>
         <faultSequence>
