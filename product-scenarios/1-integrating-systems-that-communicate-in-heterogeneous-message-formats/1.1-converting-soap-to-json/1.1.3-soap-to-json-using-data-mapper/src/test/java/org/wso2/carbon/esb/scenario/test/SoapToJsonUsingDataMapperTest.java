@@ -22,6 +22,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 
@@ -41,6 +42,9 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
+        // WSO2 ESB 4.9.0 does not support Datamapper mediator
+        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490);
+
         super.init();
         proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
