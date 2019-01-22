@@ -175,7 +175,6 @@ public class ReplaceElementsTest extends ScenarioTestBase {
         HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200, "urn:mediate",
                 "replaceTargetDefinedThroughXpathBySourceInlineGovReg");
     }
-
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
