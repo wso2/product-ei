@@ -71,11 +71,6 @@
     <artifact name="1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty.xml</file>
     </artifact>
-    <artifact name="1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript.xml</file>
-    </artifact>
-    <artifact name="1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript.xml</file>
     <artifact name="1_2_2_Proxy_pox_to_json_using_message_type" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_2_2_Proxy_pox_to_json_using_message_type.xml</file>
     </artifact>

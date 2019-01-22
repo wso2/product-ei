@@ -27,12 +27,12 @@ import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 
- /*
+/**
  * This class is to test if xml payload can be enriched before it goes to the backend server by using script mediator.
- */
+ **/
 public class AlterRequestWithScriptTest extends ScenarioTestBase {
 
-     private  String request =
+     private  static final String REQUEST_1_6_10 =
              "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                      + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
                      + "   <soap:Header />\n"
@@ -62,9 +62,11 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
         super.init();
      }
 
-    //This test is to verify if payload can be modified by removing first element using inline groovy script.
-    // This testcase has been disabled since we need to manually paste the groovy-all-dependency jar into $EI_HOME/lib.
-    @Test(description = "1.6.10.1",enabled = false)
+     /**
+      * This test is to verify if payload can be modified by removing first element using inline groovy script.
+      * This testcase has been disabled since we need to manually paste the groovy-all-dependency jar into $EI_HOME/lib.
+      */
+    @Test(description = "1.6.10.1", enabled=false)
     public void alterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript");
         String testCaseID = "1.6.10.1";
@@ -88,7 +90,7 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
                         + "   </soap:Body>\n"
                         + "</soap:Envelope>";
 
-        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_10, testCaseID, expectedResponse, 200,
                 "urn:mediate", "alterPayloadByInlineGroovyScript");
     }
 
@@ -117,12 +119,11 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
                          + "   </soap:Body>\n"
                          + "</soap:Envelope>";
 
-         HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseID, expectedResponse, 200,
+         HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_10, testCaseID, expectedResponse, 200,
                  "urn:mediate", "alterPayloadByInlineJavaScript");
      }
 
-    @AfterClass(description = "Server Cleanup",
-                alwaysRun = true)
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
     }
