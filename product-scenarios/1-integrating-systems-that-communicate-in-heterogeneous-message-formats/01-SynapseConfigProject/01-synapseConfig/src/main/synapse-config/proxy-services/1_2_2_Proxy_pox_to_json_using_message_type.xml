@@ -18,9 +18,6 @@
             <makefault version="pox">
                 <reason expression="get-property('ERROR_MESSAGE')"/>
             </makefault>
-            <log level="full">
-                <property name="FAULT_HIT" value="Fault sequence hit..."/>
-            </log>
             <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
             <respond/>
         </faultSequence>

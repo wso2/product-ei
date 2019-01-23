@@ -2,14 +2,12 @@
 <proxy name="1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
-            <log level="full"/>
             <enrich>
                 <source clone="true" type="inline">
                     <PROCESSED xmlns=""/>
                 </source>
                 <target xpath="//BANK_TR/PROCESSED"/>
             </enrich>
-            <log level="full"/>
             <respond/>
         </inSequence>
         <outSequence/>

@@ -2,16 +2,13 @@
 <proxy name="1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
-            <log level="full"/>
             <property name="testProperty" scope="default">
                 <productid xmlns="">IC002</productid>
             </property>
-            <log level="full"/>
             <enrich>
                 <source clone="true" property="testProperty" type="property"/>
                 <target action="sibling" xmlns:xsd="http://services.samples/xsd" xpath="//xsd:symbol"/>
             </enrich>
-            <log level="full"/>
             <respond/>
         </inSequence>
         <outSequence/>
