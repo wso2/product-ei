@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.scenario.test;
 
 import org.apache.http.HttpResponse;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
@@ -49,7 +50,7 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
         proxyServiceUrl = getProxyServiceURLHttp("1_8_1_1_Proxy_PlainTextReceiver");
     }
 
-    @Test(description = "1.8.1 - plaintext enrichment using script mediator")
+    @Test(description = "1.8.1.1")
     public void convertPlainTextMessageToSOAP() throws IOException {
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
 
@@ -65,5 +66,10 @@ public class PlainTextEnrichmentTest extends ScenarioTestBase {
         Assert.assertEquals(HTTPUtils.getHTTPResponseCode(httpResponse), 200,
                 "plaintext enrichment failed");
 
+    }
+
+    @AfterClass(description = "Server Cleanup", alwaysRun = true)
+    public void cleanup() throws Exception {
+        super.cleanup();
     }
 }

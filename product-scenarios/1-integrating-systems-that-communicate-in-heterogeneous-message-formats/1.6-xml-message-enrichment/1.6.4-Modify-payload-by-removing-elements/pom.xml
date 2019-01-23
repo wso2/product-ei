@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -52,22 +52,6 @@
                             <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
                             <includeTypes>jar</includeTypes>
                             <includeArtifactIds>org.jacoco.agent</includeArtifactIds>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-jar-dependencies</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/src/test/resources/artifacts/ESB/jar
-                            </outputDirectory>
-                            <includeTypes>jar</includeTypes>
-                            <includeArtifactIds>
-                                groovy-all,jruby-complete,mysql-connector-java,activemq-core,geronimo-j2ee-management_1.1_spec,geronimo-jms_1.1_spec
-                            </includeArtifactIds>
-                            <excludeTransitive>true</excludeTransitive>
                         </configuration>
                     </execution>
                 </executions>

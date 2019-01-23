@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <appointmentNumber>33</appointmentNumber>
+   <confirmed>false</confirmed>
+   <doctor>
+      <availability>9.00 a.m - 11.00 a.m</availability>
+      <category>surgery</category>
+      <fee>7000</fee>
+      <hospital>grand oak community hospital</hospital>
+      <name>thomas collins</name>
+   </doctor>
+   <fee>7000</fee>
+   <patient>
+      <address>California</address>
+      <dob>1990-03-19</dob>
+      <email>johndoe@gmail.com</email>
+      <name>John Doe</name>
+      <phone>8770586755</phone>
+      <ssn>234-23-525</ssn>
+   </patient>
+</root>

@@ -92,4 +92,10 @@
     <artifact name="1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript.xml</file>
     </artifact>
+      <artifact name="1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg.xml</file>
+    </artifact>
+    <artifact name="1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg.xml</file>
+    </artifact>
 </artifacts>

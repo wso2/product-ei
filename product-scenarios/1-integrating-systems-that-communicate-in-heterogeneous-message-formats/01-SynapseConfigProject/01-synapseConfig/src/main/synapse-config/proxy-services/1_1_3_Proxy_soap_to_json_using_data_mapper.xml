@@ -10,6 +10,7 @@
         </inSequence>
         <outSequence>
             <datamapper config="gov:datamapper/config_convert_json_to_soap.dmc" inputSchema="gov:datamapper/config_convert_json_to_soap_inputSchema.json" inputType="JSON" outputSchema="gov:datamapper/config_convert_json_to_soap_outputSchema.json" outputType="XML" xsltStyleSheet="gov:datamapper/config_convert_json_to_soap_xsltStyleSheet.xml"/>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
             <respond/>
         </outSequence>
         <faultSequence>
