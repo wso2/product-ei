@@ -82,7 +82,6 @@ echo "output directory : ${OUTPUT_DIR}"
 export DATA_BUCKET_LOCATION=${INPUT_DIR}
 
 #=============== Execute Scenarios ===============================================
-sleep 3600
 #Retreive product version
 PRODUCT_VERSION_FOUND=false
 while IFS= read -r line
