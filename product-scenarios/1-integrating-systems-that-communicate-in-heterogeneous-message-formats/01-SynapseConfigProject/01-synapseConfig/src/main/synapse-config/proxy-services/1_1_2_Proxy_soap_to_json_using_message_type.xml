@@ -12,7 +12,6 @@
         </inSequence>
         <outSequence>
             <!-- This log full is added in order to make content aware -->
-            <log level="full"/>
             <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
             <!-- This log is added to build the SOAP response -->
             <log>
@@ -26,9 +25,6 @@
                 <reason expression="get-property('ERROR_MESSAGE')"/>
             </makefault>
             <header action="remove" name="To" scope="default"/>
-            <log level="full">
-                <property name="FAULT_HIT" value="Fault sequence hit..."/>
-            </log>
             <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
             <respond/>
         </faultSequence>

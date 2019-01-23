@@ -2,12 +2,10 @@
 <proxy name="1_6_2_3_Proxy_Add_Sibling_toTargetBody" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
-            <log level="full"/>
             <enrich>
                 <source clone="true" type="body"/>
                 <target action="sibling" xmlns:ser="http://services.samples" xpath="//ser:getQuote"/>
             </enrich>
-            <log level="full"/>
             <respond/>
         </inSequence>
         <outSequence/>
