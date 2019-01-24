@@ -1,4 +1,4 @@
-### 1.1.3-Using Data Mapper mediator
+### 1.1.3-Converting SOAP message to JSON using Data Mapper mediator
 
 
 | Test Case ID| Test Case| Test Case Description| Status|

@@ -1,4 +1,4 @@
-### 1.2.1-Using PayloadFactory mediator
+### 1.2.1-Converting POX message to JSON using PayloadFactory mediator
 
 
 | Test Case ID| Test Case| Test Case Description| Status|

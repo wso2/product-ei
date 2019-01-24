@@ -1,4 +1,4 @@
-### 1.1.2-Using the MessageType property
+### 1.1.2-Converting SOAP message to JSON using the MessageType property
 
 
 | Test Case ID| Test Case| Test Case Description| Status|

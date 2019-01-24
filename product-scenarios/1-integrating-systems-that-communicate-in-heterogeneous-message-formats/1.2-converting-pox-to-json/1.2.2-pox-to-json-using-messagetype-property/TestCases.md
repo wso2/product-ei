@@ -1,4 +1,4 @@
-### 1.2.2-Using the MessageType property
+### 1.2.2-Converting POX message to JSON using the MessageType property
 
 
 | Test Case ID| Test Case| Test Case Description| Status|

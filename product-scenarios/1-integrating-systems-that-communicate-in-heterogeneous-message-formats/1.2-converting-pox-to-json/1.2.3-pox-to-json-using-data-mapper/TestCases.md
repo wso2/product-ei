@@ -1,4 +1,4 @@
-### 1.2.3 - Using Datamapper
+### 1.2.3 - Converting POX message to JSON using Datamapper mediator
 
 
 | Test Case ID| Test Case| Test Case Description| Status|
