@@ -67,7 +67,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
                 + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
-                "urn:mediate", "RemoveElementsUsingScriptMediator");
+                "urn:mediate", "removeElementsUsingScriptMediator");
     }
 
     //This test is to verify if payload can be modified by removing content of an element using enrich mediator.
@@ -103,7 +103,7 @@ public class RemoveElementsTest extends ScenarioTestBase {
                         + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
-                "urn:mediate", "RemoveContentOfElementUsingEnrichMediator");
+                "urn:mediate", "removeContentOfElementUsingEnrichMediator");
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
