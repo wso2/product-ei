@@ -1,6 +1,5 @@
 ### 1.1.1 - Converting SOAP message to JSON using PayloadFactory mediator
 
-
 | Test Case ID| Test Case| Test Case Description| Status|
 | ----------| --------| ----------| ------|
 | 1.1.1.1| Converting a valid SOAP message to JSON| **Given**:Test environment is set properly. </br> **When**:A soap request is sent to wso2 EI. </br> **Then**:It should be converted to a json message.| Automated|

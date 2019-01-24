@@ -1,6 +1,5 @@
 ### 1.2.2-Converting POX message to JSON using the MessageType property
 
-
 | Test Case ID| Test Case| Test Case Description| Status|
 | ----------| --------| ----------| ------|
 | 1.2.2.1| Converting a POX message to JSON using Messsage Type Property| **Given**:Test environment is set properly. </br> **When**:A POX message is sent to wso2 EI. </br> **Then**:It should be converted to a json message.| Automated|
