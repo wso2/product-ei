@@ -28,7 +28,8 @@ import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 
 /**
- * This class is to test if xml payload can be enriched before it goes to the backend server by using script mediator.
+ * This class is to test if xml payload can be enriched before it goes to the backend server
+ * by using script mediator.
  **/
 public class AlterRequestWithScriptTest extends ScenarioTestBase {
 
@@ -64,7 +65,8 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
 
      /**
       * This test is to verify if payload can be modified by removing first element using inline groovy script.
-      * This testcase has been disabled since we need to manually paste the groovy-all-dependency jar into $EI_HOME/lib.
+      * This testcase has been disabled since we need to manually paste the groovy-all-dependency jar
+      * into $EI_HOME/dropins.
       */
     @Test(description = "1.6.10.1", enabled=false)
     public void alterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
@@ -97,7 +99,7 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
      //This test is to verify if payload can be modified by removing the last element using inline javascript.
      @Test(description = "1.6.10.2")
      public void alterPayloadByInlineJavaScript() throws IOException, XMLStreamException {
-         String url = getProxyServiceURLHttp("1_6_10_2_Proxy_AlterPayloadWithInlineJavaScript");
+         String url = getProxyServiceURLHttp("1_6_10_2_Proxy_alterPayloadWithInlineJavaScript");
          String testCaseID = "1.6.10.2";
          String expectedResponse =
                  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

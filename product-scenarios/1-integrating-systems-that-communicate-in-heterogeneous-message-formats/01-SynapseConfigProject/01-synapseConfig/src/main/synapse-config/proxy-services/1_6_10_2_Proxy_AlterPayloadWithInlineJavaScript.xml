@@ -23,8 +23,7 @@
             <script language="js"><![CDATA[var payload = mc.getPayloadXML();
                 var length = payload.employee.length();
                 delete payload.employee[length-1];
-                mc.setPayloadXML(payload);]]>
-            </script>
+                mc.setPayloadXML(payload);]]></script>
             <respond/>
         </inSequence>
         <outSequence/>
