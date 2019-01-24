@@ -43,19 +43,18 @@ import static org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils.getRespons
  */
 public class PoxToJsonUsingMessageTypeTest extends ScenarioTestBase {
 
-    private String proxyServiceName = "1_2_2_Proxy_pox_to_json_using_message_type";
-    private String proxyServiceUrl;
-
+    private String apiName = "1_2_2_API_pox_to_json_using_message_type";
+    private String apiInvocationUrl;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
+        apiInvocationUrl = getApiInvocationURLHttp(apiName);
     }
 
     @Test(description = "1.2.2.1", dataProvider = "1.2.2.1")
     public void convertValidPoxToJsonUsingMessageType(String request, String expectedResponse, String header) throws Exception {
-        HTTPUtils.invokePoxEndpointAndAssert(proxyServiceUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
                                            header, expectedResponse, 200,
                                            "Valid Pox To Json transformation Using MessageType property");
     }
@@ -72,7 +71,7 @@ public class PoxToJsonUsingMessageTypeTest extends ScenarioTestBase {
 
         String header = "1_2_2_2_1";
 
-        HTTPUtils.invokePoxEndpointAndCheckContains(proxyServiceUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
+        HTTPUtils.invokePoxEndpointAndCheckContains(apiInvocationUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
                                                   header, responseSubstring, 500,
                                                   "Malformed Pox To Json transformation Using MessageType property");
     }
