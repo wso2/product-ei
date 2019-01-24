@@ -1,4 +1,4 @@
-### 1.8.1 - Modify plain text message 
+### 4.1.1.1 - Expose a SOAP service as SOAP service using proxy service
 
 
 | Test Case ID| Test Case| Test Case Description| Status|
