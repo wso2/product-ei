@@ -34,14 +34,14 @@ import javax.xml.stream.XMLStreamException;
  */
 public class AddSiblingTest extends ScenarioTestBase {
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeClass
     public void init() throws Exception {
         super.init();
     }
 
     //This test is to verify if payload can be modified by adding sibling elements inline to the payload.
     @Test(description = "1.6.2.1")
-    public void AddSiblingInline() throws IOException, XMLStreamException {
+    public void addSiblingInline() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_1_Proxy_Add_Sibling_Inline");
 
         String request =
@@ -67,7 +67,7 @@ public class AddSiblingTest extends ScenarioTestBase {
                         + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
-                "urn:mediate", "AddSiblingInline");
+                "urn:mediate", "addSiblingInline");
     }
 
     //This test is to verify if payload can be modified by adding sibling elements defined by xpath to the payload.
@@ -109,12 +109,12 @@ public class AddSiblingTest extends ScenarioTestBase {
                         + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, testcaseID, expectedResponse, 200,
-                "urn:mediate", "AddSiblingXpath");
+                "urn:mediate", "addSiblingXpath");
     }
 
   //This test is to verify if payload can be modified by adding current message body as the sibling to the resulting message body.
     @Test(description = "1.6.2.3")
-    public void AddSiblingToTargetBody() throws IOException, XMLStreamException {
+    public void addSiblingToTargetBody() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_3_Proxy_Add_Sibling_toTargetBody");
 
         String request =
@@ -154,12 +154,12 @@ public class AddSiblingTest extends ScenarioTestBase {
                         + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
-                "urn:mediate", "AddSiblingToTargetBody");
+                "urn:mediate", "addSiblingToTargetBody");
     }
 
     //This test is to verify if payload can be modified by adding an element to the payload as a sibling which is stored in a property.
     @Test(description = "1.6.2.4")
-    public void AddSiblingMessageBodyStoredInProperty() throws IOException, XMLStreamException {
+    public void addSiblingMessageBodyStoredInProperty() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -192,7 +192,7 @@ public class AddSiblingTest extends ScenarioTestBase {
                         + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, ScenarioConstants.MESSAGE_ID, expectedResponse, 200,
-                "urn:mediate", "AddSiblingMessageBodyStoredInProperty");
+                "urn:mediate", "addSiblingMessageBodyStoredInProperty");
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
