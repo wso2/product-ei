@@ -1,5 +1,3 @@
-# Test Case Template
-
 ## 5.1.1.1-Using-switch-mediator-on-given-xpath
 
 | Test Case ID  |                        Test Case	               |                                Test Description                |      Status    |
