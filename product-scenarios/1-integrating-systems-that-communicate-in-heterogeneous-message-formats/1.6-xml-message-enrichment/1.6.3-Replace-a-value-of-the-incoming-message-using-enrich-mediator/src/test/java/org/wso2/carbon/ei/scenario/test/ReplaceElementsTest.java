@@ -141,7 +141,30 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                 "urn:mediate", "replaceTargetDefinedThroughXpathBySourceInlineContent");
     }
 
-    //This test is to verify if payload can be modified by replacing body of payload using source defined inline through configuration registry
+    /**
+     * This test is to verify if payload can be modified by replacing body of payload using source
+     * defined inline through governance registry
+     */
+    @Test(description = "1.6.3.5")
+    public void replaceBodyOfPayloadSourceDefinedInlineGovReg() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg");
+        String testCaseID = "1.6.3.5";
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sam=\"http://sample.wso2.org\" xmlns:xsd=\"http://sample.wso2.org/xsd\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <manufacture>Nike</manufacture>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200,
+                "urn:mediate", "replaceBodyOfPayloadSourceDefinedInlineGovReg");
+    }
+
+    /**
+     * This test is to verify if payload can be modified by replacing body of payload using source
+     * defined inline through configuration registry
+     */
     @Test(description = "1.6.3.6")
     public void replaceBodyOfPayloadUsingSourceDefinedInlineConfReg() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg");
@@ -158,7 +181,10 @@ public class ReplaceElementsTest extends ScenarioTestBase {
                 "urn:mediate", "replaceBodyOfPayloadUsingSourceDefinedInlineConfReg");
     }
 
-    //This test is to verify if payload can be modified by replacing target message defined through xpath by source inline content loaded from gov reg
+    /**
+     * This test is to verify if payload can be modified by replacing target message defined through
+     * xpath by source inline content loaded from governance reg
+     */
     @Test(description = "1.6.3.7")
     public void replaceTargetDefinedThroughXpathBySourceInlineGovReg() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg");
