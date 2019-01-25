@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property name="TEST" scope="default">
+                <Employee xmlns="">
+                    <firstName>Isuru</firstName>
+                    <lastName>Uy</lastName>
+                    <team>STL</team>
+                </Employee>
+            </property>
+            <enrich>
+                <source clone="true" property="TEST" type="property"/>
+                <target action="child" xpath="//Dept"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
