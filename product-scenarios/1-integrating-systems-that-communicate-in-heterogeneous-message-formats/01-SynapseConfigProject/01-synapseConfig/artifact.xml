@@ -107,4 +107,7 @@
     <artifact name="1_6_10_2_Proxy_alterPayloadWithInlineJavaScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_10_2_Proxy_alterPayloadWithInlineJavaScript.xml</file>
     </artifact>
+    <artifact name="1_6_1_3_Proxy_addCurrentPayloadAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_3_Proxy_addCurrentPayloadAsChild.xml</file>
+    </artifact>
 </artifacts>

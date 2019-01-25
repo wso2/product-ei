@@ -89,7 +89,50 @@ public class AddChildToXMLTest extends ScenarioTestBase {
         assertResponse(response, expectedResponse);
     }
 
+    //This test is to verify if payload can be modified by adding current payload as a child to the new payload
+    @Test(description = "1.6.1.3")
+    public void addCurrentPayloadAsChild() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_1_3_Proxy_addCurrentPayloadAsChild");
+        String testCaseId = "1.6.1.3";
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soap:Header />\n"
+                        + "   <soap:Body>\n"
+                        + "      <Employee>\n"
+                        + "         <firstName>Isuru</firstName>\n"
+                        + "         <lastName>Uyanage</lastName>\n"
+                        + "         <city>Colombo</city>\n"
+                        + "         <preferredName>Isuru</preferredName>\n"
+                        + "      </Employee>\n"
+                        + "   </soap:Body>\n"
+                        + "</soap:Envelope>";
 
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soap:Body>\n"
+                        + "      <Employee>\n"
+                        + "         <firstName>Isuru</firstName>\n"
+                        + "         <lastName>Uyanage</lastName>\n"
+                        + "         <city>Colombo</city>\n"
+                        + "         <preferredName>\n"
+                        + "            Isuru\n"
+                        + "            <Employee>\n"
+                        + "               <firstName>Isuru</firstName>\n"
+                        + "               <lastName>Uyanage</lastName>\n"
+                        + "               <city>Colombo</city>\n"
+                        + "               <preferredName>Isuru</preferredName>\n"
+                        + "            </Employee>\n"
+                        + "         </preferredName>\n"
+                        + "      </Employee>\n"
+                        + "   </soap:Body>\n"
+                        + "</soap:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseId, expectedResponse, 200,
+                "urn:mediate", "addCurrentPayloadAsChild");
+    }
+    
     private void assertResponse(HttpResponse response, String expectedResponse) throws IOException, XMLStreamException {
         Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
         OMElement respElement = HTTPUtils.getOMFromResponse(response);
