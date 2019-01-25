@@ -32,7 +32,7 @@ import javax.xml.stream.XMLStreamException;
  * This class is to test if xml payload can be enriched before it goes to the backend server by adding sibling elements
  * to the payload. This can be done using enrich mediator. This class focusses on various ways of achieving that.
  */
-public class AddSiblingTest extends ScenarioTestBase {
+public class AddSiblingUsingEnrichMediatorTest extends ScenarioTestBase {
 
     @BeforeClass
     public void init() throws Exception {
