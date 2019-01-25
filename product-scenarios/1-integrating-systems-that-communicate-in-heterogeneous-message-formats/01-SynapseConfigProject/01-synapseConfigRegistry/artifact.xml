@@ -76,4 +76,11 @@
             <mediaType>application/xml</mediaType>
         </item>
     </artifact>
+    <artifact name="config_1_6_3_8_xml" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>config_1_6_3_8.xml</file>
+            <path>/_system/config/custom</path>
+            <mediaType>application/xml</mediaType>
+        </item>
+    </artifact>
 </artifacts>
