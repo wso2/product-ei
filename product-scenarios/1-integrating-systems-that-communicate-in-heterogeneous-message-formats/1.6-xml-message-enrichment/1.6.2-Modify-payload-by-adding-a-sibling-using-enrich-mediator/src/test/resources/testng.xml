@@ -27,7 +27,7 @@
     </listeners>
     <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.ei.scenario.test.AddSiblingTest"/>
+            <class name="org.wso2.carbon.ei.scenario.test.AddSiblingUsingEnrichMediatorTest"/>
         </classes>
     </test>
 </suite>
