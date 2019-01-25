@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <enrich>
+                <source clone="true" key="conf:/custom/config_1_6_3_8.xml" type="inline"/>
+                <target xmlns:sam="http://sample.wso2.org" xpath="//sam:placeOrder/sam:order"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
