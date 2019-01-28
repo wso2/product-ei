@@ -110,4 +110,7 @@
     <artifact name="VFS_Sample_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/endpoints/VFS_Sample_EP.xml</file>
     </artifact>
+    <artifact name="1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild.xml</file>
+    </artifact>
 </artifacts>

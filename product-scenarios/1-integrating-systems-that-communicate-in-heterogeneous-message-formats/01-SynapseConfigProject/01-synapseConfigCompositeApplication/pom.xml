@@ -50,6 +50,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_inputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._callPOXEndpointSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._callPOXEndpointSeq>
+    <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild>
     <org.wso2.ei.product-scenarios.scenario_01.local-entry_._out_transform>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.local-entry_._out_transform>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._fullLogSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._fullLogSeq>
     <org.wso2.ei.product-scenarios.scenario_01.endpoint_._SOAP_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._SOAP_EP>
@@ -339,6 +340,18 @@
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.endpoint</groupId>
       <artifactId>VFS_Sample_EP</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
+      <artifactId>1_6_10_2_Proxy_alterPayloadWithInlineJavaScript</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
+      <artifactId>1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>

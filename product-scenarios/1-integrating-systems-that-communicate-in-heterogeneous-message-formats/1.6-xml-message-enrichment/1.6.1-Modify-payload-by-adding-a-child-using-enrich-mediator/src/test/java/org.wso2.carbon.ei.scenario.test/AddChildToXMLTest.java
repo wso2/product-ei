@@ -129,6 +129,49 @@ public class AddChildToXMLTest extends ScenarioTestBase {
                 "urn:mediate", "addCurrentPayloadAsChild");
     }
 
+    /**
+     * This test is to verify if payload can be modified by adding payload stored in a property (OM type)
+     * as a child to the message body
+     */
+    @Test(description = "1.6.1.4")
+    public void addPayloadStoredInPropertyAsChild() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild");
+        String testCaseId = "1.6.1.4";
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <Company>\n"
+                        + "         <companyInfo>\n"
+                        + "            <name>WSO2</name>\n"
+                        + "            <location>Colombo Sri Lanka</location>\n"
+                        + "         </companyInfo>\n"
+                        + "      </Company>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <Company>\n"
+                        + "         <companyInfo>\n"
+                        + "            <name>WSO2</name>\n"
+                        + "            <location>Colombo Sri Lanka</location>\n"
+                        + "         </companyInfo>\n"
+                        + "         <employeeInfo>\n"
+                        + "            <firstName>Jacque</firstName>\n"
+                        + "            <lastName>Kallis</lastName>\n"
+                        + "            <team>EI</team>\n"
+                        + "         </employeeInfo>\n"
+                        + "      </Company>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseId, expectedResponse, 200,
+                "urn:mediate", "addPayloadStoredInPropertyAsChild");
+    }
+
     private void assertResponse(HttpResponse response, String expectedResponse) throws IOException, XMLStreamException {
         Assert.assertEquals(HTTPUtils.getHTTPResponseCode(response), 200, "Response failed");
         OMElement respElement = HTTPUtils.getOMFromResponse(response);
