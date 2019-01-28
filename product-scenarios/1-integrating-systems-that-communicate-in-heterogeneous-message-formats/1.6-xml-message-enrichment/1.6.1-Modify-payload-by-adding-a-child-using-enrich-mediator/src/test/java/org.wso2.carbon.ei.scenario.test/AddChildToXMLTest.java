@@ -22,7 +22,6 @@ import org.apache.axiom.om.OMElement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
-import org.jaxen.JaxenException;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -48,7 +47,7 @@ public class AddChildToXMLTest extends ScenarioTestBase {
     private static final Log log = LogFactory.getLog(AddChildToXMLTest.class);
     private String sourcesFilePath;
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeClass
     public void init() throws Exception {
         super.init();
         sourcesFilePath = testResourcesDir + File.separator + "source_files";
