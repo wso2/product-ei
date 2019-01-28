@@ -105,7 +105,10 @@ public class RemoveElementsTest extends ScenarioTestBase {
                 "urn:mediate", "removeContentOfElementUsingEnrichMediator");
     }
 
-    //This test is to verify if payload can be modified by removing content of an element using xslt mediator.
+    /**
+     * This test is to verify if payload can be modified by removing
+     * content of an element using xslt mediator.
+     */
     @Test(description = "1.6.4.3")
     public void removeContentOfElementUsingXsltMediator() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_4_3_Proxy_removeElementUsingXsltMediator");
