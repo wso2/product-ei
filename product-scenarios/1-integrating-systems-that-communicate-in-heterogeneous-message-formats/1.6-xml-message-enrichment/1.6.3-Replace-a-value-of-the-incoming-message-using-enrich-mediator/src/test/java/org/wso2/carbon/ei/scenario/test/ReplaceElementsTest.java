@@ -213,7 +213,7 @@ public class ReplaceElementsTest extends ScenarioTestBase {
         String expectedResponse = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://sample.wso2.org/xsd\" xmlns:sam=\"http://sample.wso2.org\">\n"
                 + "   <soapenv:Body>\n"
                 + "      <sam:placeOrder>\n"
-                + "         <manufacture>Puma</manufacture>\n"
+                + "         <manufacturer>Puma</manufacturer>\n"
                 + "      </sam:placeOrder>\n"
                 + "   </soapenv:Body>\n"
                 + "</soapenv:Envelope>";
