@@ -27,7 +27,6 @@ import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceStub;
 import org.wso2.carbon.bpmn.stub.BPMNInstanceServiceBPSFaultException;
 import org.wso2.carbon.bpmn.stub.BPMNInstanceServiceStub;
 import org.wso2.carbon.utils.xml.XMLPrettyPrinter;
-import sun.misc.BASE64Decoder;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
@@ -39,6 +38,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -181,8 +181,7 @@ public class WorkflowServiceClient {
         ByteArrayInputStream bis = null;
         byte[] imageByte;
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(imageString);
+            imageByte = Base64.getDecoder().decode(imageString);
             bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
         } catch (IOException e) {

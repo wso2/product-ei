@@ -61,10 +61,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-scr-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>de.jflex</groupId>
                 <artifactId>maven-jflex-plugin</artifactId>
                 <version>1.4.3</version>
