@@ -62,12 +62,6 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
-      <artifactId>1_2_1_Proxy_pox_to_json_using_payload_factory</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
       <artifactId>config_convert_json_to_soap_inputSchema</artifactId>
       <version>1.0.0</version>
