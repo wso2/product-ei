@@ -33,7 +33,7 @@
 
     <modules>
         <module>01-synapseConfigRegistry</module>
-        <module>01-synapseConfig</module>
+        <module>01-synapseConfig-filter</module>
     </modules>
     <profiles>
         <profile>
