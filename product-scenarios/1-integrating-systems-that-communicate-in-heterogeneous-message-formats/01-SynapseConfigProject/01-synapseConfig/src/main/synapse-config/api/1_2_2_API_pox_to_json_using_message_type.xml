@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy name="1_2_2_Proxy_pox_to_json_using_message_type" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
-    <target>
+<api context="/1_2_2_API_pox_to_json_using_message_type" name="1_2_2_API_pox_to_json_using_message_type" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST GET">
         <inSequence>
             <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <log level="custom">
@@ -21,5 +21,5 @@
             <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
             <respond/>
         </faultSequence>
-    </target>
-</proxy>
+    </resource>
+</api>
