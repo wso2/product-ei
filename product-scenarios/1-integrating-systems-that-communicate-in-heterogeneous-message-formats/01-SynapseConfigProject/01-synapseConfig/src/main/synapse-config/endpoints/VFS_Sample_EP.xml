@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="VFS_Sample_EP" xmlns="http://ws.apache.org/ns/synapse">
+    <address uri="vfs:ftp://${vfs.uri.hostname}/test"/>
+</endpoint>

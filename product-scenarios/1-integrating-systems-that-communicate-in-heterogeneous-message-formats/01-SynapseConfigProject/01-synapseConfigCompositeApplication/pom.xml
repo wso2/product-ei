@@ -43,6 +43,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.api_._1_2_2_API_pox_to_json_using_message_type>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_2_2_API_pox_to_json_using_message_type>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>
+    <org.wso2.ei.product-scenarios.scenario_01.endpoint_._VFS_Sample_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._VFS_Sample_EP>
     <org.wso2.ei.product-scenarios.scenario_01.api_._1_3_1_API_json_to_soap_using_xslt>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_3_1_API_json_to_soap_using_xslt>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_inputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg>
@@ -333,6 +334,18 @@
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
       <artifactId>1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
+      <artifactId>1_6_10_2_Proxy_alterPayloadWithInlineJavaScript</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.endpoint</groupId>
+      <artifactId>VFS_Sample_EP</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
