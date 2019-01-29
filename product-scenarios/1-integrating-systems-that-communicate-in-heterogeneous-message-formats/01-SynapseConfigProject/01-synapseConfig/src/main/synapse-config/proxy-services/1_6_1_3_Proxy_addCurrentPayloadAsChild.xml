@@ -22,7 +22,17 @@
         <inSequence>
             <enrich>
                 <source clone="true" type="body"/>
-                <target action="child" xpath="//preferredName"/>
+                <target property="TEST" type="property"/>
+            </enrich>
+            <enrich>
+                <source clone="true" type="inline">
+                    <orders xmlns=""/>
+                </source>
+                <target type="body"/>
+            </enrich>
+            <enrich>
+                <source clone="true" property="TEST" type="property"/>
+                <target action="child" xpath="//orders"/>
             </enrich>
             <respond/>
         </inSequence>

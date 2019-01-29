@@ -99,38 +99,31 @@ public class AddChildToXMLTest extends ScenarioTestBase {
         String testCaseId = "1.6.1.3";
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                        + "   <soap:Header />\n"
-                        + "   <soap:Body>\n"
-                        + "      <Employee>\n"
-                        + "         <firstName>Isuru</firstName>\n"
-                        + "         <lastName>Uyanage</lastName>\n"
-                        + "         <city>Colombo</city>\n"
-                        + "         <preferredName>Isuru</preferredName>\n"
-                        + "      </Employee>\n"
-                        + "   </soap:Body>\n"
-                        + "</soap:Envelope>";
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <order>\n"
+                        + "         <price>12</price>\n"
+                        + "         <productid>IC002</productid>\n"
+                        + "         <quantity>2</quantity>\n"
+                        + "         <reference>ref</reference>\n"
+                        + "      </order>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
 
         String expectedResponse =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                        + "   <soap:Body>\n"
-                        + "      <Employee>\n"
-                        + "         <firstName>Isuru</firstName>\n"
-                        + "         <lastName>Uyanage</lastName>\n"
-                        + "         <city>Colombo</city>\n"
-                        + "         <preferredName>\n"
-                        + "            Isuru\n"
-                        + "            <Employee>\n"
-                        + "               <firstName>Isuru</firstName>\n"
-                        + "               <lastName>Uyanage</lastName>\n"
-                        + "               <city>Colombo</city>\n"
-                        + "               <preferredName>Isuru</preferredName>\n"
-                        + "            </Employee>\n"
-                        + "         </preferredName>\n"
-                        + "      </Employee>\n"
-                        + "   </soap:Body>\n"
-                        + "</soap:Envelope>";
+                        + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soapenv:Body>\n"
+                        + "      <orders>\n"
+                        + "         <order>\n"
+                        + "            <price>12</price>\n"
+                        + "            <productid>IC002</productid>\n"
+                        + "            <quantity>2</quantity>\n"
+                        + "            <reference>ref</reference>\n"
+                        + "         </order>\n"
+                        + "      </orders>\n"
+                        + "   </soapenv:Body>\n"
+                        + "</soapenv:Envelope>";
 
         HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseId, expectedResponse, 200,
                 "urn:mediate", "addCurrentPayloadAsChild");
