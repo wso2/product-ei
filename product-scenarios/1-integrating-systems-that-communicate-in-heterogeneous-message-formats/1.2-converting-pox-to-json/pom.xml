@@ -30,6 +30,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>1.2.1-pox-to-json-using-payloadfactory-mediator</module>
         <module>1.2.2-pox-to-json-using-messagetype-property</module>
     </modules>
 </project>

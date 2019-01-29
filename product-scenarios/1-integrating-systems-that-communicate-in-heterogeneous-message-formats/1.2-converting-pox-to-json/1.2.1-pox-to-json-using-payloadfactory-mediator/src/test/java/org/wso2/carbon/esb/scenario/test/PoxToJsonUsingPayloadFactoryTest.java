@@ -32,15 +32,17 @@ import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
  */
 public class PoxToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
 
+    private String apiName = "1_2_1_API_pox_to_json_using_payload_factory";
+    private String apiInvocationUrl;
+
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
+        apiInvocationUrl = getApiInvocationURLHttp(apiName);
     }
 
     @Test(description = "1.2.1.1", enabled = true)
     public void convertValidPoxToJsonUsingPayloadFactory() throws Exception {
-        String proxyServiceUrl = getProxyServiceURLHttp("1_2_1_1_Proxy_pox_to_json_using_payload_factory");
-
         String request ="<LookupCityRequest xmlns=\"http://tempuri.org\">\n" +
                         "\t<LookupCity>\n" +
                         "        <Zip>60601</Zip>\n" +
@@ -57,14 +59,13 @@ public class PoxToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
 
         String header = "1_2_1_1_1";
 
-        HTTPUtils.invokePoxEndpointAndAssert(proxyServiceUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
                                            header, expectedResponse, 200,
                                            "Valid Pox To Json transformation Using Payload Factory");
     }
 
     @Test(description = "1.2.1.2", enabled = true)
     public void convertMalformedPoxToJsonUsingPayloadFactory() throws Exception {
-        String proxyServiceUrl = getProxyServiceURLHttp("1_2_1_1_Proxy_pox_to_json_using_payload_factory");
 
         String request = "<m0:getQuote xmlns:m0=\"http://services.samples/xsd\">\n" +
                          "   <m0:request>\n" +
@@ -75,7 +76,7 @@ public class PoxToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
 
         String header = "1_2_1_2_1";
 
-        HTTPUtils.invokePoxEndpointAndCheckContains(proxyServiceUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
+        HTTPUtils.invokePoxEndpointAndCheckContains(apiInvocationUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
                                                   header, responseSubstring, 500,
                                                   "Malformed Pox To Json transformation Using Payload Factory");
     }
