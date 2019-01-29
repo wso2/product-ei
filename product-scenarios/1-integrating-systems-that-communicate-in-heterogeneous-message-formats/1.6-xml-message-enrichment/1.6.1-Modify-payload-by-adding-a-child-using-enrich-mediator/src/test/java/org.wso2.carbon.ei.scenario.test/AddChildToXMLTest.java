@@ -130,8 +130,8 @@ public class AddChildToXMLTest extends ScenarioTestBase {
     }
 
     /**
-     * This test is to verify if payload can be modified by adding payload stored in a property (OM type)
-     * as a child to the message body
+     * This test is to verify if payload can be modified by adding payload stored in a property
+     * (OM type) as a child to the message body.
      */
     @Test(description = "1.6.1.4")
     public void addPayloadStoredInPropertyAsChild() throws IOException, XMLStreamException {
@@ -146,6 +146,7 @@ public class AddChildToXMLTest extends ScenarioTestBase {
                         + "            <name>WSO2</name>\n"
                         + "            <location>Colombo Sri Lanka</location>\n"
                         + "         </companyInfo>\n"
+                        + "         <Employees />\n"
                         + "      </Company>\n"
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";
@@ -159,11 +160,18 @@ public class AddChildToXMLTest extends ScenarioTestBase {
                         + "            <name>WSO2</name>\n"
                         + "            <location>Colombo Sri Lanka</location>\n"
                         + "         </companyInfo>\n"
-                        + "         <employeeInfo>\n"
-                        + "            <firstName>Jacque</firstName>\n"
-                        + "            <lastName>Kallis</lastName>\n"
-                        + "            <team>EI</team>\n"
-                        + "         </employeeInfo>\n"
+                        + "         <Employees>\n"
+                        + "            <employee>\n"
+                        + "               <firstName>Jacque</firstName>\n"
+                        + "               <lastName>Kallis</lastName>\n"
+                        + "               <team>EI</team>\n"
+                        + "            </employee>\n"
+                        + "            <employee>\n"
+                        + "               <firstName>Mark</firstName>\n"
+                        + "               <lastName>Boucher</lastName>\n"
+                        + "               <team>STL</team>\n"
+                        + "            </employee>\n"
+                        + "         </Employees>\n"
                         + "      </Company>\n"
                         + "   </soapenv:Body>\n"
                         + "</soapenv:Envelope>";

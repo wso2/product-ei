@@ -17,23 +17,37 @@
   ~ under the License.
   -->
 
-<proxy name="1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
     <target>
         <inSequence>
             <property name="employeeInfo" scope="default">
                 <employeeInfo xmlns="">
-                    <firstName>Jacque</firstName>
-                    <lastName>Kallis</lastName>
-                    <team>EI</team>
+                    <employee>
+                        <firstName>Jacque</firstName>
+                        <lastName>Kallis</lastName>
+                        <team>EI</team>
+                    </employee>
+                    <employee>
+                        <firstName>Mark</firstName>
+                        <lastName>Boucher</lastName>
+                        <team>STL</team>
+                    </employee>
                 </employeeInfo>
             </property>
             <enrich>
-                <source clone="true" property="employeeInfo" type="property"/>
-                <target action="child" xpath="//Company"/>
+                <source clone="true" xpath="$ctx:employeeInfo/employee"/>
+                <target action="child" xpath="//Employees"/>
             </enrich>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </target>
+    <description/>
 </proxy>
+
