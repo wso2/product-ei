@@ -98,13 +98,16 @@
     <artifact name="1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg.xml</file>
     </artifact>
-    <artifact name="1_6_10_2_Proxy_alterPayloadWithInlineJavaScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/1_6_10_2_Proxy_alterPayloadWithInlineJavaScript.xml</file>
-    </artifact>
     <artifact name="1_2_2_API_pox_to_json_using_message_type" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/1_2_2_API_pox_to_json_using_message_type.xml</file>
     </artifact>
     <artifact name="1_2_1_API_pox_to_json_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/1_2_1_API_pox_to_json_using_payload_factory.xml</file>
+    </artifact>
+    <artifact name="1_6_1_3_Proxy_addCurrentPayloadAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_3_Proxy_addCurrentPayloadAsChild.xml</file>
+    </artifact>
+    <artifact name="VFS_Sample_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/VFS_Sample_EP.xml</file>
     </artifact>
 </artifacts>
