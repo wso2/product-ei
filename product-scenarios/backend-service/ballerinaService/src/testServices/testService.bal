@@ -6,6 +6,8 @@ import facilitator as facilitate;
 import ballerina/cache;
 import ballerina/config;
 
+map<int> invocationCountMap;
+
 endpoint http:Listener listener {
     port: config:getAsInt("port", default = 9090)
 };
@@ -250,6 +252,94 @@ service<http:Service> eiTests bind listener {
         } else {
             response.setPayload("please check the payload content type");
         }
+        _ = client->respond(response);
+    }
+
+    @http:ResourceConfig {
+        methods: ["POST"],
+        path: "/invocationCount/{invocationId}"
+    }
+    incrementInvocations(endpoint client, http:Request req, string invocationId) {
+
+        http:Response response;
+        string contentType = req.getContentType();
+
+        json|error request = untaint req.getJsonPayload();
+
+        match request {
+            json jsonPayload => {
+                json jsonRequest = <json>jsonPayload;
+                int|error incrementBy = <int>jsonRequest.incrementBy;
+                match incrementBy {
+                    int incrementByInt => {
+                        int currentInvocationCount;
+                        int? previousInvocationCount = invocationCountMap[invocationId];
+                        match previousInvocationCount {
+                            int previousInvocationCountInt => {
+                                currentInvocationCount = previousInvocationCountInt + incrementByInt;
+                            }
+                            () previousInvocationCountNull => {
+                                currentInvocationCount = incrementByInt;
+                            }
+                        }
+                        invocationCountMap[invocationId] = currentInvocationCount;
+                        json responsePayload = {
+                            status: "Successful",
+                            invocationCount: currentInvocationCount,
+                            uuid: invocationId
+                        };
+                        response.setJsonPayload(untaint responsePayload);
+                    }
+                    error jsonError => {
+                        response.setPayload(facilitate:getJSONBadStringError());
+                    }
+                }
+            }
+            error jsonError => {
+                response.setPayload(facilitate:getJSONBadStringError());
+            }
+        }
+        _ = client->respond(response);
+    }
+
+    @http:ResourceConfig {
+        methods: ["GET"],
+        path: "/invocationCount/{invocationId}"
+    }
+    getNumberOfInvocations(endpoint client, http:Request req, string invocationId) {
+
+        http:Response response;
+        int? invocationCount = invocationCountMap[invocationId];
+        int invocationCountMappedInt = 0;
+        match invocationCount {
+            int invocationCountInt => {
+                invocationCountMappedInt = invocationCountInt;
+            }
+            () previousInvocationCountNull => {
+                invocationCountMappedInt = 0;
+            }
+        }
+        json responsePayload = {
+            status: "Successful",
+            invocationCount: invocationCountMappedInt,
+            uuid: invocationId
+        };
+        response.setJsonPayload(untaint responsePayload);
+        _ = client->respond(response);
+    }
+
+    @http:ResourceConfig {
+        methods: ["DELETE"],
+        path: "/invocationCount/{invocationId}"
+    }
+    resetInvocations(endpoint client, http:Request req, string invocationId) {
+        http:Response response;
+        boolean isRemoved = invocationCountMap.remove(invocationId);
+        json responsePayload = {
+            Status: "successfully reset number of invocations",
+            uuid: invocationId
+        };
+        response.setPayload(untaint responsePayload);
         _ = client->respond(response);
     }
 }
