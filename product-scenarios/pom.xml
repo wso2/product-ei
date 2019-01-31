@@ -83,6 +83,7 @@
         <module>8-connect-devices-to-enterprise</module>
         <!--<module>10-file-processing</module>-->
         <module>13-micro-services</module>
+        <module>14-periodically-execute-an-integration-process</module>
     </modules>
 
     <repositories>

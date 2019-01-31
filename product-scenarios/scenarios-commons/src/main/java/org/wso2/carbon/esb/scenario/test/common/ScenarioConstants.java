@@ -37,7 +37,7 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
-
+    public static final String BACKEND_REST_SERVICE1_URL = "http://ei-backend.scenarios.wso2.org:9090/eiTests/";
 
     /**
      *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
