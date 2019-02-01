@@ -550,7 +550,7 @@
             <dependency>
                 <groupId>org.wso2.carbon.automation</groupId>
                 <artifactId>org.wso2.carbon.automation.extensions</artifactId>
-                <version>4.4.3-SNAPSHOT</version>
+                <version>${automation.framework.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.apache.jmeter</groupId>
@@ -1548,14 +1548,14 @@
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.6.49</carbon.commons.version>
+        <carbon.commons.version>4.6.51-SNAPSHOT</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.7.19</carbon.deployment.version>
         <carbon-deployment.feature.imp.version>4.7.19</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.6.38</carbon.registry.version>
+        <carbon.registry.version>4.6.42-SNAPSHOT</carbon.registry.version>
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.6</carbon.identity-inbound-auth-sts.version>
@@ -1568,14 +1568,14 @@
         <carbon.rule.version>4.4.9</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.82</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.84-SNAPSHOT</carbon-dataservice-hosting.feature.imp.version>
 
         <version.equinox.osgi>3.9.1.v20130814-1242</version.equinox.osgi>
         <version.equinox.osgi.services>3.3.100.v20130513-1956</version.equinox.osgi.services>
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
-        <carbon.analytics.common.version>5.1.42</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.1.51-SNAPSHOT</carbon.analytics.common.version>
 
         <!-- MSF4J version -->
         <!-- MSF4J version should also be updated at /p2-profile/msf4j/pom.xml and /samples/msf4j/pom.xml -->
