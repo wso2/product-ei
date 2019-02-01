@@ -550,7 +550,7 @@
             <dependency>
                 <groupId>org.wso2.carbon.automation</groupId>
                 <artifactId>org.wso2.carbon.automation.extensions</artifactId>
-                <version>4.4.3-SNAPSHOT</version>
+                <version>${automation.framework.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.apache.jmeter</groupId>
