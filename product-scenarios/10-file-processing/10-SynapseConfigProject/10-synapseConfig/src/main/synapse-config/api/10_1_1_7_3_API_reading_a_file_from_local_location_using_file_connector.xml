@@ -17,17 +17,18 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>10-file-processing</artifactId>
-        <groupId>org.wso2.ei</groupId>
-        <version>6.4.0</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>10.2-file-movement-with-file-processing-between-two-systems</artifactId>
-    <packaging>pom</packaging>
-
-</project>
+<api context="/10_1_1_7_3_API" name="10_1_1_7_3_API_reading_a_file_from_local_location_using_file_connector" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET">
+        <inSequence>
+            <property expression="$url:sourceUrl" name="sourceUrl" scope="default" type="STRING"/>
+            <fileconnector.read>
+                <source>{$ctx:sourceUrl}</source>
+                <contentType>application/xml</contentType>
+            </fileconnector.read>
+            <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

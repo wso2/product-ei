@@ -16,18 +16,23 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>10-file-processing</artifactId>
-        <groupId>org.wso2.ei</groupId>
-        <version>6.4.0</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>10.2-file-movement-with-file-processing-between-two-systems</artifactId>
+    <parent>
+        <groupId>org.wso2.ei</groupId>
+        <artifactId>10.1-simple-file-movement-between-two-systems</artifactId>
+        <version>6.4.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>10.1.1-reading-a-file-from-a-specified-location-in-file-system</artifactId>
+
     <packaging>pom</packaging>
 
+    <modules>
+        <module>10.1.1.7-reading-a-file-from-local-location</module>
+    </modules>
 </project>
