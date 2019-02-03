@@ -106,6 +106,45 @@ public class RemoveElementsTest extends ScenarioTestBase {
                 "urn:mediate", "RemoveContentOfElementUsingEnrichMediator");
     }
 
+    /**
+     * This test is to verify if payload can be modified by removing
+     * content of an element using xslt mediator.
+     */
+    @Test(description = "1.6.4.3")
+    public void removeContentOfElementUsingXsltMediator() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_4_3_Proxy_removeElementUsingXsltMediator");
+        String testCaseId = "1.6.4.3";
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soap:Header />\n"
+                        + "   <soap:Body>\n"
+                        + "      <Employee>\n"
+                        + "         <firstName>Isuru</firstName>\n"
+                        + "         <lastName>Uyanage</lastName>\n"
+                        + "         <city>Colombo</city>\n"
+                        + "         <preferredName>Isuru</preferredName>\n"
+                        + "      </Employee>\n"
+                        + "   </soap:Body>\n"
+                        + "</soap:Envelope>";
+
+        String expectedResponse =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                        + "   <soap:Header />\n"
+                        + "   <soap:Body>\n"
+                        + "      <Employee>\n"
+                        + "         <firstName>Isuru</firstName>\n"
+                        + "         <lastName>Uyanage</lastName>\n"
+                        + "         <city>Colombo</city>\n"
+                        + "      </Employee>\n"
+                        + "   </soap:Body>\n"
+                        + "</soap:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, request, testCaseId, expectedResponse, 200,
+                "urn:mediate", "removeContentOfElementUsingXsltMediator");
+    }
+
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
