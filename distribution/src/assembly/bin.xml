@@ -931,7 +931,7 @@
             <directory>./src/resources</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/lib/endorsed</outputDirectory>
             <includes>
-                <include>**/saxon9he.jar</include>
+                <include>**/Saxon-HE-9.5.1-8.jar</include>
             </includes>
         </fileSet>
         <!-- added a bps specific endorsed directory. Fix https://wso2.org/jira/browse/ESBJAVA-5118-->
