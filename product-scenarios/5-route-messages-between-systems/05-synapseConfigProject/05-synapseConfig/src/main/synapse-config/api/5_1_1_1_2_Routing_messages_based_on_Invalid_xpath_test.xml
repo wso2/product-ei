@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/5_1_1_1_2_Routing_messages_based_on_Invalid_xpath_test" name="5_1_1_1_2_Routing_messages_based_on_Invalid_xpath_test" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST">
+        <inSequence>
+            <property expression="$bodym:StockName" name="Stock" scope="default" type="STRING" xmlns:m="http://www.example.org/stock"/>
+            <switch source="get-property('Stock')">
+                <case regex="IBM">
+                    <call>
+                        <endpoint key="05_EP_XML"/>
+                    </call>
+                </case>
+                <default/>
+            </switch>
+            <respond description="PASS"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <makefault version="pox">
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>
