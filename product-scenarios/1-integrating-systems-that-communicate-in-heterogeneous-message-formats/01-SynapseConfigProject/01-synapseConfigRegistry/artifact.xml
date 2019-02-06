@@ -108,4 +108,25 @@
             <mediaType>application/xml</mediaType>
         </item>
     </artifact>
+    <artifact name="config_1_6_12_1" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_1.dmc</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_1_inputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_1_inputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_1_outputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_1_outputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
 </artifacts>

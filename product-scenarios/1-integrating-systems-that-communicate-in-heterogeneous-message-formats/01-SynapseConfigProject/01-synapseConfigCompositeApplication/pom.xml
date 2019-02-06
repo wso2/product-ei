@@ -49,10 +49,13 @@
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._callSoapSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._callSoapSeq>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1.6.3.6_xml>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1.6.3.6_xml>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1_inputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_1_Proxy_soap_to_json_using_payload_factory>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_1_Proxy_soap_to_json_using_payload_factory>
     <org.wso2.ei.product-scenarios.scenario_01.local-entry_._in_transform>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.local-entry_._in_transform>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_2_Proxy_Add_Sibling_xpath>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_2_Proxy_Add_Sibling_xpath>
+    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_1_API_performAddOperationUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_1_API_performAddOperationUsingDatamapper>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._callTextEndpointSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._callTextEndpointSeq>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1_outputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg>
     <org.wso2.ei.product-scenarios.scenario_01.endpoint_._POX_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._POX_EP>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty>
@@ -60,6 +63,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_1_Proxy_Add_Sibling_Inline>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_1_Proxy_Add_Sibling_Inline>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1.6.3.5_xml>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1.6.3.5_xml>
+    <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1>
     <org.wso2.ei.product-scenarios.scenario_01.api_._1_2_2_API_pox_to_json_using_message_type>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_2_2_API_pox_to_json_using_message_type>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>
@@ -399,6 +403,30 @@
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.proxy-service</groupId>
       <artifactId>1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_1_6_12_1</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_1_6_12_1_inputSchema</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.resource</groupId>
+      <artifactId>config_1_6_12_1_outputSchema</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
+      <artifactId>1_6_12_1_API_performAddOperationUsingDatamapper</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
