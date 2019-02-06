@@ -171,4 +171,88 @@
             <mediaType>text/plain</mediaType>
         </item>
     </artifact>
+    <artifact name="config_1_6_12_4" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_4.dmc</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_4_inputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_4_inputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_4_outputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_4_outputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_5" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_5.dmc</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_5_inputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_5_inputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_5_outputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_5_outputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_6" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_6.dmc</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_6_inputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_6_inputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_6_outputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_6_outputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_7" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_7.dmc</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_7_inputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_7_inputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
+    <artifact name="config_1_6_12_7_outputSchema" groupId="org.wso2.ei.product-scenarios.scenario_01.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>config_1_6_12_7_outputSchema.json</file>
+            <path>/_system/governance/datamapper</path>
+            <mediaType>text/plain</mediaType>
+        </item>
+    </artifact>
 </artifacts>

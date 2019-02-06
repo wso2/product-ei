@@ -146,4 +146,16 @@
     <artifact name="1_6_12_3_API_performMultiplicationOperationUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/1_6_12_3_API_performMultiplicationOperationUsingDatamapper.xml</file>
     </artifact>
+    <artifact name="1_6_12_4_API_performDivisionOperationUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_4_API_performDivisionOperationUsingDatamapper.xml</file>
+    </artifact>
+    <artifact name="1_6_12_5_API_getRoundValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_5_API_getRoundValueUsingDatamapper.xml</file>
+    </artifact>
+    <artifact name="1_6_12_6_API_getCeilingValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_6_API_getCeilingValueUsingDatamapper.xml</file>
+    </artifact>
+    <artifact name="1_6_12_7_API_getAbsoluteValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_7_API_getAbsoluteValueUsingDatamapper.xml</file>
+    </artifact>
 </artifacts>

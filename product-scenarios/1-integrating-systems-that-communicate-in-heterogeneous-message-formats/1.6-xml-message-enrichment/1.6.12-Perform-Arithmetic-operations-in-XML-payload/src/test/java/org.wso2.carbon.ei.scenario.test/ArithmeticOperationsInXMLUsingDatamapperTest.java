@@ -116,6 +116,110 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
 
     }
 
+    /**
+     * This test is to verify if division operation can be performed with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.4")
+    public void performDivisionOperationUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_4_API_performDivisionOperationUsingDatamapper";
+        String testCaseId = "1.6.12.4";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<DivideNumbers>\n"
+                        + "    <num1>10</num1>\n"
+                        + "    <num2>5</num2>\n"
+                        + "</DivideNumbers>";
+
+        String expectedResponse =
+                "<ResultDivide>\n"
+                        + "    <result>2.0</result>\n"
+                        + "</ResultDivide>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "performDivisionOperationUsingDatamapper");
+
+    }
+
+    /**
+     * This test is to verify if it can get the round value with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.5")
+    public void getRoundValueUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_5_API_getRoundValueUsingDatamapper";
+        String testCaseId = "1.6.12.5";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<RoundValue>\n"
+                        + "    <num1>1.56</num1>\n"
+                        + "</RoundValue>";
+
+        String expectedResponse =
+                "<ResultRoundValue>\n"
+                        + "    <result>2.0</result>\n"
+                        + "</ResultRoundValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "getRoundValueUsingDatamapper");
+
+    }
+
+    /**
+     * This test is to verify if it can get the ceiling value with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.6")
+    public void getCeilingValueUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_6_API_getCeilingValueUsingDatamapper";
+        String testCaseId = "1.6.12.6";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<CeilingValue>\n"
+                        + "    <num1>1.1</num1>\n"
+                        + "</CeilingValue>";
+
+        String expectedResponse =
+                "<ResultCeilingValue>\n"
+                        + "    <result>2.0</result>\n"
+                        + "</ResultCeilingValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "getCeilingValueUsingDatamapper");
+
+    }
+
+    /**
+     * This test is to verify if it can get the absolute value with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.7")
+    public void getAbsoluteValueUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_7_API_getAbsoluteValueUsingDatamapper";
+        String testCaseId = "1.6.12.7";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<AbsoluteValue>\n"
+                        + "    <num1>-7</num1>\n"
+                        + "</AbsoluteValue>";
+
+        String expectedResponse =
+                "<ResultAbsoluteValue>\n"
+                        + "    <result>7.0</result>\n"
+                        + "</ResultAbsoluteValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "getAbsoluteValueUsingDatamapper");
+
+    }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {

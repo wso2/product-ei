@@ -1,0 +1,14 @@
+map_S_DivideNumbers_S_ResultDivide = function(){ 
+var outputResultDivide={};
+var STRING_TO_NUMBER_1_0 = '';
+var STRING_TO_NUMBER_2_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputDivideNumbers.num2);
+STRING_TO_NUMBER_2_0 = Number(inputDivideNumbers.num1);
+outputResultDivide =  {};
+outputResultDivide.result = STRING_TO_NUMBER_2_0/STRING_TO_NUMBER_1_0;
+return outputResultDivide;
+};
+
+
+
