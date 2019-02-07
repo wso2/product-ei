@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -12,7 +12,7 @@
   ~ Unless required by applicable law or agreed to in writing,
   ~ software distributed under the License is distributed on an
   ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  ~ KIND, either express or implied.  See the License for the
+  ~ KIND, either express or implied. See the License for the
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
@@ -31,8 +31,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>10.1-simple-file-movement-between-two-systems</module>
-        <module>10.2-file-movement-with-file-processing-between-two-systems</module>
-        <module>10.3-mask-valuable-business-data-stored-in-files</module>
+        <!--<module>10.2-file-movement-with-file-processing-between-two-systems</module>-->
+        <!--<module>10.3-mask-valuable-business-data-stored-in-files</module>-->
     </modules>
     <build>
         <plugins>
@@ -43,14 +43,14 @@
                     <disableXmlReport>false</disableXmlReport>
                     <parallel>false</parallel>
                     <suiteXmlFiles>
-                        <suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemProperties>
                         <property>
                             <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
                             <name>common.resources.dir</name>
                             <value>
-                                ${basedir}/resources/
+                                ${basedir}/../../../resources/
                             </value>
                         </property>
                         <property>
@@ -64,7 +64,7 @@
                             <!-- Directory containing carbon applications -->
                             <name>test.resources.carbonApplications.dir</name>
                             <value>
-                                ${basedir}/10-SynapseConfigProject/10-synapseConfigCompositeApplication/target/
+                                ${basedir}/../../../10-SynapseConfigProject/10-synapseConfigCompositeApplication/target/
                             </value>
                         </property>
                         <property>
