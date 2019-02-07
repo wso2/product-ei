@@ -30,6 +30,8 @@ import javax.xml.stream.XMLStreamException;
 
 public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBase {
 
+    private static final String API_NAME = "1_6_12_API_performArithmeticOperations";
+
     @BeforeClass
     public void init() throws Exception {
         super.init();
@@ -41,10 +43,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.1")
     public void performAddOperationUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_1_API_performAddOperationUsingDatamapper";
         String testCaseId = "1.6.12.1";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/add");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<AddNumbers>\n"
@@ -68,10 +68,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.2")
     public void performSubstractOperationUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_2_API_performSubstractOperationUsingDatamapper";
         String testCaseId = "1.6.12.2";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/substract");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<SubstractNumbers>\n"
@@ -95,10 +93,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.3")
     public void performMultiplicationOperationUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_3_API_performMultiplicationOperationUsingDatamapper";
         String testCaseId = "1.6.12.3";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/multiply");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<MultiplyNumbers>\n"
@@ -122,10 +118,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.4")
     public void performDivisionOperationUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_4_API_performDivisionOperationUsingDatamapper";
         String testCaseId = "1.6.12.4";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/divide");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<DivideNumbers>\n"
@@ -149,10 +143,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.5")
     public void getRoundValueUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_5_API_getRoundValueUsingDatamapper";
         String testCaseId = "1.6.12.5";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/round");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<RoundValue>\n"
@@ -175,10 +167,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.6")
     public void getCeilingValueUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_6_API_getCeilingValueUsingDatamapper";
         String testCaseId = "1.6.12.6";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/ceiling");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<CeilingValue>\n"
@@ -201,10 +191,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.7")
     public void getAbsoluteValueUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_7_API_getAbsoluteValueUsingDatamapper";
         String testCaseId = "1.6.12.7";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/absolute");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<AbsoluteValue>\n"
@@ -227,10 +215,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.8")
     public void getMinimumValueUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_8_API_getMinimumValueUsingDatamapper";
         String testCaseId = "1.6.12.8";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/min");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<MinValue>\n"
@@ -254,10 +240,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.9")
     public void getMaximumValueUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_9_API_getMaximumValueUsingDatamapper";
         String testCaseId = "1.6.12.9";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/max");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<MaxValue>\n"
@@ -281,10 +265,8 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
      */
     @Test(description = "1.6.12.10")
     public void getFloorValueUsingDatamapper() throws IOException, XMLStreamException {
-        String apiName = "1_6_12_10_API_getFloorValueUsingDatamapper";
         String testCaseId = "1.6.12.10";
-        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
-
+        String apiInvocationUrl = getApiInvocationURLHttp(API_NAME +"/floor");
         String request =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                         + "<FloorValue>\n"
@@ -300,7 +282,6 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                 testCaseId, expectedResponse, 200, "getFloorValueUsingDatamapper");
 
     }
-
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {

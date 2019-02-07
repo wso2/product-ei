@@ -137,34 +137,7 @@
     <artifact name="1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg.xml</file>
     </artifact>
-    <artifact name="1_6_12_1_API_performAddOperationUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_1_API_performAddOperationUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_2_API_performSubstractOperationUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_2_API_performSubstractOperationUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_3_API_performMultiplicationOperationUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_3_API_performMultiplicationOperationUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_4_API_performDivisionOperationUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_4_API_performDivisionOperationUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_5_API_getRoundValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_5_API_getRoundValueUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_6_API_getCeilingValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_6_API_getCeilingValueUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_7_API_getAbsoluteValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_7_API_getAbsoluteValueUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_8_API_getMinimumValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_8_API_getMinimumValueUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_9_API_getMaximumValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_9_API_getMaximumValueUsingDatamapper.xml</file>
-    </artifact>
-    <artifact name="1_6_12_10_API_getFloorValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/1_6_12_10_API_getFloorValueUsingDatamapper.xml</file>
+    <artifact name="1_6_12_API_performArithmeticOperations" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_API_performArithmeticOperations.xml</file>
     </artifact>
 </artifacts>

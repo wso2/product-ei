@@ -27,10 +27,10 @@
   <name>01-synapseConfigCompositeApplication</name>
   <description>01-synapseConfigCompositeApplication</description>
   <properties>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_5_API_getRoundValueUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_5_API_getRoundValueUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1.6.3.6_xml>capp/EnterpriseIntegrator</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1.6.3.6_xml>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_8_API_getMinimumValueUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_8_API_getMinimumValueUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.local-entry_._in_transform>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.local-entry_._in_transform>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_3_8_xml>capp/EnterpriseIntegrator</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_3_8_xml>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_inputSchema>
@@ -57,7 +57,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_8_1_1_Proxy_PlainTextReceiver>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_8_1_1_Proxy_PlainTextReceiver>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_10_API_getFloorValueUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_10_API_getFloorValueUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap_xsltStyleSheet>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._callPOXEndpointSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._callPOXEndpointSeq>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_1_Proxy_Add_Sibling_Inline>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_1_Proxy_Add_Sibling_Inline>
@@ -67,7 +67,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_2_Proxy_soap_to_json_using_message_type>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_2_Proxy_soap_to_json_using_message_type>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_6_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_6_inputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_3_API_performMultiplicationOperationUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_3_API_performMultiplicationOperationUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_4_1_Proxy_RemoveElements_ScriptMediator>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_4_1_Proxy_RemoveElements_ScriptMediator>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty>
@@ -77,7 +77,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_5_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_5_outputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_4_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_4_inputSchema>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_6_API_getCeilingValueUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_6_API_getCeilingValueUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.local-entry_._out_transform>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.local-entry_._out_transform>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_4_3_xsltStyleSheet_xml>capp/EnterpriseIntegrator</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_4_3_xsltStyleSheet_xml>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_4_3_Proxy_removeElementUsingXsltMediator>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_4_3_Proxy_removeElementUsingXsltMediator>
@@ -85,15 +85,15 @@
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_4_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_4_outputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_9_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_9_inputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.sequence_._callSoapSeq>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.sequence_._callSoapSeq>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_4_API_performDivisionOperationUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_4_API_performDivisionOperationUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_xsltStyleSheet>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_xsltStyleSheet>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_9_API_getMaximumValueUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_9_API_getMaximumValueUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_7_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_7_inputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_3_Proxy_soap_to_json_using_data_mapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_1_3_Proxy_soap_to_json_using_data_mapper>
     <org.wso2.ei.product-scenarios.scenario_01.endpoint_._SOAP_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._SOAP_EP>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_2_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_2_inputSchema>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_1_API_performAddOperationUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_1_API_performAddOperationUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_1_Proxy_replace_messageBody_usingPayloadStoredInProperty>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_1_Proxy_replace_messageBody_usingPayloadStoredInProperty>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg>
     <org.wso2.ei.product-scenarios.scenario_01.endpoint_._VFS_Sample_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.endpoint_._VFS_Sample_EP>
@@ -104,11 +104,11 @@
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_3_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_3_outputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.proxy-service_._1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_9_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_9_outputSchema>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_7_API_getAbsoluteValueUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_7_API_getAbsoluteValueUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_json_to_soap>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_10>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_10>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_9>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_9>
-    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_2_API_performSubstractOperationUsingDatamapper>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_2_API_performSubstractOperationUsingDatamapper>
+    
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_8>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_8>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_7>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_7>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_6>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_6>
@@ -117,6 +117,7 @@
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_4>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_4>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_3>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_3>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_2>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_2>
+    <org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_API_performArithmeticOperations>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.api_._1_6_12_API_performArithmeticOperations>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_1>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_8_outputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_1_6_12_8_outputSchema>
     <org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_inputSchema>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_01.resource_._config_convert_soap_to_json_inputSchema>
@@ -148,67 +149,7 @@
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_10_API_getFloorValueUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_1_API_performAddOperationUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_2_API_performSubstractOperationUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_3_API_performMultiplicationOperationUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_4_API_performDivisionOperationUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_5_API_getRoundValueUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_6_API_getCeilingValueUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_7_API_getAbsoluteValueUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_8_API_getMinimumValueUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
-      <artifactId>1_6_12_9_API_getMaximumValueUsingDatamapper</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
+                                            <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_01.endpoint</groupId>
       <artifactId>JSON_EP</artifactId>
       <version>1.0.0</version>
@@ -681,6 +622,12 @@
       <artifactId>config_convert_soap_to_json_xsltStyleSheet</artifactId>
       <version>1.0.0</version>
       <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_01.api</groupId>
+      <artifactId>1_6_12_API_performArithmeticOperations</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
     </dependency>
   </dependencies>
   <repositories>
