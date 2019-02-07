@@ -28,6 +28,10 @@ import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import java.io.IOException;
 import javax.xml.stream.XMLStreamException;
 
+/**
+ * This class has the test cases to test the Arithmetic operations with the Datamapper mediator
+ *  mediator with given xml payload.
+ */
 public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBase {
 
     private static final String API_NAME = "1_6_12_API_performArithmeticOperations";
