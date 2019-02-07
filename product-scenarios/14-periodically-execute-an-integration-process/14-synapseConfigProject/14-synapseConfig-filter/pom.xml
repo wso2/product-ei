@@ -24,7 +24,7 @@
 
     <parent>
         <groupId>org.wso2.ei</groupId>
-        <artifactId>01-synapseConfigProject</artifactId>
+        <artifactId>14-synapseConfigProject</artifactId>
         <version>6.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
