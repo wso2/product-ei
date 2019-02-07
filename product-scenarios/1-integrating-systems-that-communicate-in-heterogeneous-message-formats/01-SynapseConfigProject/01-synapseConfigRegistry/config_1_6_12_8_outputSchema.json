@@ -1,15 +1,11 @@
 {
   "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
   "id" : "http://wso2jsonschema.org",
-  "title" : "DivideNumbers",
+  "title" : "ResultMinimumValue",
   "type" : "object",
   "properties" : {
-    "num1" : {
-      "id" : "http://wso2jsonschema.org/num1",
-      "type" : "string"
-    },
-    "num2" : {
-      "id" : "http://wso2jsonschema.org/num2",
+    "result" : {
+      "id" : "http://wso2jsonschema.org/result",
       "type" : "string"
     }
   }

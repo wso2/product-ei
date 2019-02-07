@@ -158,4 +158,13 @@
     <artifact name="1_6_12_7_API_getAbsoluteValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/1_6_12_7_API_getAbsoluteValueUsingDatamapper.xml</file>
     </artifact>
+    <artifact name="1_6_12_8_API_getMinimumValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_8_API_getMinimumValueUsingDatamapper.xml</file>
+    </artifact>
+    <artifact name="1_6_12_9_API_getMaximumValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_9_API_getMaximumValueUsingDatamapper.xml</file>
+    </artifact>
+    <artifact name="1_6_12_10_API_getFloorValueUsingDatamapper" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_10_API_getFloorValueUsingDatamapper.xml</file>
+    </artifact>
 </artifacts>

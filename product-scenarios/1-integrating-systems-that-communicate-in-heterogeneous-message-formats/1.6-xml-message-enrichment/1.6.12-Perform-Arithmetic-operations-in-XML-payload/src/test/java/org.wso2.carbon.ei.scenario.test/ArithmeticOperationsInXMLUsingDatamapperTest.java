@@ -221,6 +221,87 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
 
     }
 
+    /**
+     * This test is to verify if it can get the minimum value with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.8")
+    public void getMinimumValueUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_8_API_getMinimumValueUsingDatamapper";
+        String testCaseId = "1.6.12.8";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<MinValue>\n"
+                        + "    <num1>5</num1>\n"
+                        + "    <num2>9</num2>\n"
+                        + "</MinValue>";
+
+        String expectedResponse =
+                "<ResultMinimumValue>\n"
+                        + "    <result>5.0</result>\n"
+                        + "</ResultMinimumValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "getMinimumValueUsingDatamapper");
+
+    }
+
+    /**
+     * This test is to verify if it can get the maximum value with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.9")
+    public void getMaximumValueUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_9_API_getMaximumValueUsingDatamapper";
+        String testCaseId = "1.6.12.9";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<MaxValue>\n"
+                        + "    <num1>5</num1>\n"
+                        + "    <num2>9</num2>\n"
+                        + "</MaxValue>";
+
+        String expectedResponse =
+                "<ResultMaximumValue>\n"
+                        + "    <result>9.0</result>\n"
+                        + "</ResultMaximumValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "getMaximumValueUsingDatamapper");
+
+    }
+
+    /**
+     * This test is to verify if it can get the floor value with given xml payload using
+     *  datamapper mediator.
+     */
+    @Test(description = "1.6.12.10")
+    public void getFloorValueUsingDatamapper() throws IOException, XMLStreamException {
+        String apiName = "1_6_12_10_API_getFloorValueUsingDatamapper";
+        String testCaseId = "1.6.12.10";
+        String apiInvocationUrl = getApiInvocationURLHttp(apiName);
+
+        String request =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                        + "<FloorValue>\n"
+                        + "    <num1>4.5</num1>\n"
+                        + "</FloorValue>";
+
+        String expectedResponse =
+                "<ResultFloorValue>\n"
+                        + "    <result>4.0</result>\n"
+                        + "</ResultFloorValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, 200, "getFloorValueUsingDatamapper");
+
+    }
+
+
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();
