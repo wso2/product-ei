@@ -20,7 +20,7 @@
 <proxy name="10_1_1_7_1_Proxy_reading_a_file_from_local_location_using_vfs_listener" startOnLoad="true" transports="vfs" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <endpoint>
-            <address format="soap12" uri="http://localhost:9000/services/SimpleStockQuoteService"/>
+            <address format="soap12" uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService"/>
         </endpoint>
         <inSequence/>
         <outSequence>
@@ -28,7 +28,7 @@
             <property name="OUT_ONLY" scope="default" type="STRING" value="true"/>
             <send>
                 <endpoint>
-                    <address uri="vfs:file://${vfsLocation}/output/stockQuote.xml"/>
+                    <address uri="vfs:file://${localVfsLocation}/vfs/output/stockQuote.xml"/>
                 </endpoint>
             </send>
         </outSequence>
@@ -36,11 +36,11 @@
     </target>
     <publishWSDL preservePolicy="true" uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
     <parameter name="transport.PollInterval">15</parameter>
-    <parameter name="transport.vfs.FileURI">file://${vfsLocation}/input/</parameter>
+    <parameter name="transport.vfs.FileURI">file://${localVfsLocation}/vfs/input/</parameter>
     <parameter name="transport.vfs.ContentType">text/xml</parameter>
     <parameter name="transport.vfs.ActionAfterProcess">MOVE</parameter>
-    <parameter name="transport.vfs.MoveAfterFailure">file://${vfsLocation}/failure/</parameter>
+    <parameter name="transport.vfs.MoveAfterFailure">file://${localVfsLocation}/vfs/failure/</parameter>
     <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
     <parameter name="transport.vfs.FileNamePattern">.*\.xml</parameter>
-    <parameter name="transport.vfs.MoveAfterProcess">file://${vfsLocation}/original/</parameter>
+    <parameter name="transport.vfs.MoveAfterProcess">file://${localVfsLocation}/vfs/original/</parameter>
 </proxy>
