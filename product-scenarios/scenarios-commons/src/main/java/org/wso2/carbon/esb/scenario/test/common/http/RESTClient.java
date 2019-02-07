@@ -104,6 +104,18 @@ public class RESTClient {
     }
 
     /**
+     * Sends an HTTP GET request to the specified URL.
+     *
+     * @param url target endpoint URL
+     * @return returned HTTP response
+     * @throws IOException if an error occurs while making the invocation
+     */
+    public HttpResponse doGet(String url) throws IOException {
+        HttpUriRequest request = new HttpGet(url);
+        return httpclient.execute(request);
+    }
+
+    /**
      * Sends a HTTP POST request to the specified URL.
      *
      * @param url         Target endpoint URL
@@ -164,6 +176,18 @@ public class RESTClient {
     public HttpResponse doDelete(String url, final Map<String, String> headers) throws IOException {
         HttpUriRequest request = new HttpDelete(url);
         HTTPUtils.setHTTPHeaders(headers, request);
+        return httpclient.execute(request);
+    }
+
+    /**
+     * Sends an HTTP DELETE request to the specified URL.
+     *
+     * @param url target endpoint URL
+     * @return returned HTTP response
+     * @throws IOException if an error occurs while making the invocation
+     */
+    public HttpResponse doDelete(String url) throws IOException {
+        HttpUriRequest request = new HttpDelete(url);
         return httpclient.execute(request);
     }
 
