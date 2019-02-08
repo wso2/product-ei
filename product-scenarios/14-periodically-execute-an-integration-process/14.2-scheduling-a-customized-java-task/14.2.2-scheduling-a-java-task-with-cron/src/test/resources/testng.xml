@@ -24,9 +24,9 @@
         <!-- TestLoggingListener : Test listener to log test execution events -->
         <listener class-name="org.wso2.carbon.esb.scenario.test.common.testng.listeners.TestLoggingListener"/>
     </listeners>
-    <test name="Scheduled-Task-with-Interval-Tests" preserve-order="true" verbose="2" parallel="false">
+    <test name="Custom-Scheduled-Task-with-Cron-tests" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.ei.scenario.test.InjectMessageToSequenceUsingScheduleTaskWithIntervalTest"/>
+            <class name="org.wso2.carbon.ei.scenario.test.ScheduleCustomJavaTaskWithCronTest"/>
         </classes>
     </test>
 </suite>
