@@ -1,0 +1,3 @@
+<m:GetStockPrice xmlns:m="http://www.example.org/stock">
+    <m:StockName></m:StockName>
+</m:GetStockPrice>

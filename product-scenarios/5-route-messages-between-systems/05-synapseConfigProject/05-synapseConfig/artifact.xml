@@ -17,10 +17,13 @@
     <artifact name="05_EP_XML" groupId="org.wso2.ei.product-scenarios.scenario_05.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/endpoints/05_EP_XML.xml</file>
     </artifact>
-    <artifact name="5_1_1_Routing_messages_based_on_content_of_message_test" groupId="org.wso2.ei.product-scenarios.scenario_05.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/5_1_1_Routing_messages_based_on_content_of_message_test.xml</file>
+    <artifact name="5_1_1_API_Routing_messages_based_on_content_of_message_test" groupId="org.wso2.ei.product-scenarios.scenario_05.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/5_1_1_API_Routing_messages_based_on_content_of_message_test.xml</file>
     </artifact>
-    <artifact name="5_1_1_1_2_Routing_messages_based_on_Invalid_xpath_test" groupId="org.wso2.ei.product-scenarios.scenario_05.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/api/5_1_1_1_2_Routing_messages_based_on_Invalid_xpath_test.xml</file>
+    <artifact name="5_1_1_1_2_API_Routing_messages_based_on_Invalid_xpath_test" groupId="org.wso2.ei.product-scenarios.scenario_05.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/5_1_1_1_2_API_Routing_messages_based_on_Invalid_xpath_test.xml</file>
+    </artifact>
+    <artifact name="5_1_2_1_1_API_Routing_based_on_regex_with_switchM_test" groupId="org.wso2.ei.product-scenarios.scenario_05.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/5_1_2_1_1_API_Routing_based_on_regex_with_switchM_test.xml</file>
     </artifact>
 </artifacts>

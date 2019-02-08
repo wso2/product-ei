@@ -28,8 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 
 /**
- * This test class tests routing the messages into relevant backends based on the XPath by using switch mediator and filter mediator.
- * This includes the test cases of valid, Invalid, Null or empty cases of XPath expressions.
+ * This test class tests routing messages into relevant backends based on the XPath by using switch and filter mediator.
  */
 public class RoutingBasedOnXpathTest extends ScenarioTestBase {
 
@@ -43,10 +42,11 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
     @Test(description = "5.1.1.1.1")
     public void routeMessagesBasedOnXpathWithValidCaseName() throws Exception {
         String header = "5_1";
-        String url = getApiInvocationURLHttp("5_1_1_Routing_messages_based_on_content_of_message_test");
+        String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/" +
+                "valid_xpath_test_with_switchM");
 
         String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                         "    <m:StockName>ABC</m:StockName>\n" +
+                         "    <m:StockName>IBM</m:StockName>\n" +
                          "</m:GetStockPrice>";
 
         String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
@@ -60,7 +60,8 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
     @Test(description = "5.1.1.1.2")
     public void routeMessagesBasedOnXpathWithInvalidCaseName() throws Exception {
         String header = "5_1";
-        String url = getApiInvocationURLHttp("5_1_1_1_2_Routing_messages_based_on_Invalid_xpath_test");
+        String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/" +
+                "Invalid_xpath_test_with_switchM");
 
         String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
                          "   <m:StockName>IBM</m:StockName>\n" +
@@ -68,8 +69,8 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
 
         String expectedResponse = "Evaluation of the XPath expression $bodym:StockName resulted in an error";
 
-        HTTPUtils.invokePoxEndpointAndCheckContains(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
-                500, "Switch messages based on given Xpath with Invalid case name");
+        HTTPUtils.invokePoxEndpointAndCheckContains(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header,
+                expectedResponse, 500, "Switch messages based on given Xpath with Invalid case name");
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
