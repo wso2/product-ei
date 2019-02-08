@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -38,13 +38,6 @@ import java.util.Map;
  * downstream without altering the content
  */
 public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
-   // private final String carFileName = "2_1_1_HttpMessageWithoutAlteringDownstreamTestCompositeApplication_1.0.0";
-
-    /*@BeforeClass(alwaysRun = true)
-    public void init() throws Exception {
-        super.init();
-        deployCarbonApplication(carFileName);
-    }*/
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {

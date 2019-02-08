@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proxy name="2_1_1_4_HttpMessageWithoutAlteringDownstreamTestProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+<proxy name="2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
-        <endpoint key="HttpMessageWithoutAlteringDownstreamTestHttpEP"/>
+        <endpoint key="EP_HttpMessageWithoutAlteringDownstreamTestHttp"/>
         <inSequence>
-            <callout endpointKey="HttpMessageWithoutAlteringDownstreamTestHttpEP" initAxis2ClientOptions="false">
+            <callout endpointKey="EP_HttpMessageWithoutAlteringDownstreamTestHttp" initAxis2ClientOptions="false">
                 <source xpath="/default/xpath"/>
                 <target xpath="/default/xpath"/>
             </callout>
