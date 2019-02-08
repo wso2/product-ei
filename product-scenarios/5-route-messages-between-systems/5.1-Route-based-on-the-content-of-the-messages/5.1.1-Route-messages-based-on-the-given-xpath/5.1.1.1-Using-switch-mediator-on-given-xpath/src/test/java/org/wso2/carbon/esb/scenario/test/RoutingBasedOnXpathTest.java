@@ -27,9 +27,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 
-
 /**
- * This test class test routing messages based on the Xpath with valid, Invalid, Null or empty cases
+ * This test class tests routing the messages into relevant backends based on the XPath by using switch mediator and filter mediator.
+ * This includes the test cases of valid, Invalid, Null or empty cases of XPath expressions.
  */
 public class RoutingBasedOnXpathTest extends ScenarioTestBase {
 
@@ -38,7 +38,6 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
     @BeforeClass
     public void init() throws Exception {
         super.init();
-
     }
 
     @Test(description = "5.1.1.1.1")
@@ -46,13 +45,13 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
         String header = "5_1";
         String url = getApiInvocationURLHttp("5_1_1_Routing_messages_based_on_content_of_message_test");
 
-        String request ="<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                "   <m:StockName>IBM</m:StockName>\n" +
-                "</m:GetStockPrice>";
+        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
+                         "    <m:StockName>ABC</m:StockName>\n" +
+                         "</m:GetStockPrice>";
 
         String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
-                "    <m:Price>34.5</m:Price>\n" +
-                "</m:GetStockPriceResponse>";
+                                  "  <m:Price>34.5</m:Price>\n" +
+                                  "</m:GetStockPriceResponse>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on given Xpath with valid case name");
@@ -63,9 +62,9 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
         String header = "5_1";
         String url = getApiInvocationURLHttp("5_1_1_1_2_Routing_messages_based_on_Invalid_xpath_test");
 
-        String request ="<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                "   <m:StockName>IBM</m:StockName>\n" +
-                "</m:GetStockPrice>";
+        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
+                         "   <m:StockName>IBM</m:StockName>\n" +
+                         "</m:GetStockPrice>";
 
         String expectedResponse = "Evaluation of the XPath expression $bodym:StockName resulted in an error";
 
