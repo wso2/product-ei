@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="HttpMessageWithoutAlteringDownstreamTestAddressEP" groupId="com.example.02-synapseConfig.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/endpoints/HttpMessageWithoutAlteringDownstreamTestAddressEP.xml</file>
+    <artifact name="2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="HttpMessageWithoutAlteringDownstreamTestHttpEP" groupId="com.example.02-synapseConfig.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/endpoints/HttpMessageWithoutAlteringDownstreamTestHttpEP.xml</file>
+    <artifact name="EP_HttpMessageWithoutAlteringDownstreamTestHttp" groupId="com.example.02-synapseConfig.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/EP_HttpMessageWithoutAlteringDownstreamTestHttp.xml</file>
     </artifact>
-    <artifact name="2_1_1_1_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_1_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_2_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_2_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_3_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_3_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_4_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_4_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_5_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_5_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_6_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_6_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_7_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_7_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    <artifact name="2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
     </artifact>
-    <artifact name="2_1_1_8_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="com.example.02-synapseConfig.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/proxy-services/2_1_1_8_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
-    </artifact>
-    <artifact name="callSoapSeq" groupId="com.example.02-synapseConfig.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/callSoapSeq.xml</file>
+    <artifact name="seq_callSoap" groupId="com.example.02-synapseConfig.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/seq_callSoap.xml</file>
     </artifact>
 </artifacts>

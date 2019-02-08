@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.wso2.ei.product-scenarios.scenario_01</groupId>
-  <artifactId>01-synapseConfig</artifactId>
+  <groupId>com.example.02-synapseConfig</groupId>
+  <artifactId>02-synapseConfig</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
-  <name>01-synapseConfig</name>
-  <description>01-synapseConfig</description>
+  <name>02-synapseConfig</name>
+  <description>02-synapseConfig</description>
   <properties>
     <maven.test.skip>false</maven.test.skip>
     <CApp.type>bpel/workflow=zip,lib/registry/filter=jar,webapp/jaxws=war,lib/library/bundle=jar,service/dataservice=dbs,synapse/local-entry=xml,synapse/proxy-service=xml,carbon/application=car,registry/resource=zip,lib/dataservice/validator=jar,synapse/endpoint=xml,web/application=war,lib/carbon/ui=jar,service/axis2=aar,synapse/sequence=xml,synapse/configuration=xml,wso2/gadget=dar,lib/registry/handlers=jar,lib/synapse/mediator=jar,synapse/task=xml,synapse/api=xml,synapse/template=xml,synapse/message-store=xml,synapse/message-processors=xml,synapse/inbound-endpoint=xml</CApp.type>
@@ -117,6 +117,7 @@
             </goals>
             <configuration>
               <artifactLocation>.</artifactLocation>
+              <typeList>${artifact.types}</typeList>
             </configuration>
           </execution>
         </executions>
@@ -150,46 +151,6 @@
         <executions>
           <execution>
             <id>sequence</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>pom-gen</goal>
-            </goals>
-            <configuration>
-              <artifactLocation>.</artifactLocation>
-              <typeList>${artifact.types}</typeList>
-            </configuration>
-          </execution>
-        </executions>
-        <configuration />
-      </plugin>
-      <plugin>
-        <groupId>org.wso2.maven</groupId>
-        <artifactId>wso2-esb-api-plugin</artifactId>
-        <version>2.1.0</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>api</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>pom-gen</goal>
-            </goals>
-            <configuration>
-              <artifactLocation>.</artifactLocation>
-              <typeList>${artifact.types}</typeList>
-            </configuration>
-          </execution>
-        </executions>
-        <configuration />
-      </plugin>
-      <plugin>
-        <groupId>org.wso2.maven</groupId>
-        <artifactId>wso2-esb-localentry-plugin</artifactId>
-        <version>2.1.0</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>localentry</id>
             <phase>process-resources</phase>
             <goals>
               <goal>pom-gen</goal>
