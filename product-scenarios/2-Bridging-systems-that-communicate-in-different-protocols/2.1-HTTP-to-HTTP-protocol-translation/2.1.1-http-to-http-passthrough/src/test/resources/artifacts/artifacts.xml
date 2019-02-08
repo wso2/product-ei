@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="2_1_1_7_httpToHttpProtocolTranslationCompositeApplication" version="1.0.0" type="carbon/application">
+        <dependency artifact="2_1_1_7_httpToHttpProtocolTranslationEp" version="1.0.0" include="true" serverRole="EnterpriseServiceBus"/>
+        <dependency artifact="2_1_1_7_httpToHttpProtocolTranslationProxy" version="1.0.0" include="true" serverRole="EnterpriseServiceBus"/>
+    </artifact>
+</artifacts>
