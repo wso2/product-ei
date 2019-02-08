@@ -38,12 +38,17 @@ import java.util.Map;
  * downstream without altering the content
  */
 public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
-    private final String carFileName = "2_1_1_HttpMessageWithoutAlteringDownstreamTestCompositeApplication_1.0.0";
+   // private final String carFileName = "2_1_1_HttpMessageWithoutAlteringDownstreamTestCompositeApplication_1.0.0";
+
+    /*@BeforeClass(alwaysRun = true)
+    public void init() throws Exception {
+        super.init();
+        deployCarbonApplication(carFileName);
+    }*/
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        deployCarbonApplication(carFileName);
     }
 
     @Test(description = "2.1.1.1", dataProvider = "2.1.1.1")
@@ -144,7 +149,7 @@ public class HttpMessageWithoutAlteringDownstreamTest extends ScenarioTestBase{
         return getRequestResponseHeaderList(testCase).iterator();
     }*/
 
-    @DataProvider(name = "2.1.1.3")
+   @DataProvider(name = "2.1.1.3")
     public Iterator<Object[]> http_2_1_1_3() throws Exception {
         String testCase = "2.1.1.3";
         return getRequestResponseHeaderList(testCase).iterator();
