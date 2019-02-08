@@ -116,16 +116,34 @@
                 <groupId>org.apache.rampart.wso2</groupId>
                 <artifactId>rampart-core</artifactId>
                 <version>${rampart.wso2.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.rampart.wso2</groupId>
                 <artifactId>rampart-policy</artifactId>
                 <version>${rampart.wso2.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.rampart.wso2</groupId>
                 <artifactId>rampart-trust</artifactId>
                 <version>${rampart.wso2.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
@@ -620,18 +638,36 @@
                 <artifactId>rampart-core</artifactId>
                 <version>${rampart.apache.version}</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.rampart</groupId>
                 <artifactId>rampart-policy</artifactId>
                 <version>${rampart.apache.version}</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.rampart</groupId>
                 <artifactId>rampart-trust</artifactId>
                 <version>${rampart.apache.version}</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.opensaml</groupId>
@@ -1746,7 +1782,7 @@
         <carbon.um.ws.version>5.0.8</carbon.um.ws.version>
         <guava.version>27.0-jre</guava.version>
         <apache.commons.jxpath.version>1.3</apache.commons.jxpath.version>
-
+        <maven.surefire.plugin.version>2.12.4</maven.surefire.plugin.version>
         <!--Ei Migration-->
         <commons-lang.wso2.osgi.version.range>[2.6.0,3.0.0)</commons-lang.wso2.osgi.version.range>
     </properties>
