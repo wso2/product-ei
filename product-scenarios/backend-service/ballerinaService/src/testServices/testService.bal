@@ -342,4 +342,18 @@ service<http:Service> eiTests bind listener {
         response.setPayload(untaint responsePayload);
         _ = client->respond(response);
     }
+
+    @http:ResourceConfig {
+        methods: ["DELETE"],
+        path: "/invocationCount"
+    }
+    clearInvocations(endpoint client, http:Request req) {
+        http:Response response;
+        invocationCountMap.clear();
+        json responsePayload = {
+            Status: "successfully cleared invocation map"
+        };
+        response.setPayload(untaint responsePayload);
+        _ = client->respond(response);
+    }
 }
