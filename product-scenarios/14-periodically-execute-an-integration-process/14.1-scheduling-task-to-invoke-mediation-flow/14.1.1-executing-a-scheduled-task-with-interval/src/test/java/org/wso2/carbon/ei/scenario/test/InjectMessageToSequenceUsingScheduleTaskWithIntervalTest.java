@@ -50,7 +50,7 @@ public class InjectMessageToSequenceUsingScheduleTaskWithIntervalTest extends Sc
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "14.1.1.1")
+    @Test(description = "14.1.1.1", enabled = false)
     public void testInjectMessageToSequenceUsingScheduledTaskWithInterval() throws Exception {
 
         RESTClient restClient = new RESTClient();

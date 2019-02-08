@@ -52,7 +52,7 @@ public class InjectMessageToSequenceUsingScheduleTaskWithCronTest extends Scenar
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "14.1.2.1")
+    @Test(description = "14.1.2.1", enabled = false)
     public void testInjectMessageToSequenceUsingScheduledTaskWithCron() throws Exception {
 
         RESTClient restClient = new RESTClient();
