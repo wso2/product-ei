@@ -23,6 +23,9 @@ target/
 *.idea
 .DS_Store
 
+#ignore /.meta directories
+.meta/
+
 # ignore target directories
 target/
 *.*~
