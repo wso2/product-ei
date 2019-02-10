@@ -16,8 +16,9 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb.scenario.test.common.vfs;
+package org.wso2.carbon.esb.scenario.test.common.ftp;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTP;
@@ -37,26 +38,27 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * VFS client for vfs operations.
+ * FTP client for ftp operations.
  */
-public class VFSClient {
+public class FTPClientWrapper {
     private String hostname;
     private String userName;
+
     private String password;
     private int port;
     private FTPClient ftpClient;
 
-    private static final Log log = LogFactory.getLog(VFSClient.class);
+    private static final Log log = LogFactory.getLog(FTPClientWrapper.class);
 
     /**
-     * Constructor to VFSClient.
+     * Constructor to FTPClient.
      *
      * @param hostname host name or IP address of the FTP server
      * @param username username of an FTP account on the FTP server to connect to
      * @param password password corresponds to the username
      * @param port ftp port
      */
-    public VFSClient(String hostname, String username, String password, int port) {
+    public FTPClientWrapper(String hostname, String username, String password, int port) {
         this.hostname = hostname;
         this.userName = username;
         this.password = password;
@@ -73,7 +75,6 @@ public class VFSClient {
         try {
             ftpClient.connect(hostname, port);
             ftpClient.login(userName, password);
-            ftpClient.enterLocalPassiveMode();
         } catch (IOException ex) {
             throw new IOException("Error occurred while connecting to FTP server", ex);
         }
@@ -190,14 +191,89 @@ public class VFSClient {
     }
 
     /**
+     * Function to create new directories in an FTP server
+     *
+     * @param dirPath directory path
+     * @throws IOException if changing directory or creating new directory fails
+     */
+    public void makeDirectories(String dirPath) throws IOException {
+        dirPath = dirPath.startsWith("/") ? dirPath.substring(1) : dirPath;
+        String[] pathElements = dirPath.split("/");
+        if (pathElements.length > 0) {
+            for (String singleDir : pathElements) {
+                boolean dirExisted = ftpClient.changeWorkingDirectory(singleDir);
+                if (!dirExisted) {
+                    boolean dirCreated = ftpClient.makeDirectory(singleDir);
+                    if (dirCreated) {
+                        log.debug("Created new directory : " + singleDir);
+                        ftpClient.changeWorkingDirectory(singleDir);
+                    } else {
+                        log.error("Could not create directory : " + singleDir);
+                        break;
+                    }
+                }
+            }
+            ftpClient.changeWorkingDirectory("/");
+        }
+    }
+
+    /**
+     * Function to check whether a directory exists in the file system in an FTP server
+     *
+     * @param dirPath absolute directory path
+     * @return boolean whether directory exists in file system
+     * @throws IOException if changing working directory fails
+     */
+    public boolean checkDirectoryExists(String dirPath) throws IOException {
+        ftpClient.changeWorkingDirectory(dirPath);
+        int returnCode = ftpClient.getReplyCode();
+        if (returnCode == 550) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Function to check whether a file exists in the file system in an FTP Server
+     *
+     * @param filePath if a file exists on file system in an FTP server
+     * @return boolean whether a file exists in an FTP server
+     * @throws IOException if file retrieving fails
+     */
+    public boolean checkFileExists(String filePath) throws IOException {
+        try {
+            return listFiles(filePath).size() == 1;
+        } catch (IOException ex) {
+            throw new IOException("Error occurred while retrieving files from " + filePath, ex);
+        }
+    }
+
+    /**
+     * Function to read a file in an FTP server
+     *
+     * @param filePath absolute file path
+     * @return String value of the file content
+     * @throws IOException if retrieving file stream fails
+     */
+    public String readFile(String filePath) throws IOException {
+        String fileContent;
+        try (InputStream inputStream = ftpClient.retrieveFileStream(filePath)){
+            fileContent = IOUtils.toString(inputStream, "UTF-8");
+        } catch (IOException ex) {
+            throw new IOException("Error occurred while retrieving file stream " + filePath, ex);
+        }
+        return fileContent;
+    }
+
+    /**
      * Function to delete a file from an FTP server.
      *
      * @param filePath file path to delete
      * @return boolean to indicate whether the file is deleted
      * @throws IOException if deleting the file fails
      */
-    public boolean ftpDeleteFile(String filePath) throws IOException {
-        boolean deleted = false;
+    public boolean deleteFile(String filePath) throws IOException {
+        boolean deleted;
         try {
             deleted = ftpClient.deleteFile(filePath);
             if (deleted) {
