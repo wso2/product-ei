@@ -36,5 +36,7 @@
         <module>1.6.3-Replace-a-value-of-the-incoming-message-using-enrich-mediator</module>
         <module>1.6.4-Modify-payload-by-removing-elements</module>
         <module>1.6.10-Setting-a-request-payload-with-a-script</module>
+        <module>1.6.12-Perform-Arithmetic-operations-in-XML-payload</module>
+
     </modules>
 </project>
