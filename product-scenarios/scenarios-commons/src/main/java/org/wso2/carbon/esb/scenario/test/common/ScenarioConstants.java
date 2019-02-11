@@ -82,6 +82,9 @@ public class ScenarioConstants {
     public static final String INFRA_EI_STACK_NAME = "EIStackName";
 
     public static final String TEST_RUN_UUID = "invocation.uuid";
+    public static final String FTP_HOST_NAME = "FTPHostname";
+    public static final String FTP_USERNAME = "FTPUserName";
+    public static final String FTP_PASSWORD = "FTPUserPassword";
 
     public static final String CAPP_EXTENSION = ".car";
 
