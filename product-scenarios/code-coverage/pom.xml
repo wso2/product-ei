@@ -25,7 +25,6 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <version>6.4.0</version>
     <name>WSO2 EI - Code Coverage POM</name>
     <artifactId>code-coverage</artifactId>
     <packaging>pom</packaging>
