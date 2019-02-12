@@ -28,7 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 
 /**
- * This test class tests routing messages into relevant backends based on the XPath by using switch and filter mediator.
+ * This test class tests routing messages into relevant backends based on the XPath by using switch mediator.
  */
 public class RoutingBasedOnXpathTest extends ScenarioTestBase {
 
