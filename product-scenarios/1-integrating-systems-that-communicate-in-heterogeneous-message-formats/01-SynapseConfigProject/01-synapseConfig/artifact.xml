@@ -140,4 +140,7 @@
     <artifact name="1_6_12_API_performArithmeticOperations" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/1_6_12_API_performArithmeticOperations.xml</file>
     </artifact>
+    <artifact name="1_6_13_API_performStringOperations" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_13_API_performStringOperations.xml</file>
+    </artifact>
 </artifacts>
