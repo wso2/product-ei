@@ -70,6 +70,7 @@
         <awaitility.version>3.1.2</awaitility.version>
         <commons.lang.version>2.6.0.wso2v1</commons.lang.version>
         <maven.surefire.version>2.12.4</maven.surefire.version>
+        <jacoco.version>0.7.9</jacoco.version>
     </properties>
 
     <modules>
@@ -232,6 +233,11 @@
                 <groupId>org.apache.axis2.wso2</groupId>
                 <artifactId>axis2</artifactId>
                 <version>${axis2.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.ant</artifactId>
+                <version>${jacoco.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
