@@ -1,0 +1,14 @@
+map_S_SubstractNumbers_S_ResultSubstract = function(){ 
+var outputResultSubstract={};
+var STRING_TO_NUMBER_1_0 = '';
+var STRING_TO_NUMBER_2_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputSubstractNumbers.num2);
+STRING_TO_NUMBER_2_0 = Number(inputSubstractNumbers.num1);
+outputResultSubstract =  {};
+outputResultSubstract.result = STRING_TO_NUMBER_2_0-STRING_TO_NUMBER_1_0;
+return outputResultSubstract;
+};
+
+
+

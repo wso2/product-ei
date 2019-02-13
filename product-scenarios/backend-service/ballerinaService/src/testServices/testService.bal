@@ -5,8 +5,10 @@ import ballerina/runtime;
 import facilitator as facilitate;
 import ballerina/cache;
 import ballerina/config;
+import ballerina/time;
 
 map<int> invocationCountMap;
+int lastInvokedtime = 0;
 
 endpoint http:Listener listener {
     port: config:getAsInt("port", default = 9090)
@@ -30,6 +32,8 @@ service<http:Service> eiTests bind listener {
         path: "/JSONEndpoint"
     }
     verifyJSON(endpoint client, http:Request req) {
+
+        lastInvokedtime = time:currentTime().time;
         // Implementation of test to verify JSON
         string messageId = req.getHeader("messageId");
         map queryParams = req.getQueryParams();
@@ -71,6 +75,9 @@ service<http:Service> eiTests bind listener {
         path: "/XMLEndpoint"
     }
     verifyXML(endpoint client, http:Request req) {
+
+        lastInvokedtime = time:currentTime().time;
+
         // Implementation of test to verify XML
         string messageId = req.getHeader("messageId");
         map queryParams = req.getQueryParams();
@@ -113,6 +120,9 @@ service<http:Service> eiTests bind listener {
         path: "/statusCode/{statusCodeParam}"
     }
     statusCode(endpoint client, http:Request req, string statusCodeParam) {
+
+        lastInvokedtime = time:currentTime().time;
+
         // Implementation of test to verify statusCode
         http:Response response;
         json responsePayload;
@@ -148,6 +158,9 @@ service<http:Service> eiTests bind listener {
         path: "/CSVEndpoint"
     }
     verifyCSV(endpoint client, http:Request req) {
+
+        lastInvokedtime = time:currentTime().time;
+
         // Implementation of test to verify statusCode
         string messageId = req.getHeader("messageId");
         map queryParams = req.getQueryParams();
@@ -192,6 +205,8 @@ service<http:Service> eiTests bind listener {
     }
     textService(endpoint client, http:Request req) {
 
+        lastInvokedtime = time:currentTime().time;
+
         http:Response response;
         string responsePayload;
         string|error requestPayload = req.getPayloadAsString();
@@ -216,6 +231,9 @@ service<http:Service> eiTests bind listener {
         path: "/echo"
     }
     echoService(endpoint client, http:Request req) {
+
+        lastInvokedtime = time:currentTime().time;
+
         http:Response response;
         string contentType = req.getContentType();
 
@@ -260,6 +278,8 @@ service<http:Service> eiTests bind listener {
         path: "/invocationCount/{invocationId}"
     }
     incrementInvocations(endpoint client, http:Request req, string invocationId) {
+
+        lastInvokedtime = time:currentTime().time;
 
         http:Response response;
         string contentType = req.getContentType();
@@ -308,6 +328,8 @@ service<http:Service> eiTests bind listener {
     }
     getNumberOfInvocations(endpoint client, http:Request req, string invocationId) {
 
+        lastInvokedtime = time:currentTime().time;
+
         http:Response response;
         int? invocationCount = invocationCountMap[invocationId];
         int invocationCountMappedInt = 0;
@@ -333,6 +355,9 @@ service<http:Service> eiTests bind listener {
         path: "/invocationCount/{invocationId}"
     }
     resetInvocations(endpoint client, http:Request req, string invocationId) {
+
+        lastInvokedtime = time:currentTime().time;
+
         http:Response response;
         boolean isRemoved = invocationCountMap.remove(invocationId);
         json responsePayload = {
@@ -340,6 +365,32 @@ service<http:Service> eiTests bind listener {
             uuid: invocationId
         };
         response.setPayload(untaint responsePayload);
+        _ = client->respond(response);
+    }
+
+    @http:ResourceConfig {
+        methods: ["DELETE"],
+        path: "/invocationCount"
+    }
+    clearInvocations(endpoint client, http:Request req) {
+
+        http:Response response;
+        int duration = time:currentTime().time - lastInvokedtime;
+        if (duration > 3600000){
+            invocationCountMap.clear();
+            json responsePayload = {
+                Status: "successfully cleared invocation map"
+            };
+            response.setPayload(untaint responsePayload);
+        }
+        else {
+            json responsePayload = {
+                Status: "Could not clear invocation map since the service has been used within an hour",
+                lastInvokedTimeStamp: lastInvokedtime
+            };
+            response.setPayload(untaint responsePayload);
+        }
+        lastInvokedtime = time:currentTime().time;
         _ = client->respond(response);
     }
 }
