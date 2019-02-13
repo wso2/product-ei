@@ -68,7 +68,7 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
       * This testcase has been disabled since we need to manually paste the groovy-all-dependency jar
       * into $EI_HOME/dropins.
       */
-    @Test(description = "1.6.10.1", enabled=false)
+    @Test(description = "1.6.10.1")
     public void alterPayloadByInlineGroovyScript() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript");
         String testCaseID = "1.6.10.1";

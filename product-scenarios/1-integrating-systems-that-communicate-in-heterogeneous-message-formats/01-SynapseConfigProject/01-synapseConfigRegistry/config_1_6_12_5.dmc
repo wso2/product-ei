@@ -1,0 +1,11 @@
+map_S_RoundValue_S_ResultRoundValue = function(){ 
+var outputResultRoundValue={};
+var STRING_TO_NUMBER_1_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputRoundValue.num1);
+outputResultRoundValue =  {};
+outputResultRoundValue.result = Math.round(STRING_TO_NUMBER_1_0);
+return outputResultRoundValue;
+};
+
+
