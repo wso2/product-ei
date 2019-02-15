@@ -21,6 +21,7 @@ package org.wso2.carbon.ei.scenario.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.apache.axis2.transport.http.HTTPConstants;
@@ -39,6 +40,7 @@ public class StringOperationsUsingDatamapperTest extends ScenarioTestBase {
     @BeforeClass
     public void init() throws Exception {
         super.init();
+        skipTestsForIncompatibleProductVersions(ScenarioConstants.VERSION_490);
     }
 
     /**
