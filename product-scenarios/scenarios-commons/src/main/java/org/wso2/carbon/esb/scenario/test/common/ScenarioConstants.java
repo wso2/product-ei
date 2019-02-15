@@ -37,12 +37,12 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
-    public static final String COMMON_ROUTING_REQUEST = "<m:GetStockPrice xmlns:m=\\\"http://www.example.org/stock\\\">\\n\" +\n"
-                                                      + "\"    <m:StockName>IBM</m:StockName>\\n\" +\n"
-                                                      + "\"</m:GetStockPrice>";
-    public static final String COMMON_ROUTING_RESPONSE = "<m:GetStockPriceResponse xmlns:m=\\\"http://www.example.org/stock\\\">\\n\" +\n"
-                                                       + "\"    <m:Price>34.5</m:Price>\\n\" +\n"
-                                                       + "\"</m:GetStockPriceResponse>";
+    public static final String COMMON_ROUTING_REQUEST = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n"
+                                                      + "   <m:StockName>IBM</m:StockName>\n"
+                                                      + "</m:GetStockPrice>";
+    public static final String COMMON_ROUTING_RESPONSE = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n"
+                                                       + "    <m:Price>34.5</m:Price>\n"
+                                                       + "</m:GetStockPriceResponse>";
 
     /**
      *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
