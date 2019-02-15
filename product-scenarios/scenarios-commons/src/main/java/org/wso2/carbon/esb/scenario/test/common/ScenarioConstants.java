@@ -40,7 +40,9 @@ public class ScenarioConstants {
     public static final String COMMON_ROUTING_REQUEST = "<m:GetStockPrice xmlns:m=\\\"http://www.example.org/stock\\\">\\n\" +\n"
                                                       + "\"    <m:StockName>IBM</m:StockName>\\n\" +\n"
                                                       + "\"</m:GetStockPrice>";
-
+    public static final String COMMON_ROUTING_RESPONSE = "<m:GetStockPriceResponse xmlns:m=\\\"http://www.example.org/stock\\\">\\n\" +\n"
+                                                       + "\"    <m:Price>34.5</m:Price>\\n\" +\n"
+                                                       + "\"</m:GetStockPriceResponse>";
 
     /**
      *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not

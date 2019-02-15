@@ -61,9 +61,7 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
         String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
                 "   <m:StockName>ABC</m:StockName>\n" +
                 "</m:GetStockPrice>";
-        String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
-                "    <m:Price>34.5</m:Price>\n" +
-                "</m:GetStockPriceResponse>";
+        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on a valid regex");
@@ -75,9 +73,7 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
         String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
                 "   <m:StockName></m:StockName>\n" +
                 "</m:GetStockPrice>";
-        String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
-                "    <m:Price>34.5</m:Price>\n" +
-                "</m:GetStockPriceResponse>";
+        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on a valid regex");

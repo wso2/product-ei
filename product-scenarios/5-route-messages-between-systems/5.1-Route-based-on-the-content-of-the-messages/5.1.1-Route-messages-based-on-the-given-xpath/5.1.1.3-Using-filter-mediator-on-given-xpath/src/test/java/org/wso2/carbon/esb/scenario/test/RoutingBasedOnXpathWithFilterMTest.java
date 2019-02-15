@@ -43,9 +43,7 @@ public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test" +
                 "/valid_xpath_test_with_filterM");
         String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n"
-                                + "  <m:Price>34.5</m:Price>\n"
-                                + "</m:GetStockPriceResponse>";
+        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Route messages based on given Xpath with valid case name");
@@ -57,9 +55,7 @@ public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test" +
                 "/Invalid_xpath_test_with_filterM");
         String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n"
-                + "  <m:Price>34.5</m:Price>\n"
-                + "</m:GetStockPriceResponse>";
+        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Route messages based on given Xpath with valid case name");
