@@ -21,9 +21,9 @@ package org.wso2.carbon.esb.scenario.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
-import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
@@ -42,9 +42,10 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
 
     @Test(description = "5.1.1.1.1")
     public void routeMessagesBasedOnValidXpathWithSwitchM() throws Exception {
-        String header = "5_1";
+        String header = "basic_xml";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/" +
                 "valid_xpath_test_with_switchM");
+
         String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
         String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
 
@@ -54,7 +55,7 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
 
     @Test(description = "5.1.1.1.2")
     public void routeMessagesBasedOnInvalidXpathWithSwitchM() throws Exception {
-        String header = "5_1";
+        String header = "basic_xml";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/" +
                 "Invalid_xpath_test_with_switchM");
         String request = ScenarioConstants.COMMON_ROUTING_REQUEST;

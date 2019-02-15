@@ -39,7 +39,7 @@ public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
 
     @Test(description = "5.1.1.3.1")
     public void routeBasedOnValidXpathWithFilterM() throws Exception {
-        String header = "5_1";
+        String header = "basic_xml";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test" +
                 "/valid_xpath_test_with_filterM");
         String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
@@ -51,14 +51,14 @@ public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
 
     @Test(description = "5.1.1.3.2")
     public void routeBasedOnInvalidXpathWithFilterM() throws Exception {
-        String header = "5_1";
+        String header = "basic_xml";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test" +
                 "/Invalid_xpath_test_with_filterM");
         String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
+        String expectedResponse = "<Exception>Evaluation of the XPath expression $bodym:StockName resulted in an error</Exception>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
-                200, "Route messages based on given Xpath with valid case name");
+                500, "Route messages based on given Xpath with valid case name");
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
