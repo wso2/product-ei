@@ -201,6 +201,27 @@ public class ReplaceElementsTest extends ScenarioTestBase {
         HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200, "urn:mediate",
                 "replaceTargetDefinedThroughXpathBySourceInlineGovReg");
     }
+
+    /**
+     * This test is to verify if payload can be modified by replacing target message defined through
+     * xpath by source inline content loaded from configuration registry
+     */
+    @Test(description = "1.6.3.8")
+    public void replaceTargetDefinedThroughXpathBySourceInlineConfReg() throws IOException, XMLStreamException {
+        String url = getProxyServiceURLHttp("1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg");
+        String testCaseID = "1.6.3.8";
+        String expectedResponse = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://sample.wso2.org/xsd\" xmlns:sam=\"http://sample.wso2.org\">\n"
+                + "   <soapenv:Body>\n"
+                + "      <sam:placeOrder>\n"
+                + "         <manufacturer>Puma</manufacturer>\n"
+                + "      </sam:placeOrder>\n"
+                + "   </soapenv:Body>\n"
+                + "</soapenv:Envelope>";
+
+        HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_3, testCaseID, expectedResponse, 200, "urn:mediate",
+                "replaceTargetDefinedThroughXpathBySourceInlineConfReg");
+    }
+
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
     public void cleanup() throws Exception {
         super.cleanup();

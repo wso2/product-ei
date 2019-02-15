@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<api context="/1_6_13_API_performStringOperations" name="1_6_13_API_performStringOperations" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/concat">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_1.dmc" inputSchema="gov:datamapper/config_1_6_13_1_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_1_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/split">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_2.dmc" inputSchema="gov:datamapper/config_1_6_13_2_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_2_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/lower">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_3.dmc" inputSchema="gov:datamapper/config_1_6_13_3_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_3_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/upper">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_4.dmc" inputSchema="gov:datamapper/config_1_6_13_4_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_4_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/substring">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_5.dmc" inputSchema="gov:datamapper/config_1_6_13_5_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_5_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/replace">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_6.dmc" inputSchema="gov:datamapper/config_1_6_13_6_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_6_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/trim">
+        <inSequence>
+            <datamapper config="gov:datamapper/config_1_6_13_7.dmc" inputSchema="gov:datamapper/config_1_6_13_7_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_1_6_13_7_outputSchema.json" outputType="XML"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

@@ -71,6 +71,7 @@
         <commons.lang.version>2.6.0.wso2v1</commons.lang.version>
         <maven.surefire.version>2.12.4</maven.surefire.version>
         <jacoco.version>0.7.9</jacoco.version>
+        <activemq.client.version>5.15.8</activemq.client.version>
     </properties>
 
     <modules>
@@ -82,8 +83,9 @@
         <module>5-route-messages-between-systems</module>
         <module>7-connecting-with-packaged-applications</module>
         <module>8-connect-devices-to-enterprise</module>
-        <!--<module>10-file-processing</module>-->
+        <module>10-file-processing</module>
         <module>13-micro-services</module>
+        <module>14-periodically-execute-an-integration-process</module>
     </modules>
 
     <repositories>
@@ -238,6 +240,11 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>org.jacoco.ant</artifactId>
                 <version>${jacoco.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>${activemq.client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
