@@ -18,31 +18,37 @@
   -->
 
 <api context="/fileOperation" name="API_file_operations" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET" url-mapping="/createFolder">
+    <resource methods="PUT" url-mapping="/createFolder">
         <inSequence>
             <property expression="$url:filePath" name="filePath" scope="default" type="STRING"/>
             <fileconnector.create>
                 <source>{$ctx:filePath}</source>
                 <encoding>UTF8</encoding>
             </fileconnector.create>
+            <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+            <property name="HTTP_SC" scope="axis2" type="STRING" value="201"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="GET" url-mapping="/createFile">
+    <resource methods="PUT" url-mapping="/createFile">
         <inSequence>
             <property expression="$url:filePath" name="filePath" scope="default" type="STRING"/>
             <fileconnector.create>
                 <source>{$ctx:filePath}</source>
                 <encoding>UTF8</encoding>
             </fileconnector.create>
+            <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+            <property name="HTTP_SC" scope="axis2" type="STRING" value="201"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="GET" url-mapping="/copyFile">
+    <resource methods="POST" url-mapping="/copyFile">
         <inSequence>
             <property expression="$url:sourcePath" name="sourcePath" scope="default" type="STRING"/>
             <property expression="$url:destinationPath" name="destinationPath" scope="default" type="STRING"/>
@@ -52,6 +58,22 @@
                 <destination>{$ctx:destinationPath}</destination>
                 <filePattern>{$ctx:fileName}</filePattern>
             </fileconnector.copy>
+            <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" url-mapping="/readFile">
+        <inSequence>
+            <property expression="$url:filePath" name="filePath" scope="default" type="STRING"/>
+            <fileconnector.read>
+                <source>{$ctx:filePath}</source>
+                <contentType>application/xml</contentType>
+            </fileconnector.read>
+            <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <respond/>
         </inSequence>
         <outSequence/>
@@ -78,6 +100,8 @@
                 <source>{$ctx:filePath}</source>
                 <filePattern>{$ctx:fileName}</filePattern>
             </fileconnector.delete>
+            <property action="remove" name="NO_ENTITY_BODY" scope="axis2"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <respond/>
         </inSequence>
         <outSequence/>

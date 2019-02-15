@@ -26,4 +26,7 @@
     <artifact name="API_file_operations" groupId="org.wso2.ei.product-scenarios.scenario_10.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/API_file_operations.xml</file>
     </artifact>
+    <artifact name="10_SOAP_EP" groupId="org.wso2.ei.product-scenarios.scenario_10.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/10_SOAP_EP.xml</file>
+    </artifact>
 </artifacts>

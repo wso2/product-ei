@@ -72,6 +72,7 @@ public class ScenarioTestBase {
     private String sessionCookie;
     private boolean standaloneMode;
     private static String runningProductVersion;
+    private static String localVfsLocation;
 
     private CarbonAppUploaderClient carbonAppUploaderClient = null;
     private ApplicationAdminClient applicationAdminClient = null;
@@ -164,6 +165,26 @@ public class ScenarioTestBase {
 
     protected String getProxyServiceURLHttps(String proxyServiceName) {
         return securedServiceURL + "services" + (proxyServiceName.startsWith("/") ? "" : "/") + proxyServiceName;
+    }
+
+    /**
+     * Function to get absolute local VFS location for VFS tests
+     *
+     * @param resourcePath - relative path
+     * @return absolute vfs path for VFS tests
+     */
+    protected String getLocalVfsLocation(String resourcePath) {
+        return localVfsLocation + (localVfsLocation.endsWith("/") ? "" : "/") + resourcePath;
+    }
+
+    /**
+     * Function to get absolute VFS location for VFS tests
+     *
+     * @param resourcePath - relative path
+     * @return absolute vfs source directory for VFS tests
+     */
+    protected String getVfsSourceDir(String resourcePath) {
+        return testResourcesDir + (testResourcesDir.endsWith("/") ? "" : "/") + resourcePath;
     }
 
     /**
@@ -354,6 +375,11 @@ public class ScenarioTestBase {
                                                   .endsWith("/") ? "" : "/");
             runningProductVersion = infraProperties.getProperty(PRODUCT_VERSION);
             mgtConsoleURL = infraProperties.getProperty(ScenarioConstants.MGT_CONSOLE_URL);
+            if(Boolean.valueOf(infraProperties.getProperty(ScenarioConstants.STANDALONE_DEPLOYMENT))) {
+                localVfsLocation = System.getProperty("user.home");
+            } else {
+                localVfsLocation = infraProperties.getProperty(ScenarioConstants.LOCAL_VFS_LOCATION);
+            }
         }
     }
 
