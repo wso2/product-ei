@@ -21,6 +21,7 @@ package org.wso2.carbon.esb.scenario.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.apache.commons.logging.Log;
@@ -43,12 +44,9 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
     }
 
     @Test(description = "5.1.2.1.1")
-    public void routeMessagesBasedOnValidRegex() throws Exception {
+    public void routeMessagesBasedOnValidRegexWithSwitchM() throws Exception {
         String header = "5_1";
-        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                         "   <m:StockName>IBM</m:StockName>\n" +
-                         "</m:GetStockPrice>";
-
+        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
         String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
                                   "    <m:Price>34.5</m:Price>\n" +
                                   "</m:GetStockPriceResponse>";
@@ -58,12 +56,11 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
     }
 
     @Test(description = "5.1.2.1.2")
-    public void routeMessagesBasedOnInvalidRegex() throws Exception {
+    public void routeMessagesBasedOnInvalidRegexWithSwitchM() throws Exception {
         String header = "5_1";
         String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
                 "   <m:StockName>ABC</m:StockName>\n" +
                 "</m:GetStockPrice>";
-
         String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
                 "    <m:Price>34.5</m:Price>\n" +
                 "</m:GetStockPriceResponse>";
@@ -73,12 +70,11 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
     }
 
     @Test(description = "5.1.2.1.3")
-    public void routeMessagesBasedOnEmptyRegex() throws Exception {
+    public void routeMessagesBasedOnEmptyRegexWithSwitchM() throws Exception {
         String header = "5_1";
         String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
                 "   <m:StockName></m:StockName>\n" +
                 "</m:GetStockPrice>";
-
         String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
                 "    <m:Price>34.5</m:Price>\n" +
                 "</m:GetStockPriceResponse>";

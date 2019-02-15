@@ -37,6 +37,9 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
+    public static final String COMMON_ROUTING_REQUEST = "<m:GetStockPrice xmlns:m=\\\"http://www.example.org/stock\\\">\\n\" +\n"
+                                                      + "\"    <m:StockName>IBM</m:StockName>\\n\" +\n"
+                                                      + "\"</m:GetStockPrice>";
 
 
     /**

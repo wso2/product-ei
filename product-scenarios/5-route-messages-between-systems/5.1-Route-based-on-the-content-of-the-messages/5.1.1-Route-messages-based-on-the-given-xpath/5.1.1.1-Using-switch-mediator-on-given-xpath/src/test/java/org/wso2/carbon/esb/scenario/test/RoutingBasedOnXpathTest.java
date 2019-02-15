@@ -23,6 +23,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
+import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
@@ -40,15 +41,11 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
     }
 
     @Test(description = "5.1.1.1.1")
-    public void routeMessagesBasedOnXpathWithValidCaseName() throws Exception {
+    public void routeMessagesBasedOnValidXpathWithSwitchM() throws Exception {
         String header = "5_1";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/" +
                 "valid_xpath_test_with_switchM");
-
-        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                         "    <m:StockName>IBM</m:StockName>\n" +
-                         "</m:GetStockPrice>";
-
+        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
         String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
                                   "  <m:Price>34.5</m:Price>\n" +
                                   "</m:GetStockPriceResponse>";
@@ -58,15 +55,11 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
     }
 
     @Test(description = "5.1.1.1.2")
-    public void routeMessagesBasedOnXpathWithInvalidCaseName() throws Exception {
+    public void routeMessagesBasedOnInvalidXpathWithSwitchM() throws Exception {
         String header = "5_1";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/" +
                 "Invalid_xpath_test_with_switchM");
-
-        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                         "   <m:StockName>IBM</m:StockName>\n" +
-                         "</m:GetStockPrice>";
-
+        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
         String expectedResponse = "Evaluation of the XPath expression $bodym:StockName resulted in an error";
 
         HTTPUtils.invokePoxEndpointAndCheckContains(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header,

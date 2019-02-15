@@ -75,13 +75,13 @@
     <modules>
         <module>scenarios-commons</module>
         <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
-        <!--<module>2-Bridging-systems-that-communicate-in-different-protocols</module>-->
+        <module>2-Bridging-systems-that-communicate-in-different-protocols</module>
         <module>3-connecting-web-apis-cloud-services</module>
         <module>4-gateway</module>
         <module>5-route-messages-between-systems</module>
         <module>7-connecting-with-packaged-applications</module>
         <module>8-connect-devices-to-enterprise</module>
-        <!--<module>10-file-processing</module>-->
+        <module>10-file-processing</module>
         <module>13-micro-services</module>
     </modules>
 

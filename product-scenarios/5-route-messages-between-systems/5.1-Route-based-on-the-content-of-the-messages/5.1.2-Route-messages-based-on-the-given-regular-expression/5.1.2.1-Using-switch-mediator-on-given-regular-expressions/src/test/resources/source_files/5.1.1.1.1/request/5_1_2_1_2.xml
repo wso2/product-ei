@@ -1,3 +1,0 @@
-<m:GetStockPrice xmlns:m="http://www.example.org/stock">
-    <m:StockName>ABC</m:StockName>
-</m:GetStockPrice>

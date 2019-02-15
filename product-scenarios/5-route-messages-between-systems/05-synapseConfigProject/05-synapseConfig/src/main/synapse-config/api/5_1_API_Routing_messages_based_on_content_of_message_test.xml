@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/5_1_API_Routing_messages_based_on_content_of_message_test" name="5_1_API_Routing_messages_based_on_content_of_message_test" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/valid_xpath_test_with_switchM">
+        <inSequence>
+            <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
+            <property expression="//m:GetStockPrice/m:StockName" name="StockName" scope="default" type="STRING" xmlns:m="http://www.example.org/stock"/>
+            <switch source="get-property('StockName')">
+                <case regex="IBM">
+                    <call>
+                        <endpoint key="05_EP_XML"/>
+                    </call>
+                </case>
+                <default/>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/Invalid_xpath_test_with_switchM">
+        <inSequence>
+            <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
+            <switch source="$bodym:StockName" xmlns:m="http://www.example.org/stock">
+                <case regex="IBM">
+                    <call>
+                        <endpoint key="05_EP_XML"/>
+                    </call>
+                </case>
+                <default/>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <makefault version="pox">
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <respond/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/regex_test_with_switchM">
+        <inSequence>
+            <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
+            <property expression="//m:GetStockPrice/m:StockName" name="StockName" scope="default" type="STRING" xmlns:m="http://www.example.org/stock"/>
+            <switch source="get-property('StockName')">
+                <case regex="IBM">
+                    <call>
+                        <endpoint key="05_EP_XML"/>
+                    </call>
+                </case>
+                <default>
+                    <log>
+                        <property name="StockName" value="Invalid Stock Name"/>
+                    </log>
+                    <payloadFactory description="Build custom response payload" media-type="xml">
+                        <format>
+                            <message>
+                                <error>Regular expression not exists or value is empty</error>
+                            </message>
+                        </format>
+                        <args/>
+                    </payloadFactory>
+                    <respond/>
+                </default>
+            </switch>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/valid_xpath_test_with_filterM">
+        <inSequence>
+            <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
+            <filter regex="IBM" source="//m:GetStockPrice/m:StockName" xmlns:m="http://www.example.org/stock">
+                <then>
+                    <call>
+                        <endpoint key="05_EP_XML"/>
+                    </call>
+                </then>
+                <else/>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/Invalid_xpath_test_with_filterM">
+        <inSequence>
+            <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
+            <filter regex="IBM" source="$bodym:StockName" xmlns:m="http://www.example.org/stock">
+                <then>
+                    <call>
+                        <endpoint key="05_EP_XML"/>
+                    </call>
+                </then>
+                <else/>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <makefault version="pox">
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>

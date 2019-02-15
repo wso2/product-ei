@@ -49,7 +49,7 @@ Following is a sample synapse configuration in EI.
             </case>
             <default/>
          </switch>
-         <respond description="PASS"/>
+         <respond/>
       </inSequence>
       <outSequence/>
       <faultSequence/>
