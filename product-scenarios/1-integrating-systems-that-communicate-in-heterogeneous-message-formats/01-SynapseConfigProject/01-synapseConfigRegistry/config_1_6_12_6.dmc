@@ -1,0 +1,11 @@
+map_S_CeilingValue_S_ResultCeilingValue = function(){ 
+var outputResultCeilingValue={};
+var STRING_TO_NUMBER_1_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputCeilingValue.num1);
+outputResultCeilingValue =  {};
+outputResultCeilingValue.result = Math.ceil(STRING_TO_NUMBER_1_0);
+return outputResultCeilingValue;
+};
+
+

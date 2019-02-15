@@ -28,17 +28,13 @@
   <description>10-synapseConfigCompositeApplication</description>
   <properties>
     <org.wso2.ei.product-scenarios.scenario_10.lib_._fileconnector-connector>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_10.lib_._fileconnector-connector>
+    <org.wso2.ei.product-scenarios.scenario_10.endpoint_._10_SOAP_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_10.endpoint_._10_SOAP_EP>
+    <org.wso2.ei.product-scenarios.scenario_10.api_._API_file_operations>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_10.api_._API_file_operations>
     <org.wso2.ei.product-scenarios.scenario_10.api_._10_1_1_7_3_API_reading_a_file_from_local_location_using_file_connector>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_10.api_._10_1_1_7_3_API_reading_a_file_from_local_location_using_file_connector>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,datasource/datasource=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
     <org.wso2.ei.product-scenarios.scenario_10.proxy-service_._10_1_1_7_1_Proxy_reading_a_file_from_local_location_using_vfs_listener>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_10.proxy-service_._10_1_1_7_1_Proxy_reading_a_file_from_local_location_using_vfs_listener>
   </properties>
   <dependencies>
-        <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_10.api</groupId>
-      <artifactId>API_file_operations</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_10.lib</groupId>
       <artifactId>fileconnector-connector</artifactId>
@@ -51,9 +47,21 @@
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
-        <dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_10.api</groupId>
+      <artifactId>API_file_operations</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_10.api</groupId>
       <artifactId>10_1_1_7_3_API_reading_a_file_from_local_location_using_file_connector</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_10.endpoint</groupId>
+      <artifactId>10_SOAP_EP</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>

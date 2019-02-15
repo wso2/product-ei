@@ -45,6 +45,13 @@ public class ScenarioConstants {
                                                        + "\"</m:GetStockPriceResponse>";
 
     /**
+     * This regular expression matches numbers with exponents
+     */
+    public static final String REGEX_EXPONENT = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+  
+    public static final String BACKEND_REST_SERVICE1_URL = "http://ei-backend.scenarios.wso2.org:9090/eiTests/";
+
+    /**
      *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
      *  If true, test case will deploy the CApp
      *  If false, infra will take care CApp deployment
@@ -61,8 +68,10 @@ public class ScenarioConstants {
     public static final String CARBON_SERVER_URL = "CarbonServerUrl";
     public static final String ESB_HTTP_URL = "ESBHttpUrl";
     public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
+    public static final String LOCAL_VFS_LOCATION = "localVfsLocation";
 
     public static final String CAPP_EXTENSION = ".car";
 
     public static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
+    public static final int FILE_WRITE_WAIT_TIME_MS = 120000;
 }

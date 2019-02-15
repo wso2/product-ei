@@ -135,7 +135,7 @@ public class TestPrepExecutionListener implements IExecutionListener {
                 if (!Boolean.valueOf(infraProperties.getProperty(ScenarioConstants.STANDALONE_DEPLOYMENT))) {
                     log.info("Waiting for artifacts synchronized across cluster nodes");
                     try {
-                        Thread.sleep(120000);
+                        Thread.sleep(300000);
                     } catch (InterruptedException e) {
                         // log and ignore
                         log.error("Error occurred while waiting for artifacts synchronized across cluster nodes", e);
