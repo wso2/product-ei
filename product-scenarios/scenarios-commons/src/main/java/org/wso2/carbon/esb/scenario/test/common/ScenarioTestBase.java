@@ -76,6 +76,7 @@ public class ScenarioTestBase {
 
     private String sessionCookie;
     private boolean standaloneMode;
+    private  String testRunUUID;
 
     private CarbonAppUploaderClient carbonAppUploaderClient = null;
     private ApplicationAdminClient applicationAdminClient = null;
@@ -92,6 +93,9 @@ public class ScenarioTestBase {
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
         standaloneMode = true;
+
+        // Retrieve test execution run UUID
+        testRunUUID = System.getProperty(ScenarioConstants.TEST_RUN_UUID);
 
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
@@ -419,6 +423,10 @@ public class ScenarioTestBase {
 
     public static String getDeploymentStackName() {
         return deploymentStackName;
+    }
+
+    public String getTestRunUUID() {
+        return testRunUUID;
     }
 
     private String appendSourceFolder(String testCase, String relativeSourceFolderPath) {

@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
 
-
     @Override
     public void init() throws Exception {
         skipTestsIfStandaloneDeployment();
@@ -53,7 +52,7 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
     @Test(description = "11.1.1.1.1.1")
     public void testAsyncHttpToHttpViaQueueAndListeningJMSProxy() throws IOException {
 
-        UUID uuid = UUID.randomUUID();
+        String uuid = getTestRunUUID() + "11_1_1_1_1_1";
         String request =
                 "{" +
                 "  \"Request\" : {" +
@@ -74,7 +73,6 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
         Awaitility.await()
                 .pollInterval(5000, TimeUnit.MILLISECONDS)
                 .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
-                .until(ElasticSearchClient.isLogAvailable(getElasticSearchHostname(), getDeploymentStackName(),
-                        uuid.toString()));
+                .until(ElasticSearchClient.isLogAvailable(getElasticSearchHostname(), getDeploymentStackName(), uuid));
     }
 }

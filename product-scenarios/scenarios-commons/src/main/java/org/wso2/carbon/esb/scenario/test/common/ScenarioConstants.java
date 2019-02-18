@@ -67,6 +67,8 @@ public class ScenarioConstants {
     public static final String ELASTICSEARCH_HOSTNAME = "ElasticSearchEndpoint";
     public static final String INFRA_EI_STACK_NAME = "EIStackName";
 
+    public static final String TEST_RUN_UUID = "invocation.uuid";
+
     public static final String CAPP_EXTENSION = ".car";
 
     public static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
