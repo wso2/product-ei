@@ -73,10 +73,11 @@ public class ScenarioTestBase {
     private static String deploymentStackName;
     private static String runningProductVersion;
     private static String localVfsLocation;
+    private static String testRunUUID;
 
     private String sessionCookie;
     private boolean standaloneMode;
-    private  String testRunUUID;
+
 
     private CarbonAppUploaderClient carbonAppUploaderClient = null;
     private ApplicationAdminClient applicationAdminClient = null;

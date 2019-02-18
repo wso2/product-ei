@@ -29,7 +29,6 @@ import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
