@@ -56,7 +56,7 @@ public class ElasticSearchClient {
      */
     public JSONObject searchCarbonLogs(String logSnippet) throws IOException {
 
-        String searchURL = "https://" + hostName + "/" + deploymentStackID + "-carbonlogs*/_search?q=" + logSnippet;
+        String searchURL = hostName + "/" + deploymentStackID + "-carbonlogs*/_search?q=" + logSnippet;
 
         RESTClient restClient = new RESTClient();
         HttpResponse response = restClient.doGet(searchURL);
