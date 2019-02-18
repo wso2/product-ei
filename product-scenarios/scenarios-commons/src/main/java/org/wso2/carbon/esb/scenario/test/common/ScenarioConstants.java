@@ -72,5 +72,10 @@ public class ScenarioConstants {
     public static final String CAPP_EXTENSION = ".car";
 
     public static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
+
+    public static final int LOG_ASSERT_INITIAL_WAIT_TIME_MS = 10000;
+    public static final int LOG_ASSERT_MAX_WAIT_TIME_MS = 120000;
+    public static final int LOG_ASSERT_POLL_INTERVAL_MS = 5000;
+
     public static final int FILE_WRITE_WAIT_TIME_MS = 120000;
 }

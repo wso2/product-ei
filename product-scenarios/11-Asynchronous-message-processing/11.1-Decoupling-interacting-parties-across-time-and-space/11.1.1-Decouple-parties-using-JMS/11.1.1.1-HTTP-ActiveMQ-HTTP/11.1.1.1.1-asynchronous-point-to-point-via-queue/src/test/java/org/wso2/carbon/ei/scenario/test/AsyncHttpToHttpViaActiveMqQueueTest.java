@@ -19,24 +19,22 @@
 package org.wso2.carbon.ei.scenario.test;
 
 import org.apache.http.HttpResponse;
-import org.awaitility.Awaitility;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.carbon.esb.scenario.test.common.elasticsearch.ElasticSearchClient;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Test class to test asynchronous point to point invocation via message queue with ActiveMQ
  */
 public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
 
-    @Override
+    @BeforeClass
     public void init() throws Exception {
         skipTestsIfStandaloneDeployment();
         super.init();
@@ -51,7 +49,7 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
     @Test(description = "11.1.1.1.1.1")
     public void testAsyncHttpToHttpViaQueueAndListeningJMSProxy() throws IOException {
 
-        String uuid = getTestRunUUID() + "11_1_1_1_1_1";
+        String uuid = getTestRunUUID() + "_11_1_1_1_1_1";
         String request =
                 "{" +
                 "  \"Request\" : {" +
@@ -69,9 +67,6 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
                 getApiInvocationURLHttp("11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue") + " to server failed" );
 
         //Assert logs to verify the message is picked by JMS listener proxy from the ActiveMQ queue
-        Awaitility.await()
-                .pollInterval(5000, TimeUnit.MILLISECONDS)
-                .atMost(ScenarioConstants.ARTIFACT_DEPLOYMENT_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
-                .until(ElasticSearchClient.isLogAvailable(getElasticSearchHostname(), getDeploymentStackName(), uuid));
+        ElasticSearchClient.assertForSingleLogEntry(getElasticSearchHostname(), getDeploymentStackName(),uuid);
     }
 }
