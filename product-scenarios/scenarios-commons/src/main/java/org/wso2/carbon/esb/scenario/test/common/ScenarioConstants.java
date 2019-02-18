@@ -63,6 +63,9 @@ public class ScenarioConstants {
     public static final String ESB_HTTP_URL = "ESBHttpUrl";
     public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
     public static final String LOCAL_VFS_LOCATION = "localVfsLocation";
+    public static final String ACTIVEMQ_HOSTNAME = "ActiveMqHostname";
+    public static final String ELASTICSEARCH_HOSTNAME = "ElasticSearchEndpoint";
+    public static final String INFRA_EI_STACK_NAME = "EIStackName";
 
     public static final String CAPP_EXTENSION = ".car";
 

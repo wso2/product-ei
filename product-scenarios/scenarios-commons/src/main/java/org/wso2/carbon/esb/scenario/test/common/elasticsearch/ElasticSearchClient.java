@@ -26,6 +26,7 @@ import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 /**
  * This ElasticSearchClient is used to search and acquire log entries from ELK stack
@@ -36,9 +37,9 @@ public class ElasticSearchClient {
     private String deploymentStackID;
     private String hostName;
 
-    public ElasticSearchClient(String hostName, String deploymentStackID) {
+    public ElasticSearchClient(String hostName, String deploymentStackName) {
 
-        this.deploymentStackID = deploymentStackID;
+        this.deploymentStackID = deploymentStackName;
         this.hostName = hostName;
 
     }
@@ -59,5 +60,25 @@ public class ElasticSearchClient {
 
         JSONObject resp = new JSONObject(HTTPUtils.getResponsePayload(response));
         return resp.getJSONObject("hits");
+    }
+
+    public static Callable<Boolean> isLogAvailable(final String elkHostName,
+                                             final String infraStackName, final String logSnippet) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                log.info("Check log entry with : " + logSnippet);
+
+                ElasticSearchClient elasticSearchClient = new ElasticSearchClient(elkHostName, infraStackName);
+                JSONObject searchResult = elasticSearchClient.searchCarbonLogs(logSnippet);
+
+                log.info(searchResult);
+
+                int total = searchResult.getInt("total");
+
+                return total == 1;
+
+            }
+        };
     }
 }
