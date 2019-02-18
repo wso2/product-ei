@@ -80,7 +80,7 @@ public class ElasticSearchClient {
                 .pollInterval(ScenarioConstants.LOG_ASSERT_POLL_INTERVAL_MS, TimeUnit.MILLISECONDS)
                 .atMost(ScenarioConstants.LOG_ASSERT_MAX_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
                 .pollDelay(ScenarioConstants.LOG_ASSERT_INITIAL_WAIT_TIME_MS, TimeUnit.MILLISECONDS)
-                .until(ElasticSearchClient.isLogAvailable(elkHostName, infraStackName, logSnippet));
+                .until(ElasticSearchClient.isSingleLogAvailable(elkHostName, infraStackName, logSnippet));
         return true;
     }
 
