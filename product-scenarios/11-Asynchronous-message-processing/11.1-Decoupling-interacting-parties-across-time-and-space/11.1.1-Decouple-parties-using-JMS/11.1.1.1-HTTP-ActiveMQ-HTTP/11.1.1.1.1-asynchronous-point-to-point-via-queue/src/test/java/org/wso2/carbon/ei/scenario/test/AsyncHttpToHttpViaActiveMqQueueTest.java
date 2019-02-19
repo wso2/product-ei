@@ -28,6 +28,7 @@ import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Test class to test asynchronous point to point invocation via message queue with ActiveMQ
@@ -49,11 +50,12 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
     @Test(description = "11.1.1.1.1.1")
     public void testAsyncHttpToHttpViaQueueAndListeningJMSProxy() throws IOException {
 
-        String uuid = getTestRunUUID() + "_11_1_1_1_1_1";
+        UUID uuid = UUID.randomUUID();
+        String msgID = getTestRunUUID() + "_11_1_1_1_1_1_" + uuid;
         String request =
                 "{" +
                 "  \"Request\" : {" +
-                "     \"UUID\" : \"" + uuid + "\"," +
+                "     \"UUID\" : \"" + msgID + "\"," +
                 "     \"MESSAGE\" : \"This is sample request to test : Receive HTTP request, store in a queue, " +
                                            "receive jms message over a jms proxy and forward to an http endpoint\"" +
                 "  }" +
@@ -67,6 +69,6 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
                 getApiInvocationURLHttp("11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue") + " to server failed" );
 
         //Assert logs to verify the message is picked by JMS listener proxy from the ActiveMQ queue
-        ElasticSearchClient.assertForSingleLogEntry(getElasticSearchHostname(), getDeploymentStackName(),uuid);
+        ElasticSearchClient.assertForSingleLogEntry(getElasticSearchHostname(), getDeploymentStackName(),msgID);
     }
 }
