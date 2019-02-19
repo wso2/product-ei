@@ -58,10 +58,12 @@ public class ElasticSearchClient {
 
         String searchURL = hostName + "/" + deploymentStackID + "-carbonlogs*/_search?q=" + logSnippet;
 
+        log.info("searchURL:" + searchURL);
         RESTClient restClient = new RESTClient();
         HttpResponse response = restClient.doGet(searchURL);
 
         JSONObject resp = new JSONObject(HTTPUtils.getResponsePayload(response));
+        log.info("Response" + resp.toString());
         return resp.getJSONObject("hits");
     }
 
