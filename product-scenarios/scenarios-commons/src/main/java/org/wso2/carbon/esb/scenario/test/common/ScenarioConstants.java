@@ -37,12 +37,12 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
-    public static final String COMMON_ROUTING_REQUEST = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n"
-                                                      + "   <m:StockName>IBM</m:StockName>\n"
-                                                      + "</m:GetStockPrice>";
-    public static final String COMMON_ROUTING_RESPONSE = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n"
-                                                       + "    <m:Price>34.5</m:Price>\n"
-                                                       + "</m:GetStockPriceResponse>";
+    public static final String COMMON_ROUTING_REQUEST = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                                                      + "   <m:Item>Apple</m:Item>\n"
+                                                      + "</m:GetPrice>";
+    public static final String COMMON_ROUTING_RESPONSE = "<m:GetPriceResponse xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                                                       + "    <m:Price>1.90</m:Price>\n"
+                                                       + "</m:GetPriceResponse>";
 
     /**
      * This regular expression matches numbers with exponents
