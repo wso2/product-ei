@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
@@ -9,83 +27,41 @@
   <name>02-synapseConfigCompositeApplication</name>
   <description>02-synapseConfigCompositeApplication</description>
   <properties>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
+    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_7_Proxy_addressEndpointViaSendMediator>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_7_Proxy_addressEndpointViaSendMediator>
+    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_3_Proxy_httpEndpointViaSendMediatorTohttpEp>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_3_Proxy_httpEndpointViaSendMediatorTohttpEp>
+    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_2_Proxy_httpEndpointViaCallMediatorBlockingMode>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_2_Proxy_httpEndpointViaCallMediatorBlockingMode>
+    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_5_Proxy_addressEndpointViaCallMediatorNonBlockingMode>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_5_Proxy_addressEndpointViaCallMediatorNonBlockingMode>
+    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_1_Proxy_httpEndpointViaCallMediatorNonBlockingMode>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_1_Proxy_httpEndpointViaCallMediatorNonBlockingMode>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,datasource/datasource=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.endpoint_._EP_HttpMessageWithoutAlteringDownstreamTestHttp>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.endpoint_._EP_HttpMessageWithoutAlteringDownstreamTestHttp>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.sequence_._seq_callSoap>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.sequence_._seq_callSoap>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.proxy-service_._2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy>
-    <org.wso2.ei.product-scenarios.scenario_02.endpoint_._EP_HttpMessageWithoutAlteringDownstreamTestHttp>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_02.endpoint_._EP_HttpMessageWithoutAlteringDownstreamTestHttp>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.endpoint</groupId>
-      <artifactId>EP_HttpMessageWithoutAlteringDownstreamTestHttp</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.endpoint</groupId>
-      <artifactId>EP_HttpMessageWithoutAlteringDownstreamTestHttp</artifactId>
+      <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
+      <artifactId>2_1_1_3_Proxy_httpEndpointViaSendMediatorTohttpEp</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
+      <artifactId>2_1_1_7_Proxy_addressEndpointViaSendMediator</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
+      <artifactId>2_1_1_1_Proxy_httpEndpointViaCallMediatorNonBlockingMode</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
+      <artifactId>2_1_1_2_Proxy_httpEndpointViaCallMediatorBlockingMode</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.proxy-service</groupId>
-      <artifactId>2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_02.sequence</groupId>
-      <artifactId>seq_callSoap</artifactId>
+      <artifactId>2_1_1_5_Proxy_addressEndpointViaCallMediatorNonBlockingMode</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>

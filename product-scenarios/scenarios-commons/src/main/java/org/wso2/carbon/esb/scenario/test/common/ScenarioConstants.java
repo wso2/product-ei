@@ -37,6 +37,19 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
+    public static final String GET_QUOTE_REQUEST = "<soapenv:Envelope "
+                                                   + "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" "
+                                                   + "xmlns:ser=\"http://services.samples\" "
+                                                   + "xmlns:xsd=\"http://services.samples/xsd\">"
+                                                    + "<soapenv:Header/>"
+                                                    + "<soapenv:Body>"
+                                                        + "<ser:getQuote>"
+                                                            + "<ser:request>"
+                                                                + "<xsd:symbol>IBM</xsd:symbol>"
+                                                            + "</ser:request>"
+                                                        + "</ser:getQuote>"
+                                                    + "</soapenv:Body>"
+                                                   + "</soapenv:Envelope>";
 
     /**
      * This regular expression matches numbers with exponents

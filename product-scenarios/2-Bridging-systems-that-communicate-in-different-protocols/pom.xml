@@ -28,12 +28,11 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>2-Bridging-systems-that-communicate-in-different-protocols</artifactId>
-    <name>HTTP to HTTP protocol translation</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>02-SynapseConfigProject</module>
-        <module>2.1-HTTP-to-HTTP-protocol-translation</module>
+        <module>02-synapseConfigProject</module>
+        <module>2.1-http-to-http-protocol-translation</module>
     </modules>
 
     <dependencies>
@@ -76,7 +75,7 @@
                                     <!-- Directory containing carbon applications -->
                                     <name>test.resources.carbonApplications.dir</name>
                                     <value>
-                                        ${basedir}/../../02-SynapseConfigProject/02-synapseConfigCompositeApplication/target/
+                                        ${basedir}/../../02-synapseConfigProject/02-synapseConfigCompositeApplication/target/
                                     </value>
                                 </property>
                                 <property>

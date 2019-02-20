@@ -29,5 +29,6 @@ public class HttpConstants {
     public static final String MEDIA_TYPE_TEXT_XML = "text/xml";
     public static final String CONTENT_ENCODING = "Content-Encoding";
     public static final String SOAP_ACTION = "SOAPAction";
+    public static final int HTTP_SC_SUCCESS = 200;
 
 }
