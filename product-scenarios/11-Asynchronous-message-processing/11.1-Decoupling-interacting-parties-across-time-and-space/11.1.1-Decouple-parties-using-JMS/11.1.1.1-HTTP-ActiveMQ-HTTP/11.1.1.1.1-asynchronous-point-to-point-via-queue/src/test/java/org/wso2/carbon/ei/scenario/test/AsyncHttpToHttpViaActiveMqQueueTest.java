@@ -71,4 +71,31 @@ public class AsyncHttpToHttpViaActiveMqQueueTest extends ScenarioTestBase {
         //Assert logs to verify the message is picked by JMS listener proxy from the ActiveMQ queue
         ElasticSearchClient.assertForSingleLogEntry(getElasticSearchHostname(), getDeploymentStackName(),msgID);
     }
+
+    /**
+     * Test Scenario : Receive HTTP request, store in a queue, receive jms message over a jms inbound endpoint and
+     * forward to an http endpoint
+     *
+     * @throws IOException
+     */
+    @Test(description = "11.1.1.1.1.2")
+    public void testAsyncHttpToHttpViaQueueAndReceiveMessageOverInboundEndpoint() throws IOException {
+        UUID uuid = UUID.randomUUID();
+        String msgID = getTestRunUUID() + "_11_1_1_1_1_2_" + uuid;
+        String request = "{\n" +
+                         "  \"Request\": {\n" +
+                         "    \"UUID\": \"" + msgID + "\"," +
+                         "    \"MESSAGE\": \"This is sample request to test : Receive HTTP request, store in a queue, receive jms message over a jms inbound endpoint and forward to an http endpoint\"\n" +
+                         "  }\n" +
+                         "}";
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse response = restClient.doPost(getApiInvocationURLHttp("11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue"),
+                                                  request, HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
+
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 202, "API request " +
+                            getApiInvocationURLHttp("11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue") + " to server failed" );
+
+        ElasticSearchClient.assertForSingleLogEntry(getElasticSearchHostname(), getDeploymentStackName(), msgID);
+    }
 }

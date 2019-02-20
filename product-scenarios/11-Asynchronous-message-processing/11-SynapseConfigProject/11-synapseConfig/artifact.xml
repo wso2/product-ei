@@ -29,4 +29,16 @@
     <artifact name="ECHO_EP" groupId="org.wso2.ei.product-scenarios.scenario_11.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/endpoints/ECHO_EP.xml</file>
     </artifact>
+    <artifact name="Seq_request" groupId="org.wso2.ei.product-scenarios.scenario_11.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/Seq_request.xml</file>
+    </artifact>
+    <artifact name="11.1.1.1.1.2_Inbound_jms" groupId="org.wso2.ei.product-scenarios.scenario_11.inbound-endpoint" version="1.0.0" type="synapse/inbound-endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/inbound-endpoints/11.1.1.1.1.2_Inbound_jms.xml</file>
+    </artifact>
+    <artifact name="11_1_1_1_1_2_Queue_EP" groupId="org.wso2.ei.product-scenarios.scenario_11.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/11_1_1_1_1_2_Queue_EP.xml</file>
+    </artifact>
+    <artifact name="11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue" groupId="org.wso2.ei.product-scenarios.scenario_11.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue.xml</file>
+    </artifact>
 </artifacts>
