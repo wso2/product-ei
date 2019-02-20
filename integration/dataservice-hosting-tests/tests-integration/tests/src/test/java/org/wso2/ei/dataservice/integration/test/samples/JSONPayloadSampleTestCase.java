@@ -136,7 +136,7 @@ public class JSONPayloadSampleTestCase extends DSSIntegrationTest {
         String response = getHttpResponse(serviceEndPoint + "employee/52", "GET", null);
         Assert.assertTrue(response.contains(
                 "{\"employees\":{\"employee\":[{\"lastName\":\"Karunaratne\",\"firstName\":\"Sangeeth\"," +
-                        "\"salary\":21400.0}]}}"), "POST method failed");
+                        "\"salary\":21400.0}]}}"), "Put method without optional parameters failed");
     }
 
     @Test(groups = "wso2.dss", description = "Invoking PUT Request with optional fields in JSON payload as " +
@@ -154,7 +154,7 @@ public class JSONPayloadSampleTestCase extends DSSIntegrationTest {
         getHttpResponse(serviceEndPoint + "employee", "PUT", payload);
         String response = getHttpResponse(serviceEndPoint + "employee/52", "GET", null);
         Assert.assertTrue(response.contains("{\"employees\":{\"employee\":[{\"lastName\":\"Karunaratne\"," +
-                "\"firstName\":\"Sangeeth\",\"salary\":18400.0}]}}"));
+                "\"firstName\":\"Sangeeth\",\"salary\":18400.0}]}}"), "Put method with optional parameters failed");
     }
 
     private String getHttpResponse(String endpoint, String requestMethod, String payload) {
