@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_1_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="EP_HttpMessageWithoutAlteringDownstreamTestHttp" groupId="org.wso2.ei.product-scenarios.scenario_02.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/EP_HttpMessageWithoutAlteringDownstreamTestHttp.xml</file>
+    </artifact>
+    <artifact name="2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_2_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_3_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_4_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_5_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_7_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_8_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy.xml</file>
+    </artifact>
+    <artifact name="seq_callSoap" groupId="org.wso2.ei.product-scenarios.scenario_02.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/seq_callSoap.xml</file>
+    </artifact>
+</artifacts>

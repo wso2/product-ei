@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<artifacts>
+    <artifact name="2_1_1_1_Proxy_httpEndpointViaCallMediatorNonBlockingMode" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_1_Proxy_httpEndpointViaCallMediatorNonBlockingMode.xml</file>
+    </artifact>
+    <artifact name="2_1_1_2_Proxy_httpEndpointViaCallMediatorBlockingMode" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_2_Proxy_httpEndpointViaCallMediatorBlockingMode.xml</file>
+    </artifact>
+    <artifact name="2_1_1_3_Proxy_httpEndpointViaSendMediatorTohttpEp" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_3_Proxy_httpEndpointViaSendMediatorTohttpEp.xml</file>
+    </artifact>
+    <artifact name="2_1_1_5_Proxy_addressEndpointViaCallMediatorNonBlockingMode" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_5_Proxy_addressEndpointViaCallMediatorNonBlockingMode.xml</file>
+    </artifact>
+    <artifact name="2_1_1_7_Proxy_addressEndpointViaSendMediator" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_1_1_7_Proxy_addressEndpointViaSendMediator.xml</file>
+    </artifact>
+</artifacts>
