@@ -21,7 +21,6 @@ package org.wso2.carbon.esb.scenario.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.apache.commons.logging.Log;
@@ -46,8 +45,12 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
     @Test(description = "5.1.2.1.1")
     public void routeMessagesBasedOnValidRegexWithSwitchM() throws Exception {
         String header = "basic_xml";
-        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
+        String request = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                + "   <m:Item>Apple</m:Item>\n"
+                + "</m:GetPrice>";
+        String expectedResponse = "<m:GetPriceResponse xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                + "   <m:Price>1.90</m:Price>\n"
+                + "</m:GetPriceResponse>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on a valid regex");
