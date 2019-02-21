@@ -21,7 +21,6 @@ package org.wso2.carbon.esb.scenario.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.apache.commons.logging.Log;
@@ -45,11 +44,13 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
 
     @Test(description = "5.1.2.1.1")
     public void routeMessagesBasedOnValidRegexWithSwitchM() throws Exception {
-        String header = "5_1";
-        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = "<m:GetStockPriceResponse xmlns:m=\"http://www.example.org/stock\">\n" +
-                                  "    <m:Price>34.5</m:Price>\n" +
-                                  "</m:GetStockPriceResponse>";
+        String header = "basic_xml";
+        String request = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                + "   <m:Item>Apple</m:Item>\n"
+                + "</m:GetPrice>";
+        String expectedResponse = "<m:GetPriceResponse xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                + "   <m:Price>1.90</m:Price>\n"
+                + "</m:GetPriceResponse>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on a valid regex");
@@ -57,11 +58,14 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
 
     @Test(description = "5.1.2.1.2")
     public void routeMessagesBasedOnInvalidRegexWithSwitchM() throws Exception {
-        String header = "5_1";
-        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                "   <m:StockName>ABC</m:StockName>\n" +
-                "</m:GetStockPrice>";
-        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
+        String header = "5_1_2_1_2";
+        String request = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                       + "<m:Item>Orange</m:Item>\n"
+                       + "</m:GetPrice>";
+
+        String expectedResponse = "<message xmlns=\"http://ws.apache.org/ns/synapse\">\n"
+                                + "<error>Regular expression not exists or value is empty</error>\n"
+                                + "</message>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on a valid regex");
@@ -69,11 +73,14 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
 
     @Test(description = "5.1.2.1.3")
     public void routeMessagesBasedOnEmptyRegexWithSwitchM() throws Exception {
-        String header = "5_1";
-        String request = "<m:GetStockPrice xmlns:m=\"http://www.example.org/stock\">\n" +
-                "   <m:StockName></m:StockName>\n" +
-                "</m:GetStockPrice>";
-        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
+        String header = "5_1_2_1_3";
+        String request = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                       + "<m:Item></m:Item>\n"
+                       + "</m:GetPrice>";
+
+        String expectedResponse = "<message xmlns=\"http://ws.apache.org/ns/synapse\">\n"
+                                + "<error>Regular expression not exists or value is empty</error>\n"
+                                + "</message>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Switch messages based on a valid regex");

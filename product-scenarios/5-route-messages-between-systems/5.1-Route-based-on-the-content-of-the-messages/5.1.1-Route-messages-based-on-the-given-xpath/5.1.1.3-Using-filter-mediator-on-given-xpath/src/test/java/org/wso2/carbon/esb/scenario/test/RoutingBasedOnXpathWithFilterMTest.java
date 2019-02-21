@@ -21,7 +21,6 @@ package org.wso2.carbon.esb.scenario.test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.esb.scenario.test.common.ScenarioConstants;
 import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.ScenarioTestBase;
 import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
@@ -31,6 +30,12 @@ import org.wso2.carbon.esb.scenario.test.common.http.HttpConstants;
  */
 
 public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
+    String request = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                    + "   <m:Item>Apple</m:Item>\n"
+                    + "</m:GetPrice>";
+    String expectedResponse = "<m:GetPriceResponse xmlns:m=\"https://www.w3schools.com/prices\">\n"
+                             + "   <m:Price>1.90</m:Price>\n"
+                             + "</m:GetPriceResponse>";
 
     @BeforeClass
     public void init() throws Exception {
@@ -39,11 +44,9 @@ public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
 
     @Test(description = "5.1.1.3.1")
     public void routeBasedOnValidXpathWithFilterM() throws Exception {
-        String header = "5_1";
-        String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test" +
-                "/valid_xpath_test_with_filterM");
-        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
+        String header = "basic_xml";
+        String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test"
+                    + "/valid_xpath_test_with_filterM");
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
                 200, "Route messages based on given Xpath with valid case name");
@@ -51,14 +54,14 @@ public class RoutingBasedOnXpathWithFilterMTest extends ScenarioTestBase {
 
     @Test(description = "5.1.1.3.2")
     public void routeBasedOnInvalidXpathWithFilterM() throws Exception {
-        String header = "5_1";
-        String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test" +
-                "/Invalid_xpath_test_with_filterM");
-        String request = ScenarioConstants.COMMON_ROUTING_REQUEST;
-        String expectedResponse = ScenarioConstants.COMMON_ROUTING_RESPONSE;
+        String header = "basic_xml";
+        String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test"
+                    + "/Invalid_xpath_test_with_filterM");
+        String expectedResponse = "<Exception>Evaluation of the XPath expression "
+                                 + "$bodym:Name resulted in an error</Exception>";
 
         HTTPUtils.invokePoxEndpointAndAssert(url, request, HttpConstants.MEDIA_TYPE_TEXT_XML, header, expectedResponse,
-                200, "Route messages based on given Xpath with valid case name");
+                500, "Route messages based on given Xpath with valid case name");
     }
 
     @AfterClass(description = "Server Cleanup", alwaysRun = true)
