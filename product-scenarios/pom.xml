@@ -70,18 +70,21 @@
         <awaitility.version>3.1.2</awaitility.version>
         <commons.lang.version>2.6.0.wso2v1</commons.lang.version>
         <maven.surefire.version>2.12.4</maven.surefire.version>
+        <jacoco.version>0.7.9</jacoco.version>
+        <activemq.client.version>5.15.8</activemq.client.version>
     </properties>
 
     <modules>
         <module>scenarios-commons</module>
         <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
-        <!--<module>2-Bridging-systems-that-communicate-in-different-protocols</module>-->
+        <module>2-Bridging-systems-that-communicate-in-different-protocols</module>
         <module>3-connecting-web-apis-cloud-services</module>
         <module>4-gateway</module>
         <module>5-route-messages-between-systems</module>
         <module>7-connecting-with-packaged-applications</module>
         <module>8-connect-devices-to-enterprise</module>
         <module>10-file-processing</module>
+        <module>11-Asynchronous-message-processing</module>
         <module>13-micro-services</module>
         <module>14-periodically-execute-an-integration-process</module>
     </modules>
@@ -233,6 +236,16 @@
                 <groupId>org.apache.axis2.wso2</groupId>
                 <artifactId>axis2</artifactId>
                 <version>${axis2.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.ant</artifactId>
+                <version>${jacoco.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>${activemq.client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

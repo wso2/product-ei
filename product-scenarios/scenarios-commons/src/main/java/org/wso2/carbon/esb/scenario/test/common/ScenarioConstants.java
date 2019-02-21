@@ -37,6 +37,19 @@ public class ScenarioConstants {
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650_SNAPSHOT = "EI-6.5.0-SNAPSHOT";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
+    public static final String GET_QUOTE_REQUEST = "<soapenv:Envelope "
+                                                   + "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" "
+                                                   + "xmlns:ser=\"http://services.samples\" "
+                                                   + "xmlns:xsd=\"http://services.samples/xsd\">"
+                                                    + "<soapenv:Header/>"
+                                                    + "<soapenv:Body>"
+                                                        + "<ser:getQuote>"
+                                                            + "<ser:request>"
+                                                                + "<xsd:symbol>IBM</xsd:symbol>"
+                                                            + "</ser:request>"
+                                                        + "</ser:getQuote>"
+                                                    + "</soapenv:Body>"
+                                                   + "</soapenv:Envelope>";
 
     /**
      * This regular expression matches numbers with exponents
@@ -63,9 +76,19 @@ public class ScenarioConstants {
     public static final String ESB_HTTP_URL = "ESBHttpUrl";
     public static final String ESB_HTTPS_URL = "ESBHttpsUrl";
     public static final String LOCAL_VFS_LOCATION = "localVfsLocation";
+    public static final String ACTIVEMQ_HOSTNAME = "ActiveMqHostname";
+    public static final String ELASTICSEARCH_HOSTNAME = "ElasticSearchEndpoint";
+    public static final String INFRA_EI_STACK_NAME = "EIStackName";
+
+    public static final String TEST_RUN_UUID = "invocation.uuid";
 
     public static final String CAPP_EXTENSION = ".car";
 
     public static final int ARTIFACT_DEPLOYMENT_WAIT_TIME_MS = 120000;
+
+    public static final int LOG_ASSERT_INITIAL_WAIT_TIME_MS = 10000;
+    public static final int LOG_ASSERT_MAX_WAIT_TIME_MS = 120000;
+    public static final int LOG_ASSERT_POLL_INTERVAL_MS = 5000;
+
     public static final int FILE_WRITE_WAIT_TIME_MS = 120000;
 }

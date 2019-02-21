@@ -9,19 +9,37 @@
   <name>05-synapseConfigCompositeApplication</name>
   <description>05-synapseConfigCompositeApplication</description>
   <properties>
-    <org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP2>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP2>
-    <org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP>
     <org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_1_API_load_balance_group_test>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_1_API_load_balance_group_test>
-    <org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_2_API_load_balance_group_define_policy_test>capp
-      /EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_2_API_load_balance_group_define_policy_test>
-    <org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_3_API_load_balance_group_define_nothing>capp
-      /EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_3_API_load_balance_group_define_nothing>
+    <org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP>
+    <org.wso2.ei.product-scenarios.scenario_05.api_._5_1_API_Routing_messages_based_on_content_of_message_test>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.api_._5_1_API_Routing_messages_based_on_content_of_message_test>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,datasource/datasource=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_XML>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_XML>
+    <org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP2>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.endpoint_._05_EP_SOAP2>
+    <org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_3_API_load_balance_group_define_nothing>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_3_API_load_balance_group_define_nothing>
+    <org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_2_API_load_balance_group_define_policy_test>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_05.api_._5_3_1_1_2_API_load_balance_group_define_policy_test>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_05.api</groupId>
+      <artifactId>5_1_API_Routing_messages_based_on_content_of_message_test</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_05.api</groupId>
       <artifactId>5_3_1_1_1_API_load_balance_group_test</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_05.endpoint</groupId>
+      <artifactId>05_EP_SOAP2</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_05.endpoint</groupId>
+      <artifactId>05_EP_SOAP</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
@@ -39,13 +57,7 @@
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_05.endpoint</groupId>
-      <artifactId>05_EP_SOAP</artifactId>
-      <version>1.0.0</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_05.endpoint</groupId>
-      <artifactId>05_EP_SOAP2</artifactId>
+      <artifactId>05_EP_XML</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>

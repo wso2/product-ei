@@ -42,7 +42,6 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -65,14 +64,20 @@ public class ScenarioTestBase {
 
     private static final String PRODUCT_VERSION = "ProductVersion";
     private static Properties infraProperties;
+
     private static String backendURL;
     private static String serviceURL;
     private static String securedServiceURL;
     private static String mgtConsoleURL;
-    private String sessionCookie;
-    private boolean standaloneMode;
+    private static String elasticSearchHostname;
+    private static String deploymentStackName;
     private static String runningProductVersion;
     private static String localVfsLocation;
+    private static String testRunUUID;
+
+    private String sessionCookie;
+    private boolean standaloneMode;
+
 
     private CarbonAppUploaderClient carbonAppUploaderClient = null;
     private ApplicationAdminClient applicationAdminClient = null;
@@ -89,6 +94,9 @@ public class ScenarioTestBase {
         //standaloneMode = Boolean.valueOf(infraProperties.getProperty(STANDALONE_DEPLOYMENT));
         // TODO : remove this once test environment is stable
         standaloneMode = true;
+
+        // Retrieve test execution run UUID
+        testRunUUID = System.getProperty(ScenarioConstants.TEST_RUN_UUID);
 
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
@@ -115,6 +123,19 @@ public class ScenarioTestBase {
                     "Skipping test: " + this.getClass().getName() + " due to version mismatch. Running "
                     + "product version: " + runningProductVersion + ", Non allowed versions: "
                     + Arrays.toString(incompatibleVersions);
+            log.warn(errorMessage);
+            throw new SkipException(errorMessage);
+        }
+    }
+
+    /**
+     * Skip test if the test is executed in standalone mode since some tests need to be executed in distributed
+     * infrastructure. For example some tests required to assert log entries from ELK stack
+     */
+    protected void skipTestsIfStandaloneDeployment() {
+        if (Boolean.valueOf(getInfrastructureProperty(ScenarioConstants.STANDALONE_DEPLOYMENT))) {
+            String errorMessage =
+                    "Skipping test: " + this.getClass().getName() + " since this test require distributed deployment";
             log.warn(errorMessage);
             throw new SkipException(errorMessage);
         }
@@ -150,6 +171,9 @@ public class ScenarioTestBase {
         return props;
     }
 
+    public String getInfrastructureProperty(String propertyName) {
+        return infraProperties.getProperty(propertyName);
+    }
 
     protected String getApiInvocationURLHttp(String resourcePath) {
         return serviceURL + (resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath);
@@ -380,6 +404,9 @@ public class ScenarioTestBase {
             } else {
                 localVfsLocation = infraProperties.getProperty(ScenarioConstants.LOCAL_VFS_LOCATION);
             }
+
+            deploymentStackName = infraProperties.getProperty(ScenarioConstants.INFRA_EI_STACK_NAME);
+            elasticSearchHostname = infraProperties.getProperty(ScenarioConstants.ELASTICSEARCH_HOSTNAME);
         }
     }
 
@@ -389,6 +416,18 @@ public class ScenarioTestBase {
 
     public static String getMgtConsoleURL() {
         return mgtConsoleURL;
+    }
+
+    public static String getElasticSearchHostname() {
+        return elasticSearchHostname;
+    }
+
+    public static String getDeploymentStackName() {
+        return deploymentStackName;
+    }
+
+    public String getTestRunUUID() {
+        return testRunUUID;
     }
 
     private String appendSourceFolder(String testCase, String relativeSourceFolderPath) {

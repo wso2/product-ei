@@ -94,5 +94,9 @@
             <artifactId>httpclient</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+        </dependency>
     </dependencies>
 </project>

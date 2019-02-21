@@ -19,34 +19,60 @@ Given below is the syntax of how regular expression can be add to the switch med
 
 ```
 
-## Sample use-case
+## Sample use case
+Let's take an example of a client that could send stock quote requests , and receive and display the price of stock quote.
+The client add the name of the stock name which he needs to ge the price of the requested stock.
+So now the request payload includes the above details. When the user sends the request,
+the message is routed to the relevant endpoint by using Switch/Filter mediator.
+In this example, the client can configure from which element or the attribute that the mediator should read and call the back-end service.
 
+Sample request payload
+
+```
+<m:GetStockPrice xmlns:m="http://www.example.org/stock">
+   <m:StockName>IBM</m:StockName>
+</m:GetStockPrice>
+
+```
+
+Following is a sample synapse configuration in EI.
+
+```
+   <resource methods="POST">
+      <inSequence>
+         <property xmlns:m="http://www.example.org/stock" name="StockName" expression="//m:GetStockPrice/m:StockName" scope="default" type="STRING"/>
+         <switch source="get-property('StockName')">
+            <case regex="IBM">
+               <call>
+                  <endpoint key="http://ei-backend.scenarios.wso2.org:9090/eiTests/XMLEndpoint"/>
+               </call>
+            </case>
+            <default/>
+         </switch>
+         <respond/>
+      </inSequence>
+      <outSequence/>
+      <faultSequence/>
+   </resource>
+</api>
+
+```
 
 ## Pre-requisites
 
-
-## Development guidelines
-
+A REST client like cURL to invoke the ESB API.
 
 ## Deployment guidelines
 
+We can simply deploy by copying the carbon composite application archive into <EI_HOME>/repository/deployment/server/carbonapps directory, and it will be deployed.
 
-## Test cases
+**OR**
 
-| Test Case ID  |                        Test Case	               |                                Test Description                |
-| ------------- | ------------------------------------------------ | ---------------------------------------------------------------|
-| 5.1.2.1.1     | Switch messages based on a valid regex   |   |
-| 5.1.2.1.2     | [N] Switch messages based on a Invalid regex |  |
-| 5.1.2.1.3     | [N] Switch messages based on a empty regex   |  |
-| 5.1.2.1.4     | [N] Switch messages based on a null regex  |  |
-| 5.1.2.1.5     | Switch messages based on regex when multiple cases exists with a default case   |  |
+We can create the api in Management Console and deploy.
 
-**_Note_**
-[N] Represent the Negative Test cases (incorrect behaviours that user can attempt)
+## Supported versions
 
-
-
-
+This is supported in all the EI and ESB versions
 
 
 

@@ -23,39 +23,62 @@ Given below is the syntax of this mediator.
 ```
 Reference : [Switch Mediator](https://docs.wso2.com/display/EI610/Switch+Mediator)
 
-## Sample use-case
+## Sample use case
+Let's take an example of a client that could send stock quote requests , and receive and display the price of stock quote.
+The client add the name of the stock name which he needs to ge the price of the requested stock.
+So now the request payload includes the above details. When the user sends the request,
+the message is routed to the relevant endpoint by using Switch/Filter mediator.
+In this example, the client can configure from which element or the attribute that the mediator should read and call the back-end service.
 
+Sample request payload
+
+```
+<m:GetStockPrice xmlns:m="http://www.example.org/stock">
+   <m:StockName>IBM</m:StockName>
+</m:GetStockPrice>
+
+```
+
+Following is a sample synapse configuration in EI.
+
+```
+   <resource methods="POST">
+      <inSequence>
+         <property xmlns:m="http://www.example.org/stock" name="StockName" expression="//m:GetStockPrice/m:StockName" scope="default" type="STRING"/>
+         <switch source="get-property('StockName')">
+            <case regex="IBM">
+               <call>
+                  <endpoint key="http://ei-backend.scenarios.wso2.org:9090/eiTests/XMLEndpoint"/>
+               </call>
+            </case>
+            <default/>
+         </switch>
+         <respond/>
+      </inSequence>
+      <outSequence/>
+      <faultSequence/>
+   </resource>
+</api>
+
+```
 
 ## Pre-requisites
 
-
-## Development guidelines
-
+A REST client like cURL to invoke the ESB API.
 
 ## Deployment guidelines
 
+We can simply deploy by copying the carbon composite application archive into <EI_HOME>/repository/deployment/server/carbonapps directory, and it will be deployed.
 
-## Test cases
+**OR**
 
-| Test Case ID  |                        Test Case	               |                                Test Description                |
-| ------------- | ------------------------------------------------ | ---------------------------------------------------------------|
-| 5.1.1.1.1     | Switch messages based on given Xpath with valid case name   | **_Given_:** Valid xml/json/csv request payload has be to sent. **_When_:** Add valid Xpath name as a source name in the switch mediator. **_Then_:** Valid response message should be logged when the client request is routed to the relevant endpoint. |
-| 5.1.1.1.2     | [N] Switch messages based on given Xpath with Invalid case name | **_Given_:** Valid xml/json/csv 
-request payload has be to sent. **_When_:** Add Invalid Xpath name as a source name in the switch mediator. 
-**_Then_:** Error message should be return from the server.|
-| 5.1.1.1.3     | [N] Switch messages based on given Xpath with null case name    | **_Given_:** Valid xml/json/csv 
-request payload has be to sent. **_When_:** Add null Xpath name as a source name in the switch mediator. **_Then_:** 
-Error message should be return from the server.|
-| 5.1.1.1.4     | [N] Switch messages based on given Xpath with empty case name   | **_Given_:** Valid xml/json/csv 
-request payload has be to sent. **_When_:** Add empty Xpath name as a source name in the switch mediator. **_Then_:**
- Error message should be return from the server.|
-| 5.1.1.1.5     | Switch messages based on Xpath when multiple cases exists with a default case  | **_Given_:** Valid
- xml/json/csv request payload has be to sent. **_When_:** Add multiple default cases in switch mediator with valid 
- Xpath name as a source name. **_Then_:** Valid response message should be return from the server.|
-| 5.1.1.1.6     | Switch messages based on a given Xpath by ignoring the case sensitivity  | **_Given_:** Valid xml/json/csv request payload has be to sent. **_When_:** Add valid Xpath name with case sensitivity in the switch mediator . **_Then_:** Valid response message should be logged when the client request is routed to the relevant endpoint. |
+We can create the api in Management Console and deploy.
 
-**_Note_**
-[N] Represent the Negative Test cases (incorrect behaviours that user can attempt)
+## Supported versions
+
+This is supported in all the EI and ESB versions
+
+
 
 
 
