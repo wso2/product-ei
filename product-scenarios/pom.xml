@@ -84,7 +84,8 @@
         <module>7-connecting-with-packaged-applications</module>
         <module>8-connect-devices-to-enterprise</module>
         <module>10-file-processing</module>
-        <module>11-Asynchronous-message-processing</module>
+        <!--TODO This module is commented until elastic search task is completed-->
+        <!--<module>11-Asynchronous-message-processing</module>-->
         <module>13-micro-services</module>
         <module>14-periodically-execute-an-integration-process</module>
     </modules>
