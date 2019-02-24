@@ -142,7 +142,7 @@ goto jdk17
 
 :unknownJdk
 echo Starting WSO2 Carbon (in unsupported JDK)
-echo [ERROR] CARBON is supported only on JDK 1.7 and 1.8
+echo [ERROR] CARBON is supported only on JDK 1.7, 1.8, 9, 10 and 11
 goto jdk17
 
 :jdk17
