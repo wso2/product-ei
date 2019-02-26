@@ -32,23 +32,18 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!--<module>tests-common</module>-->
-        <!--<module>service-samples</module>-->
+        <module>tests-common</module>
+        <module>service-samples</module>
         <module>tests-transport</module>
-        <!--<module>tests-service</module>-->
-        <!--&lt;!&ndash;38 test failures&ndash;&gt;-->
-        <!--<module>tests-mediator-1</module>-->
-        <!--<module>tests-mediator-2</module>-->
-        <!--&lt;!&ndash;4 test failures&ndash;&gt;-->
-        <!--<module>tests-patches</module>-->
-        <!--&lt;!&ndash;Invalid ECDH ServerKeyExchange signature JMS Test/ESBJAVA4692_MP_FaultSequence_HttpsEndpoint_TestCase&ndash;&gt;-->
-        <!--<module>tests-sample</module>-->
-        <!--&lt;!&ndash;20 test failures&ndash;&gt;-->
-        <!--<module>tests-other</module>-->
-        <!--&lt;!&ndash;26 test failures&ndash;&gt;-->
-        <!--<module>tests-ui</module>-->
-        <!--<module>tests-platform</module>-->
-        <!--<module>coverage-report</module>-->
+        <module>tests-service</module>
+        <module>tests-mediator-1</module>
+        <module>tests-mediator-2</module>
+        <module>tests-patches</module>
+        <module>tests-sample</module>
+        <module>tests-other</module>
+        <module>tests-ui</module>
+        <module>tests-platform</module>
+        <module>coverage-report</module>
     </modules>
 
 </project>
