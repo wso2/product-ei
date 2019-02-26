@@ -39,7 +39,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <!--<module>automation-extensions</module>-->
+                <module>automation-extensions</module>
                 <module>mediation-tests</module>
                 <!--<module>business-process-tests</module>-->
                 <!--<module>dataservice-hosting-tests</module>
