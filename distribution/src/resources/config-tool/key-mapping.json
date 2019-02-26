@@ -1,0 +1,12 @@
+{
+  "mediation.synapse.core_threads" : "synapse_properties.'synapse.threads.core'",
+  "mediation.synapse.max_threads" : "synapse_properties.'synapse.threads.max'",
+  "mediation.synapse.threads_keepalive_millis":"synapse_properties.'synapse.threads.keepalive'",
+  "mediation.synapse.threads_queue_length": "synapse_properties.'synapse.threads.qlen'",
+
+  "transports.passthru.socket_timeout_millis": "passthru_properties.'http.socket.timeout'",
+  "transports.passthru.core_worker_pool_size": "passthru_properties.'worker_pool_size_core'",
+  "transports.passthru.max_worker_pool_size": "passthru_properties.'worker_pool_size_max'",
+  "transports.passthru.worker_thread_keepalive_seconds": "passthru_properties.'worker_thread_keepalive_sec'",
+  "transports.passthru.worker_pool_queue_length": "passthru_properties.'worker_pool_queue_length'"
+}
