@@ -33,7 +33,7 @@
 
     <build>
         <filters>
-            <filter>${basedir}/../../../deployment.properties</filter>
+            <filter>${data.bucket.location}/deployment.properties</filter>
         </filters>
         <plugins>
             <plugin>
