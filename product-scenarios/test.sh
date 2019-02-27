@@ -29,6 +29,13 @@ function usage()
     "
 }
 
+function runTestProfile()
+{
+    mvn clean install -Dinvocation.uuid="$UUID" -Ddata.bucket.location="${INPUT_DIR}" \
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -fae -B -f ./pom.xml \
+     -P $1
+}
+
 optspec=":hiom-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in
@@ -79,7 +86,7 @@ echo "working Directory : ${HOME}"
 echo "input directory : ${INPUT_DIR}"
 echo "output directory : ${OUTPUT_DIR}"
 
-export DATA_BUCKET_LOCATION=${INPUT_DIR}
+#export DATA_BUCKET_LOCATION=${INPUT_DIR}
 
 #=============== Execute Scenarios ===============================================
 
@@ -97,12 +104,10 @@ do
     case ${productVersion} in
         ESB-5.0.0|EI-6.0.0|EI-6.1.0|EI-6.1.1|EI-6.2.0|EI-6.3.0|EI-6.4.0|EI-6.5.0-SNAPSHOT)
             echo "Executing tests for the product version: $productVersion"
-            mvn clean install -Dinvocation.uuid="$UUID" -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-             -fae -B -f ./pom.xml -P profile_general ;;
+            runTestProfile profile_general ;;
         ESB-4.9.0)
             echo "Executing tests for the product version: $productVersion"
-            mvn clean install -Dinvocation.uuid="$UUID" -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-             -fae -B -f ./pom.xml -P profile_490 ;;
+            runTestProfile profile_490 ;;
         *)
             echo "Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
     esac
@@ -113,8 +118,7 @@ done < "${INPUT_DIR}/deployment.properties"
 
 if ! $PRODUCT_VERSION_FOUND ; then
     echo "deployment.properties file does not contain the product version. Executing the default suite ."
-    mvn clean install -Dinvocation.uuid="$UUID" -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-    -fae -B -f ./pom.xml -P profile_general
+    runTestProfile profile_general
 fi
 
 #=============== Copy Surefire Reports ===========================================
