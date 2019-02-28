@@ -1577,7 +1577,17 @@
             <directory>./src/resources/config-tool</directory>
             <outputDirectory>wso2ei-${pom.version}/repository/resources/conf</outputDirectory>
             <includes>
-                <include>**/*.json</include>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>**/deployment.toml</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>./src/resources/config-tool</directory>
+            <outputDirectory>wso2ei-${pom.version}/</outputDirectory>
+            <includes>
+                <include>**/deployment.toml</include>
             </includes>
         </fileSet>
 
