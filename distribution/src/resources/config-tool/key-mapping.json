@@ -1,4 +1,7 @@
 {
+  "deployment.enamble_mtom": "deployment.enableMTOM",
+  "deployment.enable_swa": "deployment.enableSwA",
+
   "mediation.synapse.core_threads" : "synapse_properties.'synapse.threads.core'",
   "mediation.synapse.max_threads" : "synapse_properties.'synapse.threads.max'",
   "mediation.synapse.threads_keepalive_millis":"synapse_properties.'synapse.threads.keepalive'",

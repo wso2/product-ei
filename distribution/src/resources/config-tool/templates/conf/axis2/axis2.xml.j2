@@ -7,7 +7,7 @@
   ~ in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing,
   ~ software distributed under the License is distributed on an
@@ -15,14 +15,7 @@
   ~ KIND, either express or implied. See the License for the
   ~ specific language governing permissions and limitations
   ~ under the License.
-  ~
   -->
-
-<!--*****************************************************-->
-<!--*-->
-<!--* WARNING: Don't edit the file manually unless you are not using the deployment.toml file.-->
-<!--*-->
-<!--*****************************************************-->
 
 <axisconfig name="AxisJava2.0">
 
@@ -61,12 +54,16 @@
     <!--the directory in which .aar services are deployed inside axis2 repository-->
     <parameter name="ServicesDirectory">axis2services</parameter>
 
+    <!--If turned on with use the Accept header of the request to determine the contentType of the
+    response-->
+    <parameter name="httpContentNegotiation">true</parameter>
+
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">{{axis2.userAgent}}</parameter>
-    <parameter name="server" locked="true">{{axis2.serverDetails}}</parameter>
+    <parameter name="userAgent" locked="true">{{deployment.userAgent}}</parameter>
+    <parameter name="server" locked="true">{{deployment.serverDetails}}</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
@@ -93,7 +90,8 @@
     <parameter name="SynapseConfig.ResolveRoot" locked="false">.</parameter>
     <!-- Synapse Server name parameter -->
     <parameter name="SynapseConfig.ServerName" locked="false">localhost</parameter>
-
+    <!-- Returns 401 for UT secured scenario with incorrect/missing credentials -->
+    <parameter name="enableBasicAuth" locked="false">true</parameter>
     <!-- To override repository/services you need to uncomment following parameter and value -->
     <!-- SHOULD be absolute file path. -->
     <!--<parameter name="ServicesDirectory" locked="false">service</parameter>-->
@@ -119,7 +117,7 @@
     <!-- ================================================= -->
 
     <!-- Deployer for the dataservice. -->
-    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.DBDeployer"/>-->
+    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>-->
 
     <!-- Axis1 deployer for Axis2 -->
     <!--<deployer extension="wsdd" class="org.wso2.carbon.axis1services.Axis1Deployer" directory="axis1services"/>-->
@@ -159,11 +157,10 @@
     <!-- for different message format serializations in Axis2. These message formats are -->
     <!-- expected to be resolved based on the content type. -->
     <messageFormatters>
-        {% for content_type,class in message_formatters.properties.items() %}
-        <messageFormatter contentType="{{content_type}}"
-                          class="{{class}}"/>
+        {% for message_formatter in message_formatters %}
+        <messageFormatter contentType="{{message_formatter.content_type}}"
+                          class="{{message_formatter.class}}"/>
         {% endfor %}
-
     </messageFormatters>
 
     <!-- ================================================= -->
@@ -174,99 +171,137 @@
     <!-- different message formats in Axis2. These message formats are expected to be -->
     <!-- resolved based on the content type. -->
     <messageBuilders>
-        {% for content_type,class in message_builders.properties.items() %}
-        <messageBuilder contentType="{{content_type}}"
-                        class="{{class}}"/>
+        {% for message_builder in message_builders %}
+        <messageBuilder contentType="{{message_builder.content_type}}"
+                        class="{{message_builder.class}}"/>
         {% endfor %}
+
     </messageBuilders>
 
     <!-- ================================================= -->
     <!--             Transport Ins (Listeners)             -->
     <!-- ================================================= -->
 
-    <transportReceiver name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpListener">
-        <parameter name="port" locked="false">8280</parameter>
-        <parameter name="non-blocking" locked="false">true</parameter>
-        <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
-        <!--<parameter name="priorityConfigFile" locked="false">location of priority configuration file</parameter>-->
+    <transportReceiver name="http" class="{{transport.passthru_http.listener.class}}">
+        {% for parameter_key,parameter_value in transport.passthru_http.parameters.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
     </transportReceiver>
 
-
-    <transportReceiver name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener">
-        <parameter name="port" locked="false">8243</parameter>
-        <parameter name="non-blocking" locked="false">true</parameter>
-        <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
+    <transportReceiver name="https" class="{{transport.passthru_https.listener.class}}">
+        {% for parameter_key,parameter_value in transport.passthru_https.listener.parameters.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>repository/resources/security/wso2carbon.jks</Location>
-                <Type>JKS</Type>
-                <Password>wso2carbon</Password>
-                <KeyPassword>wso2carbon</KeyPassword>
+                <Location>{{transport.passthru_https.listener.key_store.location}}</Location>
+                <Type>{{transport.passthru_https.listener.key_store.type}}</Type>
+                <Password>{{transport.passthru_https.listener.key_store.password}}</Password>
+                <KeyPassword>{{transport.passthru_https.listener.key_store.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>repository/resources/security/client-truststore.jks</Location>
-                <Type>JKS</Type>
-                <Password>wso2carbon</Password>
+                <Location>{{transport.passthru_https.listener.trust_store.location}}</Location>
+                <Type>{{transport.passthru_https.listener.trust_store.type}}</Type>
+                <Password>{{transport.passthru_https.listener.trust_store.password}}</Password>
             </TrustStore>
+        </parameter>
+        <!-- ============================================== -->
+        <!-- Configuration for Listener Dynamic SSL Profile loading. -->
+        <!-- Configured for 10 mins. -->
+        <!-- ============================================== -->
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport.passthru_https.listener.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.passthru_https.listener.ssl_profile.interval}}</fileReadInterval>
         </parameter>
     </transportReceiver>
 
+
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
+
+    {% if transport.jms.listener.connection_factories is defined %}
+    <transportReceiver name="jms" class="{{transport.jms.listener.class}}">
+        {% for connection_factory in transport.jms.listener.connection_factories %}
+        <parameter name="{{transport.jms.listener[connection_factory].name}}" locked="false">
+            {% for name,value in transport.jms.listener[connection_factory].parameters.items() %}
+            <parameter name="{{name}}" locked="false">{{value}}</parameter>
+            {% endfor %}
+        </parameter>
+        {% endfor %}
+    </transportReceiver>
+    {% endif %}
 
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
 
-    <transportSender name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpSender">
-        <parameter name="non-blocking" locked="false">true</parameter>
+    <transportSender name="http" class="{{transport.passthru_http.sender.class}}">
+        {% for parameter_key,parameter_value in transport.passthru_http.sender.parameters.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
     </transportSender>
-
     <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
-
-
-    <transportSender name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLSender">
-        <parameter name="non-blocking" locked="false">true</parameter>
+    <transportSender name="https" class="{{transport.passthru_https.sender.class}}">
+        {% for parameter_key,parameter_value in transport.passthru_https.sender.parameters.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>repository/resources/security/{{keystore.tls.file_name}}</Location>
-                <Type>{{keystore.tls.type}}</Type>
-                <Password>{{keystore.tls.password}}</Password>
-                <KeyPassword>{{keystore.tls.key_password}}</KeyPassword>
+                <Location>{{transport.passthru_https.sender.key_store.location}}</Location>
+                <Type>{{transport.passthru_https.sender.key_store.type}}</Type>
+                <Password>{{transport.passthru_https.sender.key_store.password}}</Password>
+                <KeyPassword>{{transport.passthru_https.sender.key_store.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>repository/resources/security/{{truststore.file_name}}</Location>
-                <Type>{{truststore.type}}</Type>
-                <Password>{{truststore.password}}</Password>
+                <Location>{{transport.passthru_https.sender.trust_store.location}}</Location>
+                <Type>{{transport.passthru_https.sender.trust_store.type}}</Type>
+                <Password>{{transport.passthru_https.sender.trust_store.password}}</Password>
             </TrustStore>
         </parameter>
+        {% if transport.passthru_https.sender.ssl_profile.file_path is defined %}
         <!-- ============================================== -->
         <!-- Configuration for Dynamic SSL Profile loading. -->
         <!-- Configured for 10 mins. -->
         <!-- ============================================== -->
         <parameter name="dynamicSSLProfilesConfig">
-            <filePath>repository/resources/security/sslprofiles.xml</filePath>
-            <fileReadInterval>600000</fileReadInterval>
+            <filePath>{{transport.passthru_https.sender.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.passthru_https.sender.ssl_profile.interval}}</fileReadInterval>
         </parameter>
+        {% endif %}
     </transportSender>
-    <transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
-        <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
-        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
+    {% if transport.jms.sender.connection_factories is defined %}
+    <transportSender name="jms" class="{{transport.jms.sender.class}}">
+        {% for connection_factory in transport.jms.sender.connection_factories %}
+        <parameter name="{{transport.jms.sender[connection_factory].name}}" locked="false">
+            {% for name,value in transport.jms.sender[connection_factory].parameters.items() %}
+            <parameter name="{{name}}" locked="false">{{value}}</parameter>
+            {% endfor %}
+        </parameter>
+        {% endfor %}
     </transportSender>
+    {% endif %}
+    {% if transport.ws.sender is defined %}
+    <transportSender name="ws" class="{{transport.ws.sender.class}}">
+        {% for name,value in transport.ws.sender.parameters.items() %}
+        <parameter name="{{name}}" locked="false">{{value}}</parameter>
+        {% endfor %}
+    </transportSender>
+    {% endif %}
+    {% if transport.wss.sender is defined %}
 
-    <transportSender name="wss" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
-        <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
-        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
+    <transportSender name="wss" class="{{transport.wss.sender.class}}">
+        {% for name,value in transport.wss.sender.parameters.items() %}
+        <parameter name="{{name}}" locked="false">{{value}}</parameter>
+        {% endfor %}
         <parameter name="ws.trust.store" locked="false">
-            <ws.trust.store.location>repository/resources/security/client-truststore.jks</ws.trust.store.location>
-            <ws.trust.store.Password>wso2carbon</ws.trust.store.Password>
+            <ws.trust.store.location>{{transport.wss.sender.trust_store.location}}</ws.trust.store.location>
+            <ws.trust.store.Password>{{transport.wss.sender.trust_store.password}}</ws.trust.store.Password>
         </parameter>
     </transportSender>
-
-
+    {% endif%}
 
     <!-- ================================================= -->
     <!--             Global Engaged Modules                -->
@@ -294,6 +329,7 @@
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
                 enable="{{clustering.membership_scheme is defined}}">
 
+        {% if clustering.membership_scheme is defined %}
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
            when the AxisConfiguration is built. If set to "true" the initialization will not be
@@ -304,7 +340,6 @@
         <!--
            The membership scheme used in this setup. The only values supported at the moment are
            "multicast" and "wka"
-
            1. multicast - membership is automatically discovered using multicasting
            2. wka - Well-Known Address based multicasting. Membership is discovered with the help
                     of one or more nodes running at a Well-Known Address. New members joining a
@@ -314,7 +349,7 @@
                     is deemed to have left the cluster, it will be detected by the Group Membership
                     Service (GMS) using a TCP ping mechanism.
         -->
-        <parameter name="membershipScheme">{{clustering.membership_scheme}}</parameter>
+        <parameter name="membershipScheme">{{clustering.membership_scheme | default('multicast')}}</parameter>
         <!--<parameter name="licenseKey">xxx</parameter>-->
         <!--<parameter name="mgtCenterURL">http://localhost:8081/mancenter/</parameter>-->
 
@@ -322,7 +357,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">{{clustering.domain}}</parameter>
+        <parameter name="domain">{{clustering.domain | default('wso2.carbon.domain')}}</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
@@ -358,12 +393,7 @@
         The TCP port used by this member. This is the port through which other nodes will
         contact this member
          -->
-        <!--AWS,Kubernetese base clustering values goes here-->
-        {% for property_name,property_value in clustering.properties.items() %}
-        <parameter name="{{property_name}}">{{property_value}}</parameter>
-        {% endfor %}
-
-        <parameter name="localMemberPort">{{clustering.local_member_port}}</parameter>
+        <parameter name="localMemberPort">{{clustering.local_member_port | default('4000')}}</parameter>
 
         <!--
             The bind port of this member. The difference between localMemberPort & localMemberBindPort
@@ -389,9 +419,10 @@
         -->
         <members>
             {% for member in clustering.members %}
+            {% set splittedMember = member.split(':') %}
             <member>
-                <hostName>{{clustering.members[member].host_name}}</hostName>
-                <port>{{clustering.members[member].port}}</port>
+                <hostName>{{splittedMember[0]}}</hostName>
+                <port>{{splittedMember[1]}}</port>
             </member>
             {% endfor %}
         </members>
@@ -408,6 +439,7 @@
                                subDomain="worker"
                                port="2222"/>
         </groupManagement>
+        {% endif %}
     </clustering>
 
     <!-- ================================================= -->
@@ -438,22 +470,20 @@
            NOTE: This should be the very first phase in this flow
         -->
         <phase name="MsgInObservation">
-            <handler name="TraceMessageBuilderDispatchHandler"
+	    <handler name="TraceMessageBuilderDispatchHandler"
                      class="org.apache.synapse.transport.passthru.util.TraceMessageBuilderDispatchHandler"/>
-        </phase>
+	</phase>
         <phase name="Validation"/>
         <phase name="Transport">
-            <!--TEMPORALY-->
-            <!--handler name="TenantActiveCheckDispatcher"
-                     class="org.wso2.carbon.tenant.dispatcher.TenantActiveCheckDispatcher">
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
-            </handler-->
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
-                <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
-            <handler name="CarbonContextConfigurator"
+   	        <handler name="CarbonContextConfigurator"
                      class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
+            <handler name="RelaySecuirtyMessageBuilderDispatchandler"
+                     class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">
                 <order phase="Transport"/>
@@ -462,24 +492,22 @@
                      class="org.wso2.carbon.core.transports.smtp.SMTPFaultHandler">
                 <order phase="Transport"/>
             </handler-->
-            <!-- TEMPORALY-->
-            <!--handler name="CacheMessageBuilderDispatchandler"
-                     class="org.wso2.carbon.mediation.initializer.handler.CacheMessageBuilderDispatchandler"/-->
-            <handler name="CarbonContentConfigurator"
-                     class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
         </phase>
         <phase name="Addressing">
             <handler name="AddressingBasedDispatcher"
                      class="org.apache.axis2.dispatchers.AddressingBasedDispatcher">
                 <order phase="Addressing"/>
             </handler>
-
         </phase>
         <phase name="Security"/>
-        <phase name="PreDispatch"/>
+        <phase name="PreDispatch">
+            <!--Uncomment following handler to enable logging in EI log UI-->
+            <!--<handler name="TenantDomainSetter"-->
+                     <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
+        </phase>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
+            <handler name="JSONMessageHandler" class="org.apache.axis2.json.gson.JSONMessageHandler" />
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
@@ -516,16 +544,15 @@
         <!--system predefined phase-->
         <!--these phase will run irrespective of the service-->
         <phase name="PolicyDetermination"/>
-        <!--security handler for pass through -->
         <phase name="PTSecurityOutPhase">
-            <handler name="RelaySecuirtyMessageBuilderDispatchandler"
+		<handler name="RelaySecuirtyMessageBuilderDispatchandler"
                      class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
-        </phase>
+	    </phase>
         <phase name="MessageOut"/>
         <phase name="Security"/>
 
         <!--
-           The MsgOutObservation phase is used tju,o observe messages just before the
+           The MsgOutObservation phase is used to observe messages just before the
            responses are sent out. In this phase, we could do some things such as SOAP message
            tracing & keeping track of the time at which a particular response was sent.
 
@@ -544,32 +571,27 @@
         -->
         <phase name="MsgInObservation"/>
         <phase name="Validation"/>
-
         <phase name="Transport">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">
                 <order phase="Transport"/>
             </handler>
-            <handler name="CarbonContentConfigurator"
-                     class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
         </phase>
-
         <phase name="Addressing">
             <handler name="AddressingBasedDispatcher"
                      class="org.apache.axis2.dispatchers.AddressingBasedDispatcher">
                 <order phase="Addressing"/>
             </handler>
         </phase>
-
         <phase name="Security"/>
         <phase name="PreDispatch"/>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher"/>
+            <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
@@ -598,7 +620,7 @@
         <phase name="PolicyDetermination"/>
         <phase name="MessageOut"/>
         <phase name="Security"/>
-        <phase name="Transport"/>
+	<phase name="Transport"/>
         <!--
            The MsgOutObservation phase is used to observe messages just before the
            responses are sent out. In this phase, we could do some things such as SOAP message
