@@ -26,16 +26,26 @@
   <name>11-synapseConfigCompositeApplication</name>
   <description>11-synapseConfigCompositeApplication</description>
   <properties>
-    <org.wso2.ei.product-scenarios.scenario_11.endpoint_._11_1_1_1_1_1_Queue_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.endpoint_._11_1_1_1_1_1_Queue_EP>
-    <org.wso2.ei.product-scenarios.scenario_11.endpoint_._ECHO_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.endpoint_._ECHO_EP>
     <org.wso2.ei.product-scenarios.scenario_11.api_._11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.api_._11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue>
+    <org.wso2.ei.product-scenarios.scenario_11.endpoint_._11_1_1_1_1_2_Queue_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.endpoint_._11_1_1_1_1_2_Queue_EP>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,datasource/datasource=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <org.wso2.ei.product-scenarios.scenario_11.endpoint_._ECHO_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.endpoint_._ECHO_EP>
+    <org.wso2.ei.product-scenarios.scenario_11.sequence_._Seq_request>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.sequence_._Seq_request>
     <org.wso2.ei.product-scenarios.scenario_11.proxy-service_._11_1_1_1_1_1_Proxy_testAsyncHttpToHttpViaQueue>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.proxy-service_._11_1_1_1_1_1_Proxy_testAsyncHttpToHttpViaQueue>
+    <org.wso2.ei.product-scenarios.scenario_11.inbound-endpoint_._11.1.1.1.1.2_Inbound_jms>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.inbound-endpoint_._11.1.1.1.1.2_Inbound_jms>
+    <org.wso2.ei.product-scenarios.scenario_11.endpoint_._11_1_1_1_1_1_Queue_EP>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.endpoint_._11_1_1_1_1_1_Queue_EP>
+    <org.wso2.ei.product-scenarios.scenario_11.api_._11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue>capp/EnterpriseServiceBus</org.wso2.ei.product-scenarios.scenario_11.api_._11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_11.api</groupId>
       <artifactId>11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_11.api</groupId>
+      <artifactId>11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
@@ -46,14 +56,32 @@
       <type>xml</type>
     </dependency>
     <dependency>
-      <groupId>org.wso2.ei.product-scenarios.scenario_11.proxy-service</groupId>
-      <artifactId>11_1_1_1_1_1_Proxy_testAsyncHttpToHttpViaQueue</artifactId>
+      <groupId>org.wso2.ei.product-scenarios.scenario_11.endpoint</groupId>
+      <artifactId>11_1_1_1_1_2_Queue_EP</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.wso2.ei.product-scenarios.scenario_11.endpoint</groupId>
       <artifactId>ECHO_EP</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_11.inbound-endpoint</groupId>
+      <artifactId>11.1.1.1.1.2_Inbound_jms</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_11.proxy-service</groupId>
+      <artifactId>11_1_1_1_1_1_Proxy_testAsyncHttpToHttpViaQueue</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wso2.ei.product-scenarios.scenario_11.sequence</groupId>
+      <artifactId>Seq_request</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
