@@ -17,11 +17,8 @@
   ~ under the License.
   -->
 
-<task class="org.apache.synapse.startup.tasks.MessageInjector" group="synapse.simple.quartz" name="14_1_2_Task_WithCronJob" xmlns="http://ws.apache.org/ns/synapse">
+<task class="org.wso2.carbon.ei.scenario.test.CustomTaskImpl" group="synapse.simple.quartz" name="14_2_2_Task_CustomJavaWithCron" xmlns="http://ws.apache.org/ns/synapse">
     <trigger cron="0/3 * * ? * * *"/>
-    <property name="sequenceName" value="14_1_2_Seq_TaskWithCron" xmlns:task="http://www.wso2.org/products/wso2commons/tasks"/>
-    <property name="injectTo" value="sequence" xmlns:task="http://www.wso2.org/products/wso2commons/tasks"/>
-    <property name="message" xmlns:task="http://www.wso2.org/products/wso2commons/tasks">
-        <incrementBy xmlns="">1</incrementBy>
-    </property>
+    <property name="uuid" value="${invocation.uuid}-custom-cron" xmlns:task="http://www.wso2.org/products/wso2commons/tasks"/>
+    <property name="message" value="{&quot;incrementBy&quot;:1}" xmlns:task="http://www.wso2.org/products/wso2commons/tasks"/>
 </task>

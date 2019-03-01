@@ -21,19 +21,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>14.1-scheduling-task-to-invoke-mediation-flow</artifactId>
+        <artifactId>14-periodically-execute-an-integration-process</artifactId>
         <groupId>org.wso2.ei</groupId>
         <version>6.4.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>14.1.2-executing-a-scheduled-task-as-a-cron-job</artifactId>
+    <artifactId>14.2-scheduling-a-customized-java-task</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.wso2.ei</groupId>
-            <artifactId>14-test-commons</artifactId>
-            <version>6.4.0</version>
-        </dependency>
-    </dependencies>
+    <modules>
+        <!--This module builds the custom jar that is required to run the below modules. Commented out since it is
+        not necessary to build this module for each run. Already built jar is located at
+         ../. ./scenarios-commons/src/main/resources/lib/-->
+        <!--<module>14.2-customJavaTaskToRunWithInterval</module>-->
+        <module>14.2.1-scheduling-a-java-task-with-interval</module>
+        <module>14.2.2-scheduling-a-java-task-with-cron</module>
+    </modules>
+
+
 </project>

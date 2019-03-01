@@ -29,4 +29,10 @@
     <artifact name="14_1_2_Seq_TaskWithCron" groupId="org.wso2.ei.product-scenarios.scenario_14.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/14_1_2_Seq_TaskWithCron.xml</file>
     </artifact>
+    <artifact name="14_2_1_Task_CustomJavaWithInterval" groupId="org.wso2.ei.product-scenarios.scenario_14.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/tasks/14_2_1_Task_CustomJavaWithInterval.xml</file>
+    </artifact>
+    <artifact name="14_2_2_Task_CustomJavaWithCron" groupId="org.wso2.ei.product-scenarios.scenario_14.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/tasks/14_2_2_Task_CustomJavaWithCron.xml</file>
+    </artifact>
 </artifacts>

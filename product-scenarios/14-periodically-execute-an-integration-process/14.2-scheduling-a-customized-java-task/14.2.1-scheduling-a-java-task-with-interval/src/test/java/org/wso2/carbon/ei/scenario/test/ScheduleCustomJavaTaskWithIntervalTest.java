@@ -23,23 +23,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
- * Tests the functionality of scheduled task configured using a cron job.
+ * Tests the functionality of scheduled task running with a specified interval.
  */
-public class InjectMessageToSequenceUsingScheduleTaskWithCronTest extends Scenario14TestBase {
+public class ScheduleCustomJavaTaskWithIntervalTest extends Scenario14TestBase {
 
-    @Override
     @BeforeClass()
     public void init() throws Exception {
-        super.init(System.getProperty("invocation.uuid") + "-cron");
+        super.init(System.getProperty("invocation.uuid") + "-custom-interval");
     }
 
     /**
-     * Tests a schedules task which is configured to run with an interval of 3 seconds using a cron job.
+     * Tests a schedules task which is configured to run with an interval of 3 seconds.
      *
      * @throws Exception if any error occurs during the execution of the test
      */
-    @Test(description = "14.1.2.1")
-    public void testInjectMessageToSequenceUsingScheduledTaskWithCron() throws Exception {
+    @Test(description = "14.2.1.1")
+    public void testScheduleCustomJavaTaskWithInterval() throws Exception {
         super.executeTest();
     }
 
