@@ -94,6 +94,7 @@
                 <argument>clean</argument>
                 <argument>package</argument>
                 <argument>-Dmaven.test.skip=${maven.test.skip}</argument>
+              <argument>-Dmaven.repo.local=${maven.repo.local}</argument>
               </arguments>
             </configuration>
           </execution>
@@ -110,6 +111,7 @@
                 <argument>clean</argument>
                 <argument>install</argument>
                 <argument>-Dmaven.test.skip=${maven.test.skip}</argument>
+              <argument>-Dmaven.repo.local=${maven.repo.local}</argument>
               </arguments>
             </configuration>
           </execution>
@@ -125,6 +127,7 @@
               <arguments>
                 <argument>deploy</argument>
                 <argument>-Dmaven.test.skip=${maven.test.skip}</argument>
+                <argument>-Dmaven.repo.local=${maven.repo.local}</argument>
               </arguments>
             </configuration>
           </execution>
