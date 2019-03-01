@@ -51,7 +51,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ScenarioTestBase {
 
-    private static final String INPUTS_LOCATION = System.getenv("DATA_BUCKET_LOCATION");
+    private static final String INPUTS_LOCATION = System.getProperty("data.bucket.location");
     private static final String INFRASTRUCTURE_PROPERTIES = "infrastructure.properties";
     private static final String DEPLOYMENT_PROPERTIES = "deployment.properties";
     private static final String JOB_PROPERTIES = "testplan-props.properties";
