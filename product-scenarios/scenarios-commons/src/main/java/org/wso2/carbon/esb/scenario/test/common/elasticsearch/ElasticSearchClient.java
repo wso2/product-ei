@@ -28,6 +28,7 @@ import org.wso2.carbon.esb.scenario.test.common.http.HTTPUtils;
 import org.wso2.carbon.esb.scenario.test.common.http.RESTClient;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -57,7 +58,7 @@ public class ElasticSearchClient {
     public JSONObject searchCarbonLogs(String logSnippet) throws IOException {
 
         String searchURL = hostName + "/" + deploymentStackID + "-carbonlogs*/_search?q=\"" + logSnippet + "\"";
-
+        searchURL = URLEncoder.encode(searchURL, "UTF-8");
         log.info("searchURL:" + searchURL);
         RESTClient restClient = new RESTClient();
         HttpResponse response = restClient.doGet(searchURL);
