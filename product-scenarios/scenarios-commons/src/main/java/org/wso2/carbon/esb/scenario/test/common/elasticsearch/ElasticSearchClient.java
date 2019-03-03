@@ -57,7 +57,7 @@ public class ElasticSearchClient {
      */
     private JSONObject searchCarbonLogs(String logSnippet) throws IOException {
 
-        String baseUrl = "http://" + hostName + "/" + deploymentStackID + "-carbonlogs*/_search?q=";
+        String baseUrl = hostName + "/" + deploymentStackID + "-carbonlogs*/_search?q=";
         String queryParam = URLEncoder.encode("\"" + logSnippet + "\"", "UTF-8");
         String searchUrl = baseUrl + queryParam;
 
