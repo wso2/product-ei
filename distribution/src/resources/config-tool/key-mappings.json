@@ -1,5 +1,5 @@
 {
-  "deployment.enamble_mtom": "deployment.enableMTOM",
+  "deployment.enable_mtom": "deployment.enableMTOM",
   "deployment.enable_swa": "deployment.enableSwA",
 
   "mediation.synapse.core_threads" : "synapse_properties.'synapse.threads.core'",
