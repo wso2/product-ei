@@ -110,6 +110,10 @@
     {
       "content_type": "application/octet-stream",
       "class": "org.wso2.carbon.relay.ExpandingMessageFormatter"
+    },
+    {
+      "content_type": "application/edi-hl7",
+      "class": "org.wso2.carbon.business.messaging.hl7.message.HL7MessageFormatter"
     }
   ],
 
@@ -149,7 +153,12 @@
     {
       "content_type": "application/octet-stream",
       "class": "org.wso2.carbon.relay.BinaryRelayBuilder"
+    },
+    {
+      "content_type": "application/edi-hl7",
+      "class": "org.wso2.carbon.business.messaging.hl7.message.HL7MessageBuilder"
     }
+
   ],
   "database.shared_db.type": "h2",
   "database.shared_db.url": "jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000",

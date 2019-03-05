@@ -1,5 +1,9 @@
 [deployment]
+hostname = "localhost"
+local_member_ip = "127.0.0.1"
 
+[super_admin]
+username = "admin"
+password = "admin"
+create_admin_account = true
 
-
-[mediation]
