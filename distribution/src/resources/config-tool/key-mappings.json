@@ -4,12 +4,62 @@
 
   "mediation.synapse.core_threads" : "synapse_properties.'synapse.threads.core'",
   "mediation.synapse.max_threads" : "synapse_properties.'synapse.threads.max'",
-  "mediation.synapse.threads_keepalive_millis":"synapse_properties.'synapse.threads.keepalive'",
   "mediation.synapse.threads_queue_length": "synapse_properties.'synapse.threads.qlen'",
+  "mediation.synapse.global_timeout_interval_millis": "synapse_properties.'synapse.global_timeout_interval'",
+  "mediation.synapse.preserve_namespace_on_xml_to_json": "synapse_properties.'synapse.commons.json.preserve.namespace'",
+  "mediation.synapse.temp_data_chunk_size":"synapse_properties.'synapse.temp_data.chunk.size'",
+  "mediation.synapse.command_debugger_port": "synapse_properties.'synapse.debugger.port.command'",
+  "mediation.synapse.event_debugger_port": "synapse_properties.'synapse.debugger.port.event'",
+  "mediation.synapse.script_mediator_pool_size": "synapse_properties.'synapse.script.mediator.pool.size'",
+  "mediation.statistics.enable_clean": "synapse_properties.'statistics.clean.enable'",
+  "mediation.statistics.clean_interval_millis" : "synapse_properties.'statistics.clean.interval'",
+  "mediation.stat.tracer.collect_payloads": "synapse_properties.'mediation.flow.statistics.tracer.collect.payloads'",
+  "mediation.stat.tracer.collect_mediation_properties": "synapse_properties.'mediation.flow.statistics.tracer.collect.properties'",
 
-  "transports.passthru.socket_timeout_millis": "passthru_properties.'http.socket.timeout'",
+
+  "transport.http.socket_timeout_millis": "passthru_properties.'http.socket.timeout'",
+
   "transports.passthru.core_worker_pool_size": "passthru_properties.'worker_pool_size_core'",
   "transports.passthru.max_worker_pool_size": "passthru_properties.'worker_pool_size_max'",
   "transports.passthru.worker_thread_keepalive_seconds": "passthru_properties.'worker_thread_keepalive_sec'",
-  "transports.passthru.worker_pool_queue_length": "passthru_properties.'worker_pool_queue_length'"
+  "transports.passthru.worker_pool_queue_length": "passthru_properties.'worker_pool_queue_length'",
+
+  "transport.http.listener.port": "transport.passthru_http.parameters.port",
+  "transport.http.listener.wsdl_epr_prefix":"transport.passthru_http.parameters.WSDLEPRPrefix",
+
+  "transport.http.listener.secured_port": "transport.passthru_https.listener.parameters.port",
+  "transport.http.listener.secured_protocols": "transport.passthru_https.listener.parameters.HttpsProtocols",
+  "transport.http.listener.secured_wsdl_epr_prefix": "transport.passthru_https.listener.parameters.WSDLEPRPrefix",
+
+  "transport.mqtt.listener.mqttConFactory.host_name": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.server.host.name'",
+  "transport.mqtt.listener.mqttConFactory.connection_factory": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.connection.factory'",
+  "transport.mqtt.listener.mqttConFactory.server_port": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.server.port'",
+  "transport.mqtt.listener.mqttConFactory.client_id": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.client.id'",
+  "transport.mqtt.listener.mqttConFactory.topic_name": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.topic.name'",
+
+  "transport.rabbitmq.listener.AMQPConnectionFactory.host_name": "transport.rabbitmq.listener.AMQPConnectionFactory.parameters.'rabbitmq.server.host.name'",
+  "transport.rabbitmq.listener.AMQPConnectionFactory.port": "transport.rabbitmq.listener.AMQPConnectionFactory.parameters.'rabbitmq.server.port'",
+  "transport.rabbitmq.listener.AMQPConnectionFactory.user_name": "transport.rabbitmq.listener.AMQPConnectionFactory.parameters.'rabbitmq.server.user.name'",
+  "transport.rabbitmq.listener.AMQPConnectionFactory.password": "transport.rabbitmq.listener.AMQPConnectionFactory.parameters.'rabbitmq.server.password'",
+  "transport.rabbitmq.listener.AMQPConnectionFactory.retry_interval": "transport.rabbitmq.listener.AMQPConnectionFactory.parameters.'rabbitmq.connection.retry.interval'",
+  "transport.rabbitmq.listener.AMQPConnectionFactory.retry_count": "transport.rabbitmq.listener.AMQPConnectionFactory.parameters.'rabbitmq.connection.retry.count'",
+
+  "transport.mail.sender.hostname": "transport.mailto.sender.parameters.'mail.smtp.host'",
+  "transport.mail.sender.port": "transport.mailto.sender.parameters.'mail.smtp.port'",
+  "transport.mail.sender.enable_tls":  "transport.mailto.sender.parameters.'mail.smtp.starttls.enable'",
+  "transport.mail.sender.auth":  "transport.mailto.sender.parameters.'mail.smtp.auth'",
+  "transport.mail.sender.username":  "transport.mailto.sender.parameters.'mail.smtp.user'",
+  "transport.mail.sender.password":  "transport.mailto.sender.parameters.'mail.smtp.password'",
+  "transport.mail.sender.from":  "transport.mailto.sender.parameters.'mail.smtp.from'",
+
+  "transport.http.blocking_sender.enable_client_caching": "transport.http.blocking_sender.parameters.'cacheHttpClient'",
+  "transport.http.blocking_sender.transfer_encoding": "transport.http.blocking_sender.parameters.'Transfer-Encoding'",
+  "transport.http.blocking_sender.default_connections_per_host": "transport.http.blocking_sender.parameters.'defaultMaxConnectionsPerHost'",
+  "transport.http.blocking_sender.omit_soap12_action": "transport.http.blocking_sender.parameters.'OmitSOAP12Action'",
+
+  "transport.ws.sender.outflow_dispatch_sequence": "transport.ws.sender.parameters.'ws.outflow.dispatch.sequence'",
+  "transport.ws.sender.outflow_dispatch_fault_sequence": "transport.ws.sender.parameters.'ws.outflow.dispatch.fault.sequence'",
+
+  "transport.wss.sender.outflow_dispatch_sequence": "transport.ws.sender.parameters.'ws.outflow.dispatch.sequence'",
+  "transport.wss.sender.outflow_dispatch_fault_sequence": "transport.ws.sender.parameters.'ws.outflow.dispatch.fault.sequence'"
 }
