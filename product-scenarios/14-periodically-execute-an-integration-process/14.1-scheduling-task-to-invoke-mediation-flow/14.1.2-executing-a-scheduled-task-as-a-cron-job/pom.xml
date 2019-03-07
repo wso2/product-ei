@@ -29,4 +29,11 @@
 
     <artifactId>14.1.2-executing-a-scheduled-task-as-a-cron-job</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>14-test-commons</artifactId>
+            <version>6.4.0</version>
+        </dependency>
+    </dependencies>
 </project>

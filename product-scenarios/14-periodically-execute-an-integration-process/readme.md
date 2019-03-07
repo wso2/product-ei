@@ -11,4 +11,4 @@ Developer
 
 ## Sub-Scenarios
 - [14.1 Scheduling a task by invoking mediation flow](14.1-scheduling-task-to-invoke-mediation-flow)
-- [14.2 Scheduling a task by executing a java task](14.2-scheduling-task-by-executing-a-java-task)
+- [14.2 Scheduling a task by executing a java task](14.2-scheduling-a-customized-java-task)

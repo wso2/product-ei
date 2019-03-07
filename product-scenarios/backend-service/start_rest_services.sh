@@ -187,7 +187,13 @@ echo "############################################# Started Services ###########
 rm -rf $SERVICES_DIR/product-ei
 echo "Removed product-ei repository"
 
+crontab -r
+echo "cleared user's crontab"
+
 cd
 ./schedule_sync_resources.sh
 echo "scheduled task to sync resources"
+
+./schedule_clear_invocations.sh
+echo "scheduled task to clear invocations"
 

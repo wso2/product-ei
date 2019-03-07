@@ -55,8 +55,9 @@ public class ScenarioConstants {
      * This regular expression matches numbers with exponents
      */
     public static final String REGEX_EXPONENT = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
-  
+
     public static final String BACKEND_REST_SERVICE1_URL = "http://ei-backend.scenarios.wso2.org:9090/eiTests/";
+    public static final String BACKEND_REST_SERVICE2_URL = "http://ei-backend.scenarios.wso2.org:9091/eiTests/";
 
     /**
      *  StandaloneDeployment property define whether to skip CApp deployment by the test case or not
