@@ -83,7 +83,7 @@ goto Exit
 
 :micro-integrator
     echo Preparing the Micro Integrator profile.
-    set DEFAULT_BUNDLES=%DIR%..\wso2\components\business-process-default\configuration\org.eclipse.equinox.simpleconfigurator\bundles.info
+    set DEFAULT_BUNDLES=%DIR%..\wso2\components\micro-integrator-default\configuration\org.eclipse.equinox.simpleconfigurator\bundles.info
     call :Remove_BROKER
     call :Remove_INTEGRATOR
     call :Remove_ANALYTICS
