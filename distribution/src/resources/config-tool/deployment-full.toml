@@ -1,6 +1,5 @@
 [deployment]
 hostname = "localhost"
-local_member_ip = "127.0.0.1"
 
 enable_mtom = false # optional
 enable_swa = false # optional
@@ -13,8 +12,7 @@ create_admin_account = true
 [transport]
 hostname="${deployement.local_member_host}" # optional
 
-[transport.passthru]
-# Optional
+[transport.passthru] # Optional
 socket_timeout_millis=180000
 core_worker_pool_size=400
 max_worker_pool_size=500
@@ -60,16 +58,16 @@ proxy.port=3128
 non_proxy_hostnames="localhost|moon|sun"
 
 [transport.passthru.https]
-keystore_id="DefaultKeystore"
-truststore_id="DefaultTruststore"
+keystore_file_name="$conf{keystore.tls.file_name}"
+truststore_file_name="$conf{truststore.file_name}"
 
 [transport.passthru.https.listener]
 port=8243
 hostname="${deployement.local_member_host}"
 
 # Optional
-keystore_id="DefaultKeystore"
-truststore_id="DefaultTruststore"
+keystore_file_name="$conf{keystore.tls.file_name}"
+truststore_file_name="$conf{truststore.file_name}"
 class_name="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener"
 non_blocking=true
 protocols="TLSv1,TLSv1.1,TLSv1.2"
@@ -139,10 +137,10 @@ sender.worker_thread_keepalive_seconds = 5
 sender.worker_queue_length = -1
 sender.io_threads_per_reactor = 2
 
-rest_dispatcher_service=__MultitenantDispatcherService
+rest_dispatcher_service="__MultitenantDispatcherService"
 # URI configurations that determine if it requires custom rest dispatcher
-rest_uri_api_regex=\\w+://.+:\\d+/t/.*|\\w+://.+\\w+/t/.*|^(/t/).*
-rest_uri_proxy_regex=\\w+://.+:\\d+/services/t/.*|\\w+://.+\\w+/services/t/.*|^(/services/t/).*
+rest_uri_api_regex="\\w+://.+:\\d+/t/.*|\\w+://.+\\w+/t/.*|^(/t/).*"
+rest_uri_proxy_regex="\\w+://.+:\\d+/services/t/.*|\\w+://.+\\w+/services/t/.*|^(/services/t/).*"
 
 # bind to the same port after disconnecting. This will avoid issue when binding to ports in TIMED_WAIT state.
 reuse_address=true
@@ -202,10 +200,10 @@ class = "org.apache.synapse.transport.vfs.VFSTransportSender" # inferred
 
 [transport.mail.listener] # optional
 enable = true
-class = "org.apache.axis2.transport.mail.MailTransportListener"
+class = "org.apache.axis2.transport.mail.MailTransportListener" # inferred
 
 [transport.mail.sender] # optional
-class = "org.apache.axis2.transport.mail.MailTransportSender"
+class = "org.apache.axis2.transport.mail.MailTransportSender" # inferred
 hostname = "smtp.gmail.com"
 port = 587
 enable_tls = true
@@ -241,7 +239,6 @@ bapi.class = "org.wso2.carbon.transports.sap.SAPTransportListener" # inferred
 enable = true
 idoc.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
 bapi.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
-
 
 
 [mediation]
@@ -300,16 +297,32 @@ mediation.flow.statistics.event.cleanup_interval_millis=15000
 mediation.inbound.core_threads = 20
 mediation.inbound.max_threads = 100
 
-[[keystore]]
-id = "carbon"
-path = "<path>"
-password = "<password>"
-alias = ""
-key_password = ""
+[user_store]
+type = "database"
 
-[[truststore]]
-id = "DefaultTruststore"
-path = "<path>"
-password = "<password>"
+[database.shared_db]
+type = "h2"
+url="jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+username = "wso2carbon"
+password = "wso2carbon"
 
+[database.shared_db.pool_options]
+maxActive = "50"
+maxWait = "60000"
+testOnBorrow = true
+validationInterval = "30000"
+defaultAutoCommit = true
 
+[keystore.tls]
+file_name = "wso2carbon.jks"
+type = "JKS"
+password = "wso2carbon"
+alias = "wso2carbon"
+key_password = "wso2carbon"
+
+[truststore]
+file_name = "wso2carbon.jks"
+type = "JKS"
+password = "wso2carbon"
+alias = "symmetric.key.value"
+algorithm = "AES"
