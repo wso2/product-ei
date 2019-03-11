@@ -1657,7 +1657,7 @@
         <org.wso2.andes.client.version>3.2.82</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
-        <bouncycastle.version>1.52</bouncycastle.version>
+        <bouncycastle.version>1.60</bouncycastle.version>
         <commons-digester.version>2.1</commons-digester.version>
         <hawtbuf.version>1.9</hawtbuf.version>
         <ca.uhn.hapi.wso2.version>2.1.0.wso2v1</ca.uhn.hapi.wso2.version>
@@ -1744,7 +1744,7 @@
         <javasysmon.version>0.3.3.wso2v1</javasysmon.version>
         <version.eclipse.ecj>4.4.2</version.eclipse.ecj>
         <version.com.google.code.gson>2.3.1</version.com.google.code.gson>
-        <bouncycastle.orbit.version>1.52.0.wso2v1</bouncycastle.orbit.version>
+        <bouncycastle.orbit.version>1.60.0.wso2v1</bouncycastle.orbit.version>
         <awaitility.version>3.1.2</awaitility.version>
 
         <!--MB Integration Tests-->
