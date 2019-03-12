@@ -416,9 +416,9 @@
      getting this node to join the cluster.
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
-                enable="{{clustering.membership_scheme is defined}}">
+                enable="{{clustering is defined}}">
 
-        {% if clustering.membership_scheme is defined %}
+        {% if clustering is defined %}
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
            when the AxisConfiguration is built. If set to "true" the initialization will not be
@@ -438,7 +438,7 @@
                     is deemed to have left the cluster, it will be detected by the Group Membership
                     Service (GMS) using a TCP ping mechanism.
         -->
-        <parameter name="membershipScheme">{{clustering.membership_scheme | default('multicast')}}</parameter>
+        <parameter name="membershipScheme">{{clustering.membership_scheme | default('wka')}}</parameter>
         <!--<parameter name="licenseKey">xxx</parameter>-->
         <!--<parameter name="mgtCenterURL">http://localhost:8081/mancenter/</parameter>-->
 
@@ -522,8 +522,8 @@
         can be defined in this section.
         -->
         <groupManagement enable="false">
-            <applicationDomain name="wso2.apim.domain"
-                               description="APIM group"
+            <applicationDomain name="wso2.esb.domain"
+                               description="EI group"
                                agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent"
                                subDomain="worker"
                                port="2222"/>

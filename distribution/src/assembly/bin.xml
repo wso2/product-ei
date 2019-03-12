@@ -47,6 +47,48 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
+            <directory>./src/resources/config-tool</directory>
+            <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
+            <includes>
+                <include>**/deployment.toml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/resources/conf/</outputDirectory>
+            <includes>
+                <include>**/default.json</include>
+                <include>**/infer.json</include>
+                <include>**/key-mappings.json</include>
+                <include>**/validator.json</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/templates/repository/</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/resources/conf/templates/</outputDirectory>
+            <includes>
+                <include>**/*.j2</include>
+            </includes>
+            <excludes>
+                <exclude>**/axis2/**</exclude>
+                <exclude>**/carbon.xml.j2</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>./src/resources/config-tool</directory>
+            <outputDirectory>wso2ei-${pom.version}/repository/resources/conf</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>**/deployment.toml</exclude>
+                <exclude>**/default.json</exclude>
+                <exclude>**/infer.json</exclude>
+                <exclude>**/key-mappings.json</exclude>
+                <exclude>**/validator.json</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}</directory>
             <outputDirectory>wso2ei-${pom.version}</outputDirectory>
             <excludes>
@@ -1571,26 +1613,6 @@
             </includes>
             <fileMode>644</fileMode>
         </fileSet>
-
-
-        <fileSet>
-            <directory>./src/resources/config-tool</directory>
-            <outputDirectory>wso2ei-${pom.version}/repository/resources/conf</outputDirectory>
-            <includes>
-                <include>**/*</include>
-            </includes>
-            <excludes>
-                <exclude>**/deployment.toml</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>./src/resources/config-tool</directory>
-            <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
-            <includes>
-                <include>**/deployment.toml</include>
-            </includes>
-        </fileSet>
-
     </fileSets>
     <!-- End of Analytics dependencies -->
 
