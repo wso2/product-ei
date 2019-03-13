@@ -1,5 +1,6 @@
 [deployment]
 hostname = "localhost"
+node_ip = "10.100.1.80"
 
 enable_mtom = false # optional
 enable_swa = false # optional
@@ -9,273 +10,112 @@ username = "admin"
 password = "admin"
 create_admin_account = true
 
-[transport]
-hostname="${deployement.local_member_host}" # optional
+[transport.http] # Optional
+socket_timeout_millis = 180000
+protocol = "http" # inferred
 
-[transport.passthru] # Optional
-socket_timeout_millis=180000
-core_worker_pool_size=400
-max_worker_pool_size=500
-worker_thread_keepalive_seconds=60
-worker_pool_queue_length=-1
-io_threads_per_reactor=2
-io_buffer_size_in_bytes=16384
-max_http_connection_per_host_port=32767
-reuse_address=true # bind to the same port after disconnecting. This will avoid issue when binding to ports in TIMED_WAIT state
+listener.port = 8280
+listener.wsdl_epr_prefix = "https://apachehost:port/somepath"
+listener.hostname = "$conf{deployement.node_ip}" # inferred
 
-## Other parameters
-preserve_http_user_agent=false
-preserve_http_server_name=true
-preserve_http_headers="Content-Type"
-enable_connection_keepalive=true
+listener.secured_port = 8243
+listener.secured_protocols = "TLSv1,TLSv1.1,TLSv1.2" # inferred
+listener.secured_wsdl_epr_prefix = "https://apachehost:port/somepath"
 
-rest_dispatcher_service="MultitenantDispatcherService"
-# URI configurations that determine if it requires custom rest dispatcher
-rest_uri_api_regex="\\w+://.+:\\d+/t/.*|\\w+://.+\\w+/t/.*|^(/t/).*"
-rest_uri_proxy_regex="\\w+://.+:\\d+/services/t/.*|\\w+://.+\\w+/services/t/.*|^(/services/t/).*"
+listener.keystore.file_name ="$conf{keystore.tls.file_name}" # inferred
+listener.keystore.type = "$conf{keystore.tls.type}" # inferred
+listener.keystore.password = "$conf{keystore.tls.password}" # inferred
+listener.keystore.key_password = "$conf{keystore.tls.key_password}" # inferred
 
-# Message size validation based on the message size in bytes.
-enable_message_size_validation=true
-max_message_size_bytes=81920
+listener.truststore.file_name = "$conf{truststore.file_name}" # inferred
+listener.truststore.type = "$conf{truststore.tls.type}" # inferred
+listener.truststore.password = "$conf{truststore.tls.password}" # inferred
 
-[transport.passthru.http.listener]
-port=8280
+sender.warn_on_http_500 = "*"
+sender.proxy_hostname = "${deployement.node_ip}"
+sender.proxy_port = 3128
+sender.non_proxy_hostnames = "localhost|moon|sun"
 
-# Optional
-hostname="${deployement.local_member_host}"
-class_name="org.apache.synapse.transport.passthru.PassThroughHttpListener"
-non_blocking=true
-http_get_processor="org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor"
-wsdl_epr_prefix="https://apachehost:port/somepath"
+sender.keystore.file_name ="$conf{keystore.tls.file_name}" # inferred
+sender.keystore.type = "$conf{keystore.tls.type}" # inferred
+sender.keystore.password = "$conf{keystore.tls.password}" # inferred
+sender.keystore.key_password = "$conf{keystore.tls.key_password}" # inferred
 
-# Optional
-[transport.passthru.http.sender]
-class_name="org.apache.synapse.transport.passthru.PassThroughHttpSender"
-non_blocking=true
-warn_on_http_500="*"
-proxy.hostname="${deployement.local_member_host}"
-proxy.port=3128
-non_proxy_hostnames="localhost|moon|sun"
+sender.truststore.file_name = "$conf{truststore.file_name}" # inferred
+sender.truststore.type = "$conf{truststore.tls.type}" # inferred
+sender.truststore.password = "$conf{truststore.tls.password}" # inferred
 
-[transport.passthru.https]
-keystore_file_name="$conf{keystore.tls.file_name}"
-truststore_file_name="$conf{truststore.file_name}"
+blocking_sender.enable_client_caching = true
+blocking_sender.enable_client_caching = true
+blocking_sender.transfer_encoding = "chunked"
+blocking_sender.default_connections_per_host = 200
+blocking_sender.omit_soap12_action = true
 
-[transport.passthru.https.listener]
-port=8243
-hostname="${deployement.local_member_host}"
+[[custom_transport]]
+class="<qualified class name>"
+protocol = "ISO8583"
+parameter.port = 8081
+parameter.hostname = "$conf{deployment.node_ip}"
 
-# Optional
-keystore_file_name="$conf{keystore.tls.file_name}"
-truststore_file_name="$conf{truststore.file_name}"
-class_name="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener"
-non_blocking=true
-protocols="TLSv1,TLSv1.1,TLSv1.2"
-wsdl_epr_prefix="https://apachehost:port/somepath"
-http_get_processor="org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor"
-
-# Optional
-[transport.passthru.https.sender]
-keystore_id="DefaultKeystore"
-truststore_id="DefaultTruststore"
-class_name="org.apache.synapse.transport.passthru.PassThroughHttpSSLSender"
-non_blocking=true
-
-# Optional
-[transport.blocking]
-
-# Optional
-[transport.blocking.http.listener]
-port =  8200
-hostName = "${deployement.local_member_host}"
-class_name = "org.apache.axis2.transport.http.SimpleHTTPServer"
-origin_server = "My-Server/1.1"
-request_timeout_millis = 10000
-enable_tcp_nodelay = false
-requestTcpNoDelay = false
-core_worker_pool_size = 50
-max_worker_pool_size = 100
-worker_thread_keepalive_millis = 240000
-
-# Optional
-[transport.blocking.http.sender]
-class_name = "org.apache.axis2.transport.http.CommonsHTTPTransportSender"
-protocol = "HTTP/1.1"
-transfer_encoding = "chunked"
-enable_client_caching = true
-default_connections_per_host = 200
-omit_soap12_action = true
-
-# Optional
-[transport.blocking.https.listener]
-
-# Optional
-[transport.blocking.https.sender]
-
-# Optional
-[transport.nio]
-buffer_size_in_bytes=8192
-tcp_nodelay=1
-connection_stalecheck=0
-
-# Uncomment the following property for an AIX based deployment
-interest_ops_queueing=true
-
-# HTTP Listener (Server Workers) thread pool parameters
-listener.socket_timeout_millis = 180000 # Client > EI Connection timeout
-listener.core_worker_pool_size = 20
-listener.max_worker_pool_size = 100
-listener.worker_thread_keepalive_seconds = 5
-listener.worker_queue_length = -1
-listener.io_threads_per_reactor = 2
-
-# HTTP Sender (Client Worker) thread pool parameters
-sender.socket_timeout_millis = 180000 # EI > BackEnd Connection timeout
-sender.core_worker_pool_size = 20
-sender.max_worker_pool_size = 20
-sender.worker_thread_keepalive_seconds = 5
-sender.worker_queue_length = -1
-sender.io_threads_per_reactor = 2
-
-rest_dispatcher_service="__MultitenantDispatcherService"
-# URI configurations that determine if it requires custom rest dispatcher
-rest_uri_api_regex="\\w+://.+:\\d+/t/.*|\\w+://.+\\w+/t/.*|^(/t/).*"
-rest_uri_proxy_regex="\\w+://.+:\\d+/services/t/.*|\\w+://.+\\w+/services/t/.*|^(/services/t/).*"
-
-# bind to the same port after disconnecting. This will avoid issue when binding to ports in TIMED_WAIT state.
-reuse_address=true
-
-[transport.nio.http.listener]
-port=8280
-
-# Optional
-hostname = "${deployement.local_member_host}"
-class_name = "org.apache.synapse.transport.nhttp.HttpCoreNIOListener"
-non_blocking = true
-http_get_processor = "org.wso2.carbon.mediation.transport.handlers.NHttpGetProcessor"
-wsdl_epr_prefix = "https://apachehost:port/somepath"
-priority_config_file = "<location of priority configuration file>"
-enable_rest_service_dispatching = true
-
-[transport.nio.http.sender]
-class_name = "org.apache.synapse.transport.nhttp.HttpCoreNIOSender"
-non_blocking = true
-
-# Optional
-[transport.nio.https]
-keystore_id = "DefaultKeystore"
-truststore_id = "DefaultTruststore"
-
-# Optional
-[transport.nio.https.listener]
-port= 8243
-hostName = "${deployement.local_member_host}"
-non_blocking = true
-keystore_id="DefaultKeystore"
-truststore_id="DefaultTruststore"
-wsdl_epr_prefix = "https://apachehost:port/somepath"
-priority_config_file = "<location of priority configuration file>"
-enable_rest_service_dispatching = true
-
-# Optional
-[transport.nio.https.sender]
-keystore_id="DefaultKeystore"
-truststore_id="DefaultTruststore"
-class_name = "org.apache.synapse.transport.nhttp.HttpCoreNIOSSLSender"
-hostname_verifier = "DefaultAndLocalhost" # supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified.
-certificate_revocation.cache_size = 50
-certificate_revocation.cache_delay_seconds = 5
-
-# Optional
-[transport.local]
+[transport.local] # Optional
     type = "NonBlockingLocalTransport"
 
-[transport.vfs.listener] # optional
-enable = true
-class = "org.apache.synapse.transport.vfs.VFSTransportListener" # inferred
+[transport.vfs] # enable by default
+listener.enable = true
+sender.enable = true
 
-[transport.vfs.sender] # optional
-enable = true
-class = "org.apache.synapse.transport.vfs.VFSTransportSender" # inferred
+[transport.mail] # optional
+listener.enable = true
 
-[transport.mail.listener] # optional
-enable = true
-class = "org.apache.axis2.transport.mail.MailTransportListener" # inferred
+sender.hostname = "smtp.gmail.com"
+sender.port = 587
+sender.enable_tls = true
+sender.auth = true
+sender.username = "demo_user"
+sender.password = "mailpassword"
+sender.from = "demo_user@wso2.com"
 
-[transport.mail.sender] # optional
-class = "org.apache.axis2.transport.mail.MailTransportSender" # inferred
-hostname = "smtp.gmail.com"
-port = 587
-enable_tls = true
-auth = true
-username = "demo_user"
-password = "mailpassword"
-from = "demo_user@wso2.com"
+[transport.fix] # optional
+listener.enable = true
+listener.class = "org.apache.synapse.transport.fix.FIXTransportListener" # inferred
 
-[transport.fix.listener] # optional
-enable = true
-class = "org.apache.synapse.transport.fix.FIXTransportListener" # inferred
+sender.enable = true
+sender.class = "org.apache.synapse.transport.fix.FIXTransportSender" # inferred
 
-[transport.fix.sender] # optional
-enable = true
-class = "org.apache.synapse.transport.fix.FIXTransportSender" # inferred
+[transport.hl7] # optional
+listener.enable = true
+listener.port = 9292 # inferred
+listener.class = "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener" # inferred
 
-[transport.hl7.listener] # optional
-enable = true
-port = 9292 # inferred
-class = "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener" # inferred
+sender.enable = true
+sender.non_blocking = true # inferred
+sender.class = "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender" # inferred
 
-[transport.hl7.sender] # optional
-enable = true
-non_blocking = true # inferred
-class = "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender" # inferred
+[transport.sap] # optional
+listener.enable = true
+listener.idoc.class = "org.wso2.carbon.transports.sap.SAPTransportListener" # inferred
+listener.bapi.class = "org.wso2.carbon.transports.sap.SAPTransportListener" # inferred
 
-[transport.sap.listener] # optional
-enable = true
-idoc.class = "org.wso2.carbon.transports.sap.SAPTransportListener" # inferred
-bapi.class = "org.wso2.carbon.transports.sap.SAPTransportListener" # inferred
-
-[transport.sap.sender] # optional
-enable = true
-idoc.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
-bapi.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
-
+sender.enable = true
+sender.idoc.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
+sender.bapi.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
 
 [mediation]
 synapse.core_threads = 20
 synapse.max_threads = 100
-synapse.threads_keepalive_millis = 5
 synapse.threads_queue_length = 10
-synapse.threads_group_name = "synapse-thread-group"
-synapse.threads_id_prefix = "SynapseWorker"
 
-synapse.sal_endpoints_sesssion_timeout_default_millis=600000
-synapse.global_timeout_interval_milis=120000
+synapse.global_timeout_interval_millis=120000
 #In memory statistics cleaning state
 statistics.enable_clean=true
 statistics.clean_interval_millis=1000
 
-# Dependency tracking Synapse observer
-# Comment out to disable dependency management
-synapse.observers="org.wso2.carbon.mediation.dependency.mgt.DependencyTracker"
-
 synapse.preserve_namespace_on_xml_to_json=false
 
-# User defined wsdlLocator/Schema Resolver Implementations.
-synapse.wsdl_resolver_class_name="org.wso2.carbon.mediation.initializer.RegistryWSDLLocator"
-synapse.schema_resolver_class_name="org.wso2.carbon.mediation.initializer.RegistryXmlSchemaURIResolver"
 
 # Uncomment following to support fallback XPATH 2.0 support with DOM and Saxon
 synapse.enable_xpath_dom_failover=true
 synapse.temp_data_chunk_size=3072
-
-# A configurator to add tenant information to the out thread local carbon context
-synapse.carbon_ext_tenant_info="org.wso2.carbon.mediation.initializer.handler.CarbonTenantInfoConfigurator"
-# An initiator to initialize thread local carbon context with tenant information
-synapse.carbon_ext_tenant_info_initiator="org.wso2.carbon.mediation.initializer.handler.CarbonTenantInfoInitiator"
-
-#external componenent registration for secure vault xpath funtion lookup
-synapse.xpath_func_extensions_class_name="org.wso2.carbon.mediation.security.vault.xpath.SecureVaultLookupXPathFunctionProvider"
 
 #configuration for the external debugger channels if server is started in debug mode
 synapse.command_debugger_port=9005
@@ -290,9 +130,6 @@ mediation.flow.statistics.capture_all=false
 
 mediation.flow.statistics.tracer.collect_payloads=false
 mediation.flow.statistics.tracer.collect_properties=false
-mediation.flow.statistics.event.capture_interval_millis=1000
-mediation.flow.statistics.event.cleanup_interval_millis=15000
-# Configuration to enable statistics globally irrespective of the individual artifact level setting
 
 mediation.inbound.core_threads = 20
 mediation.inbound.max_threads = 100
