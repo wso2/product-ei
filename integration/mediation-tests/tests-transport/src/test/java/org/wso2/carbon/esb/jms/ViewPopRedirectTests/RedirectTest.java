@@ -69,7 +69,7 @@ public class RedirectTest extends ESBIntegrationTest {
     /**
      * 1. Send one payload to the proxy while the backend is unavailable
      * 2. Check if the Message Processor has successfully deactivated
-     * 3. Call the popandRedirect fucntion and verify that getMessage function is returning is expected message
+     * 3. Call the popandRedirect fucntion and verify that browseMessage function is returning is expected message
      */
 
     @Test(groups = {"wso2.esb"}, description = "Test Redirect service for Message processor")
@@ -124,7 +124,7 @@ public class RedirectTest extends ESBIntegrationTest {
 
 
         //Call the getMessage function from the REDIRECT_PROCESSOR
-        String returnedMessage = messageProcessorClient.getMessage(REDIRECT_PROCESSOR_NAME);
+        String returnedMessage = messageProcessorClient.browseMessage(REDIRECT_PROCESSOR_NAME);
         System.out.println("=== RETURNED MESSAGE === \n" + returnedMessage);
         Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
 

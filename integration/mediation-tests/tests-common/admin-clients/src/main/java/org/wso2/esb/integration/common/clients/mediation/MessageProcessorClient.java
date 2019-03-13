@@ -122,13 +122,13 @@ public class MessageProcessorClient {
     }
 
     /**
-     * Check the functionality of the getMessage function
+     * Check the functionality of the browseMessage function
      * @param processorName name of Processor
      * @return message stored in the subscribed queue
      * @throws RemoteException
      */
-    public String getMessage(String processorName) throws RemoteException {
-        return messageProcessorAdminServiceStub.getMessage(processorName);
+    public String browseMessage(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.browseMessage(processorName);
     }
 
     /**
