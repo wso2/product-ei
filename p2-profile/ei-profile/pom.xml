@@ -125,6 +125,9 @@
                                     org.wso2.carbon.mediation:org.wso2.carbon.das.messageflow.data.publisher.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.wso2.carbon.mediation:org.wso2.carbon.prometheus.publisher.feature:${carbon.mediation.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.mediation.configadmin.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -480,6 +483,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.das.messageflow.data.publisher.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.prometheus.publisher.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
