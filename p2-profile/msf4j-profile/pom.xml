@@ -31,7 +31,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>msf4j-profile</artifactId>
-    <version>6.5.0-m3-SNAPSHOT</version>
+    <version>6.5.0-m3</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
@@ -376,7 +376,7 @@
                     <xmlOutput>true</xmlOutput>
                     <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
                     <!--Exclude sources-->
-                    <excludeFilterFile></excludeFilterFile>
+                    <excludeFilterFile />
                     <plugins>
                         <plugin>
                             <groupId>com.h3xstream.findsecbugs</groupId>
@@ -467,4 +467,8 @@
             </releases>
         </repository>
     </repositories>
+
+  <scm>
+    <tag>v6.5.0-m3</tag>
+  </scm>
 </project>
