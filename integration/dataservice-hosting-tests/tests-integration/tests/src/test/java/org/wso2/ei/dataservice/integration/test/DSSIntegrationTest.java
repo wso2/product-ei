@@ -88,7 +88,7 @@ public abstract class DSSIntegrationTest {
     }
 
     protected String getResourceLocation() throws XPathExpressionException {
-        return TestConfigurationProvider.getResourceLocation(PRODUCT_NAME);
+        return TestConfigurationProvider.getResourceLocation(PRODUCT_NAME).replace("//", "/");
     }
 
     protected void deployService(String serviceName, OMElement dssConfiguration) throws Exception {
