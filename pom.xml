@@ -1611,7 +1611,7 @@
         <carbon.analytics.version>1.3.31</carbon.analytics.version>
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.82</carbon.data.version>
+        <carbon.data.version>4.4.88</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
