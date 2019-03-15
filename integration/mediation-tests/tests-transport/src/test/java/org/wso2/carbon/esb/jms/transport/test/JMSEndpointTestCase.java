@@ -61,7 +61,7 @@ public class JMSEndpointTestCase extends ESBIntegrationTest {
 
         JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
         try {
-            consumer.connect("SimpleStockQuoteService");
+            consumer.connect("SimpleStockQuoteServiceJMSEndpointTestCase");
             Awaitility.await()
                       .pollInterval(50, TimeUnit.MILLISECONDS)
                       .atMost(300, TimeUnit.SECONDS)

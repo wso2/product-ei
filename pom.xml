@@ -28,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
-    <version>6.5.0-m3-SNAPSHOT</version>
+    <version>6.5.0-m4-SNAPSHOT</version>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
@@ -1489,13 +1489,13 @@
 
         <!--Product Version-->
 
-        <product.ei.version>6.5.0-m3-SNAPSHOT</product.ei.version>
+        <product.ei.version>6.5.0-m4-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.79</carbon.business-process.version>
+        <carbon.business-process.version>4.4.84</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
-        <orbit.version.axis2>1.6.1-wso2v28</orbit.version.axis2>
+        <orbit.version.axis2>1.6.1-wso2v31</orbit.version.axis2>
         <orbit.version.ode>1.3.5-wso2v19</orbit.version.ode>
         <org.activiti.wso2.version>5.21.0.wso2v1</org.activiti.wso2.version>
         <orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1
@@ -1505,60 +1505,60 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.62</carbon.messaging.version>
+        <carbon.messaging.version>3.2.63</carbon.messaging.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.82</andes.version>
+        <andes.version>3.2.90</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
         <!-- Axis2 -->
-        <axis2.wso2.version>1.6.1-wso2v28</axis2.wso2.version>
-        <addressing.version>1.6.1-wso2v28</addressing.version>
+        <axis2.wso2.version>1.6.1-wso2v31</axis2.wso2.version>
+        <addressing.version>1.6.1-wso2v31</addressing.version>
 
         <!-- Axiom -->
-        <axiom.api.wso2.version>1.2.11-wso2v11</axiom.api.wso2.version>
-        <axiom.wso2.version>1.2.11.wso2v11</axiom.wso2.version>
+        <axiom.api.wso2.version>1.2.11.wso2v13</axiom.api.wso2.version>
+        <axiom.wso2.version>1.2.11.wso2v13</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v86</synapse.version>
+        <synapse.version>2.1.7-wso2v91</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v30</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v31</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.111</carbon.mediation.version>
+        <carbon.mediation.version>4.6.115</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.36</carbon.kernel.version>
+        <carbon.kernel.version>4.4.37</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.4.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.6.49</carbon.commons.version>
+        <carbon.commons.version>4.6.52</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.7.19</carbon.deployment.version>
         <carbon-deployment.feature.imp.version>4.7.19</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.6.38</carbon.registry.version>
+        <carbon.registry.version>4.6.42</carbon.registry.version>
 
         <!-- Carbon Identity version-->
-        <carbon.identity-inbound-auth-sts.version>5.2.6</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.12.153</carbon.identity.framework.version>
-        <carbon.identity-inbound-auth-saml2.version>5.2.9</carbon.identity-inbound-auth-saml2.version>
-        <carbon.identity-local-auth-basicauth.version>5.3.5</carbon.identity-local-auth-basicauth.version>
-        <carbon.identity-user-ws.version>5.1.4</carbon.identity-user-ws.version>
+        <carbon.identity-inbound-auth-sts.version>5.2.19</carbon.identity-inbound-auth-sts.version>
+        <carbon.identity.framework.version>5.12.283</carbon.identity.framework.version>
+        <carbon.identity-inbound-auth-saml2.version>5.2.14</carbon.identity-inbound-auth-saml2.version>
+        <carbon.identity-local-auth-basicauth.version>6.0.7</carbon.identity-local-auth-basicauth.version>
+        <carbon.identity-user-ws.version>5.1.11</carbon.identity-user-ws.version>
 
         <!-- Carbon Rule version -->
         <carbon.rule.version>4.4.9</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
-        <carbon-dataservice-hosting.feature.imp.version>4.4.82</carbon-dataservice-hosting.feature.imp.version>
+        <carbon-dataservice-hosting.feature.imp.version>4.4.88</carbon-dataservice-hosting.feature.imp.version>
 
         <version.equinox.osgi>3.9.1.v20130814-1242</version.equinox.osgi>
         <version.equinox.osgi.services>3.3.100.v20130513-1956</version.equinox.osgi.services>
@@ -1611,7 +1611,7 @@
         <carbon.analytics.version>1.3.31</carbon.analytics.version>
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.82</carbon.data.version>
+        <carbon.data.version>4.4.88</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
@@ -1640,7 +1640,7 @@
         <wso2.h2.orbit.version>1.2.140.wso2v3</wso2.h2.orbit.version>
         <org.apache.cxf.version>2.7.2</org.apache.cxf.version>
         <org.springframework.version>4.1.5.RELEASE</org.springframework.version>
-        <org.apache.tomcat>7.0.85</org.apache.tomcat>
+        <org.apache.tomcat>7.0.93</org.apache.tomcat>
         <org.codehaus.jackson.version>1.9.12</org.codehaus.jackson.version>
         <com.google.code.gson.version>2.7</com.google.code.gson.version>
         <javax.inject.version>1</javax.inject.version>
@@ -1657,7 +1657,7 @@
         <org.wso2.andes.client.version>3.2.82</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
-        <bouncycastle.version>1.52</bouncycastle.version>
+        <bouncycastle.version>1.60</bouncycastle.version>
         <commons-digester.version>2.1</commons-digester.version>
         <hawtbuf.version>1.9</hawtbuf.version>
         <ca.uhn.hapi.wso2.version>2.1.0.wso2v1</ca.uhn.hapi.wso2.version>
@@ -1696,12 +1696,12 @@
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
         <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
         <greenmail.version>1.3</greenmail.version>
-        <opensaml.orbit.version>2.6.4.wso2v3</opensaml.orbit.version>
+        <opensaml.orbit.version>2.6.4.wso2v5</opensaml.orbit.version>
         <!-- Forget-me tool -->
         <forgetme.tool.version>1.1.21</forgetme.tool.version>
 
         <version.equinox.http.servlet>1.1.400.v20130418-1354</version.equinox.http.servlet>
-        <version.tomcat>7.0.85</version.tomcat>
+        <version.tomcat>7.0.93</version.tomcat>
         <orbit.version.tomcat.jsp.api>${version.tomcat}.wso2v1</orbit.version.tomcat.jsp.api>
         <orbit.version.tomcat.el.api>${version.tomcat}.wso2v1</orbit.version.tomcat.el.api>
         <orbit.version.tomcat.servlet.api>${version.tomcat}.wso2v1</orbit.version.tomcat.servlet.api>
@@ -1744,7 +1744,7 @@
         <javasysmon.version>0.3.3.wso2v1</javasysmon.version>
         <version.eclipse.ecj>4.4.2</version.eclipse.ecj>
         <version.com.google.code.gson>2.3.1</version.com.google.code.gson>
-        <bouncycastle.orbit.version>1.52.0.wso2v1</bouncycastle.orbit.version>
+        <bouncycastle.orbit.version>1.60.0.wso2v1</bouncycastle.orbit.version>
         <awaitility.version>3.1.2</awaitility.version>
 
         <!--MB Integration Tests-->
