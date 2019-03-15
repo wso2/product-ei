@@ -30,7 +30,7 @@
   <version>1.0.0</version>
   <build>
     <filters>
-      <filter>${data.bucket.location}/deployment.properties</filter>
+      <filter>${env.DATA_BUCKET_LOCATION}/deployment.properties</filter>
     </filters>
     <plugins>
       <plugin>
@@ -60,6 +60,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
+              <escapeString>\</escapeString>
               <outputDirectory>${project.build.directory}/temp/src/</outputDirectory>
               <resources>
                 <resource>

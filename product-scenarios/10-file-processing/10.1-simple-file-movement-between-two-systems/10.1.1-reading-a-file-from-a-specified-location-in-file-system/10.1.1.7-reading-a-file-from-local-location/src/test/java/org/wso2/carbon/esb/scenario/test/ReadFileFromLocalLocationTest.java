@@ -98,7 +98,7 @@ public class ReadFileFromLocalLocationTest extends ScenarioTestBase {
         JSONObject stockQuote = stockQuoteResponse.getJSONObject("Envelope").getJSONObject("Body")
                                                   .getJSONObject("getQuoteResponse").getJSONObject("return");
 
-        boolean regexMatchStockQuote = StringUtil.stockQuoteRegexMatch(stockQuote.toString(), "IBM", "IBM Company");
+        boolean regexMatchStockQuote = StringUtil.stockQuoteJsonRegexMatch(stockQuote.toString(), "IBM", "IBM Company");
         Assert.assertTrue(regexMatchStockQuote, "Expected response not received in " + messageID);
     }
 

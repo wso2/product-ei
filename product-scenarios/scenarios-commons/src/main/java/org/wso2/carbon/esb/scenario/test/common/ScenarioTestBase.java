@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
 import org.testng.SkipException;
 import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
+import org.wso2.carbon.esb.scenario.test.common.ftp.FTPClientWrapper;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 
@@ -78,6 +79,9 @@ public class ScenarioTestBase {
     private String sessionCookie;
     private boolean standaloneMode;
 
+    private static String ftpHostName;
+    private static String ftpUsername;
+    private static String ftpPassword;
 
     private CarbonAppUploaderClient carbonAppUploaderClient = null;
     private ApplicationAdminClient applicationAdminClient = null;
@@ -407,6 +411,9 @@ public class ScenarioTestBase {
 
             deploymentStackName = infraProperties.getProperty(ScenarioConstants.INFRA_EI_STACK_NAME);
             elasticSearchHostname = infraProperties.getProperty(ScenarioConstants.ELASTICSEARCH_HOSTNAME);
+            ftpHostName = infraProperties.getProperty(ScenarioConstants.FTP_HOST_NAME);
+            ftpUsername = infraProperties.getProperty(ScenarioConstants.FTP_USERNAME);
+            ftpPassword = infraProperties.getProperty(ScenarioConstants.FTP_PASSWORD);
         }
     }
 
@@ -464,6 +471,19 @@ public class ScenarioTestBase {
             responseArray.add(fileContent);
         }
         return responseArray;
+    }
+
+    /**
+     * Function to connect to an FTP Server
+     *
+     * @param port - ftp port
+     * @return - VFSClient
+     * @throws IOException - if connecting to FTP server fails
+     */
+    protected FTPClientWrapper connectToFTP(int port) throws IOException {
+        FTPClientWrapper vfsClient = new FTPClientWrapper(ftpHostName, ftpUsername, ftpPassword, port);
+        vfsClient.connectToFtp();
+        return vfsClient;
     }
 }
 
