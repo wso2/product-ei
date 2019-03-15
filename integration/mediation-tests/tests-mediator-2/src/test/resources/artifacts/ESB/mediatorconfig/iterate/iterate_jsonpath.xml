@@ -1,0 +1,366 @@
+<!--
+  ~  Copyright (c) 2005-2019, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonBasicFlow" context="/iteratesample1">
+        <resource methods="POST" uri-template="/iteratejson1">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator1" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <send>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample1/echojson1"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+                <log level="full"/>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/echojson1">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonwithPreservePayload" context="/iteratesample2">
+        <resource methods="POST" uri-template="/iteratejson2">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator2" preservePayload="true" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <send>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample2/echojson2"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+                <log level="full"/>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/echojson2">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonwithAttachPath" context="/iteratesample3">
+        <resource methods="POST" uri-template="/iteratejson3">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator3" preservePayload="true" attachPath="json-eval($.students.studentlist)" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <send>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample3/echojson3"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+                <log level="full"/>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/echojson3">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.students.studentlist.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonWithDifferentAttachPath" context="/iteratesample4">
+        <resource methods="POST" uri-template="/iteratejson4">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator4" preservePayload="true" attachPath="json-eval($.placeHolder)" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <send>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample4/echojson4"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+                <log level="full"/>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/echojson4">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.placeHolder.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonwithRootAttachPath" context="/iteratesample5">
+        <resource methods="POST" uri-template="/iteratejson5">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator5" preservePayload="true" attachPath="json-eval($)" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <send>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample5/echojson5"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+                <log level="full"/>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/echojson5">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonwithContinueParent" context="/iteratesample6">
+        <resource methods="POST" uri-template="/iteratejson6">
+            <inSequence>
+                <log level="full"/>
+                <iterate continueParent="true" id="jsonIterator6" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <log level="full"/>
+                        </sequence>
+                    </target>
+                </iterate>
+                <payloadFactory media-type="json">
+                    <format>
+                        [{"name": "$1", "status":"accepted"},
+                        {"name": "$2", "status":"accepted"},
+                        {"name": "$3", "status":"accepted"}]
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.students.studentlist[0].Name"/>
+                        <arg evaluator="json" expression="$.students.studentlist[1].Name"/>
+                        <arg evaluator="json" expression="$.students.studentlist[2].Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonwithCallMediator" context="/iteratesample7">
+        <resource methods="POST" uri-template="/iteratejson7">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator7" preservePayload="true" attachPath="json-eval($.students.studentlist)" expression="json-eval($.students.studentlist)">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <call>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample7/echojson7"/>
+                                </endpoint>
+                            </call>
+                        </sequence>
+                    </target>
+                </iterate>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+                <log level="full"/>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+        <resource methods="POST" uri-template="/echojson7">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.students.studentlist.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestIterateMediatorJsonwithSequential" context="/iteratesample8">
+        <resource methods="POST" uri-template="/iteratejson8">
+            <inSequence>
+                <log level="full"/>
+                <iterate id="jsonIterator8" preservePayload="true" attachPath="json-eval($.students.studentlist)" expression="json-eval($.students.studentlist)" sequential="true">
+                    <target>
+                        <sequence>
+                            <header name="Content-Type" scope="transport" value="application/json"/>
+                            <send>
+                                <endpoint>
+                                    <http method="POST" uri-template="http://localhost:8480/iteratesample8/echojson8"/>
+                                </endpoint>
+                            </send>
+                        </sequence>
+                    </target>
+                </iterate>
+                <log level="full"/>
+            </inSequence>
+            <outSequence>
+                <aggregate>
+                    <completeCondition>
+                        <messageCount min="3" max="-1"/>
+                    </completeCondition>
+                    <onComplete expression="json-eval($)">
+                        <log level="full"/>
+                        <respond/>
+                    </onComplete>
+                </aggregate>
+            </outSequence>
+        </resource>
+        <resource methods="POST" uri-template="/echojson8">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"name": "$1", "status":"accepted"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.students.studentlist.Name"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>
