@@ -105,10 +105,11 @@ public class CloneBurstTestCase extends ESBIntegrationTest {
         axis2Server2.stop();
         trigger.setStopped(true);
 
-        for (int i = 0; i < threads.length; i++) {
-            if (threads[i].isAlive()) {
-                threads[i].destroy();
-            }
+        if (axis2Server1.isStarted()) {
+            axis2Server1.stop();
+        }
+        if (axis2Server2.isStarted()) {
+            axis2Server2.stop();
         }
         threads = null;
         axis2Server1 = null;

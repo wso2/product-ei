@@ -37,7 +37,7 @@ public class ActiveMQServerExtension extends ExecutionListenerExtension {
     @Override
     public void onExecutionStart() throws AutomationFrameworkException {
         if (!JMSBrokerController.isBrokerStarted()) {
-            log.info("String JMS Broker...");
+            log.info("Starting JMS Broker...");
             activeMqBroker.start();
         }
     }

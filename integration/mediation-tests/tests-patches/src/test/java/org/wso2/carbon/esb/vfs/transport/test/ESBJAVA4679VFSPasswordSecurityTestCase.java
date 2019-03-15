@@ -44,7 +44,6 @@ import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import sun.print.resources.serviceui_fr;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;

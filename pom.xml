@@ -60,6 +60,10 @@
                         <groupId>commons-httpclient</groupId>
                         <artifactId>commons-httpclient</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcpkix-jdk15on</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -172,6 +176,10 @@
                     <exclusion>
                         <groupId>commons-httpclient</groupId>
                         <artifactId>commons-httpclient</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-ext-jdk15</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -324,7 +332,7 @@
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-all</artifactId>
                 <version>${activemq.version}</version>
-                <scope>test</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.activemq</groupId>
@@ -624,6 +632,14 @@
                         <groupId>commons-httpclient</groupId>
                         <artifactId>commons-httpclient</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-jdk15</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcmail-jdk15</artifactId>
+                    </exclusion>
                 </exclusions>
                 <scope>test</scope>
             </dependency>
@@ -737,6 +753,14 @@
                         <groupId>commons-httpclient</groupId>
                         <artifactId>commons-httpclient</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-jdk15</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-ext-jdk15</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -744,6 +768,12 @@
                 <artifactId>rampart</artifactId>
                 <type>mar</type>
                 <version>${rampart.mar.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-ext-jdk15</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
@@ -1373,6 +1403,16 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>x-pack-transport</artifactId>
                 <version>${elasticsearch.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcprov-jdk15on</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.bouncycastle</groupId>
+                        <artifactId>bcpkix-jdk15on</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.mediation</groupId>
@@ -1640,7 +1680,7 @@
         <synapse.version>2.1.7-wso2v87-SNAPSHOT</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v30</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v32-SNAPSHOT</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
@@ -1774,7 +1814,7 @@
         <org.wso2.andes.client.version>3.2.82</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
-        <bouncycastle.version>1.60</bouncycastle.version>
+        <bouncycastle.version>1.61</bouncycastle.version>
         <commons-digester.version>2.1</commons-digester.version>
         <hawtbuf.version>1.9</hawtbuf.version>
         <ca.uhn.hapi.wso2.version>2.1.0.wso2v1</ca.uhn.hapi.wso2.version>
