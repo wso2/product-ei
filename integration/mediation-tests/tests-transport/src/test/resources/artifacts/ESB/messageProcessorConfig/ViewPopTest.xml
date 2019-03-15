@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+
+    <!-- Initial Message Store. Forwards to Queue -->
+    <messageStore xmlns="http://ws.apache.org/ns/synapse"
+                  class="org.apache.synapse.message.store.impl.jms.JmsStore"
+                  name="VPE_Store">
+        <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+        <parameter name="store.jms.destination">VPE_Queue</parameter>
+        <parameter name="store.producer.guaranteed.delivery.enable">false</parameter>
+        <parameter name="store.jms.cache.connection">true</parameter>
+        <parameter name="java.naming.provider.url">tcp://localhost:61616</parameter>
+        <parameter name="store.jms.JMSSpecVersion">1.1</parameter>
+    </messageStore>
+
+    <!-- Initial Message Processor. Subscribed to Queue. Uses View and Pop services -->
+    <messageProcessor xmlns="http://ws.apache.org/ns/synapse"
+                      class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
+                      name="VPE_Processor"
+                      messageStore="VPE_Store">
+        <parameter name="max.delivery.drop">Disabled</parameter>
+        <parameter name="client.retry.interval">4000</parameter>
+        <parameter name="max.delivery.attempts">1</parameter>
+        <parameter name="interval">4000</parameter>
+        <parameter name="throttle">false</parameter>
+        <parameter name="is.active">true</parameter>
+    </messageProcessor>
+
+    <!-- Initial Proxy. Sends the payload to the Message Store -->
+    <proxy name="VPE_Proxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+        <target>
+            <inSequence>
+                <property name="FORCE_SC_ACCEPTED" scope="axis2" type="STRING" value="true"/>
+                <property name="OUT_ONLY" value="true"/>
+                <log level="full"/>
+                <store messageStore="VPE_Store"/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence/>
+        </target>
+    </proxy>
+
+</definitions>
