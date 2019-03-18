@@ -19,6 +19,12 @@
   -->
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <parent>
+        <groupId>org.wso2.ei</groupId>
+        <artifactId>mediation-integration</artifactId>
+        <version>6.5.0-m3-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wso2.example.ClassMediatorDemo</groupId>
     <artifactId>ClassMediatorDemo</artifactId>
@@ -34,17 +40,14 @@
         <dependency>
             <groupId>org.apache.synapse</groupId>
             <artifactId>synapse-core</artifactId>
-            <version>2.1.2-wso2v2</version>
         </dependency>
         <dependency>
-            <groupId>commons-httpclient.wso2</groupId>
+            <groupId>org.wso2.orbit.commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
-            <version>3.1.0.wso2v2</version>
         </dependency>
         <dependency>
             <groupId>commons-codec.wso2</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.4.0.wso2v1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.woden.wso2</groupId>
@@ -54,7 +57,6 @@
         <dependency>
             <groupId>wsdl4j.wso2</groupId>
             <artifactId>wsdl4j</artifactId>
-            <version>1.6.2.wso2v4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ws.commons.schema.wso2</groupId>
@@ -68,33 +70,27 @@
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs.wso2</groupId>
-            <artifactId>geronimo-stax-api_1.0_spec</artifactId>
-            <version>1.0.1.wso2v2</version>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents.wso2</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.3.0.wso2v1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.neethi.wso2</groupId>
             <artifactId>neethi</artifactId>
-            <version>2.0.4.wso2v4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ws.commons.axiom.wso2</groupId>
             <artifactId>axiom</artifactId>
-            <version>1.2.11.wso2v4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.axis2.wso2</groupId>
             <artifactId>axis2</artifactId>
-            <version>1.6.1.wso2v10</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io.wso2</groupId>

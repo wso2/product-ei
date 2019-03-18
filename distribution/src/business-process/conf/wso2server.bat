@@ -136,8 +136,10 @@ rem find the version of the jdk
 set CMD=RUN %*
 
 :checkJdk17
-"%JAVA_HOME%\bin\java" -version 2>&1 | findstr /r "1.[7|8]" >NUL
-IF ERRORLEVEL 1 goto unknownJdk
+PATH %PATH%;%JAVA_HOME%\bin\
+for /f tokens^=2-5^ delims^=.-_^" %%j in ('java -fullversion 2^>^&1') do set "JAVA_VERSION=%%j%%k"
+if %JAVA_VERSION% LSS 17 goto unknownJdk
+if %JAVA_VERSION% GTR 110 goto unknownJdk
 goto jdk17
 
 :unknownJdk
@@ -164,7 +166,7 @@ rem ---------- Add jars to classpath ----------------
 
 set CARBON_CLASSPATH=.\lib;%CARBON_CLASSPATH%
 
-set JAVA_ENDORSED=".\..\lib\bps-endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
+if %JAVA_VERSION% GEQ 110 set CARBON_CLASSPATH=.\..\lib\bps-endorsed\*;%CARBON_CLASSPATH%
 
 rem ---------------- Setting default profile for Runtime if not parsed --------------
 
@@ -180,7 +182,10 @@ if "%profileSet%" == "false" (
     set profile=-Dprofile=business-process-default
 )
 
-set CMD_LINE_ARGS=-Xbootclasspath/a:%CARBON_XBOOTCLASSPATH% -Xms256m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="%CARBON_HOME%\repository\logs\heap-dump.hprof"  -Dcom.sun.management.jmxremote -classpath %CARBON_CLASSPATH% %JAVA_OPTS% -Djava.endorsed.dirs=%JAVA_ENDORSED% -Dcarbon.registry.root=/ -Dcarbon.home="%CARBON_HOME%" -Dwso2.server.standalone=true -Djava.command="%JAVA_HOME%\bin\java" -Djava.opts="%JAVA_OPTS%" -Djava.io.tmpdir="%CARBON_HOME%\tmp" -Dcatalina.base="%CARBON_HOME%\..\lib\tomcat" -Dwso2.carbon.xml=%CARBON_HOME%\conf\carbon.xml -Dwso2.registry.xml="%CARBON_HOME%\conf\registry.xml" -Dwso2.user.mgt.xml="%CARBON_HOME%\conf\user-mgt.xml" -Djava.util.logging.config.file="%CARBON_HOME%\conf\etc\logging-bridge.properties" -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dcarbon.config.dir.path="%CARBON_HOME%\conf"  -Dcomponents.repo="%CARBON_HOME%\..\components\plugins" -Dcarbon.config.dir.path="%CARBON_HOME%\conf" -Dcarbon.components.dir.path="%CARBON_HOME%\..\components" -Dcarbon.extensions.dir.path="%CARBON_HOME%\..\..\extensions" -Dcarbon.dropins.dir.path="%CARBON_HOME%\..\..\dropins" -Dcarbon.external.lib.dir.path="%CARBON_HOME%\..\..\lib" -Dcarbon.patches.dir.path="%CARBON_HOME%\..\..\patches" -Dcarbon.servicepacks.dir.path="%CARBON_HOME%\..\..\servicepacks" -Dcarbon.internal.lib.dir.path="%CARBON_HOME%\..\lib" -Dconf.location="%CARBON_HOME%\conf" -Dcom.atomikos.icatch.file="%CARBON_HOME%\..\lib\transactions.properties" -Dcom.atomikos.icatch.hide_init_file_path="true" -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dcom.sun.jndi.ldap.connect.pool.authentication=simple -Dcom.sun.jndi.ldap.connect.pool.timeout=3000 -Dorg.terracotta.quartz.skipUpdateCheck=true -Dcarbon.classpath=%CARBON_CLASSPATH% -Dfile.encoding=UTF8 -DworkerNode=false -Dorg.wso2.ignoreHostnameVerification=true -Dlogger.server.name="EI-Business-Process" %profile%
+if %JAVA_VERSION% LEQ 18 set JAVA_VER_BASED_OPTS=-Djava.endorsed.dirs=".\lib\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
+if %JAVA_VERSION% GEQ 110 set JAVA_VER_BASED_OPTS=--add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens java.rmi/sun.rmi.transport=ALL-UNNAMED
+
+set CMD_LINE_ARGS=-Xbootclasspath/a:%CARBON_XBOOTCLASSPATH% -Xms256m -Xmx1024m -XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="%CARBON_HOME%\repository\logs\heap-dump.hprof"  -Dcom.sun.management.jmxremote -classpath %CARBON_CLASSPATH% %JAVA_OPTS% %JAVA_VER_BASED_OPTS% -Dcarbon.registry.root=/ -Dcarbon.home="%CARBON_HOME%" -Dwso2.server.standalone=true -Djava.command="%JAVA_HOME%\bin\java" -Djava.opts="%JAVA_OPTS%" -Djava.io.tmpdir="%CARBON_HOME%\tmp" -Dcatalina.base="%CARBON_HOME%\..\lib\tomcat" -Dwso2.carbon.xml=%CARBON_HOME%\conf\carbon.xml -Dwso2.registry.xml="%CARBON_HOME%\conf\registry.xml" -Dwso2.user.mgt.xml="%CARBON_HOME%\conf\user-mgt.xml" -Dwso2.transports.xml="%CARBON_HOME%\conf\mgt-transports.xml" -Djava.util.logging.config.file="%CARBON_HOME%\conf\etc\logging-bridge.properties" -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dcarbon.config.dir.path="%CARBON_HOME%\conf" -Dcomponents.repo="%CARBON_HOME%\..\components\plugins" -Dcarbon.config.dir.path="%CARBON_HOME%\conf" -Dcarbon.components.dir.path="%CARBON_HOME%\..\components" -Dcarbon.extensions.dir.path="%CARBON_HOME%\..\..\extensions" -Dcarbon.dropins.dir.path="%CARBON_HOME%\..\..\dropins" -Dcarbon.external.lib.dir.path="%CARBON_HOME%\..\..\lib" -Dcarbon.patches.dir.path="%CARBON_HOME%\..\..\patches" -Dcarbon.servicepacks.dir.path="%CARBON_HOME%\..\..\servicepacks" -Dcarbon.internal.lib.dir.path="%CARBON_HOME%\..\lib" -Dconf.location="%CARBON_HOME%\conf" -Dcom.atomikos.icatch.file="%CARBON_HOME%\..\lib\transactions.properties" -Dcom.atomikos.icatch.hide_init_file_path="true" -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dcom.sun.jndi.ldap.connect.pool.authentication=simple -Dcom.sun.jndi.ldap.connect.pool.timeout=3000 -Dorg.terracotta.quartz.skipUpdateCheck=true -Dcarbon.classpath=%CARBON_CLASSPATH% -Dfile.encoding=UTF8 -DworkerNode=false -Dhttpclient.hostnameVerifier="DefaultAndLocalhost" -Dorg.wso2.ignoreHostnameVerification=true -Dlogger.server.name="EI-Business-Process" %profile%
 
 :runJava
 echo JAVA_HOME environment variable is set to %JAVA_HOME%

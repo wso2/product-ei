@@ -18,7 +18,8 @@
  -->
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
         "http://java.sun.com/dtd/web-app_2_3.dtd">
-<web-app id="WebApp">
+<web-app id="WebApp" metadata-complete="true">
+    <absolute-ordering />
 
     <!-- OWASP CSRFGuard per-application configuration property file location-->
     <context-param>

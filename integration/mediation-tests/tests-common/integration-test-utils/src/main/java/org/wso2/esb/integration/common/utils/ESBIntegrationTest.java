@@ -820,7 +820,7 @@ public abstract class ESBIntegrationTest {
 	}
 
 	protected String getESBResourceLocation() {
-		return FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts" + File.separator + "ESB";
+		return FrameworkPathUtil.getSystemResourceLocation() + "artifacts" + File.separator + "ESB";
 	}
 
 	protected String getBackEndServiceUrl(String serviceName) throws XPathExpressionException {
