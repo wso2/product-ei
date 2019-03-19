@@ -1492,7 +1492,7 @@
         <product.ei.version>6.5.0-m4-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.84</carbon.business-process.version>
+        <carbon.business-process.version>4.4.88</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v31</orbit.version.axis2>
