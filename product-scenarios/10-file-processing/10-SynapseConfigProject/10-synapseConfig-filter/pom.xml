@@ -30,7 +30,7 @@
   <version>1.0.0</version>
   <build>
     <filters>
-      <filter>${env.DATA_BUCKET_LOCATION}/deployment.properties</filter>
+      <filter>${data.bucket.location}/deployment.properties</filter>
     </filters>
     <plugins>
       <plugin>
