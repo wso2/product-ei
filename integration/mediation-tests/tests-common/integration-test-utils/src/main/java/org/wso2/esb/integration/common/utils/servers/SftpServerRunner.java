@@ -19,19 +19,21 @@
 package org.wso2.esb.integration.common.utils.servers;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.sshd.SshServer;
+import org.apache.sshd.server.SshServer;
 import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.common.file.virtualfs.VirtualFileSystemFactory;
-import org.apache.sshd.server.Command;
-import org.apache.sshd.server.PasswordAuthenticator;
-import org.apache.sshd.server.command.ScpCommandFactory;
+import org.apache.sshd.server.command.Command;
+import org.apache.sshd.server.auth.password.PasswordAuthenticator;
+import org.apache.sshd.server.scp.ScpCommandFactory;
 import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.apache.sshd.server.session.ServerSession;
-import org.apache.sshd.server.sftp.SftpSubsystem;
+import org.apache.sshd.server.subsystem.sftp.SftpSubsystem;
+import org.apache.sshd.server.subsystem.sftp.SftpSubsystemFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -75,10 +77,11 @@ public class SftpServerRunner {
         @Override
         public void run() {
             sshd.setPort(port);
-            sshd.setSubsystemFactories(Arrays.<NamedFactory<Command>>asList(new SftpSubsystem.Factory()));
+            sshd.setSubsystemFactories(
+                    Arrays.<NamedFactory<Command>>asList(new SftpSubsystemFactory()));
             sshd.setCommandFactory(new ScpCommandFactory());
             sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider());
-            sshd.setFileSystemFactory(new VirtualFileSystemFactory(path));
+            sshd.setFileSystemFactory(new VirtualFileSystemFactory(Paths.get(path)));
             sshd.setPasswordAuthenticator(new PasswordAuthenticator() {
                 @Override
                 public boolean authenticate(final String username, final String password, final ServerSession session) {
@@ -96,7 +99,7 @@ public class SftpServerRunner {
         private void stop() {
             try {
                 sshd.stop();
-            } catch (InterruptedException e) {
+            } catch (IOException e) {
                 LOGGER.error("Error stopping SFTP server", e);
             }
         }
