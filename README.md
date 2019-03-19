@@ -129,6 +129,11 @@ Dependent repositories:product-ei
 Repository URL <https://github.com/wso2/msf4j>  
 Microservices implementation framework for java
 
+## Connectors
+
+WSO2 EI supports connectors available at the repository 
+Repository URL <https://github.com/wso2-extensions?utf8=%E2%9C%93&q=esb&type=&language=>
+
 
 ## Build status of product EI
 
