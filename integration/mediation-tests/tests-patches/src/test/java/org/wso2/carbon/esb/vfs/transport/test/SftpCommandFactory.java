@@ -19,10 +19,10 @@ package org.wso2.carbon.esb.vfs.transport.test;
  */
 
 import org.apache.sshd.common.SshException;
-import org.apache.sshd.server.Command;
+import org.apache.sshd.server.command.Command;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
-import org.apache.sshd.server.command.ScpCommandFactory;
+import org.apache.sshd.server.scp.ScpCommandFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
