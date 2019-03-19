@@ -96,7 +96,24 @@
              <groupId>org.wso2.orbit.javax.xml.bind</groupId>
              <artifactId>jaxb-api</artifactId>
          </dependency>
+         <dependency>
+             <groupId>org.apache.sshd</groupId>
+             <artifactId>sshd-core</artifactId>
+             <version>${sshd.version}</version>
+         </dependency>
+         <dependency>
+             <groupId>org.apache.sshd</groupId>
+             <artifactId>sshd-scp</artifactId>
+             <version>${sshd.version}</version>
+         </dependency>
+         <dependency>
+             <groupId>org.apache.sshd</groupId>
+             <artifactId>sshd-sftp</artifactId>
+             <version>${sshd.version}</version>
+         </dependency>
      </dependencies>
-
+    <properties>
+        <sshd.version>2.2.0</sshd.version>
+    </properties>
 
 </project>
