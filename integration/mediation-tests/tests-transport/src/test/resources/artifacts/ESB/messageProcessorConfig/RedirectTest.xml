@@ -59,8 +59,8 @@
     <!-- Redirected Message Processor. Only required for testing to verify integrity of the redirected message -->
     <messageProcessor xmlns="http://ws.apache.org/ns/synapse"
                       class="org.apache.synapse.message.processor.impl.forwarder.ScheduledMessageForwardingProcessor"
-                      name="REDIRE_Processor"
-                      messageStore="ENQUEUE_Store">
+                      name="REDIRECT_Processor"
+                      messageStore="REDIRECT_Store">
         <parameter name="max.delivery.drop">Disabled</parameter>
         <parameter name="client.retry.interval">4000</parameter>
         <parameter name="max.delivery.attempts">1</parameter>

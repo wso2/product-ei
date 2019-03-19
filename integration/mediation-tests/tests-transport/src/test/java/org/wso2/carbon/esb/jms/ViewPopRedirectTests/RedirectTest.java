@@ -104,28 +104,16 @@ public class RedirectTest extends ESBIntegrationTest {
         requestHeader.put("SOAPAction", "urn:mediate");
         requestHeader.put("Accept", "application/json");
 
-        //Send payload to the proxy
-        System.out.println("=== Sending payload to " + PROXY_NAME + ":" + getProxyServiceURLHttp(PROXY_NAME));
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
-
         Thread.sleep(5000); //Make sure that the Message Processor has time to deactivate
-
-        //Check if the message processor has deactivated
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor" + PROCESSOR_NAME + "should not be active, " +
                 "but it is active.");
 
-        //Deactivate the REDIRECT_PROCESSOR
         messageProcessorClient.deactivateProcessor(REDIRECT_PROCESSOR_NAME);
         Assert.assertFalse(messageProcessorClient.isActive(REDIRECT_PROCESSOR_NAME), "Message processor" + REDIRECT_PROCESSOR_NAME + " should not be active, " +
                 "but it is active.");
-
-        //Call popAndRedirect function to pass the message to REDIRECT_STORE
         messageProcessorClient.popAndRedirectMessage(PROCESSOR_NAME, REDIRECT_STORE_NAME);
-
-
-        //Call the getMessage function from the REDIRECT_PROCESSOR
         String returnedMessage = messageProcessorClient.browseMessage(REDIRECT_PROCESSOR_NAME);
-        System.out.println("=== RETURNED MESSAGE === \n" + returnedMessage);
         Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
 
     }

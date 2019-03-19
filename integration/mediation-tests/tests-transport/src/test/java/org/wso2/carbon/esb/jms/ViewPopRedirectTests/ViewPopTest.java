@@ -100,28 +100,17 @@ public class ViewPopTest extends ESBIntegrationTest {
         requestHeader.put("SOAPAction", "urn:mediate");
         requestHeader.put("Accept", "application/json");
 
-        //Send payload to the proxy
-        System.out.println("=== Sending payload to " + PROXY_NAME +":"+ getProxyServiceURLHttp(PROXY_NAME));
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
-
         Thread.sleep(5000); //Make sure that the Message Processor has time to deactivate
 
-        //Check if the message processor has deactivated
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor should not be active, " +
                 "but it is active.");
 
-        //Call browseMessage function passing the PROCESSOR_NAME and assert the message
-        System.out.println("=== Retrieving msg from Queue. Passing processor : " + PROCESSOR_NAME +" ===");
-
         String returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
-        System.out.println("=== RETURNED MESSAGE === \n" + returnedMessage );
         Assert.assertEquals(returnedMessage,expectedMessage,"Returned message is not the same as expected message.");
 
-        //Call popMessage function passing the PROCESSOR_NAME and assert the empty queue
-        System.out.println("=== Popping msg from Queue. Passing processor :" + PROCESSOR_NAME +" ===");
         messageProcessorClient.popMessage(PROCESSOR_NAME);
         returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
-        System.out.println("=== AFTER POPPING Returned Message :" + returnedMessage);
         Assert.assertEquals(returnedMessage,null);
     }
 
