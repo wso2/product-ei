@@ -33,6 +33,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>10.1.1.1-reading-a-file-from-FTP-location</module>
         <module>10.1.1.7-reading-a-file-from-local-location</module>
     </modules>
 </project>

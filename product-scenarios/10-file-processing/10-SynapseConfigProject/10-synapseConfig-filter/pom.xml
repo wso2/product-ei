@@ -60,6 +60,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
+              <escapeString>\</escapeString>
               <outputDirectory>${project.build.directory}/temp/src/</outputDirectory>
               <resources>
                 <resource>

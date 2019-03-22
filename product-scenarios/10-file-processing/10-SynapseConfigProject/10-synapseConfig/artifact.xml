@@ -29,4 +29,7 @@
     <artifact name="10_SOAP_EP" groupId="org.wso2.ei.product-scenarios.scenario_10.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/endpoints/10_SOAP_EP.xml</file>
     </artifact>
+    <artifact name="10_1_1_1_1_Proxy_reading_a_file_from_ftp_location_using_vfs_listener" groupId="org.wso2.ei.product-scenarios.scenario_10.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/10_1_1_1_1_Proxy_reading_a_file_from_ftp_location_using_vfs_listener.xml</file>
+    </artifact>
 </artifacts>

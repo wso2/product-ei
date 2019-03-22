@@ -56,14 +56,14 @@ public class StringUtil {
     }
 
     /**
-     * Function to pattern match with regular expressions for stock quote response
+     * Function to pattern match with regular expressions for stock quote json response
      *
      * @param stockQuote - stockQuoteResponse as a String
      * @param symbol - stock quote symbol
      * @param companyName - company name of the stock quote response
      * @return - boolean if pattern matches with stock quote
      */
-    public static boolean stockQuoteRegexMatch(String stockQuote, String symbol, String companyName) {
+    public static boolean stockQuoteJsonRegexMatch(String stockQuote, String symbol, String companyName) {
         String regex = ".*marketCap\":" + ScenarioConstants.REGEX_EXPONENT +
                        ",\"symbol\":" + "\"" + symbol + "\"" +
                        ",\"last\":" + ScenarioConstants.REGEX_EXPONENT +
@@ -77,6 +77,35 @@ public class StringUtil {
                        ",\"low\":" + ScenarioConstants.REGEX_EXPONENT +
                        ",\"name\":" + "\"" + companyName + "\"" +
                        ".*open\":" + ScenarioConstants.REGEX_EXPONENT + "}";
+
+        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(stockQuote);
+        return matcher.find();
+    }
+
+    /**
+     * Function to pattern match with regular expressions for stock quote xml response
+     *
+     * @param stockQuote - stockQuoteResponse as a String
+     * @param symbol - stock quote symbol
+     * @param companyName - company name of the stock quote response
+     * @return - boolean if pattern matches with stock quote
+     */
+    public static boolean stockQuoteXMLRegexMatch(String stockQuote, String symbol, String companyName) {
+        String regex = ".*<ns:getQuoteResponse.*<ns:return.*<ax21:change>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:change><ax21:earnings>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:earnings><ax21:high>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:high><ax21:last>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:last>.*<ax21:low>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:low><ax21:marketCap>" +  ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:marketCap><ax21:name>" + companyName +
+                       "</ax21:name><ax21:open>" +  ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:open><ax21:peRatio>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:peRatio><ax21:percentageChange>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:percentageChange><ax21:prevClose>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:prevClose><ax21:symbol>" + symbol +
+                       "</ax21:symbol><ax21:volume>" + ScenarioConstants.REGEX_EXPONENT +
+                       "</ax21:volume></ns:return></ns:getQuoteResponse>";
 
         Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(stockQuote);
