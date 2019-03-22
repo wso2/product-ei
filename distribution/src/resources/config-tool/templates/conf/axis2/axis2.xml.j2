@@ -92,6 +92,7 @@
     <parameter name="SynapseConfig.ServerName" locked="false">localhost</parameter>
     <!-- Returns 401 for UT secured scenario with incorrect/missing credentials -->
     <parameter name="enableBasicAuth" locked="false">true</parameter>
+
     <!-- To override repository/services you need to uncomment following parameter and value -->
     <!-- SHOULD be absolute file path. -->
     <!--<parameter name="ServicesDirectory" locked="false">service</parameter>-->
@@ -194,17 +195,17 @@
         {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>{{transport.passthru_https.listener.key_store.location}}</Location>
-                <Type>{{transport.passthru_https.listener.key_store.type}}</Type>
-                <Password>{{transport.passthru_https.listener.key_store.password}}</Password>
-                <KeyPassword>{{transport.passthru_https.listener.key_store.key_password}}</KeyPassword>
+                <Location>{{transport.http.listener.key_store.file_name}}</Location>
+                <Type>{{transport.http.listener.key_store.type}}</Type>
+                <Password>{{transport.http.listener.key_store.password}}</Password>
+                <KeyPassword>{{transport.http.listener.key_store.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>{{transport.passthru_https.listener.trust_store.location}}</Location>
-                <Type>{{transport.passthru_https.listener.trust_store.type}}</Type>
-                <Password>{{transport.passthru_https.listener.trust_store.password}}</Password>
+                <Location>{{transport.http.listener.trust_store.file_name}}</Location>
+                <Type>{{transport.http.listener.trust_store.type}}</Type>
+                <Password>{{transport.http.listener.trust_store.password}}</Password>
             </TrustStore>
         </parameter>
         <!-- ============================================== -->
@@ -217,8 +218,15 @@
         </parameter>
     </transportReceiver>
 
-
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
+
+    {% if transport.vfs.listener.enable == true %}
+    <transportReceiver name="vfs" class="{{transport.vfs.listener.class}}"/>
+    {% endif %}
+
+    {% if transport.mail.listener.enable == true %}
+    <transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">
+    {% endif %}
 
     {% if transport.jms.listener.connection_factories is defined %}
     <transportReceiver name="jms" class="{{transport.jms.listener.class}}">
@@ -232,6 +240,41 @@
     </transportReceiver>
     {% endif %}
 
+    {% if transport.fix.listener.enable == true %}
+    <transportReceiver name="fix" class="{{transport.fix.listener.class}}"/>
+    {% endif %}
+
+    {% if transport.hl7.listener.enable == true %}
+    <transportReceiver name="hl7" class="{{transport.hl7.listener.class}}"/>
+    {% endif %}
+
+    <!-- SAP Transport Listeners -->
+    {% if transport.sap.listener.idoc.enable == true %}
+    <transportReceiver name="idoc" class="{{transport.sap.listener.idoc.class}}"/>
+    {% endif %}
+    {% if transport.sap.listener.bapi.enable == true %}
+    <transportReceiver name="bapi" class="{{transport.sap.listener.bapi.class}}"/>
+    {% endif %}
+
+    {% if transport.rabbitmq.listener.AMQPConnectionFactory is defined %}
+    <transportReceiver name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
+        <parameter name="AMQPConnectionFactory" locked="false">
+            {% for parameter_key,parameter_value in transport.rabbitmq.listener.AMQPConnectionFactory.parameters.items() %}
+            <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+            {% endfor %}
+        </parameter>
+    </transportReceiver>
+    {% endif %}
+
+    {% if transport.mqtt.listener.mqttConFactory is defined %}
+    <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
+        <parameter locked="false" name="mqttConFactory">
+            {% for parameter_key,parameter_value in transport.mqtt.listener.mqttConFactory.parameters.items() %}
+            <parameter locked="false" name="{{parameter_key}}">{{parameter_value}}</parameter>
+            {% endfor %}
+        </parameter>
+    </transportReceiver>
+    {% endif %}
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
@@ -241,24 +284,23 @@
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
-    <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
     <transportSender name="https" class="{{transport.passthru_https.sender.class}}">
         {% for parameter_key,parameter_value in transport.passthru_https.sender.parameters.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>{{transport.passthru_https.sender.key_store.location}}</Location>
-                <Type>{{transport.passthru_https.sender.key_store.type}}</Type>
-                <Password>{{transport.passthru_https.sender.key_store.password}}</Password>
-                <KeyPassword>{{transport.passthru_https.sender.key_store.key_password}}</KeyPassword>
+                <Location>{{transport.http.sender.key_store.file_name}}</Location>
+                <Type>{{transport.http.sender.key_store.type}}</Type>
+                <Password>{{transport.http.sender.key_store.password}}</Password>
+                <KeyPassword>{{transport.http.sender.key_store.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>{{transport.passthru_https.sender.trust_store.location}}</Location>
-                <Type>{{transport.passthru_https.sender.trust_store.type}}</Type>
-                <Password>{{transport.passthru_https.sender.trust_store.password}}</Password>
+                <Location>{{transport.http.sender.trust_store.file_name}}</Location>
+                <Type>{{transport.http.sender.trust_store.type}}</Type>
+                <Password>{{transport.http.sender.trust_store.password}}</Password>
             </TrustStore>
         </parameter>
         {% if transport.passthru_https.sender.ssl_profile.file_path is defined %}
@@ -283,7 +325,55 @@
         {% endfor %}
     </transportSender>
     {% endif %}
-    {% if transport.ws.sender is defined %}
+
+    <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
+
+    {% if transport.local.sender.nonblocking.enable == true %}
+    <transportSender name="local" class="{{transport.local.sender.nonblocking.class}}"/>
+    {% endif %}
+
+    {% if transport.jms.sender.enable == true %}
+    <transportSender name="jms" class="{{transport.jms.sender.class}}"/>
+    {% endif %}
+
+    {% if transport.vfs.sender.enable == true %}
+    <transportSender name="vfs" class="{{transport.vfs.sender.class}}"/>
+    {% endif %}
+
+    {% if transport.mailto.sender is defined %}
+    <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
+        {% for parameter_key,parameter_value in transport.mailto.sender.parameters.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportSender>
+    {% endif %}
+
+    {% if transport.fix.sender.enable == true %}
+    <transportSender name="fix" class="{{transport.fix.sender.class}}"/>
+    {% endif %}
+
+    {% if transport.hl7.sender.enable == true %}
+    <transportSender name="hl7" class="{{transport.hl7.sender.class}}"/>
+    {% endif %}
+
+
+    <!-- SAP Transport Senders -->
+    {% if transport.sap.sender.idoc.enable == true %}
+    <transportSender name="idoc" class="{{transport.sap.sender.idoc.class}}"/>
+    {% endif %}
+    {% if transport.sap.sender.bapi.enable == true %}
+    <transportSender name="bapi" class="{{transport.sap.sender.bapi.class}}"/>
+    {% endif %}
+
+    {% if transport.rabbitmq.sender.enable == true %}
+    <transportSender name="rabbitmq" class="{{transport.rabbitmq.sender.class}}"/>
+    {% endif %}
+
+    {% if transport.mqtt.sender.enable == true %}
+    <transportSender name="mqtt" class="{{transport.mqtt.sender.class}}"/>
+    {% endif %}
+
+    {% if transport.ws.sender.class is defined %}
     <transportSender name="ws" class="{{transport.ws.sender.class}}">
         {% for name,value in transport.ws.sender.parameters.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>
@@ -293,16 +383,15 @@
     {% if transport.wss.sender is defined %}
 
     <transportSender name="wss" class="{{transport.wss.sender.class}}">
-        {% for name,value in transport.wss.sender.parameters.items() %}
+        {% for name,value in transport.ws.sender.parameters.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>
         {% endfor %}
         <parameter name="ws.trust.store" locked="false">
-            <ws.trust.store.location>{{transport.wss.sender.trust_store.location}}</ws.trust.store.location>
-            <ws.trust.store.Password>{{transport.wss.sender.trust_store.password}}</ws.trust.store.Password>
+            <ws.trust.store.location>{{transport.wss.sender.trust_store_location}}</ws.trust.store.location>
+            <ws.trust.store.Password>{{transport.wss.sender.trust_store_password}}</ws.trust.store.Password>
         </parameter>
     </transportSender>
-    {% endif%}
-
+    {% endif %}
     <!-- ================================================= -->
     <!--             Global Engaged Modules                -->
     <!-- ================================================= -->
@@ -327,9 +416,9 @@
      getting this node to join the cluster.
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
-                enable="{{clustering.membership_scheme is defined}}">
+                enable="{{clustering is defined}}">
 
-        {% if clustering.membership_scheme is defined %}
+        {% if clustering is defined %}
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
            when the AxisConfiguration is built. If set to "true" the initialization will not be
@@ -349,7 +438,7 @@
                     is deemed to have left the cluster, it will be detected by the Group Membership
                     Service (GMS) using a TCP ping mechanism.
         -->
-        <parameter name="membershipScheme">{{clustering.membership_scheme | default('multicast')}}</parameter>
+        <parameter name="membershipScheme">{{clustering.membership_scheme | default('wka')}}</parameter>
         <!--<parameter name="licenseKey">xxx</parameter>-->
         <!--<parameter name="mgtCenterURL">http://localhost:8081/mancenter/</parameter>-->
 
@@ -433,8 +522,8 @@
         can be defined in this section.
         -->
         <groupManagement enable="false">
-            <applicationDomain name="wso2.apim.domain"
-                               description="APIM group"
+            <applicationDomain name="wso2.esb.domain"
+                               description="EI group"
                                agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent"
                                subDomain="worker"
                                port="2222"/>

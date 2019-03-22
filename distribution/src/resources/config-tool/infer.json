@@ -1,1 +1,75 @@
-{}
+{
+  "transport.vfs.listener.enable": {
+    "true": {
+      "transport.vfs.listener.class": "org.apache.synapse.transport.vfs.VFSTransportListener"
+    }
+  },
+  "transport.fix.listener.enable": {
+    "true": {
+      "transport.fix.listener.class": "org.apache.synapse.transport.fix.FIXTransportListener"
+    }
+  },
+  "transport.hl7.listener.enable": {
+    "true": {
+      "transport.hl7.listener.class": "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"
+    }
+  },
+  "transport.sap.listener.enable": {
+    "true": {
+      "transport.sap.listener.idoc.enable": true,
+      "transport.sap.listener.idoc.class": "org.wso2.carbon.transports.sap.SAPTransportListener"
+    }
+  },
+  "transport.sap.listener.bapi.enable": {
+    "true": {
+      "transport.sap.listener.bapi.class": "org.wso2.carbon.transports.sap.SAPTransportListener"
+    }
+  },
+  "transport.local.sender.nonblocking.enable": {
+    "true": {
+      "transport.local.sender.nonblocking.class": "org.apache.axis2.transport.local.NonBlockingLocalTransportSender"
+    }
+  },
+  "transport.jms.sender.enable": {
+    "true": {
+      "transport.jms.sender.class": "org.apache.axis2.transport.jms.JMSSender"
+    }
+  },
+  "transport.vfs.sender.enable": {
+    "true": {
+      "transport.vfs.sender.class": "org.apache.synapse.transport.vfs.VFSTransportSender"
+    }
+  },
+  "transport.fix.sender.enable": {
+    "true": {
+      "transport.fix.sender.class": "org.apache.synapse.transport.fix.FIXTransportSender"
+    }
+  },
+  "transport.hl7.sender.enable": {
+    "true": {
+      "transport.hl7.sender.class": "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"
+    }
+  },
+  "transport.sap.sender.enable": {
+    "true": {
+      "transport.sap.sender.idoc.enable": true,
+      "transport.sap.sender.idoc.class": "org.wso2.carbon.transports.sap.SAPTransportSender"
+    }
+  },
+  "transport.sap.sender.bapi.enable": {
+    "true": {
+      "transport.sap.sender.bapi.class": "org.wso2.carbon.transports.sap.SAPTransportSender"
+    }
+  },
+  "transport.rabbitmq.sender.enable": {
+    "true": {
+      "transport.rabbitmq.sender.class": "org.apache.axis2.transport.rabbitmq.RabbitMQSender"
+    }
+  },
+  "transport.mqtt.sender.enable": {
+    "true": {
+      "transport.mqtt.sender.class":"org.apache.axis2.transport.mqtt.MqttSender"
+    }
+  }
+
+}

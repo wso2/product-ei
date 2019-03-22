@@ -12,13 +12,13 @@
     "HttpsProtocols": "TLSv1,TLSv1.1,TLSv1.2",
     "httpGetProcessor": "org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor"
   },
-  "transport.passthru_https.listener.key_store.location": "repository/resources/security/$conf{keystore.tls.file_name}",
-  "transport.passthru_https.listener.key_store.type": "$conf{keystore.tls.type}",
-  "transport.passthru_https.listener.key_store.password": "$conf{keystore.tls.password}",
-  "transport.passthru_https.listener.key_store.key_password": "$conf{keystore.tls.key_password}",
-  "transport.passthru_https.listener.trust_store.location": "repository/resources/security/$conf{truststore.file_name}",
-  "transport.passthru_https.listener.trust_store.type": "$conf{truststore.type}",
-  "transport.passthru_https.listener.trust_store.password": "$conf{truststore.password}",
+  "transport.http.listener.key_store.file_name": "repository/resources/security/$conf{keystore.tls.file_name}",
+  "transport.http.listener.key_store.type": "$conf{keystore.tls.type}",
+  "transport.http.listener.key_store.password": "$conf{keystore.tls.password}",
+  "transport.http.listener.key_store.key_password": "$conf{keystore.tls.key_password}",
+  "transport.http.listener.trust_store.file_name": "repository/resources/security/$conf{truststore.file_name}",
+  "transport.http.listener.trust_store.type": "$conf{truststore.type}",
+  "transport.http.listener.trust_store.password": "$conf{truststore.password}",
   "transport.passthru_https.listener.ssl_profile.file_path": "repository/resources/security/listenerprofiles.xml",
   "transport.passthru_https.listener.ssl_profile.interval": "600000",
 
@@ -30,13 +30,19 @@
   "transport.passthru_https.sender.parameters": {
     "non-blocking": true
   },
-  "transport.passthru_https.sender.key_store.location": "repository/resources/security/$conf{keystore.tls.file_name}",
-  "transport.passthru_https.sender.key_store.type": "$conf{keystore.tls.type}",
-  "transport.passthru_https.sender.key_store.password": "$conf{keystore.tls.password}",
-  "transport.passthru_https.sender.key_store.key_password": "$conf{keystore.tls.key_password}",
-  "transport.passthru_https.sender.trust_store.location": "repository/resources/security/$conf{truststore.file_name}",
-  "transport.passthru_https.sender.trust_store.type": "$conf{truststore.type}",
-  "transport.passthru_https.sender.trust_store.password": "$conf{truststore.password}",
+  "transport.http.sender.key_store.file_name": "repository/resources/security/$conf{keystore.tls.file_name}",
+  "transport.http.sender.key_store.type": "$conf{keystore.tls.type}",
+  "transport.http.sender.key_store.password": "$conf{keystore.tls.password}",
+  "transport.http.sender.key_store.key_password": "$conf{keystore.tls.key_password}",
+  "transport.http.sender.trust_store.file_name": "repository/resources/security/$conf{truststore.file_name}",
+  "transport.http.sender.trust_store.type": "$conf{truststore.type}",
+  "transport.http.sender.trust_store.password": "$conf{truststore.password}",
+
+  "transport.http.blocking_sender.parameters": {
+    "Transfer-Encoding": "chunked",
+    "cacheHttpClient": true,
+    "defaultMaxConnectionsPerHost": 200
+  },
   "transport.jms.sender.class": "org.apache.axis2.transport.jms.JMSSender",
 
   "transport.blocking_http.sender.class": "org.apache.axis2.transport.http.CommonsHTTPTransportSender",
@@ -61,6 +67,16 @@
 
   "synapse_properties.'synapse.threads.core'": "20",
   "synapse_properties.'synapse.threads.max'": "100",
+  "synapse_properties.'synapse.global_timeout_interval'": 120000,
+  "synapse_properties.'synapse.commons.json.preserve.namespace'": false,
+  "synapse_properties.'synapse.temp_data.chunk.size'": 3072,
+  "synapse_properties.'synapse.debugger.port.command'": 9005,
+  "synapse_properties.'synapse.debugger.port.event'": 9006,
+  "synapse_properties.'statistics.clean.enable'": true,
+  "synapse_properties.'statistics.clean.interval'": 1000,
+  "synapse_properties.'mediation.flow.statistics.tracer.collect.payloads'": false,
+  "synapse_properties.'mediation.flow.statistics.tracer.collect.properties'": false,
+
 
   "passthru_properties.'http.socket.timeout'": "180000",
   "passthru_properties.'worker_pool_size_core'": "400",
@@ -160,18 +176,6 @@
     }
 
   ],
-  "database.shared_db.type": "h2",
-  "database.shared_db.url": "jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000",
-  "database.shared_db.username": "wso2carbon",
-  "database.shared_db.password": "wso2carbon",
-  "database.shared_db.driver": "org.h2.Driver",
-  "database.shared_db.validationQuery": "SELECT 1",
-  "database.shared_db.pool_options.maxActive": "50",
-  "database.shared_db.pool_options.maxWait": "60000",
-  "database.shared_db.pool_options.testOnBorrow": "true",
-  "database.shared_db.pool_options.validationInterval": "30000",
-  "database.shared_db.pool_options.defaultAutoCommit": "true",
-
   "keystore.tls.file_name": "wso2carbon.jks",
   "keystore.tls.type": "JKS",
   "keystore.tls.password": "wso2carbon",

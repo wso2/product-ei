@@ -453,7 +453,59 @@
                     </execution>
                 </executions>
             </plugin-->
-
+            <plugin>
+                <groupId>org.wso2.maven</groupId>
+                <artifactId>wso2-maven-json-merge-plugin</artifactId>
+                <version>5.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <task>
+                                    <input>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/default.json
+                                    </input>
+                                    <output>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/default.json
+                                    </output>
+                                    <config>${basedir}/src/resources/config-tool/default.json</config>
+                                </task>
+                                <task>
+                                    <input>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/infer.json
+                                    </input>
+                                    <output>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/infer.json
+                                    </output>
+                                    <config>${basedir}/src/resources/config-tool/infer.json</config>
+                                </task>
+                                <task>
+                                    <input>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/key-mappings.json
+                                    </input>
+                                    <output>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/key-mappings.json
+                                    </output>
+                                    <config>${basedir}/src/resources/config-tool/key-mappings.json</config>
+                                </task>
+                                <task>
+                                    <input>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/validator.json
+                                    </input>
+                                    <output>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/validator.json
+                                    </output>
+                                    <config>${basedir}/src/resources/config-tool/validator.json</config>
+                                </task>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
