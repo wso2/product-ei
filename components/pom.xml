@@ -41,7 +41,6 @@
     </licenses>
 
     <modules>
-        <module>org.wso2.carbon.integrator.core</module>
         <module>org.wso2.carbon.micro.integrator.core</module>
         <module>org.wso2.carbon.micro.integrator.server</module>
         <module>org.wso2.ei.styles</module>
