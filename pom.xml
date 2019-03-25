@@ -1140,9 +1140,9 @@
                 <version>${product.ei.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.ei</groupId>
-                <artifactId>org.wso2.carbon.integrator.core</artifactId>
-                <version>${product.ei.version}</version>
+                <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>org.wso2.carbon.integrator.server.feature</artifactId>
+                <version>${carbon.mediation.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
@@ -1531,7 +1531,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.117</carbon.mediation.version>
+        <carbon.mediation.version>4.6.118</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.37</carbon.kernel.version>

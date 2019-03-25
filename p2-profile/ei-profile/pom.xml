@@ -392,7 +392,7 @@
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
-                                    org.wso2.ei:org.wso2.carbon.integrator.server.feature:${product.ei.version}
+                                    org.wso2.carbon.mediation:org.wso2.carbon.integrator.server.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -833,7 +833,7 @@
 
                                 <feature>
                                     <id>org.wso2.carbon.integrator.server.feature.group</id>
-                                    <version>${product.ei.version}</version>
+                                    <version>${carbon.mediation.version}</version>
                                 </feature>
 
                                 <!--<feature>
