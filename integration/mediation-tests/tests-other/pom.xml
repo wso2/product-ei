@@ -274,7 +274,7 @@
             <artifactId>org.wso2.carbon.integration.common.tests</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
+            <groupId>org.apache.httpcomponents.wso2</groupId>
             <artifactId>httpcore</artifactId>
         </dependency>
         <dependency>
