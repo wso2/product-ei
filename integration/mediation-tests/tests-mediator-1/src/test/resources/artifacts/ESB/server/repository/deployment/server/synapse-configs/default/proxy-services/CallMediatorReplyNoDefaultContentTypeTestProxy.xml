@@ -1,4 +1,4 @@
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="CallMediatorReplyNoDefaultContentTypeTestProxy"
+<proxy name="CallMediatorReplyNoDefaultContentTypeTestProxy"
        startOnLoad="true" trace="disable" transports="http https">
 <description/>
 <target>
