@@ -76,7 +76,8 @@
     <virtualhosts>${conf}/qpid-virtualhosts.xml</virtualhosts>
 
     <heartbeat>
-        <delay>0</delay>
+        <!-- heartbeat delay in seconds-->
+        <delay>30</delay>
         <timeoutFactor>2.0</timeoutFactor>
     </heartbeat>
     <queue>
