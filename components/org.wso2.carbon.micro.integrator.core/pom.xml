@@ -85,11 +85,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.wso2.eclipse.osgi</groupId>
+            <groupId>org.eclipse.osgi</groupId>
             <artifactId>org.eclipse.osgi</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.eclipse.osgi</groupId>
+            <groupId>org.eclipse.osgi</groupId>
             <artifactId>org.eclipse.osgi.services</artifactId>
         </dependency>
         <dependency>
@@ -97,7 +97,7 @@
             <artifactId>org.eclipse.equinox.http.helper</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.eclipse.equinox</groupId>
+            <groupId>org.eclipse.equinox</groupId>
             <artifactId>org.eclipse.equinox.p2.metadata</artifactId>
         </dependency>
         <dependency>

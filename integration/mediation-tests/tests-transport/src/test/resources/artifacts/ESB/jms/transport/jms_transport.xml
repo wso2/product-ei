@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="JMSEndpointTestCaseProxy" transports="jms" startOnLoad="true" trace="disable">
+    <proxy name="JmsProxy" transports="jms" startOnLoad="true" trace="disable">
         <target>
             <inSequence>
                 <property name="OUT_ONLY" value="true"/>

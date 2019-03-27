@@ -87,9 +87,19 @@
                 <version>${synapse.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.securevault</groupId>
                 <artifactId>org.wso2.securevault</artifactId>
                 <version>${securevault.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.axis2</groupId>
@@ -677,11 +687,13 @@
                 <groupId>org.apache.httpcomponents.wso2</groupId>
                 <artifactId>httpcore</artifactId>
                 <version>${httpcore.wso2.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.wso2.orbit.org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.wso2.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.rampart</groupId>
@@ -1424,12 +1436,12 @@
                 <version>${carbon.analytics.common.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.eclipse.osgi</groupId>
+                <groupId>org.eclipse.osgi</groupId>
                 <artifactId>org.eclipse.osgi</artifactId>
                 <version>${version.equinox.osgi}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.eclipse.osgi</groupId>
+                <groupId>org.eclipse.osgi</groupId>
                 <artifactId>org.eclipse.osgi.services</artifactId>
                 <version>${version.equinox.osgi.services}</version>
             </dependency>
@@ -1439,7 +1451,7 @@
                 <version>${version.equinox.http.helper}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.eclipse.equinox</groupId>
+                <groupId>org.eclipse.equinox</groupId>
                 <artifactId>org.eclipse.equinox.p2.metadata</artifactId>
                 <version>${version.equinox.p2.metadata}</version>
             </dependency>
@@ -1652,7 +1664,7 @@
         <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.91</andes.version>
+        <andes.version>3.2.82</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1703,10 +1715,10 @@
         <!-- Data service hosting feature version -->
         <carbon-dataservice-hosting.feature.imp.version>4.4.86-SNAPSHOT</carbon-dataservice-hosting.feature.imp.version>
 
-        <version.equinox.osgi>3.11.0.v20160603-1336</version.equinox.osgi>
-        <version.equinox.osgi.services>3.5.100.v20160504-1419</version.equinox.osgi.services>
+        <version.equinox.osgi>3.9.1.v20130814-1242</version.equinox.osgi>
+        <version.equinox.osgi.services>3.3.100.v20130513-1956</version.equinox.osgi.services>
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
-        <version.equinox.p2.metadata>2.2.0.v20131211-1531</version.equinox.p2.metadata>
+        <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
         <carbon.analytics.common.version>5.1.51-SNAPSHOT</carbon.analytics.common.version>
 
@@ -1725,8 +1737,10 @@
         <carbon.module.version>1.5.5</carbon.module.version>
         <i18n.module.version>1.5.5</i18n.module.version>
         <process.module.version>1.5.5</process.module.version>
-        <httpcore.wso2.version>4.3.3.wso2v1</httpcore.wso2.version>
-        <httpclient.wso2.version>4.3.6.wso2v2</httpclient.wso2.version>
+        <httpcore.version>4.1.2</httpcore.version>
+        <httpcore.wso2.version>4.3.0.wso2v1</httpcore.wso2.version>
+        <httpclient.wso2.version>4.3.2.wso2v1</httpclient.wso2.version>
+        <httpclient.version>4.3.2</httpclient.version>
         <xercesImpl.version>2.8.1</xercesImpl.version>
         <sandesha2.version>1.6.1-wso2v1</sandesha2.version>
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
@@ -1781,7 +1795,7 @@
         <wso2.h2.orbit.version>1.2.140.wso2v3</wso2.h2.orbit.version>
         <org.apache.cxf.version>2.7.2</org.apache.cxf.version>
         <org.springframework.version>4.1.5.RELEASE</org.springframework.version>
-        <org.apache.tomcat>7.0.93</org.apache.tomcat>
+        <org.apache.tomcat>7.0.85</org.apache.tomcat>
         <org.codehaus.jackson.version>1.9.12</org.codehaus.jackson.version>
         <com.google.code.gson.version>2.7</com.google.code.gson.version>
         <javax.inject.version>1</javax.inject.version>
@@ -1843,7 +1857,7 @@
         <forgetme.tool.version>1.1.21</forgetme.tool.version>
 
         <version.equinox.http.servlet>1.1.400.v20130418-1354</version.equinox.http.servlet>
-        <version.tomcat>7.0.93</version.tomcat>
+        <version.tomcat>7.0.85</version.tomcat>
         <orbit.version.tomcat.jsp.api>${version.tomcat}.wso2v1</orbit.version.tomcat.jsp.api>
         <orbit.version.tomcat.el.api>${version.tomcat}.wso2v1</orbit.version.tomcat.el.api>
         <orbit.version.tomcat.servlet.api>${version.tomcat}.wso2v1</orbit.version.tomcat.servlet.api>
@@ -1851,7 +1865,7 @@
         <orbit.version.tomcat.ha>${version.tomcat}.wso2v1</orbit.version.tomcat.ha>
         <antlr.wso2.version>3.2.0.wso2v1</antlr.wso2.version>
 
-        <jdbc-pool.version>9.0.16.wso2v1</jdbc-pool.version>
+        <jdbc-pool.version>7.0.81.wso2v2</jdbc-pool.version>
         <version.opencsv>1.8.wso2v1</version.opencsv>
         <securevault.version>1.0.0-wso2v2</securevault.version>
         <version.h2.engine>1.3.175.wso2v1</version.h2.engine>
