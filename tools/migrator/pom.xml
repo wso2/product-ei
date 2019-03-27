@@ -190,6 +190,6 @@
         <felix.version>1.12.0</felix.version>
         <carbon.ndatasource.version>4.4.11</carbon.ndatasource.version>
         <carbon.deployment.version>4.7.11</carbon.deployment.version>
-        <carbon.analytics.common.version>5.1.31</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.1.52</carbon.analytics.common.version>
     </properties>
 </project>

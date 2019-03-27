@@ -146,7 +146,7 @@
                                 <bundleDef>org.apache.woden.wso2:woden:${version.woden}</bundleDef>
                                 <bundleDef>wsdl4j.wso2:wsdl4j:${orbit.version.wsdl4j}</bundleDef>
                                 <bundleDef>org.apache.ws.commons.schema.wso2:XmlSchema:${version.XmlSchema}</bundleDef>
-                                <bundleDef>commons-codec.wso2:commons-codec:${version.commons.codec}</bundleDef>
+                                <bundleDef>commons-codec.wso2:commons-codec:${commons.codec.version}</bundleDef>
                                 <bundleDef>annogen.wso2:annogen:${version.annogen}</bundleDef>
                                 <bundleDef>
                                     backport-util-concurrent.wso2:backport-util-concurrent:${version.backport.util.concurrent}
@@ -175,7 +175,7 @@
                                 <bundleDef>com.jezhumble.wso2:javasysmon:${javasysmon.version}</bundleDef>
                                 <bundleDef>org.wso2.orbit.org.apache.tomcat:jdbc-pool:${jdbc-pool.version}</bundleDef>
                                 <bundleDef>org.eclipse.jdt.core.compiler:ecj:${version.eclipse.ecj}</bundleDef>
-                                <bundleDef>com.google.code.gson:gson:${version.com.google.code.gson}</bundleDef>
+                                <bundleDef>com.google.code.gson:gson:${com.google.code.gson.version}</bundleDef>
 
                                 <!--Kernel bundles-->
                                 <bundleDef>org.wso2.carbon:org.wso2.carbon.utils:${carbon.kernel.version}</bundleDef>
