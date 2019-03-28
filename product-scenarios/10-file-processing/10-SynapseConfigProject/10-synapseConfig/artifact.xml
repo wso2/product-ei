@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<artifacts>
+    <artifact name="10_1_1_7_1_Proxy_reading_a_file_from_local_location_using_vfs_listener" groupId="org.wso2.ei.product-scenarios.scenario_10.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/10_1_1_7_1_Proxy_reading_a_file_from_local_location_using_vfs_listener.xml</file>
+    </artifact>
+    <artifact name="10_1_1_7_3_API_reading_a_file_from_local_location_using_file_connector" groupId="org.wso2.ei.product-scenarios.scenario_10.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/10_1_1_7_3_API_reading_a_file_from_local_location_using_file_connector.xml</file>
+    </artifact>
+    <artifact name="API_file_operations" groupId="org.wso2.ei.product-scenarios.scenario_10.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/API_file_operations.xml</file>
+    </artifact>
+    <artifact name="10_SOAP_EP" groupId="org.wso2.ei.product-scenarios.scenario_10.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/10_SOAP_EP.xml</file>
+    </artifact>
+    <artifact name="10_1_1_1_1_Proxy_reading_a_file_from_ftp_location_using_vfs_listener" groupId="org.wso2.ei.product-scenarios.scenario_10.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/10_1_1_1_1_Proxy_reading_a_file_from_ftp_location_using_vfs_listener.xml</file>
+    </artifact>
+</artifacts>

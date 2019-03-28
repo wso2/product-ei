@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="in_transform" xmlns="http://ws.apache.org/ns/synapse">
+    <xsl:stylesheet exclude-result-prefixes="m0 fn" version="2.0" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:m0="http://services.samples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+        <xsl:output indent="yes" method="xml" omit-xml-declaration="yes"/>
+        <xsl:template match="*">
+            <xsl:element name="{local-name()}" namespace="http://services.samples">
+                <xsl:copy-of select="attribute::*"/>
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>

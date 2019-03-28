@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="out_transform" xmlns="http://ws.apache.org/ns/synapse">
+    <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+        <xsl:output encoding="UTF-8" method="xml" version="1.0"/>
+        <xsl:template match="*">
+            <xsl:element name="{local-name()}">
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:template>
+    </xsl:stylesheet>
+</localEntry>

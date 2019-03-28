@@ -1,0 +1,11 @@
+map_S_AbsoluteValue_S_ResultAbsoluteValue = function(){ 
+var outputResultAbsoluteValue={};
+var STRING_TO_NUMBER_1_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputAbsoluteValue.num1);
+outputResultAbsoluteValue =  {};
+outputResultAbsoluteValue.result = Math.abs(STRING_TO_NUMBER_1_0);
+return outputResultAbsoluteValue;
+};
+
+

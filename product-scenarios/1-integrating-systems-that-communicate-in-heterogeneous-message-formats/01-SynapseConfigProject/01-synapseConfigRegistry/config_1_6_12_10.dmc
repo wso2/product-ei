@@ -1,0 +1,11 @@
+map_S_FloorValue_S_ResultFloorValue = function(){ 
+var outputResultFloorValue={};
+var STRING_TO_NUMBER_1_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputFloorValue.num1);
+outputResultFloorValue =  {};
+outputResultFloorValue.result = Math.floor(STRING_TO_NUMBER_1_0);
+return outputResultFloorValue;
+};
+
+

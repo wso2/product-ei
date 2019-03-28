@@ -1,0 +1,11 @@
+{
+    "LookupCityRequest": {
+        "LookupCity": {
+            "Zip": [
+                35801,
+                85001,
+                99501
+            ]
+        }
+    }
+}

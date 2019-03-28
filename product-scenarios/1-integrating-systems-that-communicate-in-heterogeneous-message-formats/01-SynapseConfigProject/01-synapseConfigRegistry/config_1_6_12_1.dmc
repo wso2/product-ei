@@ -1,0 +1,14 @@
+map_S_AddNumbers_S_ResultAdd = function(){ 
+var outputResultAdd={};
+var STRING_TO_NUMBER_1_0 = '';
+var STRING_TO_NUMBER_2_0 = '';
+
+STRING_TO_NUMBER_1_0 = Number(inputAddNumbers.num2);
+STRING_TO_NUMBER_2_0 = Number(inputAddNumbers.num1);
+outputResultAdd =  {};
+outputResultAdd.result = 0+STRING_TO_NUMBER_2_0+STRING_TO_NUMBER_1_0;
+return outputResultAdd;
+};
+
+
+

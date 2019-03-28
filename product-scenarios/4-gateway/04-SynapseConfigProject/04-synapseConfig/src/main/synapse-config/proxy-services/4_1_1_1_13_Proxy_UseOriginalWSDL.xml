@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="4_1_1_1_13_Proxy_UseOriginalWSDL" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <endpoint key="EP_SimpleStockQuoteService"/>
+        <inSequence/>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <publishWSDL key="conf:scenario/tests/resource/wsdl/SimpleStockQuoteService.wsdl" preservePolicy="true"/>
+    <parameter name="useOriginalwsdl">true</parameter>
+</proxy>

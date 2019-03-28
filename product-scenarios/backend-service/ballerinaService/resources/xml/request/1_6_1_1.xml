@@ -1,0 +1,13 @@
+<root>
+    <appointment_date>2025-04-02</appointment_date>
+    <doctor>thomas collins</doctor>
+    <hospital>grand oak community hospital</hospital>
+    <patient>
+        <address>California</address>
+        <dob>1990-03-19</dob>
+        <email>johndoe@gmail.com</email>
+        <name>John Doe</name>
+        <phone>8770586755</phone>
+        <ssn>234-23-525</ssn>
+    </patient>
+</root>

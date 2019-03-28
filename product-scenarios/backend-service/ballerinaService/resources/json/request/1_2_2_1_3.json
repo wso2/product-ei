@@ -1,0 +1,7 @@
+{
+    "getQuote": {
+        "request": {
+            "symbol": null
+        }
+    }
+}

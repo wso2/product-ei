@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <enrich>
+                <source clone="true" key="gov:/custom/config_1.6.3.5.xml" type="inline"/>
+                <target type="body"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

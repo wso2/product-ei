@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/1_3_1_API_json_to_soap_using_xslt" name="1_3_1_API_json_to_soap_using_xslt" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST PUT GET">
+        <inSequence>
+            <xslt key="in_transform"/>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+            <header name="Action" scope="default" value="urn:getQuote"/>
+            <enrich>
+                <source clone="true" xmlns:m0="http://services.samples" xpath="//m0:getQuote"/>
+                <target type="body"/>
+            </enrich>
+            <send>
+                <endpoint key="SOAP_EP"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <xslt key="out_transform"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+</api>

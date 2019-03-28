@@ -1,0 +1,1 @@
+<Exception>Unable to read input message in Data Mapper mediator reason : com.ctc.wstx.exc.WstxParsingException: Unexpected close tag &lt;/breakfast_menu>; expected &lt;/food>.</Exception>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="SEQ_JsonToXMLTransformation" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <xslt key="in_transform"/>
+    <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+    <header name="Action" scope="default" value="urn:getQuote"/>
+    <enrich>
+        <source clone="true" xmlns:m0="http://services.samples" xpath="//m0:getQuote"/>
+        <target type="body"/>
+    </enrich>
+</sequence>

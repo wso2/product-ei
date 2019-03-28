@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="fullLogSeq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log description="" level="full">
+        <property name="STATUS" value="LOG MESSAGE"/>
+    </log>
+</sequence>

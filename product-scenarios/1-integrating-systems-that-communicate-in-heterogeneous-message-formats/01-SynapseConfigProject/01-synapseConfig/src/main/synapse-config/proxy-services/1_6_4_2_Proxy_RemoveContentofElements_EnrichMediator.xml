@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <enrich>
+                <source clone="true" type="inline">
+                    <PROCESSED xmlns=""/>
+                </source>
+                <target xpath="//BANK_TR/PROCESSED"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

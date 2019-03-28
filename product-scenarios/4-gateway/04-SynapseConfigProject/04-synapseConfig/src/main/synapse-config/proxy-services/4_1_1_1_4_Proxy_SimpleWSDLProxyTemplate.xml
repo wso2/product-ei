@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="4_1_1_1_4_Proxy_SimpleWSDLProxyTemplate" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <endpoint name="endpoint_urn_uuid_1FF78996948B9A0B6E14565751214774-1218279313">
+            <wsdl port="SimpleStockQuoteServiceHttpSoap11Endpoint" service="SimpleStockQuoteService" uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService?wsdl"/>
+        </endpoint>
+        <inSequence/>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+</proxy>

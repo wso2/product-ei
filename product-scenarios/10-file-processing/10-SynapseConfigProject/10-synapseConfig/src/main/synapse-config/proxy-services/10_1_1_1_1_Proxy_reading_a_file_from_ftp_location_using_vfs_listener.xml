@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<proxy name="10_1_1_1_1_Proxy_reading_a_file_from_ftp_location_using_vfs_listener" startOnLoad="true" transports="vfs" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <endpoint>
+            <address format="soap12" uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService"/>
+        </endpoint>
+        <inSequence/>
+        <outSequence>
+            <log level="full"/>
+            <property expression="fn:concat(fn:substring-after(get-property('MessageID'), 'urn:uuid:'), '.xml')" name="transport.vfs.ReplyFileName" scope="transport" type="STRING"/>
+            <property name="OUT_ONLY" scope="default" type="STRING" value="true"/>
+            <log level="full"/>
+            <send>
+                <endpoint>
+                    <address uri="vfs:ftp://${FTPUserName}:${FTPUserPassword}\@${FTPHostname}/vfs/output/stockQuote.xml?vfs.passive=false"/>
+                </endpoint>
+            </send>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <publishWSDL preservePolicy="true" uri="file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl"/>
+    <parameter name="transport.PollInterval">15</parameter>
+    <parameter name="transport.vfs.FileURI">vfs:ftp://${FTPUserName}:${FTPUserPassword}\@${FTPHostname}/vfs/input/?vfs.passive=false</parameter>
+    <parameter name="transport.vfs.ContentType">text/xml</parameter>
+    <parameter name="transport.vfs.ActionAfterProcess">MOVE</parameter>
+    <parameter name="transport.vfs.MoveAfterFailure">vfs:ftp://${FTPUserName}:${FTPUserPassword}\@${FTPHostname}/vfs/failure/?vfs.passive=false</parameter>
+    <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
+    <parameter name="transport.vfs.FileNamePattern">.*\.xml</parameter>
+    <parameter name="transport.vfs.MoveAfterProcess">vfs:ftp://${FTPUserName}:${FTPUserPassword}\@${FTPHostname}/vfs/original/?vfs.passive=false</parameter>
+</proxy>

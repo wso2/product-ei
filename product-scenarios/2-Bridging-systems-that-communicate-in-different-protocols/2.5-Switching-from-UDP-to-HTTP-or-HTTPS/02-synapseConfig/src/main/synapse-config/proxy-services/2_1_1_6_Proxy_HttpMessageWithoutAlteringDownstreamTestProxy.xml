@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="2_1_1_6_Proxy_HttpMessageWithoutAlteringDownstreamTestProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <call blocking="true">
+                <endpoint key="EP_HttpMessageWithoutAlteringDownstreamTestHttp"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>
