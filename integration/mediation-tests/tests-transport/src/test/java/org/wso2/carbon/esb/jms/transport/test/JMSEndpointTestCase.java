@@ -51,7 +51,7 @@ public class JMSEndpointTestCase extends ESBIntegrationTest {
                          "  </soapenv:Body>" +
                          "</soapenv:Envelope>";
         try {
-            sender.connect("JmsProxy");
+            sender.connect("JMSEndpointTestCaseProxy");
             for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 sender.pushMessage(message);
             }

@@ -280,6 +280,10 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>org.jacoco.report</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
