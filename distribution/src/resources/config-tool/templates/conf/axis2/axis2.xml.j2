@@ -184,13 +184,13 @@
     <!-- ================================================= -->
 
     <transportReceiver name="http" class="{{transport.passthru_http.listener.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_http.parameters.items() %}
+        {% for parameter_key,parameter_value in transport.passthru_http.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportReceiver>
 
     <transportReceiver name="https" class="{{transport.passthru_https.listener.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_https.listener.parameters.items() %}
+        {% for parameter_key,parameter_value in transport.passthru_https.listener.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
@@ -251,7 +251,7 @@
     {% if transport.rabbitmq.listener.AMQPConnectionFactory is defined %}
     <transportReceiver name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
         <parameter name="AMQPConnectionFactory" locked="false">
-            {% for parameter_key,parameter_value in transport.rabbitmq.listener.AMQPConnectionFactory.parameters.items() %}
+            {% for parameter_key,parameter_value in transport.rabbitmq.listener.AMQPConnectionFactory.parameter.items() %}
             <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
             {% endfor %}
         </parameter>
@@ -260,24 +260,50 @@
     {% if transport.mqtt.listener.mqttConFactory is defined %}
     <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
         <parameter locked="false" name="mqttConFactory">
-            {% for parameter_key,parameter_value in transport.mqtt.listener.mqttConFactory.parameters.items() %}
+            {% for parameter_key,parameter_value in transport.mqtt.listener.mqttConFactory.parameter.items() %}
             <parameter locked="false" name="{{parameter_key}}">{{parameter_value}}</parameter>
             {% endfor %}
         </parameter>
     </transportReceiver>
     {% endif %}
 
+    {% for transport_item in custom_transport %}
+    <transportReceiver name="{{transport_item.protocol}}" class="{{transport_item.class}}">
+        {% for parameter_key,parameter_value in transport_item.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport_item.key_store is defined %}
+        <parameter name="keystore" locked="false">
+              <KeyStore>
+                    <Location>{{transport_item.key_store.file_name}}</Location>
+                    <Type>{{transport_item.key_store.type}}</Type>
+                    <Password>{{transport_item.key_store.password}}</Password>
+                    <KeyPassword>{{transport_item.key_store.key_password}}</KeyPassword>
+              </KeyStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.trust_store is defined %}
+        <parameter name="truststore" locked="false">
+              <TrustStore>
+                    <Location>{{transport_item.trust_store.file_name}}</Location>
+                    <Type>{{transport_item.trust_store.type}}</Type>
+                    <Password>{{transport_item.trust_store.password}}</Password>
+              </TrustStore>
+        </parameter>
+        {% endif %}
+    </transportReceiver>
+    {% endfor %}
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
 
     <transportSender name="http" class="{{transport.passthru_http.sender.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_http.sender.parameters.items() %}
+        {% for parameter_key,parameter_value in transport.passthru_http.sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
     <transportSender name="https" class="{{transport.passthru_https.sender.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_https.sender.parameters.items() %}
+        {% for parameter_key,parameter_value in transport.passthru_https.sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
@@ -326,7 +352,7 @@
     {% endif %}
     {% if transport.mailto.sender is defined %}
     <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
-        {% for parameter_key,parameter_value in transport.mailto.sender.parameters.items() %}
+        {% for parameter_key,parameter_value in transport.mailto.sender.parameter.items() %}
         <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
@@ -352,14 +378,14 @@
     {% endif %}
     {% if transport.ws.sender.class is defined %}
     <transportSender name="ws" class="{{transport.ws.sender.class}}">
-        {% for name,value in transport.ws.sender.parameters.items() %}
+        {% for name,value in transport.ws.sender.parameter.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>
         {% endfor %}
     </transportSender>
     {% endif %}
     {% if transport.wss.sender is defined %}
     <transportSender name="wss" class="{{transport.wss.sender.class}}">
-        {% for name,value in transport.ws.sender.parameters.items() %}
+        {% for name,value in transport.ws.sender.parameter.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>
         {% endfor %}
         <parameter name="ws.trust.store" locked="false">

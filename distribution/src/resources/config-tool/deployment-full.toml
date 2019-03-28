@@ -12,7 +12,6 @@ create_admin_account = true
 
 [transport.http] # Optional
 socket_timeout_millis = 180000
-protocol = "http" # inferred
 
 listener.port = 8280
 listener.wsdl_epr_prefix = "https://apachehost:port/somepath"
@@ -46,7 +45,6 @@ sender.truststore.type = "$ref{truststore.tls.type}" # inferred
 sender.truststore.password = "$ref{truststore.tls.password}" # inferred
 
 blocking_sender.enable_client_caching = true
-blocking_sender.enable_client_caching = true
 blocking_sender.transfer_encoding = "chunked"
 blocking_sender.default_connections_per_host = 200
 blocking_sender.omit_soap12_action = true
@@ -55,7 +53,16 @@ blocking_sender.omit_soap12_action = true
 class="<qualified class name>"
 protocol = "ISO8583"
 parameter.port = 8081
-parameter.hostname = "$conf{deployment.node_ip}"
+parameter.hostname = "$ref{deployment.node_ip}"
+
+key_store.file_name = "${carbon.home}/repository/resources/security/$ref{keystore.tls.file_name}"
+key_store.type = "$ref{keystore.tls.type}"
+key_store.password = "$ref{keystore.tls.password}"
+key_store.key_password = "$ref{keystore.tls.key_password}"
+
+trust_store.file_name = "${carbon.home}/repository/resources/security/$ref{truststore.file_name}"
+trust_store.type = "$ref{truststore.tls.type}"
+trust_store.password = "$ref{truststore.tls.password}"
 
 [transport.local] # Optional
     type = "NonBlockingLocalTransport"

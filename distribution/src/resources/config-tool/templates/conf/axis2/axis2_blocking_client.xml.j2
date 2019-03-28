@@ -273,7 +273,7 @@
 	<transportSender name="http"
                      class="org.apache.axis2.transport.http.CommonsHTTPTransportSender">
         <parameter name="PROTOCOL">HTTP/1.1</parameter>
-        {% for parameter_key,parameter_value in transport.http.blocking_sender.parameters.items() %}
+        {% for parameter_key,parameter_value in transport.http.blocking_sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
@@ -281,9 +281,9 @@
     <transportSender name="https"
                      class="org.apache.axis2.transport.http.CommonsHTTPTransportSender">
         <parameter name="PROTOCOL">HTTP/1.1</parameter>
-        <parameter name="Transfer-Encoding">chunked</parameter>
-        <parameter name="cacheHttpClient">true</parameter>
-        <parameter name="defaultMaxConnectionsPerHost">200</parameter>
+       {% for parameter_key,parameter_value in transport.http.blocking_sender.parameter.items() %}
+               <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+       {% endfor %}
     </transportSender>
     <transportSender name="jms"
                      class="org.apache.axis2.transport.jms.JMSSender"/>
