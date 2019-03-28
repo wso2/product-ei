@@ -1655,7 +1655,7 @@
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
         <org.wso2.andes.client.version>3.2.91</org.wso2.andes.client.version>
 
-        <commons-codec.version>1.10</commons-codec.version>
+        <commons-codec.version>1.12</commons-codec.version>
         <bouncycastle.version>1.60</bouncycastle.version>
         <commons-digester.version>2.1</commons-digester.version>
         <hawtbuf.version>1.9</hawtbuf.version>
