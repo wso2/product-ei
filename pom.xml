@@ -1047,7 +1047,7 @@
                 <version>${carbon.identity.framework.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>commons-codec.wso2</groupId>
+                        <groupId>commons-codec</groupId>
                         <artifactId>commons-codec</artifactId>
                     </exclusion>
                 </exclusions>
