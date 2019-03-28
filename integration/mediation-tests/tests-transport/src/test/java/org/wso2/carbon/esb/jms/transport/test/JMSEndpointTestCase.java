@@ -30,7 +30,7 @@ public class JMSEndpointTestCase extends ESBIntegrationTest {
         Awaitility.await()
                   .pollInterval(50, TimeUnit.MILLISECONDS)
                   .atMost(300, TimeUnit.SECONDS)
-                  .until(isServiceDeployed("JmsProxy"));
+                  .until(isServiceDeployed("JMSEndpointTestCaseProxy"));
     }
 
 
@@ -53,7 +53,7 @@ public class JMSEndpointTestCase extends ESBIntegrationTest {
                          "  </soapenv:Body>" +
                          "</soapenv:Envelope>";
         try {
-            sender.connect("JmsProxy");
+            sender.connect("JMSEndpointTestCaseProxy");
             for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 sender.pushMessage(message);
             }
