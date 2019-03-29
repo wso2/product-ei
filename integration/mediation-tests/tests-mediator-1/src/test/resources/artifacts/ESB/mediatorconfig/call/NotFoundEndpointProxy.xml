@@ -1,0 +1,25 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="NotFoundEndpointProxy"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
+    <target>
+        <inSequence>
+            <call>
+                <endpoint>
+                    <http method="GET"
+                          uri-template="http://localhost:8480/responsesample/not_found"/>
+                </endpoint>
+            </call>
+            <loopback/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <description/>
+</proxy>
+</definitions>
