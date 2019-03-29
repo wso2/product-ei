@@ -25,11 +25,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;
 
+/**
+ * This class authenticates clients
+ */
 public class AuthenticatorClient {
 
     private static final Log log = LogFactory.getLog(AuthenticatorClient.class);
     private AuthenticationAdminStub authenticationAdminStub;
 
+    /**
+     * Client authentication method
+     *
+     * @param backendUrl backend url
+     * @throws Exception if admin stub authentication initialization fails
+     */
     public AuthenticatorClient(String backendUrl) throws Exception {
         String serviceName = "AuthenticationAdmin";
         String endPoint = backendUrl + serviceName;
@@ -44,10 +53,24 @@ public class AuthenticatorClient {
         }
     }
 
+    /**
+     * Get authentication admin stub
+     *
+     * @return authentication admin stub
+     */
     public Stub getServiceStub() {
         return this.authenticationAdminStub;
     }
 
+    /**
+     * Login to authentication admin stub and get the session cookie
+     *
+     * @param userName username
+     * @param password password
+     * @param host host name
+     * @return session cookie
+     * @throws Exception if login to server fails
+     */
     public String login(String userName, String password, String host) throws
             Exception {
         Boolean loginStatus;
@@ -66,16 +89,34 @@ public class AuthenticatorClient {
         return sessionCookie;
     }
 
+    /**
+     *
+     * @param userName username
+     * @param password password
+     * @param backEndURL backend url
+     * @return boolean - whether login success or fails
+     * @throws Exception if login fails
+     */
     public Boolean unsuccessfulLogin(String userName, String password, String backEndURL) throws
             Exception {
         return authenticationAdminStub.login(userName, password, backEndURL);
     }
 
+    /**
+     * Log out from authentication admin stub
+     *
+     * @throws Exception if log out fails
+     */
     public void logOut() throws Exception {
         authenticationAdminStub.logout();
         log.info("log out");
     }
 
+    /**
+     * Get authentication admin stub
+     *
+     * @return authentication admin stub
+     */
     public Stub getAuthenticationAdminStub() {
         return authenticationAdminStub;
     }

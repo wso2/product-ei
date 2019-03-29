@@ -43,10 +43,11 @@ import java.util.List;
 public class FTPClientWrapper {
     private String hostname;
     private String userName;
-
     private String password;
     private int port;
     private FTPClient ftpClient;
+
+    private static int STATUS_CODE_PERMISSION_DENIED = 550;
 
     private static final Log log = LogFactory.getLog(FTPClientWrapper.class);
 
@@ -99,8 +100,8 @@ public class FTPClientWrapper {
                     log.info("File has been uploaded to " + targetFilePath + " successfully.");
                 }
             } catch (IOException ex) {
-                throw new IOException("Error occurred while uploading file from " + sourceFilePath + " to " +
-                                      targetFilePath, ex);
+                throw new IOException("Error occurred while uploading file from " + sourceFilePath + " to "
+                                      + targetFilePath, ex);
             }
         } catch (FileNotFoundException ex) {
             throw new IOException("File Not Found in " + sourceFilePath, ex);
@@ -125,8 +126,8 @@ public class FTPClientWrapper {
                     log.info("File has been uploaded to " + targetFilePath + " successfully.");
                 }
             } catch (IOException ex) {
-                throw new IOException("Error occurred while downloading file from " + sourceFilePath + " to " +
-                                      targetFilePath, ex);
+                throw new IOException("Error occurred while downloading file from " + sourceFilePath + " to "
+                                      + targetFilePath, ex);
             }
         } catch (FileNotFoundException ex) {
             throw new IOException("File Not Found in " + sourceFilePath, ex);
@@ -227,7 +228,7 @@ public class FTPClientWrapper {
     public boolean checkDirectoryExists(String dirPath) throws IOException {
         ftpClient.changeWorkingDirectory(dirPath);
         int returnCode = ftpClient.getReplyCode();
-        if (returnCode == 550) {
+        if (returnCode == STATUS_CODE_PERMISSION_DENIED) {
             return false;
         }
         return true;
