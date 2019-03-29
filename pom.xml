@@ -1501,7 +1501,7 @@
         <orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1
         </orbit.version.org.apache.xmlbeans.wso2.xmlbeans>
         <wsdl4j.wso2.version>1.6.2.wso2v3</wsdl4j.wso2.version>
-        <javaee.web.api.version>6.0</javaee.web.api.version>
+        <javaee.web.api.version>8.0</javaee.web.api.version>
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
