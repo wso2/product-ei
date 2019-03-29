@@ -99,8 +99,8 @@ public class FTPClientWrapper {
                     log.info("File has been uploaded to " + targetFilePath + " successfully.");
                 }
             } catch (IOException ex) {
-                throw new IOException("Error occurred while uploading file from " + sourceFilePath + " to " +
-                                      targetFilePath, ex);
+                throw new IOException("Error occurred while uploading file from " + sourceFilePath + " to "
+                                      + targetFilePath, ex);
             }
         } catch (FileNotFoundException ex) {
             throw new IOException("File Not Found in " + sourceFilePath, ex);
@@ -125,8 +125,8 @@ public class FTPClientWrapper {
                     log.info("File has been uploaded to " + targetFilePath + " successfully.");
                 }
             } catch (IOException ex) {
-                throw new IOException("Error occurred while downloading file from " + sourceFilePath + " to " +
-                                      targetFilePath, ex);
+                throw new IOException("Error occurred while downloading file from " + sourceFilePath + " to "
+                                      + targetFilePath, ex);
             }
         } catch (FileNotFoundException ex) {
             throw new IOException("File Not Found in " + sourceFilePath, ex);
