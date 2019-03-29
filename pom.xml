@@ -1676,7 +1676,7 @@
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>2.40.0</selenium.version>
         <slf4j.version>1.7.21</slf4j.version>
-        <activemq.version>5.9.1</activemq.version>
+        <activemq.version>5.15.9</activemq.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
         <orbit.fasterxml.jackson.version>2.6.1.wso2v1</orbit.fasterxml.jackson.version>
