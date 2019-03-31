@@ -30,11 +30,6 @@
       "transport.local.sender.nonblocking.class": "org.apache.axis2.transport.local.NonBlockingLocalTransportSender"
     }
   },
-  "transport.jms.sender.enable": {
-    "true": {
-      "transport.jms.sender.class": "org.apache.axis2.transport.jms.JMSSender"
-    }
-  },
   "transport.vfs.sender.enable": {
     "true": {
       "transport.vfs.sender.class": "org.apache.synapse.transport.vfs.VFSTransportSender"

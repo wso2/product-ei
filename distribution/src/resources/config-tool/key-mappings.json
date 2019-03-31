@@ -31,6 +31,20 @@
   "transport.http.listener.secured_protocols": "transport.passthru_https.listener.parameters.HttpsProtocols",
   "transport.http.listener.secured_wsdl_epr_prefix": "transport.passthru_https.listener.parameters.WSDLEPRPrefix",
 
+  "transport.jms.listener:parameter.initial_naming_factory":  "transport.jms.listener:parameter.'java.naming.factory.initial'",
+  "transport.jms.listener:parameter.provider_url":            "transport.jms.listener:parameter.'java.naming.provider.url'",
+  "transport.jms.listener:parameter.connection_factory_name": "transport.jms.listener:parameter.'transport.jms.ConnectionFactoryJNDIName'",
+  "transport.jms.listener:parameter.connection_factory_type": "transport.jms.listener:parameter.'transport.jms.ConnectionFactoryType'",
+  "transport.jms.listener:parameter.destination":             "transport.jms.listener:parameter.'transport.jms.Destination'",
+  "transport.jms.listener:parameter.cache_level":             "transport.jms.listener:parameter.'transport.jms.CacheLevel'",
+
+  "transport.jms.sender:parameter.initial_naming_factory":  "transport.jms.sender:parameter.'java.naming.factory.initial'",
+  "transport.jms.sender:parameter.provider_url":            "transport.jms.sender:parameter.'java.naming.provider.url'",
+  "transport.jms.sender:parameter.connection_factory_name": "transport.jms.sender:parameter.'transport.jms.ConnectionFactoryJNDIName'",
+  "transport.jms.sender:parameter.connection_factory_type": "transport.jms.sender:parameter.'transport.jms.ConnectionFactoryType'",
+  "transport.jms.sender:parameter.destination":             "transport.jms.sender:parameter.'transport.jms.Destination'",
+  "transport.jms.sender:parameter.cache_level":             "transport.jms.sender:parameter.'transport.jms.CacheLevel'",
+
   "transport.mqtt.listener.mqttConFactory.host_name": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.server.host.name'",
   "transport.mqtt.listener.mqttConFactory.connection_factory": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.connection.factory'",
   "transport.mqtt.listener.mqttConFactory.server_port": "transport.mqtt.listener.mqttConFactory.parameters.'mqtt.server.port'",

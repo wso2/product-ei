@@ -217,37 +217,30 @@
             <fileReadInterval>{{transport.passthru_https.listener.ssl_profile.interval}}</fileReadInterval>
         </parameter>
     </transportReceiver>
-
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
-
     {% if transport.vfs.listener.enable == true %}
     <transportReceiver name="vfs" class="{{transport.vfs.listener.class}}"/>
     {% endif %}
-
     {% if transport.mail.listener.enable == true %}
     <transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">
     {% endif %}
-
-    {% if transport.jms.listener.connection_factories is defined %}
-    <transportReceiver name="jms" class="{{transport.jms.listener.class}}">
-        {% for connection_factory in transport.jms.listener.connection_factories %}
-        <parameter name="{{transport.jms.listener[connection_factory].name}}" locked="false">
-            {% for name,value in transport.jms.listener[connection_factory].parameters.items() %}
+    {% if transport.jms.listener is defined %}
+    <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
+        {% for listener in transport.jms.listener %}
+        <parameter name="{{listener.name}}" locked="false">
+            {% for name,value in listener.parameter.items() %}
             <parameter name="{{name}}" locked="false">{{value}}</parameter>
             {% endfor %}
         </parameter>
         {% endfor %}
     </transportReceiver>
     {% endif %}
-
     {% if transport.fix.listener.enable == true %}
     <transportReceiver name="fix" class="{{transport.fix.listener.class}}"/>
     {% endif %}
-
     {% if transport.hl7.listener.enable == true %}
     <transportReceiver name="hl7" class="{{transport.hl7.listener.class}}"/>
     {% endif %}
-
     <!-- SAP Transport Listeners -->
     {% if transport.sap.listener.idoc.enable == true %}
     <transportReceiver name="idoc" class="{{transport.sap.listener.idoc.class}}"/>
@@ -255,7 +248,6 @@
     {% if transport.sap.listener.bapi.enable == true %}
     <transportReceiver name="bapi" class="{{transport.sap.listener.bapi.class}}"/>
     {% endif %}
-
     {% if transport.rabbitmq.listener.AMQPConnectionFactory is defined %}
     <transportReceiver name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
         <parameter name="AMQPConnectionFactory" locked="false">
@@ -265,7 +257,6 @@
         </parameter>
     </transportReceiver>
     {% endif %}
-
     {% if transport.mqtt.listener.mqttConFactory is defined %}
     <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
         <parameter locked="false" name="mqttConFactory">
@@ -275,6 +266,7 @@
         </parameter>
     </transportReceiver>
     {% endif %}
+
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
@@ -314,32 +306,24 @@
         </parameter>
         {% endif %}
     </transportSender>
-    {% if transport.jms.sender.connection_factories is defined %}
-    <transportSender name="jms" class="{{transport.jms.sender.class}}">
-        {% for connection_factory in transport.jms.sender.connection_factories %}
-        <parameter name="{{transport.jms.sender[connection_factory].name}}" locked="false">
-            {% for name,value in transport.jms.sender[connection_factory].parameters.items() %}
+    {% if transport.jms.sender is defined %}
+    <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender">
+        {% for sender in transport.jms.sender %}
+        <parameter name="{{sender.name}}" locked="false">
+            {% for name,value in sender.parameter.items() %}
             <parameter name="{{name}}" locked="false">{{value}}</parameter>
             {% endfor %}
         </parameter>
         {% endfor %}
     </transportSender>
     {% endif %}
-
     <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
-
     {% if transport.local.sender.nonblocking.enable == true %}
     <transportSender name="local" class="{{transport.local.sender.nonblocking.class}}"/>
     {% endif %}
-
-    {% if transport.jms.sender.enable == true %}
-    <transportSender name="jms" class="{{transport.jms.sender.class}}"/>
-    {% endif %}
-
     {% if transport.vfs.sender.enable == true %}
     <transportSender name="vfs" class="{{transport.vfs.sender.class}}"/>
     {% endif %}
-
     {% if transport.mailto.sender is defined %}
     <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
         {% for parameter_key,parameter_value in transport.mailto.sender.parameters.items() %}
@@ -347,16 +331,12 @@
         {% endfor %}
     </transportSender>
     {% endif %}
-
     {% if transport.fix.sender.enable == true %}
     <transportSender name="fix" class="{{transport.fix.sender.class}}"/>
     {% endif %}
-
     {% if transport.hl7.sender.enable == true %}
     <transportSender name="hl7" class="{{transport.hl7.sender.class}}"/>
     {% endif %}
-
-
     <!-- SAP Transport Senders -->
     {% if transport.sap.sender.idoc.enable == true %}
     <transportSender name="idoc" class="{{transport.sap.sender.idoc.class}}"/>
@@ -364,15 +344,12 @@
     {% if transport.sap.sender.bapi.enable == true %}
     <transportSender name="bapi" class="{{transport.sap.sender.bapi.class}}"/>
     {% endif %}
-
     {% if transport.rabbitmq.sender.enable == true %}
     <transportSender name="rabbitmq" class="{{transport.rabbitmq.sender.class}}"/>
     {% endif %}
-
     {% if transport.mqtt.sender.enable == true %}
     <transportSender name="mqtt" class="{{transport.mqtt.sender.class}}"/>
     {% endif %}
-
     {% if transport.ws.sender.class is defined %}
     <transportSender name="ws" class="{{transport.ws.sender.class}}">
         {% for name,value in transport.ws.sender.parameters.items() %}
@@ -381,7 +358,6 @@
     </transportSender>
     {% endif %}
     {% if transport.wss.sender is defined %}
-
     <transportSender name="wss" class="{{transport.wss.sender.class}}">
         {% for name,value in transport.ws.sender.parameters.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>

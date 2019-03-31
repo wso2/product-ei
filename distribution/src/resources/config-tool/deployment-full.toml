@@ -82,6 +82,24 @@ listener.class = "org.apache.synapse.transport.fix.FIXTransportListener" # infer
 sender.enable = true
 sender.class = "org.apache.synapse.transport.fix.FIXTransportSender" # inferred
 
+[[transport.jms.listener]]
+name = "myTopicListener"
+parameter.initial_naming_factory = "org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"
+parameter.broker_name = "artemis"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "TopicConnectionFactory"
+parameter.connection_factory_type = "topic" # [queue, topic]
+parameter.cache_level = "consumer"
+
+[[transport.jms.sender]]
+name = "myTopicSender"
+parameter.initial_naming_factory = "org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"
+parameter.broker_name = "artemis"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "TopicConnectionFactory"
+parameter.connection_factory_type = "topic"
+parameter.cache_level = "producer"
+
 [transport.hl7] # optional
 listener.enable = true
 listener.port = 9292 # inferred
