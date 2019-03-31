@@ -1531,7 +1531,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.120</carbon.mediation.version>
+        <carbon.mediation.version>4.6.121</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.38</carbon.kernel.version>
@@ -1721,7 +1721,7 @@
         <orbit.version.tiles>2.0.5.wso2v1</orbit.version.tiles>
         <version.ant>1.7.0.wso2v1</version.ant>
         <version.xmlbeans>2.3.0.wso2v1</version.xmlbeans>
-        <orbit.version.axiom>1.2.11.wso2v11</orbit.version.axiom>
+        <orbit.version.axiom>1.2.11.wso2v13</orbit.version.axiom>
         <neethi.osgi.version>2.0.4.wso2v5</neethi.osgi.version>
         <version.woden>1.0.0.M9-wso2v1</version.woden>
         <orbit.version.wsdl4j>1.6.2.wso2v4</orbit.version.wsdl4j>
