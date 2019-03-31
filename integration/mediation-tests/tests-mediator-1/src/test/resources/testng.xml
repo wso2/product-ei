@@ -8,6 +8,26 @@
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestManagerListener"/>
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestReportListener"/>
     </listeners>
+    <test name="Foreach-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.foreach"/>
+        </packages>
+    </test>
+    <test name="Transaction Mediator" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.transaction.TransactionMediatorTestCase"/>
+        </classes>
+    </test>
+    <test name="DBLookup-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.db.dblookup"/>
+        </packages>
+    </test>
+    <test name="DBReport-mediator-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.mediator.test.db.dbreport"/>
+        </packages>
+    </test>
     <test name="Throttle-mediator-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.throttle"/>
@@ -269,13 +289,6 @@
             <package name="org.wso2.carbon.esb.mediator.test.router"/>
         </packages>
     </test>
-
-    <test name="Foreach-mediator-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mediator.test.foreach"/>
-        </packages>
-    </test>
-
     <test name="Rule-mediator-Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.rule"/>
@@ -285,21 +298,6 @@
         <classes>
             <class name="org.wso2.carbon.esb.mediator.test.send.MTOMEnableDisableSendMediatorTestCase"/>
         </classes>
-    </test>
-    <test name="Transaction Mediator" preserve-order="true" verbose="2">
-        <classes>
-            <class name="org.wso2.carbon.esb.mediator.test.transaction.TransactionMediatorTestCase"/>
-        </classes>
-    </test>
-    <test name="DBLookup-mediator-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mediator.test.db.dblookup"/>
-        </packages>
-    </test>
-    <test name="DBReport-mediator-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mediator.test.db.dbreport"/>
-        </packages>
     </test>
     <!--This has been commented out due to an issue in the automation framework. Once it is fixed (pull request already sent), we can uncomment this.-->
     <!--test name="dbreport-mediator-Test" preserve-order="true" verbose="2">
