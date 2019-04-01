@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.jms.ViewPopRedirectTests;
 
 import org.apache.axis2.context.ConfigurationContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
@@ -60,6 +61,11 @@ public class ViewPopTest extends ESBIntegrationTest {
         verifyMessageStoreExistence(STORE_NAME);
         verifyMessageProcessorExistence(PROCESSOR_NAME);
         isProxySuccesfullyDeployed(PROXY_NAME);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void stop() throws Exception {
+        super.cleanup();
     }
 
     /**
