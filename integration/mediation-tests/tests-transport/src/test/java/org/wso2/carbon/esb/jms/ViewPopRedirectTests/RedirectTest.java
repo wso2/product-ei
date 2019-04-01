@@ -15,37 +15,31 @@
  *specific language governing permissions and limitations
  *under the License.
  */
-
 package org.wso2.carbon.esb.jms.ViewPopRedirectTests;
 
-import org.apache.axis2.context.ConfigurationContext;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.esb.integration.common.clients.mediation.MessageProcessorClient;
-import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class RedirectTest extends ESBIntegrationTest {
-    private MessageStoreAdminClient messageStoreAdminClient;
-    private MessageProcessorClient messageProcessorClient;
-    private JMSQueueMessageProducer jmsQueueMessageProducer;
-
-    private ConfigurationContext configurationContext;
-
     private final String STORE_NAME = "BASE_Store";
     private final String PROCESSOR_NAME = "BASE_Processor";
     private final String PROXY_NAME = "BASE_Proxy";
-
     private final String REDIRECT_STORE_NAME = "REDIRECT_Store";
     private final String REDIRECT_PROCESSOR_NAME = "REDIRECT_Processor";
+    private MessageProcessorClient messageProcessorClient;
+    private String returnedMessage = null;
 
     /**
      * Initializing environment variables
@@ -57,7 +51,6 @@ public class RedirectTest extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath("artifacts/ESB/messageProcessorConfig/RedirectTest.xml");
 
         // Initialization
-        messageStoreAdminClient = new MessageStoreAdminClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
         messageProcessorClient = new MessageProcessorClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
 
         verifyMessageStoreExistence(STORE_NAME);
@@ -111,16 +104,48 @@ public class RedirectTest extends ESBIntegrationTest {
         requestHeader.put("Accept", "application/json");
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
-        Thread.sleep(5000); //Make sure that the Message Processor has time to deactivate
-        Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor" + PROCESSOR_NAME + "should not be active, " +
-                "but it is active.");
-
+        Awaitility.await()
+                .pollInterval(2, TimeUnit.SECONDS)
+                .atMost(10, TimeUnit.SECONDS)
+                .until(isProcessorDeactivated(PROCESSOR_NAME));
+        Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor" + PROCESSOR_NAME
+                + "should not be active, but it is active.");
         messageProcessorClient.deactivateProcessor(REDIRECT_PROCESSOR_NAME);
-        Assert.assertFalse(messageProcessorClient.isActive(REDIRECT_PROCESSOR_NAME), "Message processor" + REDIRECT_PROCESSOR_NAME + " should not be active, " +
+        Assert.assertFalse(messageProcessorClient.isActive(REDIRECT_PROCESSOR_NAME), "Message processor"
+                + REDIRECT_PROCESSOR_NAME + " should not be active, " +
                 "but it is active.");
         messageProcessorClient.popAndRedirectMessage(PROCESSOR_NAME, REDIRECT_STORE_NAME);
-        String returnedMessage = messageProcessorClient.browseMessage(REDIRECT_PROCESSOR_NAME);
+        Awaitility.await()
+                .pollInterval(2, TimeUnit.SECONDS)
+                .atMost(10, TimeUnit.SECONDS)
+                .until(hasMessage(REDIRECT_PROCESSOR_NAME));
         Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
 
     }
+
+    private Callable<Boolean> hasMessage(final String PROCESSOR_NAME) throws Exception {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
+                if (returnedMessage == null) {
+                    return false;
+                }
+                return true;
+            }
+        };
+    }
+
+    private Callable<Boolean> isProcessorDeactivated(final String PROCESSOR_NAME) throws Exception {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (messageProcessorClient.isActive(PROCESSOR_NAME)) {
+                    return false;
+                }
+                return true;
+            }
+        };
+    }
+
 }
