@@ -16,34 +16,34 @@ protocol = "http" # inferred
 
 listener.port = 8280
 listener.wsdl_epr_prefix = "https://apachehost:port/somepath"
-listener.hostname = "$conf{deployement.node_ip}" # inferred
+listener.hostname = "$ref{deployement.node_ip}" # inferred
 
 listener.secured_port = 8243
 listener.secured_protocols = "TLSv1,TLSv1.1,TLSv1.2" # inferred
 listener.secured_wsdl_epr_prefix = "https://apachehost:port/somepath"
 
-listener.keystore.file_name ="$conf{keystore.tls.file_name}" # inferred
-listener.keystore.type = "$conf{keystore.tls.type}" # inferred
-listener.keystore.password = "$conf{keystore.tls.password}" # inferred
-listener.keystore.key_password = "$conf{keystore.tls.key_password}" # inferred
+listener.keystore.file_name ="$ref{keystore.tls.file_name}" # inferred
+listener.keystore.type = "$ref{keystore.tls.type}" # inferred
+listener.keystore.password = "$ref{keystore.tls.password}" # inferred
+listener.keystore.key_password = "$ref{keystore.tls.key_password}" # inferred
 
-listener.truststore.file_name = "$conf{truststore.file_name}" # inferred
-listener.truststore.type = "$conf{truststore.tls.type}" # inferred
-listener.truststore.password = "$conf{truststore.tls.password}" # inferred
+listener.truststore.file_name = "$ref{truststore.file_name}" # inferred
+listener.truststore.type = "$ref{truststore.tls.type}" # inferred
+listener.truststore.password = "$ref{truststore.tls.password}" # inferred
 
 sender.warn_on_http_500 = "*"
 sender.proxy_hostname = "${deployement.node_ip}"
 sender.proxy_port = 3128
 sender.non_proxy_hostnames = "localhost|moon|sun"
 
-sender.keystore.file_name ="$conf{keystore.tls.file_name}" # inferred
-sender.keystore.type = "$conf{keystore.tls.type}" # inferred
-sender.keystore.password = "$conf{keystore.tls.password}" # inferred
-sender.keystore.key_password = "$conf{keystore.tls.key_password}" # inferred
+sender.keystore.file_name ="$ref{keystore.tls.file_name}" # inferred
+sender.keystore.type = "$ref{keystore.tls.type}" # inferred
+sender.keystore.password = "$ref{keystore.tls.password}" # inferred
+sender.keystore.key_password = "$ref{keystore.tls.key_password}" # inferred
 
-sender.truststore.file_name = "$conf{truststore.file_name}" # inferred
-sender.truststore.type = "$conf{truststore.tls.type}" # inferred
-sender.truststore.password = "$conf{truststore.tls.password}" # inferred
+sender.truststore.file_name = "$ref{truststore.file_name}" # inferred
+sender.truststore.type = "$ref{truststore.tls.type}" # inferred
+sender.truststore.password = "$ref{truststore.tls.password}" # inferred
 
 blocking_sender.enable_client_caching = true
 blocking_sender.enable_client_caching = true
@@ -81,6 +81,49 @@ listener.class = "org.apache.synapse.transport.fix.FIXTransportListener" # infer
 
 sender.enable = true
 sender.class = "org.apache.synapse.transport.fix.FIXTransportSender" # inferred
+
+[[transport.jms.listener]]
+name = "myTopicListener"
+parameter.initial_naming_factory = "org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"
+parameter.broker_name = "artemis"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "TopicConnectionFactory"
+parameter.connection_factory_type = "topic" # [queue, topic]
+parameter.cache_level = "consumer"
+
+[[transport.jms.sender]]
+name = "myTopicSender"
+parameter.initial_naming_factory = "org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"
+parameter.broker_name = "artemis"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "TopicConnectionFactory"
+parameter.connection_factory_type = "topic"
+parameter.cache_level = "producer"
+
+[[transport.rabbitmq.listener]]
+name = "rabbitMQListener"
+parameter.hostname = "localhost"
+parameter.port = 5672
+parameter.username = "guest"
+parameter.password = "guest"
+parameter.queue_name = "MyQueue"
+parameter.exchange_name = "amq.direct"
+parameter.ssl_version = "SSL"
+parameter.keystore_file_name ="$ref{keystore.tls.file_name}" # inferred
+parameter.keystore_type = "$ref{keystore.tls.type}" # inferred
+parameter.keystore_password = "$ref{keystore.tls.password}" # inferred
+parameter.truststore_file_name ="$ref{truststore.file_name}" # inferred
+parameter.truststore_type = "$ref{truststore.type}" # inferred
+parameter.truststore_password = "$ref{truststore.password}" # inferred
+
+[[transport.rabbitmq.sender]]
+name = "rabbitMQSender"
+parameter.hostname = "localhost"
+parameter.port = 5672
+parameter.username = "guest"
+parameter.password = "guest"
+parameter.routing_key = "MyQueue"
+parameter.exchange_name = "amq.direct"
 
 [transport.hl7] # optional
 listener.enable = true
