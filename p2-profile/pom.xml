@@ -34,7 +34,6 @@
     <url>http://wso2.org</url>
     <modules>
         <module>msf4j-profile</module>
-        <module>micro-integrator-profile</module>
         <module>ei-profile</module>
         <module>analytics-profile</module>
         <module>business-process-profile</module>
