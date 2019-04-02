@@ -2494,12 +2494,6 @@
                 <fileMode>644</fileMode>
             </file>
             <file>
-                <source>../p2-profile/analytics-profile/carbon-home/LICENSE.txt</source>
-                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/</outputDirectory>
-                <filtered>true</filtered>
-                <fileMode>644</fileMode>
-            </file>
-            <file>
                 <source>../p2-profile/analytics-profile/carbon-home/deployment/stream-definitions.yaml</source>
                 <outputDirectory>wso2ei-${pom.version}/wso2/analytics/deployment/</outputDirectory>
                 <filtered>true</filtered>
