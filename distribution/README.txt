@@ -5,7 +5,6 @@ Welcome to the WSO2 EI @product.version@ release
 
 WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus and Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics, Business Processor and Message Broker.
 This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
-WSO2 EI distribution contains another lightweight integration runtime called 'Micro Integrator' that is optimized to deploy in containers.
 
 WSO2 EI simplifies integration by allowing users to easily configure message routing, mediation, transformation, logging, task scheduling, load balancing, failover routing, event brokering etc.
 Data services and various applications can also be hosted and exposed using WSO2 EI.
@@ -30,15 +29,15 @@ Running the Integrator
    username : admin
    password : admin
 
-Running other runtimes individually (Analytics, Broker, Business Process, Micro Integrator)
+Running other runtimes individually (Analytics, Broker, Business Process )
 ========================================================
 1. Extract wso2ei-@product.version@.zip and go to the extracted directory.
 2. Go to wso2ei-@product.version@/wso2 directory.
-3. Go to appropriate runtime directory (analytics/broker/business-process/micro-integrator) /bin.
+3. Go to appropriate runtime directory (analytics/broker/business-process ) /bin.
 4. Execute wso2server.sh or wso2server.bat.
 5. Optionally, you can start the runtimes using scripts located at wso2ei-@product.version@/bin directory.
-Scripts available are analytics.sh/analytics.bat for analytics profile, broker.sh/broker.bat for broker profile,
-business-process.sh/business-process.bat for business process profile and micro-integrator.sh/micro-integrator.bat for micro integrator profile.
+Scripts available are analytics.sh/analytics.bat for analytics profile, broker.sh/broker.bat for broker profile and
+business-process.sh/business-process.bat for business process profile.
 
 WSO2 EI distribution directory
 =============================================
@@ -130,15 +129,6 @@ WSO2 EI distribution directory
 
       -wso2/broker/repository
         Directory where deployments of broker runtime is stored.
-
- -wso2/micro-integrator
-      Contains micro integrator runtime related files/folders.
-
-      -wso2/micro-integrator/conf
-        Directory where micro integrator specific configuration files are stored.
-
-      -wso2/micro-integrator/repository
-        Directory where deployments of micro integrator runtime is stored.
 
  -wso2/tools
       Forget-me tool for user anonymization tasks.
