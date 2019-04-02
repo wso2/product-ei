@@ -1505,7 +1505,7 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.66</carbon.messaging.version>
+        <carbon.messaging.version>3.2.68</carbon.messaging.version>
         <carbon.metrics.version>1.2.4</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
@@ -1531,7 +1531,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.120</carbon.mediation.version>
+        <carbon.mediation.version>4.6.122</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.38</carbon.kernel.version>
@@ -1541,7 +1541,7 @@
         <carbon.commons.version>4.6.58</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.7.22</carbon.deployment.version>
+        <carbon.deployment.version>4.7.23</carbon.deployment.version>
         <carbon-deployment.feature.imp.version>4.7.22</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
@@ -1565,14 +1565,14 @@
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
-        <carbon.analytics.common.version>5.1.52</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.1.54</carbon.analytics.common.version>
 
         <!-- MSF4J version -->
         <!-- MSF4J version should also be updated at /p2-profile/msf4j/pom.xml and /samples/msf4j/pom.xml -->
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.6.20</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.6.21</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
         <jaggery.version>0.12.9</jaggery.version>
@@ -1721,7 +1721,7 @@
         <orbit.version.tiles>2.0.5.wso2v1</orbit.version.tiles>
         <version.ant>1.7.0.wso2v1</version.ant>
         <version.xmlbeans>2.3.0.wso2v1</version.xmlbeans>
-        <orbit.version.axiom>1.2.11.wso2v11</orbit.version.axiom>
+        <orbit.version.axiom>1.2.11.wso2v13</orbit.version.axiom>
         <neethi.osgi.version>2.0.4.wso2v5</neethi.osgi.version>
         <version.woden>1.0.0.M9-wso2v1</version.woden>
         <orbit.version.wsdl4j>1.6.2.wso2v4</orbit.version.wsdl4j>
