@@ -109,7 +109,6 @@ then
 	rm -rf ${DIR}/broker.sh
 	rm -rf ${DIR}/integrator.bat
 	rm -rf ${DIR}/integrator.sh
-    #remove light weight esb profile
 
 	PROFILE="_analytics"
 

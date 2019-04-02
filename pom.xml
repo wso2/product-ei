@@ -28,7 +28,7 @@
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2ei-parent</artifactId>
     <packaging>pom</packaging>
-    <version>6.5.0-m4-SNAPSHOT</version>
+    <version>6.5.0-m5-SNAPSHOT</version>
     <name>WSO2 Enterprise Integrator</name>
     <url>http://wso2.com/products/enterprise-integrator/</url>
     <description>WSO2 Enterprise Integrator</description>
@@ -1474,7 +1474,7 @@
 
         <!--Product Version-->
 
-        <product.ei.version>6.5.0-m4-SNAPSHOT</product.ei.version>
+        <product.ei.version>6.5.0-m5-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
         <carbon.business-process.version>4.4.92</carbon.business-process.version>
@@ -1516,7 +1516,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.120</carbon.mediation.version>
+        <carbon.mediation.version>4.6.122</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.38</carbon.kernel.version>
@@ -1526,7 +1526,7 @@
         <carbon.commons.version>4.6.58</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.7.22</carbon.deployment.version>
+        <carbon.deployment.version>4.7.23</carbon.deployment.version>
         <carbon-deployment.feature.imp.version>4.7.22</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
@@ -1550,14 +1550,14 @@
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
-        <carbon.analytics.common.version>5.1.52</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.1.54</carbon.analytics.common.version>
 
         <!-- MSF4J version -->
         <!-- MSF4J version should also be updated at /p2-profile/msf4j/pom.xml and /samples/msf4j/pom.xml -->
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.6.20</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.6.21</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
         <jaggery.version>0.12.9</jaggery.version>
