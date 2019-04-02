@@ -2198,21 +2198,7 @@
             <destName>tenant-axis2.xml</destName>
             <fileMode>644</fileMode>
         </file>
-        <file>
-            <source>src/conf/axis2_nhttp.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
-            <destName>axis2_nhttp.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
 
-        <file>
-            <source>src/conf/axis2_pt.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
-            <destName>axis2_pt.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
         <file>
             <source>src/conf/axis2_blocking_client.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
