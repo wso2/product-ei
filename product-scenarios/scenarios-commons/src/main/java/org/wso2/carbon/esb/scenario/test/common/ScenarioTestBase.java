@@ -158,7 +158,6 @@ public class ScenarioTestBase {
      * The deployment details are available as key-value pairs in {@link #INFRASTRUCTURE_PROPERTIES},
      * {@link #DEPLOYMENT_PROPERTIES}, and {@link #JOB_PROPERTIES} under the
      * {@link #INPUTS_LOCATION}.
-     *
      * This method loads these files into one single properties, and return it.
      *
      * @return properties the deployment properties
@@ -361,6 +360,12 @@ public class ScenarioTestBase {
         return requestResponseList;
     }
 
+    /**
+     * Get list of files in given folder
+     *
+     * @param folderLocation - relative path of the folder
+     * @return - List of files in the give folder
+     */
     protected List<String> getListOfFiles(String folderLocation) {
         File filePath = new File(getClass().getResource(folderLocation).getPath());
         File[] listOfFiles = filePath.listFiles();
@@ -376,6 +381,14 @@ public class ScenarioTestBase {
         return fileNames;
     }
 
+    /**
+     * Get file content from given file
+     *
+     * @param folderLocation - relative path of the folder
+     * @param fileName - file name
+     * @return - File content
+     * @throws IOException - If file line reading fails
+     */
     protected String getFileContent(String folderLocation, String fileName) throws IOException {
         File fileLocation = new File(getClass().getResource(folderLocation + File.separator + fileName).getPath());
 
@@ -437,17 +450,37 @@ public class ScenarioTestBase {
         return testRunUUID;
     }
 
+    /**
+     * Get the absolute path of the source directory
+     *
+     * @param testCase - testcase notation
+     * @param relativeSourceFolderPath - relative source folder path
+     * @return - absolute path of the source directory of relevant testcase
+     */
     private String appendSourceFolder(String testCase, String relativeSourceFolderPath) {
         return File.separator + ScenarioConstants.SOURCE_FILES + File.separator + testCase + File.separator
                + relativeSourceFolderPath;
     }
 
+    /**
+     * Get all files from source directory
+     *
+     * @param relativePath - relative path of the source directory
+     * @return - List of all files in the folder
+     */
     private List<String> getFilesFromSourceDirectory(String relativePath) {
         List<String> requestFiles = getListOfFiles(relativePath);
         java.util.Collections.sort(requestFiles, Collator.getInstance());
         return requestFiles;
     }
 
+    /**
+     * Get all the request content from request files in given testcase
+     *
+     * @param testCase - testcase notation
+     * @return - List of request contents
+     * @throws IOException - if extracting file content fails
+     */
     protected List<Request> extractRequests(String testCase) throws IOException {
         String relativeRequestFolderLocation = appendSourceFolder(testCase, ScenarioConstants.REQUEST);
         List<String> requestFiles = getFilesFromSourceDirectory(relativeRequestFolderLocation);
@@ -461,6 +494,13 @@ public class ScenarioTestBase {
         return requestArray;
     }
 
+    /**
+     * Get all the response content from the given testcase
+     *
+     * @param testCase - testcase notation
+     * @return - List of response contents
+     * @throws IOException - If extracting file content fails
+     */
     protected List<String> extractResponses(String testCase) throws IOException {
 
         String relativeResponseFolderLocation = appendSourceFolder(testCase, ScenarioConstants.RESPONSE);
