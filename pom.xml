@@ -1522,7 +1522,7 @@
         <axiom.wso2.version>1.2.11.wso2v13</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v93</synapse.version>
+        <synapse.version>2.1.7-wso2v95</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v33</axis2.transport.version>
@@ -1531,7 +1531,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.122</carbon.mediation.version>
+        <carbon.mediation.version>4.6.123</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.38</carbon.kernel.version>
@@ -1590,9 +1590,9 @@
         <sandesha2.version>1.6.1-wso2v1</sandesha2.version>
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
         <httpcore-nio.wso2.version>4.3.3.wso2v4</httpcore-nio.wso2.version>
-        <rampart.wso2.version>1.6.1-wso2v26</rampart.wso2.version>
+        <rampart.wso2.version>1.6.1-wso2v29</rampart.wso2.version>
         <neethi.orbit.version>2.0.4.wso2v4</neethi.orbit.version>
-        <rampart.mar.version>1.6.1-wso2v26</rampart.mar.version>
+        <rampart.mar.version>1.6.1-wso2v29</rampart.mar.version>
 
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
 
@@ -1628,8 +1628,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <opencsv.version>1.8</opencsv.version>
         <poi.version>3.17.0.wso2v1</poi.version>
-        <rampart.apache.version>1.6.1-wso2v26</rampart.apache.version>
-        <rampart.wso2.version>1.6.1-wso2v26</rampart.wso2.version>
+        <rampart.apache.version>1.6.1-wso2v29</rampart.apache.version>
+        <rampart.wso2.version>1.6.1-wso2v29</rampart.wso2.version>
         <passthru.transport.patch.version>1.0.2</passthru.transport.patch.version>
         <servlet-api.version>2.4</servlet-api.version>
         <geronimo-jms.version>1.1.1</geronimo-jms.version>
