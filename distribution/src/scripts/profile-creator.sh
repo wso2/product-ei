@@ -46,7 +46,6 @@ echo "	2.Analytics Profile"
 echo "	3.Business Process profile"
 echo "	4.Broker profile"
 echo "	5.Msf4j profile"
-echo "	6.Micro Integrator profile"
 echo "Please enter the desired profile number to create the profile specific distribution."
 read profileNumber
 #Integrator profile
@@ -77,12 +76,6 @@ then
 	rm -rf ${DIR}/analytics-dashboard.sh
 	#remove msf4j
 	rm -rf ${DIR}/../wso2/msf4j
-	#remove light weight esb profile
-	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/micro-integrator
-	rm -rf ${DIR}/../wso2/components/micro-integrator-default
-	rm -rf ${DIR}/micro-integrator.bat
-	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_integrator"
 
@@ -116,12 +109,6 @@ then
 	rm -rf ${DIR}/broker.sh
 	rm -rf ${DIR}/integrator.bat
 	rm -rf ${DIR}/integrator.sh
-    #remove light weight esb profile
-    echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/micro-integrator
-	rm -rf ${DIR}/../wso2/components/micro-integrator-default
-	rm -rf ${DIR}/micro-integrator.bat
-	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_analytics"
 
@@ -155,12 +142,6 @@ then
 	rm -rf ${DIR}/analytics-dashboard.sh
 	#remove msf4j
 	rm -rf ${DIR}/../wso2/msf4j
-	#remove light weight esb profile
-	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/micro-integrator
-	rm -rf ${DIR}/../wso2/components/micro-integrator-default
-	rm -rf ${DIR}/micro-integrator.bat
-	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_businessprocess"
 
@@ -195,12 +176,6 @@ then
 	rm -rf ${DIR}/business-process.sh
 	#remove msf4j
 	rm -rf ${DIR}/../wso2/msf4j
-	#remove light weight esb profile
-	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/micro-integrator
-	rm -rf ${DIR}/../wso2/components/micro-integrator-default
-	rm -rf ${DIR}/micro-integrator.bat
-	rm -rf ${DIR}/micro-integrator.sh
 
 	PROFILE="_broker"
 
@@ -233,56 +208,8 @@ then
 	rm -rf ${DIR}/analytics-dashboard.sh
 	rm -rf ${DIR}/broker.bat
 	rm -rf ${DIR}/broker.sh
-	#remove light weight esb profile
-	echo "Removing light weight esb profile"
-	rm -rf ${DIR}/../wso2/micro-integrator
-	rm -rf ${DIR}/../wso2/components/micro-integrator-default
-	rm -rf ${DIR}/micro-integrator.bat
-	rm -rf ${DIR}/micro-integrator.sh
 
     PROFILE="_msf4j"
-
-#Light weight Integrator profile
-elif [ ${profileNumber} -eq 6 ]
-then
-	echo "Preparing the Integrator profile distribution"
-	DEFAULT_BUNDLES="$(< ${DIR}/../wso2/components/micro-integrator-default/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info)"
-	#remove business-process
-	#remove integrator
-	echo "Removing Integrator profile"
-    rm -rf ${DIR}/../conf
-    rm -rf ${DIR}/../wso2/components/default
-    rm -rf ${DIR}/../samples/service-bus
-    rm -rf ${DIR}/../samples/data-services
-    rm -rf ${DIR}/integrator.bat
-    rm -rf ${DIR}/integrator.sh
-	rm -rf ${DIR}/wso2ei-samples.bat
-	rm -rf ${DIR}/wso2ei-samples.sh
-	echo "Removing Business Process profile"
-	rm -rf ${DIR}/../wso2/business-process
-	rm -rf ${DIR}/../samples/business-process
-	rm -rf ${DIR}/../wso2/components/business-process-default
-	rm -rf ${DIR}/business-process.bat
-	rm -rf ${DIR}/business-process.sh
-	#remove broker
-	echo "Removing Broker profile"
-	rm -rf ${DIR}/../wso2/broker
-	rm -rf ${DIR}/../wso2/components/broker-default
-	rm -rf ${DIR}/broker.bat
-	rm -rf ${DIR}/broker.sh
-	#remove analytics
-	echo "Removing Analytics profile"
-	rm -rf ${DIR}/../wso2/analytics
-	rm -rf ${DIR}/../wso2/components/analytics-default
-	rm -rf ${DIR}/analytics-worker.bat
-	rm -rf ${DIR}/analytics-worker.sh
-	rm -rf ${DIR}/analytics-dashboard.bat
-	rm -rf ${DIR}/analytics-dashboard.sh
-	#remove msf4j
-	rm -rf ${DIR}/../wso2/msf4j
-
-	PROFILE="_micro-integrator"
-
 
 else
 	echo "Invalid profile number. Terminating."

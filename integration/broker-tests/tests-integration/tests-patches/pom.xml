@@ -235,7 +235,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.ftpserver</groupId>
-                    <artifactId>:ftpserver-core</artifactId>
+                    <artifactId>ftpserver-core</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
