@@ -189,6 +189,7 @@
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/etc/launch.ini</exclude>
             </excludes>
         </fileSet>
 
@@ -260,6 +261,7 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/master-datasources.xml</exclude>
+                <exclude>**/etc/launch.ini</exclude>
             </excludes>
         </fileSet>
 
@@ -1891,6 +1893,13 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/broker/conf/etc/launch.ini</source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/broker/conf/etc/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/broker/conf/tomcat/carbon/META-INF/context.xml</source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/carbon/META-INF/
@@ -1943,7 +1952,13 @@
             <destName>axis2_client.xml</destName>
             <fileMode>644</fileMode>
         </file>
-
+        <file>
+            <source>src/business-process/conf/etc/launch.ini</source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/business-process/conf/etc/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
         <file>
             <source>src/business-process/conf/axis2/tenant-axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/axis2/</outputDirectory>
