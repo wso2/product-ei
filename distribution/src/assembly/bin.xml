@@ -1188,11 +1188,19 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
-		<exclude>**/wso2/lib/features/**</exclude>
+                <exclude>**/wso2/lib/features/**</exclude>
             </excludes>
             <fileMode>644</fileMode>
         </fileSet>
 
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/target/wso2sp-${project.version}/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>
+            <includes>
+                <include>**.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
 
         <fileSet>
             <directory>../p2-profile/analytics-profile/carbon-home/conf/manager</directory>
@@ -1350,17 +1358,6 @@
                 <exclude>**/target/**</exclude>
             </excludes>
         </fileSet>
-
-        <!--<fileSet>-->
-            <!--<directory>src/analytics/samples/udfs/country-code-ip/target</directory>-->
-            <!--<outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/samples/udfs-->
-            <!--</outputDirectory>-->
-            <!--<includes>-->
-                <!--<include>**/org.wso2.das.samples.geoip-${pom.version}.jar</include>-->
-            <!--</includes>-->
-        <!--</fileSet>-->
-
-
 
         <fileSet>
             <directory>
