@@ -37,10 +37,10 @@
 
     <properties>
 
-        <carbon.analytics.version>2.0.503</carbon.analytics.version>
+        <carbon.analytics.version>2.0.504</carbon.analytics.version>
         <siddhi.version>4.2.20</siddhi.version>
 
-        <carbon.analytics-common.version>6.1.1</carbon.analytics-common.version>
+        <carbon.analytics-common.version>6.1.4</carbon.analytics-common.version>
         <analytics.solutions.version>1.0.12</analytics.solutions.version>
         <!-- Maven plugins -->
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
@@ -76,9 +76,9 @@
         <carbon.cache.version>1.1.3</carbon.cache.version>
         <carbon.touchpoint.version>1.1.1</carbon.touchpoint.version>
         <carbon.utils.version>2.0.8</carbon.utils.version>
-        <carbon.config.version>2.1.5</carbon.config.version>
+        <carbon.config.version>2.1.10</carbon.config.version>
         <carbon.config.version.range>[2.1.0, 3.0.0)</carbon.config.version.range>
-        <carbon.securevault.version>5.0.12</carbon.securevault.version>
+        <carbon.securevault.version>5.0.13</carbon.securevault.version>
 
         <slf4j.version>1.7.5</slf4j.version>
         <slf4j.logging.package.import.version.range>[1.7.1, 2.0.0)
@@ -130,8 +130,8 @@
         <common.collections4.version>4.0</common.collections4.version>
 
         <!--MSF4J related-->
-        <msf4j.version>2.7.0</msf4j.version>
-        <com.fasterxml.jackson.core.version>2.8.9</com.fasterxml.jackson.core.version>
+        <msf4j.version>2.7.1</msf4j.version>
+        <com.fasterxml.jackson.core.version>2.9.8</com.fasterxml.jackson.core.version>
         <io.swagger.version>1.5.16</io.swagger.version>
         <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
         <pax.logging.api.version>1.8.5</pax.logging.api.version>
@@ -215,7 +215,7 @@
         <apache.commons.version>1.3</apache.commons.version>
         <json.version>3.0.0.wso2v1</json.version>
         <codehaus.jackson.version>1.9.13</codehaus.jackson.version>
-        <org.snakeyaml.version>1.17</org.snakeyaml.version>
+        <org.snakeyaml.version>1.23</org.snakeyaml.version>
         <mysql.con.version>6.0.5</mysql.con.version>
         <googlecode.json-simple.version>1.1.wso2v1</googlecode.json-simple.version>
         <io.netty.version>4.1.16.Final</io.netty.version>
@@ -628,6 +628,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${com.fasterxml.jackson.core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -648,11 +654,31 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
             <version>${com.fasterxml.jackson.core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>${com.fasterxml.jackson.core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -741,6 +767,24 @@
             <groupId>org.wso2.carbon.analytics</groupId>
             <artifactId>org.wso2.carbon.sp.jobmanager.core.feature</artifactId>
             <version>${carbon.analytics.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-smile</artifactId>
+                </exclusion>
+            </exclusions>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -964,6 +1008,24 @@
             <groupId>org.wso2.extension.siddhi.io.sqs</groupId>
             <artifactId>siddhi-io-sqs</artifactId>
             <version>${siddhi.io.sqs.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-cbor</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.wso2.extension.siddhi.io.websocket</groupId>
@@ -979,6 +1041,12 @@
             <groupId>org.wso2.extension.siddhi.map.json</groupId>
             <artifactId>siddhi-map-json</artifactId>
             <version>${siddhi.map.json.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.wso2.extension.siddhi.map.xml</groupId>
@@ -1018,6 +1086,24 @@
             <groupId>org.wso2.msf4j</groupId>
             <artifactId>org.wso2.msf4j.feature</artifactId>
             <version>${msf4j.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-yaml</artifactId>
+                </exclusion>
+            </exclusions>
             <type>zip</type>
         </dependency>
 

@@ -1202,12 +1202,12 @@
             <dependency>
                 <groupId>org.wso2.orbit.com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${orbit.fasterxml.jackson-databind.version}</version>
+                <version>${fasterxml.jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.orbit.com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>${orbit.fasterxml.jackson.version}</version>
+                <version>${fasterxml.jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
@@ -1254,6 +1254,24 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>transport</artifactId>
                 <version>${elasticsearch.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.dataformat</groupId>
+                        <artifactId>jackson-dataformat-cbor</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.dataformat</groupId>
+                        <artifactId>jackson-dataformat-smile</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.dataformat</groupId>
+                        <artifactId>jackson-dataformat-yaml</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
@@ -1477,7 +1495,7 @@
         <product.ei.version>6.5.0-m5-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.92</carbon.business-process.version>
+        <carbon.business-process.version>4.4.93</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v34</orbit.version.axis2>
@@ -1595,7 +1613,7 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.90</carbon.data.version>
+        <carbon.data.version>4.4.92</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.4</carbon.metrics.version>
@@ -1663,8 +1681,7 @@
         <activemq.version>5.9.1</activemq.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
         <rabbitmq.orbit.version>3.6.6.wso2v1</rabbitmq.orbit.version>
-        <orbit.fasterxml.jackson.version>2.6.1.wso2v1</orbit.fasterxml.jackson.version>
-        <orbit.fasterxml.jackson-databind.version>2.6.1.wso2v3</orbit.fasterxml.jackson-databind.version>
+        <fasterxml.jackson.version>2.9.8.wso2v1</fasterxml.jackson.version>
 
         <!-- Elasticsearch Version -->
         <elasticsearch.version>6.5.4</elasticsearch.version>
