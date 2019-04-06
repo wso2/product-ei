@@ -22,22 +22,29 @@ import junit.framework.Assert;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.IOUtils;
-import org.apache.sshd.SshServer;
+import org.apache.sshd.common.config.keys.KeyUtils;
+import org.apache.sshd.common.keyprovider.KeyIdentityProvider;
+import org.apache.sshd.common.keyprovider.KeyPairProvider;
+import org.apache.sshd.common.util.ValidateUtils;
+import org.apache.sshd.server.SshServer;
 import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.common.file.virtualfs.VirtualFileSystemFactory;
-import org.apache.sshd.server.Command;
-import org.apache.sshd.server.PublickeyAuthenticator;
-import org.apache.sshd.server.UserAuth;
-import org.apache.sshd.server.auth.UserAuthPublicKey;
-import org.apache.sshd.server.command.ScpCommandFactory;
+import org.apache.sshd.server.auth.pubkey.UserAuthPublicKeyFactory;
+import org.apache.sshd.server.command.Command;
+import org.apache.sshd.server.auth.pubkey.PublickeyAuthenticator;
+import org.apache.sshd.server.auth.UserAuth;
+import org.apache.sshd.server.auth.pubkey.UserAuthPublicKey;
+import org.apache.sshd.server.scp.ScpCommandFactory;
 import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.apache.sshd.server.session.ServerSession;
-import org.apache.sshd.server.sftp.SftpSubsystem;
+import org.apache.sshd.server.subsystem.sftp.SftpSubsystem;
+import org.apache.sshd.server.subsystem.sftp.SftpSubsystemFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
+import org.wso2.carbon.automation.extensions.servers.sftpserver.SFTPServer;
 import org.wso2.carbon.proxyadmin.stub.ProxyServiceAdminProxyAdminException;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
@@ -48,8 +55,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.KeyPair;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -77,6 +89,7 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
     private String carbonHome;
 
     private ServerConfigurationManager serverConfigurationManager;
+    public static final String DEFAULT_TEST_HOST_KEY_PROVIDER_ALGORITHM = KeyUtils.RSA_ALGORITHM;
 
     @BeforeClass(alwaysRun = true)
     public void deployService() throws Exception {
@@ -205,29 +218,35 @@ public class ESBJAVA3470 extends ESBIntegrationTest {
         ClassLoader classLoader = getClass().getClassLoader();
         log.info("Using identity file: " + classLoader.getResource("sftp/id_rsa.pub").getFile());
         File file = new File(classLoader.getResource("sftp/id_rsa.pub").getFile());
-        sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider(file.getAbsolutePath()));
-
-        List<NamedFactory<UserAuth>> userAuthFactories = new ArrayList<NamedFactory<UserAuth>>();
-        userAuthFactories.add(new UserAuthPublicKey.Factory());
-        sshd.setUserAuthFactories(userAuthFactories);
-        sshd.setFileSystemFactory(new VirtualFileSystemFactory(carbonHome));
+        SFTPServer sftpServer = new SFTPServer();
+        sshd.setKeyPairProvider(sftpServer.createTestHostKeyProvider(Paths.get(file.getAbsolutePath())));
+        sshd.setKeyPairProvider(createTestHostKeyProvider(Paths.get(file.getAbsolutePath())));
+        sshd.setUserAuthFactories(
+                Arrays.<NamedFactory<UserAuth>>asList(new UserAuthPublicKeyFactory()));
+        sshd.setFileSystemFactory(new VirtualFileSystemFactory(Paths.get(carbonHome)));
         sshd.setPublickeyAuthenticator(new PublickeyAuthenticator() {
             public boolean authenticate(String username, PublicKey key, ServerSession session) {
                 return "sftpuser".equals(username);
             }
         });
 
-        sshd.setCommandFactory(new ScpCommandFactory(new SftpCommandFactory()));
+        sshd.setCommandFactory(new ScpCommandFactory());
 
-        List<NamedFactory<Command>> namedFactoryList = new ArrayList<NamedFactory<Command>>();
-        namedFactoryList.add(new SftpSubsystem.Factory());
-        sshd.setSubsystemFactories(namedFactoryList);
+        sshd.setSubsystemFactories(
+                Arrays.<NamedFactory<Command>>asList(new SftpSubsystemFactory()));
 
         try {
             sshd.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static KeyPairProvider createTestHostKeyProvider(Path path) {
+        SimpleGeneratorHostKeyProvider keyProvider = new SimpleGeneratorHostKeyProvider();
+        keyProvider.setPath(ValidateUtils.checkNotNull(path, "No path"));
+        keyProvider.setAlgorithm(DEFAULT_TEST_HOST_KEY_PROVIDER_ALGORITHM);
+        return keyProvider;
     }
 
     /**
