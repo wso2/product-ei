@@ -105,8 +105,8 @@ public class RedirectTest extends ESBIntegrationTest {
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
         Awaitility.await()
-                .pollInterval(2, TimeUnit.SECONDS)
-                .atMost(10, TimeUnit.SECONDS)
+                .pollInterval(3, TimeUnit.SECONDS)
+                .atMost(120, TimeUnit.SECONDS)
                 .until(isProcessorDeactivated(PROCESSOR_NAME));
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor" + PROCESSOR_NAME
                 + "should not be active, but it is active.");
@@ -116,8 +116,8 @@ public class RedirectTest extends ESBIntegrationTest {
                 "but it is active.");
         messageProcessorClient.popAndRedirectMessage(PROCESSOR_NAME, REDIRECT_STORE_NAME);
         Awaitility.await()
-                .pollInterval(2, TimeUnit.SECONDS)
-                .atMost(10, TimeUnit.SECONDS)
+                .pollInterval(3, TimeUnit.SECONDS)
+                .atMost(120, TimeUnit.SECONDS)
                 .until(hasMessage(REDIRECT_PROCESSOR_NAME));
         Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
 
