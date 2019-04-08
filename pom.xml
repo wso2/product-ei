@@ -1590,7 +1590,7 @@
         <httpclient.wso2.version>4.3.2.wso2v1</httpclient.wso2.version>
         <httpclient.version>4.3.2</httpclient.version>
         <xercesImpl.version>2.8.1</xercesImpl.version>
-        <sandesha2.version>1.6.1-wso2v1</sandesha2.version>
+        <sandesha2.version>1.295</sandesha2.version>
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
         <httpcore-nio.wso2.version>4.3.3.wso2v4</httpcore-nio.wso2.version>
         <rampart.wso2.version>1.6.1-wso2v29</rampart.wso2.version>
