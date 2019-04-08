@@ -43,7 +43,7 @@
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <carbon.kernel.version>5.1.2</carbon.kernel.version>
         <osgi.api.version>6.0.0</osgi.api.version>
-        <carbon.jndi.version>1.0.0</carbon.jndi.version>
+        <carbon.jndi.version>1.0.5</carbon.jndi.version>
         <carbon.cache.version>1.0.0</carbon.cache.version>
         <carbon.deployment.version>5.0.0</carbon.deployment.version>
         <carbon.datasources.version>1.0.0</carbon.datasources.version>
