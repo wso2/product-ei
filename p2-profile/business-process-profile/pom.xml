@@ -649,7 +649,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.1</version>
+                <version>1.8</version>
                 <executions>
                     <execution>
                         <id>creating-required-resources</id>
