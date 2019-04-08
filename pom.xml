@@ -1666,7 +1666,7 @@
         <ibatis-core.version>3.0</ibatis-core.version>
         <javax.ws.rs.version>1.1.1</javax.ws.rs.version>
         <jersey-client.version>1.8</jersey-client.version>
-        <cipher.tool.version>1.0.0-wso2v8</cipher.tool.version>
+        <cipher.tool.version>1.1.1</cipher.tool.version>
         <commons.io.version>2.2</commons.io.version>
         <commons-httpclient.version>3.1.0.wso2v2</commons-httpclient.version>
         <netty.version>4.1.11.Final</netty.version>
