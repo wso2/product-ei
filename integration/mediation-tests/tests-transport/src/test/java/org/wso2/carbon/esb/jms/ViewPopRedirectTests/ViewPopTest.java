@@ -18,36 +18,31 @@
 
 package org.wso2.carbon.esb.jms.ViewPopRedirectTests;
 
-import org.apache.axis2.context.ConfigurationContext;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.esb.integration.common.clients.mediation.MessageProcessorClient;
-import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 
 public class ViewPopTest extends ESBIntegrationTest {
-
-    private MessageStoreAdminClient messageStoreAdminClient;
-    private MessageProcessorClient messageProcessorClient;
-    private JMSQueueMessageProducer jmsQueueMessageProducer;
-
-    private ConfigurationContext configurationContext;
-
     private final String STORE_NAME = "VPE_Store";
     private final String PROCESSOR_NAME = "VPE_Processor";
     private final String PROXY_NAME = "VPE_Proxy";
+    private MessageProcessorClient messageProcessorClient;
+    private String returnedMessage = null;
 
     /**
-     *  Initializing environment variables
+     * Initializing environment variables
      */
     @BeforeClass(alwaysRun = true, description = "Test Message processor View and Pop service")
     protected void setup() throws Exception {
@@ -55,8 +50,7 @@ public class ViewPopTest extends ESBIntegrationTest {
         loadESBConfigurationFromClasspath("artifacts/ESB/messageProcessorConfig/ViewPopTest.xml");
 
         // Initialization
-        messageStoreAdminClient = new MessageStoreAdminClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
-        messageProcessorClient = new MessageProcessorClient(context.getContextUrls().getBackEndUrl(),sessionCookie);
+        messageProcessorClient = new MessageProcessorClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
 
         verifyMessageStoreExistence(STORE_NAME);
         verifyMessageProcessorExistence(PROCESSOR_NAME);
@@ -69,10 +63,10 @@ public class ViewPopTest extends ESBIntegrationTest {
     }
 
     /**
-     *  1. Send one payload to the proxy while the backend is unavailable
-     *  2. Check if the Message Processor has successfully deactivated
-     *  3. Call browseMessage function and verify that the queue is sending the expected message
-     *  4. Call popMessage function and verify that browseMessage function is returning null
+     * 1. Send one payload to the proxy while the backend is unavailable
+     * 2. Check if the Message Processor has successfully deactivated
+     * 3. Call browseMessage function and verify that the queue is sending the expected message
+     * 4. Call popMessage function and verify that browseMessage function is returning null
      */
     @Test(groups = {"wso2.esb"}, description = "Test View and Pop and service for Message processor")
     public void testViewInMessageStore() throws Exception {
@@ -107,17 +101,63 @@ public class ViewPopTest extends ESBIntegrationTest {
         requestHeader.put("Accept", "application/json");
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
-        Thread.sleep(5000); //Make sure that the Message Processor has time to deactivate
-
+        Awaitility.await()
+                .pollInterval(2, TimeUnit.SECONDS)
+                .atMost(10, TimeUnit.SECONDS)
+                .until(isProcessorDeactivated(PROCESSOR_NAME));
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor should not be active, " +
                 "but it is active.");
-
-        String returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
-        Assert.assertEquals(returnedMessage,expectedMessage,"Returned message is not the same as expected message.");
-
+        Awaitility.await()
+                .pollInterval(2, TimeUnit.SECONDS)
+                .atMost(10, TimeUnit.SECONDS)
+                .until(hasMessage(PROCESSOR_NAME));
+        Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
         messageProcessorClient.popMessage(PROCESSOR_NAME);
+        Awaitility.await()
+                .pollInterval(2, TimeUnit.SECONDS)
+                .atMost(10, TimeUnit.SECONDS)
+                .until(hasNull(PROCESSOR_NAME));
         returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
-        Assert.assertEquals(returnedMessage,null);
+        Assert.assertEquals(returnedMessage, null, "Returned message is not null as expected.");
+    }
+
+    private Callable<Boolean> hasMessage(final String PROCESSOR_NAME) throws Exception {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
+                if (returnedMessage == null) {
+                    return false;
+                }
+                return true;
+            }
+        };
+    }
+
+    private Callable<Boolean> hasNull(final String PROCESSOR_NAME) throws Exception {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
+                if (returnedMessage != null) {
+                    return false;
+                }
+                return true;
+            }
+        };
+
+    }
+
+    private Callable<Boolean> isProcessorDeactivated(final String PROCESSOR_NAME) throws Exception {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (messageProcessorClient.isActive(PROCESSOR_NAME)) {
+                    return false;
+                }
+                return true;
+            }
+        };
     }
 
 }
