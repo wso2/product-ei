@@ -8,6 +8,14 @@
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestSuiteListener"/>
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
     </listeners>
+    <test name="MailTo-transport-Test-Sender" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.mailto.transport.sender.test.SenderBaseClass"/>
+            <class name="org.wso2.carbon.esb.mailto.transport.sender.test.SendMailWithBCCThroughESBTestCase"/>
+            <class name="org.wso2.carbon.esb.mailto.transport.sender.test.SendMailWithMultipartThroughESBTestCase"/>
+            <class name="org.wso2.carbon.esb.mailto.transport.sender.test.SendMailWithSecondaryAccountThroughESBTestCase"/>
+        </classes>
+    </test>
 
     <test name="POST-Request-Without-Body-without-chunking" preserve-order="true" verbose="2">
         <classes>
@@ -70,6 +78,11 @@
 
         <classes>
             <class name="org.wso2.carbon.esb.jms.transport.test.ESBJAVA2824MissingResponseTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+            <class name="org.wso2.carbon.esb.jms.transport.test.JMSEndpointTestCase">
                 <methods>
                     <exclude name=".*"/>
                 </methods>
@@ -173,13 +186,6 @@
             <package name="org.wso2.carbon.esb.mailto.transport.receiver.test"/>
         </packages>
     </test>
-
-    <test name="MailTo-transport-Test-Sender" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mailto.transport.sender.test"/>
-        </packages>
-    </test>
-
     <test name="Https Inbound Transport Test" preserve-order="true" verbose="2">
         <packages>
             <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
@@ -214,7 +220,6 @@
             <class name="org.wso2.carbon.esb.nhttp.transport.test.ESBJAVA3689AccessMIMEMessageContentTestCase"/>
         </classes>
     </test>
-
     <!-- Tests should not be added beyond this point since all those will run with the nhttp transport enabled
     unlike the default axis2.xml-->
 </suite>

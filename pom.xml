@@ -1647,7 +1647,7 @@
         <product.ei.version>6.5.0-m3-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.79</carbon.business-process.version>
+        <carbon.business-process.version>4.4.80-SNAPSHOT</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v30-SNAPSHOT</orbit.version.axis2>
@@ -1660,11 +1660,11 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.64</carbon.messaging.version>
-        <carbon.metrics.version>1.2.3</carbon.metrics.version>
+        <carbon.messaging.version>3.2.63-SNAPSHOT</carbon.messaging.version>
+        <carbon.metrics.version>1.2.4-SNAPSHOT</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.91</andes.version>
+        <andes.version>3.2.83-SNAPSHOT</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1769,7 +1769,6 @@
         <carbon.data.version>4.4.86-SNAPSHOT</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
-        <carbon.metrics.version>1.2.3</carbon.metrics.version>
         <orbit.version.joda-time>2.9.4.wso2v1</orbit.version.joda-time>
 
         <!-- Misc -->
@@ -1795,7 +1794,7 @@
         <wso2.h2.orbit.version>1.2.140.wso2v3</wso2.h2.orbit.version>
         <org.apache.cxf.version>2.7.2</org.apache.cxf.version>
         <org.springframework.version>4.1.5.RELEASE</org.springframework.version>
-        <org.apache.tomcat>7.0.93</org.apache.tomcat>
+        <org.apache.tomcat>7.0.85</org.apache.tomcat>
         <org.codehaus.jackson.version>1.9.12</org.codehaus.jackson.version>
         <com.google.code.gson.version>2.7</com.google.code.gson.version>
         <javax.inject.version>1</javax.inject.version>
@@ -1811,7 +1810,7 @@
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.eclipse.paho.version>0.4.0</org.eclipse.paho.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-        <org.wso2.andes.client.version>3.2.82</org.wso2.andes.client.version>
+        <org.wso2.andes.client.version>3.2.83-SNAPSHOT</org.wso2.andes.client.version>
 
         <commons-codec.version>1.10</commons-codec.version>
         <bouncycastle.version>1.61</bouncycastle.version>
@@ -1857,7 +1856,7 @@
         <forgetme.tool.version>1.1.21</forgetme.tool.version>
 
         <version.equinox.http.servlet>1.1.400.v20130418-1354</version.equinox.http.servlet>
-        <version.tomcat>7.0.93</version.tomcat>
+        <version.tomcat>7.0.85</version.tomcat>
         <orbit.version.tomcat.jsp.api>${version.tomcat}.wso2v1</orbit.version.tomcat.jsp.api>
         <orbit.version.tomcat.el.api>${version.tomcat}.wso2v1</orbit.version.tomcat.el.api>
         <orbit.version.tomcat.servlet.api>${version.tomcat}.wso2v1</orbit.version.tomcat.servlet.api>

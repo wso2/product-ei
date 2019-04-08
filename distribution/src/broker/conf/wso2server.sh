@@ -244,9 +244,9 @@ do
 done
 
 if [ $java_version_formatted -ge 0900 ]; then
-    for f in "$CARBON_HOME"/wso2/lib/endorsed/*.jar
+    for f in "$CARBON_HOME"/../lib/endorsed/*.jar
     do
-       if [ "$f" != "$CARBON_HOME/wso2/lib/endorsed/*.jar" ];then
+       if [ "$f" != "$CARBON_HOME/../lib/endorsed*.jar" ];then
            CARBON_CLASSPATH="$CARBON_CLASSPATH":$f
        fi
     done
