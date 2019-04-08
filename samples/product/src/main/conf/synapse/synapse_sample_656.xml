@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-  <proxy name="StockQuoteProxy" startOnLoad="true">
+  <proxy name="StockQuoteProxy" transports="http https" startOnLoad="true">
     <target>
       <inSequence>
         <builder>
