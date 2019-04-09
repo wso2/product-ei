@@ -22,7 +22,7 @@
                     <disableXmlReport>false</disableXmlReport>
                     <parallel>false</parallel>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${testng.suiteXml.location}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemProperties>
                         <property>

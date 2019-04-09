@@ -46,4 +46,13 @@
         <module>taskcoordination</module>
         <module>reports</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>smoke-tests</id>
+            <modules>
+                <module>bpmn</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

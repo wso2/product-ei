@@ -44,4 +44,13 @@
         <module>tests-integration</module>
         <module>tests-patches</module>
     </modules>
+    <profiles>
+        <profile>
+            <id>smoke-tests</id>
+            <modules>
+                <module>tests-common</module>
+                <module>tests-integration</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>
