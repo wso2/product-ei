@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -18,7 +18,8 @@
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="mb-suite-initializer">
+<suite name="bps-humanTask-testSuite" parallel="false">
+
     <parameter name="useDefaultListeners" value="false"/>
     <listeners>
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestExecutionListener"/>
@@ -27,6 +28,15 @@
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestSuiteListener"/>
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
     </listeners>
-    <test name="InitializedAndSetupServer" preserve-order="true" parallel="false">
+
+    <!-- HumanTask TestCases -->
+    <test name="smoke-bpmn-tests" preserve-order="true" verbose="1" parallel="false">
+        <classes>
+            <class name="org.wso2.ei.businessprocess.integration.tests.bpmn.rest.BPMNRestProcessInstancesTest" />
+            <class name="org.wso2.ei.businessprocess.integration.tests.bpmn.rest.BPMNRestExecutionTest" />
+        </classes>
     </test>
+
 </suite>
+
+
