@@ -102,20 +102,20 @@ public class ViewPopTest extends ESBIntegrationTest {
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
         Awaitility.await()
-                .pollInterval(2, TimeUnit.SECONDS)
-                .atMost(10, TimeUnit.SECONDS)
+                .pollInterval(3, TimeUnit.SECONDS)
+                .atMost(120, TimeUnit.SECONDS)
                 .until(isProcessorDeactivated(PROCESSOR_NAME));
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor should not be active, " +
                 "but it is active.");
         Awaitility.await()
-                .pollInterval(2, TimeUnit.SECONDS)
-                .atMost(10, TimeUnit.SECONDS)
+                .pollInterval(3, TimeUnit.SECONDS)
+                .atMost(120, TimeUnit.SECONDS)
                 .until(hasMessage(PROCESSOR_NAME));
         Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
         messageProcessorClient.popMessage(PROCESSOR_NAME);
         Awaitility.await()
-                .pollInterval(2, TimeUnit.SECONDS)
-                .atMost(10, TimeUnit.SECONDS)
+                .pollInterval(3, TimeUnit.SECONDS)
+                .atMost(120, TimeUnit.SECONDS)
                 .until(hasNull(PROCESSOR_NAME));
         returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
         Assert.assertEquals(returnedMessage, null, "Returned message is not null as expected.");
