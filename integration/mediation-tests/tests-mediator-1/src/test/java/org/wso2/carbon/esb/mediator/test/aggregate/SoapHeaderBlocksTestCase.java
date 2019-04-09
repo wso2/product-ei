@@ -143,6 +143,12 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
         return null;
     }
 
+    /**
+     * Checks if a CAR file is deployed.
+     *
+     * @param carFileName   CAR file name.
+     * @return  True if exists, False otherwise.
+     */
     private Callable<Boolean> isCarFileDeployed(final String carFileName) {
         return new Callable<Boolean>() {
             @Override
