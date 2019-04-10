@@ -34,10 +34,10 @@ Used for storing temporary files, and is pointed to by the java.io.tmpdir System
  Apache License 2.0 and the relevant other licenses under which WSO2 EI is distributed.
 
 -README.txt <br> 
- Product information for WSO2 EI 6.5.0-M4.
+ Product information for WSO2 EI 6.5.0-M5.
 
 -release-notes.html <br>
- Release information for WSO2 EI 6.5.0-M4.
+ Release information for WSO2 EI 6.5.0-M5.
 
 -patches <br>
 Used to add patches related for all runtimes.
