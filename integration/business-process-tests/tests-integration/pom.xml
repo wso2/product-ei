@@ -39,11 +39,25 @@
         </license>
     </licenses>
 
-    <modules>
-        <module>bpel</module>
-        <module>humantasks</module>
-        <module>bpmn</module>
-        <module>taskcoordination</module>
-        <module>reports</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>bpel</module>
+                <module>humantasks</module>
+                <module>bpmn</module>
+                <module>taskcoordination</module>
+                <module>reports</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>smoke-tests</id>
+            <modules>
+                <module>bpmn</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>
