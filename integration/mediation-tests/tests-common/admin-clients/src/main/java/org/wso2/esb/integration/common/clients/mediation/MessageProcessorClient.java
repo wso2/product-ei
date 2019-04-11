@@ -134,20 +134,22 @@ public class MessageProcessorClient {
     /**
      * Check the functionality of the popMessage function
      * @param processorName name of the Processor
+     * @return <code>true</code> if popMessage is successful, else <code>false</code>
      * @throws RemoteException
      */
-    public void popMessage(String processorName) throws RemoteException {
-        messageProcessorAdminServiceStub.popMessage(processorName);
+    public boolean popMessage(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.popMessage(processorName);
     }
 
     /**
      * Check the functionality of the popAndEnqueueFunction
      * @param processorName name of the Processor
      * @param storeName name of the destination store
+     * @return <code>true</code> if popMessage is successful, else <code>false</code>
      * @throws RemoteException
      */
-    public void popAndRedirectMessage(String processorName, String storeName) throws RemoteException {
-        messageProcessorAdminServiceStub.popAndRedirectMessage(processorName,storeName);
+    public boolean popAndRedirectMessage(String processorName, String storeName) throws RemoteException {
+        return messageProcessorAdminServiceStub.popAndRedirectMessage(processorName,storeName);
     }
 
 }

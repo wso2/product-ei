@@ -101,24 +101,28 @@ public class ViewPopTest extends ESBIntegrationTest {
         requestHeader.put("Accept", "application/json");
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
+
+        //Check if the processor has deactivated
         Awaitility.await()
                 .pollInterval(3, TimeUnit.SECONDS)
                 .atMost(120, TimeUnit.SECONDS)
                 .until(isProcessorDeactivated(PROCESSOR_NAME));
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor should not be active, " +
                 "but it is active.");
+
+        //Check if browseMessage returns the expected message
         Awaitility.await()
                 .pollInterval(3, TimeUnit.SECONDS)
                 .atMost(120, TimeUnit.SECONDS)
                 .until(hasMessage(PROCESSOR_NAME));
         Assert.assertEquals(returnedMessage, expectedMessage, "Returned message is not the same as expected message.");
-        messageProcessorClient.popMessage(PROCESSOR_NAME);
-        Awaitility.await()
-                .pollInterval(3, TimeUnit.SECONDS)
-                .atMost(120, TimeUnit.SECONDS)
-                .until(hasNull(PROCESSOR_NAME));
+
+        //Check if message is successfully popped from the queue
+        Assert.assertTrue(messageProcessorClient.popMessage(PROCESSOR_NAME), "Message processor failed to pop the message");
+
+        //Check if the returned message is null
         returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
-        Assert.assertEquals(returnedMessage, null, "Returned message is not null as expected.");
+        Assert.assertNull(returnedMessage, "Returned message is not null as expected.");
     }
 
     private Callable<Boolean> hasMessage(final String PROCESSOR_NAME) throws Exception {
@@ -132,20 +136,6 @@ public class ViewPopTest extends ESBIntegrationTest {
                 return true;
             }
         };
-    }
-
-    private Callable<Boolean> hasNull(final String PROCESSOR_NAME) throws Exception {
-        return new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                returnedMessage = messageProcessorClient.browseMessage(PROCESSOR_NAME);
-                if (returnedMessage != null) {
-                    return false;
-                }
-                return true;
-            }
-        };
-
     }
 
     private Callable<Boolean> isProcessorDeactivated(final String PROCESSOR_NAME) throws Exception {
