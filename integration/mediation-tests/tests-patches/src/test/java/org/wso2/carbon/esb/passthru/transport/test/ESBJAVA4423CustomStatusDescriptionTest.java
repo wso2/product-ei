@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- * WSO2 Inc. licenses this file to you under the Apache License, 
- * Version 2.0 (the "License"); you may not use this file except 
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -21,13 +21,13 @@ import junit.framework.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
+import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
+import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.SimpleSocketServer;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A response with a custom status description should not be replaced by default description.
@@ -35,7 +35,6 @@ import java.io.IOException;
  */
 public class ESBJAVA4423CustomStatusDescriptionTest extends ESBIntegrationTest {
 
-    private ServerConfigurationManager serverConfigurationManager;
     private SimpleSocketServer simpleSocketServer;
 
     @BeforeClass
@@ -45,7 +44,7 @@ public class ESBJAVA4423CustomStatusDescriptionTest extends ESBIntegrationTest {
     }
 
     @Test(groups = "wso2.esb", description = "Test custom status description", enabled = true)
-    public void testCustomStatusDescription() {
+    public void testCustomStatusDescription() throws Exception {
         String expectedResponse = "HTTP/1.1 417 Custom response\r\nServer: testServer\r\n" +
                 "Content-Type: text/xml; charset=UTF-8\r\n" +
                 "Transfer-Encoding: chunked\r\n" +
@@ -55,12 +54,13 @@ public class ESBJAVA4423CustomStatusDescriptionTest extends ESBIntegrationTest {
         simpleSocketServer = new SimpleSocketServer(5389, expectedResponse);
         simpleSocketServer.start();
 
-        try {
-            //this will spawn an exception with the custom response included
-            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("ESBJAVA4423HttpCustomProxyTest"), "", "IBM");
-        } catch (IOException e) {
-            Assert.assertTrue(e.getMessage().contains("Custom response"));
-        }
+        String endpoint = getProxyServiceURLHttp("ESBJAVA4423HttpCustomProxyTest");
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("Content-Type", "text/xml");
+
+        HttpResponse httpResponse = HttpRequestUtil.doGet(endpoint, header);
+        Assert.assertTrue("Could not find custom status description in response",
+                httpResponse.getResponseMessage().contains("Custom response"));
     }
 
     @AfterClass

@@ -6,6 +6,7 @@
     <description/>
     <target faultSequence="ESBJAVA4239FaultSeq">
         <inSequence>
+            <property name="error.http.status.codes" value="404" scope="axis2"/>
             <callout serviceURL="http://localhost:1995" action="urn:getQuote">
                 <source xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
                         xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/"
