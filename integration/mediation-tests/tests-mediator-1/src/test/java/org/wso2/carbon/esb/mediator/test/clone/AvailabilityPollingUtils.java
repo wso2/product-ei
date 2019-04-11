@@ -31,7 +31,6 @@ public class AvailabilityPollingUtils {
 
     private static Log log = LogFactory.getLog(AvailabilityPollingUtils.class);
 
-
     /**
      * Check if message received from server logs.
      *
