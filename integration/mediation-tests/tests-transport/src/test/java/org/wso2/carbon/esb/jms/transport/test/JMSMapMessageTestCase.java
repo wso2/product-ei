@@ -40,6 +40,8 @@ public class JMSMapMessageTestCase extends ESBIntegrationTest {
 
     private List<Message> messages = new ArrayList<>();
     private int NUM_OF_MESSAGES = 3;
+    private static final String IN_QUEUE_NAME = "JMSMapMessageTestIn";
+    private static final String OUT_QUEUE_NAME = "JMSMapMessageTestOut";
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
@@ -49,14 +51,14 @@ public class JMSMapMessageTestCase extends ESBIntegrationTest {
         Awaitility.await()
                   .pollInterval(50, TimeUnit.MILLISECONDS)
                   .atMost(60, TimeUnit.SECONDS)
-                  .until(isServiceDeployed("JmsProxy"));
+                  .until(isServiceDeployed(IN_QUEUE_NAME));
     }
 
     @Test(groups = {"wso2.esb"}, description = "Test proxy service with jms transport")
     public void testJMSProxy() throws Exception {
 
         JMSQueueMessageProducer sender = new JMSQueueMessageProducer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
-        String queueName = "JmsProxy";
+        String queueName = IN_QUEUE_NAME;
         try {
             sender.connect(queueName);
             for (int i = 0; i < NUM_OF_MESSAGES; i++) {
@@ -81,7 +83,7 @@ public class JMSMapMessageTestCase extends ESBIntegrationTest {
 
         JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
         try {
-            consumer.connect("target");
+            consumer.connect(OUT_QUEUE_NAME);
             Awaitility.await()
                       .pollInterval(50, TimeUnit.MILLISECONDS)
                       .atMost(60, TimeUnit.SECONDS)
@@ -96,9 +98,6 @@ public class JMSMapMessageTestCase extends ESBIntegrationTest {
                 } else {
                     Assert.fail("No message found in target queue");
                 }
-//                if (consumer.popMessage() != null) {
-//                    Assert.fail("JMS Proxy service failed to pick the messages from Queue");
-//                }
             }
         } finally {
             consumer.disconnect();

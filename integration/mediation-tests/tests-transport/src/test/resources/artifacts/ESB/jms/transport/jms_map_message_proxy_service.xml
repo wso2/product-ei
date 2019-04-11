@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="JmsProxy" transports="jms" startOnLoad="true" trace="disable">
+    <proxy name="JMSMapMessageTestIn" transports="jms" startOnLoad="true" trace="disable">
         <target>
             <inSequence>
                 <property action="set" name="OUT_ONLY" value="true"/>
@@ -16,7 +16,7 @@
                 </payloadFactory>
             </inSequence>
             <endpoint>
-                <address uri="jms:/mapProxy?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
+                <address uri="jms:/JMSMapMessageTestIntermediate?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
             </endpoint>
 
         </target>
@@ -29,7 +29,7 @@
     </proxy>
 
 
-    <proxy name="mapProxy" transports="jms" startOnLoad="true" trace="disable">
+    <proxy name="JMSMapMessageTestIntermediate" transports="jms" startOnLoad="true" trace="disable">
         <target>
             <inSequence>
                 <property action="set" name="OUT_ONLY" value="true"/>
@@ -37,7 +37,7 @@
                 <log level="full"/>
             </inSequence>
             <endpoint>
-                <address uri="jms:/target?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
+                <address uri="jms:/JMSMapMessageTestOut?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
             </endpoint>
         </target>
         <parameter name="transport.jms.ContentType">
