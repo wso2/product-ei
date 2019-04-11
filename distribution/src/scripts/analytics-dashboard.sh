@@ -24,15 +24,15 @@ CYGWIN*) cygwin=true;;
 MINGW*) mingw=true;;
 OS400*) os400=true;;
 Darwin*) darwin=true
-        if [ -z "$JAVA_VERSION" ] ; then
-             JAVA_VERSION="CurrentJDK"
-           else
-             echo "Using Java version: $JAVA_VERSION"
-           fi
-           if [ -z "$JAVA_HOME" ] ; then
-             JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/${JAVA_VERSION}/Home
-           fi
-           ;;
+    if [ -z "$JAVA_VERSION" ] ; then
+        JAVA_VERSION="CurrentJDK"
+    else
+        echo "Using Java version: $JAVA_VERSION"
+    fi
+    if [ -z "$JAVA_HOME" ] ; then
+        JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/${JAVA_VERSION}/Home
+    fi
+    ;;
 esac
 
 # resolve links - $0 may be a softlink

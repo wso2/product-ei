@@ -39,6 +39,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
 
+    public static final String CONF_FILTERS_DYNAMIC_SEQ_1 = "conf:/filters/dynamic_seq1";
+    
     private String toUrl = null;
     private String mainSeqUrl;
     private SequenceAdminServiceClient sequenceAdminServiceClient;
@@ -224,7 +226,7 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
 
             Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(
                     60, TimeUnit.SECONDS).until(dynamicSequenceExists(sequenceAdminServiceClient.
-                    getDynamicSequences(), "conf:/filters/dynamic_seq1"));
+                    getDynamicSequences(), CONF_FILTERS_DYNAMIC_SEQ_1));
         }
         sequenceAdminServiceClient.addDynamicSequence("conf:filters/dynamic_seq1", setEndpoints(omElement));
         //load it to esb
@@ -313,6 +315,13 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
 
     }
 
+    /**
+     * Checks if a dynamic sequence exists inside a sequence array.
+     *
+     * @param seqArr    Sequence array.
+     * @param strToFind Sequence to be checked.
+     * @return  True if exists, False otherwise.
+     */
     private Callable<Boolean> dynamicSequenceExists (final String[] seqArr, final String strToFind) {
         return new Callable<Boolean>() {
             @Override

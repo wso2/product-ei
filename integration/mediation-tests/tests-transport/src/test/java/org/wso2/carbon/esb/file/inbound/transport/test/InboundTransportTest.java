@@ -39,16 +39,30 @@ import org.wso2.esb.integration.common.utils.Utils;
 
 public class InboundTransportTest extends ESBIntegrationTest {
 
+    public static final String SPC_CHAR = "spcChar";
+    public static final String SPECIAL_CHARS_FILE_NAME = "test123@wso2_xml.xml";
+    public static final String TEST_XML_FILE_NAME = "test.xml";
+    public static final String MOVE = "move";
+    public static final String PROCESSED = "processed";
+    public static final String INVALID_CONTENT_TYPE_XML = "invalidContentType.xml";
+    public static final String IN = "in";
+    public static final String LOG_SYMBOL_WSO2 = "<m0:symbol>WSO2</m0:symbol>";
+    public static final String URI = "uri";
+    public static final String CONTENT_TYPE = "ContentType";
+    public static final String INBOUND_FILE_LISTENING_FOLDER = "inboundFileListeningFolder";
+    public static final String SYNAPSE_CONFIG = "synapseconfig";
+    public static final String VFS_TRANSPORT = "vfsTransport";
+
     private LogViewerClient logViewerClient;
     private File inboundFileListeningFolder;
     private String pathToFtpDir;
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        pathToFtpDir = getESBResourceLocation() + File.separator + "synapseconfig"
-                        + File.separator + "vfsTransport" + File.separator;
+        pathToFtpDir = getESBResourceLocation() + File.separator + SYNAPSE_CONFIG
+                       + File.separator + VFS_TRANSPORT + File.separator;
 
-        inboundFileListeningFolder = new File(pathToFtpDir + File.separator + "inboundFileListeningFolder");
+        inboundFileListeningFolder = new File(pathToFtpDir + File.separator + INBOUND_FILE_LISTENING_FOLDER);
 
         // create inboundFileListeningFolder if not exists
         if (inboundFileListeningFolder.exists()) {
@@ -72,14 +86,14 @@ public class InboundTransportTest extends ESBIntegrationTest {
     public void testInboundEnpointReadFile_ContentType_XML() throws Exception {
         logViewerClient.clearLogs();
 
-        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-        File targetFolder = new File(inboundFileListeningFolder + File.separator + "ContentType");
-        File targetFile = new File(targetFolder + File.separator + "test.xml");
+        File sourceFile = new File(pathToFtpDir + File.separator + TEST_XML_FILE_NAME);
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + CONTENT_TYPE);
+        File targetFile = new File(targetFolder + File.separator + TEST_XML_FILE_NAME);
 
         FileUtils.copyFile(sourceFile, targetFile);
         addInboundEndpoint(addEndpoint1(targetFolder.getAbsolutePath()));
 
-        boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
+        boolean isFileRead = Utils.checkForLog(logViewerClient, "LOG_SYMBOL_WSO2", 10);
         Assert.assertTrue(isFileRead, "The XML file is not getting read");
     }
 
@@ -89,7 +103,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
     public void testInboundEnpointDeleteFileAfterProcess() throws Exception {
 
         File sourceFile = new File(
-                inboundFileListeningFolder + File.separator + "ContentType" + File.separator + "test.xml");
+                inboundFileListeningFolder + File.separator + CONTENT_TYPE + File.separator + TEST_XML_FILE_NAME);
         Assert.assertFalse(sourceFile.exists(), "The file is not deleted after the read");
     }
 
@@ -113,9 +127,9 @@ public class InboundTransportTest extends ESBIntegrationTest {
     public void testInboundEndpointInvalidFileUri() throws Exception {
 
 
-        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-        File targetFolder = new File(inboundFileListeningFolder + File.separator + "uri");
-        File targetFile = new File(targetFolder + File.separator + "test.xml");
+        File sourceFile = new File(pathToFtpDir + File.separator + TEST_XML_FILE_NAME);
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + URI);
+        File targetFile = new File(targetFolder + File.separator + TEST_XML_FILE_NAME);
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint4());
@@ -137,9 +151,9 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint File name with special chars URI Test case")
     public void testInboundEndpointFileName_SpecialChars() throws Exception {
 
-        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-        File targetFolder = new File(inboundFileListeningFolder + File.separator + "spcChar");
-        File targetFile = new File(targetFolder + File.separator + "test123@wso2_xml.xml");
+        File sourceFile = new File(pathToFtpDir + File.separator + TEST_XML_FILE_NAME);
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + SPC_CHAR);
+        File targetFile = new File(targetFolder + File.separator + SPECIAL_CHARS_FILE_NAME);
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint5());
@@ -162,13 +176,13 @@ public class InboundTransportTest extends ESBIntegrationTest {
     public void testInboundEndpointContentTypeInvalid() throws Exception {
         logViewerClient.clearLogs();
 
-        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-        File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
-        File targetFile = new File(targetFolder + File.separator + "invalidContentType.xml");
+        File sourceFile = new File(pathToFtpDir + File.separator + TEST_XML_FILE_NAME);
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + IN);
+        File targetFile = new File(targetFolder + File.separator + INVALID_CONTENT_TYPE_XML);
         try {
             FileUtils.copyFile(sourceFile, targetFile);
             addInboundEndpoint(addEndpoint6());
-            boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
+            boolean isFileRead = Utils.checkForLog(logViewerClient, LOG_SYMBOL_WSO2, 10);
             Assert.assertTrue(isFileRead, "The XML file is not getting read");
 
             Assert.assertTrue(!targetFile.exists(), "file not deleted after processed");
@@ -183,7 +197,7 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint Content type not specified Test case")
     public void testInboundEndpointContentTypeNotSpecified() throws Exception {
 
-        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File sourceFile = new File(pathToFtpDir + File.separator + TEST_XML_FILE_NAME);
         File targetFolder = new File(inboundFileListeningFolder + File.separator + "in");
         File targetFile = new File(targetFolder + File.separator + "in.xml");
         try {
@@ -205,17 +219,17 @@ public class InboundTransportTest extends ESBIntegrationTest {
           description = "Inbound Endpoint move after process Test case")
     public void testInboundEndpointMoveAfterProcess() throws Exception {
 
-        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-        File targetFolder = new File(inboundFileListeningFolder + File.separator + "move");
-        File targetFile = new File(targetFolder + File.separator + "test.xml");
-        File processedFolder = new File(inboundFileListeningFolder + File.separator + "processed");
+        File sourceFile = new File(pathToFtpDir + File.separator + TEST_XML_FILE_NAME);
+        File targetFolder = new File(inboundFileListeningFolder + File.separator + MOVE);
+        File targetFile = new File(targetFolder + File.separator + TEST_XML_FILE_NAME);
+        File processedFolder = new File(inboundFileListeningFolder + File.separator + PROCESSED);
         if (processedFolder.exists()) {
             processedFolder.delete();
         } else {
             processedFolder.mkdir();
         }
 
-        File processedFile = new File(processedFolder + File.separator + "test.xml");
+        File processedFile = new File(processedFolder + File.separator + TEST_XML_FILE_NAME);
 
         try {
             FileUtils.copyFile(sourceFile, targetFile);
@@ -360,6 +374,12 @@ public class InboundTransportTest extends ESBIntegrationTest {
         return file.exists() && file.delete();
     }
 
+    /**
+     * Checks if a file exists.
+     *
+     * @param file  File to be found.
+     * @return  True if exists, False otherwise.
+     */
     private Callable<Boolean> isFileExist(final File file) {
         return new Callable<Boolean>() {
             @Override
@@ -369,6 +389,12 @@ public class InboundTransportTest extends ESBIntegrationTest {
         };
     }
 
+    /**
+     * Checks if a file does not exist.
+     *
+     * @param file  File to be found.
+     * @return  True if does not exist, False otherwise.
+     */
     private Callable<Boolean> isFileNotExist(final File file) {
         return new Callable<Boolean>() {
             @Override
