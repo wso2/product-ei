@@ -38,9 +38,7 @@ import java.util.Map;
  */
 public class ClientSSLCertificateTestCase extends ESBIntegrationTest {
 
-    private final String CUSTOM_MEDIATOR_FILE_NAME = "certmediator-1.0.jar";
     private final String CONFIG_LOCATION = getESBResourceLocation() + File.separator + "ssl" + File.separator;
-    private final String PROXY_SERVICE = "ClientSSLCertTestProxy";
     private ServerConfigurationManager serverManager;
 
     @SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
@@ -49,7 +47,6 @@ public class ClientSSLCertificateTestCase extends ESBIntegrationTest {
         super.init();
         serverManager = new ServerConfigurationManager(context);
         serverManager.applyConfigurationWithoutRestart(new File(CONFIG_LOCATION + "axis2.xml"));
-        serverManager.copyToComponentLib(new File(CONFIG_LOCATION + CUSTOM_MEDIATOR_FILE_NAME));
         serverManager.restartGracefully();
         super.init();
     }
@@ -86,6 +83,7 @@ public class ClientSSLCertificateTestCase extends ESBIntegrationTest {
         reqProps.put("SOAPAction", "urn:echoString");
         String response;
         try {
+            String PROXY_SERVICE = "ClientSSLCertTestProxy";
             response = MutualSSLClient.sendPostRequest(getProxyServiceURLHttps(PROXY_SERVICE), soapMessage, reqProps);
             log.info("Response received : " + response);
         } catch (IOException ioException) {
