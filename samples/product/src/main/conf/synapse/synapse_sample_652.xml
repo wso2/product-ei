@@ -21,7 +21,7 @@
 <!-- Introduction to priority based mediation -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <proxy name="StockQuoteProxy">
+    <proxy name="StockQuoteProxy" transports="http https">
         <target>
             <inSequence>
                 <filter source="$trp:priority" regex="1">

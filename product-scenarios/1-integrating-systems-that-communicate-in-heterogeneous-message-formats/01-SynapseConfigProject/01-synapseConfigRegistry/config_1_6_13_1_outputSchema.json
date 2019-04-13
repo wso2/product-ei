@@ -1,0 +1,26 @@
+{
+  "$schema" : "http://wso2.org/json-schema/wso2-data-mapper-v5.0.0/schema#",
+  "id" : "http://wso2jsonschema.org",
+  "title" : "Employees",
+  "type" : "object",
+  "properties" : {
+    "Employee" : {
+      "id" : "http://wso2jsonschema.org/Employee",
+      "type" : "array",
+      "items" : [ {
+        "id" : "http://wso2jsonschema.org/Employee/0",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "id" : "http://wso2jsonschema.org/Employee/0/name",
+            "type" : "string"
+          },
+          "gender" : {
+            "id" : "http://wso2jsonschema.org/Employee/0/gender",
+            "type" : "string"
+          }
+        }
+      } ]
+    }
+  }
+}

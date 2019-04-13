@@ -27,23 +27,10 @@
       <property name="org.wso2.ws.dataservice.autocommit">false</property>
       <property name="org.wso2.ws.dataservice.validation_query"/>
    </config>
-   <query id="employeesInOfficeSQL" useConfig="default">
-      <sql>select employeeNumber, firstName, lastName, email, jobTitle from Employees where officeCode = :officeCode</sql>
-      <result outputType="json">            {               "Employees":{                  "Employee":[                     {                        "employeeNumber":"$employeeNumber(type:integer)",                        "firstName":"$firstName",                        "email":"$email"                     }                  ]               }            }              </result>
-      <param name="officeCode" sqlType="STRING"/>
-   </query>
-   <query id="listOfficesSQL" useConfig="default">
-      <sql>select officeCode, addressLine1, addressLine2, city, state, country, phone from Offices</sql>
-      <result outputType="json">            {               "Offices":{                  "Office":[                     {                        "officeCode":"$officeCode(type:integer)",                        "city":"$city",                        "country":"$country",                        "phone":"$phone",                        "@employeesInOfficeSQL":"$officeCode-&gt;officeCode"                     }                  ]               }            }      </result>
-   </query>
    <query id="employeesByNumberSQL" useConfig="default">
       <sql>select * from Employees where employeeNumber = ?</sql>
       <result outputType="json">                    {               "employees":{                  "employee":[                     {                        "lastName":"$lastName",                        "firstName":"$firstName",                        "salary":"$salary(type:double)"                     }                  ]               }            }      </result>
       <param name="employeeNumber" ordinal="1" sqlType="INTEGER"/>
-   </query>
-   <query id="customersInBostonSQL" useConfig="default">
-      <sql>select  * from Customers where city = 'Boston' and country = 'USA'</sql>
-      <result outputType="json">             {               "customers":{                  "customer":[                     {                        "phone":"$phone",                        "city":"$city",                        "contact":{                           "customer-name":"$customerName",                           "contact-last-name":"$contactLastName",                           "contact-first-name":"$contactFirstName"                        }                     }                  ]               }            }      </result>
    </query>
    <query id="addEmployeeQuery" useConfig="default">
       <sql>insert into Employees (employeeNumber, lastName, firstName, email, salary) values(:employeeNumber,:lastName,:firstName,:email,:salary)</sql>
@@ -60,21 +47,15 @@
    <query id="updateEmployeeQuery" useConfig="default">
       <sql>update Employees set lastName=:lastName, firstName=:firstName, email=:email, salary=:salary where employeeNumber=:employeeNumber</sql>
       <param name="employeeNumber" sqlType="INTEGER"/>
-      <param name="lastName" sqlType="STRING">
+      <param name="lastName" optional="True" sqlType="STRING">
          <validateLength maximum="20" minimum="3"/>
       </param>
-      <param name="firstName" sqlType="STRING"/>
-      <param name="email" sqlType="STRING">
+      <param name="firstName" optional="True" sqlType="STRING"/>
+      <param name="email" optional="True" sqlType="STRING">
          <validatePattern pattern="(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|&quot;(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot;)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"/>
       </param>
-      <param defaultValue="1500" name="salary" sqlType="DOUBLE"/>
+      <param name="salary" optional="True" sqlType="DOUBLE"/>
    </query>
-   <resource method="GET" path="offices">
-      <call-query href="listOfficesSQL"/>
-   </resource>
-   <resource method="GET" path="boston_customers">
-      <call-query href="customersInBostonSQL"/>
-   </resource>
    <resource method="GET" path="employee/{employeeNumber}">
       <call-query href="employeesByNumberSQL">
          <with-param name="employeeNumber" query-param="employeeNumber"/>

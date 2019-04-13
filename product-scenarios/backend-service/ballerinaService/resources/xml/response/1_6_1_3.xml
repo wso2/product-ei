@@ -1,0 +1,17 @@
+<hospital>
+    <patients>
+        <patient>
+            <address>California</address>
+            <dob>1990-03-19</dob>
+            <email>johndoe@gmail.com</email>
+            <name>John Doe</name>
+            <phone>8770586755</phone>
+            <ssn>234-23-525</ssn>
+        </patient>
+    </patients>
+    <doctors>
+        <doctor>
+            <name>Collings</name>
+        </doctor>
+    </doctors>
+</hospital>

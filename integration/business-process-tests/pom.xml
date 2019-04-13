@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>integrations</artifactId>
-        <version>6.5.0-m3-SNAPSHOT</version>
+        <version>6.5.0-m5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -39,9 +39,24 @@
         </license>
     </licenses>
 
-    <modules>
-        <module>tests-common</module>
-        <module>tests-integration</module>
-        <module>tests-patches</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>tests-common</module>
+                <module>tests-integration</module>
+                <module>tests-patches</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>smoke-tests</id>
+            <modules>
+                <module>tests-common</module>
+                <module>tests-integration</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<xs:schema xmlns:ax22="http://services.samples/xsd"
+           attributeFormDefault="qualified" elementFormDefault="qualified"
+           targetNamespace="http://services.samples"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://services.samples">
+    <xs:import schemaLocation="SimpleStockQuoteSchema.xsd" namespace="http://services.samples/xsd"/>
+    <xs:element name="SimpleStockQuoteServiceException">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0"
+                            name="SimpleStockQuoteServiceException" nillable="true"
+                            type="ns:Exception"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="Exception">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="Message" nillable="true"
+                        type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="getQuote">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="request" nillable="true"
+                            type="ax22:GetQuote"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getQuoteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="return" nillable="true"
+                            type="ax22:GetQuoteResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getSimpleQuote">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="symbol" nillable="true"
+                            type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getSimpleQuoteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="return" nillable="true"
+                            type="ax22:GetQuoteResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getFullQuote">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="request" nillable="true"
+                            type="ax22:GetFullQuote"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getFullQuoteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="return" nillable="true"
+                            type="ax22:GetFullQuoteResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMarketActivity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="request" nillable="true"
+                            type="ax22:GetMarketActivity"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMarketActivityResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="return" nillable="true"
+                            type="ax22:GetMarketActivityResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="placeOrder">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="order" nillable="true"
+                            type="ax22:PlaceOrder"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

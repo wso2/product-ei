@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="SEQ_JsonToXMLTransformation" groupId="org.wso2.ei.product-scenarios.scenario_1_3.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/SEQ_JsonToXMLTransformation.xml</file>
+    </artifact>
+    <artifact name="in_transform" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/in_transform.xml</file>
+    </artifact>
+    <artifact name="out_transform" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/out_transform.xml</file>
+    </artifact>
+    <artifact name="EP_StockQuote" groupId="org.wso2.ei.product-scenarios.scenario_1_3.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/EP_StockQuote.xml</file>
+    </artifact>
+    <artifact name="JsonToSoap" groupId="org.wso2.ei.product-scenarios.scenario_1_3.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/JsonToSoap.xml</file>
+    </artifact>
+</artifacts>

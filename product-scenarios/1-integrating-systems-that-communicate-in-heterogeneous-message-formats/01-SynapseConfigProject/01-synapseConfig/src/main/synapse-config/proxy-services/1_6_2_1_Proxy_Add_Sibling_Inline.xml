@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_2_1_Proxy_Add_Sibling_Inline" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <enrich>
+                <source clone="true" type="inline">
+                    <gender xmlns="">M</gender>
+                </source>
+                <target action="sibling" xpath="//last_name"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

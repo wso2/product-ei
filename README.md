@@ -1,4 +1,4 @@
-# WSO2 Enterprise Integrator 6.4.0
+# WSO2 Enterprise Integrator 6.5.0-M5
 
 WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus and Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared component directory, with profile-based management capabilities for each runtime.
 
@@ -8,7 +8,7 @@ WSO2 EI simplifies integration by allowing users to easily configure message rou
 
 ## Running the Integrator
 
-1. Extract  wso2ei-6.4.0.zip and go to the extracted directory/bin.
+1. Extract  wso2ei-6.5.0-M5.zip and go to the extracted directory/bin.
 2. Run integrator.sh or integrator.bat.
 3. Point your favourite browser to  <https://localhost:9443/carbon>
 4. Use the following username and password to login
@@ -17,8 +17,8 @@ WSO2 EI simplifies integration by allowing users to easily configure message rou
 
 ## Running other runtimes individually (Analytics, Broker, Business-Process)
 
-1. Extract wso2ei-6.4.0 and go to the extracted directory.
-2. Go to wso2ei-6.4.0/wso2 directory.
+1. Extract wso2ei-6.5.0-M5 and go to the extracted directory.
+2. Go to wso2ei-6.5.0-M5/wso2 directory.
 3. Go to appropriate runtime directory (analytics/broker/business-process) /bin.
 4. Execute wso2server.sh or wso2server.bat.
 5. Access the url related to the required runtime. (For example, use <https://localhost:9445/carbon> for the business-process runtime.)
@@ -48,7 +48,7 @@ For example, you need to download the certificate with thumbprint ***97817950D81
 
 - Get a clone or download source from [github](https://github.com/wso2/product-ei)
 - Run the Maven command ``mvn clean install`` from the root directory
-- Extract the Product EI distribution created at product-ei/distribution/target/wso2ei-6.4.0.zip in to your local directory
+- Extract the Product EI distribution created at product-ei/distribution/target/wso2ei-6.5.0-M5.zip in to your local directory
 
 ## Building Product EI with dependency repositories
 
@@ -128,6 +128,11 @@ Dependent repositories:product-ei
 
 Repository URL <https://github.com/wso2/msf4j>  
 Microservices implementation framework for java
+
+## Connectors
+
+WSO2 EI supports connectors available at the repository 
+Repository URL <https://github.com/wso2-extensions?utf8=%E2%9C%93&q=esb&type=&language=>
 
 
 ## Build status of product EI

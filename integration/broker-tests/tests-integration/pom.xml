@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>mb-integration-tests</artifactId>
-        <version>6.5.0-m3-SNAPSHOT</version>
+        <version>6.5.0-m5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -32,11 +32,27 @@
     <artifactId>mb-integration</artifactId>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>tests-amqp</module>
-        <module>tests-server</module>
-        <module>tests-patches</module>
-        <!--<module>reports</module>-->
-    </modules>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>tests-amqp</module>
+                <module>tests-server</module>
+                <module>tests-patches</module>
+                <!--<module>reports</module>-->
+            </modules>
+
+        </profile>
+        <profile>
+            <id>smoke-tests</id>
+            <modules>
+                <module>tests-amqp</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

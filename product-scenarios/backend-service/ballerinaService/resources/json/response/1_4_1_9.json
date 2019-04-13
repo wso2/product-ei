@@ -1,0 +1,20 @@
+{
+    "appointmentNumber": 33,
+    "doctor": {
+        "name": "thomas collins",
+        "hospital": "grand oak community hospital",
+        "category": "surgery",
+        "availability": "9.00 a.m - 11.00 a.m",
+        "fee": 7000
+    },
+    "patient": {
+        "name": "John Doe",
+        "dob": "1990-03-19",
+        "ssn": "234-23-525",
+        "address": "California",
+        "phone": "8770586755",
+        "email": "johndoe@gmail.com"
+    },
+    "fee": 7000,
+    "confirmed": false
+}

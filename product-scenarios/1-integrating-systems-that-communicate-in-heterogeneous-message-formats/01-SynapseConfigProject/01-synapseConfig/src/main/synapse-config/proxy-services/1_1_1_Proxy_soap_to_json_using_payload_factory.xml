@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_1_1_Proxy_soap_to_json_using_payload_factory" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                <format>{ "LookupCity": {"Zip": $1}}</format>
+                <args>
+                    <arg evaluator="xml" expression="//tem:LookupCity/tem:Zip" xmlns:tem="http://tempuri.org"/>
+                </args>
+            </payloadFactory>
+            <send>
+                <endpoint key="JSON_EP"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <payloadFactory description="Build SOAP request payload" media-type="xml">
+                <format>
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soapenv:Body>
+                            <LookupCityResult xmlns="http://tempuri.org">
+                                <LookupCity>
+                                    <City>$1</City>
+                                    <State>$2</State>
+                                    <Zip>$3</Zip>
+                                </LookupCity>
+                            </LookupCityResult>
+                        </soapenv:Body>
+                    </soapenv:Envelope>
+                </format>
+                <args>
+                    <arg evaluator="json" expression="$.LookupCityResult.City"/>
+                    <arg evaluator="json" expression="$.LookupCityResult.State"/>
+                    <arg evaluator="json" expression="$.LookupCityResult.Zip"/>
+                </args>
+            </payloadFactory>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+            <respond description="Respond to client"/>
+        </outSequence>
+        <faultSequence>
+            <makefault version="soap11">
+                <code expression="get-property('ERROR_CODE')" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <header action="remove" name="To" scope="default"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+            <respond/>
+        </faultSequence>
+    </target>
+</proxy>

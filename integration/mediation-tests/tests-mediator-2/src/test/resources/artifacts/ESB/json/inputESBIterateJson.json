@@ -1,0 +1,20 @@
+{
+  "students": {
+    "studentlist": [
+      {
+        "Name": "Alice",
+        "Age": 35
+      },
+      {
+        "Name": "Bob",
+        "Age": 32
+      },
+      {
+        "Name": "Camry",
+        "Age": 27,
+        "Status" : ["Married"]
+      }
+    ]
+  },
+  "placeHolder": "PlaceHolder"
+}

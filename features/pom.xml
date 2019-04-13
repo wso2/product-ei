@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
-        <version>6.5.0-m3-SNAPSHOT</version>
+        <version>6.5.0-m5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -33,8 +33,6 @@
     <url>http://wso2.org</url>
 
     <modules>
-        <module>org.wso2.carbon.integrator.server.feature</module>
-        <module>org.wso2.carbon.micro.integrator.server.feature</module>
         <module>org.wso2.ei.styles.feature</module>
         <module>org.wso2.ei.analytics.feature</module>
         <module>org.wso2.ei.analytics.styles.feature</module>

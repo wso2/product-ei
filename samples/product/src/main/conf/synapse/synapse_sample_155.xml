@@ -21,7 +21,7 @@
 <!-- A proxy service with a dual channel invocation to the actual server -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <proxy name="StockQuoteProxy">
+    <proxy name="StockQuoteProxy" transports="http https">
         <target>
             <endpoint>
                 <address uri="http://localhost:9000/services/SimpleStockQuoteService">

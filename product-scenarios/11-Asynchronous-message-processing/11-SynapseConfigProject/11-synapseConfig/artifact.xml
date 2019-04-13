@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied. See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+<artifacts>
+    <artifact name="11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue" groupId="org.wso2.ei.product-scenarios.scenario_11.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/11_1_1_1_1_1_API_testAsyncHttpToHttpViaQueue.xml</file>
+    </artifact>
+    <artifact name="11_1_1_1_1_1_Proxy_testAsyncHttpToHttpViaQueue" groupId="org.wso2.ei.product-scenarios.scenario_11.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/11_1_1_1_1_1_Proxy_testAsyncHttpToHttpViaQueue.xml</file>
+    </artifact>
+    <artifact name="11_1_1_1_1_1_Queue_EP" groupId="org.wso2.ei.product-scenarios.scenario_11.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/11_1_1_1_1_1_Queue_EP.xml</file>
+    </artifact>
+    <artifact name="ECHO_EP" groupId="org.wso2.ei.product-scenarios.scenario_11.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/ECHO_EP.xml</file>
+    </artifact>
+    <artifact name="Seq_request" groupId="org.wso2.ei.product-scenarios.scenario_11.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/Seq_request.xml</file>
+    </artifact>
+    <artifact name="11.1.1.1.1.2_Inbound_jms" groupId="org.wso2.ei.product-scenarios.scenario_11.inbound-endpoint" version="1.0.0" type="synapse/inbound-endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/inbound-endpoints/11.1.1.1.1.2_Inbound_jms.xml</file>
+    </artifact>
+    <artifact name="11_1_1_1_1_2_Queue_EP" groupId="org.wso2.ei.product-scenarios.scenario_11.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/11_1_1_1_1_2_Queue_EP.xml</file>
+    </artifact>
+    <artifact name="11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue" groupId="org.wso2.ei.product-scenarios.scenario_11.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/11_1_1_1_1_2_API_testAsyncHttpToHttpViaQueue.xml</file>
+    </artifact>
+</artifacts>

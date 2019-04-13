@@ -42,8 +42,6 @@
                 Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for
                 EI Analytics, Business Processor and Message Broker. This product distribution includes a shared
                 component directory, with profile-based management capabilities for each runtime.
-                WSO2 EI distribution contains another lightweight integration runtime called 'Micro Integrator' that is
-                optimized to deploy in containers.
             </p>
 
             <p>
@@ -65,11 +63,11 @@
                 <li>If you need to start the OSGi console with the server use the property
                     -DosgiConsole when starting the server.</li>
             </ol>
-            <h3>Running other runtimes individually (Analytics, Broker, Business Process, Micro Integrator)</h3>
+            <h3>Running other runtimes individually (Analytics, Broker, Business Process )</h3>
             <ol>
                 <li>Extract wso2ei-@product.version@.zip and go to the extracted directory.</li>
                 <li>Go to wso2ei-@product.version@/wso2 directory.</li>
-                <li>Go to appropriate runtime directory (analytics/broker/business-process/micro-integrator) /bin.</li>
+                <li>Go to appropriate runtime directory (analytics/broker/business-process) /bin.</li>
                 <li> Execute wso2server.sh or wso2server.bat.</li>
             </ol>
 
