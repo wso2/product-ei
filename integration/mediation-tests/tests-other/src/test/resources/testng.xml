@@ -148,6 +148,12 @@
         </packages>
     </test>
 
+    <test name="SOAP11 to JSON Conversion Tests" preserve-order="true" verbose="2">
+        <classes>
+            <class name="org.wso2.carbon.esb.message.conversion.SOAP11ToJSONConversion"/>
+        </classes>
+    </test>
+
 </suite>
 
 
