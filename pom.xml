@@ -1548,7 +1548,7 @@
         <carbon-deployment.feature.imp.version>4.7.22</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.6.42</carbon.registry.version>
+        <carbon.registry.version>4.6.43</carbon.registry.version>
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.2.19</carbon.identity-inbound-auth-sts.version>
