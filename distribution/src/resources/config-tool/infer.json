@@ -4,16 +4,6 @@
       "transport.vfs.listener.class": "org.apache.synapse.transport.vfs.VFSTransportListener"
     }
   },
-  "transport.fix.listener.enable": {
-    "true": {
-      "transport.fix.listener.class": "org.apache.synapse.transport.fix.FIXTransportListener"
-    }
-  },
-  "transport.hl7.listener.enable": {
-    "true": {
-      "transport.hl7.listener.class": "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"
-    }
-  },
   "transport.sap.listener.enable": {
     "true": {
       "transport.sap.listener.idoc.enable": true,
@@ -33,16 +23,6 @@
   "transport.vfs.sender.enable": {
     "true": {
       "transport.vfs.sender.class": "org.apache.synapse.transport.vfs.VFSTransportSender"
-    }
-  },
-  "transport.fix.sender.enable": {
-    "true": {
-      "transport.fix.sender.class": "org.apache.synapse.transport.fix.FIXTransportSender"
-    }
-  },
-  "transport.hl7.sender.enable": {
-    "true": {
-      "transport.hl7.sender.class": "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"
     }
   },
   "transport.sap.sender.enable": {

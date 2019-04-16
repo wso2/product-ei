@@ -22,13 +22,6 @@
 #
 ##############################################
 
-## This file contains the configuration parameters used by the Pass-through HTTP transport
-
-rest.dispatcher.service=__MultitenantDispatcherService
-rest_uri_api_regex=\\w+://.+:\\d+/t/.*|\\w+://.+\\w+/t/.*|^(/t/).*
-rest_uri_proxy_regex=\\w+://.+:\\d+/services/t/.*|\\w+://.+\\w+/services/t/.*|^(/services/t/).*
-http.socket.reuseaddr=true
-
-{%for property, value in passthru_properties.items() %}
+{%for property, value in jndi_properties.items() %}
 {{property}} = {{value}}
 {% endfor %}

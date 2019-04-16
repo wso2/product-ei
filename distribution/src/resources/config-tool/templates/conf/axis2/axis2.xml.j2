@@ -29,9 +29,9 @@
     <parameter name="hotupdate" locked="false">true</parameter>
 
     <!-- Change this to true if you want to enable MTOM -->
-    <parameter name="enableMTOM" locked="false">{{deployment.enableMTOM}}</parameter>
+    <parameter name="enableMTOM" locked="false">{{server.enableMTOM}}</parameter>
     <!-- Change this to true if you want to enable SwA -->
-    <parameter name="enableSwA" locked="false">{{deployment.enableSwA}}</parameter>
+    <parameter name="enableSwA" locked="false">{{server.enableSwA}}</parameter>
 
     <!-- If you want to enable file caching for attachments change this to true -->
     <parameter name="cacheAttachments" locked="false">false</parameter>
@@ -62,8 +62,8 @@
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">{{deployment.userAgent}}</parameter>
-    <parameter name="server" locked="true">{{deployment.serverDetails}}</parameter>
+    <parameter name="userAgent" locked="true">{{server.userAgent}}</parameter>
+    <parameter name="server" locked="true">{{server.serverDetails}}</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
@@ -183,43 +183,55 @@
     <!--             Transport Ins (Listeners)             -->
     <!-- ================================================= -->
 
-    <transportReceiver name="http" class="{{transport.passthru_http.listener.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_http.parameter.items() %}
+    <transportReceiver name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpListener">
+        {% for parameter_key,parameter_value in transport.http.listener.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportReceiver>
 
-    <transportReceiver name="https" class="{{transport.passthru_https.listener.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_https.listener.parameter.items() %}
+    <transportReceiver name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener">
+        {% for parameter_key,parameter_value in transport.https.listener.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>{{transport.http.listener.key_store.file_name}}</Location>
-                <Type>{{transport.http.listener.key_store.type}}</Type>
-                <Password>{{transport.http.listener.key_store.password}}</Password>
-                <KeyPassword>{{transport.http.listener.key_store.key_password}}</KeyPassword>
+                <Location>repository/resources/security/{{transport.http.listener.keystore.file_name}}</Location>
+                <Type>{{transport.http.listener.keystore.type}}</Type>
+                <Password>{{transport.http.listener.keystore.password}}</Password>
+                <KeyPassword>{{transport.http.listener.keystore.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>{{transport.http.listener.trust_store.file_name}}</Location>
-                <Type>{{transport.http.listener.trust_store.type}}</Type>
-                <Password>{{transport.http.listener.trust_store.password}}</Password>
+                <Location>repository/resources/security/{{transport.http.listener.truststore.file_name}}</Location>
+                <Type>{{transport.http.listener.truststore.type}}</Type>
+                <Password>{{transport.http.listener.truststore.password}}</Password>
             </TrustStore>
         </parameter>
+        {% if transport.http.listener.verify_client is defined %}
+        <parameter name="SSLVerifyClient">{{transport.http.listener.verify_client}}</parameter>
+        {% endif %}
+
+        {% if transport.http.listener.ssl_profile.file_path is defined %}
         <!-- ============================================== -->
         <!-- Configuration for Listener Dynamic SSL Profile loading. -->
         <!-- Configured for 10 mins. -->
         <!-- ============================================== -->
         <parameter name="dynamicSSLProfilesConfig">
-            <filePath>{{transport.passthru_https.listener.ssl_profile.file_path}}</filePath>
-            <fileReadInterval>{{transport.passthru_https.listener.ssl_profile.interval}}</fileReadInterval>
+            <filePath>{{transport.http.listener.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.http.listener.ssl_profile.read_interval}}</fileReadInterval>
         </parameter>
+        {% endif %}
     </transportReceiver>
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
     {% if transport.vfs.listener.enable == true %}
-    <transportReceiver name="vfs" class="{{transport.vfs.listener.class}}"/>
+    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener">
+        <parameter locked="false" name="keystore.identity.location">{{transport.vfs.listener.keystore.file_name}}</parameter>
+        <parameter locked="false" name="keystore.identity.type">{{transport.vfs.listener.keystore.type}}</parameter>
+        <parameter locked="false" name="keystore.identity.store.password">{{transport.vfs.listener.keystore.password}}</parameter>
+        <parameter locked="false" name="keystore.identity.key.password">{{transport.vfs.listener.keystore.key_password}}</parameter>
+        <parameter locked="false" name="keystore.identity.alias">{{transport.vfs.listener.keystore.alias}}</parameter>
+    </transportReceiver>
     {% endif %}
     {% if transport.mail.listener.enable == true %}
     <transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">
@@ -236,10 +248,10 @@
     </transportReceiver>
     {% endif %}
     {% if transport.fix.listener.enable == true %}
-    <transportReceiver name="fix" class="{{transport.fix.listener.class}}"/>
+    <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
     {% endif %}
     {% if transport.hl7.listener.enable == true %}
-    <transportReceiver name="hl7" class="{{transport.hl7.listener.class}}"/>
+    <transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"/>
     {% endif %}
     <!-- SAP Transport Listeners -->
     {% if transport.sap.listener.idoc.enable == true %}
@@ -267,7 +279,7 @@
     </transportReceiver>
     {% endif %}
 
-    {% for transport_item in custom_transport %}
+    {% for transport_item in custom_transport.listener %}
     <transportReceiver name="{{transport_item.protocol}}" class="{{transport_item.class}}">
         {% for parameter_key,parameter_value in transport_item.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
@@ -293,17 +305,28 @@
         {% endif %}
     </transportReceiver>
     {% endfor %}
+    <transportReceiver name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportListener">
+        <parameter name="transport.tcp.port">6060</parameter>
+    </transportReceiver>
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
 
-    <transportSender name="http" class="{{transport.passthru_http.sender.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_http.sender.parameter.items() %}
+    <transportSender name="http" class="{{transport.http.sender.class}}">
+        <parameter name="non-blocking" locked="false">true</parameter>
+        {% if transport.http.sender.warn_on_http_500 is defined %}
+        <parameter name="warnOnHTTP500" locked="false">transport.http.sender.warn_on_http_500</parameter>
+        {% endif %}
+        <parameter name="http.nonProxyHosts" locked="false">{% for parameter_key,parameter_value in transport.http.sender.non_proxy_hosts %}
+        {{parameter_value}}|
+        {% endfor %}</parameter>
+        {% for parameter_key,parameter_value in transport.http.sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
-    <transportSender name="https" class="{{transport.passthru_https.sender.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_https.sender.parameter.items() %}
+    <transportSender name="https" class="{{transport.https.sender.class}}">
+        <parameter name="non-blocking" locked="false">true</parameter>
+        {% for parameter_key,parameter_value in transport.https.sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
@@ -321,14 +344,14 @@
                 <Password>{{transport.http.sender.trust_store.password}}</Password>
             </TrustStore>
         </parameter>
-        {% if transport.passthru_https.sender.ssl_profile.file_path is defined %}
+        {% if transport.http.sender.ssl_profile.file_path is defined %}
         <!-- ============================================== -->
         <!-- Configuration for Dynamic SSL Profile loading. -->
         <!-- Configured for 10 mins. -->
         <!-- ============================================== -->
         <parameter name="dynamicSSLProfilesConfig">
-            <filePath>{{transport.passthru_https.sender.ssl_profile.file_path}}</filePath>
-            <fileReadInterval>{{transport.passthru_https.sender.ssl_profile.interval}}</fileReadInterval>
+            <filePath>{{transport.http.sender.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.http.sender.ssl_profile.read_interval}}</fileReadInterval>
         </parameter>
         {% endif %}
     </transportSender>
@@ -344,24 +367,21 @@
     </transportSender>
     {% endif %}
     <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
-    {% if transport.local.sender.nonblocking.enable == true %}
-    <transportSender name="local" class="{{transport.local.sender.nonblocking.class}}"/>
-    {% endif %}
     {% if transport.vfs.sender.enable == true %}
-    <transportSender name="vfs" class="{{transport.vfs.sender.class}}"/>
+    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
     {% endif %}
-    {% if transport.mailto.sender is defined %}
-    <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
-        {% for parameter_key,parameter_value in transport.mailto.sender.parameter.items() %}
+    {% for mail_sender in transport.mailto.sender %}
+    <transportSender name="{{mail_sender.name}}" class="org.apache.axis2.transport.mail.MailTransportSender">
+        {% for parameter_key,parameter_value in mail_sender.parameter.items() %}
         <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
-    {% endif %}
+    {% endfor %}
     {% if transport.fix.sender.enable == true %}
-    <transportSender name="fix" class="{{transport.fix.sender.class}}"/>
+    <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>
     {% endif %}
     {% if transport.hl7.sender.enable == true %}
-    <transportSender name="hl7" class="{{transport.hl7.sender.class}}"/>
+    <transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"/>
     {% endif %}
     <!-- SAP Transport Senders -->
     {% if transport.sap.sender.idoc.enable == true %}

@@ -1,0 +1,10 @@
+{
+  "time": {
+    "synapse_properties.'synapse.global_timeout_interval'": "ms",
+    "synapse_properties.'statistics.clean.interval'": "ms",
+
+    "passthru_properties.'http.socket.timeout'": "ms",
+
+    "transport.http.listener.ssl_profile.read_interval": "ms"
+  }
+}

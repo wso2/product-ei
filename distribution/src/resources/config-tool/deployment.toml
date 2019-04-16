@@ -1,4 +1,4 @@
-[deployment]
+[server]
 hostname = "localhost"
 node_ip = "127.0.0.1"
 
@@ -29,7 +29,7 @@ alias = "wso2carbon"
 key_password = "wso2carbon"
 
 [truststore]
-file_name = "wso2carbon.jks"
+file_name = "client-truststore.jks"
 password = "wso2carbon"
 alias = "symmetric.key.value"
 algorithm = "AES"
