@@ -104,17 +104,26 @@ public class RedirectTest extends ESBIntegrationTest {
         requestHeader.put("Accept", "application/json");
 
         HttpRequestUtil.doPost(new URL(getProxyServiceURLHttp(PROXY_NAME)), inputPayload, requestHeader);
+
+        //Check if the processor has deactivated
         Awaitility.await()
                 .pollInterval(3, TimeUnit.SECONDS)
                 .atMost(120, TimeUnit.SECONDS)
                 .until(isProcessorDeactivated(PROCESSOR_NAME));
         Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message processor" + PROCESSOR_NAME
                 + "should not be active, but it is active.");
+
+        //Manually deactivate REDIRECT_PROCESSOR and check if deactivated properly
         messageProcessorClient.deactivateProcessor(REDIRECT_PROCESSOR_NAME);
         Assert.assertFalse(messageProcessorClient.isActive(REDIRECT_PROCESSOR_NAME), "Message processor"
                 + REDIRECT_PROCESSOR_NAME + " should not be active, " +
                 "but it is active.");
-        messageProcessorClient.popAndRedirectMessage(PROCESSOR_NAME, REDIRECT_STORE_NAME);
+
+        //Check if message has successfully been redirected
+        Assert.assertTrue(messageProcessorClient.popAndRedirectMessage(PROCESSOR_NAME, REDIRECT_STORE_NAME),
+                "Message processor failed to redirect the message");
+
+        //Check if the message redirected is the expected message
         Awaitility.await()
                 .pollInterval(3, TimeUnit.SECONDS)
                 .atMost(120, TimeUnit.SECONDS)
