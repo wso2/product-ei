@@ -12,6 +12,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 target/
+*.mar
 
 # ignore Intellij-IDEA files
 *.iml
@@ -29,3 +30,6 @@ target/
 # ignore target directories
 target/
 *.*~
+
+# ignore the copied samples
+integration/mediation-tests/tests-platform/tests-wso2mb/src/test/resources/artifacts/ESB/samples/
