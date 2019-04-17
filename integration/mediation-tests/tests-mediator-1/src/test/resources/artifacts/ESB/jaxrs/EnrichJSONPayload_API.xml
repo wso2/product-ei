@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api name="AddMusic" context="/addMusic">
+        <resource methods="POST" uri-template="/music*">
+            <inSequence>
+                <enrich>
+                    <source type="inline" clone="false">[{}]</source>
+                    <target xpath="json-eval($.assetCode)"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+</definitions>
