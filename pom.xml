@@ -1495,7 +1495,7 @@
         <product.ei.version>6.5.0-m6-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.95</carbon.business-process.version>
+        <carbon.business-process.version>4.4.96</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v35</orbit.version.axis2>
@@ -1613,7 +1613,7 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.96</carbon.data.version>
+        <carbon.data.version>4.4.97</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <carbon.metrics.version>1.2.4</carbon.metrics.version>
