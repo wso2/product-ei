@@ -1509,7 +1509,7 @@
 
         <!--MB-->
         <carbon.messaging.version>3.2.71</carbon.messaging.version>
-        <carbon.metrics.version>1.2.4</carbon.metrics.version>
+        <carbon.metrics.version>1.2.5</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
         <andes.version>3.2.97</andes.version>
@@ -1525,7 +1525,7 @@
         <axiom.wso2.version>1.2.11.wso2v13</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v99</synapse.version>
+        <synapse.version>2.1.7-wso2v100</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v34</axis2.transport.version>
@@ -1534,7 +1534,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.128</carbon.mediation.version>
+        <carbon.mediation.version>4.6.129</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.40</carbon.kernel.version>
@@ -1613,10 +1613,9 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.97</carbon.data.version>
+        <carbon.data.version>4.4.98</carbon.data.version>
         <carbon.event-processing.version>2.1.24</carbon.event-processing.version>
         <sso.feature.version>1.5.5</sso.feature.version>
-        <carbon.metrics.version>1.2.4</carbon.metrics.version>
         <orbit.version.joda-time>2.9.4.wso2v1</orbit.version.joda-time>
 
         <!-- Misc -->
