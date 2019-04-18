@@ -53,7 +53,7 @@ shift
 goto initial
 
 :run
-integrator.bat %CMD% -Dei.sample=%cn% -Dcarbon.registry.root=/esb-samples/s%cn%
+..\..\bin\integrator.bat %CMD% -Dei.sample=%cn% -Dcarbon.registry.root=/esb-samples/s%cn%
 goto done
 
 :invalid_number

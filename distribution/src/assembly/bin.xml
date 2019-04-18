@@ -852,6 +852,9 @@
         <fileSet>
             <directory>src/scripts</directory>
             <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <excludes>
+                <exclude>wso2ei-samples.sh</exclude>
+            </excludes>
             <includes>
                 <include>**.sh</include>
             </includes>
@@ -863,6 +866,9 @@
         <fileSet>
             <directory>src/scripts</directory>
             <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <excludes>
+                <exclude>wso2ei-samples.bat</exclude>
+            </excludes>
             <includes>
                 <include>**.bat</include>
                 <include>build.xml</include>
@@ -1485,6 +1491,22 @@
     </dependencySets>
 
     <files>
+
+        <file>
+            <source>src/scripts/wso2ei-samples.sh</source>
+            <outputDirectory>
+                wso2ei-${pom.version}/samples/bin
+            </outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
+
+        <file>
+            <source>src/scripts/wso2ei-samples.bat</source>
+            <outputDirectory>
+                wso2ei-${pom.version}/samples/bin
+            </outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
 
         <!-- BPS files: Start -->
 
