@@ -1,0 +1,3 @@
+<m:GetPriceResponse xmlns:m="https://www.w3schools.com/prices">
+  <m:Price>1.90</m:Price>
+</m:GetPriceResponse>

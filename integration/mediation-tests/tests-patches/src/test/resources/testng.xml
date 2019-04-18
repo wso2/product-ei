@@ -54,6 +54,7 @@
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4239_HTTP_SC_HandlingTests"/>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4239_AccessHTTPSCAfterCallout"/>
             <class name="org.wso2.carbon.esb.mediators.payloadFactory.ESBJAVA3573PayloadFormatWithBeginHtmlTagArgument"/>
+            <class name="org.wso2.carbon.esb.mediators.payloadFactory.JSONPayloadXMLSpecialCharEscapeTest"/>
             <class name="org.wso2.carbon.esb.mediators.clone.ESBJAVA4913HandleExceptionTest"/>
             <class name="org.wso2.carbon.esb.mediators.aggregate.ESBJAVA5103CorrelateOnExpressionTestCase"/>
             <class name="org.wso2.carbon.esb.mediators.cache.DistributedCachingHeaderSerializationTestcase"/>

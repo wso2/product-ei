@@ -1,0 +1,28 @@
+map_S_breakfast_menu_S_menu = function(){ 
+var outputmenu={};
+
+var count_i_food = 0;
+outputmenu =  {};
+outputmenu.item =  [];
+
+for(i_food in inputbreakfast_menu.food){
+outputmenu.item[count_i_food] =  {};
+outputmenu.item[count_i_food].name = inputbreakfast_menu.food[i_food].name;
+outputmenu.item[count_i_food].price = inputbreakfast_menu.food[i_food].price;
+outputmenu.item[count_i_food].calories = inputbreakfast_menu.food[i_food].calories;
+outputmenu.item[count_i_food].orgin = inputbreakfast_menu.food[i_food].orgin;
+outputmenu.item[count_i_food].veg = inputbreakfast_menu.food[i_food].veg;
+outputmenu.item[count_i_food].description = inputbreakfast_menu.food[i_food].description;
+
+count_i_food++;
+}
+return outputmenu;
+};
+
+
+
+
+
+
+
+

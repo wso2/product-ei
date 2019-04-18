@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_3_2_Proxy_replace_targetBySourceBodyDefinedThroughXpath" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <enrich>
+                <source clone="true" type="body"/>
+                <target xmlns:sam="http://sample.wso2.org" xmlns:xsd="http://sample.wso2.org/xsd" xpath="//sam:placeOrder/sam:order/xsd:price"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

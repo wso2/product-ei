@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~  Copyright (c) 2018, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+~
+~  WSO2 Inc. licenses this file to you under the Apache License,
+~  Version 2.0 (the "License"); you may not use this file except
+~  in compliance with the License.
+~  You may obtain a copy of the License at
+~
+~    http://www.apache.org/licenses/LICENSE-2.0
+~
+~  Unless required by applicable law or agreed to in writing,
+~  software distributed under the License is distributed on an
+~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~  KIND, either express or implied.  See the License for the
+~  specific language governing permissions and limitations
+~  under the License.
+-->
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <registry provider="org.wso2.carbon.mediation.registry.WSO2Registry">
+        <parameter name="cachableDuration">15000</parameter>
+    </registry>
+    <sequence name="fault">
+        <log level="full">
+            <property name="MESSAGE" value="Executing default 'fault' sequence"/>
+            <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+            <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+        </log>
+        <drop/>
+    </sequence>
+    <sequence name="main">
+        <in>
+            <log level="full"/>
+            <filter regex="http://localhost:9000.*" source="get-property('To')">
+                <send/>
+            </filter>
+        </in>
+        <out>
+            <send/>
+        </out>
+        <description>The main sequence for the message mediation</description>
+    </sequence>
+    <api context="/testEnterAPI" name="testEnterAPI">
+        <resource methods="POST">
+            <inSequence>
+                <log level="full"/>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <property name="ContentType" scope="axis2" value="application/json"/>
+                <payloadFactory media-type="json" escapeXmlChars="true">
+                    <format>$1</format>
+                    <args>
+                        <arg evaluator="json" expression="$.text"/>
+                    </args>
+                </payloadFactory>
+                <clone continueParent="true">
+                    <target>
+                        <sequence>
+                            <log level="custom">
+                                <property name="testClone" value="Inside Clone Mediator"/>
+                            </log>
+                        </sequence>
+                    </target>
+                </clone>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence>
+                <respond/>
+            </faultSequence>
+        </resource>
+    </api>
+</definitions>

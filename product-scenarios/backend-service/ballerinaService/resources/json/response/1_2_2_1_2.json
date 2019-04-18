@@ -1,0 +1,18 @@
+{
+    "LookupCityResults": [{
+            "Zip": "35801",
+            "City": "Huntsville",
+            "State": "Alabama"
+        },
+        {
+            "Zip": "85001",
+            "City": "Phoenix",
+            "State": "Arizona"
+        },
+        {
+            "Zip": "99501",
+            "City": "Anchorage",
+            "State": "Alaska"
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="POX_EP" xmlns="http://ws.apache.org/ns/synapse">
+    <address uri="http://ei-backend.scenarios.wso2.org:9090/eiTests/XMLEndpoint">
+        <timeout>
+            <responseAction>fault</responseAction>
+        </timeout>
+        <suspendOnFailure>
+            <errorCodes>-1</errorCodes>
+            <initialDuration>0</initialDuration>
+            <progressionFactor>1.0</progressionFactor>
+            <maximumDuration>0</maximumDuration>
+        </suspendOnFailure>
+        <markForSuspension>
+            <errorCodes>-1</errorCodes>
+        </markForSuspension>
+    </address>
+</endpoint>

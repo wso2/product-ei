@@ -1,0 +1,9 @@
+{
+    "getQuote": {
+        "request": {
+            "symbol": [
+                "IBM"
+            ]
+        }
+    }
+}

@@ -1,0 +1,22 @@
+map_S_Employees_S_Employees = function(){ 
+var outputEmployees={};
+
+var count_i_Employee = 0;
+outputEmployees =  {};
+outputEmployees.Employee =  [];
+
+for(i_Employee in inputEmployees.Employee){
+outputEmployees.Employee[count_i_Employee] =  {};
+outputEmployees.Employee[count_i_Employee].name = inputEmployees.Employee[i_Employee].name.toString().toLowerCase();
+outputEmployees.Employee[count_i_Employee].city = inputEmployees.Employee[i_Employee].city.toString().toLowerCase();
+outputEmployees.Employee[count_i_Employee].gender = inputEmployees.Employee[i_Employee].gender;
+
+count_i_Employee++;
+}
+return outputEmployees;
+};
+
+
+
+
+

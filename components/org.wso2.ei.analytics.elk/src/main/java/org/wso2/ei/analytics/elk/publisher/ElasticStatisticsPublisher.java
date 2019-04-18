@@ -132,7 +132,7 @@ public class ElasticStatisticsPublisher {
             BulkResponse response = bulkRequest.get();
 
             if (log.isDebugEnabled()) {
-                log.debug("Bulk Request took " + response.getTookInMillis() + " milliseconds");
+                log.debug("Bulk Request took " + response.getTook() + " milliseconds");
             }
         } catch (NoNodeAvailableException e) {
             log.error("No available Elasticsearch Nodes to connect. Please give correct configurations and" +

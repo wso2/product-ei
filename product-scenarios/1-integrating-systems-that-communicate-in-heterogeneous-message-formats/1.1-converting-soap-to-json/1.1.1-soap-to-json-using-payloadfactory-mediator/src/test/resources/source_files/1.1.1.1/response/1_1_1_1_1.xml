@@ -1,0 +1,1 @@
+<?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><LookupCityResult xmlns="http://tempuri.org"><LookupCity><City>Chicago</City><State>IL</State><Zip>60601</Zip></LookupCity></LookupCityResult></soapenv:Body></soapenv:Envelope>

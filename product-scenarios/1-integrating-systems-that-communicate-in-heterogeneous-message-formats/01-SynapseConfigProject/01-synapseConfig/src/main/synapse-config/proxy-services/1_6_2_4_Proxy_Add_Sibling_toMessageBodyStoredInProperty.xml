@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property name="testProperty" scope="default">
+                <productid xmlns="">IC002</productid>
+            </property>
+            <enrich>
+                <source clone="true" property="testProperty" type="property"/>
+                <target action="sibling" xmlns:xsd="http://services.samples/xsd" xpath="//xsd:symbol"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

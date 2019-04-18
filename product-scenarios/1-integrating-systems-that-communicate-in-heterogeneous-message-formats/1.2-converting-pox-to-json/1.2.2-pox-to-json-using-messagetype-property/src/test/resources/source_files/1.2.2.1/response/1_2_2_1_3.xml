@@ -1,0 +1,7 @@
+<jsonObject>
+    <getQuote>
+        <request>
+            <symbol/>
+        </request>
+    </getQuote>
+</jsonObject>

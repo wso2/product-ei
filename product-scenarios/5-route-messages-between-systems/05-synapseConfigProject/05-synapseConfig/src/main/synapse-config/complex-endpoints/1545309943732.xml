@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="{ep.name}" xmlns="http://ws.apache.org/ns/synapse">
+    <loadbalance algorithm="org.apache.synapse.endpoints.algorithms.RoundRobin">
+        <endpoint key="05_EP_SOAP"/>
+        <endpoint key="05_EP_SOAP2"/>
+    </loadbalance>
+</endpoint>

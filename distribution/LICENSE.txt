@@ -87,7 +87,7 @@ bcprov-jdk15on-1.60.jar                                                         
 bcprov-jdk15-132.jar                                                            jar            bouncy    285
 bcprov-jdk15on.jar                                                              bundle         bouncy    1342
 bcprov-jdk15on_1.52.0.wso2v1.jar                                                bundle         bouncy    8485
-bpmn-sample-jars-6.4.0.jar                                                      jar            apache2   3373
+bpmn-sample-jars-6.5.0-M5.jar                                                      jar            apache2   3373
 bsf-all_3.0.0.wso2v5.jar                                                        bundle         apache2   5254
 bsh_1.3.0.wso2v1.jar                                                            bundle         lgpl2     1539
 cassandra-thrift_1.2.13.wso2v4.jar                                              bundle         apache2   4379
@@ -861,7 +861,7 @@ org.wso2.carbon.inbound.ui_4.6.104.jar                                          
 org.wso2.carbon.inbound.ui_4.6.105.jar                                          bundle         apache2   18767
 org.wso2.carbon.inbound_4.6.104.jar                                             bundle         apache2   18475
 org.wso2.carbon.inbound_4.6.105.jar                                             bundle         apache2   18766
-org.wso2.carbon.integrator.core_6.4.0.jar                                       bundle         apache2   18474
+org.wso2.carbon.integrator.core_6.5.0-M5.jar                                       bundle         apache2   18474
 org.wso2.carbon.java2wsdl.ui_4.6.49.jar                                         bundle         apache2   18473
 org.wso2.carbon.java2wsdl_4.6.49.jar                                            bundle         apache2   18472
 org.wso2.carbon.jndi-1.0.0-alpha.jar                                            bundle         apache2   16072
@@ -1108,9 +1108,9 @@ org.wso2.carbon.metrics.jdbc.reporter_2.0.0.jar                                 
 org.wso2.carbon.metrics.jdbc.reporter_2.3.7.jar                                 bundle         apache2   14611
 org.wso2.carbon.metrics.manager_1.2.3.jar                                       bundle         apache2   11923
 org.wso2.carbon.metrics.view.ui_1.2.3.jar                                       bundle         apache2   11922
-org.wso2.carbon.micro.integrator.core_6.4.0.jar                                 bundle         apache2   18368
-org.wso2.carbon.micro.integrator.security_6.4.0.jar                             bundle         apache2   18367
-org.wso2.carbon.micro.integrator.server-6.4.0.jar                               bundle         apache2   18575
+org.wso2.carbon.micro.integrator.core_6.5.0-M5.jar                                 bundle         apache2   18368
+org.wso2.carbon.micro.integrator.security_6.5.0-M5.jar                             bundle         apache2   18367
+org.wso2.carbon.micro.integrator.server-6.5.0-M5.jar                               bundle         apache2   18575
 org.wso2.carbon.module.mgt.stub_4.7.19.jar                                      bundle         apache2   15643
 org.wso2.carbon.module.mgt.ui_4.7.19.jar                                        bundle         apache2   15642
 org.wso2.carbon.module.mgt_4.7.19.jar                                           bundle         apache2   15641
@@ -1322,11 +1322,11 @@ org.wso2.carbon.wsdl2code.ui_4.6.49.jar                                         
 org.wso2.carbon.wsdl2code_4.6.49.jar                                            bundle         apache2   18334
 org.wso2.carbon.wsdl2form-4.6.49.jar                                            bundle         apache2   18341
 org.wso2.ciphertool-1.0.0-wso2v8.jar                                            bundle         apache2   16276
-org.wso2.ei.analytics.elk_6.4.0.jar                                             bundle         apache2   18333
-org.wso2.ei.broker.styles_6.4.0.jar                                             bundle         apache2   18332
-org.wso2.ei.business-process.styles_6.4.0.jar                                   bundle         apache2   18331
-org.wso2.ei.samples_6.4.0.jar                                                   bundle         apache2   18330
-org.wso2.ei.styles_6.4.0.jar                                                    bundle         apache2   18329
+org.wso2.ei.analytics.elk_6.5.0-M5.jar                                             bundle         apache2   18333
+org.wso2.ei.broker.styles_6.5.0-M5.jar                                             bundle         apache2   18332
+org.wso2.ei.business-process.styles_6.5.0-M5.jar                                   bundle         apache2   18331
+org.wso2.ei.samples_6.5.0-M5.jar                                                   bundle         apache2   18330
+org.wso2.ei.styles_6.5.0-M5.jar                                                    bundle         apache2   18329
 org.wso2.orbit.asm4.asm4-all_4.0.0.wso2v1.jar                                   bundle         apache2   4710
 org.wso2.securevault-1.0.0-wso2v2.jar                                           bundle         apache2   3537
 org.wso2.securevault_1.0.0.wso2v2.jar                                           bundle         apache2   768
@@ -1345,7 +1345,7 @@ perf4j_0.9.12.wso2v1.jar                                                        
 poi-ooxml_3.17.0.wso2v1.jar                                                     bundle         apache2   15508
 poi-scratchpad_3.17.0.wso2v1.jar                                                bundle         apache2   15507
 poi_3.17.0.wso2v1.jar                                                           bundle         apache2   15506
-process-tools-6.4.0.jar                                                         bundle         apache2   3372
+process-tools-6.5.0-M5.jar                                                         bundle         apache2   3372
 quartz_2.1.1.wso2v1.jar                                                         bundle         apache2   975
 quickfixj_1.4.0.wso2v2.jar                                                      bundle         apache2   1393
 rampart-1.6.1-wso2v26.mar                                                       bundle         apache2   15485
@@ -1358,8 +1358,8 @@ reflections_0.9.11.wso2v1.jar                                                   
 reindex-client-5.4.3.jar                                                        jarinbundle    apache2   2709
 rest-5.4.3.jar                                                                  jarinbundle    apache2   2708
 rome_0.9.0.wso2v1.jar                                                           bundle         apache2   930
-sample-client-6.4.0.jar                                                         bundle         apache2   3375
-sample-utils-6.4.0.jar                                                          bundle         apache2   3371
+sample-client-6.5.0-M5.jar                                                         bundle         apache2   3375
+sample-utils-6.5.0-M5.jar                                                          bundle         apache2   3371
 sandesha2-core-1.6.1-wso2v1.jar                                                 bundle         apache2   5039
 sandesha2.mar                                                                   jar            apache2   660
 Saxon-HE_9.7.0.wso2v1.jar                                                       bundle         mpl10     14598

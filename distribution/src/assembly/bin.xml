@@ -264,78 +264,6 @@
             </excludes>
         </fileSet>
 
-        <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator</outputDirectory>
-            <excludes>
-                <exclude>**/*.sh</exclude>
-                <exclude>**/wso2</exclude>
-                <exclude>**/repository/conf/**</exclude>
-                <exclude>**/repository/components/**</exclude>
-                <exclude>**/wso2/components/**</exclude>
-                <exclude>**/lib/**</exclude>
-                <exclude>**/bin/**</exclude>
-                <exclude>**/conf/axis2/axis2.xml</exclude>
-                <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
-                <exclude>**/conf/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
-                <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
-                <exclude>**/version.txt</exclude>
-                <exclude>**/wso2carbon-version.txt</exclude>
-                <exclude>**/wso2server.bat</exclude>
-                <exclude>**/README.txt</exclude>
-                <exclude>**/LICENSE.txt</exclude>
-                <exclude>**/registry.xml</exclude>
-                <exclude>**/user-mgt.xml</exclude>
-                <exclude>**/release-notes.html</exclude>
-                <exclude>**/carbon.xml</exclude>
-                <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
-                <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
-                <exclude>**/repository/conf/registry.xml</exclude>
-                <exclude>**/repository/conf/tomcat/web.xml</exclude>
-                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
-                <exclude>**/repository/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-jms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/tomcat/carbon/META-INF/context.xml</exclude>
-                <exclude>**/repository/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar
-                </exclude>
-                <exclude>**/repository/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
-            </excludes>
-        </fileSet>
-
-        <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <excludes>
-                <exclude>**/wso2</exclude>
-                <exclude>**/*.sh</exclude>
-                <exclude>**/axis2/axis2.xml</exclude>
-                <exclude>**/axis2/tenant-axis2.xml</exclude>
-                <exclude>**/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
-                <exclude>**/services/sample01.aar</exclude>
-                <exclude>**/repository/services/version/**</exclude>
-                <exclude>**/version.txt</exclude>
-                <exclude>**/registry.xml</exclude>
-                <exclude>**/wso2carbon-version.txt</exclude>
-                <exclude>**/user-mgt.xml</exclude>
-                <exclude>**/wso2server.bat</exclude>
-                <exclude>**/README.txt</exclude>
-                <exclude>**/LICENSE.txt</exclude>
-                <exclude>**/release-notes.html</exclude>
-                <exclude>**/carbon.xml</exclude>
-                <exclude>**/lib/endorsed/xalan*.jar</exclude>
-                <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/tomcat/carbon/META-INF/context.xml</exclude>
-                <exclude>**//tomcat/catalina-server.xml</exclude>
-            </excludes>
-        </fileSet>
-
         <!-- MSF4J product -->
         <fileSet>
             <directory>
@@ -404,42 +332,6 @@
                 <exclude>**/wrapper.conf</exclude>
                 <exclude>build.xml</exclude>
             </excludes>
-        </fileSet>
-
-        <fileSet>
-            <directory>target/wso2carbon-core-${carbon.kernel.version}/bin</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/bin</outputDirectory>
-            <excludes>
-                <exclude>**/*.sh</exclude>
-                <exclude>**/*.bat</exclude>
-                <exclude>**/wrapper.conf</exclude>
-                <exclude>build.xml</exclude>
-            </excludes>
-        </fileSet>
-
-        <fileSet>
-            <directory>src/micro-integrator/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/bin</outputDirectory>
-            <includes>
-                <include>**.sh</include>
-                <include>**.bat</include>
-            </includes>
-            <fileMode>755</fileMode>
-        </fileSet>
-
-        <fileSet>
-            <directory>src/scripts/</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/bin
-            </outputDirectory>
-            <includes>
-                <include>**/build.xml</include>
-                <include>**/carbondump.bat</include>
-                <include>**/carbondump.sh</include>
-                <include>**/chpasswd.bat</include>
-                <include>**/chpasswd.sh</include>
-                <include>**/tcpmon.bat</include>
-                <include>**/tcpmon.sh</include>
-            </includes>
         </fileSet>
 
         <fileSet>
@@ -1014,31 +906,6 @@
 
         <fileSet>
             <directory>
-                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventpublishers
-            </directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/eventpublishers
-            </outputDirectory>
-        </fileSet>
-
-        <fileSet>
-            <directory>
-                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/eventstreams
-            </directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/eventstreams
-            </outputDirectory>
-        </fileSet>
-
-        <fileSet>
-            <directory>src/micro-integrator/resources/dockerfiles</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/dockerfiles</outputDirectory>
-            <excludes>
-                <exclude>Dockerfile</exclude>
-            </excludes>
-        </fileSet>
-
-
-        <fileSet>
-            <directory>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server/jaggeryapps
             </directory>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/jaggeryapps
@@ -1053,14 +920,7 @@
                 <include>**/webapp-classloading-environments.xml</include>
             </includes>
         </fileSet>
-        <fileSet>
-            <directory>./src/resources/tomcat</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat</outputDirectory>
-            <includes>
-                <include>**/catalina-server.xml</include>
-                <include>**/webapp-classloading-environments.xml</include>
-            </includes>
-        </fileSet>
+
         <fileSet>
             <directory>./src/resources</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/lib/endorsed</outputDirectory>
@@ -1118,22 +978,6 @@
                 <include>**/cipher-standalone-config.properties</include>
             </includes>
         </fileSet>
-        <fileSet>
-            <directory>./src/conf</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <includes>
-                <include>**/cipher-standalone-config.properties</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>
-                ../p2-profile/micro-integrator-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity
-            </directory>
-            <outputDirectory>
-                wso2ei-${pom.version}/wso2/micro-integrator/conf/identity/
-            </outputDirectory>
-        </fileSet>
-
 
         <fileSet>
             <directory>../samples/product/services</directory>
@@ -1227,22 +1071,6 @@
         <fileSet>
             <directory>src/conf/carbonapps</directory>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/server/carbonapps
-            </outputDirectory>
-            <excludes>
-                <exclude>empty.txt</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>src/conf/synapse-configs</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/synapse-configs
-            </outputDirectory>
-            <excludes>
-                <exclude>**/empty.txt</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>src/conf/carbonapps</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/carbonapps
             </outputDirectory>
             <excludes>
                 <exclude>empty.txt</exclude>
@@ -1357,158 +1185,166 @@
 
         <!-- Adding Analytics related files to distribution -->
 
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/target/wso2sp-${project.version}/</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>**/*.sh</exclude>-->
-		<!--<exclude>**/wso2/lib/features/**</exclude>-->
-            <!--</excludes>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/target/wso2sp-${project.version}/</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics</outputDirectory>
+            <excludes>
+                <exclude>**/*.sh</exclude>
+                <exclude>**/wso2/lib/features/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/target/wso2sp-${project.version}/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>
+            <includes>
+                <include>**.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/manager</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/manager</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/worker</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/worker</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/dashboard</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/dashboard</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
 
 
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/manager</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/manager</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/worker</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/worker</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/dashboard</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/dashboard</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/transports/manager</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/conf/transports</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/transports/worker</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/conf/transports</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/transports/dashboard</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/conf/transports</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
 
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/conf/osgi</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/osgi</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/resources/security</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/resources/security</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>
+            <includes>
+                <include>**/*.sh</include>
+                <include>**/*.bat</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/bin</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>
+            <includes>
+                <include>**/*.txt</include>
+            </includes>
+            <fileMode>444</fileMode>
+        </fileSet>
 
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/transports/manager</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/conf/transports</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/transports/worker</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/conf/transports</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/transports/dashboard</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/conf/transports</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/deployment/siddhi-files</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/deployment/siddhi-files</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/siddhi-files</outputDirectory>
+            <fileMode>644</fileMode>
+            <excludes>
+                <exclude>empty.txt</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/csv-files</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/simulation-configs</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/target/extensions</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>664</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/carbon-home/external-libs</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>664</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/deployment/siddhi-files</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
 
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/conf/osgi</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/osgi</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/resources/security</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/resources/security</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/bin</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>-->
-            <!--<includes>-->
-                <!--<include>**/*.sh</include>-->
-                <!--<include>**/*.bat</include>-->
-            <!--</includes>-->
-            <!--<fileMode>755</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/bin</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin</outputDirectory>-->
-            <!--<includes>-->
-                <!--<include>**/*.txt</include>-->
-            <!--</includes>-->
-            <!--<fileMode>444</fileMode>-->
-        <!--</fileSet>-->
+        <!--Forget me tool-->
+        <!--This includes only the relevant dependencies -->
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/</outputDirectory>
+            <excludes>
+                <exclude>**/forget-me</exclude>
+                <exclude>**/forget-me.bat</exclude>
+            </excludes>
+            <includes>
+                <include>**/log4j.properties</include>
+                <include>**/conf/log-config/sp-patterns.xml</include>
+                <include>**/lib/**</include>
+            </includes>
+            <fileMode>644</fileMode>
+        </fileSet>
 
-        <!--<fileSet>-->
-            <!--<directory>.</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/deployment/siddhi-files</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>*/**</exclude>-->
-            <!--</excludes>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/deployment/siddhi-files</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/siddhi-files</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-            <!--<excludes>-->
-                <!--<exclude>empty.txt</exclude>-->
-            <!--</excludes>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>.</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/csv-files</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>*/**</exclude>-->
-            <!--</excludes>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>.</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/deployment/simulation-configs</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>*/**</exclude>-->
-            <!--</excludes>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/target/extensions</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/lib</outputDirectory>-->
-            <!--<includes>-->
-                <!--<include>**/*.jar</include>-->
-            <!--</includes>-->
-            <!--<fileMode>664</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/carbon-home/external-libs</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/lib</outputDirectory>-->
-            <!--<includes>-->
-                <!--<include>**/*.jar</include>-->
-            <!--</includes>-->
-            <!--<fileMode>664</fileMode>-->
-        <!--</fileSet>-->
-        <!--<fileSet>-->
-            <!--<directory>.</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/deployment/siddhi-files</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>*/**</exclude>-->
-            <!--</excludes>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-
-        <!--&lt;!&ndash;Forget me tool&ndash;&gt;-->
-        <!--&lt;!&ndash;This includes only the relevant dependencies &ndash;&gt;-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>**/forget-me</exclude>-->
-                <!--<exclude>**/forget-me.bat</exclude>-->
-            <!--</excludes>-->
-            <!--<includes>-->
-                <!--<include>**/log4j.properties</include>-->
-                <!--<include>**/conf/log-config/sp-patterns.xml</include>-->
-                <!--<include>**/lib/**</include>-->
-            <!--</includes>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
-
-        <!--&lt;!&ndash;Privacy policy app &ndash;&gt;-->
-        <!--<fileSet>-->
-            <!--<directory>../p2-profile/analytics-profile/src/policies/</directory>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/deployment/web-ui-apps/policies</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-        <!--</fileSet>-->
+        <!--Privacy policy app -->
+        <fileSet>
+            <directory>../p2-profile/analytics-profile/src/policies/</directory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/deployment/web-ui-apps/policies</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
 
 
         <!-- End Analytics Configuratoins -->
@@ -1524,17 +1360,6 @@
                 <exclude>**/target/**</exclude>
             </excludes>
         </fileSet>
-
-        <!--<fileSet>-->
-            <!--<directory>src/analytics/samples/udfs/country-code-ip/target</directory>-->
-            <!--<outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/samples/udfs-->
-            <!--</outputDirectory>-->
-            <!--<includes>-->
-                <!--<include>**/org.wso2.das.samples.geoip-${pom.version}.jar</include>-->
-            <!--</includes>-->
-        <!--</fileSet>-->
-
-
 
         <fileSet>
             <directory>
@@ -1600,13 +1425,6 @@
             </includes>
         </dependencySet>
 
-        <dependencySet>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/lib</outputDirectory>
-            <includes>
-                <include>org.wso2.ei:org.wso2.carbon.micro.integrator.server:jar</include>
-            </includes>
-        </dependencySet>
-
         <!-- broker related:end-->
         <!-- use the new tool to create a bundles -->
         <dependencySet>
@@ -1647,13 +1465,6 @@
         </dependencySet>
         <dependencySet>
             <outputDirectory>wso2ei-${pom.version}/repository/deployment/client/modules
-            </outputDirectory>
-            <includes>
-                <include>org.apache.rampart:rampart:mar</include>
-            </includes>
-        </dependencySet>
-        <dependencySet>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/axis2modules
             </outputDirectory>
             <includes>
                 <include>org.apache.rampart:rampart:mar</include>
@@ -1881,11 +1692,6 @@
             </outputDirectory>
         </file>
 
-        <file>
-            <source>src/micro-integrator/conf/tasks-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/conf/etc/
-            </outputDirectory>
-        </file>
         <file>
             <source>
                 src/scripts/profiles/ciphertool.sh
@@ -2343,23 +2149,11 @@
 
         <!-- Broker files: End -->
 
-        <!-- light weight -->
-
-
-
         <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-broker.xml
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-broker.xml
-            </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
@@ -2372,14 +2166,6 @@
         </file>
 
         <file>
-            <source>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/data-bridge/data-agent-config.xml
-            </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/data-bridge</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
             <source>src/conf/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
             <destName>axis2.xml</destName>
@@ -2387,20 +2173,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <file>
-            <source>src/micro-integrator/conf/axis2.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
-            <destName>axis2.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/micro-integrator/conf/user-mgt.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <destName>user-mgt.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
         <file>
             <source>src/conf/registry.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
@@ -2420,12 +2192,6 @@
             <destName>web.xml</destName>
         </file>
 
-<!--        <file>
-            <source>src/conf/web.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat</outputDirectory>
-            <destName>web.xml</destName>
-        </file>-->
-
         <file>
             <source>src/conf/carbon/web.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat/carbon/WEB-INF</outputDirectory>
@@ -2433,83 +2199,27 @@
         </file>
 
         <file>
-            <source>src/micro-integrator/conf/web.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat/carbon/WEB-INF</outputDirectory>
-            <destName>web.xml</destName>
-        </file>
-        <file>
-            <source>src/micro-integrator/conf/context.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/tomcat/carbon/MATA-INF</outputDirectory>
-            <destName>context.xml</destName>
-        </file>
-        <file>
             <source>src/conf/webapp-mode/web.xml</source>
             <outputDirectory>wso2ei-${pom.version}/webapp-mode/WEB-INF</outputDirectory>
             <destName>web.xml</destName>
         </file>
 
-<!--        <file>
-            <source>src/conf/webapp-mode/web.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/webapp-mode/WEB-INF</outputDirectory>
-            <destName>web.xml</destName>
-        </file>-->
         <file>
             <source>src/conf/tenant-axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
             <destName>tenant-axis2.xml</destName>
             <fileMode>644</fileMode>
         </file>
-        <file>
-            <source>src/conf/axis2_nhttp.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
-            <destName>axis2_nhttp.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
 
         <file>
-            <source>src/conf/axis2_nhttp.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
-            <destName>axis2_nhttp.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/axis2_pt.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
-            <destName>axis2_pt.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/axis2_pt.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
-            <destName>axis2_pt.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/axis2_blocking_client.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/axis2</outputDirectory>
-            <destName>axis2_blocking_client.xml</destName>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/axis2_blocking_client.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/axis2</outputDirectory>
             <destName>axis2_blocking_client.xml</destName>
             <fileMode>644</fileMode>
         </file>
         <file>
             <source>src/conf/log4j.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <destName>log4j.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/micro-integrator/conf/log4j.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>log4j.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2522,13 +2232,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/micro-integrator/conf/synapse.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <destName>synapse.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/synapse-handlers.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>synapse-handlers.xml</destName>
@@ -2536,22 +2239,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/synapse-handlers.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <destName>synapse-handlers.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/datasources.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <destName>datasources.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/datasources.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>datasources.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2579,22 +2268,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/security/cipher-text.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/security</outputDirectory>
-            <destName>cipher-text.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/security/cipher-tool.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf/security</outputDirectory>
-            <destName>cipher-tool.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/security/cipher-tool.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/security</outputDirectory>
             <destName>cipher-tool.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2607,22 +2282,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/security/secret-conf.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/security</outputDirectory>
-            <destName>secret-conf.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/nhttp.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <destName>nhttp.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/nhttp.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>nhttp.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2635,13 +2296,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/passthru-http.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <destName>passthru-http.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/hl7.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>hl7.properties</destName>
@@ -2649,22 +2303,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/hl7.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <destName>hl7.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/access-log.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <destName>access-log.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/conf/access-log.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <destName>access-log.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
@@ -2684,24 +2324,10 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/jndi.properties</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <destName>jndi.properties</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/rule-engine-config.xml
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/rule-engine-config.xml
-            </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -2739,12 +2365,6 @@
         <file>
             <source>src/conf/carbon.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>src/micro-integrator/conf/carbon.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
@@ -2792,11 +2412,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/etc/logging-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/conf/etc</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>
                 ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity/identity.xml
             </source>
@@ -2804,13 +2419,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <file>
-            <source>
-                ../components/org.wso2.carbon.micro.integrator.server/target/org.wso2.carbon.micro.integrator.server-${product.ei.version}.jar
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/lib</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
         <!-- Including tasks-config.xml file-->
         <file>
             <source>src/conf/etc/tasks-config.xml</source>
@@ -2842,13 +2450,6 @@
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
-        <file>
-            <source>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/event-processor.xml
-            </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
 
         <file>
             <source>
@@ -2856,21 +2457,6 @@
             </source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/output-event-adapters.xml
-            </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                src/micro-integrator/resources/capps/org.wso2.carbon.micro.integrator.admin.api_1.0.0.car
-            </source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/repository/deployment/server/carbonapps</outputDirectory>
         </file>
 
         <!-- ODATA WebApp -->
@@ -2886,159 +2472,141 @@
         </file>
 
 
-
-
-        <!--File based Synapse registry for Micro EI-->
-        <file>
-            <source>
-                src/micro-integrator/conf/registry.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/micro-integrator/repository/deployment/server/synapse-configs/default
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
         <!-- START Analytics file copying -->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/target/wso2sp-${project.version}/bin/kernel-version.txt</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>444</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/target/wso2sp-${project.version}/bin/README.txt</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>444</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/bin/version.txt</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/LICENSE.txt</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/deployment/stream-definitions.yaml</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/deployment/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
-            <!--&lt;!&ndash;TODO: Workaround for issue trustStore and keystore certificate system properties-->
-            <!--fixed&ndash;&gt;-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/runtime/dashboard/carbon.sh</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>755</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/runtime/dashboard/carbon.bat</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>755</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/runtime/worker/carbon.sh</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>755</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/runtime/worker/carbon.bat</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>755</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/runtime/manager/carbon.sh</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>755</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/runtime/manager/carbon.bat</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/bin/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>755</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/conf/dashboard/log4j2.xml</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/dashboard/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/conf/manager/log4j2.xml</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/manager/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/carbon-home/conf/worker/log4j2.xml</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/worker/</outputDirectory>-->
-                <!--<filtered>true</filtered>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
+            <file>
+                <source>../p2-profile/analytics-profile/target/wso2sp-${project.version}/bin/kernel-version.txt</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>444</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/target/wso2sp-${project.version}/bin/README.txt</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>444</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/bin/version.txt</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>644</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/deployment/stream-definitions.yaml</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/deployment/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>644</fileMode>
+            </file>
+            <!--TODO: Workaround for issue trustStore and keystore certificate system properties
+            fixed-->
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/runtime/dashboard/carbon.sh</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>755</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/runtime/dashboard/carbon.bat</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/dashboard/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>755</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/runtime/worker/carbon.sh</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>755</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/runtime/worker/carbon.bat</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/worker/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>755</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/runtime/manager/carbon.sh</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>755</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/runtime/manager/carbon.bat</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/manager/bin/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>755</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/conf/dashboard/log4j2.xml</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/dashboard/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>644</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/conf/manager/log4j2.xml</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/manager/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>644</fileMode>
+            </file>
+            <file>
+                <source>../p2-profile/analytics-profile/carbon-home/conf/worker/log4j2.xml</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/conf/worker/</outputDirectory>
+                <filtered>true</filtered>
+                <fileMode>644</fileMode>
+            </file>
 
-            <!--&lt;!&ndash;Forget me tool&ndash;&gt;-->
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/src/scripts/forgetme.sh</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>-->
-                <!--<fileMode>744</fileMode>-->
-            <!--</file>-->
+            <!--Forget me tool-->
+            <file>
+                <source>../p2-profile/analytics-profile/src/scripts/forgetme.sh</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
+                <fileMode>744</fileMode>
+            </file>
 
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/src/scripts/forgetme.bat</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>-->
-                <!--<fileMode>744</fileMode>-->
-            <!--</file>-->
+            <file>
+                <source>../p2-profile/analytics-profile/src/scripts/forgetme.bat</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
+                <fileMode>744</fileMode>
+            </file>
 
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>-->
-                <!--<fileMode>744</fileMode>-->
-            <!--</file>-->
+            <file>
+                <source>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
+                <fileMode>744</fileMode>
+            </file>
 
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>-->
-                <!--<fileMode>744</fileMode>-->
-            <!--</file>-->
+            <file>
+                <source>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
+                <fileMode>744</fileMode>
+            </file>
 
-            <!--<file>-->
-                <!--<source>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/product-config/config-sp.json</source>-->
-                <!--<outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/conf/</outputDirectory>-->
-                <!--<destName>config.json</destName>-->
-                <!--<fileMode>644</fileMode>-->
-            <!--</file>-->
+            <file>
+                <source>../p2-profile/analytics-profile/target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/product-config/config-sp.json</source>
+                <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/conf/</outputDirectory>
+                <destName>config.json</destName>
+                <fileMode>644</fileMode>
+            </file>
 
         <!--END Analytics file copying -->
 
 
-        <!--<file>-->
-            <!--<source>src/msf4j/bin/kernel-version.txt</source>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>-->
-            <!--<fileMode>644</fileMode>-->
-            <!--<filtered>true</filtered>-->
-        <!--</file>-->
-        <!--<file>-->
-            <!--<source>../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin/README.txt</source>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>-->
-            <!--<destName>README.txt</destName>-->
-            <!--<fileMode>644</fileMode>-->
-            <!--<filtered>true</filtered>-->
-        <!--</file>-->
-        <!--<file>-->
-            <!--<source>src/msf4j/bin/carbon.bat</source>-->
-            <!--<outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>-->
-            <!--<fileMode>755</fileMode>-->
-        <!--</file>-->
+        <file>
+            <source>src/msf4j/bin/kernel-version.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin/README.txt</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
+            <destName>README.txt</destName>
+            <fileMode>644</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/msf4j/bin/carbon.bat</source>
+            <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
         <!-- END Copying files related to msf4j -->
 
         <!-- Copying files related to forget me tool -->
@@ -3102,15 +2670,6 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/conf/datasources</outputDirectory>
             <destName>activiti-datasources.xml</destName>
             <fileMode>744</fileMode>
-        </file>
-
-        <!-- Dockerfile -->
-
-        <file>
-            <source>src/micro-integrator/resources/dockerfiles/Dockerfile</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/dockerfiles/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
         </file>
 
         <!--In place Updates-->

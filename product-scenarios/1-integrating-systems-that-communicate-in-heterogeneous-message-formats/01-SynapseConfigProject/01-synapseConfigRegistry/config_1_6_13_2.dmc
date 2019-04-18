@@ -1,0 +1,27 @@
+map_S_Patients_S_Patients = function(){ 
+var outputPatients={};
+var SPLIT_5_0 = '';
+
+var count_i_Patient = 0;
+outputPatients =  {};
+outputPatients.Patient =  [];
+
+for(i_Patient in inputPatients.Patient){
+SPLIT_5_0 = inputPatients.Patient[i_Patient].reference.split('_');
+outputPatients.Patient[count_i_Patient] =  {};
+outputPatients.Patient[count_i_Patient].name = inputPatients.Patient[i_Patient].name;
+outputPatients.Patient[count_i_Patient].pharmacyRef = SPLIT_5_0[0];
+outputPatients.Patient[count_i_Patient].channelRef = SPLIT_5_0[1];
+outputPatients.Patient[count_i_Patient].age = inputPatients.Patient[i_Patient].age;
+
+count_i_Patient++;
+}
+return outputPatients;
+};
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_8_1_1_Proxy_PlainTextReceiver" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <sequence key="fullLogSeq"/>
+            <script language="js"><![CDATA[var symbol = mc.getPayloadXML();
+print("printing symbol " + symbol);
+symbol = symbol + " to work in";
+mc.setPayloadXML(<text xmlns="http://ws.apache.org/commons/ns/payload">{symbol}</text>);]]></script>
+            <sequence key="fullLogSeq"/>
+            <sequence description="" key="callTextEndpointSeq"/>
+            <sequence key="fullLogSeq"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

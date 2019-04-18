@@ -31,14 +31,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>msf4j-profile</artifactId>
-    <version>6.5.0-m3-SNAPSHOT</version>
+    <version>6.5.0-m5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 MSF4J Runtime</name>
 
     <properties>
         <carbon.messaging.version>1.0.11</carbon.messaging.version>
         <carbon.transport.http.netty.version>3.0.5</carbon.transport.http.netty.version>
-        <carbon.metrics.version>2.0.0</carbon.metrics.version>
+        <carbon.metrics.version>2.0.2</carbon.metrics.version>
         <msf4j.version>2.2.2</msf4j.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
         <carbon.kernel.version>5.1.2</carbon.kernel.version>
@@ -47,6 +47,7 @@
         <carbon.cache.version>1.0.0</carbon.cache.version>
         <carbon.deployment.version>5.0.0</carbon.deployment.version>
         <carbon.datasources.version>1.0.0</carbon.datasources.version>
+        <maven.findbugsplugin.version>3.0.4</maven.findbugsplugin.version>
     </properties>
 
    <dependencies>
@@ -135,6 +136,24 @@
             <groupId>org.wso2.msf4j</groupId>
             <artifactId>org.wso2.msf4j.feature</artifactId>
             <version>${msf4j.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-yaml</artifactId>
+                </exclusion>
+            </exclusions>
             <type>zip</type>
         </dependency>
 
@@ -363,6 +382,35 @@
                         </goals>
                     </execution>
 
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${maven.findbugsplugin.version}</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <xmlOutput>true</xmlOutput>
+                    <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+                    <!--Exclude sources-->
+                    <excludeFilterFile />
+                    <plugins>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>LATEST</version> <!-- Auto-update to the latest stable -->
+                        </plugin>
+                    </plugins>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>analyze-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

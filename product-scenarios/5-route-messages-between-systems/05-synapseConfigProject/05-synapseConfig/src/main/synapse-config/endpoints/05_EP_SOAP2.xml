@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="05_EP_SOAP2" xmlns="http://ws.apache.org/ns/synapse">
+    <address uri="http://ei-backend.scenarios.wso2.org:9091/eiTests/JSONEndpoint"/>
+</endpoint>

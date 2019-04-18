@@ -279,7 +279,7 @@
 
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
 
-    <!--<transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>-->
+    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>
 
     <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
         <!-- configure any optional POP3/IMAP properties
@@ -431,7 +431,7 @@
    <!-- uncomment this and configure to use connection pools for sending messages>
      <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
 
-    <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
+    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
 
     <!-- Uncomment and configure the SMTP server information
     check com.sun.mail.smtp package documentation for descriptions of properties

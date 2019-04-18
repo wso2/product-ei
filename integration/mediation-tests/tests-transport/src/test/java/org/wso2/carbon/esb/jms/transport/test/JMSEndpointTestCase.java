@@ -27,10 +27,8 @@ public class JMSEndpointTestCase extends ESBIntegrationTest {
         updateESBConfiguration(JMSEndpointManager.setConfigurations(synapse));
         endPointAdminClient = new EndPointAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
-        Awaitility.await()
-                  .pollInterval(50, TimeUnit.MILLISECONDS)
-                  .atMost(300, TimeUnit.SECONDS)
-                  .until(isServiceDeployed("JMSEndpointTestCaseProxy"));
+        Awaitility.await().pollInterval(50, TimeUnit.MILLISECONDS).atMost(300, TimeUnit.SECONDS)
+                .until(isServiceDeployed("JMSEndpointTestCaseProxy"));
     }
 
 
@@ -63,7 +61,7 @@ public class JMSEndpointTestCase extends ESBIntegrationTest {
 
         JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
         try {
-            consumer.connect("SimpleStockQuoteService");
+            consumer.connect("SimpleStockQuoteServiceJMSEndpointTestCase");
             Awaitility.await()
                       .pollInterval(50, TimeUnit.MILLISECONDS)
                       .atMost(300, TimeUnit.SECONDS)

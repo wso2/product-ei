@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>mb-integration</artifactId>
-        <version>6.5.0-m3-SNAPSHOT</version>
+        <version>6.5.0-m5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -43,8 +43,7 @@
                     <argLine>-Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m</argLine>
                     <parallel>false</parallel>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${testng.suiteXml.location}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemProperties>
                         <property>
@@ -240,7 +239,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.ftpserver</groupId>
-                    <artifactId>:ftpserver-core</artifactId>
+                    <artifactId>ftpserver-core</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
