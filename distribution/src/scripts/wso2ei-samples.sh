@@ -77,4 +77,4 @@ if [ -z $VALIDATE ]; then
   exit
 fi
 
-sh $PRGDIR/integrator.sh$CMD
+sh $PRGDIR/../../bin/integrator.sh$CMD
