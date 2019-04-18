@@ -30,7 +30,7 @@ echo 	1.Integrator profile
 echo 	2.Analytics Profile
 echo 	3.Business Process profile
 echo 	4.Broker profile
-echo    5.Msf4j profile
+echo 	5.Msf4j profile
 
 set /p profileNumber= [Please enter the desired profile number to create the profile specific distribution]
 
