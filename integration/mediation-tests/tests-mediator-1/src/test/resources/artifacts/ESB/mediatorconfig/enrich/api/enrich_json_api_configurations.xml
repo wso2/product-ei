@@ -1,0 +1,320 @@
+<!--
+  ~  Copyright (c) 2005-2019, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  ~
+  -->
+
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api xmlns="http://ws.apache.org/ns/synapse" name="TestEnrichMediator1" context="/testenrich1">
+        <resource methods="POST">
+            <inSequence>
+                <log level="full"/>
+                <send>
+                    <endpoint>
+                        <http method="POST" uri-template="http://localhost:8480/testenrich1/datamapper"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <log level="custom">
+                    <property name="CHECK" expression="json-eval($)"/>
+                </log>
+                <enrich>
+                    <source type="body" clone="true"/>
+                    <target xpath="json-eval($.hospital)"/>
+                </enrich>
+                <log level="custom">
+                    <property name="CHECKAFTER" expression="json-eval($)"/>
+                </log>
+                <send/>
+            </outSequence>
+            <faultSequence/>
+        </resource>
+        <resource methods="POST" uri-template="/datamapper">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {"patient": {"name": "$1", "address": $2, "phone": $3, "email": "$4" },
+                        "doctor": "$5", "hospital": "$6", "appointment_date": "$7"}
+                    </format>
+                    <args>
+                        <arg evaluator="json" expression="$.name"/>
+                        <arg evaluator="json" expression="$.address"/>
+                        <arg evaluator="json" expression="$.phone"/>
+                        <arg evaluator="json" expression="$.email"/>
+                        <arg evaluator="json" expression="$.doctor.name"/>
+                        <arg evaluator="json" expression="$.hospital"/>
+                        <arg evaluator="json" expression="$.appointment_date"/>
+                    </args>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse" name="EnrichAddChildUsingJsonPath" context="/testenrich2">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="inline" clone="true">{"appointment_id" : "1"}</source>
+                    <target action="child" xpath="json-eval($)"/>
+                </enrich>
+                <log level="full"/>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse" name="enrichAddChildByJsonPathTestProxy" context="/testenrich3">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="inline" clone="true">{"countryCode" : 94}</source>
+                    <target action="child" xpath="json-eval($.phone)"/>
+                </enrich>
+                <enrich>
+                    <source type="inline" clone="true">{"active" : true}</source>
+                    <target action="child" xpath="json-eval($.doctor)"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse" name="enrichDefinedProertyToChild" context="/testenrich5">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="inline" clone="true">{"countryCode" : 94}</source>
+                    <target type="property" property="testCode"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="testCode"/>
+                    <target action="sibling" xpath="json-eval($.doctor)"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="enrichPropertyReplaceBodyandEnrichPropertyBack" context="/testenrich7">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source clone="true" xpath="json-eval($.email)"/>
+                    <target type="property" property="testEmail"/>
+                </enrich>
+                <enrich>
+                    <source type="inline" clone="true">{"person" : {"name": "Alice", "email" : null}}</source>
+                    <target type="body"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="testEmail"/>
+                    <target xpath="json-eval($.person.email)"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse" name="enrichPropertyandEnrichBodyBack" context="/testenrich8">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="body" clone="false"/>
+                    <target type="property" property="ENRICH_BODY"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="false" property="ENRICH_BODY"/>
+                    <target type="body"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="enrichBodyToPropertyReplaceBodyandEnrichPropertyBack" context="/testenrich9">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="body" clone="true"/>
+                    <target type="property" property="testBody"/>
+                </enrich>
+                <enrich>
+                    <source type="inline" clone="true">{"person" : {"name": "Alice","email" : null}}</source>
+                    <target type="body"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="testBody"/>
+                    <target type="body"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse" name="enrichChildPropertyToParent" context="/testenrich11">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source clone="true" xpath="json-eval($.doctor.name)"/>
+                    <target xpath="json-eval($.doctor)"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="EnrichToPropertyGetXMLandRespondJSonBack" context="/testenrich12">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="body" clone="true"/>
+                    <target type="property" property="JSON_BODY"/>
+                </enrich>
+                <send>
+                    <endpoint>
+                        <http method="POST" uri-template="http://localhost:8480/testenrich12/echoxml"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <enrich>
+                    <source type="property" clone="true" property="JSON_BODY"/>
+                    <target type="body"/>
+                </enrich>
+                <property name="messageType" value="application/json" scope="axis2"/>
+                <send/>
+            </outSequence>
+            <faultSequence/>
+        </resource>
+        <resource methods="POST" uri-template="/echoxml">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="xml">
+                    <format>
+                        <Persons>
+                            <Person1>
+                                <Name>Alice</Name>
+                                <Age>23</Age>
+                            </Person1>
+                            <Person2>
+                                <Name>Bob</Name>
+                                <Age>22</Age>
+                            </Person2>
+                        </Persons>
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="EnrichToPropertyGetJsonandRespondXMLBack" context="/testenrich13">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="body" clone="true"/>
+                    <target type="property" property="XML_BODY"/>
+                </enrich>
+                <send>
+                    <endpoint>
+                        <http method="POST" uri-template="http://localhost:8480/testenrich13/echojson"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <enrich>
+                    <source type="property" clone="true" property="XML_BODY"/>
+                    <target type="body"/>
+                </enrich>
+                <property name="messageType" value="application/xml" scope="axis2"/>
+                <send/>
+            </outSequence>
+            <faultSequence/>
+        </resource>
+        <resource methods="POST" uri-template="/echojson">
+            <inSequence>
+                <log level="full"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {
+                            "Person" : {
+                                "Name" : "Alice",
+                                "Age"   : 23
+                            }
+                        }
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+            <faultSequence/>
+        </resource>
+    </api>
+
+    <api xmlns="http://ws.apache.org/ns/synapse"
+         name="enrichInlinePropertyAndAddtoJson"
+         context="/testenrich14">
+        <resource methods="POST">
+            <inSequence>
+                <enrich>
+                    <source type="inline" clone="true">alice@integrator.net</source>
+                    <target type="property" property="testEmail"/>
+                </enrich>
+                <enrich>
+                    <source type="inline" clone="true">{"name" : "adam eve", "doctorid" : "934T-76A"}</source>
+                    <target type="property" property="testDoctor"/>
+                </enrich>
+                <enrich>
+                    <source type="inline" clone="true">[32535235, 35353897, null]</source>
+                    <target type="property" property="testPhone"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="testEmail"/>
+                    <target xpath="json-eval($.email)"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="testDoctor"/>
+                    <target xpath="json-eval($.doctor)"/>
+                </enrich>
+                <enrich>
+                    <source type="property" clone="true" property="testPhone"/>
+                    <target xpath="json-eval($.phone)"/>
+                </enrich>
+                <respond/>
+            </inSequence>
+            <outSequence/>
+        </resource>
+    </api>
+</definitions>
