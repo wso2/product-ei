@@ -1,0 +1,74 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api xmlns="http://ws.apache.org/ns/synapse" name="HTTPStatusResponseAPI" context="/responsesample">
+        <resource methods="GET" uri-template="/accepted">
+            <inSequence>
+                <property name="HTTP_SC" value="202" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:202,Accepted</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/bad_request">
+            <inSequence>
+                <property name="HTTP_SC" value="400" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:400,Bad_Request</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/unauthorized">
+            <inSequence>
+                <property name="HTTP_SC" value="401" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:401,Unauthorized</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/forbidden">
+            <inSequence>
+                <property name="HTTP_SC" value="403" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:403,Forbidden</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/not_found">
+            <inSequence>
+                <property name="HTTP_SC" value="404" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:404,Not_Found</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/conflict">
+            <inSequence>
+                <property name="HTTP_SC" value="409" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:409,Conflict</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+        <resource methods="GET" uri-template="/internal_server_error">
+            <inSequence>
+                <property name="HTTP_SC" value="500" scope="axis2"/>
+                <payloadFactory media-type="text">
+                    <format>Received:500,Internal_Server_Error</format>
+                    <args/>
+                </payloadFactory>
+                <respond/>
+            </inSequence>
+        </resource>
+    </api>
+</definitions>
