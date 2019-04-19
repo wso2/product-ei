@@ -52,7 +52,7 @@ needs to be edited and then built to generate the stub.
  
  7. Overwrite the copied contents onto `MessageProcessorAdminService.wsdl` found in `<repo-home>/service-stubs/mediation-admin/org.wso2.carbon.message.processor.stub`
  
-For further clarification refer 'Discovering Admin Services" : https://docs.wso2.com/display/EI630/Working+with+Admin+Services'
+For further clarification refer 'Discovering Admin Services" : https://docs.wso2.com/display/EI650/Working+with+Admin+Services'
 
 If you generated the WSDL properly it should include your defined function
 

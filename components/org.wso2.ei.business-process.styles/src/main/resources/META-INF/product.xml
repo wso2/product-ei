@@ -18,7 +18,7 @@
 <product xmlns="http://products.wso2.org/carbon">
     <properties>
        <property name="userforum">http://stackoverflow.com/questions/tagged/wso2/</property>
-       <property name="userguide">https://docs.wso2.com/display/EI630/WSO2+Enterprise+Integrator+Documentation</property>
+       <property name="userguide">https://docs.wso2.com/display/EI650/WSO2+Enterprise+Integrator+Documentation</property>
        <property name="mailinglist">http://wso2.org/mail</property>
        <property name="issuetracker">https://github.com/wso2/product-ei/issues</property>
        <property name="webAdminConsoleTitle">WSO2 Enterprise Integrator Business Process Profile</property>
