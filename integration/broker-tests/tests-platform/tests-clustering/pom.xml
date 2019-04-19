@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>org.wso2.ei.mb.platform.tests</artifactId>
-        <version>6.5.0-M6-SNAPSHOT</version>
+        <version>6.5.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

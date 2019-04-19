@@ -39,7 +39,7 @@
     <!--
        Product Version
     -->
-    <Version>6.5.0-M6</Version>
+    <Version>6.5.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
