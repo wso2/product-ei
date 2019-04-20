@@ -1,0 +1,28 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ConflictEndpointProxy"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
+    <target>
+        <inSequence>
+            <call>
+                <endpoint>
+                    <http method="GET"
+                          uri-template="http://localhost:8480/responsesample/conflict"/>
+                </endpoint>
+            </call>
+            <loopback/>
+        </inSequence>
+        <outSequence>
+            <log level="custom">
+                <property name="outsequence" value="OutSequence"/>
+            </log>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <description/>
+</proxy>
+</definitions>

@@ -73,6 +73,7 @@
 
     <test name="Call-mediator-Test" preserve-order="true" verbose="2">
         <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorHttpStatusResponseTestCase"/>
             <!--<class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorAPIWithNamedSeqCase"/>-->
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingAPITestCase"/>
             <class name="org.wso2.carbon.esb.mediator.test.call.CallMediatorBlockingDirectEndpointTestCase"/>
@@ -174,6 +175,10 @@
         <packages>
             <package name="org.wso2.carbon.esb.mediator.test.enrich"/>
         </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.mediator.test.enrich.jsonpath.EnrichIntegrationJsonPathTestCase">
+            </class>
+        </classes>
     </test>
 
     <test name="Fault-mediator-Test" preserve-order="true" verbose="2">
