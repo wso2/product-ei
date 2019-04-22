@@ -1495,7 +1495,7 @@
         <product.ei.version>6.5.0-m7-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.99</carbon.business-process.version>
+        <carbon.business-process.version>4.4.100</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v35</orbit.version.axis2>
@@ -1508,7 +1508,7 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.72</carbon.messaging.version>
+        <carbon.messaging.version>3.2.73</carbon.messaging.version>
         <carbon.metrics.version>1.2.5</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
@@ -1525,7 +1525,7 @@
         <axiom.wso2.version>1.2.11.wso2v13</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v101</synapse.version>
+        <synapse.version>2.1.7-wso2v102</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v34</axis2.transport.version>
@@ -1534,7 +1534,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.130</carbon.mediation.version>
+        <carbon.mediation.version>4.6.131</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.40</carbon.kernel.version>
@@ -1613,7 +1613,7 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.99</carbon.data.version>
+        <carbon.data.version>4.4.100</carbon.data.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <orbit.version.joda-time>2.9.4.wso2v1</orbit.version.joda-time>
 
