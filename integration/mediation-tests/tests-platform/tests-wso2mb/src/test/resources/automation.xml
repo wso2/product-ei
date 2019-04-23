@@ -62,7 +62,7 @@
     -->
     <datasources>
         <datasource name="dataService">
-            <url>jdbc:h2:testDB</url>
+            <url>jdbc:h2:</url>
             <username>wso2carbon</username>
             <password>wso2carbon</password>
             <driverClassName>org.h2.Driver</driverClassName>
@@ -74,21 +74,6 @@
             <driverClassName>org.h2.Driver</driverClassName>
         </datasource>
     </datasources>
-
-    <!-- Mail Transport credentials-->
-    <emailCredentials>
-        <sender>synapse.demo.1</sender>
-        <senderPassword>mailpassword1</senderPassword>
-        <receiver>test.automation.dummy</receiver>
-        <receiverPassword>automation.test</receiverPassword>
-        <domain>gmail.com</domain>
-    </emailCredentials>
-
-    <!-- RabbitMQ Broker configurations -->
-    <rabbitmq>
-        <rabbitmqhome></rabbitmqhome>
-    </rabbitmq>
-
     <security>
         <!--
                     KeyStore which will be used for encrypting/decrypting passwords
@@ -264,7 +249,7 @@
                     <host type="default">localhost</host>
                 </hosts>
                 <ports>
-                    <port type="http">9265</port>
+                    <port type="http">9965</port>
                     <port type="https">9645</port>
                     <port type="nhttps">9646</port>
                     <port type="nhttp">8480</port>
@@ -273,26 +258,11 @@
                 </properties>
             </instance>
         </productGroup>
-        <!--<productGroup name="MB" clusteringEnabled="false" default="true">-->
-
-
-            <!--<instance name="wso2mb" type="standalone" nonBlockingTransportEnabled="true">-->
-                <!--<hosts>-->
-                    <!--<host type="default">localhost</host>-->
-                <!--</hosts>-->
-                <!--<ports>-->
-                    <!--<port type="http">9444</port>-->
-                    <!--<port type="https">9764</port>-->
-                <!--</ports>-->
-                <!--<properties>-->
-
-                <!--</properties>-->
-            <!--</instance>-->
-
-        <!--</productGroup>-->
     </platform>
 
     <listenerExtensions>
+        <!---->
+        <!--<className>org.wso2.carbon.automation.extensions.servers.carbonserver.CarbonServerExtension</className>-->
         <platformExecutionManager>
             <extentionClasses>
                 <class>
@@ -305,7 +275,7 @@
                     <name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>
                 </class>
                 <class>
-                    <name>org.wso2.carbon.automation.extensions.servers.axis2server.Axis2ServerExtension</name>
+                    <name>org.wso2.esb.integration.common.extensions.axis2server.Axis2ServerExtension</name>
                 </class>
             </extentionClasses>
         </platformExecutionManager>
@@ -313,13 +283,11 @@
 
         <PlatformSuiteManager>
             <extentionClasses>
-                <!--<className>org.wso2.carbon.automation.extensions.servers.carbonserver.CarbonServerExtension</className>-->
             </extentionClasses>
         </PlatformSuiteManager>
 
         <PlatformAnnotationTransferManager>
             <extentionClasses>
-                <!--<className>org.wso2.carbon.automation.extensions.servers.carbonserver.CarbonServerExtension</className>-->
             </extentionClasses>
         </PlatformAnnotationTransferManager>
 
@@ -335,6 +303,4 @@
         </PlatformReportManager>
 
     </listenerExtensions>
-
-
 </automation>

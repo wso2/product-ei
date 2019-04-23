@@ -10,7 +10,7 @@
         <parameter name="transport.jms.CacheLevel">3</parameter>
         <parameter name="transport.jms.ConnectionFactoryJNDIName">QueueConnectionFactory</parameter>
         <parameter name="java.naming.factory.initial">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-        <parameter name="java.naming.provider.url">repository/conf/jndi.properties</parameter>
+        <parameter name="java.naming.provider.url">conf/jndi.properties</parameter>
         <parameter name="transport.jms.SessionAcknowledgement">AUTO_ACKNOWLEDGE</parameter>
         <parameter name="transport.jms.SessionTransacted">false</parameter>
         <parameter name="transport.jms.ConnectionFactoryType">queue</parameter>

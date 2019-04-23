@@ -79,6 +79,9 @@ public class ESBJAVA4863JMSTransactionRollbackTestCase extends ESBIntegrationTes
 
         while (!faultSequenceInvoked && (System.currentTimeMillis() - startTime) < 15000) {
             LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+            if (logs == null) {
+                continue;
+            }
             for (LogEvent event : logs) {
                 String message = event.getMessage();
                 if (message.contains("Fault sequence invoked")) {

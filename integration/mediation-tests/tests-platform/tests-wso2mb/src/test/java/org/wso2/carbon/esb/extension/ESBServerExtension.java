@@ -58,21 +58,14 @@ public class ESBServerExtension extends ExecutionListenerExtension {
                                       + File.separator + "conf" + File.separator + "jndi.properties";
                 String axis2Xml = TestConfigurationProvider.getResourceLocation("ESB")
                                   + File.separator + "conf" + File.separator + "axis2" + File.separator + "axis2.xml";
-                String libPath = TestConfigurationProvider.getResourceLocation("ESB")
-                                 + File.separator + "lib";
-                String esbConfDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "repository" + File.separator
-                                    + "conf";
-                String esbLibDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "repository" + File.separator
-                                    + "components" + File.separator + "lib";
+                String libPath = TestConfigurationProvider.getResourceLocation("ESB") + File.separator + "lib";
+                String esbConfDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "conf";
+                String esbLibDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "lib";
 
                 try {
                     log.info("Replacing jndi.properties");
                     FileManager.copyFile(new File(jndiPtah) , esbConfDir + File.separator + "jndi.properties");
                     FileManager.copyFile(new File(axis2Xml) , esbConfDir + File.separator +"axis2" + File.separator + "axis2.xml");
-                    log.info("Copying jar files to lib folder");
-                    FileManager.copyJarFile(new File(libPath + File.separator + "andes-client-3.0.1.jar"), esbLibDir + File.separator);
-                    FileManager.copyJarFile(new File(libPath + File.separator + "geronimo-jms_1.1_spec-1.1.1.jar"), esbLibDir + File.separator);
-                    FileManager.copyJarFile(new File(libPath + File.separator + "org.wso2.securevault-1.0.0-wso2v2.jar"), esbLibDir + File.separator);
 
                 } catch (IOException e) {
                     throw new AutomationFrameworkException(e.getMessage(), e);
