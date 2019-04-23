@@ -276,6 +276,29 @@
         {% for parameter_key,parameter_value in transport.http.blocking_sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
+        {% if transport.http.sender.warn_on_http_500 is defined %}
+        <parameter name="warnOnHTTP500" locked="false">transport.http.sender.warn_on_http_500</parameter>
+        {% endif %}
+        {% if transport.http.sender.non_proxy_hosts is defined %}
+        <parameter name="http.nonProxyHosts" locked="false">{% for parameter_value in transport.http.sender.non_proxy_hosts %}{{parameter_value}}{% if loop.index < transport.http.sender.non_proxy_hosts|length %}|{% endif %}{% endfor %}</parameter>
+        {% endif %}
+        {% for parameter_key,parameter_value in transport.http.sender.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport.http.proxy_profile is defined %}
+        <parameter name="proxyProfiles">
+            {% for profile in transport.http.proxy_profile %}
+            <profile>
+                <targetHosts>{% for hostitem in profile.target_hosts %}{{hostitem}}{% if loop.index < profile.target_hosts|length %},{% endif %}{% endfor %}</targetHosts>
+                <proxyHost>{{profile.proxy_host}}</proxyHost>
+                <proxyPort>{{profile.proxy_port}}</proxyPort>
+                {% if profile.proxy_username is defined %}<proxyUserName>{{profile.proxy_username}}</proxyUserName>{% endif %}
+                {% if profile.proxy_password is defined %}<proxyPassword>{{profile.proxy_password}}</proxyPassword>{% endif %}
+                {% if profile.bypass_hosts is defined %}<bypass>{% for bypassitem in profile.bypass_hosts %}{{bypassitem}}{% if loop.index < profile.bypass_hosts|length %},{% endif %}{% endfor %}</bypass>{% endif %}
+            </profile>
+            {% endfor %}
+        </parameter>
+        {% endif %}
     </transportSender>
 
     <transportSender name="https"

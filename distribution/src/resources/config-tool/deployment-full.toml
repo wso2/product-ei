@@ -2,9 +2,14 @@
 
 hostname = "localhost"
 node_ip = "10.100.1.80"
+base_path = "127.0.0.1"
 
 enable_mtom = false # optional  default: false
 enable_swa = false # optional   default: false
+userAgent = "WSO2 ${product.key} ${product.version}"    #inferred
+serverDetails = "WSO2 ${product.key} ${product.version}"    #inferred
+offset  = 0     # inferred
+proxy_context_path = ""         # todo ?
 
 [super_admin]
 
@@ -23,8 +28,8 @@ io_buffer_size = 16384              # inferred default: 16384
 max_http_connection_per_host_port = 32767
 preserve_http_user_agent = false
 preserve_http_server_name = true
-preserve_http_headers = ["Content-Type"]  # inferred default: Content-Type
-enable_connection_keepalive = true      # Keep this in deployment.toml file
+preserve_http_headers = ["Content-Type"]  # inferred todo , sepereated or | seperated ?
+disable_connection_keepalive = false      # Keep this in deployment.toml file
 max_message_size_bytes = 81920
 
 listener.port = 8280    #inferred  default: 8280
@@ -38,7 +43,7 @@ listener.secured_protocols = "TLSv1,TLSv1.1,TLSv1.2" # inferred default: TLSv1,T
 listener.verify_client = "require"              # inferred disable by default, mutual ssl   optional/required/none
 listener.ssl_profile.file_path = "conf/sslprofiles/listenerprofiles.xml" # type 0
 listener.ssl_profile.read_interval = "1h"       # inferred
-# todo ??
+# todo need to template for wich tranport ?
 listener.preferred_ciphers = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256"
 
 listener.keystore.file_name ="$ref{keystore.tls.file_name}" # inferred
@@ -46,23 +51,23 @@ listener.keystore.type = "$ref{keystore.tls.type}" # inferred
 listener.keystore.password = "$ref{keystore.tls.password}" # inferred
 listener.keystore.key_password = "$ref{keystore.tls.key_password}" # inferred
 listener.truststore.file_name = "$ref{truststore.file_name}" # inferred
-listener.truststore.type = "$ref{truststore.tls.type}" # inferred
-listener.truststore.password = "$ref{truststore.tls.password}" # inferred
+listener.truststore.type = "$ref{truststore.type}" # inferred
+listener.truststore.password = "$ref{truststore.password}" # inferred
 
 sender.warn_on_http_500 = "*"       # optional
 sender.proxy_host = "$ref{server.hostname}"         # todo need to template for both blocking/nonblocking axis.xml
 sender.proxy_port = 3128
-sender.non_proxy_hosts = ["$ref{server.hostname}"]
+sender.non_proxy_hosts = ["$ref{server.hostname}"]      # todo ref in array not working
 
 sender.keystore.file_name ="$ref{keystore.tls.file_name}" # inferred
 sender.keystore.type = "$ref{keystore.tls.type}" # inferred
 sender.keystore.password = "$ref{keystore.tls.password}" # inferred
 sender.keystore.key_password = "$ref{keystore.tls.key_password}" # inferred
 sender.truststore.file_name = "$ref{truststore.file_name}" # inferred
-sender.truststore.type = "$ref{truststore.tls.type}" # inferred
-sender.truststore.password = "$ref{truststore.tls.password}" # inferred
+sender.truststore.type = "$ref{truststore.type}" # inferred
+sender.truststore.password = "$ref{truststore.password}" # inferred
 
-sender.ssl_profile.file_path = "conf/sslprofiles/listenerprofiles.xml"
+sender.ssl_profile.file_path = "conf/sslprofiles/senderprofiles.xml"
 sender.ssl_profile.read_interval = "30s"
 
 # common for http/https
@@ -125,8 +130,8 @@ keystore.type = "$ref{keystore.tls.type}"
 keystore.password = "$ref{keystore.tls.password}"
 keystore.key_password = "$ref{keystore.tls.key_password}"
 truststore.file_name = "$ref{truststore.file_name}"
-truststore.type = "$ref{truststore.tls.type}"
-truststore.password = "$ref{truststore.tls.password}"
+truststore.type = "$ref{truststore.type}"
+truststore.password = "$ref{truststore.password}"
 
 ssl_profile.file_path= "conf/sslprofiles/listenerprofiles.xml"
 ssl_profile.read_interval = "30s"
@@ -145,13 +150,17 @@ keystore.type = "$ref{keystore.tls.type}"
 keystore.password = "$ref{keystore.tls.password}"
 keystore.key_password = "$ref{keystore.tls.key_password}"
 truststore.file_name = "$ref{truststore.file_name}"
-truststore.type = "$ref{truststore.tls.type}"
-truststore.password = "$ref{truststore.tls.password}"
+truststore.type = "$ref{truststore.type}"
+truststore.password = "$ref{truststore.password}"
 
-ssl_profile.file_path = "conf/sslprofiles/listenerprofiles.xml"
+ssl_profile.file_path = "conf/sslprofiles/senderprofiles.xml"
 ssl_profile.read_interval = "30s"
 
 ###################################     Mail transport configurations   ###################################
+[transport.mail.listener]   # todo single array?
+enable = true
+name = "mailto"         # inferred
+
 [[transport.mail.sender]]
 
 name = "mailto"
@@ -163,30 +172,12 @@ username = "demo_user"
 password = "mailpassword"
 from = "demo_user@wso2.com"
 
-[[transport.mail.listener]]
-
-name = "mailto"
-address = ""
-body_when_attached = ""
-folder = ""
-protocol = "pop3"  # pop3/imap
-preserve_header = ""
-remove_header = ""
-action_after_process = "DELETE" # DELETE/MOVE
-action_after_failure = "DELETE" # DELETE/MOVE
-move_after_process = ""
-move_after_failure = ""
-process_parrallel = false # true/false
-concurrent_polling_allowed = false # true/false
-max_retry = 10
-reconnect_timeout_millis = 30000
-
 ###################################     JSM Transport Configurations    ###################################
 [[transport.jms.listener]]
 
 name = "myTopicListener"
 parameter.initial_naming_factory = "org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"
-parameter.broker_name = "artemis"
+parameter.broker_name = "artemis"                   # todo broker_name ?
 parameter.provider_url = "tcp://localhost:61616"
 parameter.connection_factory_name = "TopicConnectionFactory"
 parameter.connection_factory_type = "topic" # [queue, topic]
@@ -216,7 +207,7 @@ parameter.concurrent_consumer = 1
 parameter.max_concurrent_consumer = 1
 parameter.idle_task_limit = 10
 parameter.max_message_per_task = -1
-parameter.intial_reconnection_duration = "10s"
+parameter.initial_reconnection_duration = "10s"
 parameter.reconnect_progress_factor = 2
 parameter.max_reconnect_duration = "1h"
 parameter.reconnect_interval = "1h"
@@ -235,17 +226,52 @@ parameter.connection_factory_name = "TopicConnectionFactory"
 parameter.connection_factory_type = "topic"
 parameter.cache_level = "producer"
 
+parameter.naming_security_principal = ""
+parameter.naming_security_credential = ""
+parameter.transactionality = ""
+parameter.transaction_jndi_name = ""
+parameter.cache_user_transaction = true
+parameter.session_transaction = true
+parameter.session_acknowledgement = "AUTO_ACKNOWLEDGE"
+parameter.jms_spec_version = "1.1"
+parameter.username = ""
+parameter.password = ""
+parameter.destination = ""
+parameter.destination_type = "queue" # queue/topic
+parameter.default_reply_destination = ""
+parameter.default_destination_type = "queue" # queue/topic
+parameter.message_selector = ""
+parameter.subscription_durable = false
+parameter.durable_subscriber_client_id = ""
+parameter.durable_subscriber_name = ""
+parameter.pub_sub_local = false
+parameter.receive_timeout = "1s"
+parameter.concurrent_consumer = 1
+parameter.max_concurrent_consumer = 1
+parameter.idle_task_limit = 10
+parameter.max_message_per_task = -1
+parameter.initial_reconnection_duration = "10s"
+parameter.reconnect_progress_factor = 2
+parameter.max_reconnect_duration = "1h"
+parameter.reconnect_interval = "1h"
+parameter.max_jsm_connection = 10
+parameter.max_consumer_error_retrieve_before_delay = 20
+parameter.consume_error_delay = "100ms"
+parameter.consume_error_progression = "2.0"
+
+parameter.vender_class_loader = false       # only for IBM MQ       todo tempated only for sender?
+
 # todo reveiw
 ###################################     JNDI property configuration     ###################################
-[[transport.jndi.connection_factories]]
+[transport.jndi.connection_factories]       # todo hardcode defaults ?
 QueueConnectionFactory = "amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
 TopicConnectionFactory = "amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
 
-[[transport.jndi.queue]]
+[transport.jndi.queue]
 JMSMS = "JMSMS"
 StockQuotesQueue = "StockQuotesQueue"
 
-[[transport.jndi.topic]]
+[transport.jndi.topic]
 MyTopic = "example.MyTopic"
 
 ###################################     Rabbit MQ configurations        ###################################
@@ -256,8 +282,27 @@ parameter.hostname = "localhost"
 parameter.port = 5672
 parameter.username = "guest"
 parameter.password = "guest"
-parameter.queue_name = "MyQueue"
+parameter.connection_factory = ""
 parameter.exchange_name = "amq.direct"
+parameter.queue_name = "MyQueue"
+parameter.queue_auto_ack = false
+parameter.consumer_tag = ""
+parameter.channel_consumer_qos = ""
+parameter.durable = ""
+parameter.queue_exclusive = ""
+parameter.queue_auto_delete = ""
+parameter.queue_routing_key = ""
+parameter.queue_auto_declare = ""
+parameter.exchange_auto_declare = ""
+parameter.exchange_type = ""
+parameter.exchange_durable = ""
+parameter.exchange_auto_delete = ""
+parameter.message_content_type = ""
+
+parameter.retry_interval = "10s"        #in case of network failure
+parameter.retry_count = 5               #in case of network failure
+
+parameter.ssl_enable = true
 parameter.ssl_version = "SSL"
 parameter.keystore_file_name ="$ref{keystore.tls.file_name}" # inferred
 parameter.keystore_type = "$ref{keystore.tls.type}" # inferred
@@ -266,24 +311,6 @@ parameter.truststore_file_name ="$ref{truststore.file_name}" # inferred
 parameter.truststore_type = "$ref{truststore.type}" # inferred
 parameter.truststore_password = "$ref{truststore.password}" # inferred
 
-# new added parameter list
-parameter.connection_factory = ""
-parameter.queue_auto_ack = false
-parameter.consumer_tag = ""
-parameter.channel_consumer_qos = ""
-parameter.durable = ""
-parameter.queue_exclusive = ""
-parameter.queue_auto_delete = ""
-parameter.queue_routing_key = ""
-parameter.exchange_type = ""
-parameter.exchange_durable = ""
-parameter.exchange_auto_delete = ""
-parameter.message_content_type = ""
-parameter.queue_auto_declare = ""
-parameter.exchange_auto_declare = ""
-parameter.retry_interval = "10s"        #in case of network failure
-parameter.retry_count = 5               #in case of network failure
-
 [[transport.rabbitmq.sender]]
 
 name = "rabbitMQSender"
@@ -291,8 +318,8 @@ parameter.hostname = "localhost"
 parameter.port = 5672
 parameter.username = "guest"
 parameter.password = "guest"
-parameter.routing_key = "MyQueue"
 parameter.exchange_name = "amq.direct"
+parameter.routing_key = "MyQueue"
 parameter.reply_to_name = ""
 parameter.queue_delivery_mode = 1 # 1/2
 parameter.exchange_type = ""
@@ -318,8 +345,8 @@ sender.enable = false
 sender.class = "org.wso2.carbon.websocket.transport.WebsocketTransportSender"   # inferred
 sender.parameter.outflow_dispatch_sequence = "outflowDispatchSeq"               # inferred
 sender.parameter.outflow_dispatch_fault_sequence = "outflowFaultSeq"            # inferred
-sender.trust_store_location = "$ref{truststore.file_name}" # inferred
-sender.trust_store_password = "$ref{truststore.tls.password}" # inferred
+sender.truststore_location = "$ref{truststore.file_name}" # inferred
+sender.truststore_password = "$ref{truststore.password}" # inferred
 
 ###################################     SAP configurations          ###################################
 [transport.sap] # optional
@@ -332,16 +359,14 @@ sender.idoc.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferr
 sender.bapi.class = "org.wso2.carbon.transports.sap.SAPTransportSender" # inferred
 
 
-# <EI home>/repository/conf
-
 ###################################     TCP configurations          ###################################
 [transport.tcp]
 
 listener.enable = false
-listener.port = 8000        # inferred
-listener.hostname = "$ref{server.hostname}"   # inferred
-listener.content_type = ["application/xml"]     # todo default?
-listener.response_client = true                 # inferred
+listener.port = 8000
+listener.hostname = "$ref{server.hostname}"
+listener.content_type = ["application/xml"]
+listener.response_client = true
 sender.enable = true
 
 ###################################     UDP configurations          ###################################
@@ -361,7 +386,6 @@ sender.enable = false
 [transport.mqtt]
 
 listener.enable = false
-listener.calss = "org.apache.axis2.transport.mqtt.MqttListener"     # inferred
 listener.hostname = "$ref{server.hostname}"   # inferred
 listener.connection_factory = "mqttConFactory"                      # todo ? loked=false
 listener.server_port = 1883
@@ -375,14 +399,12 @@ listener.enable_ssl = false
 listener.subscription_username = ""
 listener.subscription_password = ""
 listener.temporary_store_path = ""
-listener.blocking_sender = false
+listener.temporary_store_directory = ""
+listener.blocking_sender = false                # todo does blocking sender axis configuration?
 listener.connect_type = "text/plain"
 listener.message_retained = false
 
-
 sender.enable = false
-sender.class = "org.apache.axis2.transport.mqtt.MqttSender"         # inferred
-
 
 ###################################     Http servlet                ###################################
 
@@ -426,9 +448,18 @@ flow.statistics.tracer.collect_properties=false
 inbound.core_threads = 20
 inbound.max_threads = 100
 
+###################################     Clustering configurations   ###################################
+[clustering]
+members = ["10.100.5.86:4000","10.100.5.86:4001"]
+local_member_port = 4000
+local_member_host = "10.100.5.86"
+membership_scheme =  'wka'      # inferred
+domain = "wso2.carbon.domain"   # inferred
+
 [user_store]
 type = "database"
 
+###################################     Database configurations     ###################################
 [database.shared_db]
 type = "h2"
 url="jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000" # inferred based on database.shared_db.type
@@ -442,6 +473,7 @@ testOnBorrow = true
 validationInterval = "30000"
 defaultAutoCommit = true
 
+###################################     Keystore configurations     ###################################
 [keystore.tls]
 file_name = "wso2carbon.jks"        # infered
 type = "JKS"                        # infered

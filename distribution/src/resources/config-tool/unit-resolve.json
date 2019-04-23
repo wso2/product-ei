@@ -5,6 +5,16 @@
 
     "passthru_properties.'http.socket.timeout'": "ms",
 
-    "transport.http.listener.ssl_profile.read_interval": "ms"
+    "transport.http.listener.ssl_profile.read_interval": "ms",
+    "transport.http.sender.ssl_profile.read_interval": "ms",
+    "transport.http.blocking_sender.parameter.SO_TIMEOUT": "ms",
+
+    "custom_transport.listener.ssl_profile.read_interval": "ms",
+    "custom_transport.sender.ssl_profile.read_interval": "ms",
+
+    "transport.jms.listener:parameter.'transport.jms.MaxReconnectDuration'": "ms",
+    "transport.jms.listener:parameter.'transport.jms.ConsumeErrorDelay'": "ms",
+    "transport.jms.sender:parameter.'transport.jms.MaxReconnectDuration'": "ms",
+    "transport.jms.sender:parameter.'transport.jms.ConsumeErrorDelay'": "ms"
   }
 }
