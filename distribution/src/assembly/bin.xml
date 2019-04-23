@@ -889,6 +889,7 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/endorsed/xalan*.jar</exclude>
+                <exclude>**/endorsed/geronimo-jms_1.1_spec*.jar</exclude>
             </excludes>
         </fileSet>
 
@@ -1484,8 +1485,14 @@
             <outputDirectory>wso2ei-${pom.version}/lib</outputDirectory>
             <includes>
                 <include>org.wso2.andes.wso2:andes-client:jar</include>
-                <include>org.apache.geronimo.specs.wso2:geronimo-jms_1.1_spec:jar</include>
+                <include>javax.jms:javax.jms-api:jar</include>
                 <include>org.wso2.securevault:org.wso2.securevault:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lib/endorsed</outputDirectory>
+            <includes>
+                <include>javax.jms:javax.jms-api:jar</include>
             </includes>
         </dependencySet>
     </dependencySets>

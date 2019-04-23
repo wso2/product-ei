@@ -90,6 +90,11 @@
             <groupId>org.wso2.carbon.privacy</groupId>
             <artifactId>org.wso2.carbon.privacy.forgetme.tool</artifactId>
         </dependency>
+        <!-- JMS 2.0 API dependency -->
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
