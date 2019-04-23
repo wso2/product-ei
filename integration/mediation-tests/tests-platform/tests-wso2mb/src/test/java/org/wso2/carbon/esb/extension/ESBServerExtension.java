@@ -58,12 +58,9 @@ public class ESBServerExtension extends ExecutionListenerExtension {
                                       + File.separator + "conf" + File.separator + "jndi.properties";
                 String axis2Xml = TestConfigurationProvider.getResourceLocation("ESB")
                                   + File.separator + "conf" + File.separator + "axis2" + File.separator + "axis2.xml";
-                String libPath = TestConfigurationProvider.getResourceLocation("ESB")
-                                 + File.separator + "lib";
-                String esbConfDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "repository" + File.separator
-                                    + "conf";
-                String esbLibDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "repository" + File.separator
-                                    + "components" + File.separator + "lib";
+                String libPath = TestConfigurationProvider.getResourceLocation("ESB") + File.separator + "lib";
+                String esbConfDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "conf";
+                String esbLibDir = testServerWithSecurityManager.getCarbonHome() + File.separator + "lib";
 
                 try {
                     log.info("Replacing jndi.properties");
