@@ -66,10 +66,6 @@ public class ESBServerExtension extends ExecutionListenerExtension {
                     log.info("Replacing jndi.properties");
                     FileManager.copyFile(new File(jndiPtah) , esbConfDir + File.separator + "jndi.properties");
                     FileManager.copyFile(new File(axis2Xml) , esbConfDir + File.separator +"axis2" + File.separator + "axis2.xml");
-                    log.info("Copying jar files to lib folder");
-                    FileManager.copyJarFile(new File(libPath + File.separator + "andes-client-3.0.1.jar"), esbLibDir + File.separator);
-                    FileManager.copyJarFile(new File(libPath + File.separator + "geronimo-jms_1.1_spec-1.1.1.jar"), esbLibDir + File.separator);
-                    FileManager.copyJarFile(new File(libPath + File.separator + "org.wso2.securevault-1.0.0-wso2v2.jar"), esbLibDir + File.separator);
 
                 } catch (IOException e) {
                     throw new AutomationFrameworkException(e.getMessage(), e);

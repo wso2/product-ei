@@ -14,7 +14,7 @@
         <parameter name="transport.jms.DurableSubscriberName">newID3</parameter>
         <parameter name="transport.jms.DurableSubscriberClientID">newID3</parameter>
         <parameter name="transport.jms.Destination">MyNewTopic</parameter>
-        <parameter name="java.naming.provider.url">repository/conf/jndi.properties</parameter>
+        <parameter name="java.naming.provider.url">conf/jndi.properties</parameter>
         <parameter name="transport.jms.SessionAcknowledgement">CLIENT_ACKNOWLEDGE</parameter>
         <parameter name="transport.jms.SubscriptionDurable">true</parameter>
         <parameter name="transport.jms.ConnectionFactoryType">topic</parameter>
