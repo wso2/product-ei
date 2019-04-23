@@ -1449,6 +1449,12 @@
                 <artifactId>org.wso2.ei.mb.platform.common.utils</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
+            <!-- JMS 2.0 API dependency -->
+            <dependency>
+                <groupId>javax.jms</groupId>
+                <artifactId>javax.jms-api</artifactId>
+                <version>2.0.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
