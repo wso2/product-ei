@@ -1,85 +1,86 @@
 {
-  "transport.passthru_http.listener.class": "org.apache.synapse.transport.passthru.PassThroughHttpListener",
-  "transport.passthru_http.parameters": {
-    "port": "8280",
-    "non-blocking": true,
-    "httpGetProcessor": "org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor"
-  },
-  "transport.passthru_https.listener.class": "org.apache.synapse.transport.passthru.PassThroughHttpSSLListener",
-  "transport.passthru_https.listener.parameters": {
-    "port": "8243",
-    "non-blocking": true,
-    "HttpsProtocols": "TLSv1,TLSv1.1,TLSv1.2",
-    "httpGetProcessor": "org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor"
-  },
-  "transport.http.listener.key_store.file_name": "repository/resources/security/$conf{keystore.tls.file_name}",
-  "transport.http.listener.key_store.type": "$conf{keystore.tls.type}",
-  "transport.http.listener.key_store.password": "$conf{keystore.tls.password}",
-  "transport.http.listener.key_store.key_password": "$conf{keystore.tls.key_password}",
-  "transport.http.listener.trust_store.file_name": "repository/resources/security/$conf{truststore.file_name}",
-  "transport.http.listener.trust_store.type": "$conf{truststore.type}",
-  "transport.http.listener.trust_store.password": "$conf{truststore.password}",
-  "transport.passthru_https.listener.ssl_profile.file_path": "repository/resources/security/listenerprofiles.xml",
-  "transport.passthru_https.listener.ssl_profile.interval": "600000",
-
-  "transport.passthru_http.sender.class": "org.apache.synapse.transport.passthru.PassThroughHttpSender",
-  "transport.passthru_http.sender.parameters": {
-    "non-blocking": true
-  },
-  "transport.passthru_https.sender.class": "org.apache.synapse.transport.passthru.PassThroughHttpSSLSender",
-  "transport.passthru_https.sender.parameters": {
-    "non-blocking": true
-  },
-  "transport.http.sender.key_store.file_name": "repository/resources/security/$conf{keystore.tls.file_name}",
-  "transport.http.sender.key_store.type": "$conf{keystore.tls.type}",
-  "transport.http.sender.key_store.password": "$conf{keystore.tls.password}",
-  "transport.http.sender.key_store.key_password": "$conf{keystore.tls.key_password}",
-  "transport.http.sender.trust_store.file_name": "repository/resources/security/$conf{truststore.file_name}",
-  "transport.http.sender.trust_store.type": "$conf{truststore.type}",
-  "transport.http.sender.trust_store.password": "$conf{truststore.password}",
-
-  "transport.http.blocking_sender.parameters": {
-    "Transfer-Encoding": "chunked",
-    "cacheHttpClient": true,
-    "defaultMaxConnectionsPerHost": 200
-  },
-
-  "transport.blocking_http.sender.class": "org.apache.axis2.transport.http.CommonsHTTPTransportSender",
-  "transport.blocking_http.sender.parameters": {
-    "PROTOCOL": "HTTP/1.1",
-    "Transfer-Encoding": "chunked",
-    "cacheHttpClient": true,
-    "defaultMaxConnectionsPerHost": "200"
-  },
-  "transport.blocking_https.sender.class": "org.apache.axis2.transport.http.CommonsHTTPTransportSender",
-  "transport.blocking_https.sender.parameters": {
-    "PROTOCOL": "HTTP/1.1",
-    "Transfer-Encoding": "chunked",
-    "cacheHttpClient": true,
-    "defaultMaxConnectionsPerHost": "200"
-  },
-
-  "deployment.enableMTOM": false,
-  "deployment.enableSwA": false,
-  "deployment.userAgent": "WSO2 ${product.key} ${product.version}",
-  "deployment.serverDetails": "WSO2 ${product.key} ${product.version}",
+  "server.enableMTOM": false,
+  "server.enableSwA": false,
+  "server.userAgent": "WSO2 ${product.key} ${product.version}",
+  "server.serverDetails": "WSO2 ${product.key} ${product.version}",
 
   "synapse_properties.'synapse.threads.core'": "20",
   "synapse_properties.'synapse.threads.max'": "100",
-  "synapse_properties.'synapse.global_timeout_interval'": 120000,
+  "synapse_properties.'synapse.threads.qlen'": "10",
+  "synapse_properties.'synapse.global_timeout_interval'": "120000",
   "synapse_properties.'synapse.commons.json.preserve.namespace'": false,
-  "synapse_properties.'synapse.temp_data.chunk.size'": 3072,
-  "synapse_properties.'synapse.debugger.port.command'": 9005,
-  "synapse_properties.'synapse.debugger.port.event'": 9006,
-  "synapse_properties.'statistics.clean.enable'": true,
-  "synapse_properties.'statistics.clean.interval'": 1000,
+  "synapse_properties.'synapse.xpath.dom.failover.enabled'": true,
+  "synapse_properties.'synapse.temp_data.chunk.size'": "3072",
+  "synapse_properties.'synapse.debugger.port.command'": "9005",
+  "synapse_properties.'synapse.debugger.port.event'": "9006",
+  "synapse_properties.'synapse.script.mediator.pool.size'": "15",
+  "synapse_properties.'mediation.flow.statistics.enable'": false,
+  "synapse_properties.'mediation.flow.statistics.collect.all'": false,
   "synapse_properties.'mediation.flow.statistics.tracer.collect.payloads'": false,
   "synapse_properties.'mediation.flow.statistics.tracer.collect.properties'": false,
-
+  "synapse_properties.'statistics.clean.enable'": true,
+  "synapse_properties.'statistics.clean.interval'": "1000",
+  "synapse_properties.'inbound.threads.core'": "20",
+  "synapse_properties.'inbound.threads.max'": "100",
 
   "passthru_properties.'http.socket.timeout'": "180000",
   "passthru_properties.'worker_pool_size_core'": "400",
-  "passthru_properties.'worker_pool_size_max'": "500",
+  "passthru_properties.'worker_pool_size_max'": "400",
+  "passthru_properties.'worker_pool_queue_length'": "-1",
+  "passthru_properties.'io_buffer_size'": "16384",
+  "passthru_properties.'http.max.connection.per.host.port'": "32767",
+  "passthru_properties.'http.user.agent.preserve'": false,
+  "passthru_properties.'http.server.preserve'": true,
+  "passthru_properties.'http.connection.disable.keepalive'": false,
+  "passthru_properties.'valid.max.message.size.in.bytes'": "81920",
+  "transport.http.preserve_http_headers": ["Content-Type"],
+  "transport.http.listener.parameter.port": "8280",
+  "transport.http.listener.parameter.WSDLEPRPrefix": "$ref{server.hostname}",
+  "transport.http.listener.parameter.bind-address": "$ref{server.hostname}",
+  "transport.http.listener.parameter.httpGetProcessor": "org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor",
+  "transport.https.listener.parameter.port": "8243",
+  "transport.https.listener.parameter.WSDLEPRPrefix": "$ref{server.hostname}",
+  "transport.https.listener.parameter.bind-address": "$ref{server.hostname}",
+  "transport.https.listener.parameter.HttpsProtocols": "TLSv1,TLSv1.1,TLSv1.2",
+  "transport.https.listener.parameter.httpGetProcessor": "org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor",
+  "transport.http.listener.ssl_profile.read_interval": "3600000",
+  "transport.http.listener.keystore.file_name": "repository/resources/security/$ref{keystore.tls.file_name}",
+  "transport.http.listener.keystore.type": "$ref{keystore.tls.type}",
+  "transport.http.listener.keystore.password": "$ref{keystore.tls.password}",
+  "transport.http.listener.keystore.key_password": "$ref{keystore.tls.key_password}",
+  "transport.http.listener.truststore.file_name": "repository/resources/security/$ref{truststore.file_name}",
+  "transport.http.listener.truststore.type": "$ref{truststore.type}",
+  "transport.http.listener.truststore.password": "$ref{truststore.password}",
+
+  "transport.http.sender.keystore.file_name": "repository/resources/security/$ref{keystore.tls.file_name}",
+  "transport.http.sender.keystore.type": "$ref{keystore.tls.type}",
+  "transport.http.sender.keystore.password": "$ref{keystore.tls.password}",
+  "transport.http.sender.keystore.key_password": "$ref{keystore.tls.key_password}",
+  "transport.http.sender.truststore.file_name": "repository/resources/security/$ref{truststore.file_name}",
+  "transport.http.sender.truststore.type": "$ref{truststore.type}",
+  "transport.http.sender.truststore.password": "$ref{truststore.password}",
+  "transport.http.sender.ssl_profile.read_interval": "600000",
+
+  "transport.http.blocking_sender.parameter.cacheHttpClient": true,
+  "transport.http.blocking_sender.parameter.Transfer-Encoding": "chunked",
+  "transport.http.blocking_sender.parameter.defaultMaxConnectionsPerHost": "200",
+  "transport.http.blocking_sender.parameter.OmitSOAP12Action": true,
+  "transport.http.blocking_sender.parameter.SO_TIMEOUT": "60000",
+
+  "transport.hl7.listener.enable": false,
+  "transport.hl7.sender.enable": false,
+
+  "transport.vfs.listener.enable": true,
+  "transport.vfs.listener.keystore.file_name": "repository/resources/security/$ref{keystore.tls.file_name}",
+  "transport.vfs.listener.keystore.type": "$ref{keystore.tls.type}",
+  "transport.vfs.listener.keystore.password": "$ref{keystore.tls.password}",
+  "transport.vfs.listener.keystore.key_password": "$ref{keystore.tls.key_password}",
+  "transport.vfs.listener.keystore.alias": "$ref{keystore.tls.alias}",
+  "transport.vfs.sender.enable": true,
+
+  "transport.msmq.listener.parameter.'msmq.receiver.host'": "$ref{server.hostname}",
+
+  "transport.mqtt.listener.mqttConFactory.parameter.'mqtt.server.host.name'": "$ref{server.hostname}",
 
   "message_formatters": [
     {
@@ -129,6 +130,10 @@
     {
       "content_type": "application/edi-hl7",
       "class": "org.wso2.carbon.business.messaging.hl7.message.HL7MessageFormatter"
+    },
+    {
+      "content_type": "application/binary",
+      "class": "org.apache.axis2.format.BinaryFormatter"
     }
   ],
 
@@ -172,6 +177,10 @@
     {
       "content_type": "application/edi-hl7",
       "class": "org.wso2.carbon.business.messaging.hl7.message.HL7MessageBuilder"
+    },
+    {
+      "content_type": "application/binary",
+      "class": "org.apache.axis2.format.BinaryBuilder"
     }
 
   ],

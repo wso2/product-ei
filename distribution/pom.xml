@@ -501,6 +501,15 @@
                                     </output>
                                     <config>${basedir}/src/resources/config-tool/validator.json</config>
                                 </task>
+                                <task>
+                                    <input>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/unit-resolve.json
+                                    </input>
+                                    <output>
+                                        ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/resources/conf/unit-resolve.json
+                                    </output>
+                                    <config>${basedir}/src/resources/config-tool/unit-resolve.json</config>
+                                </task>
                             </tasks>
                         </configuration>
                     </execution>

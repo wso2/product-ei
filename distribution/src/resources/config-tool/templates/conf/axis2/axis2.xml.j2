@@ -29,9 +29,9 @@
     <parameter name="hotupdate" locked="false">true</parameter>
 
     <!-- Change this to true if you want to enable MTOM -->
-    <parameter name="enableMTOM" locked="false">{{deployment.enableMTOM}}</parameter>
+    <parameter name="enableMTOM" locked="false">{{server.enableMTOM}}</parameter>
     <!-- Change this to true if you want to enable SwA -->
-    <parameter name="enableSwA" locked="false">{{deployment.enableSwA}}</parameter>
+    <parameter name="enableSwA" locked="false">{{server.enableSwA}}</parameter>
 
     <!-- If you want to enable file caching for attachments change this to true -->
     <parameter name="cacheAttachments" locked="false">false</parameter>
@@ -62,8 +62,8 @@
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">{{deployment.userAgent}}</parameter>
-    <parameter name="server" locked="true">{{deployment.serverDetails}}</parameter>
+    <parameter name="userAgent" locked="true">{{server.userAgent}}</parameter>
+    <parameter name="server" locked="true">{{server.serverDetails}}</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
@@ -183,46 +183,59 @@
     <!--             Transport Ins (Listeners)             -->
     <!-- ================================================= -->
 
-    <transportReceiver name="http" class="{{transport.passthru_http.listener.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_http.parameters.items() %}
+    <transportReceiver name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpListener">
+        {% for parameter_key,parameter_value in transport.http.listener.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
     </transportReceiver>
 
-    <transportReceiver name="https" class="{{transport.passthru_https.listener.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_https.listener.parameters.items() %}
+    <transportReceiver name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener">
+        {% for parameter_key,parameter_value in transport.https.listener.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>{{transport.http.listener.key_store.file_name}}</Location>
-                <Type>{{transport.http.listener.key_store.type}}</Type>
-                <Password>{{transport.http.listener.key_store.password}}</Password>
-                <KeyPassword>{{transport.http.listener.key_store.key_password}}</KeyPassword>
+                <Location>{{transport.http.listener.keystore.file_name}}</Location>
+                <Type>{{transport.http.listener.keystore.type}}</Type>
+                <Password>{{transport.http.listener.keystore.password}}</Password>
+                <KeyPassword>{{transport.http.listener.keystore.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>{{transport.http.listener.trust_store.file_name}}</Location>
-                <Type>{{transport.http.listener.trust_store.type}}</Type>
-                <Password>{{transport.http.listener.trust_store.password}}</Password>
+                <Location>{{transport.http.listener.truststore.file_name}}</Location>
+                <Type>{{transport.http.listener.truststore.type}}</Type>
+                <Password>{{transport.http.listener.truststore.password}}</Password>
             </TrustStore>
         </parameter>
+        {% if transport.http.listener.verify_client is defined %}
+        <parameter name="SSLVerifyClient">{{transport.http.listener.verify_client}}</parameter>
+        {% endif %}
+
+        {% if transport.http.listener.ssl_profile.file_path is defined %}
         <!-- ============================================== -->
         <!-- Configuration for Listener Dynamic SSL Profile loading. -->
         <!-- Configured for 10 mins. -->
         <!-- ============================================== -->
         <parameter name="dynamicSSLProfilesConfig">
-            <filePath>{{transport.passthru_https.listener.ssl_profile.file_path}}</filePath>
-            <fileReadInterval>{{transport.passthru_https.listener.ssl_profile.interval}}</fileReadInterval>
+            <filePath>{{transport.http.listener.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.http.listener.ssl_profile.read_interval}}</fileReadInterval>
         </parameter>
+        {% endif %}
     </transportReceiver>
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
     {% if transport.vfs.listener.enable == true %}
-    <transportReceiver name="vfs" class="{{transport.vfs.listener.class}}"/>
+    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener">
+        <parameter locked="false" name="keystore.identity.location">{{transport.vfs.listener.keystore.file_name}}</parameter>
+        <parameter locked="false" name="keystore.identity.type">{{transport.vfs.listener.keystore.type}}</parameter>
+        <parameter locked="false" name="keystore.identity.store.password">{{transport.vfs.listener.keystore.password}}</parameter>
+        <parameter locked="false" name="keystore.identity.key.password">{{transport.vfs.listener.keystore.key_password}}</parameter>
+        <parameter locked="false" name="keystore.identity.alias">{{transport.vfs.listener.keystore.alias}}</parameter>
+    </transportReceiver>
     {% endif %}
     {% if transport.mail.listener.enable == true %}
-    <transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">
+    <transportReceiver name="{{transport.mail.listener.name}}" class="org.apache.axis2.transport.mail.MailTransportListener">
+    </transportReceiver>
     {% endif %}
     {% if transport.jms.listener is defined %}
     <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
@@ -236,10 +249,14 @@
     </transportReceiver>
     {% endif %}
     {% if transport.fix.listener.enable == true %}
-    <transportReceiver name="fix" class="{{transport.fix.listener.class}}"/>
+    <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
     {% endif %}
     {% if transport.hl7.listener.enable == true %}
-    <transportReceiver name="hl7" class="{{transport.hl7.listener.class}}"/>
+    <transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener">
+        {% for parameter_key,parameter_value in transport.hl7.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportReceiver>
     {% endif %}
     <!-- SAP Transport Listeners -->
     {% if transport.sap.listener.idoc.enable == true %}
@@ -249,60 +266,128 @@
     <transportReceiver name="bapi" class="{{transport.sap.listener.bapi.class}}"/>
     {% endif %}
     {% if transport.rabbitmq.listener.AMQPConnectionFactory is defined %}
-    <transportReceiver name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
+    <transportReceiver name="{{transport.rabbitmq.listener.name}}" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
         <parameter name="AMQPConnectionFactory" locked="false">
-            {% for parameter_key,parameter_value in transport.rabbitmq.listener.AMQPConnectionFactory.parameters.items() %}
+            {% for parameter_key,parameter_value in transport.rabbitmq.listener.AMQPConnectionFactory.parameter.items() %}
             <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
             {% endfor %}
         </parameter>
     </transportReceiver>
     {% endif %}
-    {% if transport.mqtt.listener.mqttConFactory is defined %}
+    {% if transport.mqtt.listener.enable == true %}
     <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
         <parameter locked="false" name="mqttConFactory">
-            {% for parameter_key,parameter_value in transport.mqtt.listener.mqttConFactory.parameters.items() %}
+            {% for parameter_key,parameter_value in transport.mqtt.listener.mqttConFactory.parameter.items() %}
             <parameter locked="false" name="{{parameter_key}}">{{parameter_value}}</parameter>
             {% endfor %}
         </parameter>
     </transportReceiver>
     {% endif %}
 
+    {% for transport_item in custom_transport.listener %}
+    <transportReceiver name="{{transport_item.protocol}}" class="{{transport_item.class}}">
+        {% for parameter_key,parameter_value in transport_item.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport_item.key_store is defined %}
+        <parameter name="keystore" locked="false">
+              <KeyStore>
+                    <Location>{{transport_item.keystore.file_name}}</Location>
+                    <Type>{{transport_item.keystore.type}}</Type>
+                    <Password>{{transport_item.keystore.password}}</Password>
+                    <KeyPassword>{{transport_item.keystore.key_password}}</KeyPassword>
+              </KeyStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.trust_store is defined %}
+        <parameter name="truststore" locked="false">
+              <TrustStore>
+                    <Location>{{transport_item.truststore.file_name}}</Location>
+                    <Type>{{transport_item.truststore.type}}</Type>
+                    <Password>{{transport_item.truststore.password}}</Password>
+              </TrustStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.ssl_profile.file_path is defined %}
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport_item.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport_item.ssl_profile.read_interval}}</fileReadInterval>
+        </parameter>
+        {% endif %}
+    </transportReceiver>
+    {% endfor %}
+    {% if transport.tcp.listener.enable == true %}
+    <transportReceiver name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportListener">
+        {% for parameter_key,parameter_value in transport.tcp.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportReceiver>
+    {% endif %}
+    {% if transport.udp.listener.enable == true %}
+    <transportReceiver name="udp" class="org.apache.axis2.transport.udp.UDPListener"/>
+    {% endif %}
+    {% if transport.msmq.listener.enable == true %}
+    <transportReceiver name="msmq" class="org.apache.axis2.transport.msmq.MSMQListener">
+        {% for parameter_key,parameter_value in transport.msmq.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportReceiver>
+    {% endif %}
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
 
-    <transportSender name="http" class="{{transport.passthru_http.sender.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_http.sender.parameters.items() %}
+    <transportSender name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpSender">
+        <parameter name="non-blocking" locked="false">true</parameter>
+        {% if transport.http.sender.non_proxy_hosts is defined %}
+        <parameter name="http.nonProxyHosts" locked="false">{% for parameter_value in transport.http.sender.non_proxy_hosts %}{{parameter_value}}{% if loop.index < transport.http.sender.non_proxy_hosts|length %}|{% endif %}{% endfor %}</parameter>
+        {% endif %}
+        {% for parameter_key,parameter_value in transport.http.sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
+        {% if transport.http.proxy_profile is defined %}
+        <parameter name="proxyProfiles">
+            {% for profile in transport.http.proxy_profile %}
+            <profile>
+                <targetHosts>{% for hostitem in profile.target_hosts %}{{hostitem}}{% if loop.index < profile.target_hosts|length %},{% endif %}{% endfor %}</targetHosts>
+                <proxyHost>{{profile.proxy_host}}</proxyHost>
+                <proxyPort>{{profile.proxy_port}}</proxyPort>
+                {% if profile.proxy_username is defined %}<proxyUserName>{{profile.proxy_username}}</proxyUserName>{% endif %}
+                {% if profile.proxy_password is defined %}<proxyPassword>{{profile.proxy_password}}</proxyPassword>{% endif %}
+                {% if profile.bypass_hosts is defined %}<bypass>{% for bypassitem in profile.bypass_hosts %}{{bypassitem}}{% if loop.index < profile.bypass_hosts|length %},{% endif %}{% endfor %}</bypass>{% endif %}
+            </profile>
+            {% endfor %}
+        </parameter>
+        {% endif %}
     </transportSender>
-    <transportSender name="https" class="{{transport.passthru_https.sender.class}}">
-        {% for parameter_key,parameter_value in transport.passthru_https.sender.parameters.items() %}
+    <transportSender name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLSender">
+        <parameter name="non-blocking" locked="false">true</parameter>
+        {% for parameter_key,parameter_value in transport.https.sender.parameter.items() %}
         <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
         {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>{{transport.http.sender.key_store.file_name}}</Location>
-                <Type>{{transport.http.sender.key_store.type}}</Type>
-                <Password>{{transport.http.sender.key_store.password}}</Password>
-                <KeyPassword>{{transport.http.sender.key_store.key_password}}</KeyPassword>
+                <Location>{{transport.http.sender.keystore.file_name}}</Location>
+                <Type>{{transport.http.sender.keystore.type}}</Type>
+                <Password>{{transport.http.sender.keystore.password}}</Password>
+                <KeyPassword>{{transport.http.sender.keystore.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>{{transport.http.sender.trust_store.file_name}}</Location>
-                <Type>{{transport.http.sender.trust_store.type}}</Type>
-                <Password>{{transport.http.sender.trust_store.password}}</Password>
+                <Location>{{transport.http.sender.truststore.file_name}}</Location>
+                <Type>{{transport.http.sender.truststore.type}}</Type>
+                <Password>{{transport.http.sender.truststore.password}}</Password>
             </TrustStore>
         </parameter>
-        {% if transport.passthru_https.sender.ssl_profile.file_path is defined %}
+        {% if transport.http.sender.ssl_profile.file_path is defined %}
         <!-- ============================================== -->
         <!-- Configuration for Dynamic SSL Profile loading. -->
         <!-- Configured for 10 mins. -->
         <!-- ============================================== -->
         <parameter name="dynamicSSLProfilesConfig">
-            <filePath>{{transport.passthru_https.sender.ssl_profile.file_path}}</filePath>
-            <fileReadInterval>{{transport.passthru_https.sender.ssl_profile.interval}}</fileReadInterval>
+            <filePath>{{transport.http.sender.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.http.sender.ssl_profile.read_interval}}</fileReadInterval>
         </parameter>
         {% endif %}
     </transportSender>
@@ -318,24 +403,25 @@
     </transportSender>
     {% endif %}
     <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
-    {% if transport.local.sender.nonblocking.enable == true %}
-    <transportSender name="local" class="{{transport.local.sender.nonblocking.class}}"/>
-    {% endif %}
     {% if transport.vfs.sender.enable == true %}
-    <transportSender name="vfs" class="{{transport.vfs.sender.class}}"/>
+    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
     {% endif %}
-    {% if transport.mailto.sender is defined %}
-    <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
-        {% for parameter_key,parameter_value in transport.mailto.sender.parameters.items() %}
+    {% for mail_sender in transport.mail.sender %}
+    <transportSender name="{{mail_sender.name}}" class="org.apache.axis2.transport.mail.MailTransportSender">
+        {% for parameter_key,parameter_value in mail_sender.parameter.items() %}
         <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
         {% endfor %}
     </transportSender>
-    {% endif %}
+    {% endfor %}
     {% if transport.fix.sender.enable == true %}
-    <transportSender name="fix" class="{{transport.fix.sender.class}}"/>
+    <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>
     {% endif %}
     {% if transport.hl7.sender.enable == true %}
-    <transportSender name="hl7" class="{{transport.hl7.sender.class}}"/>
+    <transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender">
+        {% for parameter_key,parameter_value in transport.hl7.sender.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportSender>
     {% endif %}
     <!-- SAP Transport Senders -->
     {% if transport.sap.sender.idoc.enable == true %}
@@ -344,29 +430,79 @@
     {% if transport.sap.sender.bapi.enable == true %}
     <transportSender name="bapi" class="{{transport.sap.sender.bapi.class}}"/>
     {% endif %}
-    {% if transport.rabbitmq.sender.enable == true %}
-    <transportSender name="rabbitmq" class="{{transport.rabbitmq.sender.class}}"/>
+    {% if transport.rabbitmq.sender.AMQPConnectionFactory is defined %}
+    <transportReceiver name="{{transport.rabbitmq.sender.name}}" class="org.apache.axis2.transport.rabbitmq.RabbitMQSender">
+        <parameter name="AMQPConnectionFactory" locked="false">
+            {% for parameter_key,parameter_value in transport.rabbitmq.sender.AMQPConnectionFactory.parameter.items() %}
+            <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+            {% endfor %}
+        </parameter>
+    </transportReceiver>
     {% endif %}
     {% if transport.mqtt.sender.enable == true %}
     <transportSender name="mqtt" class="{{transport.mqtt.sender.class}}"/>
     {% endif %}
-    {% if transport.ws.sender.class is defined %}
+    {% if transport.ws.sender.enable == true %}
     <transportSender name="ws" class="{{transport.ws.sender.class}}">
-        {% for name,value in transport.ws.sender.parameters.items() %}
+        {% for name,value in transport.ws.sender.parameter.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>
         {% endfor %}
     </transportSender>
     {% endif %}
-    {% if transport.wss.sender is defined %}
+    {% if transport.wss.sender.enable == true %}
     <transportSender name="wss" class="{{transport.wss.sender.class}}">
-        {% for name,value in transport.ws.sender.parameters.items() %}
+        {% for name,value in transport.wss.sender.parameter.items() %}
         <parameter name="{{name}}" locked="false">{{value}}</parameter>
         {% endfor %}
         <parameter name="ws.trust.store" locked="false">
-            <ws.trust.store.location>{{transport.wss.sender.trust_store_location}}</ws.trust.store.location>
-            <ws.trust.store.Password>{{transport.wss.sender.trust_store_password}}</ws.trust.store.Password>
+            <ws.trust.store.location>{{transport.wss.sender.truststore_location}}</ws.trust.store.location>
+            <ws.trust.store.Password>{{transport.wss.sender.truststore_password}}</ws.trust.store.Password>
         </parameter>
     </transportSender>
+    {% endif %}
+    {% for transport_item in custom_transport.sender %}
+    <transportSender name="{{transport_item.protocol}}" class="{{transport_item.class}}">
+        {% for parameter_key,parameter_value in transport_item.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport_item.key_store is defined %}
+        <parameter name="keystore" locked="false">
+            <KeyStore>
+                <Location>{{transport_item.keystore.file_name}}</Location>
+                <Type>{{transport_item.keystore.type}}</Type>
+                <Password>{{transport_item.keystore.password}}</Password>
+                <KeyPassword>{{transport_item.keystore.key_password}}</KeyPassword>
+            </KeyStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.trust_store is defined %}
+        <parameter name="truststore" locked="false">
+            <TrustStore>
+                <Location>{{transport_item.truststore.file_name}}</Location>
+                <Type>{{transport_item.truststore.type}}</Type>
+                <Password>{{transport_item.truststore.password}}</Password>
+            </TrustStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.ssl_profile.file_path is defined %}
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport_item.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport_item.ssl_profile.read_interval}}</fileReadInterval>
+        </parameter>
+        {% endif %}
+    </transportSender>
+    {% endfor %}
+    {% if transport.tcp.sender.enable == true %}
+    <transportSender name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportSender"/>
+    {% endif %}
+    {% if transport.udp.sender.enable == true %}
+    <transportSender name="udp" class="org.apache.axis2.transport.udp.UDPSender"/>
+    {% endif %}
+    {% if transport.msmq.sender.enable == true %}
+    <transportSender name="msmq" class="org.apache.axis2.transport.msmq.MSMQSender"/>
+    {% endif %}
+    {% if transport.mqtt.sender.enable == true %}
+    <transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>
     {% endif %}
     <!-- ================================================= -->
     <!--             Global Engaged Modules                -->

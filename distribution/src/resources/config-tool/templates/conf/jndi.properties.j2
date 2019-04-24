@@ -15,14 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-
+#
 ##############################################
 #
 # WARNING: Don't edit the file manually unless you are not using the deployment.toml file.
 #
 ##############################################
 
-{%for property, value in synapse_properties.items() %}
-{{property}} = {{value}}
+{%for connection_key,connection_value in transport.jndi.connection_factories.items() %}
+{{connection_key}} = {{connection_value}}
 {% endfor %}
-synapse.sal.endpoints.sesssion.timeout.default=600000
+
+{%for connection_key,connection_value in transport.jndi.queue.items() %}
+queue.{{connection_key}} = {{connection_value}}
+{% endfor %}
+
+{%for connection_key,connection_value in transport.jndi.topic.items() %}
+topic.{{connection_key}} = {{connection_value}}
+{% endfor %}

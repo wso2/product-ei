@@ -1,17 +1,17 @@
 {
-  "transport.vfs.listener.enable": {
-    "true": {
-      "transport.vfs.listener.class": "org.apache.synapse.transport.vfs.VFSTransportListener"
-    }
-  },
-  "transport.fix.listener.enable": {
-    "true": {
-      "transport.fix.listener.class": "org.apache.synapse.transport.fix.FIXTransportListener"
-    }
-  },
   "transport.hl7.listener.enable": {
     "true": {
-      "transport.hl7.listener.class": "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"
+      "transport.hl7.listener.parameter.port": "9292"
+    }
+  },
+  "transport.hl7.sender.enable": {
+    "true": {
+      "transport.hl7.sender.parameter.non-blocking":true
+    }
+  },
+  "transport.mail.listener.enable": {
+    "true": {
+      "transport.mail.listener.name": "mailto"
     }
   },
   "transport.sap.listener.enable": {
@@ -25,26 +25,6 @@
       "transport.sap.listener.bapi.class": "org.wso2.carbon.transports.sap.SAPTransportListener"
     }
   },
-  "transport.local.sender.nonblocking.enable": {
-    "true": {
-      "transport.local.sender.nonblocking.class": "org.apache.axis2.transport.local.NonBlockingLocalTransportSender"
-    }
-  },
-  "transport.vfs.sender.enable": {
-    "true": {
-      "transport.vfs.sender.class": "org.apache.synapse.transport.vfs.VFSTransportSender"
-    }
-  },
-  "transport.fix.sender.enable": {
-    "true": {
-      "transport.fix.sender.class": "org.apache.synapse.transport.fix.FIXTransportSender"
-    }
-  },
-  "transport.hl7.sender.enable": {
-    "true": {
-      "transport.hl7.sender.class": "org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"
-    }
-  },
   "transport.sap.sender.enable": {
     "true": {
       "transport.sap.sender.idoc.enable": true,
@@ -56,14 +36,20 @@
       "transport.sap.sender.bapi.class": "org.wso2.carbon.transports.sap.SAPTransportSender"
     }
   },
-  "transport.rabbitmq.sender.enable": {
+  "transport.ws.sender.enable": {
     "true": {
-      "transport.rabbitmq.sender.class": "org.apache.axis2.transport.rabbitmq.RabbitMQSender"
+      "transport.ws.sender.class": "org.wso2.carbon.websocket.transport.WebsocketTransportSender",
+      "transport.ws.sender.parameter.outflow_dispatch_sequence": "outflowDispatchSeq",
+      "transport.ws.sender.parameter.outflow_dispatch_fault_sequence": "outflowFaultSeq"
     }
   },
-  "transport.mqtt.sender.enable": {
+  "transport.wss.sender.enable": {
     "true": {
-      "transport.mqtt.sender.class":"org.apache.axis2.transport.mqtt.MqttSender"
+      "transport.wss.sender.class": "org.wso2.carbon.websocket.transport.WebsocketTransportSender",
+      "transport.wss.sender.parameter.outflow_dispatch_sequence": "outflowDispatchSeq",
+      "transport.wss.sender.parameter.outflow_dispatch_fault_sequence": "outflowFaultSeq",
+      "transport.wss.sender.truststore_location": "$ref{truststore.file_name}",
+      "transport.wss.sender.truststore_password": "$ref{truststore.tls.password}"
     }
   }
 
