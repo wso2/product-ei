@@ -34,7 +34,8 @@ public class AvailabilityPollingUtils {
     /**
      * Check if message received from server logs.
      *
-     * @return
+     * @param logViewerClient logViewerClient instance of LogViewerClient class
+     * @return Whether REQUEST PARAM VALUE is contained in the log message or not
      */
     public static Callable<Boolean> isMessageRecived(LogViewerClient logViewerClient) {
         final LogViewerClient logViewer = logViewerClient;
