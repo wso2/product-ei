@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="sapBapiProxy"
+       transports="http https"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <inSequence>
+         <call>
+            <endpoint>
+               <address uri="bapi:/ECD"/>
+            </endpoint>
+         </call>
+          <respond/>
+      </inSequence>
+      <outSequence/>
+   </target>
+</proxy>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="sapIdocUsingCallBlockingTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+   <description/>
+   <target>
+      <inSequence>
+         <property name="OUT_ONLY" value="true"/>
+         <call blocking="true">
+            <endpoint>
+               <address uri="idoc:/ECD"/>
+            </endpoint>
+         </call>
+         <log level="custom">
+            <property name="transactionId" expression="$trp:SAP-Transaction-Id"/>
+         </log>
+         <payloadFactory media-type="xml">
+            <format>
+               <idoc>
+                  <result>success</result>
+                  <transaction-id>$1</transaction-id>
+               </idoc>
+            </format>
+            <args>
+               <arg evaluator="xml" expression="$trp:SAP-Transaction-Id"/>
+            </args>
+         </payloadFactory>
+         <property name="HTTP_SC" value="200" scope="axis2"/>
+         <respond/>
+      </inSequence>
+   </target>
+</proxy>

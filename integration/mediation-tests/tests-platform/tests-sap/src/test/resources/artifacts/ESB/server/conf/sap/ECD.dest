@@ -1,0 +1,17 @@
+jco.client.client=100
+jco.client.user=USER
+jco.client.passwd=pwd
+jco.client.lang=en
+jco.client.ashost=sap_ip
+jco.client.gwserv=3300
+jco.client.sysnr=0
+jco.client.idle_timeout=300
+jco.client.logon=0
+jco.client.msserv=3600
+jco.client.trace=1
+jco.client.getsso2=0
+jco.client.r3name=ECD
+
+sap.client.RCVPOR=ZWSO2ISR
+sap.client.RCVPRT=LS
+sap.client.RCVPRN=SAP
