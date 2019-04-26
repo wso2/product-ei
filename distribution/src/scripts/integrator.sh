@@ -205,7 +205,12 @@ elif [ "$CMD" = "restart" ]; then
 
 elif [ "$CMD" = "synapseTest" ]; then
   export UNIT_TEST="true"
-  export UNIT_TEST_PORT="$2"
+  if [ -z "$2" ]
+    then
+          export UNIT_TEST_PORT="9008"
+    else
+          export UNIT_TEST_PORT="$2"
+  fi
 
 elif [ "$CMD" = "version" ]; then
   cat "$CARBON_HOME"/bin/version.txt
