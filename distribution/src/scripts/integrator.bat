@@ -97,6 +97,10 @@ if ""%1""==""version""   goto commandVersion
 if ""%1""==""-version""  goto commandVersion
 if ""%1""==""--version"" goto commandVersion
 
+if ""%1""==""synapseTest""   goto commandSynapseUnitTest
+if ""%1""==""-synapseTest""  goto commandSynapseUnitTest
+if ""%1""==""--synapseTest"" goto commandSynapseUnitTest
+
 shift
 goto setupArgs
 
@@ -115,6 +119,12 @@ if "%DEBUG_PORT%"=="" goto noDebugPort
 if not "%JAVA_OPTS%"=="" echo Warning !!!. User specified JAVA_OPTS will be ignored, once you give the --debug option.
 set JAVA_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=%DEBUG_PORT%
 echo Please start the remote debugging client to continue...
+goto findJdk
+
+rem ----- commandSynapseUnitTest ---------------------------------------------------------
+:commandSynapseUnitTest
+set UNIT_TEST="true"
+set UNIT_TEST_PORT=%2
 goto findJdk
 
 :noDebugPort
