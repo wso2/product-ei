@@ -18,7 +18,6 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -48,6 +47,7 @@ import javax.naming.NamingException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 
@@ -100,11 +100,11 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "sessionTransactedAckQueue";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                             brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
         consumerConfig.setAcknowledgeMode(JMSAcknowledgeMode.SESSION_TRANSACTED);
@@ -113,7 +113,7 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                          brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
@@ -163,17 +163,17 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "autoAcknowledgeQueue";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                                 brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                                  brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
@@ -223,11 +223,11 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "clientAcknowledgeQueue";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                             brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
         consumerConfig.setAcknowledgeMode(JMSAcknowledgeMode.CLIENT_ACKNOWLEDGE);
@@ -237,7 +237,7 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                             brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
@@ -287,11 +287,11 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "dupsOkAcknowledgeQueue";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                             brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
         consumerConfig.setAcknowledgeMode(JMSAcknowledgeMode.DUPS_OK_ACKNOWLEDGE);
@@ -300,7 +300,7 @@ public class DifferentAckModeQueueTestCase extends MBPlatformBaseTest {
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                              brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);

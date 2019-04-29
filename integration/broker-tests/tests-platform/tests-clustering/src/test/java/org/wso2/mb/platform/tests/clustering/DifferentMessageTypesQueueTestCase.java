@@ -18,7 +18,7 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
+import java.net.InetSocketAddress;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -312,18 +312,18 @@ public class DifferentMessageTypesQueueTestCase extends MBPlatformBaseTest {
         long sendCount = messageCount;
         long printDivider = 10L;
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                                     brokerAddress.getPort(), ExchangeType.QUEUE, destinationName);
         consumerConfig.setMaximumMessagesToReceived(sendCount * numberOfPublishers);
         consumerConfig.setPrintsPerMessageCount(sendCount / printDivider);
 
         // Creating publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                                      brokerAddress.getPort(), ExchangeType.QUEUE, destinationName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);

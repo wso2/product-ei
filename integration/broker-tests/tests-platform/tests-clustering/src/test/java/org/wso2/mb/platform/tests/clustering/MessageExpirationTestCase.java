@@ -18,7 +18,7 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
+import java.net.InetSocketAddress;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -128,8 +128,8 @@ public class MessageExpirationTestCase extends MBPlatformBaseTest{
 
         //Creating a consumer
         AndesJMSConsumerClientConfiguration consumerConfig2 = consumerConfig.clone();
-        HostAndPort randomAMQPBrokerAddress = getRandomAMQPBrokerAddress();
-        consumerConfig2.setHostName(randomAMQPBrokerAddress.getHostText());
+        InetSocketAddress randomAMQPBrokerAddress = getRandomAMQPBrokerAddress();
+        consumerConfig2.setHostName(randomAMQPBrokerAddress.getHostName());
         consumerConfig2.setPort(randomAMQPBrokerAddress.getPort());
         AndesClient consumerClient2 = new AndesClient(consumerConfig2, true);
         consumerClient2.startClient();

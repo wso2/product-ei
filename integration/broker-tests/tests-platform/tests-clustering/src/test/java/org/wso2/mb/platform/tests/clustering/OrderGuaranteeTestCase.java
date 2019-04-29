@@ -18,7 +18,6 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -48,6 +47,7 @@ import javax.naming.NamingException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 
@@ -100,11 +100,11 @@ public class OrderGuaranteeTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "singleQueueOrder1";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                                     brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
         consumerConfig.setPrintsPerMessageCount(expectedCount / printDivider);
@@ -112,7 +112,7 @@ public class OrderGuaranteeTestCase extends MBPlatformBaseTest {
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                                  brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
@@ -166,21 +166,21 @@ public class OrderGuaranteeTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "singleQueueOrder2";
 
-        HostAndPort consumerBrokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress consumerBrokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(consumerBrokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(consumerBrokerAddress.getHostName(),
                             consumerBrokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
         consumerConfig.setPrintsPerMessageCount(expectedCount / printDivider);
         consumerConfig.setFilePathToWriteReceivedMessages(AndesClientConstants.FILE_PATH_TO_WRITE_RECEIVED_MESSAGES);
 
-        HostAndPort publisherBrokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress publisherBrokerAddress = getRandomAMQPBrokerAddress();
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(publisherBrokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(publisherBrokerAddress.getHostName(),
                          publisherBrokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
