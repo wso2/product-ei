@@ -156,6 +156,9 @@ work on developing integration flows.
 
 Read on how to develop integration artifacts with EI tooling [here](https://docs.wso2.com/display/EI640/Integration+Tutorials).
 
+#### Test Artifacts in the Enterprise Integrator
+WSO2 Enterprise Integrator allows you to execute unit tests against your integration artifacts by using [Synapse Unit Testing Framework](gh-docs/synapse-unit-testing-framework/synapse-unit-testing-framework.md). 
+
 ## Building from Source
 
 If you intend to build the project from the source you can do that with or without building the dependent projects. 
