@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.handler;
 
 import org.apache.axiom.om.OMElement;
+import org.apache.axis2.AxisFault;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -26,11 +27,15 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.FileManager;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
 import java.io.IOException;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 /**
  * Test class to test a synapse handler.
@@ -48,8 +53,6 @@ public class HandlerTest extends ESBIntegrationTest {
     public void setEnvironment() throws Exception {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(context);
-        serverConfigurationManager
-                .copyToComponentDropins(new File(getClass().getResource(LOCATION + "/" + JAR_NAME).toURI()));
         copyToComponentConf(getClass().getResource(LOCATION + "/" + CONF_NAME).getPath(), CONF_NAME);
         serverConfigurationManager.restartForcefully();
         super.init();
@@ -66,7 +69,6 @@ public class HandlerTest extends ESBIntegrationTest {
         boolean responseInStatus = false;
         boolean responseOutStatus = false;
         boolean handlerStatus = false;
-
         OMElement response = axis2Client
                 .sendSimpleStockQuoteRequest(getProxyServiceURLHttp("handlerTestProxy"), null, "WSO2");
         Assert.assertNotNull(response);
@@ -98,6 +100,29 @@ public class HandlerTest extends ESBIntegrationTest {
 
     }
 
+    @Test(groups = {"wso2.esb"}, description = "Sending a message via proxy to check whether Synapse Handlers get "
+            + "invoked when a SoapFault come as a response")
+    public void testSynapseHandlerExecutionWhenSoapFaultRecieved() throws IOException, LogViewerLogViewerException,
+            InterruptedException {
+        boolean responseInStatus = false;
+        boolean errorOnSoapFaultStatus = false;
+        logViewerClient.clearLogs();
+        try {
+            axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("handlerTestProxyWithSoapfault"), null,
+                    "WSO2");
+            fail("This query must throw an exception since SoapFault come as response");
+        } catch (AxisFault expected) {
+            assertEquals(expected.getReason(), "Custom ERROR Message", "Custom ERROR Message mismatched");
+        }
+
+        errorOnSoapFaultStatus = Utils.checkForLogsWithPriority(logViewerClient, "INFO", "Fault Sequence Hit", 10);
+        responseInStatus = Utils.checkForLogsWithPriority(logViewerClient, "INFO", "handleResponseInFlow", 10);
+
+        Assert.assertTrue(errorOnSoapFaultStatus, "When SoapFault come as a response the fault sequence hasn't been "
+                + "invoked because of FORCE_ERROR_ON_SOAP_FAULT property is not working properly");
+        Assert.assertTrue(responseInStatus, "Synapse handler hasn't been invoked when a Soap Fault received");
+    }
+
     private void copyToComponentConf(String sourcePath, String fileName) throws IOException {
         String carbonHome = System.getProperty("carbon.home");
         String targetPath = carbonHome + File.separator + "conf";
@@ -112,8 +137,6 @@ public class HandlerTest extends ESBIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        serverConfigurationManager
-                .removeFromComponentDropins(JAR_NAME);
         removeFromComponentConf(getClass().getResource(LOCATION + "/" + CONF_NAME).getPath());
         super.cleanup();
     }
