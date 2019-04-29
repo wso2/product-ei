@@ -34,6 +34,7 @@
     <modules>
         <module>tests-rabbitmq</module>
         <module>tests-wso2mb</module>
+        <!--<module>tests-sap</module>-->
     </modules>
 
 </project>

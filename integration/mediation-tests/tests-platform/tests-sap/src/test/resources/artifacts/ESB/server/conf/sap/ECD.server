@@ -1,0 +1,6 @@
+jco.server.gwhost=sap_ip
+jco.server.gwserv=3300
+jco.server.progid=ECD
+jco.server.repository_destination=ECD
+jco.server.name=ECD
+jco.server.unicode=1
