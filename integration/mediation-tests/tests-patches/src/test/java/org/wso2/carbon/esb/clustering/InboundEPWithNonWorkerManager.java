@@ -50,7 +50,6 @@ public class InboundEPWithNonWorkerManager extends ESBIntegrationTest {
     private final String ACTIVEMQ_CLIENT = "activemq-client-5.9.1.jar";
     private final String ACTIVEMQ_BROKER = "activemq-broker-5.9.1.jar";
     private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
-    private final String GERONIMO_JMS = "geronimo-jms_1.1_spec-1.1.1.jar";
     private final String JAR_LOCATION = "/artifacts/ESB/jar";
 
     @BeforeClass(alwaysRun = true)
@@ -67,8 +66,6 @@ public class InboundEPWithNonWorkerManager extends ESBIntegrationTest {
                 (new File(getClass().getResource(JAR_LOCATION + File.separator + ACTIVEMQ_CLIENT).toURI()));
         serverConfigurationManager.copyToComponentLib
                 (new File(getClass().getResource(JAR_LOCATION + File.separator + GERONIMO_J2EE_MANAGEMENT).toURI()));
-        serverConfigurationManager.copyToComponentLib
-                (new File(getClass().getResource(JAR_LOCATION + File.separator + GERONIMO_JMS).toURI()));
         serverConfigurationManager.restartGracefully();
         super.init();
         addInboundEndpoint(esbUtils.loadResource(RELATIVE_RESOURCE_PATH + "JMSEndpoint.xml"));

@@ -38,7 +38,6 @@ public class ActiveMQServer extends ESBIntegrationTest {
 
     private final String ACTIVEMQ_BROKER = "activemq-broker-5.9.1.jar";
     private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
-    private final String GERONIMO_JMS = "geronimo-jms_1.1_spec-1.1.1.jar";
     private final String HAWTBUF = "hawtbuf-1.9.jar";
     private final String ACTIVEMQ_CLIENT = "activemq-client-5.9.1.jar";
 
@@ -62,10 +61,6 @@ public class ActiveMQServer extends ESBIntegrationTest {
 
         serverManager.copyToComponentLib(new File(
                 TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
-                + File.separator + "jar" + File.separator + GERONIMO_JMS));
-
-        serverManager.copyToComponentLib(new File(
-                TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
                 + File.separator + "jar" + File.separator + HAWTBUF));
 
         serverManager.copyToComponentLib(new File(
@@ -86,7 +81,6 @@ public class ActiveMQServer extends ESBIntegrationTest {
             if (serverManager != null) {
                 serverManager.removeFromComponentLib(ACTIVEMQ_BROKER);
                 serverManager.removeFromComponentLib(GERONIMO_J2EE_MANAGEMENT);
-                serverManager.removeFromComponentLib(GERONIMO_JMS);
                 serverManager.removeFromComponentLib(HAWTBUF);
                 serverManager.removeFromComponentLib(ACTIVEMQ_CLIENT);
                 serverManager.restoreToLastConfiguration();
