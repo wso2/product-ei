@@ -55,7 +55,7 @@
                         <property>
                             <name>carbon.zip</name>
                             <value>
-                                ${basedir}/../../../../distribution/target/wso2ei-${project.version}.zip
+                                ${basedir}/../../../distribution/target/wso2ei-${project.version}.zip
                             </value>
                         </property>
                         <property>

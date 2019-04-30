@@ -31,7 +31,7 @@ public class AddUserStep1Page {
     public AddUserStep1Page(WebDriver driver){
         this.driver = driver;
         if (!driver.findElement(By.xpath(UIElementMapper.getInstance()
-                .getElement("usr.mgt.add.user.step1.sub.header.xpath"))).getText().contains("Step 1 : Enter user name")) {
+                .getElement("usr.mgt.add.user.step1.sub.header.xpath"))).getText().contains("Step 1: Enter Username and Password")) {
             throw new IllegalStateException("This is not the add users step1 page");
         }
     }

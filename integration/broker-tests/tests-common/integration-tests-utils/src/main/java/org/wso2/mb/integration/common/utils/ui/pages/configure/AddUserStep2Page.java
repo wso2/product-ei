@@ -43,7 +43,7 @@ public class AddUserStep2Page extends MBPage{
     public AddUserStep2Page(WebDriver driver) {
         super(driver);
         if (!driver.findElement(By.xpath(UIElementMapper.getInstance()
-                .getElement("usr.mgt.add.user.step2.sub.header.xpath"))).getText().contains("Step 2 : Select roles of the user")) {
+                .getElement("usr.mgt.add.user.step2.sub.header.xpath"))).getText().contains("Step 2: Select Roles of the User")) {
             throw new IllegalStateException("This is not the Add User step2 page");
         }
     }
