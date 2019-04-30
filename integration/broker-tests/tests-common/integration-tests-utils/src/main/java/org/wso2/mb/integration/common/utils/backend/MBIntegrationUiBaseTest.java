@@ -136,7 +136,7 @@ public class MBIntegrationUiBaseTest {
         serverManager.applyConfiguration(new File(FrameworkPathUtil.getSystemResourceLocation() + File.separator +
                 "artifacts" + File.separator + "mb" + File.separator + "config" + File.separator
                 + "user-mgt.xml"), new File(ServerConfigurationManager.getCarbonHome() +
-                File.separator + "repository" + File.separator + "conf" + File.separator +
+                File.separator + "wso2" + File.separator + "broker" + File.separator + "conf" + File.separator +
                 "user-mgt.xml"), true, true);
     }
 
@@ -155,7 +155,7 @@ public class MBIntegrationUiBaseTest {
         serverManager.applyConfiguration(new File(FrameworkPathUtil.getSystemResourceLocation() + File.separator +
                 "artifacts" + File.separator + "mb" + File.separator + "config" + File.separator
                 + "user-mgt-admin-role-name.xml"), new File(ServerConfigurationManager.getCarbonHome() +
-                File.separator + "repository" + File.separator + "conf" + File.separator +
+                File.separator + "wso2" + File.separator + "broker" + File.separator + "conf" + File.separator +
                 "user-mgt.xml"), true, true);
     }
 

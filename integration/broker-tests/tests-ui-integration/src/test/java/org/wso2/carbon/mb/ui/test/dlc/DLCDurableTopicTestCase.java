@@ -99,8 +99,9 @@ public class DLCDurableTopicTestCase extends MBIntegrationUiBaseTest {
         super.init();
 
         super.serverManager = new ServerConfigurationManager(mbServer);
-        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "repository" +
-                                            File.separator + "conf" + File.separator + "broker.xml";
+        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "wso2"
+                                            + File.separator + "broker" + File.separator + "conf" + File.separator
+                                            + "broker.xml";
         ConfigurationEditor configurationEditor = new ConfigurationEditor(defaultMBConfigurationPath);
         // Changing "maximumRedeliveryAttempts" value to "2" in broker.xml
         configurationEditor.updateProperty(AndesConfiguration.TRANSPORTS_AMQP_MAXIMUM_REDELIVERY_ATTEMPTS, "2");

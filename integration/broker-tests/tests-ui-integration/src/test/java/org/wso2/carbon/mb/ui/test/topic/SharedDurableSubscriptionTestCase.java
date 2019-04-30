@@ -57,8 +57,9 @@ public class SharedDurableSubscriptionTestCase extends MBIntegrationUiBaseTest {
         super.init();
 
         super.serverManager = new ServerConfigurationManager(mbServer);
-        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "repository" +
-                                            File.separator + "conf" + File.separator + "broker.xml";
+        String defaultMBConfigurationPath = ServerConfigurationManager.getCarbonHome() + File.separator + "wso2"
+                                            + File.separator + "broker" + File.separator + "conf" + File.separator
+                                            + "broker.xml";
         ConfigurationEditor configurationEditor = new ConfigurationEditor(defaultMBConfigurationPath);
         // Changing "allowSharedSubscription" value to "true" in broker.xml
         configurationEditor.updateProperty(AndesConfiguration.ALLOW_SHARED_SHARED_SUBSCRIBERS, "true");
