@@ -117,6 +117,7 @@
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/launch.ini</exclude>
             </excludes>
         </fileSet>
 
@@ -2422,6 +2423,11 @@
         </file>
         <file>
             <source>src/conf/etc/logging-config.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/conf/etc</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/etc/launch.ini</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/conf/etc</outputDirectory>
             <fileMode>644</fileMode>
         </file>
