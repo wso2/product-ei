@@ -18,7 +18,7 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
+import java.net.InetSocketAddress;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -90,7 +90,7 @@ public class DifferentRateSubscriberTestCase extends MBPlatformBaseTest {
     public void testSameNodeSlowSubscriber(long messageCount)
             throws IOException, JMSException, AndesClientConfigurationException, NamingException,
                    XPathExpressionException, AndesClientException, DataAccessUtilException, InterruptedException {
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
         this.runDifferentRateSubscriberTestCase("singleQueue1", 10L, 0L, messageCount, true, brokerAddress, brokerAddress);
     }
 
@@ -109,7 +109,7 @@ public class DifferentRateSubscriberTestCase extends MBPlatformBaseTest {
     public void testSameNodeSlowPublisher(long messageCount)
             throws XPathExpressionException, IOException, JMSException, AndesClientConfigurationException,
                    NamingException, AndesClientException, DataAccessUtilException, InterruptedException {
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
         this.runDifferentRateSubscriberTestCase("singleQueue2", 0L, 10L, messageCount, true, brokerAddress, brokerAddress);
     }
 
@@ -201,8 +201,8 @@ public class DifferentRateSubscriberTestCase extends MBPlatformBaseTest {
     private void runDifferentRateSubscriberTestCase(String destinationName, long consumerDelay,
             long publisherDelay,
             long messageCount,
-            boolean isSameNode, HostAndPort consumerBrokerAddress,
-            HostAndPort publisherBrokerAddress)
+            boolean isSameNode, InetSocketAddress consumerBrokerAddress,
+            InetSocketAddress publisherBrokerAddress)
             throws AndesClientConfigurationException, NamingException, JMSException, IOException, AndesClientException,
                    DataAccessUtilException, InterruptedException {
         // Number of messages expected
@@ -213,7 +213,7 @@ public class DifferentRateSubscriberTestCase extends MBPlatformBaseTest {
 
         // Creating a consumer client configuration
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(consumerBrokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(consumerBrokerAddress.getHostName(),
                                 consumerBrokerAddress.getPort(), ExchangeType.QUEUE, destinationName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount * 2);
         consumerConfig.setPrintsPerMessageCount(expectedCount / printDivider);
@@ -221,7 +221,7 @@ public class DifferentRateSubscriberTestCase extends MBPlatformBaseTest {
 
         // Creating a publisher client configuration
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(publisherBrokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(publisherBrokerAddress.getHostName(),
                              publisherBrokerAddress.getPort(), ExchangeType.QUEUE, destinationName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);

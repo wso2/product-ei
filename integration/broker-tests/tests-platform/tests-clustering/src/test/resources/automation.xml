@@ -206,10 +206,10 @@
                     <host type="default">127.0.0.1</host>
                 </hosts>
                 <ports>
-                    <port type="http">9763</port>
-                    <port type="https">9443</port>
-                    <port type="amqp">5672</port>
-                    <port type="mqtt">1883</port>
+                    <port type="http">9766</port>
+                    <port type="https">9446</port>
+                    <port type="amqp">5675</port>
+                    <port type="mqtt">1886</port>
                 </ports>
                 <properties>
 
@@ -220,10 +220,10 @@
                     <host type="default">127.0.0.1</host>
                 </hosts>
                 <ports>
-                    <port type="http">9764</port>
-                    <port type="https">9444</port>
-                    <port type="amqp">5673</port>
-                    <port type="mqtt">1884</port>
+                    <port type="http">9767</port>
+                    <port type="https">9447</port>
+                    <port type="amqp">5676</port>
+                    <port type="mqtt">1887</port>
                 </ports>
                 <properties>
                 

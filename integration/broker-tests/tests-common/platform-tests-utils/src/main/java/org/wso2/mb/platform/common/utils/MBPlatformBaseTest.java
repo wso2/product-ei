@@ -18,7 +18,6 @@
 
 package org.wso2.mb.platform.common.utils;
 
-import com.google.common.net.HostAndPort;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.andes.stub.AndesAdminServiceBrokerManagerAdminException;
@@ -35,6 +34,7 @@ import org.xml.sax.SAXException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -212,7 +212,7 @@ public class MBPlatformBaseTest {
             for (Map.Entry<String, AutomationContext> entry : contextMap.entrySet()) {
                 AutomationContext tempContext = entry.getValue();
                 andesAdminClients.put(entry.getKey(), new AndesAdminClient(tempContext.getContextUrls().getBackEndUrl(),
-                        login(tempContext)));
+                                                                           login(tempContext)));
             }
         }
     }
@@ -240,7 +240,7 @@ public class MBPlatformBaseTest {
             for (Map.Entry<String, AutomationContext> entry : contextMap.entrySet()) {
                 AutomationContext tempContext = entry.getValue();
                 topicAdminClients.put(entry.getKey(), new TopicAdminClient(tempContext.getContextUrls().getBackEndUrl(),
-                            login(tempContext)));
+                                                                           login(tempContext)));
             }
         }
     }
@@ -307,30 +307,14 @@ public class MBPlatformBaseTest {
      * Give a random AMQP broker URL.
      *
      * @return Broker URL in host:port format (E.g "127.0.0.1:5672")
-     * @throws XPathExpressionException
+     * @throws XPathExpressionException if an error occurs while retrieving values from the configuration
      */
-    protected HostAndPort getRandomAMQPBrokerAddress() throws XPathExpressionException {
+    protected InetSocketAddress getRandomAMQPBrokerAddress() throws XPathExpressionException {
         String randomInstanceKey = getRandomMBInstance();
         AutomationContext tempContext = getAutomationContextWithKey(randomInstanceKey);
 
-        return HostAndPort.fromString(tempContext.getInstance().getHosts().get
-                ("default") + ":" + tempContext.getInstance().getPorts().get("amqp"));
+        String host = tempContext.getInstance().getHosts().get("default");
+        int port = Integer.parseInt(tempContext.getInstance().getPorts().get("amqp"));
+        return new InetSocketAddress(host, port);
     }
-
-    /**
-     * Give a random AMQP broker URL.
-     *
-     * @return Broker URL in host:port format (E.g "127.0.0.1:5672")
-     * @throws XPathExpressionException
-     */
-    protected HostAndPort getRandomMQTTBrokerAddress() throws XPathExpressionException {
-        String randomInstanceKey = getRandomMBInstance();
-        AutomationContext tempContext = getAutomationContextWithKey(randomInstanceKey);
-
-        return HostAndPort.fromString(tempContext.getInstance().getHosts().get
-                ("default") + ":" + tempContext.getInstance().getPorts().get("mqtt"));
-    }
-
-    
-
 }

@@ -18,7 +18,7 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
+import java.net.InetSocketAddress;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -61,8 +61,8 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     String topicName1 = "mixedTopic1";
     String topicName2 = "mixedTopic2";
 
-    HostAndPort broker1;
-    HostAndPort broker2;
+    InetSocketAddress broker1;
+    InetSocketAddress broker2;
 
     Map<String, Set<AndesClient>> publishers = new HashMap<>();
     Map<String, Set<AndesClient>> subscribers = new HashMap<>();
@@ -161,12 +161,12 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     private void createQueue1Subscribers() throws AndesClientException, JMSException, IOException, NamingException,
             AndesClientConfigurationException {
         AndesJMSConsumerClientConfiguration queue1ConsumerBroker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.QUEUE, queueName1);
         queue1ConsumerBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration queue1ConsumerBroker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.QUEUE, queueName1);
         queue1ConsumerBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
@@ -193,12 +193,12 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     private void createQueue2Subscribers() throws AndesClientException, JMSException, IOException, NamingException,
             AndesClientConfigurationException {
         AndesJMSConsumerClientConfiguration queue2ConsumerBroker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.QUEUE, queueName2);
         queue2ConsumerBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration queue2ConsumerBroker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.QUEUE, queueName2);
         queue2ConsumerBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
@@ -224,12 +224,12 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     private void createTopic1Subscribers() throws AndesClientException, JMSException, IOException, NamingException,
             AndesClientConfigurationException {
         AndesJMSConsumerClientConfiguration topic1ConsumerBroker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName1);
         topic1ConsumerBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration topic1ConsumerBroker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName1);
         topic1ConsumerBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
@@ -257,12 +257,12 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     private void createTopic2Subscribers() throws IOException, JMSException, AndesClientException, NamingException,
             AndesClientConfigurationException {
         AndesJMSConsumerClientConfiguration topic2ConsumerBroker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName2);
         topic2ConsumerBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration topic2ConsumerBroker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName2);
         topic2ConsumerBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
@@ -292,31 +292,31 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     private void createTopic1DurableSubscribers() throws AndesClientConfigurationException, IOException,
             JMSException, AndesClientException, NamingException {
         AndesJMSConsumerClientConfiguration durable1Consumer1Broker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName1);
         durable1Consumer1Broker1Config.setDurable(true, "ultimateDurable1Sub1Broker1");
         durable1Consumer1Broker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable1Consumer2Broker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName1);
         durable1Consumer2Broker1Config.setDurable(true, "ultimateDurable1Sub2Broker1");
         durable1Consumer2Broker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable1Consumer3Broker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName1);
         durable1Consumer3Broker1Config.setDurable(true, "ultimateDurable1Sub3Broker1");
         durable1Consumer3Broker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable1Consumer1Broker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName1);
         durable1Consumer1Broker2Config.setDurable(true, "ultimateDurable1Sub1Broker2");
         durable1Consumer1Broker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable1Consumer2Broker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName1);
         durable1Consumer2Broker2Config.setDurable(true, "ultimateDurable1Sub2Broker2");
         durable1Consumer2Broker2Config.setPrintsPerMessageCount(printPerMessageCount);
@@ -353,31 +353,31 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
     private void createTopic2DurableSubscribers() throws AndesClientConfigurationException, AndesClientException,
             JMSException, IOException, NamingException {
         AndesJMSConsumerClientConfiguration durable2Consumer1Broker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName2);
         durable2Consumer1Broker1Config.setDurable(true, "ultimateDurable2Sub1Broker1");
         durable2Consumer1Broker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable2Consumer2Broker1Config =
-                new AndesJMSConsumerClientConfiguration(broker1.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName2);
         durable2Consumer2Broker1Config.setDurable(true, "ultimateDurable2Sub2Broker1");
         durable2Consumer2Broker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable2Consumer1Broker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName2);
         durable2Consumer1Broker2Config.setDurable(true, "ultimateDurable1Sub3Broker2");
         durable2Consumer1Broker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable2Consumer2Broker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName2);
         durable2Consumer2Broker2Config.setDurable(true, "ultimateDurable2Sub1Broker2");
         durable2Consumer2Broker2Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSConsumerClientConfiguration durable2Consumer3Broker2Config =
-                new AndesJMSConsumerClientConfiguration(broker2.getHostText(),
+                new AndesJMSConsumerClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName2);
         durable2Consumer3Broker2Config.setDurable(true, "ultimateDurable2Sub2Broker2");
         durable2Consumer3Broker2Config.setPrintsPerMessageCount(printPerMessageCount);
@@ -418,13 +418,13 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
         long queueSendCountPerPublisher = 50000;
 
         AndesJMSPublisherClientConfiguration queue1PublisherBroker1Config =
-                new AndesJMSPublisherClientConfiguration(broker1.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.QUEUE, queueName1);
         queue1PublisherBroker1Config.setNumberOfMessagesToSend(queueSendCountPerPublisher);
         queue1PublisherBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSPublisherClientConfiguration queue1PublisherBroker2Config =
-                new AndesJMSPublisherClientConfiguration(broker2.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.QUEUE, queueName1);
         queue1PublisherBroker2Config.setNumberOfMessagesToSend(queueSendCountPerPublisher);
         queue1PublisherBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
@@ -456,13 +456,13 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
         long queueSendCountPerPublisher = 50000;
 
         AndesJMSPublisherClientConfiguration queue2PublisherBroker1Config =
-                new AndesJMSPublisherClientConfiguration(broker1.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.QUEUE, queueName2);
         queue2PublisherBroker1Config.setNumberOfMessagesToSend(queueSendCountPerPublisher);
         queue2PublisherBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
 
         AndesJMSPublisherClientConfiguration queue2PublisherBroker2Config =
-                new AndesJMSPublisherClientConfiguration(broker2.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.QUEUE, queueName2);
         queue2PublisherBroker2Config.setNumberOfMessagesToSend(queueSendCountPerPublisher);
         queue2PublisherBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
@@ -494,14 +494,14 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
         long topicSendCountPerPublisher = 25000;
 
         AndesJMSPublisherClientConfiguration topic1PublisherBroker1Config =
-                new AndesJMSPublisherClientConfiguration(broker1.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName1);
         topic1PublisherBroker1Config.setNumberOfMessagesToSend(topicSendCountPerPublisher);
         topic1PublisherBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
         topic1PublisherBroker1Config.setRunningDelay(1L);
 
         AndesJMSPublisherClientConfiguration topic1PublisherBroker2Config =
-                new AndesJMSPublisherClientConfiguration(broker2.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName1);
         topic1PublisherBroker2Config.setNumberOfMessagesToSend(topicSendCountPerPublisher);
         topic1PublisherBroker2Config.setPrintsPerMessageCount(printPerMessageCount);
@@ -535,14 +535,14 @@ public class MixedQueueTopicTestCase extends MBPlatformBaseTest {
         long topicSendCountPerPublisher = 25000;
 
         AndesJMSPublisherClientConfiguration topic2PublisherBroker1Config =
-                new AndesJMSPublisherClientConfiguration(broker1.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker1.getHostName(),
                         broker1.getPort(), ExchangeType.TOPIC, topicName2);
         topic2PublisherBroker1Config.setNumberOfMessagesToSend(topicSendCountPerPublisher);
         topic2PublisherBroker1Config.setPrintsPerMessageCount(printPerMessageCount);
         topic2PublisherBroker1Config.setRunningDelay(1L);
 
         AndesJMSPublisherClientConfiguration topic2PublisherBroker2Config =
-                new AndesJMSPublisherClientConfiguration(broker2.getHostText(),
+                new AndesJMSPublisherClientConfiguration(broker2.getHostName(),
                         broker2.getPort(), ExchangeType.TOPIC, topicName2);
         topic2PublisherBroker2Config.setNumberOfMessagesToSend(topicSendCountPerPublisher);
         topic2PublisherBroker2Config.setPrintsPerMessageCount(printPerMessageCount);

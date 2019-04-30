@@ -18,7 +18,7 @@
 
 package org.wso2.mb.platform.tests.clustering;
 
-import com.google.common.net.HostAndPort;
+import java.net.InetSocketAddress;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -96,16 +96,16 @@ public class SubscriptionDisconnectingTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "singleQueueSubscription1";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                             brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount);
         consumerConfig.setPrintsPerMessageCount(expectedCount / printDivider);
 
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                              brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
@@ -175,16 +175,16 @@ public class SubscriptionDisconnectingTestCase extends MBPlatformBaseTest {
         long printDivider = 10L;
         String queueName = "singleQueueSubscription2";
 
-        HostAndPort brokerAddress = getRandomAMQPBrokerAddress();
+        InetSocketAddress brokerAddress = getRandomAMQPBrokerAddress();
 
         AndesJMSConsumerClientConfiguration consumerConfig =
-                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSConsumerClientConfiguration(brokerAddress.getHostName(),
                             brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         consumerConfig.setMaximumMessagesToReceived(expectedCount);
         consumerConfig.setPrintsPerMessageCount(expectedCount / printDivider);
 
         AndesJMSPublisherClientConfiguration publisherConfig =
-                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostText(),
+                new AndesJMSPublisherClientConfiguration(brokerAddress.getHostName(),
                              brokerAddress.getPort(), ExchangeType.QUEUE, queueName);
         publisherConfig.setNumberOfMessagesToSend(sendCount);
         publisherConfig.setPrintsPerMessageCount(sendCount / printDivider);
@@ -203,8 +203,8 @@ public class SubscriptionDisconnectingTestCase extends MBPlatformBaseTest {
                             "Message " + "receiving failed for consumerClient1");
 
         AndesJMSConsumerClientConfiguration consumerConfig2 = consumerConfig.clone();
-        HostAndPort randomAMQPBrokerAddress = getRandomAMQPBrokerAddress();
-        consumerConfig2.setHostName(randomAMQPBrokerAddress.getHostText());
+        InetSocketAddress randomAMQPBrokerAddress = getRandomAMQPBrokerAddress();
+        consumerConfig2.setHostName(randomAMQPBrokerAddress.getHostName());
         consumerConfig2.setPort(randomAMQPBrokerAddress.getPort());
         AndesClient consumerClient2 = new AndesClient(consumerConfig2, true);
         consumerClient2.startClient();
@@ -218,7 +218,7 @@ public class SubscriptionDisconnectingTestCase extends MBPlatformBaseTest {
         
         AndesJMSConsumerClientConfiguration consumerConfig3 = consumerConfig.clone();
         randomAMQPBrokerAddress = getRandomAMQPBrokerAddress();
-        consumerConfig3.setHostName(randomAMQPBrokerAddress.getHostText());
+        consumerConfig3.setHostName(randomAMQPBrokerAddress.getHostName());
         consumerConfig3.setPort(randomAMQPBrokerAddress.getPort());
         AndesClient consumerClient3 = new AndesClient(consumerConfig3, true);
         consumerClient3.startClient();
@@ -230,7 +230,7 @@ public class SubscriptionDisconnectingTestCase extends MBPlatformBaseTest {
 
         AndesJMSConsumerClientConfiguration consumerConfig4 = consumerConfig.clone();
         randomAMQPBrokerAddress = getRandomAMQPBrokerAddress();
-        consumerConfig4.setHostName(randomAMQPBrokerAddress.getHostText());
+        consumerConfig4.setHostName(randomAMQPBrokerAddress.getHostName());
         consumerConfig4.setPort(randomAMQPBrokerAddress.getPort());
         AndesClient consumerClient4 = new AndesClient(consumerConfig4, true);
         consumerClient4.startClient();
