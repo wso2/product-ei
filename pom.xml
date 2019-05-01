@@ -1592,7 +1592,7 @@
         <i18n.module.version>1.5.5</i18n.module.version>
         <process.module.version>1.5.5</process.module.version>
         <httpcore.version>4.1.2</httpcore.version>
-        <httpcore.wso2.version>4.3.0.wso2v1</httpcore.wso2.version>
+        <httpcore.wso2.version>4.3.3.wso2v1</httpcore.wso2.version>
         <httpclient.wso2.version>4.3.2.wso2v1</httpclient.wso2.version>
         <httpclient.version>4.3.2</httpclient.version>
         <xercesImpl.version>2.8.1</xercesImpl.version>
