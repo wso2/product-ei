@@ -37,9 +37,14 @@ import java.util.Map;
  */
 public class MTOMMIMEBoundaryWhenContentTypePreservedTestCase extends ESBIntegrationTest {
 
+    private final String MIME_PROXY = "MTOMMIMEBoundaryWithDisableChunking";
+    private final String RESPOND_PROXY = "respondBE";
+
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
+        verifyProxyServiceExistence(MIME_PROXY);
+        verifyProxyServiceExistence(RESPOND_PROXY);
     }
 
     @Test(groups = { "wso2.esb" }, description = "Test MIME boundary correctness when Content-Type preserved and "
@@ -62,6 +67,28 @@ public class MTOMMIMEBoundaryWhenContentTypePreservedTestCase extends ESBIntegra
         org.testng.Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200,
                 "Actual MIME Boundaries may not have " + "been matched with the boundaries set in "
                         + "Content-Type header");
+    }
+
+    @Test(groups = { "wso2.esb" }, description = "Test MIME boundary correctness when Disable Chunking Used"
+            + "Refer https://github.com/wso2/product-ei/issues/3624 ")
+    public void testMIMEWithDisableChunking()  throws Exception {
+
+        String proxyHttpUrl = getProxyServiceURLHttp(MIME_PROXY);
+
+        SimpleHttpClient simpleHttpClient = new SimpleHttpClient();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("SOAPAction", "urn:mediate");
+        String body = "<?xml version='1.0' encoding='UTF-8'?>"
+                + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">" + "  <soapenv:Body>"
+                + "    <echo:echoString xmlns:echo=\"http://echo.services.core.carbon.wso2.org\">Test Message</echo:echoString>"
+                + "  </soapenv:Body>" + "</soapenv:Envelope>";
+
+        HttpResponse httpResponse = simpleHttpClient.doPost(proxyHttpUrl, headers, body, "text/xml; charset=UTF-8");
+
+        // If the payload received by the backend had correct MIME boundaries it would have processed the payload
+        // correctly and sent 200 OK response
+        org.testng.Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200,
+                "Actual MIME Boundaries may not have been matched with the boundaries set in Content-Type header");
     }
 
     @AfterClass(alwaysRun = true)
