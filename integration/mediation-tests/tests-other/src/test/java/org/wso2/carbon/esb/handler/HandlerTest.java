@@ -42,7 +42,6 @@ import static org.testng.Assert.fail;
  */
 public class HandlerTest extends ESBIntegrationTest {
 
-    private static final String JAR_NAME = "org.wso2.carbon.test.gateway-1.0.0.jar";
     private static final String CONF_NAME = "synapse-handlers.xml";
     private static final String LOCATION = "/artifacts/ESB/handler";
 
