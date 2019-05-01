@@ -84,7 +84,7 @@
         <slf4j.logging.package.import.version.range>[1.7.1, 2.0.0)
         </slf4j.logging.package.import.version.range>
 
-        <antlr4.runtime.version>4.5.1.wso2v1</antlr4.runtime.version>
+        <antlr4.runtime.version>4.6.wso2v1</antlr4.runtime.version>
         <!--Dashboard-->
         <carbon.dashboards.version>4.0.63</carbon.dashboards.version>
         <carbon.uis.version>1.0.2</carbon.uis.version>
