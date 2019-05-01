@@ -11,10 +11,10 @@ Unit testing framework for synapse provides an in-built way to execute a unit te
 ### Running Unit Testing Framework
 
 You can use the following command depending on the platform to start the unit testing framework in the Enterprise Integrator.
-- MacOS/Linux/CentOS - `sh <MI_HOME>/bin/integrator.sh -synapseTest <port>`
-- Windows - `<MI_HOME>/bin/integrator.bat -synapseTest <port>`
+- MacOS/Linux/CentOS - `sh <MI_HOME>/bin/integrator.sh -DsynapseTest`
+- Windows - `<MI_HOME>/bin/integrator.bat -DsynapseTest`
 
-By default the unit testing framework starts on port 9008 and you can change the starting port by passing the port as above
+By default the unit testing framework starts on port 9008 and you can change the starting port by passing the ```-DsynapseTestPort=<port>``` property with above command.
 
 ### Stopping Unit Testing Framework
 To stop the Unit Testing Framework runtime, press Ctrl+C in the command window and it will stop the server along with the Enterprise Integrator runtime.
