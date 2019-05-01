@@ -37,7 +37,7 @@
 
     <properties>
 
-        <carbon.analytics.version>2.1.8</carbon.analytics.version>
+        <carbon.analytics.version>2.1.11</carbon.analytics.version>
         <siddhi.version>4.5.5</siddhi.version>
 
         <carbon.analytics-common.version>6.1.18</carbon.analytics-common.version>
