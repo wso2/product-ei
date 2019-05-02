@@ -74,21 +74,85 @@
         <activemq.client.version>5.15.8</activemq.client.version>
     </properties>
 
-    <modules>
-        <module>scenarios-commons</module>
-        <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
-        <module>2-Bridging-systems-that-communicate-in-different-protocols</module>
-        <module>3-connecting-web-apis-cloud-services</module>
-        <module>4-gateway</module>
-        <module>5-route-messages-between-systems</module>
-        <module>7-connecting-with-packaged-applications</module>
-        <module>8-connect-devices-to-enterprise</module>
-        <!--TODO Scenario 10 is commented until VFS is supported-->
-        <!--<module>10-file-processing</module>-->
-        <module>11-Asynchronous-message-processing</module>
-        <module>13-micro-services</module>
-        <module>14-periodically-execute-an-integration-process</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>artifacts</id>
+            <modules>
+                <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats/01-SynapseConfigProject</module>
+                <module>2-Bridging-systems-that-communicate-in-different-protocols/02-synapseConfigProject</module>
+                <module>4-gateway/04-SynapseConfigProject</module>
+                <module>5-route-messages-between-systems/05-synapseConfigProject</module>
+                <module>10-file-processing/10-SynapseConfigProject</module>
+                <module>11-Asynchronous-message-processing/11-SynapseConfigProject</module>
+                <module>14-periodically-execute-an-integration-process/14-synapseConfigProject</module>
+            </modules>
+            <build>
+                <plugins>
+                    <plugin>
+                        <inherited>false</inherited>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-composite-applications</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>capps/target</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>1-integrating-systems-that-communicate-in-heterogeneous-message-formats/01-SynapseConfigProject/01-synapseConfigCompositeApplication/target</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>2-Bridging-systems-that-communicate-in-different-protocols/02-synapseConfigProject/02-synapseConfigCompositeApplication/target/</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>4-gateway/04-SynapseConfigProject/04-synapseConfigCompositeApplication/target/</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>5-route-messages-between-systems/05-synapseConfigProject/05-synapseConfigCompositeApplication/target/</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>10-file-processing/10-SynapseConfigProject/10-synapseConfigCompositeApplication/target/</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>11-Asynchronous-message-processing/11-SynapseConfigProject/11-synapseConfigCompositeApplication/target/</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>14-periodically-execute-an-integration-process/14-synapseConfigProject/14-synapseConfigCompositeApplication/target/</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>general</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>scenarios-commons</module>
+                <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
+                <module>2-Bridging-systems-that-communicate-in-different-protocols</module>
+                <module>3-connecting-web-apis-cloud-services</module>
+                <module>4-gateway</module>
+                <module>5-route-messages-between-systems</module>
+                <module>7-connecting-with-packaged-applications</module>
+                <module>8-connect-devices-to-enterprise</module>
+                <!--TODO Scenario 10 is commented until VFS is supported-->
+                <!--<module>10-file-processing</module>-->
+                <module>11-Asynchronous-message-processing</module>
+                <module>13-micro-services</module>
+                <module>14-periodically-execute-an-integration-process</module>
+            </modules>
+        </profile>
+    </profiles>
+
 
     <repositories>
         <!-- WSO2 released artifact repository -->
