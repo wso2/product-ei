@@ -23,77 +23,40 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PrometheusStatisticsTest extends ESBIntegrationTest {
 
-    private ServerConfigurationManager scm;
-    private SimpleHttpClient client;
-    private Map<String, String> headers;
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
 
         super.init();
-        client = new SimpleHttpClient();
-        headers = new HashMap<>();
-        changeESBConfig();
     }
 
     @Test(groups = {"wso2.esb"}, description = "Test if metric data are exposed, when it is enabled in config")
     public void testPrometheusPublisher() throws Exception {
 
+        SimpleHttpClient client = new SimpleHttpClient();
+        Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
-        String endpoint = "http://localhost:9091/metric-service/metrics";
+        String endpoint = "http://localhost:9191/metric-service/metrics";
+
         HttpResponse response = client.doGet(endpoint, headers);
         String responsePayload = client.getResponsePayload(response);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200,
-                "Metric retrieval failed");
+
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200, "Metric retrieval failed");
         Assert.assertFalse(responsePayload.isEmpty(), "Metric response is empty");
-
-    }
-
-    private void changeESBConfig() throws Exception {
-
-        String carbonHome = CarbonUtils.getCarbonHome();
-
-        // apply prometheus-conf.xml config
-        File prometheusConf = new File(
-                carbonHome + File.separator + "conf" + File.separator + "prometheus-conf.xml");
-        String resourcePath = "artifacts" + File.separator + "ESB" + File.separator + "mediationStatConfig" +
-                File.separator + "prometheus-conf.xml";
-        File modifiedPrometheusConf = new File(
-                FrameworkPathUtil.getSystemResourceLocation(), resourcePath);
-
-        // apply synapse config
-        File synapseProps = new File(carbonHome + File.separator + "conf" + File.separator
-                + "synapse.properties");
-        String testSynapseResource = "artifacts" + File.separator + "ESB" + File.separator + "mediationStatConfig" +
-                File.separator + "synapse.properties";
-        File configuredSynapseProps = new File(FrameworkPathUtil.getSystemResourceLocation(), testSynapseResource);
-
-        scm = new ServerConfigurationManager(context);
-        scm.applyConfigurationWithoutRestart(modifiedPrometheusConf, prometheusConf, true);
-        scm.applyConfigurationWithoutRestart(configuredSynapseProps, synapseProps, true);
-        scm.restartGracefully();
-        super.init();
     }
 
     @AfterClass(alwaysRun = true)
     public void cleanup() throws Exception {
 
         super.cleanup();
-        if (scm != null) {
-            scm.restoreToLastConfiguration(true);
-        }
     }
 
 }

@@ -2254,13 +2254,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/prometheus-conf.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <destName>prometheus-conf.xml</destName>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/conf/synapse-handlers.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>synapse-handlers.xml</destName>
