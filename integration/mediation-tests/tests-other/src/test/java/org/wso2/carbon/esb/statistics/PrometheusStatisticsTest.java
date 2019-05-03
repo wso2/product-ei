@@ -44,7 +44,7 @@ public class PrometheusStatisticsTest extends ESBIntegrationTest {
         SimpleHttpClient client = new SimpleHttpClient();
         Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
-        String endpoint = "http://localhost:9091/metric-service/metrics";
+        String endpoint = "http://localhost:9191/metric-service/metrics";
 
         HttpResponse response = client.doGet(endpoint, headers);
         String responsePayload = client.getResponsePayload(response);
