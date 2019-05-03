@@ -34,8 +34,9 @@
     <modules>
         <module>14-synapseConfigProject</module>
         <module>14-test-commons</module>
-        <module>14.1-scheduling-task-to-invoke-mediation-flow</module>
-        <module>14.2-scheduling-a-customized-java-task</module>
+        <!--Commented until https://github.com/wso2/product-ei/issues/3841 is fixed-->
+        <!--<module>14.1-scheduling-task-to-invoke-mediation-flow</module>-->
+        <!--<module>14.2-scheduling-a-customized-java-task</module>-->
     </modules>
     <build>
         <plugins>
