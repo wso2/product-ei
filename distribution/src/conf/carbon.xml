@@ -719,4 +719,26 @@
 	
 	<LoadAPIContextsInServerStartup>true</LoadAPIContextsInServerStartup>
    </APIManagement>
+    
+   <!-- 
+    Configuring EI analytics server details. 
+    mediation.flow.statistics.enable has to be set to true in synapse.properties 
+    file in addition to these configs
+    -->    
+   <Analytics>
+        <!-- 
+            Server URL of the analytics server. Events are published to this URL
+            This url is in the format <protocol>://<hostname or ip>:<port>. 
+            For the HA mode use a comma seperated list of urls of the nalytics nodes to 
+            enable publishing events to the servers in a round robin manner.
+            e.g.; tcp://analytics-server-1:7612,tcp://analytics-server-2:7612
+         -->
+        <ServerURL>tcp://localhost:7612</ServerURL>
+        <AuthServerURL>ssl://localhost:7712</AuthServerURL>
+        <!--
+            Credentails of the admin user of the analytics server.
+        -->
+        <Username>admin</Username>
+        <Password>admin</Password>
+   </Analytics>
 </Server>
