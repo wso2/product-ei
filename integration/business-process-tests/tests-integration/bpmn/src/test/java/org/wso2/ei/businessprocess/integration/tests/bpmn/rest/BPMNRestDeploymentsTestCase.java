@@ -26,12 +26,16 @@ import org.json.JSONObject;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.ei.businessprocess.integration.common.clients.AuthenticateStubUtil;
 import org.wso2.ei.businessprocess.integration.common.clients.bpmn.WorkflowServiceClient;
 import org.wso2.ei.businessprocess.integration.common.utils.BPSMasterTest;
+import org.wso2.ei.businessprocess.integration.common.utils.BPSTestConstants;
 import org.wso2.ei.businessprocess.integration.tests.bpmn.BPMNTestUtils;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNProcess;
 import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceStub;
+
+import java.io.File;
 
 public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
 
@@ -46,11 +50,34 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
         super.init();
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         loginLogoutClient.login();
+
+        //Rename oneTaskProcess.bar to OneTaskProcess.bar
+        File source = new File(FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS
+                + File.separator + BPSTestConstants.DIR_BPMN + File.separator + "oneTaskProcess.bar");
+        File newSourceName = new File(FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS
+                + File.separator + BPSTestConstants.DIR_BPMN + File.separator + "OneTaskProcess.bar");
+        boolean success = source.renameTo(newSourceName);
+
+        if (!success) {
+            log.error("Failed to rename the file");
+        }
     }
 
     @AfterTest
     public void removeArtifacts () throws Exception {
-        workflowServiceClient.undeploy("oneTaskProcess");
+
+        //Rename oneTaskProcess.bar to OneTaskProcess.bar
+        File source = new File(FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS
+                + File.separator + BPSTestConstants.DIR_BPMN + File.separator + "OneTaskProcess.bar");
+        File newSourceName = new File(FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS
+                + File.separator + BPSTestConstants.DIR_BPMN + File.separator + "oneTaskProcess.bar");
+        boolean success = source.renameTo(newSourceName);
+
+        if (!success) {
+            log.error("Failed to rename the file");
+        }
+
+        workflowServiceClient.undeploy("OneTaskProcess");
         workflowServiceClient.undeploy("HelloApprove");
         workflowServiceClient.undeploy("VacationRequest");
     }
@@ -70,8 +97,8 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
             deploymentCount = workflowServiceClient.getDeployments().length;
         }
         // Deploy artifacts and wait for deployment end
-        uploadBPMNForTest("oneTaskProcess");
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "oneTaskProcess.bar",
+        uploadBPMNForTest("OneTaskProcess");
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "OneTaskProcess.bar",
                 deploymentCount);
         uploadBPMNForTest("HelloApprove");
         BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "HelloApprove",
@@ -156,7 +183,7 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
         for (int i = 1; i < jsonObject.getInt("size"); i++) {
             int compare = ((JSONObject) array.get(i - 1)).getString("name")
                     .compareTo(((JSONObject) array.get(i)).getString("name"));
-            Assert.assertTrue("repository/deployments sort=name,order=asc query test", compare > 0);
+            Assert.assertTrue("repository/deployments sort=name,order=desc query test", compare > 0);
         }
 
         // Check paging
@@ -173,13 +200,13 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
             true)
     public void testGetSingleDeployment() throws Exception {
 
-        uploadBPMNForTest("oneTaskProcess");
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "oneTaskProcess", 0);
+        uploadBPMNForTest("OneTaskProcess");
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "OneTaskProcess", 0);
 
         String deploymentId = null;
         //get deployments by id
         for (int i=0; i < workflowServiceClient.getDeployments().length; i++) {
-            if (workflowServiceClient.getDeployments()[i].getDeploymentName().equals("oneTaskProcess")) {
+            if (workflowServiceClient.getDeployments()[i].getDeploymentName().equals("OneTaskProcess")) {
                 deploymentId = workflowServiceClient.getDeployments()[i].getDeploymentId();
             }
         }
@@ -221,8 +248,8 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
             true)
     public void testGetProcessDefinitions() throws Exception {
 
-        uploadBPMNForTest("oneTaskProcess");
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "oneTaskProcess", 0);
+        uploadBPMNForTest("OneTaskProcess");
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "OneTaskProcess", 0);
 
         BPMNProcess[] bpmnProcesses = workflowServiceClient.getProcesses();
 
@@ -294,8 +321,8 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
           singleThreaded = true)
     public void testActiveAndSuspendProcessDefinitions() throws Exception {
 
-        uploadBPMNForTest("oneTaskProcess");
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "oneTaskProcess", 0);
+        uploadBPMNForTest("OneTaskProcess");
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "OneTaskProcess", 0);
         BPMNProcess[] bpmnProcesses = workflowServiceClient.getProcesses();
         String suspendRequest = "{\"action\":\"suspend\"}";
         HttpResponse resultResponse = BPMNTestUtils
@@ -311,5 +338,6 @@ public class BPMNRestDeploymentsTestCase extends BPSMasterTest {
         Assert.assertEquals(
                 "PUT repository/process-definitions/{processDefinitionID}  process definition activate " + "test", 200,
                 resultResponse.getStatusLine().getStatusCode());
+        workflowServiceClient.undeploy("OneTaskProcess");
     }
 }

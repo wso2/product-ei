@@ -23,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
-        <title>WSO2 EI v@product.version@ Released - October 2017</title>
+        <title>WSO2 EI v@product.version@ Released - April 2019</title>
     </head>
     <body>
         <div id="header">
@@ -38,16 +38,17 @@
             </p>
 
             <p>
-                WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus, Application Server and
+                WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus and
                 Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for
-                WSO2 Analytics, Business Processor and Message Broker. This product distribution includes a shared
+                EI Analytics, Business Processor and Message Broker. This product distribution includes a shared
                 component directory, with profile-based management capabilities for each runtime.
             </p>
+
             <p>
-                WSO2 EI simplifies integration by allowing users to easily configure message routing,
-                inter-mediation,transformation, logging, task scheduling, load balancing, failover routing,
+                WSO2 EI simplifies integration by allowing users to easily configure message routing, message mediation,
+                transformation, logging, task scheduling, load balancing, failover routing,
                 event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI.
-                These integration capabilities are further powered by the capabilities of the WSO2 Analytics, Business Processor and Message Broker runtimes.
+                These integration capabilities are further powered by the capabilities of the EI Analytics, Business Processor and Message Broker runtimes.
             </p>
 
 
@@ -57,18 +58,17 @@
                 <li>Extract the downloaded wso2ei-@product.version@.zip</li>
                 <li>Go to the bin directory in the extracted folder</li>
                 <li>Run the integrator.sh or integrator.bat as appropriate</li>
-                <li>Point your browser to the URL https://localhost:8243/carbon</li>
+                <li>Point your browser to the URL https://localhost:9443/carbon</li>
                 <li>Use "admin", "admin" as the username and password to login as an admin</li>
                 <li>If you need to start the OSGi console with the server use the property
                     -DosgiConsole when starting the server.</li>
             </ol>
-            <h3>Running other runtimes individually (Analytics, Broker, Business-Process)</h3>
+            <h3>Running other runtimes individually (Analytics, Broker, Business Process )</h3>
             <ol>
                 <li>Extract wso2ei-@product.version@.zip and go to the extracted directory.</li>
                 <li>Go to wso2ei-@product.version@/wso2 directory.</li>
                 <li>Go to appropriate runtime directory (analytics/broker/business-process) /bin.</li>
                 <li> Execute wso2server.sh or wso2server.bat.</li>
-                <li>Access the url related to the required runtime. (For example, use https://localhost:9445/carbon for the business-process runtime.)</li>
             </ol>
 
             <h2>Key Features of WSO2 EI</h2>
@@ -185,7 +185,7 @@
                 visit <a href="http://wso2.com/support">http://wso2.com/support</a>.
             </p>
             <p>
-                For more information about WSO2 EI please see <a href="http://wso2.com/products/enterprise-integrator/">
+                For more information about WSO2 EI please see <a href="https://wso2.com/integration">
                 http://wso2.com/products/enterprise-integrator</a>.
             </p>
 

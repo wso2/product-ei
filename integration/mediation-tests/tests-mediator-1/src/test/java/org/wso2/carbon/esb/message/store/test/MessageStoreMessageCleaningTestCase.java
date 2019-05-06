@@ -37,7 +37,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 public class MessageStoreMessageCleaningTestCase extends ESBIntegrationTest {
 
 	private MessageStoreAdminClient messageStoreAdminClient;
-	private final String MESSAGE_STORE_NAME = "automationMessageStore";
+	private final String MESSAGE_STORE_NAME = "automationMessageStore1";
 	private boolean isMessageStoreCreated = false;
 	private String[] messageStores = null;
     private ServerConfigurationManager serverConfigurationManager;
@@ -46,7 +46,6 @@ public class MessageStoreMessageCleaningTestCase extends ESBIntegrationTest {
 	public void setEnvironment() throws Exception {
 		init();
 	    initVariables();
-		initialize();
 	}
 
     private void initVariables() throws Exception {
@@ -64,7 +63,7 @@ public class MessageStoreMessageCleaningTestCase extends ESBIntegrationTest {
 		                  "Message store should be initially empty");
 		// refer within a sequence through a store mediator, mediate messages
 		// and verify the messages are stored correctly in the store.
-		loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/messageStore/sample_700.xml");
+		loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/messageStore/inmemory_message_store.xml");
 		for (int i = 0; i < 5; i++) {
 			axis2Client.sendSimpleQuoteRequest(getMainSequenceURL(), null, "WSO2");
 		}

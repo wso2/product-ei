@@ -56,7 +56,7 @@
 
     <!--If turned on with use the Accept header of the request to determine the contentType of the
     response-->
-    <parameter name="httpContentNegotiation">true</parameter>
+    <parameter name="httpContentNegotiation">false</parameter>
 
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
@@ -170,7 +170,8 @@
                          class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
         <messageFormatter contentType="text/plain"
                          class="org.apache.axis2.format.PlainTextFormatter"/>
-
+        <messageFormatter contentType="application/octet-stream"
+                          class="org.wso2.carbon.relay.ExpandingMessageFormatter"/>
         <!--JSON Message Formatters-->
         <messageFormatter contentType="application/json"
                           class="org.wso2.carbon.integrator.core.json.JsonStreamFormatter"/>
@@ -210,7 +211,8 @@
                         class="org.apache.axis2.builder.MultipartFormDataBuilder"/>
         <messageBuilder contentType="text/plain"
                         class="org.apache.axis2.format.PlainTextBuilder"/>
-
+        <messageBuilder contentType="application/octet-stream"
+                        class="org.wso2.carbon.relay.BinaryRelayBuilder"/>
         <!--JSON Message Builders-->
         <messageBuilder contentType="application/json"
                         class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder"/>
@@ -277,7 +279,7 @@
 
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
 
-    <!--<transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>-->
+    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>
 
     <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
         <!-- configure any optional POP3/IMAP properties
@@ -429,7 +431,7 @@
    <!-- uncomment this and configure to use connection pools for sending messages>
      <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
 
-    <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
+    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
 
     <!-- Uncomment and configure the SMTP server information
     check com.sun.mail.smtp package documentation for descriptions of properties

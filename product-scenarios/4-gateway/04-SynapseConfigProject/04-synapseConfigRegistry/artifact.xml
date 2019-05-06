@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="SimpleStockQuoteService_wsdl" groupId="org.wso2.ei.product-scenarios.scenario_04.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>SimpleStockQuoteService.wsdl</file>
+            <path>/_system/config/scenario/tests/resource/wsdl</path>
+            <mediaType>application/wsdl+xml</mediaType>
+        </item>
+    </artifact>
+    <artifact name="SimpleStockQuoteServiceWithImports_wsdl" groupId="org.wso2.ei.product-scenarios.scenario_04.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>SimpleStockQuoteServiceWithImports.wsdl</file>
+            <path>/_system/config/scenario/tests/resource/wsdl</path>
+            <mediaType>application/wsdl+xml</mediaType>
+        </item>
+    </artifact>
+    <artifact name="SimpleStockQuoteSchema2_xsd" groupId="org.wso2.ei.product-scenarios.scenario_04.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>SimpleStockQuoteSchema2.xsd</file>
+            <path>/_system/governance/scenario/tests/resource/wsdl/schema</path>
+            <mediaType>application/x-xsd+xml</mediaType>
+        </item>
+    </artifact>
+    <artifact name="SimpleStockQuoteSchema_xsd" groupId="org.wso2.ei.product-scenarios.scenario_04.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <item>
+            <file>SimpleStockQuoteSchema.xsd</file>
+            <path>/_system/governance/scenario/tests/resource/wsdl/schema</path>
+            <mediaType>application/x-xsd+xml</mediaType>
+        </item>
+    </artifact>
+</artifacts>

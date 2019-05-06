@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~  Copyright (c) 2005, WSO2 Inc. (http://wso2.com) All Rights Reserved.
   ~
   ~  WSO2 Inc. licenses this file to you under the Apache License,
   ~  Version 2.0 (the "License"); you may not use this file except
@@ -17,6 +17,7 @@
   ~  under the License.
   ~
   -->
+
 <!-- Introduction to Payload-factory mediator  -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
     <proxy xmlns="http://ws.apache.org/ns/synapse"
@@ -32,43 +33,43 @@
                 <payloadFactory media-type="json">
                     <format>
                         {
-                        "coordinates": null,
-                        "created_at": "Fri Jun 24 17:43:26 +0000 2011",
-                        "truncated": false,
-                        "favorited": false,
-                        "id_str": "$1",
-                        "entities": {
-                        "urls": [
-                        ],
-                        "hashtags": [
-                        {
-                        "text": "$2",
-                        "indices": [
-                        35,
-                        45
-                        ]
-                        }
-                        ],
-                        "user_mentions": [
-                        ]
-                        },
-                        "in_reply_to_user_id_str": null,
-                        "contributors": null,
-                        "text": "##",
-                        "retweet_count": 0,
-                        "id": "##",
-                        "in_reply_to_status_id_str": null,
-                        "geo": null,
-                        "retweeted": false,
-                        "in_reply_to_user_id": null,
-                        "source": "&lt;a href=\"http://sites.google.com/site/yorufukurou/\" rel=\"nofollow\"&gt;YoruFukurou&lt;/a&gt;",
-                        "in_reply_to_screen_name": null,
-                        "user": {
-                        "id_str": "##",
-                        "id": "##"
-                        },
-                        "place": null,
-                        "in_reply_to_status_id": null
+                            "coordinates": null,
+                            "created_at": "Fri Jun 24 17:43:26 +0000 2011",
+                            "truncated": false,
+                            "favorited": false,
+                            "id_str": "$1",
+                            "entities": {
+                                "urls": [
+                                ],
+                                "hashtags": [
+                                    {
+                                        "text": "$2",
+                                        "indices": [
+                                            35,
+                                            45
+                                        ]
+                                    }
+                                ],
+                                "user_mentions": [
+                                ]
+                            },
+                            "in_reply_to_user_id_str": null,
+                            "contributors": null,
+                            "text": "##",
+                            "retweet_count": 0,
+                            "id": "##",
+                            "in_reply_to_status_id_str": null,
+                            "geo": null,
+                            "retweeted": false,
+                            "in_reply_to_user_id": null,
+                            "source": "&lt;a href=\"http://sites.google.com/site/yorufukurou/\" rel=\"nofollow\"&gt;YoruFukurou&lt;/a&gt;",
+                            "in_reply_to_screen_name": null,
+                            "user": {
+                                "id_str": "##",
+                                "id": "##"
+                            },
+                            "place": null,
+                            "in_reply_to_status_id": null
                         }
                     </format>
                     <args>

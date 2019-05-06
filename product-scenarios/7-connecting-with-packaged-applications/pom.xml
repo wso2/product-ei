@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>product-scenarios</artifactId>
+        <groupId>org.wso2.ei</groupId>
+        <version>6.4.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>7-connecting-with-packaged-applications</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>7.1-connecting-with-SAP</module>
+    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=128m</argLine>
+                    <disableXmlReport>false</disableXmlReport>
+                    <parallel>false</parallel>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <systemProperties>
+                        <property>
+                            <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
+                            <name>common.resources.dir</name>
+                            <value>
+                                ${basedir}/resources/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- testcase specific  resources directory-->
+                            <name>test.resources.dir</name>
+                            <value>
+                                ${basedir}/src/test/resources/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- Directory containing carbon applications -->
+                            <name>test.resources.carbonApplications.dir</name>
+                            <value>
+                                ${basedir}/07-SynapseConfigProject/07-synapseConfigCompositeApplication/target/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- Related carbon applications (comma separated) to deploy -->
+                            <name>test.resources.carbonApplications.list</name>
+                            <value>
+                                07-synapseConfigCompositeApplication_1.0.0
+                            </value>
+                        </property>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                    </systemProperties>
+                    <workingDirectory>${basedir}/target</workingDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

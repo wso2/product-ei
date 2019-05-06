@@ -55,7 +55,9 @@ public class JMSClientAndRestServiceTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         try {
-            tomcatServerManager.stop();
+            if (tomcatServerManager != null) {
+                tomcatServerManager.stop();
+            }
         } finally {
             super.cleanup();
         }

@@ -67,6 +67,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.xpath.XPathExpressionException;
@@ -291,6 +292,11 @@ public abstract class ESBIntegrationTest {
 		esbUtils.addInboundEndpoint(contextUrls.getBackEndUrl(), sessionCookie, inboundEndpoint);
 	}
 
+	protected boolean isInboundEndpointDeployed(OMElement inboundEndpoint) throws Exception {
+		String inboundName = inboundEndpoint.getAttributeValue(new QName("name"));
+		return esbUtils.isInboundEndpointExist(contextUrls.getBackEndUrl(), sessionCookie, inboundName);
+	}
+
 	protected void isInboundUndeployed(String inboundEndpoint) throws Exception {
 		try {
 			esbUtils.isInboundEndpointUndeployed(contextUrls.getBackEndUrl(), sessionCookie, inboundEndpoint);
@@ -355,12 +361,25 @@ public abstract class ESBIntegrationTest {
 		                                           proxyServiceName), "Proxy Deployment failed or time out");
 	}
 
+	protected boolean isProxyDeployed(OMElement omElement) throws Exception {
+		String proxyName = omElement.getAttributeValue(new QName("name"));
+		return esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName);
+	}
+
+    protected boolean isProxySuccesfullyDeployed(String proxyName) throws Exception {
+        return esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName);
+    }
+
 	protected void isEndpointDeployed(String endpointName) throws Exception {
 		Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie,
 		                                           endpointName), "Endpoint Deployment failed or time out");
 	}
 
+    protected boolean isEndpointDeployed(OMElement omElement) throws Exception {
 
+        String endpointName = omElement.getAttributeValue(new QName("name"));
+        return esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName);
+    }
 
 	protected void isLocalEntryDeployed(String localEntryName) throws Exception {
 		Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie,
@@ -417,13 +436,17 @@ public abstract class ESBIntegrationTest {
 		sequencesList.add(sequenceName);
 	}
 
+	protected boolean isSequenceDeployed(OMElement sequenceConfig) throws RemoteException, SequenceEditorException {
+        String sequenceName = sequenceConfig.getAttributeValue(new QName("name"));
+        return esbUtils.isSequenceExist(contextUrls.getBackEndUrl(), sessionCookie, sequenceName);
+    }
+
 	protected  void uploadConnector(String repoLocation, String strFileName) throws MalformedURLException,
 	                                                                                RemoteException {
 		List<LibraryFileItem> uploadLibraryInfoList = new ArrayList<LibraryFileItem>();
 		LibraryFileItem uploadedFileItem = new LibraryFileItem();
-		uploadedFileItem.setDataHandler(new DataHandler(new URL("file:" + File.separator +
-		                                                        File.separator + repoLocation +
-		                                                        File.separator + strFileName)));
+		uploadedFileItem.setDataHandler(new DataHandler(new FileDataSource(new File(repoLocation +
+		                                                        File.separator + strFileName))));
 		uploadedFileItem.setFileName(strFileName);
 		uploadedFileItem.setFileType("zip");
 		uploadLibraryInfoList.add(uploadedFileItem);

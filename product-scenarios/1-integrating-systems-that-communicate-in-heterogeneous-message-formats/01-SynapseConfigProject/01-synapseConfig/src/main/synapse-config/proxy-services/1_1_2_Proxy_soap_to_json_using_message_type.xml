@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_1_2_Proxy_soap_to_json_using_message_type" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <log level="custom">
+                <property expression="json-eval($)" name="JSON_VALUE"/>
+            </log>
+            <send>
+                <endpoint key="JSON_EP"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <!-- This log full is added in order to make content aware -->
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+            <!-- This log is added to build the SOAP response -->
+            <log>
+                <property expression="//getQuoteResponse" name="quoteResponse"/>
+            </log>
+            <respond/>
+        </outSequence>
+        <faultSequence>
+            <makefault version="soap11">
+                <code expression="get-property('ERROR_CODE')" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                <reason expression="get-property('ERROR_MESSAGE')"/>
+            </makefault>
+            <header action="remove" name="To" scope="default"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+            <respond/>
+        </faultSequence>
+    </target>
+</proxy>

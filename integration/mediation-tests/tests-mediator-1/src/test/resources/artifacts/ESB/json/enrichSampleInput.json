@@ -1,0 +1,12 @@
+{
+  "name": "John Doe",
+  "address": null,
+  "phone": [8770586755, 35352399, null],
+  "email": "johndoe@gmail.com",
+  "doctor": {
+    "name" : "thomas collins",
+    "doctorid" : "76DA-856"
+  },
+  "hospital": "grand oak community hospital",
+  "appointment_date": "2017-04-02"
+}

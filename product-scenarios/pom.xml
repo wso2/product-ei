@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>product-scenarios</artifactId>
+    <packaging>pom</packaging>
+    <name>product scenarios</name>
+    <url>http://wso2.org</url>
+    <groupId>org.wso2.ei</groupId>
+    <version>6.4.0</version>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.wso2.maven</groupId>
+                <artifactId>carbon-p2-plugin</artifactId>
+                <version>${carbon.p2.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <properties>
+        <product.ei.version>6.4.0</product.ei.version>
+        <axis2.wso2.version>1.6.1-wso2v28</axis2.wso2.version>
+        <commons.logging.version>1.1</commons.logging.version>
+        <carbon.kernel.version>4.4.36</carbon.kernel.version>
+        <carbon.mediation.version>4.6.105</carbon.mediation.version>
+        <org.testng.version>6.1.1</org.testng.version>
+        <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
+        <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
+        <httpclient.version>4.3.2</httpclient.version>
+        <org.wso2.json.version>3.0.0.wso2v1</org.wso2.json.version>
+        <awaitility.version>3.1.2</awaitility.version>
+        <commons.lang.version>2.6.0.wso2v1</commons.lang.version>
+        <maven.surefire.version>2.12.4</maven.surefire.version>
+        <jacoco.version>0.7.9</jacoco.version>
+        <activemq.client.version>5.15.8</activemq.client.version>
+    </properties>
+
+    <modules>
+        <module>scenarios-commons</module>
+        <module>1-integrating-systems-that-communicate-in-heterogeneous-message-formats</module>
+        <module>2-Bridging-systems-that-communicate-in-different-protocols</module>
+        <module>3-connecting-web-apis-cloud-services</module>
+        <module>4-gateway</module>
+        <module>5-route-messages-between-systems</module>
+        <module>7-connecting-with-packaged-applications</module>
+        <module>8-connect-devices-to-enterprise</module>
+        <!--TODO Scenario 10 is commented until VFS is supported-->
+        <!--<module>10-file-processing</module>-->
+        <module>11-Asynchronous-message-processing</module>
+        <module>13-micro-services</module>
+        <module>14-periodically-execute-an-integration-process</module>
+    </modules>
+
+    <repositories>
+        <!-- WSO2 released artifact repository -->
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 Releases Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <!-- WSO2 Snapshot artifact repository -->
+        <repository>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <id>wso2-nexus</id>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons.logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2</artifactId>
+                <version>1.6.2</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-kernel</artifactId>
+                <version>1.6.1-wso2v20</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>org.wso2.carbon.task</artifactId>
+                <version>${carbon.mediation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${org.testng.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.automationutils</groupId>
+                <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
+                <version>${automation.framework.utils.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>scenarios-commons</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>integration-test-utils</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>admin-clients</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
+                <artifactId>automation-extensions</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.json.wso2</groupId>
+                <artifactId>json</artifactId>
+                <version>${org.wso2.json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang.wso2</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- Jacoco Dependency-->
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>0.7.5.201505241946</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.wso2</groupId>
+                <artifactId>axis2</artifactId>
+                <version>${axis2.wso2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.ant</artifactId>
+                <version>${jacoco.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>${activemq.client.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

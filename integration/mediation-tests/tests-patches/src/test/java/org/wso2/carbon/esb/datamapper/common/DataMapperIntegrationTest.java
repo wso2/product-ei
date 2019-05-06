@@ -23,12 +23,14 @@ import org.testng.annotations.BeforeClass;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 public class DataMapperIntegrationTest extends ESBIntegrationTest {
 
@@ -78,16 +80,16 @@ public class DataMapperIntegrationTest extends ESBIntegrationTest {
 		resourceAdminServiceClient.addCollection("/_system/governance/", registryRoot, "", "");
 
 		resourceAdminServiceClient.addResource("/_system/governance/" + registryRoot + dmConfig, "text/plain", "",
-		                                       new DataHandler(new URL("file:///" + getClass()
-				                                       .getResource(artifactRoot + dmConfig).getPath())));
+		                                       new DataHandler(new FileDataSource(
+		                                       		new File(getClass().getResource(artifactRoot + dmConfig).getPath()))));
 
 		resourceAdminServiceClient.addResource("/_system/governance/" + registryRoot + inSchema, "", "",
-		                                       new DataHandler(new URL("file:///" + getClass()
-				                                       .getResource(artifactRoot + inSchema).getPath())));
+		                                       new DataHandler(new FileDataSource(
+		                                       		new File(getClass().getResource(artifactRoot + inSchema).getPath()))));
 
 		resourceAdminServiceClient.addResource("/_system/governance/" + registryRoot + outSchema, "", "",
-		                                       new DataHandler(new URL("file:///" + getClass()
-				                                       .getResource(artifactRoot + outSchema).getPath())));
+		                                       new DataHandler(new FileDataSource(
+		                                       		new File(getClass().getResource(artifactRoot + outSchema).getPath()))));
 	}
 
 	@AfterClass(alwaysRun = true)

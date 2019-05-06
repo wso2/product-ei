@@ -1,0 +1,56 @@
+<!--
+  ~ Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="mb-suite-initializer">
+    <parameter name="useDefaultListeners" value="false"/>
+    <listeners>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestExecutionListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestManagerListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestReportListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestSuiteListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
+    </listeners>
+    <test name="InitializedAndSetupServer" preserve-order="true" parallel="false">
+        <classes>
+            <class name="org.wso2.carbon.mb.ui.test.login.LoginTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.subscriptions.SubscriptionDeleteTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.queues.BrowseQueueContentTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.dlc.DLCQueueTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.dlc.DLCDurableTopicTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.dlc.DLCReRouteAllTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.configure.UserStoreManagementTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.queues.QueueDeleteTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.queues.QueueCreationTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.topic.TopicCreationTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.configure.AddNewTenantTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.configure.NewUserPermissionTest"/>
+            <class name="org.wso2.carbon.mb.ui.test.log.ViewLogsTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.queues.BrowseQueueWithUserWithDomainName"/>
+            <class name="org.wso2.carbon.mb.ui.test.configure.AdminWithDifferentAdminRoleName"/>
+            <class name="org.wso2.carbon.mb.ui.test.messagecontent.ViewMessageContentTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.messagecontent.LZ4UITestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.permissions.QueuePermissionTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.permissions.TopicPermissionTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.queues.QueueDeleteWithSubscriber"/>
+            <class name="org.wso2.carbon.mb.ui.test.topic.SharedDurableSubscriptionTestCase"/>
+            <class name="org.wso2.carbon.mb.ui.test.subscriptions.SubscriptionSearchTestCase"/>
+        </classes>
+    </test>
+</suite>

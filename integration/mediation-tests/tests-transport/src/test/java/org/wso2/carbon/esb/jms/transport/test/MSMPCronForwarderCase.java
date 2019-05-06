@@ -19,6 +19,7 @@
 package org.wso2.carbon.esb.jms.transport.test;
 
 import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -36,6 +37,8 @@ import org.wso2.esb.integration.services.jaxrs.customersample.CustomerConfig;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -48,6 +51,7 @@ public class MSMPCronForwarderCase extends ESBIntegrationTest {
 
     private TomcatServerManager tomcatServerManager;
     private LoggingAdminClient logAdmin;
+    private final int NUMBER_OF_MESSAGES = 4;
 
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
@@ -58,7 +62,10 @@ public class MSMPCronForwarderCase extends ESBIntegrationTest {
                 CustomerConfig.class.getName(), TomcatServerType.jaxrs.name(), 8080);
 
         tomcatServerManager.startServer();  // staring tomcat server instance
-        Thread.sleep(10000);
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isServerStarted());
         logAdmin = new LoggingAdminClient(contextUrls.getBackEndUrl(), getSessionCookie());
     }
 
@@ -89,32 +96,53 @@ public class MSMPCronForwarderCase extends ESBIntegrationTest {
         assertEquals(response4.getResponseCode(), 202, "ESB failed to send 202 even after setting FORCE_SC_ACCEPTED");
 
         // WAIT FOR THE MESSAGE PROCESSOR TO TRIGGER
-        Thread.sleep(30000);
-
-        // ASSERT RESULTS
-        LogViewerClient logViewerClient =
-                new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
-
-        boolean success = false;
-        int msgCount = 0;
-        for (int i = 0; i < logEvents.length ; i++) {
-            if (logEvents[i].getMessage().contains("Jack")) {
-                if (4 == ++msgCount) {
-                    success = true;
-                    break;
-                }
-            }
-        }
-
-        assertTrue(success, "Message process Forwarding does not work with cron expression");
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isLogWritten());
     }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         //undo logger change
         logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.LogLevel.INFO.name(), true, false);
-        tomcatServerManager.stop();
+        if (tomcatServerManager != null) {
+            tomcatServerManager.stop();
+        }
         super.cleanup();
+    }
+
+    private Callable<Boolean> isServerStarted() {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+
+                return tomcatServerManager.isRunning();
+            }
+        };
+    }
+
+    private Callable<Boolean> isLogWritten() {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                LogViewerClient logViewerClient =
+                        new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+                LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
+
+                boolean success = false;
+                int msgCount = 0;
+                for (int i = 0; i < logEvents.length; i++) {
+                    if (logEvents[i].getMessage().contains("Jack")) {
+                        msgCount = ++msgCount;
+                        if (NUMBER_OF_MESSAGES == msgCount) {
+                            success = true;
+                            break;
+                        }
+                    }
+                }
+                return success;
+            }
+        };
     }
 }

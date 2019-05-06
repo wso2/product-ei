@@ -21,8 +21,12 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageConsumer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
@@ -32,9 +36,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
+
+    private static Log log = LogFactory.getLog(Utils.class);
+
     public static OMElement getSimpleQuoteRequest(String symbol) {
         OMFactory fac = OMAbstractFactory.getOMFactory();
         OMNamespace omNs = fac.createOMNamespace("http://services.samples", "ns");
@@ -277,5 +285,41 @@ public class Utils {
             elapsedTime += 500;
         }
         return messageCountFound;
+    }
+
+    /**
+     * Util function to check whether specified car file is deployed
+     *
+     * @param carFileName - Name of the car file to deploy
+     * @param applicationAdminClient - Application admin client
+     * @param timeout - timeout for car deployment
+     * @return true if the car file deployed successfully else, false
+     */
+    public static boolean isCarFileDeployed(String carFileName, ApplicationAdminClient applicationAdminClient,
+            int timeout) throws Exception {
+
+        log.info("waiting " + timeout + " millis for car deployment " + carFileName);
+        boolean isCarFileDeployed = false;
+        Calendar startTime = Calendar.getInstance();
+        long time;
+
+        while ((time = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())) < timeout) {
+            String[] applicationList = applicationAdminClient.listAllApplications();
+            if (applicationList != null) {
+                if (ArrayUtils.contains(applicationList, carFileName)) {
+                    isCarFileDeployed = true;
+                    log.info("car file deployed in " + time + " mills");
+                    return isCarFileDeployed;
+                }
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // ignore
+            }
+
+        }
+        return isCarFileDeployed;
     }
 }

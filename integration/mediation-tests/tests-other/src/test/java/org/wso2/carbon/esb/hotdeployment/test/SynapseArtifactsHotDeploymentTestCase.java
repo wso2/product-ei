@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.hotdeployment.test;
 
 import org.apache.commons.io.FileUtils;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -33,6 +34,9 @@ import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.concurrent.Callable;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * This class will test the ESB artifacts hot deployment.
@@ -79,7 +83,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
                 "Proxy deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isProxyDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
                 "Proxy Deployment failed on updating file");
-        FileManager.deleteFile(proxyServiceFile);
+        Awaitility.await().atMost(10, SECONDS).until(fileDelete(proxyServiceFile));
         Assert.assertTrue(esbUtils.isProxyUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, proxyName),
                 "Proxy Undeployment failed");
     }
@@ -95,12 +99,13 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
 
         logViewerClient.clearLogs();
         FileUtils.touch(new File(sequenceFile));
-        log.info(sequenceFileName + " has been updated and waiting for redeployment");
+        log.info(sequenceFile + " has been updated and waiting for redeployment");
         Assert.assertTrue(searchInLogs(logViewerClient, "HotDeploymentTestSequence has been updated from the file"),
                 "Sequence deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isSequenceDeployed(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
                 "Sequence Deployment failed on updating file");
-        FileManager.deleteFile(sequenceFile);
+
+        Awaitility.await().atMost(10, SECONDS).until(fileDelete(sequenceFile));
         Assert.assertTrue(esbUtils.isSequenceUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, sequenceName),
                 "Sequence Undeployment failed");
     }
@@ -121,7 +126,8 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
                 "Endpoint deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isEndpointDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
                 "Endpoint Deployment failed on updating file");
-        FileManager.deleteFile(endpointFile);
+
+        Awaitility.await().atMost(10, SECONDS).until(fileDelete(endpointFile));
         Assert.assertTrue(esbUtils.isEndpointUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, endpointName),
                 "Endpoint Undeployment failed");
     }
@@ -142,7 +148,8 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
                 "API deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isApiDeployed(contextUrls.getBackEndUrl(), sessionCookie, apiName),
                 "API Deployment failed on updating file");
-        FileManager.deleteFile(apiFile);
+
+        Awaitility.await().atMost(5, SECONDS).until(fileDelete(apiFile));
         Assert.assertTrue(esbUtils.isApiUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, apiName),
                 "API Undeployment failed");
     }
@@ -163,7 +170,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
                 "Local Entry deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isLocalEntryDeployed(contextUrls.getBackEndUrl(), sessionCookie, localEntryName),
                 "Local Entry Deployment failed on updating file");
-        FileManager.deleteFile(localEntryFile);
+        Awaitility.await().atMost(10, SECONDS).until(fileDelete(localEntryFile));
         Assert.assertTrue(esbUtils.isLocalEntryUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, localEntryName),
                 "Local Entry Undeployment failed");
     }
@@ -184,7 +191,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
                 "Message Store deployment failed on updating file. Log message not found");
         Assert.assertTrue(esbUtils.isMessageStoreDeployed(contextUrls.getBackEndUrl(), sessionCookie, messageStoreName),
                 "Message Store Deployment failed on updating file");
-        FileManager.deleteFile(messageStoreFile);
+        Awaitility.await().atMost(10, SECONDS).until(fileDelete(messageStoreFile));
         Assert.assertTrue(esbUtils.isSequenceUnDeployed(contextUrls.getBackEndUrl(), sessionCookie, messageStoreName),
                 "Message Store Undeployment failed");
     }
@@ -236,5 +243,13 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
             Thread.sleep(500);
         }
         return logFound;
+    }
+
+    private Callable<Boolean> fileDelete(final String filePath) {
+        return new Callable<Boolean>() {
+            public Boolean call() throws Exception {
+                return FileManager.deleteFile(filePath);
+            }
+        };
     }
 }

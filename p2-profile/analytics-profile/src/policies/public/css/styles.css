@@ -1,0 +1,230 @@
+/*
+~   Copyright 2018, WSO2 Inc. (http://www.wso2.com)
+~
+~   Licensed under the Apache License, Version 2.0 (the "License");
+~   you may not use this file except in compliance with the License.
+~   You may obtain a copy of the License at
+~
+~        http://www.apache.org/licenses/LICENSE-2.0
+~
+~   Unless required by applicable law or agreed to in writing, software
+~   distributed under the License is distributed on an "AS IS" BASIS,
+~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~   See the License for the specific language governing permissions and
+~   limitations under the License.
+*/
+
+* {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background-color: #283337;
+    height: 40px;
+    color: #eee;
+    display: flex;
+    align-items: center;
+}
+
+header img {
+    padding: 11px 15px 0 24px;
+    float: left;
+
+}
+
+header h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: normal;
+    color: #eee !important;
+    display: inline-flex;
+}
+
+.main-content {
+    padding: 15px;
+}
+
+.main-content h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+}
+
+@page {
+    margin: 1in
+}
+
+p {
+    margin-bottom: 0.1in;
+    direction: ltr;
+    color: #616161 !important;
+    line-height: 120%;
+    text-align: left;
+    orphans: 2;
+    widows: 2;
+    text-decoration: none
+}
+
+p.western {
+    font-size: 11pt;
+    font-style: normal;
+    font-weight: normal
+}
+
+h1 {
+    margin-top: 0.28in;
+    margin-bottom: 0.08in;
+    direction: ltr;
+    color: #212121 !important;
+    line-height: 115%;
+    text-align: left;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+    text-decoration: none
+}
+
+h1 font {
+    color: #212121 !important;
+}
+
+h1.western {
+    font-size: 20pt;
+    font-style: normal;
+    font-weight: normal
+}
+
+h2 {
+    margin-top: 0.25in;
+    direction: ltr;
+    color: #424242 !important;
+    line-height: 115%;
+    text-align: left;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+    text-decoration: none
+}
+
+h2 font {
+    color: #424242 !important;
+}
+
+h2.western {
+    font-size: 16pt;
+    font-style: normal;
+    font-weight: normal
+}
+
+h3 {
+    margin-top: 0.22in;
+    margin-bottom: 0.06in;
+    direction: ltr;
+    color: #616161;
+    line-height: 115%;
+    text-align: left;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+    text-decoration: none
+}
+
+h3 font,
+h4 font {
+    color: #616161 !important;
+}
+
+h3.western {
+    font-style: normal;
+    font-weight: normal
+}
+
+h4 {
+    margin-top: 0.19in;
+    margin-bottom: 0.06in;
+    direction: ltr;
+    color: #616161;
+    line-height: 115%;
+    text-align: left;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+    text-decoration: none
+}
+
+h4.western {
+    font-style: normal;
+    font-weight: normal
+}
+
+.policies-landing h1 {
+    text-align: center;
+    margin: 30px auto;
+}
+
+.link-wrap {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #ccc;
+    position: relative;
+    transition-duration: 0.3s;
+    color: #37474F;
+    margin-top: 20px
+}
+
+.link-wrap i {
+    font-size: 50px;
+    position: absolute;
+    left: 80px;
+    top: 40px;
+}
+
+.link-wrap .text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 55px;
+    font-size: 20px;
+}
+
+.container a {
+    padding: 0 20px;
+}
+
+.container {
+    width: 500px;
+    display: flex;
+    align-content: center;
+    margin: auto;
+}
+
+.link-wrap:hover,
+.link-wrap:focus,
+.link-wrap:active {
+    background: #607D8B;
+    color: #fff
+}
+
+.back {
+    background-color: rgba(19, 67, 168, 0.8);
+    bottom: 10px;
+    color: #fff;
+    font-size: 12px;
+    padding: 9px 12px;
+    position: fixed;
+    right: 10px;
+    text-decoration: none;
+}
+
+.back {
+    background-color: rgba(19, 67, 168, 1);
+    color: #fff;
+}

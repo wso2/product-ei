@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_2_2_Proxy_Add_Sibling_xpath" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <enrich>
+                <source clone="true" xmlns:ser="http://services.samples" xmlns:xsd="http://services.samples/xsd" xpath="//ser:getQuote/ser:request"/>
+                <target action="sibling" type="body"/>
+            </enrich>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

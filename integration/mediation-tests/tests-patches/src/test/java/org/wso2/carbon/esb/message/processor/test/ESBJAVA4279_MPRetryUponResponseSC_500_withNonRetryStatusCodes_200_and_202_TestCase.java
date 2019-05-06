@@ -42,8 +42,7 @@ public class ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_a
                                                                                                extends
                                                                                                ESBIntegrationTest {
     private static final String PROXY_SERVICE_NAME = "NonRetrySCProxy";
-    private static final String EXPECTED_ERROR_MESSAGE =
-                                                         "BlockingMessageSender of message processor [Processor1] failed to send message to the endpoint";
+    private static final String EXPECTED_ERROR_MESSAGE = "Message forwarding failed";
     private static final String EXPECTED_MP_DEACTIVATION_MSG =
                                                                "Successfully deactivated the message processor [Processor1]";
     private static final int RETRY_COUNT = 4;
@@ -53,9 +52,9 @@ public class ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_a
     @BeforeClass(alwaysRun = true)
     public void deployeService() throws Exception {
         super.init();
+        activeMQServer.startJMSBroker();
         loadESBConfigurationFromClasspath("/artifacts/ESB/messageProcessorConfig/MessageProcessorRetryUpon_500_ResponseWith_200And_202As_Non_retry_SC.xml");
         isProxyDeployed(PROXY_SERVICE_NAME);
-        activeMQServer.startJMSBroker();
     }
 
     @Test(groups = { "wso2.esb" }, description = "Test whether a Message Processor retries sending the message to the EP when the response status code is 500 and MP is configured with 200,202 as non-retry status codes.")

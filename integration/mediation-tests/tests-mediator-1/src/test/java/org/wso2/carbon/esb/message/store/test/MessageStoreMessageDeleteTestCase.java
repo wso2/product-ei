@@ -29,7 +29,6 @@ import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuote
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.message.store.stub.MessageInfo;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**

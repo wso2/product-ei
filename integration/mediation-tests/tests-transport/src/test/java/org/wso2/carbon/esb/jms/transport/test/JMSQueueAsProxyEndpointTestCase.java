@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.jms.transport.test;
 
 import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -29,7 +30,13 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
 public class JMSQueueAsProxyEndpointTestCase extends ESBIntegrationTest {
+
+    private int NUM_OF_MESSAGES = 5;
+
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
@@ -46,12 +53,15 @@ public class JMSQueueAsProxyEndpointTestCase extends ESBIntegrationTest {
         try {
             consumer.connect("TestQueuePox");
             //sending messages to proxy service
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 client.sendRobust(Utils.getStockQuoteRequest("JMS"), getProxyServiceURLHttp("proxyWithJmsEndpointPox"), "getQuote");
             }
             //wait for messages to reach the destination queue
-            Thread.sleep(5000);
-            for (int i = 0; i < 5; i++) {
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isMessagesConsumed(consumer));
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 String message = consumer.popMessage();
                 Assert.assertNotNull(message, "Message not found. message sent by proxy service not reached to the destination Queue");
                 Assert.assertEquals(message, "<ns:getQuote xmlns:ns=\"http://services.samples\"><" +
@@ -72,14 +82,18 @@ public class JMSQueueAsProxyEndpointTestCase extends ESBIntegrationTest {
         try {
             consumer.connect("TestQueueSoap11");
             //sending messages to proxy service
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 client.sendRobust(Utils.getStockQuoteRequest("JMS"), getProxyServiceURLHttp("proxyWithJmsEndpointSoap11"), "getQuote");
             }
             //wait for messages to reach the destination queue
-            Thread.sleep(5000);
+
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isMessagesConsumed(consumer));
             String expectedOutCome = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"><soapenv:Body><ns:getQuote xmlns:ns=\"http://services.samples\"><ns:request><ns:symbol>JMS</ns:symbol></ns:request></ns:getQuote></soapenv:Body></soapenv:Envelope>";
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 String message = consumer.popMessage();
                 Assert.assertNotNull(message, "Message not found. message sent by proxy service not reached to the destination Queue");
                 //added contains since <?xml version=\"1.0\" encoding=\"UTF-8\"?> " are replaced with ' in jenkins. <?xml version=\'1.0\' encoding=\'UTF-8\'?>
@@ -98,13 +112,16 @@ public class JMSQueueAsProxyEndpointTestCase extends ESBIntegrationTest {
         try {
             consumer.connect("TestQueueSoap12");
             //sending messages to proxy service
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 client.sendRobust(Utils.getStockQuoteRequest("JMS"), getProxyServiceURLHttp("proxyWithJmsEndpointSoap12"), "getQuote");
             }
             //wait for messages to reach the destination queue
-            Thread.sleep(5000);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isMessagesConsumed(consumer));
             String expectedOutPut = "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"><soapenv:Body><ns:getQuote xmlns:ns=\"http://services.samples\"><ns:request><ns:symbol>JMS</ns:symbol></ns:request></ns:getQuote></soapenv:Body></soapenv:Envelope>";
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < NUM_OF_MESSAGES; i++) {
                 String message = consumer.popMessage();
                 Assert.assertNotNull(message, "Message not found. message sent by proxy service not reached to the destination Queue");
                 //added contains since <?xml version=\"1.0\" encoding=\"UTF-8\"?> " are replaced with ' in jenkins. <?xml version=\'1.0\' encoding=\'UTF-8\'?>
@@ -118,5 +135,14 @@ public class JMSQueueAsProxyEndpointTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
+    }
+
+    private Callable<Boolean> isMessagesConsumed(final JMSQueueMessageConsumer consumer) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return consumer.getMessages().size() == NUM_OF_MESSAGES;
+            }
+        };
     }
 }

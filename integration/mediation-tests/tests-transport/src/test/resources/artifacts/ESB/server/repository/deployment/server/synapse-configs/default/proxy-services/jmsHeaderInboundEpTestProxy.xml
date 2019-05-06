@@ -32,7 +32,8 @@
         </outSequence>
         <endpoint>
             <address
-                    uri="jms:/testqueue?transport.jms.DestinationType=queue&amp;java.naming.provider.url=tcp://localhost:61616&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
+                    uri="jms:/testqueue?transport.jms.DestinationType=queue&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
+
         </endpoint>
     </target>
 </proxy>

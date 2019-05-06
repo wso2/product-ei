@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="4_1_1_1_3_Proxy_SimpleLogForwardTemplate" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <endpoint name="endpoint_urn_uuid_6f63ce93-1945-42ac-9bc7-75ad24ae56b9">
+            <address uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService"/>
+        </endpoint>
+        <inSequence>
+            <log level="full"/>
+        </inSequence>
+        <outSequence>
+            <log level="full"/>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+</proxy>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://ws.apache.org/ns/synapse">
-    <proxy name="JmsProxy" transports="jms" startOnLoad="true" trace="disable">
+    <proxy name="JMSEndpointTestCaseProxy" transports="jms" startOnLoad="true" trace="disable">
         <target>
             <inSequence>
                 <property name="OUT_ONLY" value="true"/>
                 <property name="FORCE_SC_ACCEPTED" value="true" scope="axis2"/>
                 <send>
-                    <endpoint key="jmsAddressEP"/>
+                    <endpoint>
+                        <address uri="jms:/SimpleStockQuoteServiceJMSEndpointTestCase?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
+                    </endpoint>
                 </send>
             </inSequence>
 
@@ -18,7 +20,4 @@
             </rules>
         </parameter>
     </proxy>
-    <endpoint name="jmsAddressEP">
-        <address uri="jms:/SimpleStockQuoteService?transport.jms.DestinationType=queue&amp;transport.jms.ContentTypeProperty=contentType&amp;java.naming.provider.url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=10&amp;java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory&amp;transport.jms.SessionTransacted=true&amp;transport.jms.ConnectionFactoryType=queue&amp;transport.jms.SessionAcknowledgement=CLIENT_ACKNOWLEDGE&amp;transport.jms.ConnectionFactoryJNDIName=QueueConnectionFactory"/>
-    </endpoint>
 </definitions>

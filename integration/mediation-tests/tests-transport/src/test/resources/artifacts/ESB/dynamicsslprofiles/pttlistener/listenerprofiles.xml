@@ -1,0 +1,17 @@
+<parameter name="SSLProfiles">
+    <profile>
+        <bindAddress>localhost</bindAddress>
+        <KeyStore>
+            <Location>../../../src/test/resources/artifacts/ESB/dynamicsslprofiles/pttlistener/esb.jks</Location>
+            <Type>JKS</Type>
+            <Password>123456</Password>
+            <KeyPassword>123456</KeyPassword>
+        </KeyStore>
+        <TrustStore>
+            <Location>../../../src/test/resources/artifacts/ESB/dynamicsslprofiles/pttlistener/clienttruststore.jks</Location>
+            <Type>JKS</Type>
+            <Password>123456</Password>
+        </TrustStore>
+        <SSLVerifyClient>require</SSLVerifyClient>
+    </profile>
+</parameter>

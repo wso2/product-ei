@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="callSoapSeq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log>
+        <property name="STATUS" value="calling SOAP EP"/>
+    </log>
+    <call>
+        <endpoint key="SOAPEP"/>
+    </call>
+</sequence>

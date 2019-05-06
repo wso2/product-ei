@@ -34,7 +34,7 @@
     </dbConfig>
     
     <indexingConfiguration>
-        <startIndexing>true</startIndexing>
+        <startIndexing>false</startIndexing>
         <startingDelayInSeconds>35</startingDelayInSeconds>
         <indexingFrequencyInSeconds>3</indexingFrequencyInSeconds>
         <!--number of resources submit for given indexing thread -->
@@ -117,6 +117,18 @@
         <targetPath>/_system/nodes</targetPath>
     </mount-->
 
+    <!--
+    Following handler used to clear synapse cache for the put, move, rename and delete operation on the
+    registry resources.
+    -->
+    <handler class="org.wso2.carbon.mediation.library.RegistryCachingHandler">
+        <filter class="org.wso2.carbon.registry.core.jdbc.handlers.filters.URLMatcher">
+            <property name="putPattern">.*</property>
+            <property name="movePattern">.*</property>
+            <property name="renamePattern">.*</property>
+            <property name="deletePattern">.*</property>
+        </filter>
+    </handler>
     
     <versionResourcesOnChange>false</versionResourcesOnChange>
 

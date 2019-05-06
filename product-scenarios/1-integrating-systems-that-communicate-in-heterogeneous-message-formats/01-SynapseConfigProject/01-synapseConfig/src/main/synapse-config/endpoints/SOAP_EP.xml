@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="SOAP_EP" xmlns="http://ws.apache.org/ns/synapse">
+    <address format="soap11" uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService">
+        <timeout>
+            <responseAction>fault</responseAction>
+        </timeout>
+        <suspendOnFailure>
+            <errorCodes>-1</errorCodes>
+            <initialDuration>0</initialDuration>
+            <progressionFactor>1.0</progressionFactor>
+            <maximumDuration>0</maximumDuration>
+        </suspendOnFailure>
+        <markForSuspension>
+            <errorCodes>-1</errorCodes>
+        </markForSuspension>
+    </address>
+</endpoint>

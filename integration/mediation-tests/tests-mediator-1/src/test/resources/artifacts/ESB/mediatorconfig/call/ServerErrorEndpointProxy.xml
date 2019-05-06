@@ -1,0 +1,25 @@
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ServerErrorEndpointProxy"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="http,https">
+    <target>
+        <inSequence>
+            <call>
+                <endpoint>
+                    <http method="GET"
+                          uri-template="http://localhost:8480/responsesample/internal_server_error"/>
+                </endpoint>
+            </call>
+            <loopback/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+    <description/>
+</proxy>
+</definitions>

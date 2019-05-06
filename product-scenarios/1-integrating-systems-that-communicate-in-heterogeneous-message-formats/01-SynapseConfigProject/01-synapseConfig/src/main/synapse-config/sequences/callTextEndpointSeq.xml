@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="callTextEndpointSeq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log>
+        <property name="STATUS" value="calling Text EP"/>
+    </log>
+    <call description="">
+        <endpoint key="Plaintext_EP"/>
+    </call>
+</sequence>

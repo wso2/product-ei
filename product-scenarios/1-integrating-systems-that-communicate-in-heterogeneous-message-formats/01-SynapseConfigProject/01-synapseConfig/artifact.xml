@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<artifacts>
+    <artifact name="Plaintext_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/Plaintext_EP.xml</file>
+    </artifact>
+    <artifact name="SOAP_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/SOAP_EP.xml</file>
+    </artifact>
+    <artifact name="callSoapSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callSoapSeq.xml</file>
+    </artifact>
+    <artifact name="callTextEndpointSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callTextEndpointSeq.xml</file>
+    </artifact>
+    <artifact name="fullLogSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/fullLogSeq.xml</file>
+    </artifact>
+    <artifact name="1_8_1_1_Proxy_PlainTextReceiver" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_8_1_1_Proxy_PlainTextReceiver.xml</file>
+    </artifact>
+    <artifact name="1_1_2_Proxy_soap_to_json_using_message_type" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_1_2_Proxy_soap_to_json_using_message_type.xml</file>
+    </artifact>
+    <artifact name="POX_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/POX_EP.xml</file>
+    </artifact>
+    <artifact name="callPOXEndpointSeq" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callPOXEndpointSeq.xml</file>
+    </artifact>
+    <artifact name="1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild.xml</file>
+    </artifact>
+    <artifact name="1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild.xml</file>
+    </artifact>
+    <artifact name="JSON_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/JSON_EP.xml</file>
+    </artifact>
+    <artifact name="1_1_1_Proxy_soap_to_json_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_1_1_Proxy_soap_to_json_using_payload_factory.xml</file>
+    </artifact>
+    <artifact name="1_1_3_Proxy_soap_to_json_using_data_mapper" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_1_3_Proxy_soap_to_json_using_data_mapper.xml</file>
+    </artifact>
+    <artifact name="1_3_1_API_json_to_soap_using_xslt" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_3_1_API_json_to_soap_using_xslt.xml</file>
+    </artifact>
+    <artifact name="in_transform" groupId="org.wso2.ei.product-scenarios.scenario_01.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/in_transform.xml</file>
+    </artifact>
+    <artifact name="out_transform" groupId="org.wso2.ei.product-scenarios.scenario_01.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/out_transform.xml</file>
+    </artifact>
+    <artifact name="1_3_2_API_json_to_soap_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_3_2_API_json_to_soap_using_payload_factory.xml</file>
+    </artifact>
+    <artifact name="1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_4_2_Proxy_RemoveContentofElements_EnrichMediator.xml</file>
+    </artifact>
+    <artifact name="1_6_4_1_Proxy_RemoveElements_ScriptMediator" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_4_1_Proxy_RemoveElements_ScriptMediator.xml</file>
+    </artifact>
+    <artifact name="1_6_2_1_Proxy_Add_Sibling_Inline" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_2_1_Proxy_Add_Sibling_Inline.xml</file>
+    </artifact>
+    <artifact name="1_6_2_3_Proxy_Add_Sibling_toTargetBody" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_2_3_Proxy_Add_Sibling_toTargetBody.xml</file>
+    </artifact>
+    <artifact name="1_6_2_2_Proxy_Add_Sibling_xpath" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_2_2_Proxy_Add_Sibling_xpath.xml</file>
+    </artifact>
+    <artifact name="1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_2_4_Proxy_Add_Sibling_toMessageBodyStoredInProperty.xml</file>
+    </artifact>
+    <artifact name="1_6_3_1_Proxy_replace_messageBody_usingPayloadStoredInProperty" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_1_Proxy_replace_messageBody_usingPayloadStoredInProperty.xml</file>
+    </artifact>
+    <artifact name="1_6_3_2_Proxy_replace_targetBySourceBodyDefinedThroughXpath" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_2_Proxy_replace_targetBySourceBodyDefinedThroughXpath.xml</file>
+    </artifact>
+    <artifact name="1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_3_Proxy_replace_targetDefinedThroughXpathBySourceProperty.xml</file>
+    </artifact>
+    <artifact name="1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_4_Proxy_replace_targetDefinedThroughXpathBySourceInlineContent.xml</file>
+    </artifact>
+    <artifact name="1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_10_1_Proxy_AlterPayloadWithInlineGroovyScript.xml</file>
+    </artifact>
+    <artifact name="1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_7_Proxy_replaceTargetDefinedThroughXpathSourceInlineGovReg.xml</file>
+    </artifact>
+    <artifact name="1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_6_Proxy_replaceBodyOfPayloadUsingSourceDefinedInlineConfReg.xml</file>
+    </artifact>
+    <artifact name="1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_5_Proxy_replaceBodyOfPayloadSourceDefinedInlineGovReg.xml</file>
+    </artifact>
+    <artifact name="1_2_2_API_pox_to_json_using_message_type" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_2_2_API_pox_to_json_using_message_type.xml</file>
+    </artifact>
+    <artifact name="1_2_1_API_pox_to_json_using_payload_factory" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_2_1_API_pox_to_json_using_payload_factory.xml</file>
+    </artifact>
+    <artifact name="1_6_1_3_Proxy_addCurrentPayloadAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_3_Proxy_addCurrentPayloadAsChild.xml</file>
+    </artifact>
+    <artifact name="VFS_Sample_EP" groupId="org.wso2.ei.product-scenarios.scenario_01.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/VFS_Sample_EP.xml</file>
+    </artifact>
+    <artifact name="1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_1_4_Proxy_addPayloadStoredInPropertyAsChild.xml</file>
+    </artifact>
+    <artifact name="1_6_10_2_Proxy_alterPayloadWithInlineJavaScript" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_10_2_Proxy_alterPayloadWithInlineJavaScript.xml</file>
+    </artifact>
+    <artifact name="1_6_4_3_Proxy_removeElementUsingXsltMediator" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_4_3_Proxy_removeElementUsingXsltMediator.xml</file>
+    </artifact>
+    <artifact name="1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg" groupId="org.wso2.ei.product-scenarios.scenario_01.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/1_6_3_8_Proxy_replaceTargetDefinedThroughXpathSourceInlineConfReg.xml</file>
+    </artifact>
+    <artifact name="1_6_12_API_performArithmeticOperations" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_12_API_performArithmeticOperations.xml</file>
+    </artifact>
+    <artifact name="1_6_13_API_performStringOperations" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_6_13_API_performStringOperations.xml</file>
+    </artifact>
+</artifacts>

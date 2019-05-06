@@ -144,7 +144,7 @@ variable to point to the directory in which Java is installed.
 <h3 id="Standalone">Running WSO2 EI in Standalone Mode</h3>
 <p>
 Now you are all set to start WSO2 EI in the standalone mode. Go to EI_HOME/bin directory and if you are
-on Unix/Linux execute the wso2server.sh shell script or if you are on Windows execute the wso2server.bat
+on Unix/Linux execute the integrator.sh shell script or if you are on Windows execute the integrator.bat
 batch file. This will start the EI and you can see the progress of the startup procedure on the console.
 Please note that server startup may take some time depending on the hardware configuration of your system.
 The very first startup of the EI can take up a few additional seconds since some first time configuration
@@ -273,15 +273,15 @@ EI_HOME/bin/wso2EI-sample.sh (for Unix/Linux) or EI_HOME/bin/wso2EI-sample.bat (
 These launcher scripts take a mandatory argument -sn. Use this argument to specify the sample number.
 </p>
 <p>
-eg: ./wso2EI-sample.sh -sn 250 (This will launch the EI using the Sample 250 configuration)
+eg: ./wso2ei-sample.sh -sn 250 (This will launch the EI using the Sample 250 configuration)
 </p>
 <p>
 The sample configuration files can be found in the EI_HOME/samples/service-bus directory.
 </p>
 <p>
-When launching the EI using the wso2EI-sample.sh/wso2EI-sample.bat scripts a new registry context root
+When launching the EI using the wso2ei-sample.sh/wso2ei-sample.bat scripts a new registry context root
 will be created for storing data and configurations related to that sample. Also note that these launcher
-scripts accept the same set of arguments accepted by the wso2server.sh and wso2server.bat.
+scripts accept the same set of arguments accepted by the integrator.sh and integrator.bat.
 </p>
 
 <h2 id="DirHierarchy">WSO2 EI Directory Hierarchy</h2>
@@ -298,10 +298,10 @@ bin -<br/>
   <br/>
   <ul>
     <li>
-      wso2server.sh/wso2server.bat - Launches WSO2 EI
+      integrator.sh/integrator.bat - Launches WSO2 EI
     </li>
     <li>
-      wso2EI-samples.sh/wso2EI-samples.bat - Launches WSO2 EI using one of the sample configurations
+      wso2ei-samples.sh/wso2ei-samples.bat - Launches WSO2 EI using one of the sample configurations
     </li>
     <li>
       wsdl2java.sh/wsdl2java.bat - Launches the Java stub generation tool for Web Services

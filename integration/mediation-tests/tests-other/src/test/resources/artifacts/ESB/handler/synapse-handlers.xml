@@ -1,0 +1,3 @@
+<handlers>
+    <handler name="TestHandler" class="org.wso2.carbon.test.gateway.TestHandler"/>
+</handlers>

@@ -21,7 +21,7 @@
 <!-- Message splitting and aggregating the responses -->
 <definitions xmlns="http://ws.apache.org/ns/synapse">
 
-    <proxy name="SplitAggregateProxy">
+    <proxy name="SplitAggregateProxy" transports="http https">
         <target>
             <inSequence>
                 <iterate xmlns:m0="http://services.samples" expression="//m0:getQuote/m0:request" preservePayload="true"

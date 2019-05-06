@@ -43,15 +43,16 @@ import org.wso2.esb.integration.common.utils.ESBTestCaseUtils;
 public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
 
     private Log log = LogFactory.getLog(HTTPResponseCodeTestCase.class);
-    private HttpServer server = null;
     private int responseCode;
+    private static final int PORT = 8089;
+
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
         super.init();
         String relativePath = "/artifacts/ESB/synapseconfig/esbjava2283/api.xml";
         ESBTestCaseUtils util = new ESBTestCaseUtils();
-        relativePath = relativePath.replaceAll("[\\\\/]", File.separator);
+        relativePath = relativePath.replaceAll("[\\\\/]", "/");
         OMElement apiConfig = util.loadResource(relativePath);
         addApi(apiConfig);
     }
@@ -62,8 +63,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
             int responseCode) throws Exception {
         this.responseCode = responseCode;
         //Starting backend server
-        int port = 8089;
-        server = HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/gettest", new ResponseHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
@@ -79,7 +79,7 @@ public class HTTPResponseCodeTestCase extends ESBIntegrationTest {
             sendRequest(url, contentType);
         }
 
-        server.stop(0);
+        server.stop(5);
 
     }
 

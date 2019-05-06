@@ -24,8 +24,10 @@ import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,10 +62,10 @@ public class CarbonApplicationReDeploymentTestCase extends ESBIntegrationTest {
     }
 
     private void deployCar() throws Exception {
-        uploadCapp("sample-passthrough-proxy-car_1.0.0.car"
-                , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                                          + File.separator + "car" + File.separator +
-                                          "sample-passthrough-proxy-car_1.0.0.car")));
+        String cAppPath =
+                Paths.get(getESBResourceLocation(), "car", "sample-passthrough-proxy-car_1.0.0.car").toString();
+        uploadCapp("sample-passthrough-proxy-car_1.0.0.car",
+                   new DataHandler(new FileDataSource(new File( cAppPath))));
     }
 
     @AfterClass(alwaysRun = true)

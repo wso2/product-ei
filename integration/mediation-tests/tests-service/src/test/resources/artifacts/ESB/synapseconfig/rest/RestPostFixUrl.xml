@@ -32,7 +32,7 @@
                     <endpoint>
                         <address statistics="disable" trace="disable" uri="http://localhost:8480/services/testAPI">
                             <timeout>
-                                <duration>0</duration>
+                                <duration>10000</duration>
                                 <responseAction>discard</responseAction>
                             </timeout>
                             <markForSuspension>

@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.file.inbound.transport.test;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -34,8 +35,11 @@ import org.wso2.esb.integration.common.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class FtpInboundTransportTest extends ESBIntegrationTest {
+
 	private FTPServerManager ftpServerManager;
 	private String FTPUsername;
 	private String FTPPassword;
@@ -55,10 +59,8 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 		String outputFolderName = "ftpout";
 		int FTPPort = 9653;
 
-		pathToFtpDir = getClass().getResource(
-				File.separator + "artifacts" + File.separator + "ESB"
-						+ File.separator + "synapseconfig" + File.separator
-						+ "vfsTransport" + File.separator).getPath();
+		pathToFtpDir = getESBResourceLocation() + File.separator + "synapseconfig" + File.separator
+				+ "vfsTransport" + File.separator;
 
 		// Local folder of the FTP server root
 		FTPFolder = new File(pathToFtpDir + "FTP_Location" + File.separator);
@@ -69,20 +71,16 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 		}
 		Assert.assertTrue(FTPFolder.mkdir(), "FTP root file folder not created");
 
-
 		// create 'in' directory under FTP server root
-		inputFolder = new File(FTPFolder.getAbsolutePath() + File.separator
-				+ inputFolderName);
+		inputFolder = new File(FTPFolder.getAbsolutePath() + File.separator + inputFolderName);
 
 		if (inputFolder.exists()) {
 			FileUtils.deleteDirectory(inputFolder);
 		}
 		Assert.assertTrue(inputFolder.mkdir(), "FTP data /in folder not created");
 
-
 		// create 'out' directory under FTP server root
-		outputFolder = new File(FTPFolder.getAbsolutePath() + File.separator
-				+ outputFolderName);
+		outputFolder = new File(FTPFolder.getAbsolutePath() + File.separator + outputFolderName);
 
 		if (outputFolder.exists()) {
 			FileUtils.deleteDirectory(outputFolder);
@@ -93,20 +91,19 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 		Utils.shutdownFailsafe(FTPPort);
 
 		// start-up FTP server
-		ftpServerManager = new FTPServerManager(FTPPort,
-				FTPFolder.getAbsolutePath(), FTPUsername, FTPPassword);
+		ftpServerManager = new FTPServerManager(FTPPort, FTPFolder.getAbsolutePath(), FTPUsername, FTPPassword);
 		ftpServerManager.startFtpServer();
 
 		super.init();
 
-		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
-				getSessionCookie());
+		logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 		log.info("Before Class test method completed successfully");
 
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void stopFTPServerForInboundTest() throws Exception {
+
 		try {
 			super.cleanup();
 		} finally {
@@ -118,11 +115,9 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 	}
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
+	@SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
 	@Test(groups = "wso2.esb", description = "Inbound endpoint Reading file in FTP Test Case")
 	public void testInboundEnpointReadFileinFTP() throws Exception {
-
-		addInboundEndpoint(addEndpoint1());
 
 		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
 		File targetFolder = new File(FTPFolder + File.separator + "ftpin");
@@ -130,7 +125,9 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 
 		try {
 			FileUtils.copyFile(sourceFile, targetFile);
-			boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 2);
+			logViewerClient.clearLogs();
+			addInboundEndpoint(addEndpoint1());
+			boolean isFileRead = Utils.checkForLog(logViewerClient, "<m0:symbol>WSO2</m0:symbol>", 10);
 			Assert.assertTrue(isFileRead, "The XML file is not getting read");
 		} finally {
 			deleteFile(targetFile);
@@ -140,112 +137,116 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 	//  This test case works locally, but in the Jenkins build, it fails due to a lack of permission issue
 	//	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
 	//	@Test(groups = "wso2.esb", dependsOnMethods = "testInboundInvalidFtpUsername", description = "Inbound endpoint move after process in FTP Test Case")
-	public void testInboundEnpointMoveAfterProcessFTP() throws Exception {
+    public void testInboundEnpointMoveAfterProcessFTP() throws Exception {
 
-		addInboundEndpoint(addEndpoint2());
+        addInboundEndpoint(addEndpoint2());
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFile = new File(FTPFolder + File.separator + "ftpin"
-				+ File.separator + "test.xml");
-		File outFile = new File(FTPFolder + File.separator + "ftpout"
-				+ File.separator + "test.xml");
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFile = new File(FTPFolder + File.separator + "ftpin" + File.separator + "test.xml");
+        File outFile = new File(FTPFolder + File.separator + "ftpout" + File.separator + "test.xml");
 
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
-			Assert.assertTrue(outFile.exists(),
-					"Input file is not moved after processing the file");
-			Assert.assertFalse(targetFile.exists(),
-					"Input file is exist after processing the input file");
-		} finally {
-			deleteFile(targetFile);
-			deleteFile(outFile);
-		}
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileExist(outFile));
+            Assert.assertTrue(outFile.exists(), "Input file is not moved after processing the file");
+            Assert.assertFalse(targetFile.exists(), "Input file is exist after processing the input file");
+        } finally {
+            deleteFile(targetFile);
+            deleteFile(outFile);
+        }
 
-	}
+    }
 
-	@SetEnvironment(executionEnvironments = { ExecutionEnvironment.STANDALONE })
-	@Test(groups = "wso2.esb", description = "Inbound endpoint invalid FTP username Test Case")
-	public void testInboundInvalidFtpUsername() throws Exception {
+    @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE})
+    @Test(groups = "wso2.esb", description = "Inbound endpoint invalid FTP username Test Case")
+    public void testInboundInvalidFtpUsername() throws Exception {
 
-		addInboundEndpoint(addEndpoint3());
+        File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
+        File targetFile = new File(FTPFolder + File.separator + "ftpin" + File.separator + "test.xml");
+        File outFile = new File(FTPFolder + File.separator + "ftpout" + File.separator + "test.xml");
 
-		File sourceFile = new File(pathToFtpDir + File.separator + "test.xml");
-		File targetFile = new File(FTPFolder + File.separator + "ftpin"
-				+ File.separator + "test.xml");
-		File outFile = new File(FTPFolder + File.separator + "ftpout"
-				+ File.separator + "test.xml");
+        try {
+            FileUtils.copyFile(sourceFile, targetFile);
+            addInboundEndpoint(addEndpoint3());
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isFileNotExist(outFile));
+            Assert.assertTrue(!outFile.exists());
 
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-			Thread.sleep(2000);
-			Assert.assertTrue(!outFile.exists());
-
-		} finally {
-			deleteFile(targetFile);
-		}
-	}
+        } finally {
+            deleteFile(targetFile);
+        }
+    }
 
 	private OMElement addEndpoint1() throws Exception {
+
 		OMElement synapseConfig = null;
 		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFtpFile1\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">disable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.FileURI\">ftp://admin:admin@localhost:9653/ftpin/test.xml"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+                .stringToOM("<inboundEndpoint name=\"testFtpFile1\" onError=\"inFault\" protocol=\"file\"\n"
+                            + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                            + " <parameters>\n"
+                            + " <parameter name=\"interval\">1000</parameter>\n"
+                            + " <parameter name=\"coordination\">false</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.Locking\">disable</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterProcess\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.FileURI\">ftp://admin:admin@localhost:9653/ftpin/test.xml"
+                            + "</parameter>\n"
+                            + " </parameters>\n"
+                            + "</inboundEndpoint>\n");
 
 		return synapseConfig;
 	}
 
 	private OMElement addEndpoint2() throws Exception {
+
 		OMElement synapseConfig = null;
 		synapseConfig = AXIOMUtil
 				.stringToOM("<inboundEndpoint name=\"testFtpFile2\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
-						+ "<parameter name=\"transport.vfs.MoveAfterProcess\">ftp://admin:admin@localhost:9653/ftpout"
-						+ "</parameter>"
-						+ " <parameter name=\"transport.vfs.FileURI\">ftp://admin:admin@localhost:9653/ftpin"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+                            + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                            + " <parameters>\n"
+                            + " <parameter name=\"interval\">1000</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
+                            + "<parameter name=\"transport.vfs.MoveAfterProcess\">ftp://admin:admin@localhost:9653/ftpout"
+                            + "</parameter>"
+                            + " <parameter name=\"transport.vfs.FileURI\">ftp://admin:admin@localhost:9653/ftpin"
+                            + "</parameter>\n"
+                            + " </parameters>\n"
+                            + "</inboundEndpoint>\n");
 
 		return synapseConfig;
 	}
 
 	private OMElement addEndpoint3() throws Exception {
+
 		OMElement synapseConfig = null;
 		synapseConfig = AXIOMUtil
-				.stringToOM("<inboundEndpoint name=\"testFtpFile3\" onError=\"inFault\" protocol=\"file\"\n"
-						+ " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
-						+ " <parameters>\n"
-						+ " <parameter name=\"interval\">1000</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
-						+ " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
-						+ "<parameter name=\"transport.vfs.MoveAfterProcess\">ftp://admin:admin@localhost:9653/ftpout/test.xml"
-						+ "</parameter>"
-						+ " <parameter name=\"transport.vfs.FileURI\">ftp://invalid:admin@localhost:9653/ftpin/test.xml"
-						+ "</parameter>\n"
-						+ " </parameters>\n"
-						+ "</inboundEndpoint>\n");
+                .stringToOM("<inboundEndpoint name=\"testFtpFile3\" onError=\"inFault\" protocol=\"file\"\n"
+                            + " sequence=\"requestHandlerSeq\" suspend=\"false\" xmlns=\"http://ws.apache.org/ns/synapse\">\"\n"
+                            + " <parameters>\n"
+                            + " <parameter name=\"interval\">1000</parameter>\n"
+                            + " <parameter name=\"coordination\">false</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterErrors\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.Locking\">enable</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ContentType\">application/xml</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterFailure\">NONE</parameter>\n"
+                            + " <parameter name=\"transport.vfs.ActionAfterProcess\">MOVE</parameter>\n"
+                            + "<parameter name=\"transport.vfs.MoveAfterProcess\">ftp://admin:admin@localhost:9653/ftpout/test.xml"
+                            + "</parameter>"
+                            + " <parameter name=\"transport.vfs.FileURI\">ftp://invalid:admin@localhost:9653/ftpin/test.xml"
+                            + "</parameter>\n"
+                            + " </parameters>\n"
+                            + "</inboundEndpoint>\n");
 
 		return synapseConfig;
 	}
@@ -253,4 +254,22 @@ public class FtpInboundTransportTest extends ESBIntegrationTest {
 	private boolean deleteFile(File file) throws IOException {
 		return file.exists() && file.delete();
 	}
+
+    private Callable<Boolean> isFileExist(final File file) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return file.exists();
+            }
+        };
+    }
+
+    private Callable<Boolean> isFileNotExist(final File file) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+            	return !file.exists();
+            }
+        };
+    }
 }

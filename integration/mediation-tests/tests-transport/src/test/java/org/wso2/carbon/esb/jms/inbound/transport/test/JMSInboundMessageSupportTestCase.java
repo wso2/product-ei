@@ -37,7 +37,6 @@ import javax.xml.stream.XMLStreamException;
  * Currently includes tests for BytesMessages and MapMessages.
  */
 public class JMSInboundMessageSupportTestCase extends ESBIntegrationTest {
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
     private JMSQueueMessageProducer jmsQueueMessageProducer;
     private LogViewerClient logViewerClient;
     private LogEvent[] logEvents;
@@ -49,7 +48,6 @@ public class JMSInboundMessageSupportTestCase extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
-        activeMQServer.startJMSBroker();
         super.init();
         jmsQueueMessageProducer = new JMSQueueMessageProducer(JMSBrokerConfigurationProvider.getInstance()
                 .getBrokerConfiguration());
@@ -143,7 +141,6 @@ public class JMSInboundMessageSupportTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBroker();
     }
 
     /**

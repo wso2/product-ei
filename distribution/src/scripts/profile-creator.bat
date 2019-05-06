@@ -30,7 +30,7 @@ echo 	1.Integrator profile
 echo 	2.Analytics Profile
 echo 	3.Business Process profile
 echo 	4.Broker profile
-echo    5.Msf4j profile
+echo 	5.Msf4j profile
 
 set /p profileNumber= [Please enter the desired profile number to create the profile specific distribution]
 
@@ -78,12 +78,27 @@ goto Exit
 
 :Analytics
     echo Preparing the Analytics profile.
-    set DEFAULT_BUNDLES=%DIR%..\wso2\components\analytics-default\configuration\org.eclipse.equinox.simpleconfigurator\bundles.info
     call :Remove_BPS
-    call :Remove_INTEGRATOR
     call :Remove_BROKER
-    call :Remove_JARS
     call :Remove_MSF4J
+    call :Remove_INTEGRATOR
+    call :Remove_MSF4J
+    IF EXIST %DIR%\..\conf @RD /S /Q %DIR%\..\conf
+    IF EXIST %DIR%\..\lib @RD /S /Q %DIR%\..\lib
+    IF EXIST %DIR%\..\dropins @RD /S /Q %DIR%\..\dropins
+    IF EXIST %DIR%\..\dbscripts @RD /S /Q %DIR%\..\dbscripts
+    IF EXIST %DIR%\..\patches @RD /S /Q %DIR%\..\patches
+    IF EXIST %DIR%\..\repository @RD /S /Q %DIR%\..\repository
+    IF EXIST %DIR%\..\resources @RD /S /Q %DIR%\..\resources
+    IF EXIST %DIR%\..\samples @RD /S /Q %DIR%\..\samples
+    IF EXIST %DIR%\..\servicepacks @RD /S /Q %DIR%\..\servicepacks
+    IF EXIST %DIR%\..\webapp-mode @RD /S /Q %DIR%\..\webapp-mode
+    IF EXIST %DIR%\..\wso2\analytics @RD /S /Q %DIR%\..\wso2\msf4j
+    IF EXIST %DIR%\..\wso2\broker @RD /S /Q %DIR%\..\wso2\broker
+    IF EXIST %DIR%\..\wso2\business-process @RD /S /Q %DIR%\..\wso2\business-process
+    IF EXIST %DIR%\..\wso2\components @RD /S /Q %DIR%\..\wso2\components
+    IF EXIST %DIR%\..\wso2\lib @RD /S /Q %DIR%\..\wso2\lib
+    IF EXIST %DIR%\..\wso2\tmp @RD /S /Q %DIR%\..\wso2\tmp
     echo Analytics profile created successfully.
     goto Exit
 
@@ -133,8 +148,10 @@ goto Exit
     echo Removing Analytics profile
     IF EXIST %DIR%\..\wso2\analytics @RD /S /Q %DIR%\..\wso2\analytics
     IF EXIST %DIR%\..\wso2\components\analytics-default @RD /S /Q %DIR%\..\wso2\components\analytics-default
-    IF EXIST %DIR%\analytics.bat del %DIR%\analytics.bat
-    IF EXIST %DIR%\analytics.sh del %DIR%\analytics.sh
+    IF EXIST %DIR%\analytics.bat del %DIR%\analytics-worker.bat
+    IF EXIST %DIR%\analytics.sh del %DIR%\analytics-worker.sh
+    IF EXIST %DIR%\analytics.bat del %DIR%\analytics-dashboard.bat
+    IF EXIST %DIR%\analytics.sh del %DIR%\analytics-dashboard.sh
     goto :eof
 
 :Remove_INTEGRATOR

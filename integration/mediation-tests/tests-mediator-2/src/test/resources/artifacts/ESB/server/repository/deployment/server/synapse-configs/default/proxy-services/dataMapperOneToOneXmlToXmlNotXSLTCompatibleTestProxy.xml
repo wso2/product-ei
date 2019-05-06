@@ -1,0 +1,19 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="dataMapperOneToOneXmlToXmlNotXSLTCompatibleTestProxy"
+       transports="http,https"
+       statistics="disable"
+       trace="disable"
+       startOnLoad="true">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <datamapper config="gov:/datamapper/one_to_one/xml_to_xml_not_xslt_compatible/testMap.js"
+                        inputSchema="gov:/datamapper/one_to_one/xml_to_xml_not_xslt_compatible/inschema.jsschema"
+                        outputSchema="gov:/datamapper/one_to_one/xml_to_xml_not_xslt_compatible/outschema.jsschema"
+                        inputType="XML"
+                        outputType="XML"
+			xsltStyleSheet="gov:/datamapper/one_to_one/xml_to_xml_not_xslt_compatible/xsltStyleSheet.xml"/>
+            <respond/>
+        </inSequence>
+    </target>
+    <description/>
+</proxy>

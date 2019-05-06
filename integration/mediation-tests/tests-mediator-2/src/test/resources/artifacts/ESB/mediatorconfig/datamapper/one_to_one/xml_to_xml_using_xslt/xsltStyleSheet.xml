@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:firstElementOfTheInput="company" xmlns:notXSLTCompatible="false" xmlns:own="http://ownfunction.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" extension-element-prefixes="xs own notXSLTCompatible firstElementOfTheInput" version="2.0">
+    <xsl:function name="own:setPrecision">
+        <xsl:param name="resultString"/>
+        <xsl:param name="noOfDigits"/>
+        <xsl:if test="$noOfDigits=0">
+            <xsl:value-of select="$resultString"/>
+        </xsl:if>
+        <xsl:if test="$noOfDigits!=0">
+            <xsl:value-of select="own:setPrecision(concat($resultString,'0'),$noOfDigits - 1)"/>
+        </xsl:if>
+    </xsl:function>
+    <xsl:template match="/">
+        <company>
+            <offices>
+                <asiaoffice>
+                    <fax><xsl:value-of select="company/usoffice/fax"/></fax>
+                    <phone><xsl:value-of select="company/usoffice/phone"/></phone>
+                    <address><xsl:value-of select="concat(company/name,concat(number( company/asiaoffice/address/no ),company/asiaoffice/address/city))"/></address>
+                </asiaoffice>
+                <europeoffice>
+                    <fax><xsl:value-of select="company/asiaoffice/fax"/></fax>
+                    <phone><xsl:value-of select="company/asiaoffice/phone"/></phone>
+                    <address><xsl:value-of select="concat(company/name,concat(number( company/asiaoffice/address/no ),company/asiaoffice/address/city))"/></address>
+                </europeoffice>
+                <usoffice>
+                    <phone><xsl:value-of select="company/europeoffice/phone"/></phone>
+                    <address><xsl:value-of select="concat(company/name,concat(number( company/usoffice/address/no ),company/usoffice/address/city))"/></address>
+                </usoffice>
+            </offices>
+        </company>
+    </xsl:template>
+</xsl:stylesheet>

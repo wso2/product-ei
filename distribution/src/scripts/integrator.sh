@@ -154,8 +154,6 @@ do
           CMD="version"
     elif [ "$c" = "--restart" ] || [ "$c" = "-restart" ] || [ "$c" = "restart" ]; then
           CMD="restart"
-    elif [ "$c" = "--test" ] || [ "$c" = "-test" ] || [ "$c" = "test" ]; then
-          CMD="test"
     else
         args="$args $c"
     fi
@@ -202,8 +200,7 @@ elif [ "$CMD" = "restart" ]; then
 # using nohup sh to avoid erros in solaris OS.TODO
   nohup sh "$CARBON_HOME"/bin/integrator.sh $args > /dev/null 2>&1 &
   exit 0
-elif [ "$CMD" = "test" ]; then
-    JAVACMD="exec "$JAVACMD""
+
 elif [ "$CMD" = "version" ]; then
   cat "$CARBON_HOME"/bin/version.txt
   cat "$CARBON_HOME"/bin/wso2carbon-version.txt

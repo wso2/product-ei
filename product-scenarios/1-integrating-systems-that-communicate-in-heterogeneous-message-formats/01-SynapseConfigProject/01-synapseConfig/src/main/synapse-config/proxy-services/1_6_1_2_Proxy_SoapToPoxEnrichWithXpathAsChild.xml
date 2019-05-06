@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log>
+                <property name="STATUS" value="Called 1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild"/>
+            </log>
+            <enrich description="">
+                <source clone="true" xpath="//patient"/>
+                <target xpath="//root"/>
+            </enrich>
+            <sequence key="callPOXEndpointSeq"/>
+            <property name="messageType" scope="axis2" type="STRING" value="text/xml"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

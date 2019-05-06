@@ -96,10 +96,11 @@ public class RequestBoxJsonTestCase extends DSSIntegrationTest {
     private String getHttpResponse(String endpoint, String requestMethod, String payload) {
         StringBuilder jsonString = new StringBuilder();
         BufferedReader br = null;
+        HttpURLConnection connection = null;
         try {
             String line;
             URL url = new URL(endpoint);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setRequestProperty("charset", "UTF-8");
@@ -117,13 +118,13 @@ public class RequestBoxJsonTestCase extends DSSIntegrationTest {
             while (null != (line = br.readLine())) {
                 jsonString.append(line);
             }
-            connection.disconnect();
         } catch (IOException e) {
             log.error("IO exception occurred, " + e.getMessage(), e);
         } finally {
             try {
                 if (null != br) {
                     br.close();
+                    connection.disconnect();
                 }
             } catch (IOException e) {
                 log.error("IO exception occurred while closing the reader, " + e.getMessage(), e);

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <api context="/includeAge" name="include_age_api">
+        <resource methods="POST">
+            <inSequence>
+                <cache collector="false" maxMessageSize="10000" timeout="120">
+                    <protocol type="HTTP">
+                        <methods>POST</methods>
+                        <headersToExcludeInHash />
+                        <responseCodes>2[0-9][0-9]</responseCodes>
+                        <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                        <enableCacheControl>true</enableCacheControl>
+                        <includeAgeHeader>true</includeAgeHeader>
+                    </protocol>
+                    <implementation maxSize="2" />
+                </cache>
+                <header name="Cache-Control" scope="transport" value="no-cache, max-age=60"/>
+                <send>
+                    <endpoint name="inlined">
+                        <address uri="http://localhost:9000/services/SimpleStockQuoteService" />
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <cache collector="true" />
+                <send />
+            </outSequence>
+        </resource>
+    </api>
+
+    <api context="/noStore" name="no_store_api">
+        <resource methods="POST">
+            <inSequence>
+                <cache collector="false" maxMessageSize="10000" timeout="120">
+                    <protocol type="HTTP">
+                        <methods>POST</methods>
+                        <headersToExcludeInHash />
+                        <responseCodes>2[0-9][0-9]</responseCodes>
+                        <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                        <enableCacheControl>true</enableCacheControl>
+                        <includeAgeHeader>true</includeAgeHeader>
+                    </protocol>
+                    <implementation maxSize="2" />
+                </cache>
+                <send>
+                    <endpoint>
+                        <http uri-template="http://localhost:8480/noStoreHeaderBackend"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <cache collector="true" />
+                <send />
+            </outSequence>
+        </resource>
+    </api>
+
+    <api context="/maxAge" name="max_age_api">
+        <resource methods="POST">
+            <inSequence>
+                <cache collector="false" maxMessageSize="10000" timeout="120">
+                    <protocol type="HTTP">
+                        <methods>POST</methods>
+                        <headersToExcludeInHash />
+                        <responseCodes>2[0-9][0-9]</responseCodes>
+                        <hashGenerator>org.wso2.carbon.mediator.cache.digest.HttpRequestHashGenerator</hashGenerator>
+                        <enableCacheControl>true</enableCacheControl>
+                        <includeAgeHeader>true</includeAgeHeader>
+                    </protocol>
+                    <implementation maxSize="2" />
+                </cache>
+                <send>
+                    <endpoint>
+                        <http uri-template="http://localhost:8480/cacheControlHeadersBackend"/>
+                    </endpoint>
+                </send>
+            </inSequence>
+            <outSequence>
+                <cache collector="true" />
+                <send />
+            </outSequence>
+        </resource>
+    </api>
+</definitions>

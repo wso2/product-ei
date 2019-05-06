@@ -18,6 +18,7 @@
 package org.wso2.carbon.esb.jms.transport.test;
 
 import org.apache.axiom.om.OMElement;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -29,7 +30,13 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
 public class JMSMessageProcessorTestCase extends ESBIntegrationTest {
+
+    private int NUM_OF_MESSAGES = 5;
+
     @BeforeClass(alwaysRun = true)
     protected void init() throws Exception {
         super.init();
@@ -49,15 +56,18 @@ public class JMSMessageProcessorTestCase extends ESBIntegrationTest {
         JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
 
         AxisServiceClient client = new AxisServiceClient();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < NUM_OF_MESSAGES; i++) {
             client.sendRobust(Utils.getStockQuoteRequest("JMS"), getProxyServiceURLHttp("JMSStoreAndProcessorTestCaseProxy"), "getQuote");
         }
 
-        Thread.sleep(10000);
         try {
             consumer.connect("JMSProcessorEndPoint");
+            Awaitility.await()
+                      .pollInterval(50, TimeUnit.MILLISECONDS)
+                      .atMost(60, TimeUnit.SECONDS)
+                      .until(isMessagesConsumed(consumer));
             for (int i = 0; i < 10; i++) {
-                if (i < 5) {
+                if (i < NUM_OF_MESSAGES) {
                     //first 5 messages should be in the queue
                     Assert.assertNotNull(consumer.popMessage(), "JMS Message Processor not send message to endpoint");
 
@@ -75,5 +85,14 @@ public class JMSMessageProcessorTestCase extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
+    }
+
+    private Callable<Boolean> isMessagesConsumed(final JMSQueueMessageConsumer consumer) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return consumer.getMessages().size() == NUM_OF_MESSAGES;
+            }
+        };
     }
 }

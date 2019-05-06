@@ -2,6 +2,12 @@ echo Loading spark environment variables
 SET CARBON_SPARK_HOME=%CARBON_HOME%
 SET _SPARK_ASSEMBLY=%CARBON_SPARK_HOME%\repository\components\plugins\spark-core_2.10_*.wso2*.jar
 SET SPARK_SCALA_VERSION=2.10
+SET CARBON_CONFIG_DIR_PATH=%CARBON_HOME%\conf
+SET CARBON_INTERNAL_LIB_DIR_PATH=%CARBON_HOME%\..\lib
+SET CARBON_EXTERNAL_LIB_DIR_PATH=%CARBON_HOME%\..\..\lib
+SET CARBON_DROPINS_DIR_PATH=%CARBON_HOME%\..\..\dropins
+SET COMPONENTS_REPO=%CARBON_HOME%\..\components\plugins
+SET CARBON_DATA_DIR_PATH=%CARBON_HOME%\repository\data
 if not exist %CARBON_SPARK_HOME%\lib_managed\jars mkdir %CARBON_SPARK_HOME%\lib_managed\jars
 
 

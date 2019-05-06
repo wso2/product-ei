@@ -102,6 +102,8 @@
                           class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
         <messageFormatter contentType="application/soap+xml"
                           class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
+        <messageFormatter contentType="application/octet-streaml"
+                          class="org.wso2.carbon.relay.ExpandingMessageFormatter"/>
 	<!--JSON Message Formatters-->
 	<messageFormatter contentType="application/json"
                           class="org.wso2.carbon.integrator.core.json.JsonStreamFormatter"/>
@@ -117,6 +119,8 @@
                         class="org.apache.axis2.builder.ApplicationXMLBuilder"/>
         <messageBuilder contentType="application/x-www-form-urlencoded"
                         class="org.apache.axis2.builder.XFormURLEncodedBuilder"/>
+        <messageBuilder contentType="application/octet-stream"
+                        class="org.wso2.carbon.relay.BinaryRelayBuilder"/>
 	<!--JSON Message Builders-->
 	<messageBuilder contentType="application/json"
                         class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder"/>

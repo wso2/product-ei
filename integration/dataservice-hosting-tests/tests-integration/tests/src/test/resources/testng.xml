@@ -61,6 +61,7 @@
             <class name="org.wso2.ei.dataservice.integration.test.odata.ODataStringFunctionsTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.odata.ODataSuperTenantUserTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.odata.ODataTenantUserTestCase"/>
+            <class name="org.wso2.ei.dataservice.integration.test.odata.ODataViewTestCase"/>
         </classes>
     </test>
 
@@ -242,7 +243,7 @@
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1081NullValuesTest"/>
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.DS1209EqualElementNamesInJSONHierarchyTestCase"/>
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15280RepeatServiceNameInURLTest"/>
-            <!--class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15262JsonGsonFormatterTenantModeTest"/-->
+            <class name="org.wso2.ei.dataservice.integration.test.jira.issues.CARBON15262JsonGsonFormatterTenantModeTest"/>
             <class name="org.wso2.ei.dataservice.integration.test.jira.issues.EI1222JSONSecuredServiceWithXMLCharacterTestCase"/>
         </classes>
     </test>

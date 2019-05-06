@@ -42,6 +42,9 @@ import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+import org.awaitility.Awaitility;
 
 public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
     private static final Log log = LogFactory.getLog(BPMNUserSubstitutionTestCase.class);
@@ -155,8 +158,13 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         String getSubResponse = getSubstitute(USER4);
         JSONObject jsonResponse = new JSONObject(getSubResponse);
         Assert.assertTrue("null".equals(jsonResponse.getString("endTime")), "Add sub with endTime null");
-        Thread.sleep(2 * 60 * 1000); // need to wait till activation time passed
+
         //task should be assigned to user1, user4 should have no tasks
+        Awaitility.await()
+                .pollInterval(50, TimeUnit.MILLISECONDS)
+                .atMost(300000, TimeUnit.MILLISECONDS)
+                .until(isTaskRemoveFromUser(USER4));
+
         JSONObject user4TasksJson = findTasksWithGivenAssignee(USER4);
         Assert.assertEquals(user4TasksJson.getInt("total"), 0, "Substitution activation by scheduler");
     }
@@ -328,6 +336,19 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
 
         HttpResponse response = BPMNTestUtils.putRequest(backEndUrl + SUBSTITUTE_URL + "/" + assignee, payload);
         return response.getStatusLine().getStatusCode();
+    }
+
+    private Callable<Boolean> isTaskRemoveFromUser(final String assignee) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (findTasksWithGivenAssignee(assignee).getInt("total")==0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
     }
 
     @AfterClass(alwaysRun = true)

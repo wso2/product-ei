@@ -1,16 +1,19 @@
 package org.wso2.carbon.esb.mediator.test.aggregate;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.application.mgt.stub.ApplicationAdminExceptionException;
 import org.wso2.carbon.automation.test.utils.http.client.HttpsResponse;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
@@ -22,14 +25,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.util.Calendar;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
 
     private CarbonAppUploaderClient carbonAppUploaderClient;
     private ApplicationAdminClient applicationAdminClient;
-    private final int MAX_TIME = 120000;
+    private final int MAX_TIME = 120;
     private final String carFileName = "SoapHeaderTestRegFiles_1.0.0";
     private final String carFileNameWithExtension = "SoapHeaderTestRegFiles_1.0.0.car";
     private final String serviceName="SoapHeaderBlockTestProxy";
@@ -39,10 +44,13 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
         super.init();
         carbonAppUploaderClient = new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
         carbonAppUploaderClient.uploadCarbonAppArtifact(carFileNameWithExtension
-                , new DataHandler(new URL("file:" + File.separator + File.separator + getESBResourceLocation()
-                + File.separator + "car" + File.separator + carFileNameWithExtension)));
+                , new DataHandler( new FileDataSource( new File(getESBResourceLocation()
+                + File.separator + "car" + File.separator + carFileNameWithExtension))));
         applicationAdminClient = new ApplicationAdminClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
-        Assert.assertTrue(isCarFileDeployed(carFileName), "Car file deployment failed");
+
+        Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(MAX_TIME, TimeUnit.SECONDS).
+                until(isCarFileDeployed(carFileName));
+
         loadESBConfigurationFromClasspath("/artifacts/ESB/synapseconfig/requestWithSoapHeaderBlockConfig/synapse.xml");
         TimeUnit.SECONDS.sleep(5);
     }
@@ -80,30 +88,6 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
         super.cleanup();
     }
 
-    private boolean isCarFileDeployed(String carFileName) throws Exception {
-
-        log.info("waiting " + MAX_TIME + " millis for car deployment " + carFileName);
-        boolean isCarFileDeployed = false;
-        Calendar startTime = Calendar.getInstance();
-        long time;
-        while ((time = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())) < MAX_TIME) {
-            String[] applicationList = applicationAdminClient.listAllApplications();
-            if (applicationList != null) {
-                if (ArrayUtils.contains(applicationList, carFileName)) {
-                    isCarFileDeployed = true;
-                    log.info("car file deployed in " + time + " mills");
-                    return isCarFileDeployed;
-                }
-            }
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                //ignore
-            }
-        }
-        return isCarFileDeployed;
-    }
     public HttpsResponse postWithBasicAuth(String uri, String requestQuery, String contentType, String userName,
             String password) throws IOException {
         if (uri.startsWith("https://")) {
@@ -157,5 +141,30 @@ public class SoapHeaderBlocksTestCase extends ESBIntegrationTest {
             return new HttpsResponse(sb.toString(), conn.getResponseCode());
         }
         return null;
+    }
+
+    /**
+     * Checks if a CAR file is deployed.
+     *
+     * @param carFileName   CAR file name.
+     * @return  True if exists, False otherwise.
+     */
+    private Callable<Boolean> isCarFileDeployed(final String carFileName) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws ApplicationAdminExceptionException, RemoteException {
+                log.info("waiting " + MAX_TIME + " millis for car deployment " + carFileName);
+                Calendar startTime = Calendar.getInstance();
+                long time = Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis();
+                String[] applicationList = applicationAdminClient.listAllApplications();
+                if (applicationList != null) {
+                    if (ArrayUtils.contains(applicationList, carFileName)) {
+                        log.info("car file deployed in " + time + " milliseconds");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
     }
 }

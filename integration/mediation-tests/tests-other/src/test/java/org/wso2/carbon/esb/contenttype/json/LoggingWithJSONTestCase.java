@@ -21,12 +21,19 @@ package org.wso2.carbon.esb.contenttype.json;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
+
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -40,12 +47,14 @@ public class LoggingWithJSONTestCase extends ESBIntegrationTest {
     private LogViewerClient logViewer;
     private boolean isLogExists = false;
     private Client client = Client.create();
+    private final String JSON_LOG_FULL_PROXY = "jsonLog";
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/jaxrs/loggingwithjson.xml");
         logViewer = new LogViewerClient(context.getContextUrls().getBackEndUrl(), sessionCookie);
+        verifyProxyServiceExistence(JSON_LOG_FULL_PROXY);
     }
 
     @AfterClass(alwaysRun = true)
@@ -117,4 +126,22 @@ public class LoggingWithJSONTestCase extends ESBIntegrationTest {
         assertNotNull(getResponse, "Received Null response for while getting Music album details");
         assertEquals(getResponse.getEntity(String.class), JSON_PAYLOAD, "Response mismatch for HTTP Get call");
     }
+
+    @Test(groups = { "wso2.esb" }, description = "Tests whether Json Payloads are getting logged in Native Json Form")
+    public void testJsonWithLogLevelFull() throws Exception {
+
+        String JSON_PAYLOAD = "{\"album\":\"Desperado\",\"singer\":\"Eagles\"}";
+
+        URL endpoint = new URL(getProxyServiceURLHttp(JSON_LOG_FULL_PROXY));
+
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+
+        HttpRequestUtil.doPost(endpoint, JSON_PAYLOAD, header);
+
+        Assert.assertTrue(Utils.checkForLog(logViewer, JSON_PAYLOAD, 10),
+                " Json Payload is not getting logged in the expected format ");
+
+    }
+
 }

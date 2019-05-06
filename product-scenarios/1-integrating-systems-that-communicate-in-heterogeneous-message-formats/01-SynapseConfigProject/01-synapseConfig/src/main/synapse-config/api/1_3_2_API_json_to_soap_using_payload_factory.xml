@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/1_3_2_API_json_to_soap_using_payload_factory" name="1_3_2_API_json_to_soap_using_payload_factory" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST GET">
+        <inSequence>
+            <log level="custom">
+                <property expression="get-property('transport','messageId')" name="Request Payload"/>
+            </log>
+            <log level="custom">
+                <property expression="json-eval('$')" name="JSON_VALUE"/>
+            </log>
+            <payloadFactory description="Build SOAP request payload" media-type="xml">
+                <format>
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soapenv:Body>
+                            <getQuote xmlns="http://services.samples">
+                                <request>
+                                    <symbol>$1</symbol>
+                                </request>
+                            </getQuote>
+                        </soapenv:Body>
+                    </soapenv:Envelope>
+                </format>
+                <args>
+                    <arg evaluator="json" expression="$.getQuote.request.symbol"/>
+                </args>
+            </payloadFactory>
+            <property name="SOAPAction" scope="transport" type="STRING" value="urn:getQuote"/>
+            <property action="remove" description="Avoid appending resource to endpoint URL" name="REST_URL_POSTFIX" scope="axis2"/>
+            <send description="Send Request Payload to SOAP endpoint">
+                <endpoint key="SOAP_EP"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <log level="custom">
+                <property expression="get-property('transport','messageId')" name="Request Payload"/>
+            </log>
+            <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                <format>
+					{
+					"getQuoteResponse":{
+					"return":{
+					"change":"$1",
+					"earnings":"$2",
+					"high":"$3",
+					"last":"$4",
+					"lastTradeTimestamp":"$5",
+					"low":"$6",
+					"marketCap":"$7",
+					"name":"$8",
+					"open":"$9",
+					"peRatio":"$10",
+					"percentageChange":"$11",
+					"prevClose":"$12",
+					"symbol":"$13",
+					"volume":"$14"
+					}
+					}
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:change" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:earnings" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:high" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:last" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:lastTradeTimestamp" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:low" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:marketCap" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:name" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:open" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:peRatio" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:percentageChange" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:prevClose" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:symbol" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                    <arg evaluator="xml" expression="//ns:getQuoteResponse/ns:return/ax21:volume" xmlns:ax21="http://services.samples/xsd" xmlns:ns="http://services.samples"/>
+                </args>
+            </payloadFactory>
+            <respond description="Respond to client"/>
+        </outSequence>
+        <faultSequence>
+            <payloadFactory description="" media-type="json">
+                <format>
+					{
+					"Error": {
+					"message": "Error while processing the request",
+					"code": "$1",
+					"description": "$2"
+					}
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:ERROR_CODE"/>
+                    <arg evaluator="xml" expression="$ctx:ERROR_MESSAGE"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>

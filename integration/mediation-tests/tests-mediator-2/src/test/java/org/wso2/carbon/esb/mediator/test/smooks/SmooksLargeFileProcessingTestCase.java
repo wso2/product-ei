@@ -71,14 +71,14 @@ public class SmooksLargeFileProcessingTestCase extends ESBIntegrationTest {
     }
 
     @SetEnvironment(executionEnvironments = {ExecutionEnvironment.STANDALONE
-})
+    })
     @Test(groups = {"wso2.esb"}, description = "Sending a Large File To Smooks Mediator")
     public void testSendingToSmooks() throws Exception {
-        String smooksResourceDir = getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath();
+        String smooksResourceDirstr = getClass().getResource("/artifacts/ESB/synapseconfig/smooks/").getFile();
+        File fileSmook = new File(smooksResourceDirstr);
+        String smooksResourceDir = fileSmook.getAbsolutePath();
         Path source = Paths.get(smooksResourceDir, "person.csv");
-        Path destination = Paths.get(smooksResourceDir + "test", "in", "person.csv");
+        Path destination = Paths.get(smooksResourceDir, "test", "in", "person.csv");
 
         Files.createDirectories(Paths.get(smooksResourceDir, "test", "in"));
         Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
@@ -113,15 +113,11 @@ public class SmooksLargeFileProcessingTestCase extends ESBIntegrationTest {
                 + "        <output type=\"xml\"/>\n" + "    </smooks>\n"
                 + "    <property name=\"OUT_ONLY\" value=\"true\"/>\n" + "    <send>\n"
                 + "        <endpoint name=\"FileEpr\">\n" + "            <address uri=\"vfs:file://" + getClass()
-                .getResource(File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "out"
-                + File.separator + "Out.xml\" format=\"soap11\"/>\n" + "        </endpoint>\n" + "    </send>\n"
+                .getResource("/artifacts/ESB/synapseconfig/smooks/").getPath() + "test/out/Out.xml\" format=\"soap11\"/>\n" + "        </endpoint>\n" + "    </send>\n"
                 + "    <log level=\"full\"/>\n" + "    </inSequence>\n" + "    </target>\n"
                 + "    <parameter name=\"transport.PollInterval\">1</parameter>\n"
                 + "    <parameter name=\"transport.vfs.FileURI\">file://" + getClass().getResource(
-                File.separator + "artifacts" + File.separator + "ESB" + File.separator + "synapseconfig"
-                        + File.separator + "smooks" + File.separator).getPath() + "test" + File.separator + "in"
-                + File.separator + "</parameter>\n"
+                "/artifacts/ESB/synapseconfig/smooks/").getPath() + "test/in/</parameter>\n"
                 + "    <parameter name=\"transport.vfs.FileNamePattern\">.*\\.csv</parameter>\n"
                 + "    <parameter name=\"transport.vfs.ContentType\">text/plain</parameter>\n" + "</proxy>"));
         isProxyDeployed = true;

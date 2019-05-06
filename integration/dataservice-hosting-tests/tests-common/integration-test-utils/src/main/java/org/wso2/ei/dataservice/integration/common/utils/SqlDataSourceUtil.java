@@ -167,8 +167,8 @@ public class SqlDataSourceUtil {
 
         if (jdbcUrl.contains("h2") && jdbcDriver.contains("h2")) {
             //Random number appends to a database name to create new database for H2*//*
-            databaseName = System.getProperty("basedir")+ File.separator + "target" + File.separator+ databaseName + new Random().nextInt();
-            jdbcUrl = jdbcUrl + databaseName;
+            databaseName = databaseName + new Random().nextInt();
+            jdbcUrl = jdbcUrl + System.getProperty("basedir")+ File.separator + "target" + File.separator + databaseName;
             //create database on in-memory
             H2DataBaseManager h2 = null;
             try {
@@ -199,8 +199,8 @@ public class SqlDataSourceUtil {
 
         if (jdbcUrl.contains("h2") && jdbcDriver.contains("h2")) {
             //Random number appends to a database name to create new database for H2*//*
-            databaseName = System.getProperty("basedir")+ File.separator + "target" + File.separator+ databaseName + new Random().nextInt();
-            jdbcUrl = jdbcUrl + databaseName;
+            databaseName = databaseName + new Random().nextInt();
+            jdbcUrl = jdbcUrl + System.getProperty("basedir")+ File.separator + "target" + File.separator + databaseName;
             //create database on in-memory
             H2DataBaseManager h2 = null;
             try {

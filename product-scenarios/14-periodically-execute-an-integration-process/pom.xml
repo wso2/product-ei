@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>product-scenarios</artifactId>
+        <groupId>org.wso2.ei</groupId>
+        <version>6.4.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>14-periodically-execute-an-integration-process</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>14-synapseConfigProject</module>
+        <module>14-test-commons</module>
+        <!--Commented until https://github.com/wso2/product-ei/issues/3841 is fixed-->
+        <!--<module>14.1-scheduling-task-to-invoke-mediation-flow</module>-->
+        <!--<module>14.2-scheduling-a-customized-java-task</module>-->
+    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=128m</argLine>
+                    <disableXmlReport>false</disableXmlReport>
+                    <parallel>false</parallel>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <systemProperties>
+                        <property>
+                            <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
+                            <name>common.resources.dir</name>
+                            <value>
+                                ${basedir}/../../resources/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- testcase specific  resources directory-->
+                            <name>test.resources.dir</name>
+                            <value>
+                                ${basedir}/src/test/resources/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- Directory containing carbon applications -->
+                            <name>test.resources.carbonApplications.dir</name>
+                            <value>
+                                ${basedir}/../../14-synapseConfigProject/14-synapseConfigCompositeApplication/target/
+                            </value>
+                        </property>
+                        <property>
+                            <!-- Related carbon applications (comma separated) to deploy -->
+                            <name>test.resources.carbonApplications.list</name>
+                            <value>14-synapseConfigCompositeApplication_1.0.0</value>
+                        </property>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                        <sec.verifier.dir>${basedir}/target/security-verifier/</sec.verifier.dir>
+                        <maven.test.haltafterfailure>false</maven.test.haltafterfailure>
+                        <instr.file>${basedir}/coverage-report/instrumentation.txt</instr.file>
+                        <filters.file>${basedir}/coverage-report/filters.txt</filters.file>
+                    </systemProperties>
+                    <workingDirectory>${basedir}/target</workingDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.wso2.ei</groupId>
+            <artifactId>scenarios-commons</artifactId>
+        </dependency>
+    </dependencies>
+</project>

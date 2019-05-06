@@ -121,5 +121,35 @@ public class MessageProcessorClient {
         return messageProcessorAdminServiceStub.isActive(processorName);
     }
 
+    /**
+     * Check the functionality of the browseMessage function
+     * @param processorName name of Processor
+     * @return message stored in the subscribed queue
+     * @throws RemoteException
+     */
+    public String browseMessage(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.browseMessage(processorName);
+    }
+
+    /**
+     * Check the functionality of the popMessage function
+     * @param processorName name of the Processor
+     * @return <code>true</code> if popMessage is successful, else <code>false</code>
+     * @throws RemoteException
+     */
+    public boolean popMessage(String processorName) throws RemoteException {
+        return messageProcessorAdminServiceStub.popMessage(processorName);
+    }
+
+    /**
+     * Check the functionality of the popAndEnqueueFunction
+     * @param processorName name of the Processor
+     * @param storeName name of the destination store
+     * @return <code>true</code> if popMessage is successful, else <code>false</code>
+     * @throws RemoteException
+     */
+    public boolean popAndRedirectMessage(String processorName, String storeName) throws RemoteException {
+        return messageProcessorAdminServiceStub.popAndRedirectMessage(processorName,storeName);
+    }
 
 }

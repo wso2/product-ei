@@ -43,7 +43,6 @@ import javax.xml.stream.XMLStreamException;
 public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
     private InboundAdminClient inboundAdminClient;
     private LogViewerClient logViewerClient;
-    private ActiveMQServer activeMQServer = new ActiveMQServer();
 
     /**
      * This method initializes an activeMQ server and adds relevant synapse configs to the ESB instance
@@ -52,7 +51,6 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
      */
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
-        activeMQServer.startJMSBroker();
         super.init();
 
         verifyProxyServiceExistence("jmsHeaderInboundEpTestProxy");
@@ -83,7 +81,6 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
-        activeMQServer.stopJMSBroker();
     }
 
     /**

@@ -20,6 +20,7 @@ package org.wso2.carbon.esb.vfs.transport.test;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.axis2.AxisFault;
+import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -30,6 +31,9 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
 import java.io.File;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class VFSQueryParameterAppendESBJAVA2373TestCase extends ESBIntegrationTest {
 
@@ -100,7 +104,10 @@ public class VFSQueryParameterAppendESBJAVA2373TestCase extends ESBIntegrationTe
                     , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         } catch(AxisFault e) {}
 
-        Thread.sleep(5000);
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isFileSizeLarge(fileSize, appendTrueFile.length()));
         Assert.assertTrue(fileSize < appendTrueFile.length(), "File has been appended to");
 
         deleteProxyService("VFSProxy");
@@ -154,11 +161,30 @@ public class VFSQueryParameterAppendESBJAVA2373TestCase extends ESBIntegrationTe
                     , getBackEndServiceUrl(ESBTestConstant.SIMPLE_STOCK_QUOTE_SERVICE), "WSO2");
         } catch(AxisFault e) {}
 
-        Thread.sleep(5000);
+        Awaitility.await()
+                  .pollInterval(50, TimeUnit.MILLISECONDS)
+                  .atMost(60, TimeUnit.SECONDS)
+                  .until(isFileSizeEqual(fileSize, appendFalseFile.length()));
         Assert.assertTrue(fileSize == appendFalseFile.length(), "File has been overwritten - no appending");
 
         deleteProxyService("VFSProxy");
     }
 
+    private Callable<Boolean> isFileSizeEqual(final long fileSize, final long appendedFileSize) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return fileSize == appendedFileSize;
+            }
+        };
+    }
 
+    private Callable<Boolean> isFileSizeLarge(final long fileSize, final long appendedFileSize) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return fileSize < appendedFileSize;
+            }
+        };
+    }
 }

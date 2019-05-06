@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <getQuote xmlns="http://services.samples">
+      <request>
+         <symbol>WSO2</symbol>
+      </request>
+   </soapenv:Body>
+</soapenv:Envelope>

@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wso2.ei</groupId>
         <artifactId>wso2ei-parent</artifactId>
-        <version>6.2.0-SNAPSHOT</version>
+        <version>6.5.0-m7-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -43,6 +43,20 @@
                 <module>mediation-tests</module>
                 <module>business-process-tests</module>
                 <module>dataservice-hosting-tests</module>
+                <module>broker-tests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>smoke-tests</id>
+            <properties>
+                <testng.suiteXml.location>src/test/resources/smokeTestng.xml</testng.suiteXml.location>
+            </properties>
+            <modules>
+                <module>automation-extensions</module>
+                <module>mediation-tests</module>
+                <module>business-process-tests</module>
+                <module>dataservice-hosting-tests</module>
+                <module>broker-tests</module>
             </modules>
         </profile>
         <profile>
@@ -78,9 +92,26 @@
             </activation>
             <modules>
                 <module>automation-extensions</module>
+                <module>mediation-tests/tests-common/admin-clients</module>
+                <module>mediation-tests/tests-common/integration-test-utils</module>
                 <module>dataservice-hosting-tests</module>
             </modules>
         </profile>
+        <profile>
+            <id>broker-tests-profile</id>
+            <activation>
+                <property>
+                    <name>broker.integration.test.profile</name>
+                </property>
+            </activation>
+            <modules>
+                <module>automation-extensions</module>
+                <module>broker-tests</module>
+            </modules>
+        </profile>
     </profiles>
+    <properties>
+        <testng.suiteXml.location>src/test/resources/testng.xml</testng.suiteXml.location>
+    </properties>
 
 </project>

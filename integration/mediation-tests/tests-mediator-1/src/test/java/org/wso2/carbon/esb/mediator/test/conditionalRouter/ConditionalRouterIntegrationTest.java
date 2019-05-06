@@ -27,20 +27,20 @@ import org.testng.annotations.Test;
 import org.wso2.esb.integration.common.clients.sequences.SequenceAdminServiceClient;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
-//import org.wso2.carbon.automation.core.utils.endpointutils.EsbEndpointSetter;
-//import org.wso2.carbon.automation.utils.esb.ArtifactReaderUtil;
-//import org.wso2.carbon.automation.utils.esb.StockQuoteClient;
 import org.wso2.esb.integration.common.utils.ArtifactReaderUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import org.wso2.esb.integration.common.utils.clients.stockquoteclient.StockQuoteClient;
-//import org.wso2.esb.integration.common.utils.clientsutil.EndpointGenerator;
+import org.awaitility.Awaitility;
 
 import java.io.File;
-import java.net.URL;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
 
+    public static final String CONF_FILTERS_DYNAMIC_SEQ_1 = "conf:/filters/dynamic_seq1";
+    
     private String toUrl = null;
     private String mainSeqUrl;
     private SequenceAdminServiceClient sequenceAdminServiceClient;
@@ -223,13 +223,10 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
         // Add dynamic sequence to WSO2registry    config/filters/dynamic_seq1
         if (ArrayUtils.contains(sequenceAdminServiceClient.getDynamicSequences(), "conf:/filters/dynamic_seq1")) {
             sequenceAdminServiceClient.deleteDynamicSequence("conf:/filters/dynamic_seq1");
-            for (int i = 0; i < 5; i++) {
-                if (!ArrayUtils
-                        .contains(sequenceAdminServiceClient.getDynamicSequences(), "conf:/filters/dynamic_seq1")) {
-                    break;
-                }
-                Thread.sleep(500);
-            }
+
+            Awaitility.await().pollInterval(500, TimeUnit.MILLISECONDS).atMost(
+                    60, TimeUnit.SECONDS).until(dynamicSequenceExists(sequenceAdminServiceClient.
+                    getDynamicSequences(), CONF_FILTERS_DYNAMIC_SEQ_1));
         }
         sequenceAdminServiceClient.addDynamicSequence("conf:filters/dynamic_seq1", setEndpoints(omElement));
         //load it to esb
@@ -316,6 +313,22 @@ public class ConditionalRouterIntegrationTest extends ESBIntegrationTest {
 
         Assert.assertNull(response);
 
+    }
+
+    /**
+     * Checks if a dynamic sequence exists inside a sequence array.
+     *
+     * @param seqArr    Sequence array.
+     * @param strToFind Sequence to be checked.
+     * @return  True if exists, False otherwise.
+     */
+    private Callable<Boolean> dynamicSequenceExists (final String[] seqArr, final String strToFind) {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                return !ArrayUtils.contains(seqArr, strToFind);
+            }
+        };
     }
 
     @AfterClass(alwaysRun = true)

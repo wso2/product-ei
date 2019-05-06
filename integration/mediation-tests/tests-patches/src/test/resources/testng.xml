@@ -48,15 +48,17 @@
             <class name="org.wso2.carbon.esb.mediators.clone.ESBJAVA3412EmptyStackExceptionTest"/>
             <class name="org.wso2.carbon.esb.mediators.enrich.ESBJAVA3676EnrichSourcePropNoClone"/>
             <class name="org.wso2.carbon.esb.mediators.enrich.ESBJAVA4892EnrichPropertyTestCase"/>
+            <class name="org.wso2.carbon.esb.mediators.enrich.EI2084EnrichNamespaceAdditionTestCase"/>
             <class name="org.wso2.carbon.esb.mediators.callout.CARBON15119DuplicateSOAPActionHeader"/>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4118_SOAPHeaderHandlingTest"/>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4239_HTTP_SC_HandlingTests"/>
             <class name="org.wso2.carbon.esb.mediators.callout.ESBJAVA_4239_AccessHTTPSCAfterCallout"/>
             <class name="org.wso2.carbon.esb.mediators.payloadFactory.ESBJAVA3573PayloadFormatWithBeginHtmlTagArgument"/>
+            <class name="org.wso2.carbon.esb.mediators.payloadFactory.JSONPayloadXMLSpecialCharEscapeTest"/>
             <class name="org.wso2.carbon.esb.mediators.clone.ESBJAVA4913HandleExceptionTest"/>
             <class name="org.wso2.carbon.esb.mediators.aggregate.ESBJAVA5103CorrelateOnExpressionTestCase"/>
             <class name="org.wso2.carbon.esb.mediators.cache.DistributedCachingHeaderSerializationTestcase"/>
-            <class name="org.wso2.carbon.esb.mediators.cache.ESBJAVA4318Testcase"/>
+            <!--class name="org.wso2.carbon.esb.mediators.cache.ESBJAVA4318Testcase"/-->
             <class name="org.wso2.carbon.esb.mediators.rule.ESBJAVA2506RuleFetchFromRegistryFailsForTheFirstTime"/>
         </classes>
     </test>
@@ -93,6 +95,7 @@
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4631PreserveHTTPHeadersTest"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3770DropLargePayloadsPreventESBFromOOMTestCase"/>
             <class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA3336HostHeaderValuePortCheckTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.ForceMessageValidationTestCase" />
             <!--<class name="org.wso2.carbon.esb.passthru.transport.test.ESBJAVA4931PreserveContentTypeHeaderCharSetTestCase"/>-->
         </classes>
     </test>
@@ -116,6 +119,7 @@
     <test name="JMS Test">
         <classes>
             <class name="org.wso2.carbon.esb.jms.transport.test.JMSBrokerStartupTestCase" />
+            <class name="org.wso2.carbon.esb.jms.transport.test.EI1622JMSInboundMessagePollingConsumerTest" />
             <!--<class name="org.wso2.carbon.esb.jms.transport.test.ESBJAVA3714JMXPauseJMSListener" />-->
             <class name="org.wso2.carbon.esb.jms.transport.test.ESBJAVA3282CalloutJMSHeadersTestCase" />
             <class name="org.wso2.carbon.esb.mediators.store.ESBJAVA4470StoreMediatorEmptyOMArraySerializeException" />
@@ -160,7 +164,7 @@
 
     <test name="Misc-tests" preserve-order="true" verbose="2">
         <classes>
-            <class name="org.wso2.carbon.esb.template.HttpEpTemplateWithSystemPropsTestCase"/>
+            <!--<class name="org.wso2.carbon.esb.template.HttpEpTemplateWithSystemPropsTestCase"/>-->
             <class name="org.wso2.carbon.esb.security.policy.UTResponseCode401UTauthFailure"/>
             <class name="org.wso2.carbon.esb.registry.task.ESBJAVA4565TestCase"/>
             <class name="org.wso2.carbon.esb.header.preserve.ESBJAVA4631PreserveContentTypeHeaderTestCase"/>
@@ -180,6 +184,7 @@
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5021MultiplePrefixesAndDashSupport"/>
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5045XsiNilElementSupport"/>
             <class name="org.wso2.carbon.esb.datamapper.ESBJAVA5200DashSupportForMappingDataTestCase"/>
+            <class name="org.wso2.carbon.esb.datamapper.NestedElementsWithSameNameTest"/>
         </classes>
     </test>
 

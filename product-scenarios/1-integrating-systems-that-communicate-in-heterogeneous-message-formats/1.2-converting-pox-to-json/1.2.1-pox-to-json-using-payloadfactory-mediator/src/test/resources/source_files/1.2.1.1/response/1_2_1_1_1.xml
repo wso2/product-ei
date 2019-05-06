@@ -1,0 +1,7 @@
+<LookupCityResult xmlns="http://tempuri.org">
+    <LookupCity>
+        <City>Chicago</City>
+        <State>IL</State>
+        <Zip>60601</Zip>
+    </LookupCity>
+</LookupCityResult>
