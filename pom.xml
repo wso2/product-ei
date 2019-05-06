@@ -47,6 +47,7 @@
         <module>p2-profile</module>
         <module>distribution</module>
         <module>integration</module>
+        <module>migration/migration-service</module>
     </modules>
 
     <dependencyManagement>
@@ -1365,6 +1366,18 @@
                 <scope>test</scope>
             </dependency>
 
+            <!--EI migration-->
+            <dependency>
+                <groupId>org.wso2.carbon.registry</groupId>
+                <artifactId>org.wso2.carbon.registry.properties</artifactId>
+                <version>${carbon.registry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>org.wso2.carbon.mediation.security</artifactId>
+                <version>${carbon.mediation.version}</version>
+            </dependency>
+
             <!--MB Integration tests related dependencies-->
             <dependency>
                 <groupId>org.wso2.andes.wso2</groupId>
@@ -1712,6 +1725,9 @@
         <carbon.um.ws.version>5.0.8</carbon.um.ws.version>
         <guava.version>27.0-jre</guava.version>
         <apache.commons.jxpath.version>1.3</apache.commons.jxpath.version>
+
+        <!--Ei Migration-->
+        <commons-lang.wso2.osgi.version.range>[2.6.0,3.0.0)</commons-lang.wso2.osgi.version.range>
     </properties>
 
     <repositories>
