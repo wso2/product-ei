@@ -31,7 +31,7 @@ Take a backup of the existing database used by the older version. This backup is
     ```
     b. Windows
     ```
-    sh integrator.bat -Dmigrate
+    integrator.bat -Dmigrate
     ```
 
 1. Once the migration is successful, stop the server and delete **org.wso2.carbon.ei.migration-6.5.0.jar** from 
@@ -43,5 +43,5 @@ a. Linux/Unix
     ```
     b. Windows
     ```
-    sh integrator.bat
+    integrator.bat
     ```
