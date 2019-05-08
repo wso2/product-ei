@@ -118,6 +118,22 @@
             </ul>
 
 
+            <h2>Deprecated features</h2>
+
+            <p>
+                Following features are deprecated in this release and will be removed in the next release.
+            </p>
+
+            <ul>
+                <li>Priority Executors, Enqueue Mediator</li>
+                <li>Bean Mediator</li>
+                <li>POJO Command Mediator</li>
+                <li>Spring Mediator</li>
+                <li>Conditional Router Mediator</li>
+                <li>In, Out Mediators</li>
+                <li>Event Mediator and In memory Topics</li>
+            </ul>
+
             <h2>Known Issues</h2>
             <p>
                 All the open issues pertaining to WSO2 EI @product.version@ are reported at following

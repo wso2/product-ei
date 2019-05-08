@@ -18,4 +18,7 @@
     This is the configuration file for internal APIs
 -->
 
-<apis> <api name="MetricAPI" class="org.wso2.carbon.prometheus.publisher.service.MetricAPI"/> </apis>
+<apis>
+    <api name="PrometheusApi" class="org.wso2.carbon.prometheus.publisher.service.MetricAPI"/>
+</apis>
+

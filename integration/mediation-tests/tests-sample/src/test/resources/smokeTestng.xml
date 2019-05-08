@@ -31,7 +31,7 @@
         <classes>
             <class name="org.wso2.carbon.esb.samples.test.endpoint.Sample60TestCase"/>
             <class name="org.wso2.carbon.esb.samples.test.mediation.Sample400TestCase"/>
-            <class name="org.wso2.carbon.esb.samples.test.miscellaneous.Sample652TestCase"/>
+            <class name="org.wso2.carbon.esb.samples.test.miscellaneous.Sample650TestCase"/>
         </classes>
     </test>
 
