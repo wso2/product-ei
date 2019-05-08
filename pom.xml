@@ -47,7 +47,6 @@
         <module>p2-profile</module>
         <module>distribution</module>
         <module>integration</module>
-        <module>migration/migration-service</module>
     </modules>
 
     <dependencyManagement>
