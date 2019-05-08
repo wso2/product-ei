@@ -122,6 +122,7 @@ if ! $PRODUCT_VERSION_FOUND ; then
 fi
 
 #=============== Copy Surefire Reports ===========================================
+echo
 echo "------------------------------------------------------------------------"
 echo "Copying surefire-reports to ${OUTPUT_DIR}/scenarios"
 mkdir -p ${OUTPUT_DIR}/scenarios
@@ -135,5 +136,4 @@ source ${HOME}/code-coverage/code-coverage.sh
 generate_code_coverage ${INPUT_DIR} ${OUTPUT_DIR}
 
 echo "------------------------------------------------------------------------"
-
 echo "test.sh execution completed."
