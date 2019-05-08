@@ -82,7 +82,7 @@ function generate_code_coverage(){
             #Zip the jacoco folder
             echo "Zip the jacoco folder in node ${agent_name[i]}"
 
-            echo $(tinkerer_curl_commands ${agent_name[i]} "cd\t$VAR_REM_DIR/repository/logs/jacoco;\tzip\t-r\tjacoco.zip\t.")
+            echo $(tinkerer_curl_commands ${agent_name[i]} "cd\t$VAR_REM_DIR/repository/logs/jacoco;\tzip\t-qr\tjacoco.zip\t.")
 
             #Generate key
             echo "Generate a key in node ${agent_name[i]}"
@@ -108,7 +108,7 @@ function generate_code_coverage(){
             sleep 30
 
             echo "Extract the copied coverage artifact file of ${agent_name[i]}"
-            unzip ${HOME}/code-coverage/resources/instance$((i+1))/jacoco.zip \
+            unzip -q ${HOME}/code-coverage/resources/instance$((i+1))/jacoco.zip \
             -d ${HOME}/code-coverage/resources/instance$((i+1))/jacoco
 
             sleep 40
@@ -118,6 +118,7 @@ function generate_code_coverage(){
         done < "${HOME}"/code-coverage/resources/agent_name_list.txt
 
         #Execute code-coverage POM and generate coverage reports
+        echo "------------------------------------------------------------------------"
         echo "Generate coverage reports from coverage artifacts"
         mvn clean install -f ${HOME}/code-coverage/pom.xml
 
