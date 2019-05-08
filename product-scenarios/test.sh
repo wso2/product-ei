@@ -109,7 +109,7 @@ do
             echo "Executing tests for the product version: $productVersion"
             runTestProfile profile_490 ;;
         *)
-            echo "Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
+            echo "ERROR: Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
     esac
     PRODUCT_VERSION_FOUND=true
     break
