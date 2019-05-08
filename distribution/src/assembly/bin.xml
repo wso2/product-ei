@@ -1499,23 +1499,6 @@
     </dependencySets>
 
     <files>
-
-        <file>
-            <source>src/scripts/wso2ei-samples.sh</source>
-            <outputDirectory>
-                wso2ei-${pom.version}/samples/bin
-            </outputDirectory>
-            <fileMode>755</fileMode>
-        </file>
-
-        <file>
-            <source>src/scripts/wso2ei-samples.bat</source>
-            <outputDirectory>
-                wso2ei-${pom.version}/samples/bin
-            </outputDirectory>
-            <fileMode>755</fileMode>
-        </file>
-
         <!-- BPS files: Start -->
 
         <file>
