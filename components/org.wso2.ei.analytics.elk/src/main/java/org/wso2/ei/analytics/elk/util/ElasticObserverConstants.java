@@ -18,7 +18,7 @@
 
 package org.wso2.ei.analytics.elk.util;
 
-import org.wso2.carbon.das.data.publisher.util.DASDataPublisherConstants;
+import org.wso2.carbon.das.data.publisher.util.AnalyticsDataPublisherConstants;
 
 /**
  * Stores needed constant values
@@ -54,7 +54,7 @@ public class ElasticObserverConstants {
      */
 
     // Constants to get data from carbon.xml
-    private static final String OBSERVER_ELEMENT = DASDataPublisherConstants.STAT_CONFIG_ELEMENT + ".ElasticObserver";
+    private static final String OBSERVER_ELEMENT = AnalyticsDataPublisherConstants.STAT_CONFIG_ELEMENT + ".ElasticObserver";
     public static final String HOST_CONFIG = OBSERVER_ELEMENT + ".Host";
     public static final String PORT_CONFIG = OBSERVER_ELEMENT + ".Port";
     public static final String CLUSTER_NAME_CONFIG = OBSERVER_ELEMENT + ".ClusterName";
