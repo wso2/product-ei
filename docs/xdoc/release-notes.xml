@@ -131,8 +131,7 @@
                 <li>Spring Mediator</li>
                 <li>Conditional Router Mediator</li>
                 <li>In, Out Mediators</li>
-                <li>Event Mediator and In memory Topics</li>
-                <li>ESB artifacts option in Management console</li>
+                <li>Event Mediator and In Memory Topics</li>
             </ul>
 
             <h2>Known Issues</h2>
