@@ -1513,7 +1513,7 @@
         <product.ei.version>6.5.0-m7-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.103</carbon.business-process.version>
+        <carbon.business-process.version>4.4.104</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v35</orbit.version.axis2>
@@ -1526,7 +1526,7 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.2.75</carbon.messaging.version>
+        <carbon.messaging.version>3.2.76</carbon.messaging.version>
         <carbon.metrics.version>1.2.5</carbon.metrics.version>
         <product.mb.version>3.1.0</product.mb.version>
         <jline.version>1.0</jline.version>
@@ -1552,7 +1552,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.6.146</carbon.mediation.version>
+        <carbon.mediation.version>4.6.148</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.40</carbon.kernel.version>
@@ -1593,7 +1593,7 @@
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.6.24</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.6.25</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
         <jaggery.version>0.12.9</jaggery.version>
