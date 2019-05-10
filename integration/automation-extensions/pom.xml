@@ -54,6 +54,14 @@
                     <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-rt-frontend-jaxrs</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.saucelabs.selenium</groupId>
+                    <artifactId>sauce-ondemand-driver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.saucelabs.selenium</groupId>
+                    <artifactId>selenium-client-factory</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -74,12 +82,30 @@
                     <groupId>org.seleniumhq.selenium</groupId>
                     <artifactId>selenium-java</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.saucelabs.selenium</groupId>
+                    <artifactId>sauce-ondemand-driver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.saucelabs.selenium</groupId>
+                    <artifactId>selenium-client-factory</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.automationutils</groupId>
             <artifactId>org.wso2.carbon.integration.common.utils</artifactId>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.saucelabs.selenium</groupId>
+                    <artifactId>sauce-ondemand-driver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.saucelabs.selenium</groupId>
+                    <artifactId>selenium-client-factory</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
