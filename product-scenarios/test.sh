@@ -109,7 +109,7 @@ do
             echo "Executing tests for the product version: $productVersion"
             runTestProfile profile_490 ;;
         *)
-            echo "Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
+            echo "ERROR: Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
     esac
     PRODUCT_VERSION_FOUND=true
     break
@@ -122,13 +122,18 @@ if ! $PRODUCT_VERSION_FOUND ; then
 fi
 
 #=============== Copy Surefire Reports ===========================================
-
+echo
+echo "------------------------------------------------------------------------"
 echo "Copying surefire-reports to ${OUTPUT_DIR}/scenarios"
 mkdir -p ${OUTPUT_DIR}/scenarios
 find ./* -name "surefire-reports" -exec cp --parents -r {} ${OUTPUT_DIR}/scenarios \;
 
 #=============== Code Coverage Report Generation ===========================================
-
+echo
+echo "------------------------------------------------------------------------"
 echo "Generating Scenario Code Coverage Reports"
 source ${HOME}/code-coverage/code-coverage.sh
 generate_code_coverage ${INPUT_DIR} ${OUTPUT_DIR}
+
+echo "------------------------------------------------------------------------"
+echo "test.sh execution completed."
