@@ -61,6 +61,12 @@
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>x-pack-transport</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>x-pack-core</artifactId>
+                    <groupId>org.elasticsearch.plugin</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
