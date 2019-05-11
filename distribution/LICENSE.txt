@@ -33,6 +33,7 @@ arq_1.0.0.wso2v1.jar                                                            
 asm-1.0.2.jar                                                                   jarinbundle    bsd       3715      
 asm-3.3.1.jar                                                                   jar            bsd       1268      
 atomikos_3.8.0.wso2v1.jar                                                       bundle         apache2   850       
+axiom-1.2.11.wso2v11.jar                                                        bundle         apache2       
 axiom_1.2.11.wso2v13.jar                                                        bundle         apache2   18956     
 axion_1.0.0.M3-dev-wso2v1.jar                                                   bundle         apache2   2826      
 axis2-jaxbri_1.6.1.wso2v35.jar                                                  bundle         apache2   19776     
@@ -74,6 +75,7 @@ bcprov-jdk15on-1.60.jar                                                         
 bcprov-jdk15on-1.60.jar                                                         bundle         bouncy    3816      
 bcprov-jdk15on.jar                                                              bundle         bouncy    1342      
 bcprov-jdk15on_1.60.0.wso2v1.jar                                                bundle         bouncy    18944     
+bcprov-jdk15-132.jar                                                            jar            bouncy    285       
 bpmn-sample-jars-6.5.0.jar                                                      jar            apache2   3815      
 bsf-all_3.0.0.wso2v5.jar                                                        bundle         apache2   5254      
 bsh_1.3.0.wso2v1.jar                                                            bundle         lgpl2     1539      
@@ -182,6 +184,7 @@ google-http-client_1.20.0.wso2v2.jar                                            
 google-oauth-client_1.20.0.wso2v1.jar                                           bundle         apache2   8797      
 groovy-all_2.4.7.jar                                                            bundle         apache2   3390      
 gson-2.8.2.jar                                                                  bundle         apache2   2894      
+h2-1.2.140-wso2v3.jar									       epl1	
 h2-1.3.175.jar                                                                  jarinbundle    epl1      1999      
 h2-database-engine-1.2.140.wso2v3.jar                                           bundle         epl1      16076     
 h2-database-engine_1.2.140.wso2v3.jar                                           bundle         epl1      697       
@@ -256,6 +259,8 @@ javassist_3.18.1.GA.jar                                                         
 javassist_3.19.0.GA.jar                                                         bundle         apache2+lgpl2+mpl12178      
 javasysmon_0.3.3.wso2v1.jar                                                     bundle         bsd       721       
 javax.cache.wso2_4.4.40.jar                                                     bundle         apache2   3696      
+jaxen_1.1.6.jar   										apache2
+javax.servlet-api_3.1.0.jar.                                                    bundle         cddl+gpl  
 javax.jms-api-2.0.1.jar                                                         bundle         cddl+gpl  2097      
 javax.validation.api_1.1.0.Final.jar                                            bundle         apache2   1840      
 javax.websocket-api_1.1.0.jar                                                   bundle         cddl+gpl  2368      
@@ -479,7 +484,9 @@ org.eclipse.osgi.services_3.3.100.v20130513-1956.jar                            
 org.eclipse.osgi.services_3.4.0.v20140312-2051.jar                              bundle         epl1      1412      
 org.eclipse.osgi.services_3.5.100.v20160504-1419.jar                            bundle         epl1      2029      
 org.eclipse.osgi_3.10.2.v20150203-1939.jar                                      bundle         epl1      1411      
+org.eclipse.osgi.services-3.4.0.v20140312-2051.jar						epl1
 org.eclipse.osgi_3.11.0.v20160603-1336.jar                                      bundle         epl1      2028      
+org.eclipse.osgi-3.10.2.v20150203-1939.jar							epl1
 org.eclipse.osgi_3.9.1.v20130814-1242.jar                                       bundle         epl1      1092      
 org.eclipse.wst.jsdt.debug.rhino.debugger_1.0.300.v201109150503.jar             bundle         epl1      558       
 org.eclipse.wst.jsdt.debug.transport_1.0.100.v201109150330.jar                  bundle         epl1      557       
@@ -1152,13 +1159,13 @@ wadl-core-1.1.3.wso2v2.jar                                                      
 webharvest-core_2.0.0.wso2v3.jar                                                bundle         bsd       8741      
 woden_1.0.0.M9-wso2v1.jar                                                       bundle         apache2   3755      
 woodstox-core-asl-4.4.1.jar                                                     bundle         apache2   1087      
+woodstox-core-asl-4.2.0.jar                                                     bundle         apache2        
 wsdl-validator_1.2.0.wso2v1.jar                                                 bundle         epl1      1175      
 wsdl4j-1.6.3.jar                                                                jar            cpl1      276       
 wsdl4j_1.6.2.wso2v4.jar                                                         bundle         apache2   745       
 wso2-uri-templates_1.6.2.jar                                                    bundle         apache2   364       
 wss4j_1.5.11.wso2v18.jar                                                        bundle         apache2   19149     
-wss4j_1.5.11.wso2v6.jar                                                         bundle         apache2   1984      
-x-pack-core-6.5.4.jar                                                           jarinbundle    ecs-eula  3784      
+wss4j_1.5.11.wso2v6.jar                                                         bundle         apache2   1984
 x-pack-transport-6.5.4.jar                                                      jarinbundle    apache2   3787      
 xalan-2.7.1.wso2v1.jar                                                          bundle         apache2   659       
 xalan-2.7.2.wso2v2.jar                                                          bundle         apache2   8202      
@@ -1207,8 +1214,6 @@ icu            ICU License
                http://source.icu-project.org/repos/icu/icu/trunk/license.html
 asm            ASM License
                http://asm.objectweb.org/license.html
-ecs-eula       Elastic Commercial Software End User License Agreement
-               https://www.elastic.co/eula/
 mpl10          Mozilla Public License 1.0
                http://www.mozilla.org/MPL/
 cpl1           Common Public License
