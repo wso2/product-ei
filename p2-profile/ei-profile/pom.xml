@@ -175,6 +175,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.mediator.datamapper.engine.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.mediation:org.wso2.carbon.mediator.kerberos.feature:${carbon.mediation.version}
+                                </featureArtifactDef>
 
                                 <!--2 Carbon-Kernel-->
                                 <featureArtifactDef>
@@ -487,6 +490,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.prometheus.publisher.feature.group</id>
+                                    <version>${carbon.mediation.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.mediator.kerberos.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
                                 <feature>
