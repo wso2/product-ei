@@ -823,7 +823,8 @@ org.wso2.carbon.mediator.foreach.ui_4.6.150.jar                                 
 org.wso2.carbon.mediator.header.ui_4.6.150.jar                                  bundle         apache2   19692     
 org.wso2.carbon.mediator.in.ui_4.6.150.jar                                      bundle         apache2   19719     
 org.wso2.carbon.mediator.iterate.ui_4.6.150.jar                                 bundle         apache2   19828     
-org.wso2.carbon.mediator.kerberos.ui_4.6.150.jar                                bundle         apache2   19788     
+org.wso2.carbon.mediator.kerberos_4.6.150.jar                                   bundle         apache2
+org.wso2.carbon.mediator.kerberos.ui_4.6.150.jar                                bundle         apache2   19788
 org.wso2.carbon.mediator.log.ui_4.6.150.jar                                     bundle         apache2   19698     
 org.wso2.carbon.mediator.loopback.ui_4.6.150.jar                                bundle         apache2   19809     
 org.wso2.carbon.mediator.oauth.ui_4.6.150.jar                                   bundle         apache2   19724     
