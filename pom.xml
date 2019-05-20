@@ -1271,6 +1271,10 @@
                         <groupId>com.fasterxml.jackson.dataformat</groupId>
                         <artifactId>jackson-dataformat-yaml</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.elasticsearch</groupId>
+                        <artifactId>jna</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
