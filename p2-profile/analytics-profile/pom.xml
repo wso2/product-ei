@@ -130,7 +130,7 @@
         <carbon.coordination.version>2.1.1</carbon.coordination.version>
 
         <!--MSF4J related-->
-        <msf4j.version>2.7.1</msf4j.version>
+        <msf4j.version>2.7.3</msf4j.version>
         <com.fasterxml.jackson.core.version>2.9.8</com.fasterxml.jackson.core.version>
         <io.swagger.version>1.5.16</io.swagger.version>
         <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
