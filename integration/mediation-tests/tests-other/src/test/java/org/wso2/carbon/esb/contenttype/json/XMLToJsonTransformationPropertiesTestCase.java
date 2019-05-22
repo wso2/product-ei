@@ -46,7 +46,7 @@ public class XMLToJsonTransformationPropertiesTestCase extends ESBIntegrationTes
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator + "json" +
-                File.separator + "jsonTransformationConfig" + File.separator + "synapse.properties"));
+                File.separator + "jsonTransformationConfig" + File.separator + "deployment.toml"));
         super.init();
         verifyProxyServiceExistence("xmlToJsonTestProxy");
     }

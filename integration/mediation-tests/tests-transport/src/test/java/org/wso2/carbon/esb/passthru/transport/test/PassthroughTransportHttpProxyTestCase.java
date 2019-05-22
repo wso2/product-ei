@@ -41,7 +41,7 @@ public class PassthroughTransportHttpProxyTestCase extends ESBIntegrationTest {
         super.init();
         serverConfigurationManager = new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator
-                                                               + "passthru" + File.separator + "transport" + File.separator + "httpproxy" + File.separator + "axis2.xml"));
+                                                               + "passthru" + File.separator + "transport" + File.separator + "httpproxy" + File.separator + "deployment.toml"));
         super.init();
         loadESBConfigurationFromClasspath("/artifacts/ESB/passthru/transport/httpproxy/httpProxy.xml");
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());

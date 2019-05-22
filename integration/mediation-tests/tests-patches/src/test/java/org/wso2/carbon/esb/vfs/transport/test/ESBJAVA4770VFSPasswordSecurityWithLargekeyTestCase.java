@@ -114,7 +114,7 @@ public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBInteg
         serverConfigurationManager = new ServerConfigurationManager(context);
         serverConfigurationManager.applyConfiguration(
                 new File(getClass().getResource("/artifacts/ESB/synapseconfig/"
-                                                + "vfsTransport/ESBJAVA4770/axis2.xml").getPath()));
+                                                + "vfsTransport/ESBJAVA4770/deployment.toml").getPath()));
         super.init();
     }
 

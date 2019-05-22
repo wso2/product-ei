@@ -321,6 +321,7 @@ do
     -DworkerNode=false \
     -Dorg.wso2.ignoreHostnameVerification=true \
     -Dorg.apache.activemq.SERIALIZABLE_PACKAGES="*" \
+    -Dcarbon.new.config.dir.path="$CARBON_HOME/repository/resources/conf" \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done

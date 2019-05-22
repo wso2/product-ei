@@ -99,7 +99,7 @@ public class ESBJAVA3770DropLargePayloadsPreventESBFromOOMTestCase extends ESBIn
         serverConfigurationManager =
                 new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(new File(getESBResourceLocation() + File.separator + "passthru" +
-                File.separator + "transport" + File.separator + "ESBJAVA3770" + File.separator + "passthru-http.properties"));
+                File.separator + "transport" + File.separator + "ESBJAVA3770" + File.separator + "deployment.toml"));
         super.init();
         verifyAPIExistence("DropLargePayloadPreventESBOOM");
     }

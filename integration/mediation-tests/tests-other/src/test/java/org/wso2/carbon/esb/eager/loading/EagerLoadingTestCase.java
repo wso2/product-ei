@@ -47,9 +47,8 @@ public class EagerLoadingTestCase extends ESBIntegrationTest {
                                                "/artifacts/ESB/eager/loading/ESBJAVA3602-FaultySeq.xml"),
                                       getSynapseDeploymentDir());
 
-        File carbonXml = new File(FrameworkPathUtil.getSystemResourceLocation() +
-                                  "/artifacts/ESB/eager/loading/ESBJAVA3602Carbon.xml");
-        serverManager.applyConfiguration(carbonXml, getCarbonXmlFile());
+        serverManager.applyConfiguration(new File(getESBResourceLocation() + File.separator + "eager" +
+                                                  File.separator + "loading" + File.separator + "deployment.toml"));
         super.init(TestUserMode.TENANT_ADMIN);
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
@@ -78,13 +77,6 @@ public class EagerLoadingTestCase extends ESBIntegrationTest {
     @AfterTest
     public void restoreSettings() throws Exception {
         serverManager.restoreToLastConfiguration();
-    }
-
-    public File getCarbonXmlFile() {
-        String carbonHome = System.getProperty("carbon.home");
-        File carbonXmlFile = new File(carbonHome + File.separator + "repository" + File.separator +
-                                      "conf" + File.separator + "carbon.xml");
-        return carbonXmlFile;
     }
 
     public File getSynapseDeploymentDir() {

@@ -61,7 +61,7 @@ public class DynamicSSLProfilesPTTListenerTestCase extends ESBIntegrationTest {
         serverManager = new ServerConfigurationManager(context);
         serverManager.applyConfigurationWithoutRestart(new File(
                 getESBResourceLocation() + File.separator + "dynamicsslprofiles" + File.separator + "pttlistener"
-                        + File.separator + "axis2.xml"));
+                        + File.separator + "deployment.toml"));
         serverManager.restartGracefully();
         super.init();
     }

@@ -41,7 +41,7 @@ public class RestApiAdminHttpsServerContextTestCase extends ESBIntegrationTest {
         serverConfigurationManager = new ServerConfigurationManager(context);
         serverConfigurationManager.applyConfiguration
                 (new File(getESBResourceLocation() + File.separator + "restapi" + 
-                           File.separator + "axis2.xml"));
+                           File.separator + "deployment.toml"));
         super.init();
     }
 

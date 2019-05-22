@@ -1,0 +1,56 @@
+[server]
+hostname = "localhost"
+node_ip = "127.0.0.1"
+base_path = "https://localhost:9443"
+http_content_negotiation = true
+
+[super_admin]
+username = "admin"
+password = "admin"
+create_admin_account = true
+
+[transport.passthru.http.listener]
+port=8280
+
+[transport.passthru.https.listener]
+port=8243
+
+[user_store]
+type = "database"
+
+[database.shared_db]
+type = "h2"
+url="jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+username = "wso2carbon"
+password = "wso2carbon"
+
+[transport.http]
+max_worker_pool_size=500
+
+[[transport.jms.listener]]
+name = "myTopicConnectionFactory"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "TopicConnectionFactory"
+parameter.connection_factory_type = "topic"
+
+[[transport.jms.listener]]
+name = "myQueueConnectionFactory"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+
+[[transport.jms.listener]]
+name = "default"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"
+
+[[transport.jms.sender]]
+name = "default"
+parameter.initial_naming_factory = "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+parameter.provider_url = "tcp://localhost:61616"
+parameter.connection_factory_name = "QueueConnectionFactory"
+parameter.connection_factory_type = "queue"

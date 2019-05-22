@@ -32,7 +32,10 @@
     <dbConfig name="wso2registry">
         <dataSource>jdbc/WSO2CarbonDB</dataSource>
     </dbConfig>
-    
+    <dbConfig name="configregistry">
+        <dataSource>jdbc/SHARED_DB</dataSource>
+    </dbConfig>
+
     <indexingConfiguration>
         <startIndexing>false</startIndexing>
         <startingDelayInSeconds>35</startingDelayInSeconds>

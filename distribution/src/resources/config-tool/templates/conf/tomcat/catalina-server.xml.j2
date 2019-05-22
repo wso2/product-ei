@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<Server port="8005" shutdown="SHUTDOWN">
+
+    <Service className="org.wso2.carbon.tomcat.ext.service.ExtendedStandardService" name="Catalina">
+
+        <!--
+        optional attributes:
+
+        proxyPort="80"
+        -->
+        <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
+                    port="{{transport.http.port}}"
+                    redirectPort="{{transport.http.redirectPort}}"
+                    bindOnInit="{{transport.http.bindOnInit}}"
+                    maxHttpHeaderSize="{{transport.http.maxHttpHeaderSize}}"
+                    acceptorThreadCount="{{transport.http.acceptorThreadCount}}"
+                    maxThreads="{{transport.http.maxThreads}}"
+                    minSpareThreads="{{transport.http.minSpareThreads}}"
+                    disableUploadTimeout="{{transport.http.disableUploadTimeout}}"
+                    connectionUploadTimeout="{{transport.http.connectionUploadTimeout}}"
+                    maxKeepAliveRequests="{{transport.http.maxKeepAliveRequests}}"
+                    acceptCount="{{transport.http.acceptCount}}"
+                    server="{{transport.http.server}}"
+                    compression="{{transport.http.compression}}"
+                    compressionMinSize="{{transport.http.compressionMinSize}}"
+                    noCompressionUserAgents="{{transport.http.noCompressionUserAgents}}"
+                    compressableMimeType="{{transport.http.compressableMimeType}}"
+                    URIEncoding="{{transport.http.URIEncoding}}"/>
+
+        <!--
+        optional attributes:
+
+        proxyPort="443"
+        -->
+        <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
+                    port="{{transport.https.port}}"
+                    bindOnInit="{{transport.https.bindOnInit}}"
+                    sslEnabledProtocols="{{transport.https.sslEnabledProtocols}}"
+                    maxHttpHeaderSize="{{transport.https.maxHttpHeaderSize}}"
+                    acceptorThreadCount="{{transport.https.acceptorThreadCount}}"
+                    maxThreads="{{transport.https.maxThreads}}"
+                    minSpareThreads="{{transport.https.minSpareThreads}}"
+                    disableUploadTimeout="{{transport.https.disableUploadTimeout}}"
+                    enableLookups="{{transport.https.enableLookups}}"
+                    connectionUploadTimeout="{{transport.https.connectionUploadTimeout}}"
+                    maxKeepAliveRequests="{{transport.https.maxKeepAliveRequests}}"
+                    acceptCount="{{transport.https.acceptCount}}"
+                    server="{{transport.https.server}}"
+                    clientAuth="{{transport.https.clientAuth}}"
+                    compression="{{transport.https.compression}}"
+                    scheme="{{transport.https.scheme}}"
+                    secure="{{transport.https.secure}}"
+                    SSLEnabled="{{transport.https.SSLEnabled}}"
+                    keystoreFile="{{transport.https.keystoreFile}}"
+                    keystorePass="{{transport.https.keystorePass}}"
+                    compressionMinSize="{{transport.https.compressionMinSize}}"
+                    noCompressionUserAgents="{{transport.https.noCompressionUserAgents}}"
+                    compressableMimeType="{{transport.https.compressableMimeType}}"
+                    URIEncoding="{{transport.https.URIEncoding}}"/>
+
+
+
+        <Engine name="Catalina" defaultHost="localhost">
+
+            <!--Realm className="org.apache.catalina.realm.MemoryRealm" pathname="${carbon.home}/repository/conf/tomcat/tomcat-users.xml"/-->
+
+            <Realm className="org.wso2.carbon.tomcat.ext.realms.CarbonTomcatRealm"/>
+
+            <Host name="localhost" unpackWARs="true" deployOnStartup="false" autoDeploy="false" appBase="${carbon.home}/repository/deployment/server/webapps/">
+                <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonContextCreatorValve"/>
+                <Valve className="org.apache.catalina.valves.AccessLogValve" directory="${carbon.home}/repository/logs"
+                       prefix="http_access_management_console_" suffix=".log"
+                       pattern="combined" />
+                <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonStuckThreadDetectionValve" threshold="600"/>
+                <Valve className="org.wso2.carbon.tomcat.ext.valves.CompositeValve"/>
+                <!--<Valve className="org.wso2.carbon.integrator.core.IntegratorValve"/>-->
+            </Host>
+        </Engine>
+    </Service>
+</Server>
+

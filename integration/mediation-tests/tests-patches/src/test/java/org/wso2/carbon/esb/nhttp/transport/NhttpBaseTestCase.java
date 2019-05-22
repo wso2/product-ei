@@ -43,7 +43,7 @@ public class NhttpBaseTestCase extends ESBIntegrationTest {
         serverConfigurationManager = new ServerConfigurationManager(
                 new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(
-                Paths.get(getESBResourceLocation(), "nhttp", "transport", "axis2.xml").toFile());
+                Paths.get(getESBResourceLocation(), "nhttp", "transport", "deployment.toml").toFile());
 
     }
 

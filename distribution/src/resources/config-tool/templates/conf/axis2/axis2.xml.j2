@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
-  ~  WSO2 Inc. licenses this file to you under the Apache License,
-  ~  Version 2.0 (the "License"); you may not use this file except
-  ~  in compliance with the License.
-  ~  You may obtain a copy of the License at
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
   ~
-  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~  Unless required by applicable law or agreed to in writing,
-  ~  software distributed under the License is distributed on an
-  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  ~  KIND, either express or implied.  See the License for the
-  ~  specific language governing permissions and limitations
-  ~  under the License.
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
   -->
 
 <axisconfig name="AxisJava2.0">
@@ -29,9 +29,9 @@
     <parameter name="hotupdate" locked="false">true</parameter>
 
     <!-- Change this to true if you want to enable MTOM -->
-    <parameter name="enableMTOM" locked="false">false</parameter>
+    <parameter name="enableMTOM" locked="false">{{server.enableMTOM}}</parameter>
     <!-- Change this to true if you want to enable SwA -->
-    <parameter name="enableSwA" locked="false">false</parameter>
+    <parameter name="enableSwA" locked="false">{{server.enableSwA}}</parameter>
 
     <!-- If you want to enable file caching for attachments change this to true -->
     <parameter name="cacheAttachments" locked="false">false</parameter>
@@ -54,12 +54,16 @@
     <!--the directory in which .aar services are deployed inside axis2 repository-->
     <parameter name="ServicesDirectory">axis2services</parameter>
 
+    <!--If turned on with use the Accept header of the request to determine the contentType of the
+    response-->
+    <parameter name="httpContentNegotiation">{{server.http_content_negotiation | default('false')}}</parameter>
+
     <!--the directory in which modules are deployed inside axis2 repository-->
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">WSO2 ESB 5.0.0</parameter>
-    <parameter name="server" locked="true">WSO2 ESB 5.0.0</parameter>
+    <parameter name="userAgent" locked="true">{{server.userAgent}}</parameter>
+    <parameter name="server" locked="true">{{server.serverDetails}}</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
@@ -79,13 +83,15 @@
     <parameter name="ConfigContextTimeoutInterval" locked="false">30000</parameter>
 
     <!-- Synapse Configuration file location relative to CARBON_HOME -->
-    <parameter name="SynapseConfig.ConfigurationFile" locked="false">samples/service-bus/synapse_sample_650.xml</parameter>
+    <parameter name="SynapseConfig.ConfigurationFile" locked="false">repository/deployment/server/synapse-configs</parameter>
     <!-- Synapse Home parameter -->
     <parameter name="SynapseConfig.HomeDirectory" locked="false">.</parameter>
     <!-- Resolve root used to resolve synapse references like schemas inside a WSDL -->
     <parameter name="SynapseConfig.ResolveRoot" locked="false">.</parameter>
     <!-- Synapse Server name parameter -->
     <parameter name="SynapseConfig.ServerName" locked="false">localhost</parameter>
+    <!-- Returns 401 for UT secured scenario with incorrect/missing credentials -->
+    <parameter name="enableBasicAuth" locked="false">true</parameter>
 
     <!-- To override repository/services you need to uncomment following parameter and value -->
     <!-- SHOULD be absolute file path. -->
@@ -112,7 +118,7 @@
     <!-- ================================================= -->
 
     <!-- Deployer for the dataservice. -->
-    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.DBDeployer"/>-->
+    <!--<deployer extension="dbs" directory="dataservices" class="org.wso2.dataservices.core.DBDeployer"/>-->
 
     <!-- Axis1 deployer for Axis2 -->
     <!--<deployer extension="wsdd" class="org.wso2.carbon.axis1services.Axis1Deployer" directory="axis1services"/>-->
@@ -152,49 +158,10 @@
     <!-- for different message format serializations in Axis2. These message formats are -->
     <!-- expected to be resolved based on the content type. -->
     <messageFormatters>
-        <messageFormatter contentType="application/x-www-form-urlencoded"
-                          class="org.apache.axis2.transport.http.XFormURLEncodedFormatter"/>
-        <messageFormatter contentType="multipart/form-data"
-                          class="org.apache.axis2.transport.http.MultipartFormDataFormatter"/>
-        <messageFormatter contentType="application/xml"
-                          class="org.apache.axis2.transport.http.ApplicationXMLFormatter"/>
-        <messageFormatter contentType="text/xml"
-                         class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
-        <messageFormatter contentType="application/soap+xml"
-                         class="org.apache.axis2.transport.http.SOAPMessageFormatter"/>
-        <messageFormatter contentType="text/plain"
-                         class="org.apache.axis2.format.PlainTextFormatter"/>
-
-        <!--JSON Message Formatters-->
-        <!--messageFormatter contentType="application/json"
-                          class="org.apache.synapse.commons.json.JsonFormatter"/-->
-        <messageFormatter contentType="application/json"
-                          class="org.apache.synapse.commons.json.JsonStreamFormatter"/>
-        <!--messageFormatter contentType="application/json"
-                          class="org.apache.axis2.json.JSONMessageFormatter"/-->
-        <!--messageFormatter contentType="application/json"
-                          class="org.apache.axis2.json.JSONStreamFormatter"/-->
-        <messageFormatter contentType="application/json/badgerfish"
-                          class="org.apache.axis2.json.JSONBadgerfishMessageFormatter"/>
-
-        <!--messageFormatter contentType="application/x-www-form-urlencoded"
-                        class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-        <!--messageFormatter contentType="multipart/form-data"
-                        class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-        <!--messageFormatter contentType="application/xml"
-                        class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-        <!--messageFormatter contentType="text/html"
-                        class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-        <!--messageFormatter contentType="application/soap+xml"
-                        class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-        <!--messageFormatter contentType="text/xml"
-                        class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-	    <!--messageFormatter contentType="x-application/hessian"
-                         class="org.apache.synapse.format.hessian.HessianMessageFormatter"/-->
-        <!--messageFormatter contentType=""
-                         class="org.apache.synapse.format.hessian.HessianMessageFormatter"/-->
-        <!--messageFormatter contentType="application/edi-hl7"
-                         class="org.wso2.carbon.business.messaging.hl7.message.HL7MessageFormatter"/-->
+        {% for message_formatter in message_formatters %}
+        <messageFormatter contentType="{{message_formatter.content_type}}"
+                          class="{{message_formatter.class}}"/>
+        {% endfor %}
     </messageFormatters>
 
     <!-- ================================================= -->
@@ -205,249 +172,360 @@
     <!-- different message formats in Axis2. These message formats are expected to be -->
     <!-- resolved based on the content type. -->
     <messageBuilders>
-        <messageBuilder contentType="application/xml"
-                        class="org.apache.axis2.builder.ApplicationXMLBuilder"/>
-        <messageBuilder contentType="application/x-www-form-urlencoded"
-                        class="org.apache.synapse.commons.builders.XFormURLEncodedBuilder"/>
-        <messageBuilder contentType="multipart/form-data"
-                        class="org.apache.axis2.builder.MultipartFormDataBuilder"/>
-        <messageBuilder contentType="text/plain"
-                        class="org.apache.axis2.format.PlainTextBuilder"/>
+        {% for message_builder in message_builders %}
+        <messageBuilder contentType="{{message_builder.content_type}}"
+                        class="{{message_builder.class}}"/>
+        {% endfor %}
 
-        <!--JSON Message Builders-->
-        <!--messageBuilder contentType="application/json"
-                        class="org.apache.synapse.commons.json.JsonBuilder"/-->
-        <messageBuilder contentType="application/json"
-                        class="org.apache.synapse.commons.json.JsonStreamBuilder"/>
-        <!--messageBuilder contentType="application/json"
-                        class="org.apache.axis2.json.JSONBuilder"/-->
-        <!--messageBuilder contentType="application/json"
-                        class="org.apache.axis2.json.JSONStreamBuilder"/-->
-        <messageBuilder contentType="application/json/badgerfish"
-                        class="org.apache.axis2.json.JSONBadgerfishOMBuilder"/>
-
-	<!--messageBuilder contentType="application/xml"
-                        class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="application/x-www-form-urlencoded"
-                        class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="multipart/form-data"
-                        class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="multipart/related"
-                       class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="application/soap+xml"
-                       class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="text/plain"
-                       class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="text/xml"
-                       class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
-        <!--messageBuilder contentType="x-application/hessian"
-                        class="org.apache.synapse.format.hessian.HessianMessageBuilder"/-->
-        <!--messageBuilder contentType=""
-                         class="org.apache.synapse.format.hessian.HessianMessageBuilder"/-->
-        <!--messageBuilder contentType="application/edi-hl7"
-                        class="org.wso2.carbon.business.messaging.hl7.message.HL7MessageBuilder"/-->
     </messageBuilders>
 
     <!-- ================================================= -->
     <!--             Transport Ins (Listeners)             -->
     <!-- ================================================= -->
 
-     <transportReceiver name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpListener">
-        <parameter name="port" locked="false">8280</parameter>
-        <parameter name="non-blocking" locked="false">true</parameter>
-        <!--parameter name="bind-address" locked="false">hostname or IP address</parameter-->
-        <!--parameter name="WSDLEPRPrefix" locked="false">https://apachehost:port/somepath</parameter-->
-        <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
-        <!--<parameter name="priorityConfigFile" locked="false">location of priority configuration file</parameter>-->
+    {% if transport.http.listener.enable == true %}
+    <transportReceiver name="http" class="{{transport.http.listener.class}}">
+        {% for parameter_key,parameter_value in transport.http.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
     </transportReceiver>
+    {% endif %}
 
-     <transportReceiver name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLListener">
-        <parameter name="port" locked="false">8243</parameter>
-        <parameter name="non-blocking" locked="false">true</parameter>
-        <!--parameter name="bind-address" locked="false">hostname or IP address</parameter-->
-        <!--parameter name="WSDLEPRPrefix" locked="false">https://apachehost:port/somepath</parameter-->
- 	 <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
+    <transportReceiver name="https" class="{{transport.https.listener.class}}">
+        {% for parameter_key,parameter_value in transport.https.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>repository/resources/security/wso2carbon.jks</Location>
-                <Type>JKS</Type>
-                <Password>wso2carbon</Password>
-                <KeyPassword>wso2carbon</KeyPassword>
+                <Location>{{transport.http.listener.keystore.file_name}}</Location>
+                <Type>{{transport.http.listener.keystore.type}}</Type>
+                <Password>{{transport.http.listener.keystore.password}}</Password>
+                <KeyPassword>{{transport.http.listener.keystore.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>repository/resources/security/client-truststore.jks</Location>
-                <Type>JKS</Type>
-                <Password>wso2carbon</Password>
+                <Location>{{transport.http.listener.truststore.file_name}}</Location>
+                <Type>{{transport.http.listener.truststore.type}}</Type>
+                <Password>{{transport.http.listener.truststore.password}}</Password>
             </TrustStore>
         </parameter>
-        <!--<parameter name="SSLVerifyClient">require</parameter>
-            supports optional|require or defaults to none -->
+        {% if transport.http.listener.verify_client is defined %}
+        <parameter name="SSLVerifyClient">{{transport.http.listener.verify_client}}</parameter>
+        {% endif %}
+
+        {% if transport.http.listener.ssl_profile.file_path is defined %}
+        <!-- ============================================== -->
+        <!-- Configuration for Listener Dynamic SSL Profile loading. -->
+        <!-- Configured for 10 mins. -->
+        <!-- ============================================== -->
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport.http.listener.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.http.listener.ssl_profile.read_interval}}</fileReadInterval>
+        </parameter>
+        {% endif %}
     </transportReceiver>
-
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
-
-    <!--<transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>-->
-
-    <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
-        <!-- configure any optional POP3/IMAP properties
-        check com.sun.mail.pop3 and com.sun.mail.imap package documentation for more details-->
-    <!--</transportReceiver>-->
-
-    <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment (e.g. ActiveMQ)
+    {% if transport.vfs.listener.enable == true %}
+    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener">
+        <parameter locked="false" name="keystore.identity.location">{{transport.vfs.listener.keystore.file_name}}</parameter>
+        <parameter locked="false" name="keystore.identity.type">{{transport.vfs.listener.keystore.type}}</parameter>
+        <parameter locked="false" name="keystore.identity.store.password">{{transport.vfs.listener.keystore.password}}</parameter>
+        <parameter locked="false" name="keystore.identity.key.password">{{transport.vfs.listener.keystore.key_password}}</parameter>
+        <parameter locked="false" name="keystore.identity.alias">{{transport.vfs.listener.keystore.alias}}</parameter>
+    </transportReceiver>
+    {% endif %}
+    {% if transport.mail.listener.enable == true %}
+    <transportReceiver name="{{transport.mail.listener.name}}" class="org.apache.axis2.transport.mail.MailTransportListener">
+    </transportReceiver>
+    {% endif %}
+    {% if transport.jms.listener is defined %}
     <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
-        <parameter name="myTopicConnectionFactory" locked="false">
-        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
-		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
+        {% for listener in transport.jms.listener %}
+        <parameter name="{{listener.name}}" locked="false">
+            {% for name,value in listener.parameter.items() %}
+            <parameter name="{{name}}" locked="false">{{value}}</parameter>
+            {% endfor %}
         </parameter>
-
-        <parameter name="myQueueConnectionFactory" locked="false">
-        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-
-        <parameter name="default" locked="false">
-        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-    </transportReceiver>-->
-
-    <!--Uncomment this and configure as appropriate for JMS transport support with Apache Qpid -->
-    <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
-        <parameter name="myTopicConnectionFactory" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
-        </parameter>
-
-        <parameter name="myQueueConnectionFactory" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-
-        <parameter name="default" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.apache.qpid.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-    </transportReceiver-->
-
-    <!--Uncomment this and configure as appropriate for JMS transport support with WSO2 EI Broker Profile -->
-    <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
-        <parameter name="myTopicConnectionFactory" locked="false">
-           <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
-        </parameter>
-
-        <parameter name="myQueueConnectionFactory" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-           <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-
-        <parameter name="default" locked="false">
-            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
-            <parameter name="java.naming.provider.url" locked="false">repository/conf/jndi.properties</parameter>
-            <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-            <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
-        </parameter>
-    </transportReceiver-->
-
-    <!--Uncomment this for FIX transport support
+        {% endfor %}
+    </transportReceiver>
+    {% endif %}
+    {% if transport.fix.listener.enable == true %}
     <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
-    -->
-
-    <!--transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"/-->
-
+    {% endif %}
+    {% if transport.hl7.listener.enable == true %}
+    <transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener">
+        {% for parameter_key,parameter_value in transport.hl7.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportReceiver>
+    {% endif %}
     <!-- SAP Transport Listeners -->
-    <!-- <transportReceiver name="idoc" class="org.wso2.carbon.transports.sap.SAPTransportListener"/> -->
-    <!-- <transportReceiver name="bapi" class="org.wso2.carbon.transports.sap.SAPTransportListener"/> -->
+    {% if transport.sap.listener.idoc.enable == true %}
+    <transportReceiver name="idoc" class="{{transport.sap.listener.idoc.class}}"/>
+    {% endif %}
+    {% if transport.sap.listener.bapi.enable == true %}
+    <transportReceiver name="bapi" class="{{transport.sap.listener.bapi.class}}"/>
+    {% endif %}
+    {% if transport.rabbitmq.listener.AMQPConnectionFactory is defined %}
+    <transportReceiver name="{{transport.rabbitmq.listener.name}}" class="org.apache.axis2.transport.rabbitmq.RabbitMQListener">
+        <parameter name="AMQPConnectionFactory" locked="false">
+            {% for parameter_key,parameter_value in transport.rabbitmq.listener.AMQPConnectionFactory.parameter.items() %}
+            <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+            {% endfor %}
+        </parameter>
+    </transportReceiver>
+    {% endif %}
+    {% if transport.mqtt.listener.enable == true %}
+    <transportReceiver name="mqtt" class="org.apache.axis2.transport.mqtt.MqttListener">
+        <parameter locked="false" name="mqttConFactory">
+            {% for parameter_key,parameter_value in transport.mqtt.listener.parameter.items() %}
+            <parameter locked="false" name="{{parameter_key}}">{{parameter_value}}</parameter>
+            {% endfor %}
+        </parameter>
+    </transportReceiver>
+    {% endif %}
 
+    {% for transport_item in custom_transport.listener %}
+    <transportReceiver name="{{transport_item.protocol}}" class="{{transport_item.class}}">
+        {% for parameter_key,parameter_value in transport_item.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport_item.key_store is defined %}
+        <parameter name="keystore" locked="false">
+            <KeyStore>
+                <Location>{{transport_item.keystore.file_name}}</Location>
+                <Type>{{transport_item.keystore.type}}</Type>
+                <Password>{{transport_item.keystore.password}}</Password>
+                <KeyPassword>{{transport_item.keystore.key_password}}</KeyPassword>
+            </KeyStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.trust_store is defined %}
+        <parameter name="truststore" locked="false">
+            <TrustStore>
+                <Location>{{transport_item.truststore.file_name}}</Location>
+                <Type>{{transport_item.truststore.type}}</Type>
+                <Password>{{transport_item.truststore.password}}</Password>
+            </TrustStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.ssl_profile.file_path is defined %}
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport_item.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport_item.ssl_profile.read_interval}}</fileReadInterval>
+        </parameter>
+        {% endif %}
+    </transportReceiver>
+    {% endfor %}
+    {% if transport.tcp.listener.enable == true %}
+    <transportReceiver name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportListener">
+        {% for parameter_key,parameter_value in transport.tcp.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+        <parameter name="transport.tcp.contentType">{% for content_item in transport.tcp.listener.content_type %}{{content_item}}{% if loop.index < transport.tcp.listener.content_type|length %},{% endif %}{% endfor %}</parameter>
+    </transportReceiver>
+    {% endif %}
+    {% if transport.udp.listener.enable == true %}
+    <transportReceiver name="udp" class="org.apache.axis2.transport.udp.UDPListener"/>
+    {% endif %}
+    {% if transport.msmq.listener.enable == true %}
+    <transportReceiver name="msmq" class="org.apache.axis2.transport.msmq.MSMQListener">
+        {% for parameter_key,parameter_value in transport.msmq.listener.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportReceiver>
+    {% endif %}
     <!-- ================================================= -->
     <!--             Transport Outs (Senders)              -->
     <!-- ================================================= -->
 
-    <transportSender name="http" class="org.apache.synapse.transport.passthru.PassThroughHttpSender">
+    {% if transport.http.sender.enable == true %}
+    <transportSender name="http" class="{{transport.http.sender.class}}">
         <parameter name="non-blocking" locked="false">true</parameter>
-        <!--<parameter name="warnOnHTTP500" locked="false">*</parameter>-->
-        <!--parameter name="http.proxyHost" locked="false">localhost</parameter-->
-        <!--<parameter name="http.proxyPort" locked="false">3128</parameter>-->
-        <!--<parameter name="http.nonProxyHosts" locked="false">localhost|moon|sun</parameter>-->
+        {% if transport.http.sender.non_proxy_hosts is defined %}
+        <parameter name="http.nonProxyHosts" locked="false">{% for parameter_value in transport.http.sender.non_proxy_hosts %}{{parameter_value}}{% if loop.index < transport.http.sender.non_proxy_hosts|length %}|{% endif %}{% endfor %}</parameter>
+        {% endif %}
+        {% for parameter_key,parameter_value in transport.http.sender.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport.http.proxy_profile is defined %}
+        <parameter name="proxyProfiles">
+            {% for profile in transport.http.proxy_profile %}
+            <profile>
+                <targetHosts>{% for hostitem in profile.target_hosts.toList() %}{{hostitem}}{% if loop.index < profile.target_hosts.toList()|length %},{% endif %}{% endfor %}</targetHosts>
+                <proxyHost>{{profile.proxy_host}}</proxyHost>
+                <proxyPort>{{profile.proxy_port}}</proxyPort>
+                {% if profile.proxy_username is defined %}
+                <proxyUserName>{{profile.proxy_username}}</proxyUserName>
+                {% endif %}
+                {% if profile.proxy_password is defined %}
+                <proxyPassword>{{profile.proxy_password}}</proxyPassword>
+                {% endif %}
+                {% if profile.bypass_hosts is defined %}
+                <bypass>{% for bypassitem in profile.bypass_hosts.toList() %}{{bypassitem}}{% if loop.index < profile.bypass_hosts.toList()|length %},{% endif %}{% endfor %}</bypass>
+                {% endif %}
+            </profile>
+            {% endfor %}
+        </parameter>
+        {% endif %}
     </transportSender>
-
-    <transportSender name="https" class="org.apache.synapse.transport.passthru.PassThroughHttpSSLSender">
+    {% endif %}
+    <transportSender name="https" class="{{transport.https.sender.class}}">
         <parameter name="non-blocking" locked="false">true</parameter>
+        {% for parameter_key,parameter_value in transport.https.sender.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
         <parameter name="keystore" locked="false">
             <KeyStore>
-                <Location>repository/resources/security/wso2carbon.jks</Location>
-                <Type>JKS</Type>
-                <Password>wso2carbon</Password>
-                <KeyPassword>wso2carbon</KeyPassword>
+                <Location>{{transport.http.sender.keystore.file_name}}</Location>
+                <Type>{{transport.http.sender.keystore.type}}</Type>
+                <Password>{{transport.http.sender.keystore.password}}</Password>
+                <KeyPassword>{{transport.http.sender.keystore.key_password}}</KeyPassword>
             </KeyStore>
         </parameter>
         <parameter name="truststore" locked="false">
             <TrustStore>
-                <Location>repository/resources/security/client-truststore.jks</Location>
-                <Type>JKS</Type>
-                <Password>wso2carbon</Password>
+                <Location>{{transport.http.sender.truststore.file_name}}</Location>
+                <Type>{{transport.http.sender.truststore.type}}</Type>
+                <Password>{{transport.http.sender.truststore.password}}</Password>
             </TrustStore>
         </parameter>
-        <!--<parameter name="HostnameVerifier">DefaultAndLocalhost</parameter>-->
-            <!--supports Strict|AllowAll|DefaultAndLocalhost or the default if none specified -->
+        {% if transport.http.sender.ssl_profile.file_path is defined %}
+        <!-- ============================================== -->
+        <!-- Configuration for Dynamic SSL Profile loading. -->
+        <!-- Configured for 10 mins. -->
+        <!-- ============================================== -->
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport.http.sender.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport.http.sender.ssl_profile.read_interval}}</fileReadInterval>
+        </parameter>
+        {% endif %}
     </transportSender>
-
+    {% if transport.jms.sender is defined %}
+    <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender">
+        {% for sender in transport.jms.sender %}
+        <parameter name="{{sender.name}}" locked="false">
+            {% for name,value in sender.parameter.items() %}
+            <parameter name="{{name}}" locked="false">{{value}}</parameter>
+            {% endfor %}
+        </parameter>
+        {% endfor %}
+    </transportSender>
+    {% endif %}
     <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
-
-    <!--Uncomment this local transport to use local transport in mediation flow-->
-    <!--<transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>-->
-
-   <!-- uncomment this and configure to use connection pools for sending messages>
-     <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
-
-    <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
-
-    <!-- Uncomment and configure the SMTP server information
-    check com.sun.mail.smtp package documentation for descriptions of properties
-    <transportSender name="mailto" class="org.apache.axis2.transport.mail.MailTransportSender">
-        <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
-        <parameter name="mail.smtp.port">587</parameter>
-        <parameter name="mail.smtp.starttls.enable">true</parameter>
-        <parameter name="mail.smtp.auth">true</parameter>
-        <parameter name="mail.smtp.user">synapse.demo.0</parameter>
-        <parameter name="mail.smtp.password">mailpassword</parameter>
-        <parameter name="mail.smtp.from">synapse.demo.0@gmail.com</parameter>
-    </transportSender>-->
-
-    <!--Uncomment this for FIX transport support
+    <transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>
+    {% if transport.vfs.sender.enable == true %}
+    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
+    {% endif %}
+    {% for mail_sender in transport.mail.sender %}
+    <transportSender name="{{mail_sender.name}}" class="org.apache.axis2.transport.mail.MailTransportSender">
+        {% for parameter_key,parameter_value in mail_sender.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportSender>
+    {% endfor %}
+    {% if transport.fix.sender.enable == true %}
     <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>
-    -->
-
-    <!--transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"/-->
-
+    {% endif %}
+    {% if transport.hl7.sender.enable == true %}
+    <transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender">
+        {% for parameter_key,parameter_value in transport.hl7.sender.parameter.items() %}
+        <parameter name="{{parameter_key}}">{{parameter_value}}</parameter>
+        {% endfor %}
+    </transportSender>
+    {% endif %}
     <!-- SAP Transport Senders -->
-    <!-- <transportSender name="idoc" class="org.wso2.carbon.transports.sap.SAPTransportSender"/> -->
-    <!-- <transportSender name="bapi" class="org.wso2.carbon.transports.sap.SAPTransportSender"/> -->
-
+    {% if transport.sap.sender.idoc.enable == true %}
+    <transportSender name="idoc" class="{{transport.sap.sender.idoc.class}}"/>
+    {% endif %}
+    {% if transport.sap.sender.bapi.enable == true %}
+    <transportSender name="bapi" class="{{transport.sap.sender.bapi.class}}"/>
+    {% endif %}
+    {% if transport.rabbitmq.sender.AMQPConnectionFactory is defined %}
+    <transportReceiver name="{{transport.rabbitmq.sender.name}}" class="org.apache.axis2.transport.rabbitmq.RabbitMQSender">
+        <parameter name="AMQPConnectionFactory" locked="false">
+            {% for parameter_key,parameter_value in transport.rabbitmq.sender.AMQPConnectionFactory.parameter.items() %}
+            <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+            {% endfor %}
+        </parameter>
+    </transportReceiver>
+    {% endif %}
+    {% if transport.ws.sender.enable == true %}
+    <transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
+        {% for name,value in transport.ws.sender.parameter.items() %}
+        <parameter name="{{name}}" locked="false">{{value}}</parameter>
+        {% endfor %}
+    </transportSender>
+    {% endif %}
+    {% if transport.wss.sender.enable == true %}
+    <transportSender name="wss" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
+        {% for name,value in transport.wss.sender.parameter.items() %}
+        <parameter name="{{name}}" locked="false">{{value}}</parameter>
+        {% endfor %}
+        <parameter name="ws.trust.store" locked="false">
+            <ws.trust.store.location>{{transport.wss.sender.truststore_location}}</ws.trust.store.location>
+            <ws.trust.store.Password>{{transport.wss.sender.truststore_password}}</ws.trust.store.Password>
+        </parameter>
+    </transportSender>
+    {% endif %}
+    {% for transport_item in custom_transport.sender %}
+    <transportSender name="{{transport_item.protocol}}" class="{{transport_item.class}}">
+        {% for parameter_key,parameter_value in transport_item.parameter.items() %}
+        <parameter name="{{parameter_key}}" locked="false">{{parameter_value}}</parameter>
+        {% endfor %}
+        {% if transport_item.key_store is defined %}
+        <parameter name="keystore" locked="false">
+            <KeyStore>
+                <Location>{{transport_item.keystore.file_name}}</Location>
+                <Type>{{transport_item.keystore.type}}</Type>
+                <Password>{{transport_item.keystore.password}}</Password>
+                <KeyPassword>{{transport_item.keystore.key_password}}</KeyPassword>
+            </KeyStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.trust_store is defined %}
+        <parameter name="truststore" locked="false">
+            <TrustStore>
+                <Location>{{transport_item.truststore.file_name}}</Location>
+                <Type>{{transport_item.truststore.type}}</Type>
+                <Password>{{transport_item.truststore.password}}</Password>
+            </TrustStore>
+        </parameter>
+        {% endif %}
+        {% if transport_item.ssl_profile.file_path is defined %}
+        <parameter name="dynamicSSLProfilesConfig">
+            <filePath>{{transport_item.ssl_profile.file_path}}</filePath>
+            <fileReadInterval>{{transport_item.ssl_profile.read_interval}}</fileReadInterval>
+        </parameter>
+        {% endif %}
+    </transportSender>
+    {% endfor %}
+    {% if transport.tcp.sender.enable == true %}
+    <transportSender name="tcp" class="org.apache.axis2.transport.tcp.TCPTransportSender"/>
+    {% endif %}
+    {% if transport.udp.sender.enable == true %}
+    <transportSender name="udp" class="org.apache.axis2.transport.udp.UDPSender"/>
+    {% endif %}
+    {% if transport.msmq.sender.enable == true %}
+    <transportSender name="msmq" class="org.apache.axis2.transport.msmq.MSMQSender"/>
+    {% endif %}
+    {% if transport.mqtt.sender.enable == true %}
+    <transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>
+    {% endif %}
     <!-- ================================================= -->
     <!--             Global Engaged Modules                -->
     <!-- ================================================= -->
 
     <!-- Comment this out to disable Addressing -->
     <module ref="addressing"/>
+
+    <!--
+    Uncomment out the following entry if SOAP (text/xml and application/soap+xml) messages
+    are processed through the message relay.
+    -->
+    <!--module ref="relay"/-->
+
 
     <!-- ================================================= -->
     <!--                Clustering                         -->
@@ -459,8 +537,9 @@
      getting this node to join the cluster.
      -->
     <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
-                enable="false">
+                enable="{{clustering.membership_scheme is defined}}">
 
+        {% if clustering is defined %}
         <!--
            This parameter indicates whether the cluster has to be automatically initalized
            when the AxisConfiguration is built. If set to "true" the initialization will not be
@@ -471,7 +550,6 @@
         <!--
            The membership scheme used in this setup. The only values supported at the moment are
            "multicast" and "wka"
-
            1. multicast - membership is automatically discovered using multicasting
            2. wka - Well-Known Address based multicasting. Membership is discovered with the help
                     of one or more nodes running at a Well-Known Address. New members joining a
@@ -481,7 +559,7 @@
                     is deemed to have left the cluster, it will be detected by the Group Membership
                     Service (GMS) using a TCP ping mechanism.
         -->
-        <parameter name="membershipScheme">wka</parameter>
+        <parameter name="membershipScheme">{{clustering.membership_scheme | default('wka')}}</parameter>
         <!--<parameter name="licenseKey">xxx</parameter>-->
         <!--<parameter name="mgtCenterURL">http://localhost:8081/mancenter/</parameter>-->
 
@@ -489,7 +567,7 @@
          The clustering domain/group. Nodes in the same group will belong to the same multicast
          domain. There will not be interference between nodes in different groups.
         -->
-        <parameter name="domain">wso2.carbon.domain</parameter>
+        <parameter name="domain">{{clustering.domain | default('wso2.carbon.domain')}}</parameter>
 
         <!-- The multicast address to be used -->
         <!--<parameter name="mcastAddress">228.0.0.4</parameter>-->
@@ -510,7 +588,7 @@
         -->
         <!-- The host name or IP address of this member -->
 
-        <parameter name="localMemberHost">127.0.0.1</parameter>
+        <parameter name="localMemberHost">{{clustering.local_member_host}}</parameter>
 
         <!--
             The bind adress of this member. The difference between localMemberHost & localMemberBindAddress
@@ -525,7 +603,7 @@
         The TCP port used by this member. This is the port through which other nodes will
         contact this member
          -->
-        <parameter name="localMemberPort">4100</parameter>
+        <parameter name="localMemberPort">{{clustering.local_member_port | default('4000')}}</parameter>
 
         <!--
             The bind port of this member. The difference between localMemberPort & localMemberBindPort
@@ -542,13 +620,7 @@
         <parameter name="properties">
             <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
             <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
- 	    <!-- Manger Setup with Port Mapping-->
-	    <!--property name="port.mapping.8280" value="9764"/>
-            <property name="port.mapping.8243" value="9444"/>
-            <property name="subDomain" value="mgt"/-->
-
-	    <!-- Worker Setup-->
-	    <!--property name="subDomain" value="worker"/-->
+            <property name="subDomain" value="worker"/>
         </parameter>
 
         <!--
@@ -556,10 +628,13 @@
            "membershipScheme" above is set to "wka"
         -->
         <members>
+            {% for member in clustering.members %}
+            {% set splittedMember = member.split(':') %}
             <member>
-                <hostName>127.0.0.1</hostName>
-                <port>4000</port>
+                <hostName>{{splittedMember[0]}}</hostName>
+                <port>{{splittedMember[1]}}</port>
             </member>
+            {% endfor %}
         </members>
 
         <!--
@@ -569,11 +644,12 @@
         -->
         <groupManagement enable="false">
             <applicationDomain name="wso2.esb.domain"
-                               description="ESB group"
+                               description="EI group"
                                agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent"
                                subDomain="worker"
                                port="2222"/>
         </groupManagement>
+        {% endif %}
     </clustering>
 
     <!-- ================================================= -->
@@ -611,6 +687,8 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
    	        <handler name="CarbonContextConfigurator"
                      class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
@@ -624,7 +702,6 @@
                      class="org.wso2.carbon.core.transports.smtp.SMTPFaultHandler">
                 <order phase="Transport"/>
             </handler-->
-
         </phase>
         <phase name="Addressing">
             <handler name="AddressingBasedDispatcher"
@@ -634,12 +711,13 @@
         </phase>
         <phase name="Security"/>
         <phase name="PreDispatch">
-            <!--Uncomment following handler to enable logging in ESB log UI-->
+            <!--Uncomment following handler to enable logging in EI log UI-->
             <!--<handler name="TenantDomainSetter"-->
                      <!--class="org.wso2.carbon.utils.logging.handler.TenantDomainSetter"/>-->
         </phase>
         <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler"/>
+            <handler name="JSONMessageHandler" class="org.apache.axis2.json.gson.JSONMessageHandler" />
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher"/>
             <handler name="RequestURIOperationDispatcher"
@@ -679,8 +757,7 @@
         <phase name="PTSecurityOutPhase">
 		<handler name="RelaySecuirtyMessageBuilderDispatchandler"
                      class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
-	</phase>
-
+	    </phase>
         <phase name="MessageOut"/>
         <phase name="Security"/>
 
@@ -707,6 +784,8 @@
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
                 <order phase="Transport"/>
+                <handler name="JSONMessageHandler"
+                         class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
             <handler name="SOAPActionBasedDispatcher"
                      class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">

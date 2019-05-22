@@ -43,7 +43,7 @@ public class PropertyXPATH2FunctionsTestCase extends ESBIntegrationTest {
                 new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(new File(
                 getESBResourceLocation() + File.separator + "mediatorconfig" + File.separator + "property"
-                        + File.separator + "synapse.properties"));
+                        + File.separator + "deployment.toml"));
         super.init();
         loadESBConfigurationFromClasspath(
                 File.separator + "artifacts" + File.separator + "ESB" + File.separator + "mediatorconfig"

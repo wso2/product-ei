@@ -76,7 +76,7 @@ public class ActiveMQServer extends ESBIntegrationTest {
         serverManager.applyConfiguration(new File(
                 TestConfigurationProvider.getResourceLocation() + File.separator + "artifacts" + File.separator + "ESB"
                 + File.separator + "jms" + File.separator + "transport" + File.separator + "axis2config" + File.separator
-                + "activemq" + File.separator + "axis2.xml"));
+                + "activemq" + File.separator + "deployment.toml"));
     }
 
     public void stopJMSBrokerRevertESBConfiguration() throws Exception {

@@ -51,7 +51,7 @@ public class ProxyStatisticsTest extends ESBIntegrationTest {
                 new ServerConfigurationManager(new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN));
         serverConfigurationManager.applyConfiguration(
                 new File(getESBResourceLocation() + File.separator + "StatisticTestResources" + File.separator +
-                        "synapse.properties"));
+                        "deployment.toml"));
         super.init();
 
         thriftServer.resetMsgCount();

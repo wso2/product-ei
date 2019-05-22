@@ -1,0 +1,54 @@
+{
+  "transport.hl7.listener.enable": {
+    "true": {
+      "transport.hl7.listener.parameter.port": "9292"
+    }
+  },
+  "transport.hl7.sender.enable": {
+    "true": {
+      "transport.hl7.sender.parameter.non-blocking":true
+    }
+  },
+  "transport.mail.listener.enable": {
+    "true": {
+      "transport.mail.listener.name": "mailto"
+    }
+  },
+  "transport.sap.listener.enable": {
+    "true": {
+      "transport.sap.listener.idoc.enable": true,
+      "transport.sap.listener.idoc.class": "org.wso2.carbon.transports.sap.SAPTransportListener"
+    }
+  },
+  "transport.sap.listener.bapi.enable": {
+    "true": {
+      "transport.sap.listener.bapi.class": "org.wso2.carbon.transports.sap.SAPTransportListener"
+    }
+  },
+  "transport.sap.sender.enable": {
+    "true": {
+      "transport.sap.sender.idoc.enable": true,
+      "transport.sap.sender.idoc.class": "org.wso2.carbon.transports.sap.SAPTransportSender"
+    }
+  },
+  "transport.sap.sender.bapi.enable": {
+    "true": {
+      "transport.sap.sender.bapi.class": "org.wso2.carbon.transports.sap.SAPTransportSender"
+    }
+  },
+  "transport.ws.sender.enable": {
+    "true": {
+      "transport.ws.sender.parameter.outflow_dispatch_sequence": "outflowDispatchSeq",
+      "transport.ws.sender.parameter.outflow_dispatch_fault_sequence": "outflowFaultSeq"
+    }
+  },
+  "transport.wss.sender.enable": {
+    "true": {
+      "transport.wss.sender.parameter.outflow_dispatch_sequence": "outflowDispatchSeq",
+      "transport.wss.sender.parameter.outflow_dispatch_fault_sequence": "outflowFaultSeq",
+      "transport.wss.sender.truststore_location": "$ref{truststore.file_name}",
+      "transport.wss.sender.truststore_password": "$ref{truststore.tls.password}"
+    }
+  }
+
+}

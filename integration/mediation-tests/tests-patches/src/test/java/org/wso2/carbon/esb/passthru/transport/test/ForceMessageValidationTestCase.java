@@ -58,7 +58,7 @@ public class ForceMessageValidationTestCase extends ESBIntegrationTest {
 
         serverConfigurationManager.applyConfiguration(new File(
                 getESBResourceLocation().replace("//", "/") + File.separator + "passthru" + File.separator + "transport"
-                        + File.separator + "forceMessageValidation" + File.separator + "passthru-http.properties"));
+                        + File.separator + "forceMessageValidation" + File.separator + "deployment.toml"));
         super.init();
 
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());

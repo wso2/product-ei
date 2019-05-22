@@ -1,0 +1,27 @@
+[server]
+hostname = "localhost"
+node_ip = "127.0.0.1"
+base_path = "https://localhost:9443"
+
+[super_admin]
+username = "admin"
+password = "admin"
+create_admin_account = true
+
+[transport.passthru.http.listener]
+port=8280
+
+[transport.passthru.https.listener]
+port=8243
+
+[user_store]
+type = "database"
+
+[database.shared_db]
+type = "h2"
+url="jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
+username = "wso2carbon"
+password = "wso2carbon"
+
+[mediation]
+synapse.preserve_namespace_on_xml_to_json=true
