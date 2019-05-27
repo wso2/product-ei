@@ -1586,7 +1586,7 @@
         <carbon.identity-user-ws.version>5.1.11</carbon.identity-user-ws.version>
 
         <!-- Carbon Rule version -->
-        <carbon.rule.version>4.4.9</carbon.rule.version>
+        <carbon.rule.version>4.4.11</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
         <carbon-dataservice-hosting.feature.imp.version>${carbon.data.version}</carbon-dataservice-hosting.feature.imp.version>
@@ -1641,7 +1641,7 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.4.106</carbon.data.version>
+        <carbon.data.version>4.4.107</carbon.data.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <orbit.version.joda-time>2.9.4.wso2v1</orbit.version.joda-time>
 
