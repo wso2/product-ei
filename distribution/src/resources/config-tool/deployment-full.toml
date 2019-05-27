@@ -504,3 +504,6 @@ algorithm = "AES"                   # infered
 [[server.get_request_processor]]    # hidden property
 item = "swagger.json"
 class = "org.wso2.appcloud.api.swagger.processors.json.SwaggerJsonProcessor"
+
+[transport.local]
+sender.nonblocking.enable = false

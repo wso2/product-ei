@@ -17,7 +17,7 @@
   ~ under the License.
   -->
 
-<axisconfig name="AxisJava2.0">
+<axisconfig name="AxisJava2.0" xmlns:svns="http://org.wso2.securevault/configuration">
 
     <!-- ================================================= -->
     <!--                  Parameters                       -->
@@ -414,7 +414,9 @@
     </transportSender>
     {% endif %}
     <transportSender name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportSender"/>
+    {% if transport.local.sender.nonblocking.enable == true %}
     <transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>
+    {% endif %}
     {% if transport.vfs.sender.enable == true %}
     <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
     {% endif %}
