@@ -38,7 +38,9 @@
         <module>org.wso2.ei.analytics.styles.feature</module>
         <module>org.wso2.ei.samples.feature</module>
         <module>org.wso2.ei-business-process.styles.feature</module>
+        <module>org.wso2.ei.business-process.multitenancy.dashboard.ui.feature</module>
         <module>org.wso2.ei.broker.styles.feature</module>
+        <module>org.wso2.ei.broker.stratos.dashboard.ui.feature</module>
         <module>org.wso2.ei.analytics.elk.feature</module>
     </modules>
 

@@ -152,7 +152,7 @@
                                     org.wso2.ei:org.wso2.ei.broker.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.mb:org.wso2.stratos.mb.dashboard.ui.feature:${product.mb.version}
+                                    org.wso2.ei:org.wso2.ei.broker.stratos.dashboard.ui.feature:${product.ei.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}
@@ -218,8 +218,8 @@
                                     <version>${carbon.analytics.common.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.stratos.mb.dashboard.ui.feature.group</id>
-                                    <version>${product.mb.version}</version>
+                                    <id>org.wso2.ei.broker.stratos.dashboard.ui.feature.group</id>
+                                    <version>${product.ei.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.system.statistics.feature.group</id>
