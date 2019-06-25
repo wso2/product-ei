@@ -1,0 +1,39 @@
+div#dashboard-clear {
+    clear:both;
+    margin-top:5px;
+}
+div.tip {
+	width: 133px;
+	float: left;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 40px;
+	padding-left: 12px;
+	padding-right: 12px;
+	text-align: center;
+	background-image: url(../images/tip-bg.gif);
+	background-position: left 12px;
+	background-repeat: no-repeat;
+
+}
+div#workArea h2.dashboard-title {
+	background-image: url(../images/dashboard-title-bg.gif);
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	border-bottom: 0px;
+	line-height: 20px;
+	font-size: 130%;
+	color: #000;
+	margin-bottom: 20px;
+}
+div.tip div.image {
+	height: 65px;
+}
+div.tip a.dashboard-subtitle {
+	line-height: 25px;
+	font-weight: bold;
+}
+div.tip p{
+	text-align: left;
+	font-size: 11px;
+}

@@ -2585,7 +2585,7 @@
                 <!--<fileMode>644</fileMode>-->
             <!--</file>-->
 
-            <file>
+            <!--<file>
                 <source>../p2-profile/analytics-profile/src/scripts/forgetme.bat</source>
                 <outputDirectory>wso2ei-${pom.version}/wso2/analytics/bin/</outputDirectory>
                 <fileMode>744</fileMode>
@@ -2608,12 +2608,12 @@
                 <outputDirectory>wso2ei-${pom.version}/wso2/analytics/wso2/tools/identity-anonymization-tool/conf/</outputDirectory>
                 <destName>config.json</destName>
                 <fileMode>644</fileMode>
-            </file>
+            </file>-->
 
         <!--END Analytics file copying -->
 
 
-        <file>
+        <!--<file>
             <source>src/msf4j/bin/kernel-version.txt</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
             <fileMode>644</fileMode>
@@ -2630,7 +2630,7 @@
             <source>src/msf4j/bin/carbon.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
             <fileMode>755</fileMode>
-        </file>
+        </file>-->
         <!-- END Copying files related to msf4j -->
 
         <!-- Copying files related to forget me tool -->
