@@ -123,9 +123,9 @@ WSO2 EI is packaged in several forms for different platforms and environments. H
 |[WSO2 EI Docker](https://wso2.com/integration/install/docker/get-started/)          |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=ubuntu) for Ubuntu  |   |
 |[WSO2 EI Vagrant](https://wso2.com/integration/install/vagrant/get-started/)        |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=centos) for CentOS  |   |
 |[WSO2 EI Helm](https://wso2.com/integration/install/helm/get-started/)              |   |   |
-|[WSO2 EI YUM Install](https://wso2.com/integration/install/yum/)                    |   |   |
-|[WSO2 EI Brew Install](https://wso2.com/integration/install/brew/)                  |   |   |
-|[WSO2 EI Apt Install](https://wso2.com/integration/install/apt/)                    |   |   |
+|[WSO2 EI YUM Install](https://wso2.com/integration/install/yum/community/get-started/)                    |   |   |
+|[WSO2 EI Brew Install](https://wso2.com/integration/install/brew/community/get-started/)                  |   |   |
+|[WSO2 EI Apt Install](https://wso2.com/integration/install/apt/community/get-started/)                    |   |   |
 
 - [WSO2 Micro Integrator](https://github.com/wso2/micro-integrator) is the cloud-native offering of WSO2 EI. It is a 
   configuration driven runtime that helps developers implement composite microservices. 
