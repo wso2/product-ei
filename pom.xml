@@ -1523,7 +1523,7 @@
         <product.ei.version>6.6.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.4.105</carbon.business-process.version>
+        <carbon.business-process.version>4.4.107</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>1.6.1-wso2v35</orbit.version.axis2>
@@ -1665,7 +1665,7 @@
         <!--<emma.version>2.1.5320</emma.version>-->
         <jacoco.agent.version>0.8.4</jacoco.agent.version>
         <wso2.h2.orbit.version>1.2.140.wso2v3</wso2.h2.orbit.version>
-        <org.apache.cxf.version>2.7.2</org.apache.cxf.version>
+        <org.apache.cxf.version>3.2.8</org.apache.cxf.version>
         <org.springframework.version>4.1.5.RELEASE</org.springframework.version>
         <org.apache.tomcat>7.0.93</org.apache.tomcat>
         <org.codehaus.jackson.version>1.9.12</org.codehaus.jackson.version>

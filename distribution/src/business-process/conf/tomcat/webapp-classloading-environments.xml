@@ -69,8 +69,8 @@
     -->	
     <ExclusiveEnvironments>
         <ExclusiveEnvironment>
-            <Name>CXF</Name>
-            <Classpath>${carbon.home}/../lib/runtimes/cxf/*.jar;${carbon.home}/../lib/runtimes/cxf/</Classpath>
+            <Name>CXF3</Name>
+            <Classpath>${carbon.home}/../lib/runtimes/cxf3/*.jar;${carbon.home}/../lib/runtimes/cxf3/</Classpath>
         </ExclusiveEnvironment>
     </ExclusiveEnvironments>
 
