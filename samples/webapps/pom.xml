@@ -159,7 +159,7 @@
     </dependencyManagement>
 
     <properties>
-        <samples.cxf.version>2.7.2</samples.cxf.version>
+        <samples.cxf.version>3.2.8</samples.cxf.version>
         <samples.version.commons.httpclient>3.1</samples.version.commons.httpclient>
         <samples.version.jsr311.api>1.1.1</samples.version.jsr311.api>
 
