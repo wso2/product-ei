@@ -52,7 +52,11 @@
                 <testng.suiteXml.location>src/test/resources/smokeTestng.xml</testng.suiteXml.location>
             </properties>
             <modules>
+                <module>automation-extensions</module>
                 <module>mediation-tests</module>
+                <module>business-process-tests</module>
+                <module>dataservice-hosting-tests</module>
+                <module>broker-tests</module>
             </modules>
         </profile>
         <profile>

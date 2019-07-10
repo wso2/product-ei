@@ -1739,7 +1739,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.7.3-SNAPSHOT</carbon.mediation.version>
+        <carbon.mediation.version>4.7.3</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.5.0-m1</carbon.kernel.version>

@@ -145,7 +145,7 @@ public class BpelVersioningTest extends BPSMasterTest {
                 }
             }
         }
-
+        Thread.sleep(1000);
         sendRequest();
     }
 
