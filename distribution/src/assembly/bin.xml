@@ -136,6 +136,7 @@
                 <exclude>**/bin/**</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
+                <exclude>**/conf/deployment.toml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
@@ -192,7 +193,7 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/etc/launch.ini</exclude>
-                <exclude>**/conf/deployment.toml</exclude>
+                <exclude>**/deployment.toml</exclude>
             </excludes>
         </fileSet>
 
@@ -266,7 +267,7 @@
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/etc/launch.ini</exclude>
-                <exclude>**/conf/deployment.toml</exclude>
+                <exclude>**/deployment.toml</exclude>
             </excludes>
         </fileSet>
 
@@ -2258,7 +2259,7 @@
         </file>
         <file>
             <source>src/conf/synapse-handlers.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/micro-integrator/conf</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>synapse-handlers.xml</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>

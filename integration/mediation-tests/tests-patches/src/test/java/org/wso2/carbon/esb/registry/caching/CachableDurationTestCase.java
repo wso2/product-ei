@@ -3,10 +3,12 @@ package org.wso2.carbon.esb.registry.caching;
 
 import org.apache.log4j.Logger;
 import org.testng.Assert;
+import org.testng.ReporterConfig;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.registry.properties.stub.utils.xsd.Property;
 import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.esb.integration.common.clients.registry.PropertiesAdminServiceClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
@@ -14,6 +16,7 @@ import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 
 import java.rmi.RemoteException;
+import java.util.Properties;
 
 /**
  * ESBJAVA-3267
@@ -65,7 +68,12 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
         //Update the registry value
         updateResourcesInConfigRegistry();
 
-        Assert.assertTrue(propertyPropertiesAdminServiceClient.getProperty(PATH, NAME).getProperties()[0].getValue().equals(NEW_VALUE));
+        for (Property registryResourceProperty : propertyPropertiesAdminServiceClient.getProperty(PATH, NAME).
+                getProperties()) {
+            if (registryResourceProperty.getKey().equals(NAME)) {
+                Assert.assertTrue(registryResourceProperty.getValue().equals(NEW_VALUE));
+            }
+        }
 
         SendRequest(ADD_URL, trpUrl);
 
