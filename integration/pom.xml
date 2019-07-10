@@ -41,9 +41,9 @@
             <modules>
                 <module>automation-extensions</module>
                 <module>mediation-tests</module>
-                <!--<module>business-process-tests</module>-->
-                <!--<module>dataservice-hosting-tests</module>
-                <module>broker-tests</module>-->
+                <module>business-process-tests</module>
+                <module>dataservice-hosting-tests</module>
+                <module>broker-tests</module>
             </modules>
         </profile>
         <profile>

@@ -76,6 +76,7 @@
                 <exclude>**/conf/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/conf/registry.xml</exclude>
                 <exclude>**/conf/tomcat/web.xml</exclude>
+                <exclude>**/conf/deployment.toml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/wso2/components/plugins/httpclient_4.3.1.wso2v3.jar</exclude>
@@ -118,6 +119,7 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/launch.ini</exclude>
+                <exclude>**/deployment.toml</exclude>
             </excludes>
         </fileSet>
 
@@ -190,6 +192,7 @@
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/etc/launch.ini</exclude>
+                <exclude>**/conf/deployment.toml</exclude>
             </excludes>
         </fileSet>
 
@@ -207,6 +210,7 @@
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
+                <exclude>**/conf/deployment.toml</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
@@ -262,6 +266,7 @@
                 <exclude>**/tomcat/carbon/WEB-INF/web.xml</exclude>
                 <exclude>**/master-datasources.xml</exclude>
                 <exclude>**/etc/launch.ini</exclude>
+                <exclude>**/conf/deployment.toml</exclude>
             </excludes>
         </fileSet>
 
