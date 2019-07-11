@@ -1034,6 +1034,11 @@
                 <version>${andes.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.orbit.net.sf.saxon</groupId>
+                <artifactId>Saxon-HE</artifactId>
+                <version>${saxon.wso2.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.maven</groupId>
                 <artifactId>carbon-p2-plugin</artifactId>
                 <version>${carbon.p2.plugin.version}}</version>
@@ -1742,7 +1747,7 @@
         <carbon.mediation.version>4.7.3</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.5.0-m1</carbon.kernel.version>
+        <carbon.kernel.version>4.5.0-m2</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.5.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
@@ -1861,6 +1866,7 @@
         <org.apache.activemq.version>5.2.0</org.apache.activemq.version>
         <org.eclipse.paho.version>0.4.0</org.eclipse.paho.version>
         <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
+        <saxon.wso2.version>9.7.0.wso2v1</saxon.wso2.version>
 
         <commons-codec.version>1.12</commons-codec.version>
         <bouncycastle.version>1.61</bouncycastle.version>

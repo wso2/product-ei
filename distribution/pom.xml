@@ -78,6 +78,11 @@
             <version>${andes.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.wso2.orbit.net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>${saxon.wso2.version}</version>
+        </dependency>
+        <dependency>
             <groupId>slf4j.wso2</groupId>
             <artifactId>slf4j</artifactId>
             <version>${slf4j.wso2.version}</version>
@@ -99,6 +104,73 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.2</version>
+                <executions>
+                    <!-- Replace Datasource, Scope mpl classes and OAuth callback class in identity.xml -->
+                    <execution>
+                        <id>replace-for-ei-identity</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <file>
+                                ${basedir}/../p2-profile/ei-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity/identity.xml
+                            </file>
+                            <replacements>
+                                <replacement>
+                                    <xpath>/Server/JDBCPersistenceManager/DataSource/Name</xpath>
+                                    <token>(jdbc/WSO2IdentityDB)</token>
+                                    <value>jdbc/WSO2CarbonDB</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </execution>
+                    <!-- Replace Datasource, Scope mpl classes and OAuth callback class in identity.xml -->
+                    <execution>
+                        <id>replace-for-bps-identity</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <file>
+                                ${basedir}/../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity/identity.xml
+                            </file>
+                            <replacements>
+                                <replacement>
+                                    <xpath>/Server/JDBCPersistenceManager/DataSource/Name</xpath>
+                                    <token>(jdbc/WSO2IdentityDB)</token>
+                                    <value>jdbc/WSO2CarbonDB</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </execution>
+                    <!-- Replace Datasource, Scope mpl classes and OAuth callback class in identity.xml -->
+                    <execution>
+                        <id>replace-for-broker-identity</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                        <configuration>
+                            <file>
+                                ${basedir}/../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/identity/identity.xml
+                            </file>
+                            <replacements>
+                                <replacement>
+                                    <xpath>/Server/JDBCPersistenceManager/DataSource/Name</xpath>
+                                    <token>(jdbc/WSO2IdentityDB)</token>
+                                    <value>jdbc/WSO2CarbonDB</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
