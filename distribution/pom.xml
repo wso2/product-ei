@@ -78,11 +78,6 @@
             <version>${andes.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.orbit.net.sf.saxon</groupId>
-            <artifactId>Saxon-HE</artifactId>
-            <version>${saxon.wso2.version}</version>
-        </dependency>
-        <dependency>
             <groupId>slf4j.wso2</groupId>
             <artifactId>slf4j</artifactId>
             <version>${slf4j.wso2.version}</version>

@@ -243,8 +243,6 @@ do
     fi
 done
 
-JAVA_ENDORSED_DIRS="$CARBON_HOME/../lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
-
 CARBON_CLASSPATH=""
 if [ -e "$JAVA_HOME/lib/tools.jar" ]; then
     CARBON_CLASSPATH="$JAVA_HOME/lib/tools.jar"
@@ -255,7 +253,7 @@ do
         CARBON_CLASSPATH="$CARBON_CLASSPATH":$f
     fi
 done
-for t in "$CARBON_HOME"/../lib/commons-lang*.jar
+for t in "$CARBON_HOME"/../lib/*.jar
 do
     CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
 done
