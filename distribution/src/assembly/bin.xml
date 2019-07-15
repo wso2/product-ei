@@ -937,7 +937,7 @@
 
         <fileSet>
             <directory>./src/resources</directory>
-            <outputDirectory>wso2ei-${pom.version}/wso2/lib/endorsed</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/lib</outputDirectory>
             <includes>
                 <include>**/Saxon-HE-9.5.1-8.jar</include>
             </includes>
@@ -1496,11 +1496,10 @@
                 <include>org.wso2.andes.wso2:andes-client:jar</include>
                 <include>javax.jms:javax.jms-api:jar</include>
                 <include>org.wso2.securevault:org.wso2.securevault:jar</include>
-                <include>org.wso2.orbit.net.sf.saxon:Saxon-HE:jar</include>
             </includes>
         </dependencySet>
         <dependencySet>
-            <outputDirectory>wso2ei-${pom.version}/wso2/lib/endorsed</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lib</outputDirectory>
             <includes>
                 <include>javax.jms:javax.jms-api:jar</include>
             </includes>
@@ -1730,7 +1729,7 @@
 
         <file>
             <source>
-                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/activiti.h2.db
+                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/activiti.mv.db
             </source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/business-process/repository/database/
@@ -1739,7 +1738,7 @@
         </file>
         <file>
             <source>
-                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/jpadb.h2.db
+                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/jpadb.mv.db
             </source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/business-process/repository/database/
@@ -2117,7 +2116,7 @@
         </file>
         <file>
             <source>
-                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2MB_DB.h2.db
+                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2MB_DB.mv.db
             </source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/repository/database/
             </outputDirectory>

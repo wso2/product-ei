@@ -42,13 +42,13 @@ public class CARBON15379XMLExternalEntityAttacksTestCase extends DSSIntegrationT
     private static final Log log = LogFactory.getLog(CARBON15379XMLExternalEntityAttacksTestCase.class);
 
     private String xmlWithAttack = "<!DOCTYPE acunetix [  <!ENTITY sampleVal SYSTEM \"file:///sample/sample\">]>" +
-                                   "<configuration><url>jdbc:h2:repository/database/WSO2CARBON_DB;" +
+                                   "<configuration><url>jdbc:h2:./repository/database/WSO2CARBON_DB;" +
                                    "DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url><username>&sampleVal;</username>" +
                                    "<password>wso2carbon</password><driverClassName>org.h2.Driver</driverClassName>" +
                                    "<maxActive>50</maxActive><maxWait>60000</maxWait><testOnBorrow>true</testOnBorrow>" +
                                    "<validationQuery>SELECT 1</validationQuery><validationInterval>30000</validationInterval>" +
                                    "</configuration>";
-    private String xmlWithoutAttack = "<configuration><url>jdbc:h2:repository/database/WSO2CARBON_DB;" +
+    private String xmlWithoutAttack = "<configuration><url>jdbc:h2:./repository/database/WSO2CARBON_DB;" +
                                       "DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url><username>wso2carbon</username>" +
                                       "<password>wso2carbon</password><driverClassName>org.h2.Driver</driverClassName>" +
                                       "<maxActive>50</maxActive><maxWait>60000</maxWait><testOnBorrow>true</testOnBorrow>" +
