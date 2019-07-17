@@ -302,8 +302,8 @@
                 <version>${axiom.wso2.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.h2database.wso2</groupId>
-                <artifactId>h2-database-engine</artifactId>
+                <groupId>org.wso2.orbit.com.h2database</groupId>
+                <artifactId>h2</artifactId>
                 <version>${wso2.h2.orbit.version}</version>
             </dependency>
             <dependency>
@@ -1842,7 +1842,7 @@
         <wss4j.version>1.5.11-wso2v18</wss4j.version>
         <!--<emma.version>2.1.5320</emma.version>-->
         <jacoco.agent.version>0.8.4</jacoco.agent.version>
-        <wso2.h2.orbit.version>1.2.140.wso2v3</wso2.h2.orbit.version>
+        <wso2.h2.orbit.version>1.4.199.wso2v1</wso2.h2.orbit.version>
         <org.apache.cxf.version>3.2.8</org.apache.cxf.version>
         <org.springframework.version>4.1.5.RELEASE</org.springframework.version>
         <org.apache.tomcat>7.0.85</org.apache.tomcat>
