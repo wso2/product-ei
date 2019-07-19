@@ -34,7 +34,7 @@
 
     <modules>
         <module>05-synapseConfigProject</module>
-        <!--<module>5.1-Route-based-on-the-content-of-the-messages</module>-->
+        <module>5.1-Route-based-on-the-content-of-the-messages</module>
         <module>5.3-load-balance-messages-among-systems</module>
     </modules>
 
