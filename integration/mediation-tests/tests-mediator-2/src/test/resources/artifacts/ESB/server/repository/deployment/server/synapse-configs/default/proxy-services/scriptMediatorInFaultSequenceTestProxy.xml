@@ -34,7 +34,7 @@
                 <property name="Detail" expression="get-property('customErrorDetail')" />
             </log>
             <makefault version="soap11">
-                <code xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/" value="tns:Receiver" />
+                <code xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/" value="tns:Server" />
                 <reason expression="get-property('ERROR_MESSAGE')"/>
                 <detail expression="get-property('customErrorDetail')" />
             </makefault>

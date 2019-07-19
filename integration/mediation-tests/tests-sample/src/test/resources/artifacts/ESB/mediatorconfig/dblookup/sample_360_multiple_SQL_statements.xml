@@ -2,7 +2,7 @@
 
     <sequence name="myFaultHandler">
         <makefault>
-            <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+            <code value="tns:Server" xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"/>
             <reason expression="get-property('ERROR_MESSAGE')"/>
         </makefault>
 
@@ -59,8 +59,8 @@
                                 <property name="text" value="** Unrecognized Company ID **"/>
                             </log>
                             <makefault>
-                                <code value="tns:Receiver"
-                                      xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+                                <code value="tns:Server"
+                                      xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"/>
                                 <reason value="** Unrecognized Company ID **"/>
                             </makefault>
                             <property name="RESPONSE" value="true"/>
@@ -75,8 +75,8 @@
                         <property name="text" value="** Unrecognized Company ID **"/>
                     </log>
                     <makefault>
-                        <code value="tns:Receiver"
-                              xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+                        <code value="tns:Server"
+                              xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"/>
                         <reason value="** Unrecognized Company ID **"/>
                     </makefault>
                     <property name="RESPONSE" value="true"/>

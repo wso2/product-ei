@@ -62,7 +62,7 @@
     </sequence>
     <sequence name="myFaultHandler">
         <makefault>
-            <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+            <code value="tns:Server" xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"/>
             <reason expression="get-property('ERROR_MESSAGE')"/>
         </makefault>
 

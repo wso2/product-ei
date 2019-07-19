@@ -76,7 +76,7 @@
                     </case>
                     <case regex="SUN">
                         <makefault version="soap11">
-                            <code value="tns:Receiver" xmlns:tns="http://www.w3.org/2003/05/soap-envelope"/>
+                            <code value="tns:Server" xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"/>
                             <reason value="Invalid Symbol..!"/>
                         </makefault>
                         <property name="RESPONSE" value="true" scope="default" type="STRING"/>

@@ -21,7 +21,7 @@
 <definitions xmlns="http://ws.apache.org/ns/synapse">
    <sequence name="errorHandler">
       <makefault response="true">
-         <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver" />
+         <code xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/" value="tns:Server" />
          <reason value="COULDN'T SEND THE MESSAGE TO THE SERVER." />
       </makefault>
       <send />

@@ -217,7 +217,7 @@ public class JMSEndpointSuspensionViaVFSTest extends ESBIntegrationTest {
                                              "                        <property name=\"ERROR\" value=\"Endpoint Down!\"/>\n" +
                                              "                     </log>\n" +
                                              "                     <makefault>\n" +
-                                             "                         <code value=\"tns:Sender\" xmlns:tns=\"http://www.w3.org/2003/05/soap-envelope\"/>\n" +
+                                             "                         <code value=\"tns:Client\" xmlns:tns=\"http://schemas.xmlsoap.org/soap/envelope/\"/>\n" +
                                              "                         <reason value=\"Endpoint Down!\"/>\n" +
                                              "                     </makefault>\n" +
                                              "                     <send>\n" +
