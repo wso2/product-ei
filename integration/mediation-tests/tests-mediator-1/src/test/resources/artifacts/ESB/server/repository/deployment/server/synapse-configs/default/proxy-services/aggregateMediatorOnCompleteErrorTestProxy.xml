@@ -34,7 +34,7 @@
         </outSequence>
         <faultSequence>
             <makefault version="soap11">
-                <code xmlns:soap11Env="http://www.w3.org/2003/05/soap-envelope" value="soap11Env:Receiver"/>
+                <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/" value="soap11Env:Server"/>
                 <reason xmlns:ns="http://org.apache.synapse/xsd" expression="get-property('ERROR_MESSAGE')"/>
             </makefault>
             <send/>

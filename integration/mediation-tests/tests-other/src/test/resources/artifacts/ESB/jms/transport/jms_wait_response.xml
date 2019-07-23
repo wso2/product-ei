@@ -48,7 +48,7 @@ expression="get-property('ReplyTo')" scope="transport" type="STRING"/>
 
 <sequence xmlns="http://ws.apache.org/ns/synapse" name="faultHandler">
    <makefault version="soap12">
-      <code xmlns:tns="http://www.w3.org/2003/05/soap-envelope" value="tns:Receiver"/>
+      <code xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/" value="tns:Server"/>
       <reason xmlns:ns="http://org.apache.synapse/xsd" expression="get-property('ERROR_MESSAGE')"/>
    </makefault>
    <send/>
