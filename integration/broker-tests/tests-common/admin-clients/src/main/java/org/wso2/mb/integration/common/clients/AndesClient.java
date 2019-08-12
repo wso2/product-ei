@@ -19,7 +19,8 @@
 package org.wso2.mb.integration.common.clients;
 
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.mb.integration.common.clients.configurations.AndesJMSClientConfiguration;
 import org.wso2.mb.integration.common.clients.configurations.AndesJMSConsumerClientConfiguration;
 import org.wso2.mb.integration.common.clients.configurations.AndesJMSPublisherClientConfiguration;
@@ -44,7 +45,7 @@ public class AndesClient {
     /**
      * The logger used to log information, warnings, errors, etc.
      */
-    private static Logger log = Logger.getLogger(AndesClient.class);
+    private static Log log = LogFactory.getLog(AndesClient.class);
 
     /**
      * The delay between starting publishers or consumers

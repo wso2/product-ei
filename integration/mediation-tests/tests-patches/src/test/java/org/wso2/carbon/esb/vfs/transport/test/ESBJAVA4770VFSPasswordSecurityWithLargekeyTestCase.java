@@ -21,7 +21,8 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.awaitility.Awaitility;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -52,7 +53,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase extends ESBIntegrationTest {
 
-    private static final Logger LOGGER = Logger.getLogger(ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase.class);
+    private static final Log LOGGER = LogFactory.getLog(ESBJAVA4770VFSPasswordSecurityWithLargekeyTestCase.class);
 
     private SftpServerRunner sftpServerRunner;
     private File sampleFileFolder;

@@ -240,9 +240,6 @@
                                     org.wso2.carbon.commons:org.wso2.carbon.transaction.manager.feature:${carbon.commons.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.commons:org.wso2.carbon.logging.mgt.feature:${carbon.commons.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.message.flows.feature:${carbon.commons.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -600,10 +597,6 @@
                                 <feature>
                                     <id>org.wso2.carbon.event.publisher.aggregate.feature.group</id>
                                     <version>${carbon.analytics.common.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.logging.mgt.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.ndatasource.feature.group</id>

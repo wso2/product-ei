@@ -1,7 +1,8 @@
 package org.wso2.carbon.esb.registry.caching;
 
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.ReporterConfig;
 import org.testng.annotations.AfterClass;
@@ -26,7 +27,7 @@ import java.util.Properties;
 
 public class CachableDurationTestCase extends ESBIntegrationTest {
 
-    Logger logger = Logger.getLogger(CachableDurationTestCase.class);
+    Log logger = LogFactory.getLog(CachableDurationTestCase.class);
 
     private PropertiesAdminServiceClient propertyPropertiesAdminServiceClient;
 
