@@ -18,7 +18,8 @@
 
 package org.wso2.mb.integration.common.clients;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.mb.integration.common.clients.configurations.AndesJMSPublisherClientConfiguration;
 import org.wso2.mb.integration.common.clients.configurations.JMSHeaderProperty;
 import org.wso2.mb.integration.common.clients.configurations.JMSHeaderPropertyType;
@@ -51,7 +52,7 @@ public class AndesJMSPublisher extends AndesJMSBase implements Runnable {
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
-    private static Logger log = Logger.getLogger(AndesJMSPublisher.class);
+    private static Log log = LogFactory.getLog(AndesJMSPublisher.class);
 
     /**
      * The configuration for the publisher

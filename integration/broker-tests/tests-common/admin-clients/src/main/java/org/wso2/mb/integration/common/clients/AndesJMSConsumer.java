@@ -18,7 +18,8 @@
 
 package org.wso2.mb.integration.common.clients;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.mb.integration.common.clients.configurations.AndesJMSConsumerClientConfiguration;
 import org.wso2.mb.integration.common.clients.exceptions.AndesClientException;
 import org.wso2.mb.integration.common.clients.operations.utils.AndesClientConstants;
@@ -56,7 +57,7 @@ public class AndesJMSConsumer extends AndesJMSBase
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
-    private static Logger log = Logger.getLogger(AndesJMSConsumer.class);
+    private static Log log = LogFactory.getLog(AndesJMSConsumer.class);
 
     /**
      * The configuration for the consumer

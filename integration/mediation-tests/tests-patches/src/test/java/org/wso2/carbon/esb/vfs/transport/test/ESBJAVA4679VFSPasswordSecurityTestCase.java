@@ -21,7 +21,8 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.sshd.server.SshServer;
 import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.server.command.Command;
@@ -62,7 +63,7 @@ import java.util.Properties;
  */
 public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
 
-    private static final Logger LOGGER = Logger.getLogger(ESBJAVA4679VFSPasswordSecurityTestCase.class);
+    private static final Log LOGGER = LogFactory.getLog(ESBJAVA4679VFSPasswordSecurityTestCase.class);
     private static final String FORWARD_SLASH = "/";
 
     private FTPServerManager ftpServerManager;

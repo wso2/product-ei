@@ -20,7 +20,8 @@ package org.wso2.mb.integration.common.clients.configurations;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.mb.integration.common.clients.exceptions.AndesClientConfigurationException;
 import org.wso2.mb.integration.common.clients.operations.utils.ExchangeType;
 import org.wso2.mb.integration.common.clients.operations.utils.JMSAcknowledgeMode;
@@ -36,7 +37,7 @@ public class AndesJMSConsumerClientConfiguration extends AndesJMSClientConfigura
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
-    private static Logger log = Logger.getLogger(AndesJMSConsumerClientConfiguration.class);
+    private static Log log = LogFactory.getLog(AndesJMSConsumerClientConfiguration.class);
 
     /**
      * Message count at which the consumer un-subscribes.
