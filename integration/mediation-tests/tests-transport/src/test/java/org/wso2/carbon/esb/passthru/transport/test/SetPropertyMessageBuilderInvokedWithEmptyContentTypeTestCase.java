@@ -74,7 +74,7 @@ public class SetPropertyMessageBuilderInvokedWithEmptyContentTypeTestCase extend
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(Utils.checkForLog(logViewerClient, "messageBuilderInvokedValue = true", 20));
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains(EXPECTED_ERROR_MESSAGE)) {

@@ -34,7 +34,7 @@ public class ESBJAVA2907TestCase extends ESBIntegrationTest {
 		LogViewerClient cli = new LogViewerClient(contextUrls.getBackEndUrl(),getSessionCookie());
 		boolean hasPrefix = Utils.checkForLog(cli, GET_QUOTE_REQUEST_BODY, 5);
 		Assert.assertTrue(hasPrefix, "OMElement is not saved to the message store");
-		log.info(cli.getAllSystemLogs());
+		log.info(cli.getAllRemoteSystemLogs());
 	}
 
 	@AfterClass(alwaysRun = true)

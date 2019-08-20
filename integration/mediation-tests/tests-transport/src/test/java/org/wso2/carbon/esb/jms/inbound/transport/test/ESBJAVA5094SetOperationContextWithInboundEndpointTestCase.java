@@ -117,7 +117,7 @@ public class ESBJAVA5094SetOperationContextWithInboundEndpointTestCase extends E
         long startTime = System.currentTimeMillis();
         LogEvent[] systemLogs;
         while (!assertValue && (System.currentTimeMillis() - startTime) < 10000) {
-            systemLogs = logViewerClient.getAllSystemLogs();
+            systemLogs = logViewerClient.getAllRemoteSystemLogs();
             if (systemLogs != null) {
                 for (LogEvent logEvent : systemLogs) {
                     if (logEvent.getMessage().contains("In second sequence !!")) {

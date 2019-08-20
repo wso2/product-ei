@@ -65,7 +65,7 @@ public class JMSAccessSOAPFaultDataTestCase extends ESBIntegrationTest {
 	public void readSOAPFaultDetails() {
 		int beforeLogCount = 0;
 		try {
-			beforeLogCount = logViewerClient.getAllSystemLogs().length;
+			beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
 			AxisServiceClient client = new AxisServiceClient();
 
 			client.fireAndForget(Utils.getIncorrectRequest("Invalid"),
@@ -79,7 +79,7 @@ public class JMSAccessSOAPFaultDataTestCase extends ESBIntegrationTest {
 			String allLogs = "";
 			LogEvent[] logs;
 			try {
-				logs = logViewerClient.getAllSystemLogs();
+				logs = logViewerClient.getAllRemoteSystemLogs();
 
 				for (int i = 0; i < logs.length - beforeLogCount; i++) {
 					allLogs += logs[i].getMessage();

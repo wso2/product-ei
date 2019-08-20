@@ -78,7 +78,7 @@ public class JMSMessageStoreProcRESTTestCase extends ESBIntegrationTest {
         HttpResponse response = httpClient.doPost(url, headers, payload, "application/json");
         Thread.sleep(10000);
         assertEquals(response.getStatusLine().getStatusCode(), 202);
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int i = 1;
         for (LogEvent log : logs) {
             if (log.getMessage().contains(logLine0)) {

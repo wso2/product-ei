@@ -56,7 +56,7 @@ public class ESBJAVA2464TestCase extends ESBIntegrationTest {
 			sender.disconnect();
 		}
 
-		LogEvent[] logs = logViewer.getAllSystemLogs();
+		LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
 		for (LogEvent log : logs) {
 			if (log.getMessage().contains(logLine0)) {
 				Assert.fail(logLine0 + "is in log");

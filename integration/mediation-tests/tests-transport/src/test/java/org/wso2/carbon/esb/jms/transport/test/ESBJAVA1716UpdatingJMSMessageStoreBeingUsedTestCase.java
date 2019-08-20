@@ -81,12 +81,12 @@ public class ESBJAVA1716UpdatingJMSMessageStoreBeingUsedTestCase extends ESBInte
     @Test(groups = {"wso2.esb"}, description = "Updating MessageStore once it is used by message processor"
             , dependsOnMethods = "addMessageStoreConfigurationTest")
     public void updateMessageStoreBeingUsedTest() throws Exception {
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
         messageStoreAdminClient.updateMessageStore(synapseConfig.getFirstChildWithName(
                 new QName(synapseConfiguration.getNamespace().getNamespaceURI(), "messageStore")));
         Thread.sleep(5000);
         esbUtils.isMessageStoreDeployed(contextUrls.getBackEndUrl(), getSessionCookie(), messageStoreName);
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {

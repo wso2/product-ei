@@ -41,7 +41,7 @@ public class JMSOutOnlyTestCase extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
                 getSessionCookie());
         //to clear the logs old logs
-        logViewerClient.getAllSystemLogs();
+        logViewerClient.getAllRemoteSystemLogs();
         logViewerClient.clearLogs();
     }
 
@@ -72,7 +72,7 @@ public class JMSOutOnlyTestCase extends ESBIntegrationTest {
         Thread.sleep(60000); //wait until all message received to jms proxy
         client.sendRobust(AXIOMUtil.stringToOM(payload), contextUrls.getServiceUrl() + "/EndLogProxy", "placeOrder");
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
         boolean logMessageFound = false;
         String logMessage = "";
