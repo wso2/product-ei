@@ -128,7 +128,7 @@ public class MSMPCronForwarderCase extends ESBIntegrationTest {
             public Boolean call() throws Exception {
                 LogViewerClient logViewerClient =
                         new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-                LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
+                LogEvent[] logEvents = logViewerClient.getAllRemoteSystemLogs();
 
                 boolean success = false;
                 int msgCount = 0;

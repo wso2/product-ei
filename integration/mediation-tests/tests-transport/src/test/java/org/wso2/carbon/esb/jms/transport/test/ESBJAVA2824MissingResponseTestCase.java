@@ -59,7 +59,7 @@ public class ESBJAVA2824MissingResponseTestCase extends ESBIntegrationTest {
 			Assert.assertEquals(errMsg,"Send timeout", "JMS Client did not receive Send timeout");			
 			
 			LogViewerClient cli = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-			LogEvent[] logs = cli.getAllSystemLogs();
+			LogEvent[] logs = cli.getAllRemoteSystemLogs();
 			Assert.assertNotNull(logs, "No logs found");
 			Assert.assertTrue(logs.length > 0, "No logs found");
 			boolean errorMsgTrue = Utils.checkForLogsWithPriority(cli,"ERROR", logLine0, 10);

@@ -106,7 +106,7 @@ public class ESBJAVA3430TestCase extends ESBIntegrationTest {
 			removeProxy("VFSProxyFileCreateInRoot");
 		}
 
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
+		LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
 		for (LogEvent logEvent : logs) {
 			String message = logEvent.getMessage();
@@ -141,7 +141,7 @@ public class ESBJAVA3430TestCase extends ESBIntegrationTest {
 			removeProxy("VFSProxyFileCreateInDirectory");
 		}
 
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
+		LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
 		for (LogEvent logEvent : logs) {
 			String message = logEvent.getMessage();

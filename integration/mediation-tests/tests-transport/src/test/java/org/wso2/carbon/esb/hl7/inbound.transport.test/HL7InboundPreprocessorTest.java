@@ -44,7 +44,7 @@ public class HL7InboundPreprocessorTest extends ESBIntegrationTest {
         HL7InboundTestSender sender = new HL7InboundTestSender();
         sender.send("localhost", 20003);
         Thread.sleep(500);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean found = false;
         for (int i = 0; i < (logs.length - beforeLogCount); i++) {
             if (logs[i].getMessage().contains("Encoding ER7")) {

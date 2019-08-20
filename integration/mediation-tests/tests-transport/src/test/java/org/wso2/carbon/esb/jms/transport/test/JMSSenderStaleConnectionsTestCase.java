@@ -67,7 +67,7 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
           description = "Test for JMS sender side stale connections handling")
     public void staleConnectionsTestJMSProxy() throws Exception {
 
-        int beforeLogCount = logViewerClient.getAllSystemLogs().length;
+        int beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
         AxisServiceClient client = new AxisServiceClient();
 
         boolean isExceptionThrown = false;
@@ -86,7 +86,7 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
         client.sendRobust(Utils.getStockQuoteRequest("JMS"),
                 getProxyServiceURLHttp("JMSSenderStaleConnectionsTestProxy"), "getQuote");
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
         for (int i = 0; i < (logs.length - beforeLogCount); i++) {
             if (logs[i].getMessage().contains(exceptedErrorLog)) {
