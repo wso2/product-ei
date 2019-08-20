@@ -50,7 +50,7 @@ public class HeadMethodResponseTestCase extends ESBIntegrationTest {
         SimpleHttpClient httpClient = new SimpleHttpClient();
         httpClient.doGet(contextUrls.getServiceUrl() + "/ClientProxy", null);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean errorLogFound = false;
         for (LogEvent log : logs) {
             if (log.getMessage().contains("HTTP protocol violation")) {

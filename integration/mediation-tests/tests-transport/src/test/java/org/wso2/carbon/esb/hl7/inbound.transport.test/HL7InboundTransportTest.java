@@ -61,7 +61,7 @@ public class HL7InboundTransportTest extends ESBIntegrationTest {
         HL7InboundTestSender sender = new HL7InboundTestSender();
         String response = sender.send("localhost", 20000);
         Thread.sleep(500);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean found = false;
         for (int i = 0; i < (logs.length - beforeLogCount); i++) {
             if (logs[i].getMessage().contains("<MSG.3>ADT_A01</MSG.3>")) {

@@ -27,7 +27,7 @@ public class ESBJAVA1910TestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Test Property get-property('HTTP_SC') in message.processor.reply.sequence" , enabled = false)
     public void testStatusCode() throws Exception {
-        int beforeLogCount = logViewerClient.getAllSystemLogs().length;
+        int beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
         AxisServiceClient client = new AxisServiceClient();
         Thread.sleep(3000); //force wait until message processor executes
         client.sendRobust(Utils.getStockQuoteRequest("WSO2"), getProxyServiceURLHttp("MessageStoreProxy"), "getQuote");

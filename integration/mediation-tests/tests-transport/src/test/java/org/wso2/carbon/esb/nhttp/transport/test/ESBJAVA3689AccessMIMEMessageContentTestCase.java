@@ -86,7 +86,7 @@ public class ESBJAVA3689AccessMIMEMessageContentTestCase extends ESBIntegrationT
                 "+CiAgICA8dG9rZW4" + "+d3NvMl9hY2Nlc3NfMDAxPC90b2tlbj4KPC9taW1lPg==</data></mediate></soapenv:Body"
                 + "></soapenv:Envelope>";
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean LogFound = false;
         for (LogEvent log : logs) {
             if (log.getMessage().contains(expectedMessage)) {
