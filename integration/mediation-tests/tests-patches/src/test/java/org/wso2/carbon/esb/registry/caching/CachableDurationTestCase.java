@@ -10,9 +10,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.registry.properties.stub.utils.xsd.Property;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.esb.integration.common.clients.registry.PropertiesAdminServiceClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 
@@ -86,7 +86,7 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
     }
 
 
-    private boolean validateLogMessage(String value) throws RemoteException, LogViewerLogViewerException, InterruptedException {
+    private boolean validateLogMessage(String value) throws RemoteException, InterruptedException {
 
         LogEvent[] logs = cli.getAllSystemLogs();
         Assert.assertNotNull(logs, "No logs found");

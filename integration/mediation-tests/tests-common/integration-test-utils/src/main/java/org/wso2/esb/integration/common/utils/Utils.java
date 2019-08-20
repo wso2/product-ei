@@ -28,8 +28,8 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMe
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 
 import java.io.BufferedReader;
@@ -160,7 +160,7 @@ public class Utils {
      * @throws LogViewerLogViewerException due to a logviewer error
      */
     public static boolean assertIfSystemLogContains(LogViewerClient logViewerClient, String expected)
-            throws RemoteException, LogViewerLogViewerException {
+            throws RemoteException {
         boolean matchFound = false;
         long startTime = System.currentTimeMillis();
         LogEvent[] systemLogs;
@@ -171,7 +171,7 @@ public class Utils {
     }
 
     private static boolean assertIfLogExists(LogViewerClient logViewerClient, String expected)
-            throws RemoteException, LogViewerLogViewerException {
+            throws RemoteException {
 
         LogEvent[] systemLogs;
         systemLogs = logViewerClient.getAllRemoteSystemLogs();
@@ -201,7 +201,7 @@ public class Utils {
      * @throws LogViewerLogViewerException
      */
     private static boolean assertIfLogExistsWithGivenPriority(LogViewerClient logViewerClient, String priority, String expected)
-            throws RemoteException, LogViewerLogViewerException {
+            throws RemoteException {
 
         LogEvent[] systemLogs;
         systemLogs = logViewerClient.getAllRemoteSystemLogs();
@@ -232,7 +232,7 @@ public class Utils {
      * @throws LogViewerLogViewerException due to a logviewer error
      */
     public static boolean checkForLog(LogViewerClient logViewerClient, String expected, int timeout) throws
-            InterruptedException, RemoteException, LogViewerLogViewerException {
+            InterruptedException, RemoteException {
         boolean logExists = false;
         for (int i = 0; i < timeout; i++) {
             TimeUnit.SECONDS.sleep(1);
@@ -257,7 +257,7 @@ public class Utils {
      * @throws RemoteException
      */
     public static boolean checkForLogsWithPriority(LogViewerClient logViewerClient, String priority,  String expected, int timeout)
-            throws InterruptedException, LogViewerLogViewerException, RemoteException {
+            throws InterruptedException, RemoteException {
         boolean logExists = false;
         for (int i = 0; i < timeout; i++) {
             TimeUnit.SECONDS.sleep(1);

@@ -6,8 +6,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 
@@ -48,7 +48,7 @@ public class ESBJAVA4913HandleExceptionTest extends ESBIntegrationTest {
      */
     @Test(groups = "wso2.esb", description = "Check if clone mediator reach error sequence on error.")
     public void testExceptionHandlingInCloneMediator()
-            throws InterruptedException, IOException, LogViewerLogViewerException {
+            throws InterruptedException, IOException {
 
         final String expectedErrorMsg = "This is error sequence from sequenceOne";
 

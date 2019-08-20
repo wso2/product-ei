@@ -53,7 +53,7 @@
         <carbon.kernel.version>4.4.36</carbon.kernel.version>
         <carbon.mediation.version>4.6.105</carbon.mediation.version>
         <org.testng.version>6.1.1</org.testng.version>
-        <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
+        <automation.framework.utils.version>4.5.0</automation.framework.utils.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <httpclient.version>4.3.2</httpclient.version>
         <org.wso2.json.version>3.0.0.wso2v1</org.wso2.json.version>

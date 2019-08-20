@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
@@ -66,7 +66,7 @@ public class EndpointTemplateSuspensionTest extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Test invoking EP which cause timeout and verify whether Endpoint "
             + "template has been marked for suspension")
-    public void testTemplateEndpointSuspension () throws IOException, LogViewerLogViewerException,
+    public void testTemplateEndpointSuspension () throws IOException,
             InterruptedException {
 
         String contentType = "text/xml";//Content-Type
