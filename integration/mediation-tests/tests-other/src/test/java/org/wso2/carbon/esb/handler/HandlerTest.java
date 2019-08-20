@@ -24,8 +24,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.FileManager;
@@ -62,7 +62,7 @@ public class HandlerTest extends ESBIntegrationTest {
     @Test(groups = { "wso2.esb" },
           description = "Sending a Message Via proxy to check synapse handler logs")
     public void testSynapseHandlerExecution()
-            throws IOException, LogViewerLogViewerException {
+            throws IOException {
         boolean requestInStatus = false;
         boolean requestOutStatus = false;
         boolean responseInStatus = false;
@@ -101,7 +101,7 @@ public class HandlerTest extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Sending a message via proxy to check whether Synapse Handlers get "
             + "invoked when a SoapFault come as a response")
-    public void testSynapseHandlerExecutionWhenSoapFaultRecieved() throws IOException, LogViewerLogViewerException,
+    public void testSynapseHandlerExecutionWhenSoapFaultRecieved() throws IOException,
             InterruptedException {
         boolean responseInStatus = false;
         boolean errorOnSoapFaultStatus = false;

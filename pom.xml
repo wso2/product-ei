@@ -1848,7 +1848,7 @@
 
         <!-- auto Framework versions -->
         <automation.framework.version>4.4.4</automation.framework.version>
-        <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
+        <automation.framework.utils.version>4.5.0</automation.framework.utils.version>
         <jettison.orbit.version>1.3.4.wso2v1</jettison.orbit.version>
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>3.141.59</selenium.version>

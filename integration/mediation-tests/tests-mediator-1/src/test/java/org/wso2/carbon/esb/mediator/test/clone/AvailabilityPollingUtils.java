@@ -21,7 +21,7 @@ package org.wso2.carbon.esb.mediator.test.clone;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 import java.rmi.RemoteException;
 import java.util.concurrent.Callable;

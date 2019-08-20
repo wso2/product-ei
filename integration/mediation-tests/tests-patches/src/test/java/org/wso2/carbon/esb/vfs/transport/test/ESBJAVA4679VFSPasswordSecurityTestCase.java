@@ -42,8 +42,8 @@ import org.wso2.carbon.automation.extensions.servers.sftpserver.SFTPServer;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.stream.XMLStreamException;
@@ -146,7 +146,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "VFS secure password test")
     public void securePasswordTest()
-            throws XMLStreamException, IOException, InterruptedException, LogViewerLogViewerException {
+            throws XMLStreamException, IOException, InterruptedException {
 
         //copy SOAP message  into the SFTP server
         String sentMessageFile = "test.xml";

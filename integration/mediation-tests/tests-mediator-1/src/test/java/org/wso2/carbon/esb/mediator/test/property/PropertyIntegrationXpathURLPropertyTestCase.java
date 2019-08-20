@@ -22,8 +22,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.stream.XMLStreamException;
@@ -55,7 +55,7 @@ public class PropertyIntegrationXpathURLPropertyTestCase extends ESBIntegrationT
     }
 
     @Test(groups = {"wso2.esb"}, description = "Test getting the  URI element of a request URL")
-    public void testXpathURLProperty() throws IOException, XMLStreamException, LogViewerLogViewerException {
+    public void testXpathURLProperty() throws IOException, XMLStreamException {
         boolean isUri = false;
         logViewer.clearLogs();
         HttpRequestUtil.sendGetRequest(getApiInvocationURL("editing") + "/edit?a=wso2&b=2.4", null);

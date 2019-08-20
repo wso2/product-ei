@@ -27,7 +27,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.apache.axis2.AxisFault;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.Utils;
 
 
