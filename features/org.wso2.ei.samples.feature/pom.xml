@@ -65,7 +65,7 @@
                                 <bundleDef>org.wso2.ei:org.wso2.ei.samples</bundleDef>
                             </bundles>
                             <importFeatures>
-                                <importFeatureDef>org.apache.synapse.wso2:${carbon.mediation.version}</importFeatureDef>
+                                <importFeatureDef>org.apache.synapse.wso2:${synapse.version}</importFeatureDef>
                             </importFeatures>
                         </configuration>
                     </execution>
