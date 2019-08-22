@@ -273,7 +273,7 @@
         </fileSet>
 
         <!-- MSF4J product -->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 ../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}
             </directory>
@@ -285,10 +285,10 @@
                 <exclude>**/bin/kernel-version.txt</exclude>
 		<exclude>**/osgi/features/**</exclude>
             </excludes>
-        </fileSet>
+        </fileSet-->
 
         <!-- MSF4J scripts -->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 ../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin
             </directory>
@@ -301,22 +301,22 @@
                 <exclude>carbon.bat</exclude>
             </excludes>
             <fileMode>755</fileMode>
-        </fileSet>
+        </fileSet-->
 
         <!-- MSF4J updating netty-transports.yml-->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 src/conf/msf4j-transport/
             </directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/conf/transports/</outputDirectory>
-        </fileSet>
+        </fileSet-->
 
         <!-- MSF4J Samples -->
-        <fileSet>
+        <!--fileSet>
             <directory>../samples/msf4j</directory>
             <outputDirectory>wso2ei-${pom.version}/samples/msf4j</outputDirectory>
             <fileMode>644</fileMode>
-        </fileSet>
+        </fileSet-->
 
         <!-- BPS scripts :start-->
 
@@ -2632,7 +2632,7 @@
         <!--END Analytics file copying -->
 
 
-        <file>
+        <!--file>
             <source>src/msf4j/bin/kernel-version.txt</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
             <fileMode>644</fileMode>
@@ -2649,7 +2649,7 @@
             <source>src/msf4j/bin/carbon.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
             <fileMode>755</fileMode>
-        </file>
+        </file-->
         <!-- END Copying files related to msf4j -->
 
         <!-- Copying files related to forget me tool -->
