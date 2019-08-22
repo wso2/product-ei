@@ -62,7 +62,7 @@ public class TestFunctionStackDeepClone extends ESBIntegrationTest {
         //This sleep is added to wait till all the necessary logs are printed
         Thread.sleep(5000);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int call1Count = 0, call2Count = 0, call3Count = 0;
 
         for (LogEvent log : logs) {

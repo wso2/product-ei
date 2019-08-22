@@ -43,7 +43,7 @@ public class FaviconTest extends ESBIntegrationTest {
                     new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
 
-            LogEvent[] logs = logViewerClient.getAllSystemLogs();
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
             boolean exceptionFound = false;
             for (LogEvent item : logs) {
                 String message = item.getMessage();

@@ -125,7 +125,7 @@ public class PropertyIntegrationDefaultScopeRemovePropertiesTestCase extends ESB
      */
     private boolean isMatchFound(String matchStr) throws Exception {
         boolean isSet = false;
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int size = logs.length;
         for (int i = size-1; i >= 0; i--) {
             if (logs[i].getMessage().contains(matchStr)) {

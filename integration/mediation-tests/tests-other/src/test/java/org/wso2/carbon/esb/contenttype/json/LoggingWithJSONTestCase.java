@@ -72,7 +72,7 @@ public class LoggingWithJSONTestCase extends ESBIntegrationTest {
         WebResource webResource = client
                 .resource(getProxyServiceURLHttp("LoggingWithJSONProxy"));
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         // sending post request
         ClientResponse postResponse = webResource.type("application/json")
@@ -80,7 +80,7 @@ public class LoggingWithJSONTestCase extends ESBIntegrationTest {
 
         Thread.sleep(3000);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         String requestMessage = "Direction: request, JSON-RequestPayload = " + JSON_PAYLOAD;
@@ -99,7 +99,7 @@ public class LoggingWithJSONTestCase extends ESBIntegrationTest {
                 "Content-Type Should be application/json");
         assertEquals(postResponse.getStatus(), 201, "Response status should be 201");
 
-        beforeLogSize = logViewer.getAllSystemLogs().length;
+        beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
         isLogExists = false;
 
         // Calling the GET request to verify Added album details

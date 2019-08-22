@@ -136,7 +136,7 @@ public class Sample364TestCase extends ESBSampleIntegrationTest {
         client.sendRobust(Utils.getStockQuoteRequest("IBM")
                 , getMainSequenceURL(), "getQuote");
 
-        LogEvent[] getLogsInfo = logViewerClient.getAllSystemLogs();
+        LogEvent[] getLogsInfo = logViewerClient.getAllRemoteSystemLogs();
         boolean assertValue = false;
         for (LogEvent event : getLogsInfo) {
             if (event.getMessage().contains("Stock Prize")) {

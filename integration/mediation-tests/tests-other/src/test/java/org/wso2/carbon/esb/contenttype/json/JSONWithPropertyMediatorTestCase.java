@@ -63,7 +63,7 @@ public class JSONWithPropertyMediatorTestCase extends ESBIntegrationTest {
         WebResource webResource = client
                 .resource(getProxyServiceURLHttp("PropertyMediatorWithJsonPath"));
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         // sending post request
         ClientResponse postResponse = webResource.type("application/json")
@@ -71,7 +71,7 @@ public class JSONWithPropertyMediatorTestCase extends ESBIntegrationTest {
 
         Thread.sleep(3000);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         String msg = "Property1 = TradeWorld";

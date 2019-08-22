@@ -122,7 +122,7 @@ public class FailOverWithDisabledErrors extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test sending request to Fail Over Endpoint", enabled = false)
     public void testFailOverWithTimingOutPrimaryEp() throws IOException, InterruptedException {
         request(1);  // send request 7 times and observe the carbon log.
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int[] occurrences = new int[10];
         int[] expected = new int[]{1, 1, 5, 1, 1, 1, 1, 1, 7, 7};
         for (LogEvent log : logs) {

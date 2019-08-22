@@ -70,7 +70,7 @@ public class ESBJAVA_4239_HTTP_SC_HandlingTests extends ESBIntegrationTest {
         try {
             httpClient.executeMethod(post);
 
-            LogEvent[] logs = logViewerClient.getAllSystemLogs();
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
             for (LogEvent logEvent : logs) {
                 if (logEvent.getPriority().equals("INFO")) {
                     String message = logEvent.getMessage();

@@ -52,7 +52,7 @@ public class ESBJAVA3282CalloutJMSHeadersTestCase extends ESBIntegrationTest {
         Thread.sleep(60000); //wait until all message received to jms proxy
 
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean logFound = false;
         for (LogEvent item : logs) {
             if (item.getPriority().equals("INFO")) {

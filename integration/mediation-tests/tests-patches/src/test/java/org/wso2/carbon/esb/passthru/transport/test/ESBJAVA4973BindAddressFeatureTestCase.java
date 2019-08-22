@@ -60,7 +60,7 @@ public class ESBJAVA4973BindAddressFeatureTestCase extends ESBIntegrationTest {
         boolean httpsListenerAssert = false;
 
         //check for system logs
-        LogEvent[] systemLogs = logViewerClient.getAllSystemLogs();
+        LogEvent[] systemLogs = logViewerClient.getAllRemoteSystemLogs();
 
         for (LogEvent logEvent : systemLogs) {
             String logMessage = logEvent.getMessage();

@@ -57,12 +57,12 @@ public class PropertyIntegrationXPathBodyTestCase extends ESBIntegrationTest {
         assertTrue(response.toString().contains("WSO2 Company"));
 
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
         axis2Client.sendSimpleStockQuoteRequest
                 (getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
 
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         String msg = "stockprop = <ns:getQuote xmlns:ns=\"http://services.samples\">" +

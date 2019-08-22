@@ -103,7 +103,7 @@ public class ESBJAVA4569RabbiMQSSLStoreWithClientCertValidationTest extends ESBI
         } else {
             assertTrue(false);
         }
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int i = 1;
         for (LogEvent log : logs) {
             if (log.getMessage().contains(logLine0)) {

@@ -52,14 +52,14 @@ public class PropertyIntegrationXPathExtensionTestCase extends ESBIntegrationTes
     public void testRESPONSETEnabledTrue() throws IOException {
 
         // before deployment of car app
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
                 (getProxyServiceURLHttp("Hello"), null, "WSO2");
 
         assertTrue(response.toString().contains("WSO2"));
 
         // after deployment of car app
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {

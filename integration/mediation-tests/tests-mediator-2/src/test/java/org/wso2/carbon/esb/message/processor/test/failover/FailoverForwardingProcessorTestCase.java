@@ -65,7 +65,7 @@ public class FailoverForwardingProcessorTestCase extends ESBIntegrationTest {
     private boolean isMatchFound(String matchStr) throws Exception {
         boolean logFound = false;
         for (int i = 0; i < 60; i++) {
-            LogEvent[] logEvents = logViewer.getAllSystemLogs();
+            LogEvent[] logEvents = logViewer.getAllRemoteSystemLogs();
             if (logEvents != null) {
                 for (LogEvent logEvent : logEvents) {
                     if (logEvent == null) {
