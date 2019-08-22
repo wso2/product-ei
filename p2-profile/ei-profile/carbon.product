@@ -21,6 +21,9 @@ version="4.5.0.alpha" useFeatures="true" includeLaunchers="true">
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.ops4j.pax.logging.pax-logging-api" autoStart="true" startLevel="3" />
+      <plugin id="org.ops4j.pax.logging.pax-logging-log4j2" autoStart="true" startLevel="3" />
+      <plugin id="org.wso2.carbon.pax-logging-log4j2-plugins" autoStart="true" startLevel="3" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
 

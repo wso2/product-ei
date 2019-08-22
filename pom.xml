@@ -1702,7 +1702,7 @@
         <axiom.wso2.version>1.2.11-wso2v16</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v117</synapse.version>
+        <synapse.version>2.1.7-wso2v118</synapse.version>
 
         <!-- Axis2 Transport -->
         <axis2.transport.version>2.0.0-wso2v35</axis2.transport.version>
@@ -1711,14 +1711,14 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.7.8</carbon.mediation.version>
+        <carbon.mediation.version>4.7.9</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.5.0-alpha</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.5.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.7.6</carbon.commons.version>
+        <carbon.commons.version>4.7.7</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.9.9</carbon.deployment.version>
@@ -1752,10 +1752,10 @@
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.7.7</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.7.8</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
-        <jaggery.version>0.12.9</jaggery.version>
+        <jaggery.version>0.14.9</jaggery.version>
         <jaggery.modules.carbon.version>1.5.5</jaggery.modules.carbon.version>
         <jaggery.modules.process.version>1.5.5</jaggery.modules.process.version>
         <jaggery.modules.i18n.version>1.5.5</jaggery.modules.i18n.version>
