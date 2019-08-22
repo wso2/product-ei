@@ -81,7 +81,7 @@ public class ESBJAVA1716UpdatingJMSMessageStoreBeingUsedTestCase extends ESBInte
     @Test(groups = {"wso2.esb"}, description = "Updating MessageStore once it is used by message processor"
             , dependsOnMethods = "addMessageStoreConfigurationTest")
     public void updateMessageStoreBeingUsedTest() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
         messageStoreAdminClient.updateMessageStore(synapseConfig.getFirstChildWithName(
                 new QName(synapseConfiguration.getNamespace().getNamespaceURI(), "messageStore")));
         Thread.sleep(5000);
@@ -89,7 +89,7 @@ public class ESBJAVA1716UpdatingJMSMessageStoreBeingUsedTestCase extends ESBInte
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
+        for (int i = 0; i < afterLogSize; i++) {
             Assert.assertFalse(logs[i].getMessage().contains("synapse.message.processor.quartz.JMSTestMessageProcessor-forward job threw an")
                     , "Exception observed in backend when editing message store which is used by message processor > " + logs[i].getMessage());
         }

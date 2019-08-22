@@ -49,8 +49,7 @@ public class PassthroughTransportHttpProxyTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Passthrough Transport Http.proxy test case")
     public void passthroughTransportHttpProxy() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
-
+        logViewer.clearLogs();
         try {
             axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("HttpProxyTest"), "", "IBM");
         } catch (AxisFault expected) {
@@ -60,7 +59,7 @@ public class PassthroughTransportHttpProxyTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
 
         boolean proxyhostEntryFound = false;
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
+        for (int i = 0; i < afterLogSize; i++) {
             if (logs[i].getMessage().contains("111.wso2.com:7777")) {
                 proxyhostEntryFound = true;
                 break;
