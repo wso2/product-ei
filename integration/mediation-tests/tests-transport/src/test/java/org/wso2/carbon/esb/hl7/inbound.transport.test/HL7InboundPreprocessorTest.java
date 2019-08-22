@@ -39,14 +39,14 @@ public class HL7InboundPreprocessorTest extends ESBIntegrationTest {
 
     @Test(priority=3, groups = { "wso2.esb" }, description = "Test HL7 PreProcessor")
     public void testHL7InboundAutoAck() throws Exception {
-        int beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
+        logViewerClient.clearLogs();
         addInboundEndpoint(addEndpoint0());
         HL7InboundTestSender sender = new HL7InboundTestSender();
         sender.send("localhost", 20003);
         Thread.sleep(500);
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean found = false;
-        for (int i = 0; i < (logs.length - beforeLogCount); i++) {
+        for (int i = 0; i < logs.length; i++) {
             if (logs[i].getMessage().contains("Encoding ER7")) {
                 found = true;
                 break;
