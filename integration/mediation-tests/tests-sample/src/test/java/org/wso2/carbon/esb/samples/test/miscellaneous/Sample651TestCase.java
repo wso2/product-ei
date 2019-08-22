@@ -64,7 +64,7 @@ public class Sample651TestCase extends ESBSampleIntegrationTest {
 
         boolean isRequestLogFound = false;
 
-        LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
+        LogEvent[] logEvents = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent event : logEvents) {
             if (event.getMessage().contains("Simple logging observer initialized")) {
                 isRequestLogFound = true;

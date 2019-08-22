@@ -65,6 +65,7 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
 
         String propertyName = "nhttp.log.directory";
         createNewDir(httpLogDir);
+        applyProperty(srcFile, propertyName, httpLogDir);
         applyProperty(log4jProperties, "logger.synapse-transport-http-access.level", "DEBUG");
         serverConfigurationManager.restartGracefully();
         super.init();

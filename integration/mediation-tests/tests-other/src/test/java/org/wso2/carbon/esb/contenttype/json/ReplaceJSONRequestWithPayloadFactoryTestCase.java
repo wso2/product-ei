@@ -63,7 +63,7 @@ public class ReplaceJSONRequestWithPayloadFactoryTestCase extends ESBIntegration
         WebResource webResource = client
                 .resource(getProxyServiceURLHttp("ReplacePayloadJSONProxy"));
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         // sending post request
         ClientResponse postResponse = webResource.type("application/json")

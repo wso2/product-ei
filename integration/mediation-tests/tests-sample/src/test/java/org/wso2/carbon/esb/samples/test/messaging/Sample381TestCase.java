@@ -72,7 +72,7 @@ public class Sample381TestCase extends ESBSampleIntegrationTest {
 
         boolean isRequestLogFound = false;
 
-        LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
+        LogEvent[] logEvents = logViewerClient.getAllRemoteSystemLogs();
 
         for (LogEvent event : logEvents) {
             if (event.getMessage().contains("MSTF")) {

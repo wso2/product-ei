@@ -54,12 +54,12 @@ public class PropertyIntegrationXpathAxis2PropertyTestCase extends ESBIntegratio
     @Test(groups = {"wso2.esb"}, description = "Test getting the property value at the axis2 scope")
     public void testRESPONSETEnabledTrue() throws IOException {
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         axis2Client.sendSimpleStockQuoteRequest
                 (getProxyServiceURLHttp("StockQuoteProxy") + "/test/prefix", null, "WSO2");
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
 
         int afterLogSize = logs.length;
 

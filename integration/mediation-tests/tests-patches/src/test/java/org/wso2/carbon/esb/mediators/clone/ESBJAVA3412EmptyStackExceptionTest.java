@@ -66,7 +66,7 @@ public class ESBJAVA3412EmptyStackExceptionTest extends ESBIntegrationTest {
 
 		Thread.sleep(2000);
 
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
+		LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
 		// Asserting both the ERROR message and the stack trace.
 

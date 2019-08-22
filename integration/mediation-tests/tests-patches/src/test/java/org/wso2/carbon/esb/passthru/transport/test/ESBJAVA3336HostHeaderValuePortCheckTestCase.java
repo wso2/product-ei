@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import static org.testng.Assert.assertFalse;
@@ -58,6 +59,7 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
         applyProperty(log4jProperties, "loggers", "" + loggers + ", synapse-transport-http-wire");
         applyProperty(log4jProperties, "logger.synapse-transport-http-wire.name",
                 "org.apache.synapse.transport.http.wire");
+        serverConfigurationManager.reInitializeConfigData();
         applyProperty(log4jProperties, "logger.synapse-transport-http-wire.level", "DEBUG");
         serverConfigurationManager.restartGracefully();
         init();
