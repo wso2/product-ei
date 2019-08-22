@@ -61,12 +61,11 @@ public class HttpAccessLogTestCase extends ESBIntegrationTest {
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
         httpLogDir = carbonHome + File.separator + "repository" + File.separator + "logs" + File.separator + "httpLogs";
         File log4jProperties = new File(carbonHome + File.separator + "conf" +
-                File.separator + "log4j.properties");
+                File.separator + "log4j2.properties");
 
         String propertyName = "nhttp.log.directory";
         createNewDir(httpLogDir);
-        applyProperty(srcFile, propertyName, httpLogDir);
-        applyProperty(log4jProperties, "log4j.logger.org.apache.synapse.transport.http.access", "DEBUG");
+        applyProperty(log4jProperties, "logger.synapse-transport-http-access.level", "DEBUG");
         serverConfigurationManager.restartGracefully();
         super.init();
         verifyProxyServiceExistence("HttpAccessLogsTestProxy");

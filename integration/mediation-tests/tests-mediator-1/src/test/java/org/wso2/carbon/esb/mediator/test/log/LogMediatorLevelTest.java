@@ -57,11 +57,6 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
         Assert.assertTrue(response.toString().contains("WSO2"));
         log.info(response);
         Thread.sleep(2000);
-
-        LogEvent[] getLogsDebug = logViewer.getLogs("DEBUG", "LogMediator", "", "");
-        LogEvent[] getLogsTrace = logViewer.getLogs("TRACE", "LogMediator", "", "");
-        LogEvent[] getLogsInfo = logViewer.getLogs("INFO", "LogMediator", "", "");
-
         logAdmin.updateLoggerData("org.apache.synapse", LoggingAdminClient.LogLevel.INFO.name(), true, false);
     }
 
