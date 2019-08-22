@@ -53,7 +53,7 @@ public class PropertyIntegrationXPathTrpPropertyTestCase extends ESBIntegrationT
                                                "Content-Type of the current message")
     public void testRESPONSETEnabledTrue() throws IOException, XMLStreamException {
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         OMElement response = axis2Client.sendSimpleStockQuoteRequest
                 (getProxyServiceURLHttp("StockQuoteProxy")
@@ -61,7 +61,7 @@ public class PropertyIntegrationXPathTrpPropertyTestCase extends ESBIntegrationT
 
         assertTrue(response.toString().contains("IBM"), "Asserting for IBM in response");
         // after deployment of car app
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {

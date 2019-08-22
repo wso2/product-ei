@@ -46,7 +46,7 @@ public class ESBJAVA3019_ScriptWithNullJson extends ESBIntegrationTest {
 
         boolean jsonNullErrorFound = false;
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains("testNull")) {
                 jsonNullErrorFound = true;

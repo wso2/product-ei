@@ -56,7 +56,7 @@ public class PropertyIntegrationXpathCtxPropertyTestCase extends ESBIntegrationT
                                                "$ctx:ERROR_MESSAGE scenario", enabled = false)
     public void testRESPONSETEnabledTrue() throws IOException, XMLStreamException {
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         AxisServiceClient axisServiceClient = new AxisServiceClient();
         OMElement putRequest = AXIOMUtil.stringToOM("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
@@ -77,7 +77,7 @@ public class PropertyIntegrationXpathCtxPropertyTestCase extends ESBIntegrationT
 
         axisServiceClient.fireAndForget(putRequest, getProxyServiceURLHttp("StockQuoteProxy"), "getQuote");
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {

@@ -114,7 +114,7 @@ public class JDBCMessageStoreProcRESTTestCase extends ESBIntegrationTest{
         HttpResponse response = httpClient.doPost(url, headers, payload, "application/json");
         assertEquals(response.getStatusLine().getStatusCode(), 202);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int i = 1;
         for (LogEvent log : logs) {
             if (log.getMessage().contains(logLine0)) {

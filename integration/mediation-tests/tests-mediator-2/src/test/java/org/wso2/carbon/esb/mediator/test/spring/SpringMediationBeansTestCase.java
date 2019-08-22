@@ -80,7 +80,7 @@ public class SpringMediationBeansTestCase extends ESBIntegrationTest {
 
 		} catch (Exception axisFault) {
 			try {
-				LogEvent[] logs = logViewerClient.getAllSystemLogs();
+				LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 				for (LogEvent logEvent : logs) {
 					String message = logEvent.getMessage();
 					if (message

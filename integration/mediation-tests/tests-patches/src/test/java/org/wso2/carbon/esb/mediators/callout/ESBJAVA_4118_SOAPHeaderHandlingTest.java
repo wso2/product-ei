@@ -63,7 +63,7 @@ public class ESBJAVA_4118_SOAPHeaderHandlingTest extends ESBIntegrationTest {
             log.info("Response Status: " + result);
             log.info("Response Body: "+ responseBody);
 
-            LogEvent[] logs = logViewerClient.getAllSystemLogs();
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
             for (LogEvent logEvent : logs) {
                 if (logEvent.getPriority().equals("ERROR")) {
                     String message = logEvent.getMessage();

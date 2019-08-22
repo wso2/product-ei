@@ -45,7 +45,7 @@ public class AvailabilityPollingUtils {
                 LogEvent[] getLogsInfo;
                 boolean assertValue = false;
                 try {
-                    getLogsInfo = logViewer.getAllSystemLogs();
+                    getLogsInfo = logViewer.getAllRemoteSystemLogs();
                     for (LogEvent event : getLogsInfo) {
                         log.info("Read Log: " + event.getMessage());
                         if (event.getMessage().contains("REQUEST PARAM VALUE")) {

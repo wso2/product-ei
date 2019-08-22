@@ -57,7 +57,7 @@ public class EagerLoadingTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", enabled = true, description = "Test server start up with Eager loading")
     public void testStartupLogs() throws Exception {
-        LogEvent[] logs = this.logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = this.logViewerClient.getAllRemoteSystemLogs();
         Assert.assertNotNull(logs, "No logs found");
         Assert.assertTrue(logs.length > 0, "No logs found");
         boolean serverStarted = false;

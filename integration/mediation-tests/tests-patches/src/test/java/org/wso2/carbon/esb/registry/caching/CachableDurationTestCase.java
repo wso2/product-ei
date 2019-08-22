@@ -88,7 +88,7 @@ public class CachableDurationTestCase extends ESBIntegrationTest {
 
     private boolean validateLogMessage(String value) throws RemoteException, InterruptedException {
 
-        LogEvent[] logs = cli.getAllSystemLogs();
+        LogEvent[] logs = cli.getAllRemoteSystemLogs();
         Assert.assertNotNull(logs, "No logs found");
         Assert.assertTrue(logs.length > 0, "No logs found");
         return Utils.checkForLog(cli, value, 2);

@@ -62,7 +62,7 @@ public class LogMediatorLevelTest extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests System Logs")
     public void testSystemLogs() throws Exception {
-        int beforeCount = logViewer.getAllSystemLogs().length;
+        int beforeCount = logViewer.getAllRemoteSystemLogs().length;
         OMElement response = axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("logMediatorLevelTestProxy"),
                                                                      null, "WSO2");
         Assert.assertTrue(response.toString().contains("WSO2"));

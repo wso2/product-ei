@@ -61,7 +61,7 @@ public class FaultSequenceExecutionOrderTestCase extends ESBIntegrationTest {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", contentType);
         httpClient.doPost(getMainSequenceURL() + "faultSequenceExecutionOrderTest", headers, "", contentType);
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean isImmediateOnly = false, isSuperSequecefalutExecuted = false;
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains("cF = C Fault")) {
