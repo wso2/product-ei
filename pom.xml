@@ -1718,7 +1718,7 @@
         <carbon.kernel.imp.pkg.version>[4.5.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.7.6</carbon.commons.version>
+        <carbon.commons.version>4.7.7</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
         <carbon.deployment.version>4.9.9</carbon.deployment.version>
@@ -1755,7 +1755,7 @@
         <carbon.multitenancy.version>4.7.8</carbon.multitenancy.version>
         <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
         therefore please don't upgrade to 0.13.x -->
-        <jaggery.version>0.12.9</jaggery.version>
+        <jaggery.version>0.14.9</jaggery.version>
         <jaggery.modules.carbon.version>1.5.5</jaggery.modules.carbon.version>
         <jaggery.modules.process.version>1.5.5</jaggery.modules.process.version>
         <jaggery.modules.i18n.version>1.5.5</jaggery.modules.i18n.version>
