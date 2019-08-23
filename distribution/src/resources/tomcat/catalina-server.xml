@@ -42,7 +42,7 @@
                 compression="on"
                 compressionMinSize="2048"
                 noCompressionUserAgents="gozilla, traviata"
-                compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
+                compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
                 URIEncoding="UTF-8"/>
 
     <!--
@@ -53,7 +53,7 @@
     <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
                 port="9443"
                 bindOnInit="false"
-                sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
+                sslEnabledProtocols="+TLSv1,+TLSv1.1,+TLSv1.2"
                 maxHttpHeaderSize="8192"
                 acceptorThreadCount="2"
                 maxThreads="250"
@@ -73,7 +73,7 @@
 				keystorePass="wso2carbon"
                 compressionMinSize="2048"
                 noCompressionUserAgents="gozilla, traviata"
-                compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
+                compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
                 URIEncoding="UTF-8"/>
 
 
