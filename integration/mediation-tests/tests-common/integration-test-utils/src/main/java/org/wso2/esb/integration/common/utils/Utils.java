@@ -28,7 +28,6 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMe
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
 import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.clients.mediation.MessageStoreAdminClient;
 
@@ -36,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -151,13 +151,40 @@ public class Utils {
     }
 
     /**
+     * Get set of logs with expected string and given priority
+     *
+     * @param logViewerClient LogViewerClient object
+     * @param priority        priority level
+     * @param expected        expected string
+     * @return set of logs with expected string and given priority
+     * @throws RemoteException
+     */
+    public static ArrayList<LogEvent> getLogsWithExpectedValue(LogViewerClient logViewerClient, String priority,
+                                                      String expected) throws RemoteException {
+        LogEvent[] allLogs;
+        allLogs = logViewerClient.getAllRemoteSystemLogs();
+        ArrayList<LogEvent> systemLogs = new ArrayList<>();
+        int i = 0;
+        if (allLogs != null) {
+            for (LogEvent logEvent : allLogs) {
+                if (logEvent == null) {
+                    continue;
+                }
+                if (logEvent.getPriority().equals(priority) && logEvent.getMessage().contains(expected)) {
+                    systemLogs.add(logEvent);
+                }
+            }
+        }
+        return systemLogs;
+    }
+
+    /**
      * Check if the system log contains the expected string. The search will be done for maximum 10 seconds.
      *
      * @param logViewerClient log viewer used for test
      * @param expected        expected string
      * @return true if a match found, false otherwise
      * @throws RemoteException             due to a logviewer error
-     * @throws LogViewerLogViewerException due to a logviewer error
      */
     public static boolean assertIfSystemLogContains(LogViewerClient logViewerClient, String expected)
             throws RemoteException {
@@ -198,7 +225,6 @@ public class Utils {
      * @param expected        expected string
      * @return true if a log found with expected string of given priority, false otherwise
      * @throws RemoteException
-     * @throws LogViewerLogViewerException
      */
     private static boolean assertIfLogExistsWithGivenPriority(LogViewerClient logViewerClient, String priority, String expected)
             throws RemoteException {
@@ -229,7 +255,6 @@ public class Utils {
      * @return true if the log is found with given timeout, false otherwise
      * @throws InterruptedException        if interrupted while sleeping
      * @throws RemoteException             due to a logviewer error
-     * @throws LogViewerLogViewerException due to a logviewer error
      */
     public static boolean checkForLog(LogViewerClient logViewerClient, String expected, int timeout) throws
             InterruptedException, RemoteException {
@@ -253,7 +278,6 @@ public class Utils {
      * @param timeout         timeout value in seconds
      * @return true if a log found with the given priority and content within the given timeout, false otherwise
      * @throws InterruptedException
-     * @throws LogViewerLogViewerException
      * @throws RemoteException
      */
     public static boolean checkForLogsWithPriority(LogViewerClient logViewerClient, String priority,  String expected, int timeout)
