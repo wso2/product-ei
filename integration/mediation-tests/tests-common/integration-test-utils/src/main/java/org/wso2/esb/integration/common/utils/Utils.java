@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-
 public class Utils {
 
     private static Log log = LogFactory.getLog(Utils.class);
