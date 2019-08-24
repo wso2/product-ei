@@ -328,7 +328,7 @@ do
     -Dorg.wso2.ignoreHostnameVerification=true \
     -Dorg.apache.activemq.SERIALIZABLE_PACKAGES="*" \
     -Djavax.xml.xpath.XPathFactory:http://java.sun.com/jaxp/xpath/dom=net.sf.saxon.xpath.XPathFactoryImpl \
-    -DavoidConfigUpdate \
+    -DavoidConfigUpdate=true \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done
