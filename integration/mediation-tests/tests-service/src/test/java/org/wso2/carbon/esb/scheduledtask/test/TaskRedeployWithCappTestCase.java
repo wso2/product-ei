@@ -43,8 +43,8 @@ public class TaskRedeployWithCappTestCase extends ESBIntegrationTest {
 
     @Test(groups = { "wso2.esb" })
     public void taskRedeployWithCappTest() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
+        logViewer.clearLogs();
         carbonAppUploaderClient.uploadCarbonAppArtifact(carFileFullName, new DataHandler( new FileDataSource( new File
                 (getESBResourceLocation() + File.separator +
                         "scheduledTask" + File.separator + carFileFullName))));
@@ -68,7 +68,7 @@ public class TaskRedeployWithCappTestCase extends ESBIntegrationTest {
         int startLogCount = 0;
         int endLogCount = 0;
 
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
+        for (int i = 0; i < afterLogSize; i++) {
             if (logs[i].getMessage().contains("STARTED PROXY")) {
                 startLogCount++;
 

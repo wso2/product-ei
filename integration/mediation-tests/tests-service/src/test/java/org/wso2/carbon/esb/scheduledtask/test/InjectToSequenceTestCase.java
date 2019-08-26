@@ -59,14 +59,14 @@ public class InjectToSequenceTestCase extends ESBIntegrationTest {
                                               "    <task:property name=\"injectTo\" value=\"sequence\"/>\n" +
                                               "</task:task>");
 
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
+        logViewer.clearLogs();
         addScheduledTask(task);
         TimeUnit.SECONDS.sleep(5);
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         boolean invokedLogFound = false;
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
+        for (int i = 0; i < afterLogSize; i++) {
             if (logs[i].getMessage().contains("SEQUENCE INVOKED")) {
                 invokedLogFound = true;
                 break;
