@@ -127,9 +127,9 @@ public class PropertyIntegrationDefaultScopeRemovePropertiesTestCase extends ESB
         boolean isSet = false;
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int size = logs.length;
-        for (int i = size-1; i >= 0; i--) {
+        for (int i = 0; i < size; i++) {
             if (logs[i].getMessage().contains(matchStr)) {
-                for (int j = i; j >= 0; j--) {
+                for (int j = i; j < size; j++) {
                     if (logs[j].getMessage().contains("symbol = null")) {
                         isSet = true;
                         break;
