@@ -65,7 +65,7 @@ public class ServiceChainingTest extends ESBIntegrationTest {
         sc.fireAndForget(createStandardSimpleRequest("wso2"));
         // Get logs by tenant name
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), sessionCookie);
-        ArrayList<LogEvent> logs = Utils.getLogsWithExpectedValue(logViewerClient, "ALL", "RECEIVE");
+        ArrayList<LogEvent> logs = Utils.getLogsWithExpectedValue(logViewerClient, "INFO", "RECEIVE");
         Assert.assertNotNull(logs, "Expected logs were not found");
         LogEvent receiveSeqLog_1 = getLogEventByMessage(logs, "DEBUG SEQ 1 = FIRST RECEIVE SEQUENCE");
         Assert.assertNotNull(receiveSeqLog_1);
