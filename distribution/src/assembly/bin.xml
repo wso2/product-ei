@@ -1844,7 +1844,7 @@
             <filtered>true</filtered>
         </file>
         <file>
-            <source>src/business-process/conf/log4j.properties</source>
+            <source>src/business-process/conf/log4j2.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf
             </outputDirectory>
             <fileMode>644</fileMode>
