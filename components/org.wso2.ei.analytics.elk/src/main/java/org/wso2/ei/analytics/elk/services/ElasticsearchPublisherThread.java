@@ -22,10 +22,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.wso2.ei.analytics.elk.publisher.ElasticStatisticsPublisher;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class ElasticsearchPublisherThread extends Thread {
     // To stop running
     private volatile boolean shutdownRequested = false;
 
-    private TransportClient client;
+    private RestHighLevelClient client;
     private int bulkSize;
     private long bulkTimeOut;
     private long bufferEmptySleep;
@@ -52,15 +54,15 @@ public class ElasticsearchPublisherThread extends Thread {
     /**
      * This adds the following configurable values to the thread.
      *
-     * @param transportClient  configured transport client object
+     * @param restClient       configured rest client object
      * @param bulkSize         maximum size of the bulk to be published at a time
      * @param bulkTimeOut      time out for bulk collecting from the buffer
      * @param bufferEmptySleep thread sleep time when the event buffer is empty
      * @param noNodesSleep     thread sleep time when the Elasticsearch cluster is down
      */
-    public void init(TransportClient transportClient, int bulkSize, long bulkTimeOut, long bufferEmptySleep,
+    public void init(RestHighLevelClient restClient, int bulkSize, long bulkTimeOut, long bufferEmptySleep,
                      long noNodesSleep) {
-        this.client = transportClient;
+        this.client = restClient;
         this.bulkSize = bulkSize;
         this.bulkTimeOut = bulkTimeOut;
         this.bufferEmptySleep = bufferEmptySleep;
@@ -86,20 +88,24 @@ public class ElasticsearchPublisherThread extends Thread {
                     throw new RuntimeException();
                 }
             } else {
-                if (isPublishing) {
-                    // If nodes has connected before, check whether nodes are not connected now
-                    if (client.connectedNodes().isEmpty()) {
-                        // Log only once
-                        log.info("No available Elasticsearch nodes to connect. Waiting for nodes... ");
-                        isPublishing = false;
+                try {
+                    if (isPublishing) {
+                        // If nodes has connected before, check whether nodes are not connected now
+                        if (!client.ping(RequestOptions.DEFAULT)) {
+                            // Log only once
+                            log.info("No available Elasticsearch nodes to connect. Waiting for nodes... ");
+                            isPublishing = false;
+                        }
+                    } else {
+                        // If nodes has not connected before, check whether node are connected now
+                        if (client.ping(RequestOptions.DEFAULT)) {
+                            // Log only once
+                            log.info("Elasticsearch node connected");
+                            isPublishing = true;
+                        }
                     }
-                } else {
-                    // If nodes has not connected before, check whether node are connected now
-                    if (!(client.connectedNodes().isEmpty())) {
-                        // Log only once
-                        log.info("Elasticsearch node connected");
-                        isPublishing = true;
-                    }
+                } catch (IOException e) {
+                    log.debug("Elasticsearch connection error.", e);
                 }
 
                 if (!isPublishing) {

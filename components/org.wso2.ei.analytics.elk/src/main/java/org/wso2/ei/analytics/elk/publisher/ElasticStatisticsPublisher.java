@@ -34,24 +34,26 @@ import org.apache.commons.logging.LogFactory;
 
 import org.apache.synapse.aspects.flow.statistics.publishing.PublishingEvent;
 import org.apache.synapse.aspects.flow.statistics.publishing.PublishingFlow;
-import org.elasticsearch.ElasticsearchSecurityException;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkProcessor;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.client.transport.NoNodeAvailableException;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.wso2.carbon.das.data.publisher.util.PublisherUtil;
 
-import org.elasticsearch.client.transport.TransportClient;
 import org.wso2.ei.analytics.elk.util.ElasticObserverConstants;
 
 /**
- * Processes the PublishingFlow into json strings and publishes to Elasticsearch using the TransportClient
+ * Processes the PublishingFlow into json strings and publishes to Elasticsearch using the RestHighLevelClient.
  */
 public class ElasticStatisticsPublisher {
 
     private ElasticStatisticsPublisher() {
     }
 
+    private static BulkProcessor bulkProcessor;
     private static final Log log = LogFactory.getLog(ElasticStatisticsPublisher.class);
 
     /*
@@ -113,33 +115,26 @@ public class ElasticStatisticsPublisher {
     }
 
     /**
-     * Publishes the array list of simplified jsons to Elasticsearch using the Transport client
+     * Publishes the array list of simplified jsons to Elasticsearch using the Java High Level REST Client.
      *
      * @param jsonsToSend array list of json strings to be published to Elasticsearch
-     * @param client      elasticsearch Transport client
+     * @param client      elasticsearch RestHighLevelClient
      */
-    public static void publish(List<String> jsonsToSend, TransportClient client) {
-        try {
-            // Prepares the bulk request
-            BulkRequestBuilder bulkRequest = client.prepareBulk();
+    public static void publish(List<String> jsonsToSend, RestHighLevelClient client) {
+
+        // Prepare and Send the bulk request
+        IndexRequest indexRequest = new IndexRequest("eidata");
+        if (jsonsToSend != null) {
             for (String jsonString : jsonsToSend) {
-                bulkRequest.add(client.prepareIndex("eidata", "data")
-                        .setSource(jsonString, XContentType.JSON)
-                );
+                BulkProcessor.Builder bulkProcessorBuilder = BulkProcessor.builder(
+                        (request, bulkListener) ->
+                                client.bulkAsync(request, RequestOptions.DEFAULT, bulkListener),
+                        new BulkProcessorListener());
+                bulkProcessor = bulkProcessorBuilder.build();
+                indexRequest.source(jsonString, XContentType.JSON);
+                bulkProcessor.add(indexRequest);
+                bulkProcessor.close();
             }
-
-            // Send the bulk request
-            BulkResponse response = bulkRequest.get();
-
-            if (log.isDebugEnabled()) {
-                log.debug("Bulk Request took " + response.getTook() + " milliseconds");
-            }
-        } catch (NoNodeAvailableException e) {
-            log.error("No available Elasticsearch Nodes to connect. Please give correct configurations and" +
-                    " run Elasticsearch.", e);
-        } catch (ElasticsearchSecurityException e) {
-            log.error("Elasticsearch user lacks access to write.", e);
-            client.close();
         }
     }
 
@@ -167,5 +162,32 @@ public class ElasticStatisticsPublisher {
      */
     public static Queue<Map<String, Object>> getAllMappingsQueue() {
         return allMappingsQueue;
+    }
+
+    /**
+     * The requests will be executed by the BulkProcessor, which takes care of calling the BulkProcessor.Listener
+     * for every bulk request.
+     * The listener provides methods to access to the BulkRequest and the BulkResponse.
+     */
+    static class BulkProcessorListener implements BulkProcessor.Listener {
+        @Override
+        public void beforeBulk(long executionId, BulkRequest request) {
+            log.debug("Executing bulk [{" + executionId + "}]");
+        }
+
+        @Override
+        public void afterBulk(long executionId, BulkRequest request, BulkResponse response) {
+            if (response.hasFailures()) {
+                log.warn("Bulk [{" + executionId + "}] executed with failures");
+            } else if (log.isDebugEnabled()) {
+                log.debug("Bulk [{" + executionId + "}] completed in {" + response.getTook().getMillis() +
+                        "} milliseconds");
+            }
+        }
+
+        @Override
+        public void afterBulk(long executionId, BulkRequest request, Throwable failure) {
+            log.error("Failed to execute bulk", failure);
+        }
     }
 }

@@ -18,20 +18,34 @@
 
 package org.wso2.ei.analytics.elk.observer;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.elasticsearch.ElasticsearchSecurityException;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.TransportAddress;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient;
 
 import org.apache.synapse.aspects.flow.statistics.publishing.PublishingFlow;
 import org.wso2.carbon.base.ServerConfiguration;
@@ -52,10 +66,12 @@ import org.wso2.ei.analytics.elk.util.ElasticObserverConstants;
  * Gets stored in MessageFlowObserverStore and updateStatistics() is notified by the MessageFlowReporterThread.
  */
 public class ElasticMediationFlowObserver implements MessageFlowObserver {
+
     private static final Log log = LogFactory.getLog(ElasticMediationFlowObserver.class);
 
-    // Defines elasticsearch Transport Client as client
-    private TransportClient client = null;
+    // Defines elasticsearch RestHighLevelClient as client
+    private RestHighLevelClient client = null;
+    private HttpHost elasticHost = null;
 
     // Thread to publish json strings to Elasticsearch
     private ElasticsearchPublisherThread publisherThread = null;
@@ -70,69 +86,83 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
     private Map<String, Object> configurations = new HashMap<>();
 
     /**
-     * Instantiates the TransportClient as this class is instantiated
+     * Instantiates the RestHighLevelClient as this class is instantiated.
      */
     public ElasticMediationFlowObserver() {
         try {
             // Take config, resolve and validates , and put into configurations field
             getConfigurations();
 
-            String clusterName = (String) configurations.get(ElasticObserverConstants.CLUSTER_NAME);
             String username = (String) configurations.get(ElasticObserverConstants.USERNAME);
             String password = (String) configurations.get(ElasticObserverConstants.PASSWORD);
-            String sslKey = (String) configurations.get(ElasticObserverConstants.SSL_KEY);
-            String sslCert = (String) configurations.get(ElasticObserverConstants.SSL_CERT);
-            String sslCa = (String) configurations.get(ElasticObserverConstants.SSL_CA);
+            String trustStorePath = (String) configurations.get(ElasticObserverConstants.TRUST_STORE_PATH);
+            String trustStoreType = (String) configurations.get(ElasticObserverConstants.TRUST_STORE_TYPE);
+            String trustStorePassword = (String) configurations.get(ElasticObserverConstants.TRUST_STORE_PASSWORD);
             String host = (String) configurations.get(ElasticObserverConstants.HOST);
             int port = (int) configurations.get(ElasticObserverConstants.PORT);
+            boolean sslEnabled = (boolean) configurations.get(ElasticObserverConstants.SSL_ENABLED);
 
-            // Elasticsearch settings builder object
-            Settings.Builder settingsBuilder = Settings.builder()
-                    .put("cluster.name", clusterName)
-                    .put("transport.tcp.compress", true);
+            if (sslEnabled) {
+                if (trustStorePath != null && trustStoreType != null && trustStorePassword != null) {
+                    elasticHost = new HttpHost(host, port, ElasticObserverConstants.HTTPS_PROTOCOL);
+                } else {
+                    throw new IOException("SSL is enabled, trustStore can not be found. Please provide trustStore details.");
+                }
+            } else {
+                elasticHost = new HttpHost(host, port, ElasticObserverConstants.HTTP_PROTOCOL);
+            }
 
             if (username != null && password != null) {
                 // Can use password without ssl
-                settingsBuilder.put("xpack.security.user", username + ":" + password)
-                        .put("request.headers.X-Found-Cluster", clusterName);
-
-                if (sslKey != null && sslCert != null && sslCa != null) {
-                    settingsBuilder.put("xpack.ssl.key", sslKey)
-                            .put("xpack.ssl.certificate", sslCert)
-                            .put("xpack.ssl.certificate_authorities", sslCa)
-                            .put("xpack.security.transport.ssl.enabled", "true");
-
-                    if (log.isDebugEnabled()) {
-                        log.debug("SSL keys and certificates added.");
-                    }
-                } else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("SSL is not configured.");
-                    }
-                }
+                final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+                credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+                String finalTrustStorePassword = trustStorePassword;
+                client = new RestHighLevelClient(RestClient.builder(elasticHost).
+                        setHttpClientConfigCallback(httpClientBuilder -> {
+                            if (sslEnabled) {
+                                try {
+                                    KeyStore trustStore = KeyStore.getInstance(trustStoreType);
+                                    InputStream is = Files.newInputStream(Paths.get(trustStorePath));
+                                    trustStore.load(is, finalTrustStorePassword.toCharArray());
+                                    SSLContextBuilder sslBuilder = SSLContexts.custom().loadTrustMaterial(trustStore, null);
+                                    httpClientBuilder.setSSLContext(sslBuilder.build());
+                                } catch (IOException e) {
+                                    log.error("The trustStore password = " + finalTrustStorePassword + " or trustStore path "
+                                            + trustStorePath + " defined is incorrect while creating " + "sslContext");
+                                } catch (CertificateException e) {
+                                    log.error("Any of the certificates in the keystore could not be loaded " +
+                                            "when loading trustStore" + e);
+                                } catch (NoSuchAlgorithmException e) {
+                                    log.error("\"Algorithm used to check the integrity of the trustStore cannot " +
+                                            "be found for when loading trustStore", e);
+                                } catch (KeyStoreException e) {
+                                    log.error("The trustStore type truststore.type = " + "" + trustStoreType
+                                            + " defined is incorrect", e);
+                                } catch (KeyManagementException e) {
+                                    log.error("Error occurred while builing sslContext", e);
+                                }
+                                if (log.isDebugEnabled()) {
+                                    log.debug("SSL is configured with given truststore.");
+                                }
+                            }
+                            return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+                        }));
+            } else {
+                client = new RestHighLevelClient(RestClient.builder(elasticHost));
             }
 
-            client = new PreBuiltXPackTransportClient(settingsBuilder.build());
-
             if (log.isDebugEnabled()) {
-                log.debug("Transport Client is built.");
-            }
-
-            client.addTransportAddress(new TransportAddress(InetAddress.getByName(host), port));
-
-            if (log.isDebugEnabled()) {
-                log.debug("Host & Port added to the client.");
+                log.debug("RestHighLevelClient is built with host and port number");
             }
 
             // Wrong cluster name provided or given cluster is down or wrong access credentials
-            if (client.connectedNodes().isEmpty()) {
+            if (!client.ping(RequestOptions.DEFAULT)) {
                 log.error("Can not connect to any Elasticsearch nodes. Please give correct configurations, " +
                         "run Elasticsearch and restart WSO2-EI.");
                 client.close();
 
                 if (log.isDebugEnabled()) {
-                    log.debug("No nodes connected. Reasons: Wrong cluster name/ Given cluster is down/ " +
-                            "Wrong access credentials");
+                    log.debug("No nodes connected. Reasons:cluster is down/ " + "Wrong access credentials");
                 }
             } else {
                 /*
@@ -141,13 +171,18 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
                     of events are published.
                     So, to check the access privileges before hand, here put a test json string and delete it.
                 */
-                client.prepareIndex("eidata", "data", "1")
-                        .setSource("{" +
-                                "\"test_att\":\"test\"" +
-                                "}", XContentType.JSON)
-                        .get();
+                IndexRequest request = new IndexRequest("eidata").id("1");
 
-                client.prepareDelete("eidata", "data", "1").get();
+                String jsonString = "{" +
+                        "\"test_att\":\"test\"" +
+                        "}";
+
+                request.source(jsonString, XContentType.JSON);
+
+                client.index(request, RequestOptions.DEFAULT);
+
+                DeleteRequest requestDel = new DeleteRequest("eidata", "1");
+                client.delete(requestDel, RequestOptions.DEFAULT);
 
                 if (log.isDebugEnabled()) {
                     log.debug("Access privileges for given user is sufficient.");
@@ -156,29 +191,24 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
                 startPublishing();
                 log.info("Elasticsearch mediation statistic publishing enabled.");
             }
-        } catch (UnknownHostException e) {
-            log.error("Unknown Elasticsearch Host.", e);
-            client.close();
-        } catch (NumberFormatException e) {
-            log.error("Invalid port number, queue size or time value.", e);
-        } catch (ElasticsearchSecurityException e) { // lacks access privileges
-            log.error("Elasticsearch user credentials lacks access privileges.", e);
-            client.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Elasticsearch connection error.", e);
-            client.close();
         }
     }
 
     /**
-     * TransportClient gets closed
+     * RestHighLevelClient gets closed.
      */
     @Override
     public void destroy() {
         publisherThread.shutdown();
 
         if (client != null) {
-            client.close();
+            try {
+                client.close();
+            } catch (IOException e) {
+                log.error("Error shutting down the client. ", e);
+            }
         }
 
         if (log.isDebugEnabled()) {
@@ -225,7 +255,7 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
     }
 
     /**
-     * Instantiates the publisher thread, passes the transport client and starts.
+     * Instantiates the publisher thread, passes the RestHighLevelClient and starts.
      */
     private void startPublishing() {
         publisherThread = new ElasticsearchPublisherThread();
@@ -247,6 +277,13 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
      * @see ElasticObserverConstants for the keys of the configurations object
      */
     private void getConfigurations() {
+        String host = ElasticObserverConstants.DEFAULT_HOSTNAME;
+        int port = ElasticObserverConstants.DEFAULT_PORT;
+        String username = ElasticObserverConstants.DEFAULT_USERNAME;
+        String password = ElasticObserverConstants.DEFAULT_PASSWORD;
+        boolean sslEnabled = ElasticObserverConstants.DEFAULT_SSL_ENABLED;
+        String trustStorePassword = ElasticObserverConstants.DEFAULT_TRUSTSTORE_PASSWORD;
+        String trustStoreType = ElasticObserverConstants.DEFAULT_TRUSTSTORE_TYPE;
         // Event buffering queue size = 5000
         int bufferSize = ElasticObserverConstants.DEFAULT_BUFFER_SIZE;
 
@@ -263,8 +300,7 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
         long noNodesSleep = ElasticObserverConstants.DEFAULT_NO_NODES_SLEEP_TIME;
 
         // Takes configuration details form carbon.xml
-        String clusterName = serverConf.getFirstProperty(ElasticObserverConstants.CLUSTER_NAME_CONFIG);
-        String host = serverConf.getFirstProperty(ElasticObserverConstants.HOST_CONFIG);
+        String hostInConfig = serverConf.getFirstProperty(ElasticObserverConstants.HOST_CONFIG);
         String portString = serverConf.getFirstProperty(ElasticObserverConstants.PORT_CONFIG);
         String bufferSizeString = serverConf.getFirstProperty(ElasticObserverConstants.BUFFER_SIZE_CONFIG);
         String bulkSizeString = serverConf.getFirstProperty(ElasticObserverConstants.BULK_SIZE_CONFIG);
@@ -273,41 +309,67 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
         String bufferEmptySleepString = serverConf.getFirstProperty(
                 ElasticObserverConstants.BUFFER_EMPTY_SLEEP_TIME_CONFIG);
         String noNodesSleepString = serverConf.getFirstProperty(ElasticObserverConstants.NO_NODES_SLEEP_TIME_CONFIG);
-        String username = serverConf.getFirstProperty(ElasticObserverConstants.USERNAME_CONFIG);
+        String usernameInConfig = serverConf.getFirstProperty(ElasticObserverConstants.USERNAME_CONFIG);
         String passwordInConfig = serverConf.getFirstProperty(ElasticObserverConstants.PASSWORD_CONFIG);
-        String sslKey = serverConf.getFirstProperty(ElasticObserverConstants.SSL_KEY_CONFIG);
-        String sslCert = serverConf.getFirstProperty(ElasticObserverConstants.SSL_CERT_CONFIG);
-        String sslCa = serverConf.getFirstProperty(ElasticObserverConstants.SSL_CA_CONFIG);
+        String trustStorePath = serverConf.getFirstProperty(ElasticObserverConstants.TRUST_STORE_PATH_CONFIG);
+        String trustStoreTypeInConfig = serverConf.getFirstProperty(ElasticObserverConstants.TRUST_STORE_TYPE_CONFIG);
+        String trustStorePasswordInConfig = serverConf.getFirstProperty(ElasticObserverConstants.TRUST_STORE_PASSWORD_CONFIG);
+        String sslEnabledInConfig = serverConf.getFirstProperty(ElasticObserverConstants.SSL_ENABLED_CONFIG);
 
         if (log.isDebugEnabled()) {
             log.debug("Configurations taken from carbon.xml.");
         }
 
-        int port = Integer.parseInt(portString);
-
         // If the value is not in config, keep the default value defined in constants
-        if (bufferSizeString != null) {
+        if (hostInConfig != null && !hostInConfig.isEmpty()) {
+            host = hostInConfig;
+        }
+
+        if (portString != null && !portString.isEmpty()) {
+            port = Integer.parseInt(portString);
+        }
+
+        if (usernameInConfig != null && !usernameInConfig.isEmpty()) {
+            username = usernameInConfig;
+        }
+
+        if (passwordInConfig != null && !passwordInConfig.isEmpty()) {
+            password = passwordInConfig;
+        }
+
+        if (sslEnabledInConfig != null && !sslEnabledInConfig.isEmpty()) {
+            sslEnabled = Boolean.parseBoolean(sslEnabledInConfig);
+        }
+
+        if (trustStorePasswordInConfig != null && !trustStorePasswordInConfig.isEmpty()) {
+            trustStorePassword = trustStorePasswordInConfig;
+        }
+
+        if (trustStoreTypeInConfig != null && !trustStoreTypeInConfig.isEmpty()) {
+            trustStoreType = trustStoreTypeInConfig;
+        }
+
+        if (bufferSizeString != null && !bufferSizeString.isEmpty()) {
             bufferSize = Integer.parseInt(bufferSizeString);
         }
 
-        if (bulkSizeString != null) {
+        if (bulkSizeString != null && !bulkSizeString.isEmpty()) {
             bulkSize = Integer.parseInt(bulkSizeString);
         }
 
-        if (bulkCollectingTimeOutString != null) {
+        if (bulkCollectingTimeOutString != null && !bulkCollectingTimeOutString.isEmpty()) {
             bulkTimeOut = Integer.parseInt(bulkCollectingTimeOutString);
         }
 
-        if (bufferEmptySleepString != null) {
+        if (bufferEmptySleepString != null && !bufferEmptySleepString.isEmpty()) {
             bufferEmptySleep = Integer.parseInt(bufferEmptySleepString);
         }
 
-        if (noNodesSleepString != null) {
+        if (noNodesSleepString != null && !noNodesSleepString.isEmpty()) {
             noNodesSleep = Integer.parseInt(noNodesSleepString);
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Cluster Name: " + clusterName);
             log.debug("Host: " + host);
             log.debug("Port: " + port);
             log.debug("Buffer Size: " + bufferSize + " events");
@@ -316,13 +378,13 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
             log.debug("Buffer Empty Sleep Time: " + bufferEmptySleep + " millis");
             log.debug("No Nodes Sleep Time: " + noNodesSleep + " millis");
             log.debug("Username: " + username);
-            log.debug("SSL Key Path: " + sslKey);
-            log.debug("SSL Certificate Path: " + sslCert);
-            log.debug("SSL CA Cert Path: " + sslCa);
+            log.debug("Trust Store Path: " + trustStorePath);
+            log.debug("Trust Store Type: " + trustStoreType);
+            log.debug("Trust Store Pass: " + trustStorePassword);
+            log.debug("SSL Enabled: " + sslEnabled);
         }
 
         // Put resolved configurations into configuration field
-        configurations.put(ElasticObserverConstants.CLUSTER_NAME, clusterName);
         configurations.put(ElasticObserverConstants.HOST, host);
         configurations.put(ElasticObserverConstants.PORT, port);
         configurations.put(ElasticObserverConstants.BUFFER_SIZE, bufferSize);
@@ -331,15 +393,22 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
         configurations.put(ElasticObserverConstants.BUFFER_EMPTY_SLEEP, bufferEmptySleep);
         configurations.put(ElasticObserverConstants.NO_NODES_SLEEP, noNodesSleep);
         configurations.put(ElasticObserverConstants.USERNAME, username);
-        configurations.put(ElasticObserverConstants.SSL_KEY, sslKey);
-        configurations.put(ElasticObserverConstants.SSL_CERT, sslCert);
-        configurations.put(ElasticObserverConstants.SSL_CA, sslCa);
+        configurations.put(ElasticObserverConstants.PASSWORD, password);
+        configurations.put(ElasticObserverConstants.TRUST_STORE_PATH, trustStorePath);
+        configurations.put(ElasticObserverConstants.TRUST_STORE_TYPE, trustStoreType);
+        configurations.put(ElasticObserverConstants.TRUST_STORE_PASSWORD, trustStorePassword);
+        configurations.put(ElasticObserverConstants.SSL_ENABLED, sslEnabled);
 
         // If username is not null; password can be in plain or Secure Vault
         // <Password> in config must be present
         if (username != null && passwordInConfig != null) {
             // Resolve password and add to configurations
-            configurations.put(ElasticObserverConstants.PASSWORD, resolvePassword(passwordInConfig));
+            configurations.put(ElasticObserverConstants.PASSWORD, resolvePassword(passwordInConfig, ElasticObserverConstants.PASSWORD_ALIAS));
+        }
+
+        if (trustStorePassword != null) {
+            configurations.put(ElasticObserverConstants.TRUST_STORE_PASSWORD, resolvePassword(trustStorePassword,
+                    ElasticObserverConstants.TRUST_STORE_PASSWORD_ALIAS));
         }
     }
 
@@ -350,17 +419,25 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
      * @param passwordInConfig value of the <Password> element found in carbon.xml
      * @return final plain text password
      */
-    private String resolvePassword(String passwordInConfig) {
+    private String resolvePassword(String passwordInConfig, String alias) {
         // Plain password resolved/directly from carbon.xml
         String password;
 
         boolean secureVaultPassword = false;
 
+        NodeList nodeList = null;
+
         // Checking the <Password> element for the attribute "svns:secretAlias" to identify whether the
         // password is to be taken from Secure Vault or as plain text
 
         // nodeList contains all the nodes with the tag <Password>
-        NodeList nodeList = serverConf.getDocumentElement().getElementsByTagName("Password");
+        if (alias.equals(ElasticObserverConstants.PASSWORD_ALIAS)) {
+            nodeList = serverConf.getDocumentElement().getElementsByTagName("Password");
+        }
+        // nodeList contains all the nodes with the tag <TrustStorePassword>
+        if (alias.equals(ElasticObserverConstants.TRUST_STORE_PASSWORD_ALIAS)) {
+            nodeList = serverConf.getDocumentElement().getElementsByTagName("TrustStorePassword");
+        }
 
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
@@ -370,7 +447,7 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
                 NamedNodeMap attributeMap = node.getAttributes();
                 for (int j = 0; j < attributeMap.getLength(); j++) {
                     if ("svns:secretAlias".equals(attributeMap.item(j).getNodeName())
-                            && ElasticObserverConstants.PASSWORD_ALIAS.equals(attributeMap.item(j).getNodeValue())) {
+                            && alias.equals(attributeMap.item(j).getNodeValue())) {
                         secureVaultPassword = true;
                         break;
                     }
@@ -384,12 +461,12 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
                     true);
 
             // Resolves password using the defined alias
-            password = secretResolver.resolve(ElasticObserverConstants.PASSWORD_ALIAS);
+            password = secretResolver.resolve(alias);
 
             // If the alias is wrong and there is no password, resolver returns the alias string again
-            if (ElasticObserverConstants.PASSWORD_ALIAS.equals(password)) {
+            if (alias.equals(password)) {
                 log.error("Wrong password alias in Secure Vault. Use alias: " +
-                        ElasticObserverConstants.PASSWORD_ALIAS);
+                        alias);
                 password = null;
             } else {
                 if (log.isDebugEnabled()) {
