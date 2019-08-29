@@ -325,10 +325,10 @@
 
                                 <!--Move solr registry -->
                                 <unzip
-                                        src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_4.7.9.jar" dest="${tempdir2}" />
+                                        src="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_${carbon.registry.version}.jar" dest="${tempdir2}" />
                                 <replace file="${tempdir2}/core.properties" token="dataDir=../../../../solr/data" value="dataDir=../../../solr/data" />
                                 <zip
-                                        destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_4.7.9.jar" basedir="${tempdir2}" />
+                                        destfile="target/wso2carbon-core-${carbon.kernel.version}/wso2/components/plugins/org.wso2.carbon.registry.indexing_${carbon.registry.version}.jar" basedir="${tempdir2}" />
 
 
                                 <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties" token="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*" value="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*${line.separator}org.owasp.csrfguard.unprotected.Sequences=%servletContext%/carbon/sequences/*${line.separator}org.owasp.csrfguard.unprotected.Configadmin=%servletContext%/carbon/configadmin/*${line.separator}org.owasp.csrfguard.unprotected.Localentries=%servletContext%/carbon/localentries/*${line.separator}org.owasp.csrfguard.unprotected.Api=%servletContext%/carbon/api/*${line.separator}org.owasp.csrfguard.unprotected.Proxyservices=%servletContext%/carbon/proxyservices/*${line.separator}org.owasp.csrfguard.unprotected.Resources=%servletContext%/carbon/resources/*${line.separator}org.owasp.csrfguard.unprotected.Task=%servletContext%/carbon/task/*${line.separator}org.owasp.csrfguard.unprotected.RegistryResource=%servletContext%/registry/resource/*${line.separator}org.owasp.csrfguard.unprotected.TenantServices=^%servletContext%/t/.*/services/.*$${line.separator}org.owasp.csrfguard.unprotected.TenantProxyServices=^%servletContext%/t/.*/carbon/proxyservices/.*$${line.separator}org.owasp.csrfguard.unprotected.Saml2SSO=%servletContext%/acs" />
