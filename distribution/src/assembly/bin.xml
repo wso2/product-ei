@@ -1946,6 +1946,11 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/broker/conf/log4j2.properties</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/broker/conf/axis2/axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/axis2/</outputDirectory>
             <destName>axis2.xml</destName>
