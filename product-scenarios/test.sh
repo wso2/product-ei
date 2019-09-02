@@ -127,6 +127,7 @@ echo "------------------------------------------------------------------------"
 echo "Copying surefire-reports to ${OUTPUT_DIR}/scenarios"
 mkdir -p ${OUTPUT_DIR}/scenarios
 find ./* -name "surefire-reports" -exec cp --parents -r {} ${OUTPUT_DIR}/scenarios \;
+ls -al ${OUTPUT_DIR}/scenarios
 
 #=============== Code Coverage Report Generation ===========================================
 echo

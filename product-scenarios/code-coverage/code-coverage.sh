@@ -31,6 +31,7 @@ VAR_TINKERER_PASSWORD=""
 VAR_REM_DIR=""
 
 function generate_code_coverage(){
+    set +o xtrace
     INPUT_DIR=$1
     OUTPUT_DIR=$2
     HOME=`pwd`
@@ -120,7 +121,9 @@ function generate_code_coverage(){
         #Execute code-coverage POM and generate coverage reports
         echo "------------------------------------------------------------------------"
         echo "Generate coverage reports from coverage artifacts"
-        mvn clean install -f ${HOME}/code-coverage/pom.xml
+        mvn clean install -f ${HOME}/code-coverage/pom.xml \
+        -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+        --quiet
 
         #Copy Code Coverage Reports
         echo "Copy code coverage reports to the output directory"
