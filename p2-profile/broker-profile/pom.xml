@@ -154,6 +154,12 @@
                                 <featureArtifactDef>
                                     org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.logging.viewer.feature:${carbon.commons.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.logging.updater.feature:${carbon.commons.version}
+                                </featureArtifactDef>
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -299,6 +305,14 @@
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <id>org.wso2.carbon.as.runtimes.cxf3.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.logging.view.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.logging.updater.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
                                 </feature>
                             </features>
                         </configuration>
