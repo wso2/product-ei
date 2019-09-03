@@ -1686,7 +1686,7 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.3.4</carbon.messaging.version>
+        <carbon.messaging.version>3.3.5</carbon.messaging.version>
         <carbon.metrics.version>1.3.2</carbon.metrics.version>
         <jline.version>1.0</jline.version>
         <andes.version>3.3.2</andes.version>
