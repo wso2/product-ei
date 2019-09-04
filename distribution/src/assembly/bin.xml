@@ -1939,12 +1939,6 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-
-        <file>
-            <source>src/broker/conf/log4j.properties</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
         <file>
             <source>src/broker/conf/log4j2.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/</outputDirectory>
@@ -1957,7 +1951,6 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-
         <file>
             <source>src/business-process/conf/axis2/axis2_client.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/axis2/</outputDirectory>
