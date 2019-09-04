@@ -226,7 +226,6 @@ do
     fi
 done
 
-JAVA_ENDORSED_DIRS="$CARBON_HOME/bin/bootstrap/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
 
 CARBON_CLASSPATH=""
 if [ -e "$JAVA_HOME/bin/bootstrap/tools.jar" ]; then
@@ -248,7 +247,6 @@ if $cygwin; then
   CARBON_HOME=`cygpath --absolute --windows "$CARBON_HOME"`
   RUNTIME_HOME=`cygpath --absolute --windows "$RUNTIME_HOME"`
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
-  JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
   CARBON_CLASSPATH=`cygpath --path --windows "$CARBON_CLASSPATH"`
   CARBON_XBOOTCLASSPATH=`cygpath --path --windows "$CARBON_XBOOTCLASSPATH"`
 fi
@@ -276,7 +274,6 @@ do
     -XX:HeapDumpPath="$RUNTIME_HOME/logs/heap-dump.hprof" \
     $JAVA_OPTS \
     -classpath "$CARBON_CLASSPATH" \
-    -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
     -Djava.io.tmpdir="$CARBON_HOME/tmp" \
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \
