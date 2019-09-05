@@ -1714,7 +1714,7 @@
         <carbon.mediation.version>4.7.11</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.5.0-alpha3</carbon.kernel.version>
+        <carbon.kernel.version>4.5.0-beta</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.5.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
