@@ -246,7 +246,7 @@
                        class="org.apache.synapse.transport.passthru.PassThroughHttpMultiSSLListener">
         <parameter name="port" locked="false">8243</parameter>
         <parameter name="non-blocking" locked="false">true</parameter>
-
+        <parameter name="HttpsProtocols">TLSv1,TLSv1.1,TLSv1.2</parameter>
         <parameter name="httpGetProcessor" locked="false">org.wso2.carbon.mediation.transport.handlers.PassThroughNHttpGetProcessor</parameter>
         <parameter name="dynamicSSLProfilesConfig">
             <filePath>../../../src/test/resources/artifacts/ESB/dynamicsslprofiles/pttlistener/listenerprofiles.xml</filePath>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -19,81 +19,91 @@
 
 <Server port="8005" shutdown="SHUTDOWN">
 
-  <Service className="org.wso2.carbon.tomcat.ext.service.ExtendedStandardService" name="Catalina">
+    <Service className="org.wso2.carbon.tomcat.ext.service.ExtendedStandardService" name="Catalina">
 
-    <!--
-	optional attributes:
+        <!--
+        optional attributes:
 
-	proxyPort="80"
-    -->
-    <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
-                port="9763"
-                redirectPort="9443"
-                bindOnInit="false"
-                maxHttpHeaderSize="8192"
-                acceptorThreadCount="2"
-                maxThreads="250"
-                minSpareThreads="50"
-                disableUploadTimeout="false"
-                connectionUploadTimeout="120000"
-                maxKeepAliveRequests="200"
-                acceptCount="200"
-                server="WSO2 Carbon Server"
-                compression="on"
-                compressionMinSize="2048"
-                noCompressionUserAgents="gozilla, traviata"
-                compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
-                URIEncoding="UTF-8"/>
+        proxyPort="80"
+        -->
+        <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
+                    port="9763"
+                    redirectPort="9443"
+                    bindOnInit="false"
+                    maxHttpHeaderSize="8192"
+                    acceptorThreadCount="2"
+                    maxThreads="250"
+                    minSpareThreads="50"
+                    disableUploadTimeout="false"
+                    connectionUploadTimeout="120000"
+                    maxKeepAliveRequests="200"
+                    acceptCount="200"
+                    server="WSO2 Carbon Server"
+                    compression="on"
+                    compressionMinSize="2048"
+                    noCompressionUserAgents="gozilla, traviata"
+                    compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
+                    URIEncoding="UTF-8">
+        </Connector>
+        <!--
+        optional attributes:
 
-    <!--
-	optional attributes:
+        proxyPort="443"
+        -->
+        <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
+                    port="9443"
+                    bindOnInit="false"
+                    maxHttpHeaderSize="8192"
+                    acceptorThreadCount="2"
+                    maxThreads="250"
+                    minSpareThreads="50"
+                    disableUploadTimeout="false"
+                    enableLookups="false"
+                    connectionUploadTimeout="120000"
+                    maxKeepAliveRequests="200"
+                    acceptCount="200"
+                    server="WSO2 Carbon Server"
+                    compression="on"
+                    scheme="https"
+                    secure="true"
+                    SSLEnabled="true"
+                    compressionMinSize="2048"
+                    noCompressionUserAgents="gozilla, traviata"
+                    compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
+                    URIEncoding="UTF-8">
+            <SSLHostConfig
+                    protocols="+TLSv1,+TLSv1.1,+TLSv1.2"
+                    sslProtocol="TLS"
+                    certificateVerification="false"
+                    truststoreFile="${carbon.home}/repository/resources/security/client-truststore.jks"
+                    truststorePassword="wso2carbon"
+                    truststoreType="JKS"
+            >
+                <Certificate certificateKeystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"
+                             certificateKeystorePassword="wso2carbon"
+                             certificateKeystoreType="JKS"
+                             certificateKeyAlias="wso2carbon"
+                />
+            </SSLHostConfig>
+        </Connector>
 
-	proxyPort="443"
-    -->
-    <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
-                port="9443"
-                bindOnInit="false"
-                sslEnabledProtocols="+TLSv1,+TLSv1.1,+TLSv1.2"
-                maxHttpHeaderSize="8192"
-                acceptorThreadCount="2"
-                maxThreads="250"
-                minSpareThreads="50"
-                disableUploadTimeout="false"
-                enableLookups="false"
-                connectionUploadTimeout="120000"
-                maxKeepAliveRequests="200"
-                acceptCount="200"
-                server="WSO2 Carbon Server"
-                clientAuth="false"
-                compression="on"
-                scheme="https"
-                secure="true"
-                SSLEnabled="true"
-				keystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"
-				keystorePass="wso2carbon"
-                compressionMinSize="2048"
-                noCompressionUserAgents="gozilla, traviata"
-                compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
-                URIEncoding="UTF-8"/>
 
 
+        <Engine name="Catalina" defaultHost="localhost">
 
-    <Engine name="Catalina" defaultHost="localhost">
+            <!--Realm className="org.apache.catalina.realm.MemoryRealm" pathname="${carbon.home}/repository/conf/tomcat/tomcat-users.xml"/-->
 
-      <!--Realm className="org.apache.catalina.realm.MemoryRealm" pathname="${carbon.home}/repository/conf/tomcat/tomcat-users.xml"/-->
+            <Realm className="org.wso2.carbon.tomcat.ext.realms.CarbonTomcatRealm"/>
 
-      <Realm className="org.wso2.carbon.tomcat.ext.realms.CarbonTomcatRealm"/>
-
-      <Host name="localhost" unpackWARs="true" deployOnStartup="false" autoDeploy="false" appBase="${carbon.home}/repository/deployment/server/webapps/">
-          <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonContextCreatorValve"/>
-          <Valve className="org.apache.catalina.valves.AccessLogValve" directory="${carbon.home}/repository/logs"
-               prefix="http_access_management_console_" suffix=".log"
-               pattern="combined" />
-          <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonStuckThreadDetectionValve" threshold="600"/>
-          <Valve className="org.wso2.carbon.tomcat.ext.valves.CompositeValve"/>
-          <!--<Valve className="org.wso2.carbon.integrator.core.IntegratorValve"/>-->
-      </Host>
-    </Engine>
-  </Service>
+            <Host name="localhost" unpackWARs="true" deployOnStartup="false" autoDeploy="false" appBase="${carbon.home}/repository/deployment/server/webapps/">
+                <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonContextCreatorValve"/>
+                <Valve className="org.apache.catalina.valves.AccessLogValve" directory="${carbon.home}/repository/logs"
+                       prefix="http_access_management_console_" suffix=".log"
+                       pattern="combined" />
+                <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonStuckThreadDetectionValve" threshold="600"/>
+                <Valve className="org.wso2.carbon.tomcat.ext.valves.CompositeValve"/>
+                <!--<Valve className="org.wso2.carbon.integrator.core.IntegratorValve"/>-->
+            </Host>
+        </Engine>
+    </Service>
 </Server>
-
