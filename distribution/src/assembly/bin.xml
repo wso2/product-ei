@@ -1413,6 +1413,18 @@
             <fileMode>644</fileMode>
         </fileSet>
 
+        <!-- Copying the in-place update tools-->
+        <fileSet>
+            <directory>src/resources/updates/in-place/</directory>
+            <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>**/update_linux</include>
+                <include>**/update_darwin</include>
+                <include>**/update_windows.exe</include>
+            </includes>
+            <fileMode>744</fileMode>
+        </fileSet>
+
     </fileSets>
     <!-- End of Analytics dependencies -->
 
