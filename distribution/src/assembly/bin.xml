@@ -73,6 +73,7 @@
                 <exclude>**/wso2/components/plugins/saxon_*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/conf/tomcat/catalina.properties</exclude>
                 <exclude>**/conf/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/conf/registry.xml</exclude>
                 <exclude>**/conf/tomcat/web.xml</exclude>
@@ -114,6 +115,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/tomcat/catalina-server.xml</exclude>
+                <exclude>**/tomcat/catalina.properties</exclude>
                 <exclude>**/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
@@ -152,6 +154,7 @@
                 <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/tomcat/catalina.properties</exclude>
                 <exclude>**/repository/conf/registry.xml</exclude>
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -189,6 +192,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
+                <exclude>**//tomcat/catalina.properties</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -226,6 +230,7 @@
                 <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/tomcat/catalina.properties</exclude>
                 <exclude>**/repository/conf/registry.xml</exclude>
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -262,6 +267,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
+                <exclude>**//tomcat/catalina.properties</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -794,6 +800,7 @@
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <excludes>
                 <exclude>**/catalina-server.xml</exclude>
+                <exclude>**/catalina.properties</exclude>
                 <exclude>**/webapp-classloading-environments.xml</exclude>
             </excludes>
         </fileSet>
@@ -932,6 +939,7 @@
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <includes>
                 <include>**/catalina-server.xml</include>
+                <include>**/catalina.properties</include>
                 <include>**/webapp-classloading-environments.xml</include>
             </includes>
         </fileSet>
@@ -1761,6 +1769,15 @@
         <file>
             <source>
                 src/business-process/conf/tomcat/catalina-server.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/tomcat/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                src/business-process/conf/tomcat/catalina.properties
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/tomcat/
             </outputDirectory>
