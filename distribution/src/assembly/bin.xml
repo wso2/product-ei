@@ -1944,6 +1944,12 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/broker/conf/tomcat/catalina.properties</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/broker/conf/tomcat/tomcat-users.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/
             </outputDirectory>
