@@ -114,6 +114,8 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
+                <exclude>**/datasources/master-datasources.xml</exclude>
+                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/tomcat/catalina-server.xml</exclude>
                 <exclude>**/tomcat/catalina.properties</exclude>
                 <exclude>**/tomcat/webapp-classloading-environments.xml</exclude>
@@ -1591,6 +1593,20 @@
         </file>
 
         <file>
+            <source>src/conf/master-datasources.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/datasources</outputDirectory>
+            <destName>master-datasources.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>src/conf/user-mgt.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
+            <destName>user-mgt.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
             <source>src/business-process/conf/axis2/tenant-axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf/axis2
             </outputDirectory>
@@ -1690,6 +1706,16 @@
             </source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/business-process/conf/datasources
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                src/business-process/conf/user-mgt.xml
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/business-process/conf
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
