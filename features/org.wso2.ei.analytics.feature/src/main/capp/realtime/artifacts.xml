@@ -36,5 +36,8 @@
         <dependency artifact="GadgetMediatorProperties" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
         <!-- Dashboard Definition -->
         <dependency artifact="Dashboard" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <!-- Data Purging -->
+        <dependency artifact="DataPurgingDay" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
+        <dependency artifact="DataPurgingSecMinHour" version="1.0.0" include="true" serverRole="DataAnalyticsServer"/>
     </artifact>
 </artifacts>
