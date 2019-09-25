@@ -22,7 +22,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.util.concurrent.TimeUnit;
@@ -59,14 +59,14 @@ public class InjectToSequenceTestCase extends ESBIntegrationTest {
                                               "    <task:property name=\"injectTo\" value=\"sequence\"/>\n" +
                                               "</task:task>");
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        logViewer.clearLogs();
         addScheduledTask(task);
         TimeUnit.SECONDS.sleep(5);
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         boolean invokedLogFound = false;
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
+        for (int i = 0; i < afterLogSize; i++) {
             if (logs[i].getMessage().contains("SEQUENCE INVOKED")) {
                 invokedLogFound = true;
                 break;

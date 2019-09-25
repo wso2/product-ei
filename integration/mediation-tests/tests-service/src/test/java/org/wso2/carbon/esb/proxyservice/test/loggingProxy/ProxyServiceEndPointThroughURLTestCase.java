@@ -23,6 +23,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
 
 import javax.xml.namespace.QName;
 
@@ -42,8 +43,8 @@ public class ProxyServiceEndPointThroughURLTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Proxy service with providing endpoint through url")
     public void testLoggingProxy() throws Exception {
-        OMElement response = axis2Client.sendSimpleStockQuoteRequest
-                (getProxyServiceURLHttp("StockQuoteLoggingProxy"), null, "WSO2");
+        OMElement response =
+                axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("StockQuoteLoggingProxy"), null, "WSO2");
 
         String lastPrice = response.getFirstElement().
                 getFirstChildWithName(new QName("http://services.samples/xsd", "last")).getText();
@@ -53,14 +54,15 @@ public class ProxyServiceEndPointThroughURLTestCase extends ESBIntegrationTest {
                 getFirstChildWithName(new QName("http://services.samples/xsd", "symbol")).getText();
         assertEquals(symbol, "WSO2", "Fault: value 'symbol' mismatched");
 
-        LogViewerClient logViewerClient = new LogViewerClient(context.getContextUrls().getBackEndUrl(),
-                getSessionCookie());
-        assertNotNull(logViewerClient.getRemoteLogs("INFO", "getQuote", "", ""),
-                      "Request INFO log entry not found");
-        assertNotNull(logViewerClient.getRemoteLogs("INFO", "<ns:symbol>WSO2</ns:symbol>", "", ""),
-                      "Request INFO log entry not found");
-        assertNotNull(logViewerClient.getRemoteLogs("INFO", "ns:getQuoteResponse", "", ""),
-                      "Request INFO log entry not found");
+        LogViewerClient logViewerClient =
+                new LogViewerClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
+
+        assertNotNull(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "getQuote", 30),
+                "Request INFO log entry not found");
+        assertNotNull(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "<ns:symbol>WSO2</ns:symbol>", 30),
+                "Request INFO log entry not found");
+        assertNotNull(Utils.checkForLogsWithPriority(logViewerClient, "INFO", "ns:getQuoteResponse", 30),
+                "Request INFO log entry not found");
     }
 
     @AfterClass(alwaysRun = true)

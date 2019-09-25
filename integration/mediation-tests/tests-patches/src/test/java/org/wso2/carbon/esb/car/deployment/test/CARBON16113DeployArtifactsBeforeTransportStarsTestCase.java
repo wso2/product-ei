@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
@@ -66,9 +66,9 @@ public class CARBON16113DeployArtifactsBeforeTransportStarsTestCase extends ESBI
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean cappBeforeTransport = false;
         int size = logs.length;
-        for (int i = size - 1; i >= 0; i--) {
+        for (int i = 0; i < size; i++) {
             if (logs[i].getMessage().contains(CAPP_MESSAGE)) {
-                for (int j = i; j >= 0; j--) {
+                for (int j = i; j < size; j++) {
                     if (logs[j].getMessage().contains(TRANSPORT_MESSAGE)) {
                         cappBeforeTransport = true;
                         break;

@@ -27,7 +27,7 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.SqlDataSourceUtil;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
@@ -117,7 +117,7 @@ public class ESBJAVA5094SetOperationContextWithInboundEndpointTestCase extends E
         long startTime = System.currentTimeMillis();
         LogEvent[] systemLogs;
         while (!assertValue && (System.currentTimeMillis() - startTime) < 10000) {
-            systemLogs = logViewerClient.getAllSystemLogs();
+            systemLogs = logViewerClient.getAllRemoteSystemLogs();
             if (systemLogs != null) {
                 for (LogEvent logEvent : systemLogs) {
                     if (logEvent.getMessage().contains("In second sequence !!")) {

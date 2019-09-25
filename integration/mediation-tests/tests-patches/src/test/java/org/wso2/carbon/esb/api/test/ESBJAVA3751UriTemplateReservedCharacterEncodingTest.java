@@ -28,7 +28,7 @@ import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 
 public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBIntegrationTest {
@@ -49,7 +49,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
         HttpResponse response = HttpRequestUtil.sendGetRequest(
                 getApiInvocationURL("services/client/urlEncoded?queryParam=ESB:WSO2"),
                 null);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains("ESB%3AWSO2")) {
@@ -70,7 +70,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
         HttpResponse response = HttpRequestUtil.sendGetRequest(
                 getApiInvocationURL("services/client/escapeUrlEncoded?queryParam=ESB:WSO2"),
                 null);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains("ESB%3AWSO2")) {
@@ -91,7 +91,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
         HttpResponse response = HttpRequestUtil.sendGetRequest(
                 getApiInvocationURL("services/client/urlEncoded/ESB:WSO2"),
                 null);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains("To: /services/test_2/ESB%3AWSO2")) {
@@ -112,7 +112,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
         HttpResponse response = HttpRequestUtil.sendGetRequest(
                 getApiInvocationURL("services/client/escapeUrlEncoded/ESB:WSO2"),
                 null);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains("To: /services/test_2/ESB%3AWSO2")) {
@@ -135,7 +135,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
                 getApiInvocationURL("services/client/urlEncoded?queryParam=ESB%20WSO2"),
                 null);
         String decodedMessageContextProperty="decodedQueryParamValue = ESB WSO2";
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains(decodedMessageContextProperty)) {
@@ -163,7 +163,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
                 getApiInvocationURL("services/client/urlEncoded?queryParam=ESB+WSO2"),
                 null);
         String decodedMessageContextProperty="decodedQueryParamValue = ESB+WSO2";
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains(decodedMessageContextProperty)) {
@@ -191,7 +191,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
                 getApiInvocationURL("services/client/escapeUrlEncoded?queryParam=ESB+WSO2"),
                 null);
         String decodedMessageContextProperty="decodedQueryParamValue = ESB+WSO2";
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
         //introduced since clearLogs() is not clearing previoues URL call logs, and need to stop
         // searching after 4 messages
@@ -224,7 +224,7 @@ public class ESBJAVA3751UriTemplateReservedCharacterEncodingTest extends ESBInte
         HttpResponse response = HttpRequestUtil.sendGetRequest(
                 getApiInvocationURL("services/client/special_case/http://localhost:8480/services/test_2/special_case"),
                 null);
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains("To: /services/test_2/special_case")) {

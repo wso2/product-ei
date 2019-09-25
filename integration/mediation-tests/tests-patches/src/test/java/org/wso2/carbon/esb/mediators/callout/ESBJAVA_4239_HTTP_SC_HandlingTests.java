@@ -23,7 +23,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
 import org.wso2.esb.integration.common.utils.servers.SimpleSocketServer;
@@ -70,7 +70,7 @@ public class ESBJAVA_4239_HTTP_SC_HandlingTests extends ESBIntegrationTest {
         try {
             httpClient.executeMethod(post);
 
-            LogEvent[] logs = logViewerClient.getAllSystemLogs();
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
             for (LogEvent logEvent : logs) {
                 if (logEvent.getPriority().equals("INFO")) {
                     String message = logEvent.getMessage();

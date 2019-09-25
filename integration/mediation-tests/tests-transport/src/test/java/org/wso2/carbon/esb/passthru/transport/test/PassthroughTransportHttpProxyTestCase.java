@@ -25,7 +25,7 @@ import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
@@ -49,18 +49,17 @@ public class PassthroughTransportHttpProxyTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Passthrough Transport Http.proxy test case")
     public void passthroughTransportHttpProxy() throws Exception {
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
-
+        logViewer.clearLogs();
         try {
             axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("HttpProxyTest"), "", "IBM");
         } catch (AxisFault expected) {
             //read timeout expected
         }
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         boolean proxyhostEntryFound = false;
-        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
+        for (int i = 0; i < afterLogSize; i++) {
             if (logs[i].getMessage().contains("111.wso2.com:7777")) {
                 proxyhostEntryFound = true;
                 break;

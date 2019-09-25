@@ -21,7 +21,8 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.sshd.server.SshServer;
 import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.server.command.Command;
@@ -41,8 +42,8 @@ import org.wso2.carbon.automation.extensions.servers.sftpserver.SFTPServer;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.stream.XMLStreamException;
@@ -62,7 +63,7 @@ import java.util.Properties;
  */
 public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
 
-    private static final Logger LOGGER = Logger.getLogger(ESBJAVA4679VFSPasswordSecurityTestCase.class);
+    private static final Log LOGGER = LogFactory.getLog(ESBJAVA4679VFSPasswordSecurityTestCase.class);
     private static final String FORWARD_SLASH = "/";
 
     private FTPServerManager ftpServerManager;
@@ -145,7 +146,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "VFS secure password test")
     public void securePasswordTest()
-            throws XMLStreamException, IOException, InterruptedException, LogViewerLogViewerException {
+            throws XMLStreamException, IOException, InterruptedException {
 
         //copy SOAP message  into the SFTP server
         String sentMessageFile = "test.xml";
@@ -154,7 +155,7 @@ public class ESBJAVA4679VFSPasswordSecurityTestCase extends ESBIntegrationTest {
         copyFile(sourceMessage, destinationMessage);
 
         //Below is encrypted value of "user1:pass" using local wso2carbon.jks TODO if security settings change, will need to change below value as well. Otherwise this test will fail
-        String encryptedPass = "biWozilZLK6Dpxrxv4vWYCs8bUb/BGt58lqF2hajizDlu4/faCLRWiSSxfNqNy36KikM8spwB3z/HRdSa3hEnCmccZLayLgbN8zLigSUXYFNtNy3ppgWbCp4sm1GCuZDin0gWcW1UKRbKn+05f9CAY8jZbs27z0Mj2ULR7GAIJjasv7uJy+of7dcyhCa9Y4/rkP7bxbkrBSJOtgR0XxKfvKWm+FPM2zSrRf7wiGbrVNpBOSvNT0nmIZr6LVTMNFHKFLjVN3si3MhgWO3LrU8GF+rqy+i+J/hiOTvZschtfADpUxPipCpygT1LcFpbRyvRYwJ9/yg1dxiVXTLPTzWgw==";
+        String encryptedPass = "eTAXKdQ89VUVDYhs4ZMe2Zhk1+ZHkBsHCSBjJ5PTNQKBZjr1Ca5jWfYl8+z+6UkvnsBS8L09/4jBDmpKNgrBlu2gMG0dsw4nzNQkXJDORlMuCbsDAHL2EMsxb9QKvD7IbgSZbVeJJC8ICknJUsADsyY2IfYVlCf/PTulvdCQLyk5co3e8Lo636J8tTi/oyHExmRX+wAKrOyHEX8BaIZmeYUdar2uU0bxPPjp0NWFyHf4ZkSp3MQDa9t8GxmoqR/Gx/u+HcLR33iWO+dI7cU46NR5cCnmuq4rwVxjReY9ldqqgQtE3du3mRjBtYF+9zEq+RJ4XMRS3abtv2uviACIIA==";
         String fileUri = "vfs:ftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + inputFolderName;
         String moveAfterProcess = "vfs:ftp://{wso2:vault-decrypt('" + encryptedPass + "')}@localhost:" + FTPPort + "/" + outputFolderName;
 

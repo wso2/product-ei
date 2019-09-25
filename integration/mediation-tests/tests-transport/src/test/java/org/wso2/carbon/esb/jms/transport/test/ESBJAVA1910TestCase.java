@@ -10,7 +10,7 @@ import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClie
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 
 public class ESBJAVA1910TestCase extends ESBIntegrationTest {
@@ -27,7 +27,7 @@ public class ESBJAVA1910TestCase extends ESBIntegrationTest {
 
     @Test(groups = {"wso2.esb"}, description = "Test Property get-property('HTTP_SC') in message.processor.reply.sequence" , enabled = false)
     public void testStatusCode() throws Exception {
-        int beforeLogCount = logViewerClient.getAllSystemLogs().length;
+        int beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
         AxisServiceClient client = new AxisServiceClient();
         Thread.sleep(3000); //force wait until message processor executes
         client.sendRobust(Utils.getStockQuoteRequest("WSO2"), getProxyServiceURLHttp("MessageStoreProxy"), "getQuote");

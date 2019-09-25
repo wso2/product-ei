@@ -33,8 +33,11 @@ import org.wso2.carbon.automation.test.utils.axis2client.ConfigurationContextPro
 import org.wso2.carbon.integration.common.admin.client.AuthenticatorClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.integration.common.admin.client.TenantManagementServiceClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.Utils;
+
+import java.util.ArrayList;
 
 /**
  * Created by shameera on 7/8/14.
@@ -62,8 +65,8 @@ public class ServiceChainingTest extends ESBIntegrationTest {
         sc.fireAndForget(createStandardSimpleRequest("wso2"));
         // Get logs by tenant name
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), sessionCookie);
-        LogEvent[] logs = logViewerClient.getLogs("ALL", "RECEIVE", "t5.com", "");
-        Assert.assertNotNull(logs);
+        ArrayList<LogEvent> logs = Utils.getLogsWithExpectedValue(logViewerClient, "INFO", "RECEIVE");
+        Assert.assertNotNull(logs, "Expected logs were not found");
         LogEvent receiveSeqLog_1 = getLogEventByMessage(logs, "DEBUG SEQ 1 = FIRST RECEIVE SEQUENCE");
         Assert.assertNotNull(receiveSeqLog_1);
         LogEvent receiveSeqLog_2 = getLogEventByMessage(logs, "DEBUG SEQ 2 = SECOND RECEIVE SEQUENCE");
@@ -75,7 +78,7 @@ public class ServiceChainingTest extends ESBIntegrationTest {
         super.cleanup();
     }
     
-    private LogEvent getLogEventByMessage(LogEvent[] logs, String msg) {
+    private LogEvent getLogEventByMessage(ArrayList<LogEvent> logs, String msg) {
         for (LogEvent evt : logs) {
             if (evt.getMessage().equals(msg)) {
                 return evt;

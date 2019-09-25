@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
@@ -65,7 +65,7 @@ public class JMSAccessSOAPFaultDataTestCase extends ESBIntegrationTest {
 	public void readSOAPFaultDetails() {
 		int beforeLogCount = 0;
 		try {
-			beforeLogCount = logViewerClient.getAllSystemLogs().length;
+			beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
 			AxisServiceClient client = new AxisServiceClient();
 
 			client.fireAndForget(Utils.getIncorrectRequest("Invalid"),
@@ -79,7 +79,7 @@ public class JMSAccessSOAPFaultDataTestCase extends ESBIntegrationTest {
 			String allLogs = "";
 			LogEvent[] logs;
 			try {
-				logs = logViewerClient.getAllSystemLogs();
+				logs = logViewerClient.getAllRemoteSystemLogs();
 
 				for (int i = 0; i < logs.length - beforeLogCount; i++) {
 					allLogs += logs[i].getMessage();

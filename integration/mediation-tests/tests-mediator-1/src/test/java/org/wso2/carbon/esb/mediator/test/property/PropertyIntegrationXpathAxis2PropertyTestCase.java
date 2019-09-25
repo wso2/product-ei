@@ -22,7 +22,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.IOException;
@@ -54,12 +54,12 @@ public class PropertyIntegrationXpathAxis2PropertyTestCase extends ESBIntegratio
     @Test(groups = {"wso2.esb"}, description = "Test getting the property value at the axis2 scope")
     public void testRESPONSETEnabledTrue() throws IOException {
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         axis2Client.sendSimpleStockQuoteRequest
                 (getProxyServiceURLHttp("StockQuoteProxy") + "/test/prefix", null, "WSO2");
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
 
         int afterLogSize = logs.length;
 

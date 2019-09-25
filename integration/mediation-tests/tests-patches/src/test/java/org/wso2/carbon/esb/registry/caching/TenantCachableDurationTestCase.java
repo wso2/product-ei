@@ -19,7 +19,8 @@
 package org.wso2.carbon.esb.registry.caching;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -35,7 +36,7 @@ import java.io.FileInputStream;
  */
 public class TenantCachableDurationTestCase extends ESBIntegrationTest {
 
-	Logger logger = Logger.getLogger(TenantCachableDurationTestCase.class);
+	Log logger = LogFactory.getLog(TenantCachableDurationTestCase.class);
 	private String registryContents;
 
 	@BeforeClass(alwaysRun = true)

@@ -131,18 +131,18 @@
             </packages>
         </test>-->
 
-    <!--<test name="inbound-File Transport-Test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.file.inbound.transport.test"/>-->
-        <!--</packages>-->
-        <!--<classes>-->
-            <!--<class name="org.wso2.carbon.esb.file.inbound.transport.test.FtpInboundTransportTest">-->
-                <!--<methods>-->
-                    <!--<exclude name=".*"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <!--<test name="inbound-File Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.file.inbound.transport.test"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.file.inbound.transport.test.FtpInboundTransportTest">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>-->
 
     <test name="inbound-Generic Transport-Test" preserve-order="true" verbose="2">
         <packages>
@@ -163,11 +163,11 @@
         </packages>
     </test>
 
-    <!--<test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>-->
-        <!--</packages>-->
-    <!--</test>-->
+    <!--<test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>
+        </packages>
+    </test>-->
 
     <test name="inbound-MQTT-Transport-Test" preserve-order="true" verbose="2">
         <packages>

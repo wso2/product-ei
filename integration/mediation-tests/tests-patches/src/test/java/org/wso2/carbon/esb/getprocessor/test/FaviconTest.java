@@ -24,7 +24,7 @@ import org.wso2.carbon.automation.test.utils.http.client.HttpsResponse;
 import org.wso2.carbon.automation.test.utils.http.client.HttpsURLConnectionClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 public class FaviconTest extends ESBIntegrationTest {
 
@@ -43,7 +43,7 @@ public class FaviconTest extends ESBIntegrationTest {
                     new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
 
 
-            LogEvent[] logs = logViewerClient.getAllSystemLogs();
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
             boolean exceptionFound = false;
             for (LogEvent item : logs) {
                 String message = item.getMessage();

@@ -30,8 +30,8 @@ import org.wso2.carbon.automation.engine.exceptions.AutomationFrameworkException
 import org.wso2.carbon.automation.extensions.servers.carbonserver.TestServerManager;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.integration.common.utils.FileManager;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -44,6 +44,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,8 +110,6 @@ public class CCOMMONS8SetTenantDomainTest extends ESBIntegrationTest {
         } catch (IOException e) {
             Assert.fail(e.getMessage());
         } catch (XPathExpressionException e) {
-            Assert.fail(e.getMessage());
-        } catch (LogViewerLogViewerException e) {
             Assert.fail(e.getMessage());
         }
     }

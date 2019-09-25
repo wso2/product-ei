@@ -24,7 +24,7 @@ import org.testng.annotations.*;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClientUtils;
 import org.wso2.esb.integration.common.utils.servers.axis2.SampleAxis2Server;
@@ -122,7 +122,7 @@ public class FailOverWithDisabledErrors extends ESBIntegrationTest {
     @Test(groups = "wso2.esb", description = "Test sending request to Fail Over Endpoint", enabled = false)
     public void testFailOverWithTimingOutPrimaryEp() throws IOException, InterruptedException {
         request(1);  // send request 7 times and observe the carbon log.
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int[] occurrences = new int[10];
         int[] expected = new int[]{1, 1, 5, 1, 1, 1, 1, 1, 7, 7};
         for (LogEvent log : logs) {

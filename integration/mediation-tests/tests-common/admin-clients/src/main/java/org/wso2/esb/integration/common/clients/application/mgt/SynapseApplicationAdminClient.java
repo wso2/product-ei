@@ -17,7 +17,8 @@
 package org.wso2.esb.integration.common.clients.application.mgt;
 
 import org.apache.axis2.AxisFault;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.application.mgt.synapse.stub.ExceptionException;
 import org.wso2.carbon.application.mgt.synapse.stub.SynapseApplicationAdminStub;
 import org.wso2.carbon.application.mgt.synapse.stub.types.carbon.SynapseApplicationMetadata;
@@ -26,7 +27,7 @@ import org.wso2.esb.integration.common.clients.client.utils.AuthenticateStub;
 import java.rmi.RemoteException;
 
 public class SynapseApplicationAdminClient {
-    private Logger log = Logger.getLogger(SynapseApplicationAdminClient.class);
+    private Log log = LogFactory.getLog(SynapseApplicationAdminClient.class);
 
     private SynapseApplicationAdminStub applicationAdminStub;
     private String serviceName = "SynapseApplicationAdmin";

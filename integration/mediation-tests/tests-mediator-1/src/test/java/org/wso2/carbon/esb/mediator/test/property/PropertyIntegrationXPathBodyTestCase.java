@@ -23,7 +23,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import static org.testng.Assert.assertTrue;
@@ -57,12 +57,12 @@ public class PropertyIntegrationXPathBodyTestCase extends ESBIntegrationTest {
         assertTrue(response.toString().contains("WSO2 Company"));
 
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
         axis2Client.sendSimpleStockQuoteRequest
                 (getProxyServiceURLHttp("StockQuoteProxy"), null, "WSO2");
 
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         String msg = "stockprop = <ns:getQuote xmlns:ns=\"http://services.samples\">" +

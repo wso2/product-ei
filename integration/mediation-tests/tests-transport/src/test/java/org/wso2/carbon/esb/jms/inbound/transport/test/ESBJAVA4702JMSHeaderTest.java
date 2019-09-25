@@ -26,8 +26,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.clients.inbound.endpoint.InboundAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
@@ -70,7 +70,7 @@ public class ESBJAVA4702JMSHeaderTest extends ESBIntegrationTest {
      */
     @Test(groups = {"wso2.esb" }, description = "Test JMS Headers : ESBJAVA-4702")
     public void JMSInboundEndpointHeaderTest()
-            throws RemoteException, XMLStreamException, LogViewerLogViewerException, InterruptedException {
+            throws RemoteException, XMLStreamException, InterruptedException {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         logViewerClient.clearLogs();
         axis2Client.sendRobust(getProxyServiceURLHttp("jmsHeaderInboundEpTestProxy"), null, null, AXIOMUtil.stringToOM("<body/>"));

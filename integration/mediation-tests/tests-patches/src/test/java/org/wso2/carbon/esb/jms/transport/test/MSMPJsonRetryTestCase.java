@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.extensions.servers.tomcatserver.TomcatServerManager;
 import org.wso2.carbon.automation.extensions.servers.tomcatserver.TomcatServerType;
 
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;

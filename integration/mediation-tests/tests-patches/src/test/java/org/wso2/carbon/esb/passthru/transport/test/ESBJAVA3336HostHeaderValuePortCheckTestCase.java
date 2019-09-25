@@ -27,15 +27,16 @@ import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.carbon.utils.ServerConstants;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
+import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import static org.testng.Assert.assertFalse;
@@ -50,9 +51,16 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
         context = new AutomationContext("ESB", TestUserMode.SUPER_TENANT_ADMIN);
         serverConfigurationManager = new ServerConfigurationManager(context);
         String carbonHome = System.getProperty(ServerConstants.CARBON_HOME);
-        File log4jProperties = new File(carbonHome + File.separator + "conf" +
-                                        File.separator + "log4j.properties");
-        applyProperty(log4jProperties, "log4j.logger.org.apache.synapse.transport.http.wire", "DEBUG");
+        File log4jProperties = new File(carbonHome + File.separator + "conf" + File.separator + "log4j2.properties");
+        String loggers = getProperty(log4jProperties, "loggers");
+        if (loggers == null) {
+            Assert.assertTrue(false, "Loggers property became null");
+        }
+        applyProperty(log4jProperties, "loggers", "" + loggers + ", synapse-transport-http-wire");
+        applyProperty(log4jProperties, "logger.synapse-transport-http-wire.name",
+                "org.apache.synapse.transport.http.wire");
+        serverConfigurationManager.reInitializeConfigData();
+        applyProperty(log4jProperties, "logger.synapse-transport-http-wire.level", "DEBUG");
         serverConfigurationManager.restartGracefully();
         init();
         verifyProxyServiceExistence("ESBJAVA3336httpsBackendProxyService");
@@ -118,5 +126,31 @@ public class ESBJAVA3336HostHeaderValuePortCheckTestCase extends ESBIntegrationT
                 fos.close();
             }
         }
+    }
+
+    /**
+     * Get the given property
+     *
+     * @param srcFile
+     * @param key
+     * @throws IOException
+     */
+    private String getProperty(File srcFile, String key) throws IOException {
+        FileInputStream fis = null;
+        String value = null;
+        try {
+            fis = new FileInputStream(srcFile);
+            Properties properties = new Properties();
+            properties.load(fis);
+            fis.close();
+            value = properties.getProperty(key);
+        } catch (Exception e) {
+            Assert.assertTrue(false, "Exception occured with the message: " + e.getMessage());
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+        }
+        return value;
     }
 }
