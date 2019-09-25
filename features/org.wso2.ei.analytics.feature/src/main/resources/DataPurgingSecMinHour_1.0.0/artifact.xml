@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="DataPurgingSecMinHour" version="1.0.0" type="analytics/dataPurging" serverRole="DataAnalyticsServer">
+    <file>data_purging_for_sec_min_hour.xml</file>
+</artifact>
