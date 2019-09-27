@@ -1679,7 +1679,7 @@
         <product.ei.version>6.6.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.5.17</carbon.business-process.version>
+        <carbon.business-process.version>4.5.20</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>${axis2.wso2.version}</orbit.version.axis2>
