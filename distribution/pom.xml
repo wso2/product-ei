@@ -246,6 +246,24 @@
                 <version>1.1</version>
                 <executions>
                     <execution>
+                        <id>add-in-place-tool</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!-- download file -->
+                                <get src="https://product-dist.wso2.com/downloads/in-place/release/update.zip"
+                                     dest="${project.build.directory}/update.zip"
+                                     verbose="false"
+                                     usetimestamp="true"/>
+                                <unzip src="${project.build.directory}/update.zip"
+                                       dest="${project.build.directory}" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>extract-docs-from-components</id>
                         <phase>package</phase>
                         <goals>
