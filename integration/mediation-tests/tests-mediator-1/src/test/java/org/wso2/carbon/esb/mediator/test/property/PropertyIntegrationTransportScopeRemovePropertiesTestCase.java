@@ -24,7 +24,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import javax.xml.namespace.QName;
@@ -124,11 +124,11 @@ public class PropertyIntegrationTransportScopeRemovePropertiesTestCase extends E
      */
     private boolean isMatchFound(String matchStr) throws Exception {
         boolean isSet = false;
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int size = logs.length;
-        for (int i = size-1; i >= 0; i--) {
+        for (int i = 0; i < size; i++) {
             if (logs[i].getMessage().contains(matchStr)) {
-                for (int j = i; j >= 0; j--) {
+                for (int j = i; j < size; j++) {
                     if (logs[j].getMessage().contains("symbol = null")) {
                         isSet = true;
                         break;

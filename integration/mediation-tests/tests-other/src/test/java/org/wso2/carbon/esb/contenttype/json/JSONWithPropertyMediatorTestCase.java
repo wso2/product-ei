@@ -25,7 +25,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import static org.testng.Assert.assertEquals;
@@ -63,7 +63,7 @@ public class JSONWithPropertyMediatorTestCase extends ESBIntegrationTest {
         WebResource webResource = client
                 .resource(getProxyServiceURLHttp("PropertyMediatorWithJsonPath"));
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         // sending post request
         ClientResponse postResponse = webResource.type("application/json")
@@ -71,7 +71,7 @@ public class JSONWithPropertyMediatorTestCase extends ESBIntegrationTest {
 
         Thread.sleep(3000);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         String msg = "Property1 = TradeWorld";

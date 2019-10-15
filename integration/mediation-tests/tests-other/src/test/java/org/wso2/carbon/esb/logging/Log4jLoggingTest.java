@@ -14,6 +14,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+/*
 package org.wso2.carbon.esb.logging;
 
 import org.apache.log4j.lf5.LogLevel;
@@ -24,12 +25,13 @@ import org.wso2.esb.integration.common.clients.logging.LoggingAdminClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import static org.testng.Assert.assertEquals;
-
+*/
 /**
  * This test case is testing the following functionality in logging admin.
  *    1. Restore to defaults functionality.
  *    2. Get appender data for an appender name.
  */
+/*
 public class Log4jLoggingTest extends ESBIntegrationTest {
 
     @BeforeClass(alwaysRun = true)
@@ -69,3 +71,4 @@ public class Log4jLoggingTest extends ESBIntegrationTest {
         assertEquals(appenderData.getName(), appenderName, "Unexpected appender data was returned.");
     }
 }
+*/

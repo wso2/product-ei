@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.test.utils.axis2client.AxisServiceClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 /**
@@ -66,7 +66,7 @@ public class ESBJAVA3412EmptyStackExceptionTest extends ESBIntegrationTest {
 
 		Thread.sleep(2000);
 
-		LogEvent[] logs = logViewerClient.getAllSystemLogs();
+		LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
 		// Asserting both the ERROR message and the stack trace.
 

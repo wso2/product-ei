@@ -525,6 +525,10 @@ public class ServerConfigurationManager {
         }
     }
 
+    public void reInitializeConfigData() {
+        configDatas = new ArrayList<ConfigData>();
+    }
+
     /**
      * Private class to hold config data
      */

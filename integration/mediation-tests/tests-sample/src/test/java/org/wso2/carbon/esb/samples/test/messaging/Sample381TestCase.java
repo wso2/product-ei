@@ -29,7 +29,7 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.esb.samples.test.messaging.utils.MDDProducer;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.carbon.esb.samples.test.util.ESBSampleIntegrationTest;
 import org.wso2.esb.integration.common.utils.servers.ActiveMQServer;
 
@@ -72,7 +72,7 @@ public class Sample381TestCase extends ESBSampleIntegrationTest {
 
         boolean isRequestLogFound = false;
 
-        LogEvent[] logEvents = logViewerClient.getAllSystemLogs();
+        LogEvent[] logEvents = logViewerClient.getAllRemoteSystemLogs();
 
         for (LogEvent event : logEvents) {
             if (event.getMessage().contains("MSTF")) {

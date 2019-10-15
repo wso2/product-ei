@@ -22,8 +22,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.carbon.security.mgt.stub.config.SecurityAdminServiceSecurityConfigExceptionException;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.SecureServiceClient;
@@ -69,7 +69,7 @@ public class EnrichAddCustomHeaderTestCase extends ESBIntegrationTest {
      * @param property required property which needs to be validate if exists or not.
      * @return A Boolean
      */
-    private boolean isPropertyContainedInLog(String property) throws LogViewerLogViewerException, RemoteException {
+    private boolean isPropertyContainedInLog(String property) throws RemoteException {
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean containsProperty = false;
         for (LogEvent logEvent : logs) {

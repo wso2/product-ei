@@ -87,21 +87,20 @@
                             <publishArtifactRepository>true</publishArtifactRepository>
                             <featureArtifacts>
 
-                                <!--1. Carbon-Mediation-->
                                 <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.apache.synapse.wso2.feature:${carbon.mediation.version}
+                                    org.apache.synapse:org.apache.synapse.wso2.feature:${synapse.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.jackson.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.apache.synapse.transport.fix.feature:${carbon.mediation.version}
+                                    org.apache.synapse:org.apache.synapse.transport.fix.feature:${synapse.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.apache.synapse.transport.nhttp.feature:${carbon.mediation.version}
+                                    org.apache.synapse:org.apache.synapse.transport.nhttp.feature:${synapse.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.mediation:org.apache.synapse.transport.vfs.feature:${carbon.mediation.version}
+                                    org.apache.synapse:org.apache.synapse.transport.vfs.feature:${synapse.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.application.deployer.synapse.feature:${carbon.mediation.version}
@@ -240,9 +239,6 @@
                                     org.wso2.carbon.commons:org.wso2.carbon.transaction.manager.feature:${carbon.commons.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.commons:org.wso2.carbon.logging.mgt.feature:${carbon.commons.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.message.flows.feature:${carbon.commons.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -251,7 +247,12 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.tryit.feature:${carbon.commons.version}
                                 </featureArtifactDef>
-
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.logging.viewer.feature:${carbon.commons.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.logging.updater.feature:${carbon.commons.version}
+                                </featureArtifactDef>
                                 <!--4 Carbon-registry-->
                                 <featureArtifactDef>
                                     org.wso2.carbon.registry:org.wso2.carbon.registry.core.feature:${carbon.registry.version}
@@ -452,10 +453,9 @@
                             </destination>
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
-                                <!--1 Carbon Mediation -->
                                 <feature>
                                     <id>org.apache.synapse.wso2.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
+                                    <version>${synapse.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.jackson.feature.group</id>
@@ -463,7 +463,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.apache.synapse.transport.fix.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
+                                    <version>${synapse.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.task.feature.group</id>
@@ -527,11 +527,11 @@
                                 </feature>
                                 <feature>
                                     <id>org.apache.synapse.transport.nhttp.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
+                                    <version>${synapse.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.apache.synapse.transport.vfs.feature.group</id>
-                                    <version>${carbon.mediation.version}</version>
+                                    <version>${synapse.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.application.mgt.synapse.feature.group</id>
@@ -602,10 +602,6 @@
                                     <version>${carbon.analytics.common.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.logging.mgt.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature>
-                                <feature>
                                     <id>org.wso2.carbon.ndatasource.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
@@ -635,6 +631,14 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.discovery.core.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.logging.view.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.logging.updater.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>

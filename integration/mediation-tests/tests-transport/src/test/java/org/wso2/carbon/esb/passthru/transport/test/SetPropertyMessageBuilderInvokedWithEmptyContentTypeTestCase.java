@@ -23,7 +23,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 import org.wso2.esb.integration.common.utils.clients.JSONClient;
@@ -74,7 +74,7 @@ public class SetPropertyMessageBuilderInvokedWithEmptyContentTypeTestCase extend
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         Assert.assertTrue(Utils.checkForLog(logViewerClient, "messageBuilderInvokedValue = true", 20));
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             String message = logEvent.getMessage();
             if (message.contains(EXPECTED_ERROR_MESSAGE)) {

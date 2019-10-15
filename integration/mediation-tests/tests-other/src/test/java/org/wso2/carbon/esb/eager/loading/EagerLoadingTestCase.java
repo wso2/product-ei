@@ -29,7 +29,7 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 import java.io.File;
 
@@ -57,7 +57,7 @@ public class EagerLoadingTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", enabled = true, description = "Test server start up with Eager loading")
     public void testStartupLogs() throws Exception {
-        LogEvent[] logs = this.logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = this.logViewerClient.getAllRemoteSystemLogs();
         Assert.assertNotNull(logs, "No logs found");
         Assert.assertTrue(logs.length > 0, "No logs found");
         boolean serverStarted = false;

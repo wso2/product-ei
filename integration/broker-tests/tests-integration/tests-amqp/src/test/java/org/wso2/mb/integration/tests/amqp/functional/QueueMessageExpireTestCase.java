@@ -18,7 +18,8 @@
 
 package org.wso2.mb.integration.tests.amqp.functional;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -47,7 +48,7 @@ public class QueueMessageExpireTestCase extends MBIntegrationBaseTest {
     /**
      * Logger used for logging information related to the test class
      */
-    private static Logger log = Logger.getLogger(QueueMessageExpireTestCase.class);
+    private static Log log = LogFactory.getLog(QueueMessageExpireTestCase.class);
 
     /**
      * Initializing test case

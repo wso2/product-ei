@@ -34,16 +34,6 @@
                 <artifactId>carbon-p2-plugin</artifactId>
                 <version>${carbon.p2.plugin.version}</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -63,7 +53,7 @@
         <carbon.kernel.version>4.4.36</carbon.kernel.version>
         <carbon.mediation.version>4.6.105</carbon.mediation.version>
         <org.testng.version>6.1.1</org.testng.version>
-        <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
+        <automation.framework.utils.version>4.5.0</automation.framework.utils.version>
         <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <httpclient.version>4.3.2</httpclient.version>
         <org.wso2.json.version>3.0.0.wso2v1</org.wso2.json.version>
@@ -72,6 +62,7 @@
         <maven.surefire.version>2.12.4</maven.surefire.version>
         <jacoco.version>0.7.9</jacoco.version>
         <activemq.client.version>5.15.8</activemq.client.version>
+        <pax.logging.api.version>1.10.1</pax.logging.api.version>
     </properties>
 
     <modules>
@@ -144,9 +135,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>${commons.logging.version}</version>
+                <groupId>org.ops4j.pax.logging</groupId>
+                <artifactId>pax-logging-api</artifactId>
+                <version>${pax.logging.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.axis2</groupId>

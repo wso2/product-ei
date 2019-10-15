@@ -343,6 +343,7 @@ do
     -DworkerNode=false \
     -DenableCorrelationLogs=false \
     -Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600 \
+    -DavoidConfigUpdate=true \
     $NODE_PARAMS \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?

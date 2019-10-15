@@ -25,8 +25,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.integration.common.utils.FileManager;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import org.wso2.esb.integration.common.utils.common.TestConfigurationProvider;
@@ -222,7 +222,7 @@ public class SynapseArtifactsHotDeploymentTestCase extends ESBIntegrationTest {
     }
 
     private boolean searchInLogs(LogViewerClient logViewerClient, String searchString)
-            throws LogViewerLogViewerException, RemoteException, InterruptedException {
+            throws RemoteException, InterruptedException {
         boolean logFound = false;
         for (int i = 0; i < 60; i++) {
             LogEvent[] logEvents = logViewerClient.getAllRemoteSystemLogs();

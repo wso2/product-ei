@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class ESBJAVA2464TestCase extends ESBIntegrationTest {
 			sender.disconnect();
 		}
 
-		LogEvent[] logs = logViewer.getAllSystemLogs();
+		LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
 		for (LogEvent log : logs) {
 			if (log.getMessage().contains(logLine0)) {
 				Assert.fail(logLine0 + "is in log");

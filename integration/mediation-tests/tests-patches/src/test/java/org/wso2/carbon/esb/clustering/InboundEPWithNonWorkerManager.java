@@ -24,8 +24,8 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
 
@@ -89,7 +89,7 @@ public class InboundEPWithNonWorkerManager extends ESBIntegrationTest {
         serverConfigurationManager = null;
     }
 
-    protected boolean stringExistsInLog(String value) throws LogViewerLogViewerException, RemoteException {
+    protected boolean stringExistsInLog(String value) throws RemoteException {
         LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean logFound = false;
         for (LogEvent logEvent : logs) {

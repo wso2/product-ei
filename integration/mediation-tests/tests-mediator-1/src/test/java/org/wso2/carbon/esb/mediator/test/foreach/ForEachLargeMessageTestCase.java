@@ -23,7 +23,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.common.FixedSizeSymbolGenerator;
 
@@ -49,8 +49,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests large message in small number 5")
     public void testSmallNumbers() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
-
+        logViewer.clearLogs();
         OMElement response;
         for (int i = 0; i < 5; i++) {
             response =
@@ -65,7 +64,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
+        for (int i = 0; i < afterLogSize; i++) {
             String message = logs[i].getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("IBM")) {
@@ -82,8 +81,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests large message in large number 10")
     public void testLargeNumbers() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
-
+        logViewer.clearLogs();
         OMElement response;
         for (int i = 0; i < 10; i++) {
             response =
@@ -97,7 +95,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
+        for (int i = 0; i < afterLogSize; i++) {
             String message = logs[i].getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("SUN")) {
@@ -113,8 +111,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
 
     @Test(groups = "wso2.esb", description = "Tests large message 3MB")
     public void testLargeMessage() throws Exception {
-        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
-
+        logViewer.clearLogs();
         String symbol2 = FixedSizeSymbolGenerator.generateMessageMB(3);
         OMElement response;
 
@@ -128,7 +125,7 @@ public class ForEachLargeMessageTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
         int forEachCount = 0;
 
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
+        for (int i = 0; i < afterLogSize; i++) {
             String message = logs[i].getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("MSFT")) {

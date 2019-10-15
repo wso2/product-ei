@@ -82,11 +82,12 @@
         </packages>
     </test>
 
-    <test name="Spring-mediator-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.esb.mediator.test.spring"/>
-        </packages>
-    </test>
+    <!-- These test cases are removed since the spring mediator is deprecated and the spring server feature is not packed with the EI -->
+<!--    <test name="Spring-mediator-Test" preserve-order="true" verbose="2">-->
+<!--        <packages>-->
+<!--            <package name="org.wso2.carbon.esb.mediator.test.spring"/>-->
+<!--        </packages>-->
+<!--    </test>-->
 
     <test name="Smook-mediator-Test" preserve-order="true" verbose="2">
         <packages>

@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceExceptionException;
 import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
@@ -80,7 +80,7 @@ public class SpringMediationBeansTestCase extends ESBIntegrationTest {
 
 		} catch (Exception axisFault) {
 			try {
-				LogEvent[] logs = logViewerClient.getAllSystemLogs();
+				LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 				for (LogEvent logEvent : logs) {
 					String message = logEvent.getMessage();
 					if (message
