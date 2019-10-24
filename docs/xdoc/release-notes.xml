@@ -114,14 +114,16 @@
                 <li>Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.</li>
                 <li>Comprehensive and customizable web applications for managing human tasks. bpmn processes and
                     instances</li>
+                <li>Switched to the log4j2 logging</li>
+                <li>Support for JDK 11</li>
 
             </ul>
 
 
-            <h2>Deprecated features</h2>
+            <h2>Removed features</h2>
 
             <p>
-                Following features are deprecated in this release and will be removed in the next release.
+                Following features are removed in this release.
             </p>
 
             <ul>
@@ -132,6 +134,7 @@
                 <li>Conditional Router Mediator</li>
                 <li>In, Out Mediators</li>
                 <li>Event Mediator and In memory Topics</li>
+                <li>ESB artifacts option in Management console</li>
             </ul>
 
             <h2>Known Issues</h2>
