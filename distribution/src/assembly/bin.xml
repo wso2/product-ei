@@ -85,7 +85,6 @@
                 <exclude>**/wso2/components/plugins/axis2-transport-sms_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/axis2-transport-mail_1.1.1.wso2v2.jar</exclude>
                 <exclude>**/wso2/components/plugins/jsch_0.1.49.wso2v1.jar</exclude>
-                <exclude>**/wso2/components/plugins/org.wso2.carbon.tenant.redirector.servlet_*.jar</exclude>
 		<exclude>**/wso2/components/features/**</exclude>
             </excludes>
         </fileSet>
