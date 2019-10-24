@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~  Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta content="text/html; charset=iso-8859-1" http-equiv="content-type"/>
+        <title>WSO2 EI v6.6.0 Released - April 2019</title>
+    </head>
+    <body>
+        <div id="header">
+        </div>
+
+        <div id="main-content">
+            <h1>The WSO2 Enterprise Integrator (EI) 6.6.0 Released!</h1>
+
+            <p>
+                WSO2 EI team is pleased to announce the release of version 6.6.0 of
+                the Open Source Enterprise Integrator (EI).
+            </p>
+
+            <p>
+                WSO2 EI is a unified distribution of WSO2 Enterprise Service Bus and
+                Data Services Server, which works as a single runtime (Integrator) along with optional runtimes for
+                EI Analytics, Business Processor and Message Broker. This product distribution includes a shared
+                component directory, with profile-based management capabilities for each runtime.
+            </p>
+
+            <p>
+                WSO2 EI simplifies integration by allowing users to easily configure message routing, message mediation,
+                transformation, logging, task scheduling, load balancing, failover routing,
+                event brokering etc. Data services and various applications can also be hosted and exposed using WSO2 EI.
+                These integration capabilities are further powered by the capabilities of the EI Analytics, Business Processor and Message Broker runtimes.
+            </p>
+
+
+            <h2>Installation and Running </h2>
+            <h3>Running the Integrator</h3>
+            <ol>
+                <li>Extract the downloaded wso2ei-6.6.0.zip</li>
+                <li>Go to the bin directory in the extracted folder</li>
+                <li>Run the integrator.sh or integrator.bat as appropriate</li>
+                <li>Point your browser to the URL https://localhost:9443/carbon</li>
+                <li>Use "admin", "admin" as the username and password to login as an admin</li>
+                <li>If you need to start the OSGi console with the server use the property
+                    -DosgiConsole when starting the server.</li>
+            </ol>
+            <h3>Running other runtimes individually (Analytics, Broker, Business Process )</h3>
+            <ol>
+                <li>Extract wso2ei-6.6.0.zip and go to the extracted directory.</li>
+                <li>Go to wso2ei-6.6.0/wso2 directory.</li>
+                <li>Go to appropriate runtime directory (analytics/broker/business-process) /bin.</li>
+                <li> Execute wso2server.sh or wso2server.bat.</li>
+            </ol>
+
+            <h2>Key Features of WSO2 EI</h2>
+            <ul>
+                <li>Proxy services - facilitating synchronous/asynchronous transport, interface
+                    (WSDL/Schema/Policy), message format (SOAP 1.1/1.2, POX/REST, Text, Binary),
+                    QoS (WS-Addressing/WS-Security) and optimization switching (MTOM/SwA).</li>
+                <li>API facilitating building REST APIs</li>
+                <li>Non-blocking HTTP/S transports based on Apache HttpCore-NIO for ultra-fast
+                    execution and support for thousands of connections at high concurrency with
+                    constant memory usage.</li>
+                <li>Built in Registry/Repository, facilitating dynamic updating and reloading
+                    of the configuration and associated resources (e.g. XSLTs, XSD, WSDL,
+                    Policies, JS configurations ..)</li>
+                <li>Easily extendable via custom Java classes (mediator and command)/Spring
+                    configurations, or BSF Scripting languages (Javascript, Ruby, Groovy, etc.)</li>
+                <li>Built in support for scheduling tasks using the Quartz scheduler.</li>
+                <li>Load-balancing (with or without sticky sessions)/Fail-over, and clustered
+                    Throttling and Caching support</li>
+                <li>WS-Security, Caching &amp; Throttling configurable via
+                    (message/operation/service level) WS-Policies</li>
+                <li>Lightweight, XML and Web services centric messaging model</li>
+                <li> Support for industrial standards (Hessian binary web service protocol/
+                    Financial Information eXchange protocol and optional Health Level-7 protocol)</li>
+                <li>Enhanced support for the VFS (File/FTP/SFTP), JMS, Mail transports with
+                    optional TCP/UDP transports and transport switching among any of the above
+                    transports</li>
+                <li>Support for message splitting &amp; aggregation using the EIP and service
+                    callouts</li>
+                <li>Database lookup &amp; store support with DBMediators with reusable database
+                    connection pools</li>
+                <li>WS-Eventing support</li>
+                <li>Rule based mediation of the messages using the Drools rule engine</li>
+                <li>Transactions support via the JMS transport and Transaction mediator for
+                    database mediators</li>
+                <li>Internationalized GUI management console with user management for
+                    configuration development</li>
+                <li>Integrated monitoring support with statistics, configurable logging and tracing</li>
+                <li>JMX monitoring support and JMX management capabilities like,
+                    Graceful/Forceful shutdown/restart</li>
+                <li>Deploying Business Processes written in compliance with WS-BPEL 2.0 Standard and BPEL4WS 1.1 standard.</li>
+                <li>Deploying Business Processes written in compliance with a frequently used subset of BPMN 2.0 standard.</li>
+                <li>Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.</li>
+                <li>Comprehensive and customizable web applications for managing human tasks. bpmn processes and
+                    instances</li>
+                <li>Switched to the log4j2 logging</li>
+                <li>Support for JDK 11</li>
+
+            </ul>
+
+
+            <h2>Removed features</h2>
+
+            <p>
+                Following features are removed in this dsgsdgsdgsrelease.
+            </p>
+
+            <ul>
+                <li>Priority Executors, Enqueue Mediator</li>
+                <li>Bean Mediator</li>
+                <li>POJO Command Mediator</li>
+                <li>Spring Mediator</li>
+                <li>Conditional Router Mediator</li>
+                <li>In, Out Mediators</li>
+                <li>Event Mediator and In memory Topics</li>
+                <li>ESB artifacts option in kugiugManagement console</li>
+            </ul>
+
+            <h2>Known Issues</h2>
+            <p>
+                All the open issues pertaining to WSO2 EI 6.6.0 are reported at following
+                locations:
+            </p>
+            <ul>
+                <li><a href="https://github.com/wso2/product-ei/issues">
+                    WSO2 EI 6.6.0 component issues</a></li>
+            </ul>
+
+            <h2>How You Can Contribute</h2>
+            <h3>
+                Mailing Lists
+            </h3>
+            <p>
+                Join our mailing list and correspond with the developers directly.
+            </p>
+            <ul>
+                <li>
+                    Developer List : <a href="mailto:dev@wso2.org">dev@wso2.org</a>
+                    | <a href="mailto:dev-request@wso2.org?subject=subscribe">Subscribe</a>
+                    | <a href="http://mail.wso2.org/mailarchive/dev/">Mail Archive</a>
+                </li>
+            </ul>
+            <h3>
+                Reporting Issues
+            </h3>
+            <p>
+                We encourage you to report issues, documentation faults and feature requests regarding
+                WSO2 EI through the public <a href="https://github.com/wso2/product-ei/issues">Github EI issues</a>.
+            </p>
+
+            <h3>
+                Discussion Forums
+            </h3>
+            <p>
+                Alternatively, questions could be raised on <a href="http://stackoverflow.com/questions/tagged/wso2">http://stackoverflow.com</a>.
+            </p>
+
+            <h2>Support</h2>
+            <p>
+                We are committed to ensuring that your enterprise middleware deployment is
+                completely supported from evaluation to production. Our unique approach
+                ensures that all support leverages our open development methodology and is
+                provided by the very same engineers who build the technology.
+            </p>
+            <p>
+                For more details and to take advantage of this unique opportunity please
+                visit <a href="http://wso2.com/support">http://wso2.com/support</a>.
+            </p>
+            <p>
+                For more information about WSO2 EI please see <a href="https://wso2.com/integration">
+                http://wso2.com/products/enterprise-integrator</a>.
+            </p>
+
+
+            <p><i>-- The WSO2 EI Team --</i> </p>
+        </div>
+    </body>
+</html>
