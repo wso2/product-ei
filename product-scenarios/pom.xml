@@ -34,6 +34,16 @@
                 <artifactId>carbon-p2-plugin</artifactId>
                 <version>${carbon.p2.plugin.version}</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
