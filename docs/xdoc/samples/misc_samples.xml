@@ -153,105 +153,105 @@
  }</pre>
     </div>
 
- <h2>
-         <a name="Sample652">Sample 652: Priority Based Message Mediation</a>
-       </h2>
-       <p>
-         &#xa0;
-       </p>
-   <pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
-    &lt;priority-executor name=&quot;exec&quot;&gt;
-        &lt;queues&gt;
-            &lt;queue size=&quot;100&quot; priority=&quot;1&quot;/&gt;
-            &lt;queue size=&quot;100&quot; priority=&quot;10&quot;/&gt;
-        &lt;/queues&gt;
-    &lt;/priority-executor&gt;
-    &lt;proxy name=&quot;StockQuoteProxy&quot;&gt;
-        &lt;target&gt;
-            &lt;inSequence&gt;
-                &lt;filter source=&quot;$trp:priority&quot; regex=&quot;1&quot;&gt;
-                    &lt;then&gt;
-                        &lt;enqueue priority=&quot;1&quot; sequence=&quot;priority_sequence&quot; executor=&quot;exec&quot;/&gt;
-                    &lt;/then&gt;
-                    &lt;else&gt;
-                        &lt;enqueue priority=&quot;10&quot; sequence=&quot;priority_sequence&quot; executor=&quot;exec&quot;/&gt;
-                    &lt;/else&gt;
-                &lt;/filter&gt;
-            &lt;/inSequence&gt;
-            &lt;outSequence&gt;
-                &lt;send/&gt;
-            &lt;/outSequence&gt;
-        &lt;/target&gt;
-        &lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;
-    &lt;/proxy&gt;
-    &lt;sequence name=&quot;priority_sequence&quot;&gt;
-        &lt;log level=&quot;full&quot;/&gt;
-        &lt;send&gt;
-            &lt;endpoint&gt;
-                &lt;address uri=&quot;http://localhost:9000/services/SimpleStockQuoteService&quot;/&gt;
-            &lt;/endpoint&gt;
-        &lt;/send&gt;
-    &lt;/sequence&gt;
-&lt;/definitions&gt;</pre>
-       <div>
-         <p>
-           <strong>Objective:</strong> Demonstrate the priority based mediation capability of EI.
-         </p>
-         <p>
-           <strong>Prerequisites:</strong> Deploy the
-           SimpleStockQuoteService in sample Axis2 server and start it on port
-           9000. Priority is applied only when EI is loaded with enough messages to consume its core number of threads.
-             So to observe the priority based mediation, it is required to use a load testing tool like JMeter, SOAP UI or Apache bench.
-         </p>
-         <p>
-           Start EI with the sample configuration 652 (i.e. wso2EI-samples.sh -sn 652).
-         </p>
-         <p>
-           In this sample, client should send a HTTP header that specifies the priority of the message.This header name is priority.
-             This header is retrieved in the EI configuration using the $trp:priority XPath expression. Then it is matched against
-             the value 1. If it has the value 1, message is executed with priority 1. Otherwise the message is executed with priority 10.
-         </p>
-           <p>
-               Here are two sample XML files that can be used to invoke the service using a tool like JMeter, or Ab. For SOAP UI,
-               user can use the WSDL samples/service-bus/resources/proxy/sample_proxy_1.wsdl to create the request. The only
-               difference between the two demonstrated requests here is the symbol. One has the symbol as IBM and other has MSFT. For one type of
-               request set the priority header to 1 and for the next set the priority header to 10. Then load EI with high
-               volume of traffic from both types of requests using the load testing tool. In the back end server it prints the
-               symbol of the incoming requests. User should be able to see more of high priority symbol.
-           </p>
-           <pre xml:space="preserve">
-&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
-     &lt;soapenv:Header xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;
-        &lt;wsa:To&gt;http://localhost:8281/services/SimpleStockQuoteService&lt;/wsa:To&gt;
-        &lt;wsa:MessageID&gt;urn:uuid:1B57D0B0BF770678DE1261165228620&lt;/wsa:MessageID&gt;
-        &lt;wsa:Action&gt;urn:getQuote&lt;/wsa:Action&gt;
-     &lt;/soapenv:Header&gt;
-     &lt;soapenv:Body&gt;
-        &lt;m0:getQuote xmlns:m0=&quot;http://services.samples&quot;&gt;
-           &lt;m0:request&gt;
-              &lt;m0:symbol&gt;IBM&lt;/m0:symbol&gt;
-           &lt;/m0:request&gt;
-        &lt;/m0:getQuote&gt;
-     &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-           </pre>
-           <pre xml:space="preserve">
-&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
-     &lt;soapenv:Header xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;
-        &lt;wsa:To&gt;http://localhost:8281/services/SimpleStockQuoteService&lt;/wsa:To&gt;
-        &lt;wsa:MessageID&gt;urn:uuid:1B57D0B0BF770678DE1261165228620&lt;/wsa:MessageID&gt;
-        &lt;wsa:Action&gt;urn:getQuote&lt;/wsa:Action&gt;
-     &lt;/soapenv:Header&gt;
-     &lt;soapenv:Body&gt;
-        &lt;m0:getQuote xmlns:m0=&quot;http://services.samples&quot;&gt;
-           &lt;m0:request&gt;
-              &lt;m0:symbol&gt;MSFT&lt;/m0:symbol&gt;
-           &lt;/m0:request&gt;
-        &lt;/m0:getQuote&gt;
-     &lt;/soapenv:Body&gt;
-&lt;/soapenv:Envelope&gt;
-           </pre>
-       </div>
+ <!--<h2>-->
+         <!--<a name="Sample652">Sample 652: Priority Based Message Mediation</a>-->
+       <!--</h2>-->
+       <!--<p>-->
+         <!--&#xa0;-->
+       <!--</p>-->
+   <!--<pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;-->
+    <!--&lt;priority-executor name=&quot;exec&quot;&gt;-->
+        <!--&lt;queues&gt;-->
+            <!--&lt;queue size=&quot;100&quot; priority=&quot;1&quot;/&gt;-->
+            <!--&lt;queue size=&quot;100&quot; priority=&quot;10&quot;/&gt;-->
+        <!--&lt;/queues&gt;-->
+    <!--&lt;/priority-executor&gt;-->
+    <!--&lt;proxy name=&quot;StockQuoteProxy&quot;&gt;-->
+        <!--&lt;target&gt;-->
+            <!--&lt;inSequence&gt;-->
+                <!--&lt;filter source=&quot;$trp:priority&quot; regex=&quot;1&quot;&gt;-->
+                    <!--&lt;then&gt;-->
+                        <!--&lt;enqueue priority=&quot;1&quot; sequence=&quot;priority_sequence&quot; executor=&quot;exec&quot;/&gt;-->
+                    <!--&lt;/then&gt;-->
+                    <!--&lt;else&gt;-->
+                        <!--&lt;enqueue priority=&quot;10&quot; sequence=&quot;priority_sequence&quot; executor=&quot;exec&quot;/&gt;-->
+                    <!--&lt;/else&gt;-->
+                <!--&lt;/filter&gt;-->
+            <!--&lt;/inSequence&gt;-->
+            <!--&lt;outSequence&gt;-->
+                <!--&lt;send/&gt;-->
+            <!--&lt;/outSequence&gt;-->
+        <!--&lt;/target&gt;-->
+        <!--&lt;publishWSDL uri=&quot;file:samples/service-bus/resources/proxy/sample_proxy_1.wsdl&quot;/&gt;-->
+    <!--&lt;/proxy&gt;-->
+    <!--&lt;sequence name=&quot;priority_sequence&quot;&gt;-->
+        <!--&lt;log level=&quot;full&quot;/&gt;-->
+        <!--&lt;send&gt;-->
+            <!--&lt;endpoint&gt;-->
+                <!--&lt;address uri=&quot;http://localhost:9000/services/SimpleStockQuoteService&quot;/&gt;-->
+            <!--&lt;/endpoint&gt;-->
+        <!--&lt;/send&gt;-->
+    <!--&lt;/sequence&gt;-->
+<!--&lt;/definitions&gt;</pre>-->
+       <!--<div>-->
+         <!--<p>-->
+           <!--<strong>Objective:</strong> Demonstrate the priority based mediation capability of EI.-->
+         <!--</p>-->
+         <!--<p>-->
+           <!--<strong>Prerequisites:</strong> Deploy the-->
+           <!--SimpleStockQuoteService in sample Axis2 server and start it on port-->
+           <!--9000. Priority is applied only when EI is loaded with enough messages to consume its core number of threads.-->
+             <!--So to observe the priority based mediation, it is required to use a load testing tool like JMeter, SOAP UI or Apache bench.-->
+         <!--</p>-->
+         <!--<p>-->
+           <!--Start EI with the sample configuration 652 (i.e. wso2EI-samples.sh -sn 652).-->
+         <!--</p>-->
+         <!--<p>-->
+           <!--In this sample, client should send a HTTP header that specifies the priority of the message.This header name is priority.-->
+             <!--This header is retrieved in the EI configuration using the $trp:priority XPath expression. Then it is matched against-->
+             <!--the value 1. If it has the value 1, message is executed with priority 1. Otherwise the message is executed with priority 10.-->
+         <!--</p>-->
+           <!--<p>-->
+               <!--Here are two sample XML files that can be used to invoke the service using a tool like JMeter, or Ab. For SOAP UI,-->
+               <!--user can use the WSDL samples/service-bus/resources/proxy/sample_proxy_1.wsdl to create the request. The only-->
+               <!--difference between the two demonstrated requests here is the symbol. One has the symbol as IBM and other has MSFT. For one type of-->
+               <!--request set the priority header to 1 and for the next set the priority header to 10. Then load EI with high-->
+               <!--volume of traffic from both types of requests using the load testing tool. In the back end server it prints the-->
+               <!--symbol of the incoming requests. User should be able to see more of high priority symbol.-->
+           <!--</p>-->
+           <!--<pre xml:space="preserve">-->
+<!--&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;-->
+     <!--&lt;soapenv:Header xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;-->
+        <!--&lt;wsa:To&gt;http://localhost:8281/services/SimpleStockQuoteService&lt;/wsa:To&gt;-->
+        <!--&lt;wsa:MessageID&gt;urn:uuid:1B57D0B0BF770678DE1261165228620&lt;/wsa:MessageID&gt;-->
+        <!--&lt;wsa:Action&gt;urn:getQuote&lt;/wsa:Action&gt;-->
+     <!--&lt;/soapenv:Header&gt;-->
+     <!--&lt;soapenv:Body&gt;-->
+        <!--&lt;m0:getQuote xmlns:m0=&quot;http://services.samples&quot;&gt;-->
+           <!--&lt;m0:request&gt;-->
+              <!--&lt;m0:symbol&gt;IBM&lt;/m0:symbol&gt;-->
+           <!--&lt;/m0:request&gt;-->
+        <!--&lt;/m0:getQuote&gt;-->
+     <!--&lt;/soapenv:Body&gt;-->
+<!--&lt;/soapenv:Envelope&gt;-->
+           <!--</pre>-->
+           <!--<pre xml:space="preserve">-->
+<!--&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;-->
+     <!--&lt;soapenv:Header xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;-->
+        <!--&lt;wsa:To&gt;http://localhost:8281/services/SimpleStockQuoteService&lt;/wsa:To&gt;-->
+        <!--&lt;wsa:MessageID&gt;urn:uuid:1B57D0B0BF770678DE1261165228620&lt;/wsa:MessageID&gt;-->
+        <!--&lt;wsa:Action&gt;urn:getQuote&lt;/wsa:Action&gt;-->
+     <!--&lt;/soapenv:Header&gt;-->
+     <!--&lt;soapenv:Body&gt;-->
+        <!--&lt;m0:getQuote xmlns:m0=&quot;http://services.samples&quot;&gt;-->
+           <!--&lt;m0:request&gt;-->
+              <!--&lt;m0:symbol&gt;MSFT&lt;/m0:symbol&gt;-->
+           <!--&lt;/m0:request&gt;-->
+        <!--&lt;/m0:getQuote&gt;-->
+     <!--&lt;/soapenv:Body&gt;-->
+<!--&lt;/soapenv:Envelope&gt;-->
+           <!--</pre>-->
+       <!--</div>-->
 
     <h2>
          <a name="Sample653">Sample 653: NHTTP Transport Priority Based Dispatching</a>

@@ -1940,115 +1940,115 @@ Axis2 server and start it on port 9000. </p>
     directly publish a received request or a response to a topic as an event.
 </p>
 
-<h2><a name="Sample460">Sample 460: Introduction to Eventing and Event Mediator</a></h2>
-<pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;
+<!--<h2><a name="Sample460">Sample 460: Introduction to Eventing and Event Mediator</a></h2>-->
+<!--<pre xml:space="preserve">&lt;definitions xmlns="http://ws.apache.org/ns/synapse"&gt;-->
 
-    &lt;sequence name="main"&gt;
-        &lt;log/&gt;
-        &lt;event topic="stockquote"/&gt;
-    &lt;/sequence&gt;
+    <!--&lt;sequence name="main"&gt;-->
+        <!--&lt;log/&gt;-->
+        <!--&lt;event topic="stockquote"/&gt;-->
+    <!--&lt;/sequence&gt;-->
 
-&lt;/definitions&gt;</pre>
-<div>
-    <p>
-        <strong>Objective: </strong> Demonstrate the usage of the event mediator to publish messages to event topics
-    </p>
-    <p>
-        <strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample Axis2 server
-        and start it on port 9000.
-    </p>
-    <p>
-        Start EI with the sample configuration 460 (i.e. wso2EI-samples -sn 460).
-    </p>
-    <p>
-        Now sign in to the EI management console can select 'Topics > Add' option from the 'Manage'
-        menu. Enter the name 'stockquote' for the topic and click 'Add Topic'. This will create an
-        event topic named 'stockquote' and you will be directed to the 'Topic Browser' tree view. The
-        newly created topic will be shown on the tree. Click on this topic and select the 'Subscribe'
-        option to create a static subscription. Enter the value 'http://localhost:9000/services/SimpleStockQuoteService'
-        in the 'Event Sink URL' field and click 'Subscribe'.
-    </p>
-    <p>
-        Now run the sample client as follows to send a request to the main sequence.
-    </p>
-    <pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280 -Dmode=placeorder</pre>
-    <p>
-        The request will be published to the 'stockquote' topic by the event mediator and as a result
-        the subscriber (Axis2 server in this case) will receive a copy of the message. You will see a
-        log entry in the Axis2 server console indicating the receipt of the place order request.
-    </p>
-    <p>
-        Note that the provided EI configuration does not explicitly specify the endpoint of the Axis2
-        server. Also we don't set the actual EPR of the service on the request when sending the message
-        from the client either. Therefore the only reason that Axis2 receives the message is because
-        it is subscribed to the 'stockquote' event topic.
-    </p>
-</div>
+<!--&lt;/definitions&gt;</pre>-->
+<!--<div>-->
+    <!--<p>-->
+        <!--<strong>Objective: </strong> Demonstrate the usage of the event mediator to publish messages to event topics-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--<strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample Axis2 server-->
+        <!--and start it on port 9000.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Start EI with the sample configuration 460 (i.e. wso2EI-samples -sn 460).-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Now sign in to the EI management console can select 'Topics > Add' option from the 'Manage'-->
+        <!--menu. Enter the name 'stockquote' for the topic and click 'Add Topic'. This will create an-->
+        <!--event topic named 'stockquote' and you will be directed to the 'Topic Browser' tree view. The-->
+        <!--newly created topic will be shown on the tree. Click on this topic and select the 'Subscribe'-->
+        <!--option to create a static subscription. Enter the value 'http://localhost:9000/services/SimpleStockQuoteService'-->
+        <!--in the 'Event Sink URL' field and click 'Subscribe'.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Now run the sample client as follows to send a request to the main sequence.-->
+    <!--</p>-->
+    <!--<pre xml:space="preserve">ant stockquote -Dtrpurl=http://localhost:8280 -Dmode=placeorder</pre>-->
+    <!--<p>-->
+        <!--The request will be published to the 'stockquote' topic by the event mediator and as a result-->
+        <!--the subscriber (Axis2 server in this case) will receive a copy of the message. You will see a-->
+        <!--log entry in the Axis2 server console indicating the receipt of the place order request.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Note that the provided EI configuration does not explicitly specify the endpoint of the Axis2-->
+        <!--server. Also we don't set the actual EPR of the service on the request when sending the message-->
+        <!--from the client either. Therefore the only reason that Axis2 receives the message is because-->
+        <!--it is subscribed to the 'stockquote' event topic.-->
+    <!--</p>-->
+<!--</div>-->
 
-<h2><a name="Spring">Spring</a></h2>
-<h2><a name="Sample470">Sample 470: How to initialize and use a Spring Bean as a Mediator</a></h2>
-<pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;
-             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-             xsi:schemaLocation=&quot;http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd&quot;&gt;
+<!--<h2><a name="Spring">Spring</a></h2>-->
+<!--<h2><a name="Sample470">Sample 470: How to initialize and use a Spring Bean as a Mediator</a></h2>-->
+<!--<pre xml:space="preserve">&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;-->
+             <!--xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;-->
+             <!--xsi:schemaLocation=&quot;http://ws.apache.org/ns/synapse http://synapse.apache.org/ns/2010/04/configuration/synapse_config.xsd&quot;&gt;-->
 
-    &lt;registry provider=&quot;org.apache.synapse.registry.url.SimpleURLRegistry&quot;&gt;
-        &lt;parameter name=&quot;root&quot;&gt;file:repository/conf/sample/resources/&lt;/parameter&gt;
-        &lt;parameter name=&quot;cachableDuration&quot;&gt;15000&lt;/parameter&gt;
-    &lt;/registry&gt;
+    <!--&lt;registry provider=&quot;org.apache.synapse.registry.url.SimpleURLRegistry&quot;&gt;-->
+        <!--&lt;parameter name=&quot;root&quot;&gt;file:repository/conf/sample/resources/&lt;/parameter&gt;-->
+        <!--&lt;parameter name=&quot;cachableDuration&quot;&gt;15000&lt;/parameter&gt;-->
+    <!--&lt;/registry&gt;-->
 
-    &lt;sequence name=&quot;main&quot;&gt;
-        &lt;!--Setting the Spring Mediator and its Spring Beans xml file location --&gt;
-        &lt;!--Note that springtest is the bean id used in springCustomLogger.xml --&gt;
-        &lt;spring bean=&quot;springtest&quot; key=&quot;spring/springCustomLogger.xml&quot;/&gt;
-        &lt;send/&gt;
-    &lt;/sequence&gt;
+    <!--&lt;sequence name=&quot;main&quot;&gt;-->
+        <!--&lt;!&#45;&#45;Setting the Spring Mediator and its Spring Beans xml file location &#45;&#45;&gt;-->
+        <!--&lt;!&#45;&#45;Note that springtest is the bean id used in springCustomLogger.xml &#45;&#45;&gt;-->
+        <!--&lt;spring bean=&quot;springtest&quot; key=&quot;spring/springCustomLogger.xml&quot;/&gt;-->
+        <!--&lt;send/&gt;-->
+    <!--&lt;/sequence&gt;-->
 
-&lt;/definitions&gt;</pre>
+<!--&lt;/definitions&gt;</pre>-->
 
-<p>springCustomLogger.xml file<br/></p>
-<pre xml:space="preserve">
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE beans PUBLIC  &quot;-//SPRING//DTD BEAN//EN&quot;
-    &quot;http://www.springframework.org/dtd/spring-beans.dtd&quot;&gt;
+<!--<p>springCustomLogger.xml file<br/></p>-->
+<!--<pre xml:space="preserve">-->
+<!--&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;-->
+<!--&lt;!DOCTYPE beans PUBLIC  &quot;-//SPRING//DTD BEAN//EN&quot;-->
+    <!--&quot;http://www.springframework.org/dtd/spring-beans.dtd&quot;&gt;-->
 
-&lt;beans&gt;
+<!--&lt;beans&gt;-->
 
-   &lt;bean id=&quot;springtest&quot; class=&quot;samples.mediators.extensions.SpringCustomLogger&quot; singleton=&quot;false&quot;&gt;
-	   &lt;property name=&quot;userName&quot;&gt;&lt;value&gt;&quot;Synapse User&quot;&lt;/value&gt;&lt;/property&gt;
-	   &lt;property name=&quot;email&quot;&gt;&lt;value&gt;&quot;usr@synapse.org&quot;&lt;/value&gt;&lt;/property&gt;
-   &lt;/bean&gt;
+   <!--&lt;bean id=&quot;springtest&quot; class=&quot;samples.mediators.extensions.SpringCustomLogger&quot; singleton=&quot;false&quot;&gt;-->
+	   <!--&lt;property name=&quot;userName&quot;&gt;&lt;value&gt;&quot;Synapse User&quot;&lt;/value&gt;&lt;/property&gt;-->
+	   <!--&lt;property name=&quot;email&quot;&gt;&lt;value&gt;&quot;usr@synapse.org&quot;&lt;/value&gt;&lt;/property&gt;-->
+   <!--&lt;/bean&gt;-->
 
-&lt;/beans&gt;
-</pre>
+<!--&lt;/beans&gt;-->
+<!--</pre>-->
 
-<div>
-    <p>
-        <strong>Objective: </strong> Demonstrate How to initialize and use a SpringBean as a mediator
-    </p>
-    <p>
-        <strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample Axis2 server
-        and start it on port 9000.
-    </p>
-    <p>
-        Start EI with the sample configuration 470 (i.e. wso2EI-samples -sn 470).
-    </p>
-    <p>
-       In this sample, the Spring Bean, SpringCustomLogger get initialized using
-        springCustomLogger.xml file and then it log the message Id.
-    </p>
-    <p>
-        Invoke the client as follows.
-    </p>
-    <pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/</pre>
-    <p>If you have enabled logging for the samples.mediators package you will see an
-        output similar to the following on the console:</p>
-    <pre xml:space="preserve">
-    2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Starting Spring Meditor
-    2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Bean in Initialized with User:["Synapse User"]
-    2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger E-MAIL:["usr@synapse.org"]
-    2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Massage Id:  urn:uuid:383FA8B27D7CC549D91285514217720
-    2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Logged....</pre>
+<!--<div>-->
+    <!--<p>-->
+        <!--<strong>Objective: </strong> Demonstrate How to initialize and use a SpringBean as a mediator-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--<strong>Prerequisites:</strong> Deploy the SimpleStockQuoteService in sample Axis2 server-->
+        <!--and start it on port 9000.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Start EI with the sample configuration 470 (i.e. wso2EI-samples -sn 470).-->
+    <!--</p>-->
+    <!--<p>-->
+       <!--In this sample, the Spring Bean, SpringCustomLogger get initialized using-->
+        <!--springCustomLogger.xml file and then it log the message Id.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Invoke the client as follows.-->
+    <!--</p>-->
+    <!--<pre xml:space="preserve">ant stockquote -Daddurl=http://localhost:9000/services/SimpleStockQuoteService -Dtrpurl=http://localhost:8280/</pre>-->
+    <!--<p>If you have enabled logging for the samples.mediators package you will see an-->
+        <!--output similar to the following on the console:</p>-->
+    <!--<pre xml:space="preserve">-->
+    <!--2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Starting Spring Meditor-->
+    <!--2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Bean in Initialized with User:["Synapse User"]-->
+    <!--2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger E-MAIL:["usr@synapse.org"]-->
+    <!--2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Massage Id:  urn:uuid:383FA8B27D7CC549D91285514217720-->
+    <!--2010-09-26 20:46:57,946 [-] [HttpServerWorker-1]  INFO SpringCustomLogger Logged....</pre>-->
 
-</div>
+<!--</div>-->
 </body>
 </html>

@@ -499,123 +499,123 @@ done </p>
     </p>
 
 
-    <h2>
-      <a name="Sample157">Sample 157: Conditional Router for Routing Messages based on HTTP URL, HTTP Headers and Query Parameters</a>
-    </h2>
-    <pre xml:space="preserve">
-&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;
-    &lt;proxy name=&quot;StockQuoteProxy&quot; transports=&quot;https http local&quot; startOnLoad=&quot;true&quot; trace=&quot;disable&quot;&gt;
-        &lt;target&gt;
-            &lt;inSequence&gt;
-                &lt;conditionalRouter continueAfter=&quot;false&quot;&gt;
-                    &lt;conditionalRoute breakRoute=&quot;false&quot;&gt;
-                        &lt;condition&gt;
-                            &lt;match xmlns=&quot;&quot; type=&quot;header&quot; source=&quot;foo&quot; regex=&quot;bar.*&quot;/&gt;
-                        &lt;/condition&gt;
-                        &lt;target sequence=&quot;cnd1_seq&quot;/&gt;
-                    &lt;/conditionalRoute&gt;
+    <!--<h2>-->
+      <!--<a name="Sample157">Sample 157: Conditional Router for Routing Messages based on HTTP URL, HTTP Headers and Query Parameters</a>-->
+    <!--</h2>-->
+    <!--<pre xml:space="preserve">-->
+<!--&lt;definitions xmlns=&quot;http://ws.apache.org/ns/synapse&quot;&gt;-->
+    <!--&lt;proxy name=&quot;StockQuoteProxy&quot; transports=&quot;https http local&quot; startOnLoad=&quot;true&quot; trace=&quot;disable&quot;&gt;-->
+        <!--&lt;target&gt;-->
+            <!--&lt;inSequence&gt;-->
+                <!--&lt;conditionalRouter continueAfter=&quot;false&quot;&gt;-->
+                    <!--&lt;conditionalRoute breakRoute=&quot;false&quot;&gt;-->
+                        <!--&lt;condition&gt;-->
+                            <!--&lt;match xmlns=&quot;&quot; type=&quot;header&quot; source=&quot;foo&quot; regex=&quot;bar.*&quot;/&gt;-->
+                        <!--&lt;/condition&gt;-->
+                        <!--&lt;target sequence=&quot;cnd1_seq&quot;/&gt;-->
+                    <!--&lt;/conditionalRoute&gt;-->
 
-                    &lt;conditionalRoute breakRoute=&quot;false&quot;&gt;
-                        &lt;condition&gt;
-                            &lt;and xmlns=&quot;&quot;&gt;
-                                &lt;match type=&quot;header&quot; source=&quot;my_custom_header1&quot; regex=&quot;foo.*&quot;/&gt;
-                                &lt;match type=&quot;url&quot; regex=&quot;/services/StockQuoteProxy.*&quot;/&gt;
-                            &lt;/and&gt;
-                        &lt;/condition&gt;
-                        &lt;target sequence=&quot;cnd2_seq&quot;/&gt;
-                    &lt;/conditionalRoute&gt;
+                    <!--&lt;conditionalRoute breakRoute=&quot;false&quot;&gt;-->
+                        <!--&lt;condition&gt;-->
+                            <!--&lt;and xmlns=&quot;&quot;&gt;-->
+                                <!--&lt;match type=&quot;header&quot; source=&quot;my_custom_header1&quot; regex=&quot;foo.*&quot;/&gt;-->
+                                <!--&lt;match type=&quot;url&quot; regex=&quot;/services/StockQuoteProxy.*&quot;/&gt;-->
+                            <!--&lt;/and&gt;-->
+                        <!--&lt;/condition&gt;-->
+                        <!--&lt;target sequence=&quot;cnd2_seq&quot;/&gt;-->
+                    <!--&lt;/conditionalRoute&gt;-->
 
-                    &lt;conditionalRoute breakRoute=&quot;false&quot;&gt;
-                        &lt;condition&gt;
-                            &lt;and xmlns=&quot;&quot;&gt;
-                                &lt;match type=&quot;header&quot; source=&quot;my_custom_header2&quot; regex=&quot;bar.*&quot;/&gt;
-                                &lt;equal type=&quot;param&quot; source=&quot;qparam1&quot; value=&quot;qpv_foo&quot;/&gt;
-                                &lt;or&gt;
-                                    &lt;match type=&quot;url&quot; regex=&quot;/services/StockQuoteProxy.*&quot;/&gt;
-                                    &lt;match type=&quot;header&quot; source=&quot;my_custom_header3&quot; regex=&quot;foo.*&quot;/&gt;
-                                &lt;/or&gt;
-                                &lt;not&gt;
-                                    &lt;equal type=&quot;param&quot; source=&quot;qparam2&quot; value=&quot;qpv_bar&quot;/&gt;
-                                &lt;/not&gt;
-                            &lt;/and&gt;
-                        &lt;/condition&gt;
-                        &lt;target sequence=&quot;cnd3_seq&quot;/&gt;
-                    &lt;/conditionalRoute&gt;
-                &lt;/conditionalRouter&gt;
-            &lt;/inSequence&gt;
-            &lt;outSequence&gt;
-                &lt;send/&gt;
-            &lt;/outSequence&gt;
-        &lt;/target&gt;
-    &lt;/proxy&gt;
+                    <!--&lt;conditionalRoute breakRoute=&quot;false&quot;&gt;-->
+                        <!--&lt;condition&gt;-->
+                            <!--&lt;and xmlns=&quot;&quot;&gt;-->
+                                <!--&lt;match type=&quot;header&quot; source=&quot;my_custom_header2&quot; regex=&quot;bar.*&quot;/&gt;-->
+                                <!--&lt;equal type=&quot;param&quot; source=&quot;qparam1&quot; value=&quot;qpv_foo&quot;/&gt;-->
+                                <!--&lt;or&gt;-->
+                                    <!--&lt;match type=&quot;url&quot; regex=&quot;/services/StockQuoteProxy.*&quot;/&gt;-->
+                                    <!--&lt;match type=&quot;header&quot; source=&quot;my_custom_header3&quot; regex=&quot;foo.*&quot;/&gt;-->
+                                <!--&lt;/or&gt;-->
+                                <!--&lt;not&gt;-->
+                                    <!--&lt;equal type=&quot;param&quot; source=&quot;qparam2&quot; value=&quot;qpv_bar&quot;/&gt;-->
+                                <!--&lt;/not&gt;-->
+                            <!--&lt;/and&gt;-->
+                        <!--&lt;/condition&gt;-->
+                        <!--&lt;target sequence=&quot;cnd3_seq&quot;/&gt;-->
+                    <!--&lt;/conditionalRoute&gt;-->
+                <!--&lt;/conditionalRouter&gt;-->
+            <!--&lt;/inSequence&gt;-->
+            <!--&lt;outSequence&gt;-->
+                <!--&lt;send/&gt;-->
+            <!--&lt;/outSequence&gt;-->
+        <!--&lt;/target&gt;-->
+    <!--&lt;/proxy&gt;-->
 
-    &lt;sequence name=&quot;cnd1_seq&quot;&gt;
-        &lt;log level=&quot;custom&quot;&gt;
-            &lt;property name=&quot;MSG_FLOW&quot; value=&quot;Condition (I) Satisfied&quot;/&gt;
-        &lt;/log&gt;
-        &lt;sequence key=&quot;send_seq&quot;/&gt;
-    &lt;/sequence&gt;
-    &lt;sequence name=&quot;cnd2_seq&quot;&gt;
-        &lt;log level=&quot;custom&quot;&gt;
-            &lt;property name=&quot;MSG_FLOW&quot; value=&quot;Condition (II) Satisfied&quot;/&gt;
-        &lt;/log&gt;
-        &lt;sequence key=&quot;send_seq&quot;/&gt;
-    &lt;/sequence&gt;
-    &lt;sequence name=&quot;cnd3_seq&quot;&gt;
-        &lt;log level=&quot;custom&quot;&gt;
-            &lt;property name=&quot;MSG_FLOW&quot; value=&quot;Condition (III) Satisfied&quot;/&gt;
-        &lt;/log&gt;
-        &lt;sequence key=&quot;send_seq&quot;/&gt;
-    &lt;/sequence&gt;
+    <!--&lt;sequence name=&quot;cnd1_seq&quot;&gt;-->
+        <!--&lt;log level=&quot;custom&quot;&gt;-->
+            <!--&lt;property name=&quot;MSG_FLOW&quot; value=&quot;Condition (I) Satisfied&quot;/&gt;-->
+        <!--&lt;/log&gt;-->
+        <!--&lt;sequence key=&quot;send_seq&quot;/&gt;-->
+    <!--&lt;/sequence&gt;-->
+    <!--&lt;sequence name=&quot;cnd2_seq&quot;&gt;-->
+        <!--&lt;log level=&quot;custom&quot;&gt;-->
+            <!--&lt;property name=&quot;MSG_FLOW&quot; value=&quot;Condition (II) Satisfied&quot;/&gt;-->
+        <!--&lt;/log&gt;-->
+        <!--&lt;sequence key=&quot;send_seq&quot;/&gt;-->
+    <!--&lt;/sequence&gt;-->
+    <!--&lt;sequence name=&quot;cnd3_seq&quot;&gt;-->
+        <!--&lt;log level=&quot;custom&quot;&gt;-->
+            <!--&lt;property name=&quot;MSG_FLOW&quot; value=&quot;Condition (III) Satisfied&quot;/&gt;-->
+        <!--&lt;/log&gt;-->
+        <!--&lt;sequence key=&quot;send_seq&quot;/&gt;-->
+    <!--&lt;/sequence&gt;-->
 
-    &lt;sequence name=&quot;send_seq&quot;&gt;
-        &lt;log level=&quot;custom&quot;&gt;
-            &lt;property name=&quot;DEBUG&quot; value=&quot;Condition Satisfied&quot;/&gt;
-        &lt;/log&gt;
-        &lt;send&gt;
-            &lt;endpoint name=&quot;simple&quot;&gt;
-                &lt;address uri=&quot;http://localhost:9000/services/SimpleStockQuoteService&quot;/&gt;
-            &lt;/endpoint&gt;
-        &lt;/send&gt;
-    &lt;/sequence&gt;
-&lt;/definitions&gt;
+    <!--&lt;sequence name=&quot;send_seq&quot;&gt;-->
+        <!--&lt;log level=&quot;custom&quot;&gt;-->
+            <!--&lt;property name=&quot;DEBUG&quot; value=&quot;Condition Satisfied&quot;/&gt;-->
+        <!--&lt;/log&gt;-->
+        <!--&lt;send&gt;-->
+            <!--&lt;endpoint name=&quot;simple&quot;&gt;-->
+                <!--&lt;address uri=&quot;http://localhost:9000/services/SimpleStockQuoteService&quot;/&gt;-->
+            <!--&lt;/endpoint&gt;-->
+        <!--&lt;/send&gt;-->
+    <!--&lt;/sequence&gt;-->
+<!--&lt;/definitions&gt;-->
 
-    </pre>
-    <p>
-      <strong>Objective: Routing Messages based on the HTTP Transport properties.</strong>
-    </p>
-    <p>
-      <strong>Prerequisites:</strong><br/> Start the Synapse configuration numbered 157: i.e. wso2EI-samples -sn 157
-        <br/>Start the Axis2 server and deploy the SimpleStockQuoteService if not already done.
-        For this particular case we will be using 'curl' to send requests with custom HTTP Headers to the proxy service. You may use a similar tool with facilitate those requirements.
-        <br/><br/>The request file : stockQuoteReq.xml, should contain the following request.
-    </p>
-    <pre xml:space="preserve">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot; xmlns:ser=&quot;http://services.samples&quot; xmlns:xsd=&quot;http://services.samples/xsd&quot;&gt;
-   &lt;soap:Header/&gt;
-   &lt;soap:Body&gt;
-      &lt;ser:getQuote&gt;
-         &lt;ser:request&gt;
-            &lt;xsd:symbol&gt;IBM&lt;/xsd:symbol&gt;
-         &lt;/ser:request&gt;
-      &lt;/ser:getQuote&gt;
-   &lt;/soap:Body&gt;
-&lt;/soap:Envelope&gt;</pre>
+    <!--</pre>-->
+    <!--<p>-->
+      <!--<strong>Objective: Routing Messages based on the HTTP Transport properties.</strong>-->
+    <!--</p>-->
+    <!--<p>-->
+      <!--<strong>Prerequisites:</strong><br/> Start the Synapse configuration numbered 157: i.e. wso2EI-samples -sn 157-->
+        <!--<br/>Start the Axis2 server and deploy the SimpleStockQuoteService if not already done.-->
+        <!--For this particular case we will be using 'curl' to send requests with custom HTTP Headers to the proxy service. You may use a similar tool with facilitate those requirements.-->
+        <!--<br/><br/>The request file : stockQuoteReq.xml, should contain the following request.-->
+    <!--</p>-->
+    <!--<pre xml:space="preserve">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot; xmlns:ser=&quot;http://services.samples&quot; xmlns:xsd=&quot;http://services.samples/xsd&quot;&gt;-->
+   <!--&lt;soap:Header/&gt;-->
+   <!--&lt;soap:Body&gt;-->
+      <!--&lt;ser:getQuote&gt;-->
+         <!--&lt;ser:request&gt;-->
+            <!--&lt;xsd:symbol&gt;IBM&lt;/xsd:symbol&gt;-->
+         <!--&lt;/ser:request&gt;-->
+      <!--&lt;/ser:getQuote&gt;-->
+   <!--&lt;/soap:Body&gt;-->
+<!--&lt;/soap:Envelope&gt;</pre>-->
 
-    <p>
-    Condition I : Matching HTTP Header <br/>
-    </p>
-    <pre xml:space="preserve">curl -d @stockQuoteReq.xml -H "Content-Type: application/soap+xml;charset=UTF-8" -H "foo:bar" "http://localhost:8280/services/StockQuoteProxy"
-    </pre>
+    <!--<p>-->
+    <!--Condition I : Matching HTTP Header <br/>-->
+    <!--</p>-->
+    <!--<pre xml:space="preserve">curl -d @stockQuoteReq.xml -H "Content-Type: application/soap+xml;charset=UTF-8" -H "foo:bar" "http://localhost:8280/services/StockQuoteProxy"-->
+    <!--</pre>-->
 
-    <p>
-    Condition II : Matching HTTP Header AND Url<br/>
-    </p>
-    <pre xml:space="preserve">curl -d @stockQuoteReq.xml -H "Content-Type: application/soap+xml;charset=UTF-8" -H "my_custom_header1:foo1" "http://localhost:8280/services/StockQuoteProxy"</pre>
+    <!--<p>-->
+    <!--Condition II : Matching HTTP Header AND Url<br/>-->
+    <!--</p>-->
+    <!--<pre xml:space="preserve">curl -d @stockQuoteReq.xml -H "Content-Type: application/soap+xml;charset=UTF-8" -H "my_custom_header1:foo1" "http://localhost:8280/services/StockQuoteProxy"</pre>-->
 
-    <p>
-    Condition III : Complex conditions with AND, OR and NOT<br/>
-    </p>
-    <pre xml:space="preserve">curl -d @stockQuoteReq.xml -H "Content-Type: application/soap+xml;charset=UTF-8" -H "my_custom_header2:bar" -H "my_custom_header3:foo" "http://localhost:8280/services/StockQuoteProxy?qparam1=qpv_foo&amp;qparam2=qpv_foo2"</pre>
+    <!--<p>-->
+    <!--Condition III : Complex conditions with AND, OR and NOT<br/>-->
+    <!--</p>-->
+    <!--<pre xml:space="preserve">curl -d @stockQuoteReq.xml -H "Content-Type: application/soap+xml;charset=UTF-8" -H "my_custom_header2:bar" -H "my_custom_header3:foo" "http://localhost:8280/services/StockQuoteProxy?qparam1=qpv_foo&amp;qparam2=qpv_foo2"</pre>-->
 
 </body>
 </html>
