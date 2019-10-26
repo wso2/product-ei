@@ -100,6 +100,13 @@
         <packages>
             <package name="org.wso2.carbon.esb.tenant.test.*"/>
         </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.tenant.test.ServiceChainingTest">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
     </test>
 
     <test name="Secure-Proxy-Test" preserve-order="true" verbose="2" parallel="false">
