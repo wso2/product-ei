@@ -100,7 +100,7 @@
     <test name="inbound-Http Endpoint-Test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTestCase"/>
-            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>
+<!--            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>-->
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundDispatchTestCase"/>
         </classes>
     </test>
@@ -197,6 +197,14 @@
         <packages>
             <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
         </packages>
+
+        <classes>
+            <class name="org.wso2.carbon.esb.https.inbound.transport.test.HttpsInboundTransportTenantTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
     </test>
 
     <test name="SSL Test" preserve-order="true" verbose="2">
