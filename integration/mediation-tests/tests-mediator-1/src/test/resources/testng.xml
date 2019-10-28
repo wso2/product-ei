@@ -18,6 +18,11 @@
                     <exclude name=".*" />
                 </methods>
             </class>
+            <class name="org.wso2.carbon.esb.mediator.test.foreach.NestedForEachPropertiesTestCase">
+                <methods>
+                    <exclude name=".*" />
+                </methods>
+            </class>
         </classes>
     </test>
     <test name="Transaction Mediator" preserve-order="true" verbose="2">
