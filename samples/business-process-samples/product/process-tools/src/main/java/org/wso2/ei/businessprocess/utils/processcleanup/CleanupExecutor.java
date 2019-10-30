@@ -104,9 +104,14 @@ public class CleanupExecutor {
 					((DeferredElementImpl) datasource).getElementsByTagName(CleanupConstants.NAME)
 					                                  .item(0).getTextContent();
 			if (dbName.equals(CleanupConstants.BPS_DS)) {
-				databaseURL =
+				String tmpDatabaseURL =
 						document.getDocumentElement().getElementsByTagName(CleanupConstants.URL)
-						        .item(i).getTextContent().split(";")[0];
+								.item(i).getTextContent();
+				if (tmpDatabaseURL.contains(CleanupConstants.SQL_SERVER)) {
+					databaseURL = tmpDatabaseURL;
+				} else {
+					databaseURL = tmpDatabaseURL.split(";")[0];
+				}
 				databaseDriver = document.getDocumentElement()
 				                         .getElementsByTagName(CleanupConstants.DRIVER_CLASS_NAME)
 				                         .item(i).getTextContent();
