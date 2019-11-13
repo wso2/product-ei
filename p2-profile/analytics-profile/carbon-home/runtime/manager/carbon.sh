@@ -240,6 +240,22 @@ for t in "$CARBON_HOME"/bin/bootstrap/commons-lang*.jar
 do
     CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
 done
+for t in "$CARBON_HOME"/../lib/jaxb-api*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
+for t in "$CARBON_HOME"/../components/plugins/org.wso2.orbit.sun.xml.bind.jaxb*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
+for t in "$CARBON_HOME"/../lib/javax.annotation-api*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
+for t in "$CARBON_HOME"/wso2/lib/plugins/org.apache.geronimo.specs.geronimo-activation*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
