@@ -15,7 +15,7 @@ language: java
 jdk:
   - openjdk8
 install: true
-script: mvn clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+script: mvn clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -q -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 cache:
   directories:
   - $HOME/.m2
