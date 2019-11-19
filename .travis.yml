@@ -11,16 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 language: java
-
-services:
-  - docker
-
+jdk:
+  - openjdk8
 install: true
-
-script: docker run -v "$HOME/.m2":/root/.m2 --rm -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven a5anka/wso2-ei-maven mvn clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -B -q -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-
+script: mvn clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 cache:
   directories:
   - $HOME/.m2
