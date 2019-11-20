@@ -226,8 +226,6 @@ do
     fi
 done
 
-JAVA_ENDORSED_DIRS="$CARBON_HOME/bin/bootstrap/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed"
-
 CARBON_CLASSPATH=""
 if [ -e "$JAVA_HOME/bin/bootstrap/tools.jar" ]; then
     CARBON_CLASSPATH="$JAVA_HOME/lib/tools.jar"
@@ -242,13 +240,28 @@ for t in "$CARBON_HOME"/bin/bootstrap/commons-lang*.jar
 do
     CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
 done
+for t in "$CARBON_HOME"/../lib/jaxb-api*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
+for t in "$CARBON_HOME"/../components/plugins/org.wso2.orbit.sun.xml.bind.jaxb*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
+for t in "$CARBON_HOME"/../lib/javax.annotation-api*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
+for t in "$CARBON_HOME"/wso2/lib/plugins/org.apache.geronimo.specs.geronimo-activation*.jar
+do
+    CARBON_CLASSPATH="$CARBON_CLASSPATH":$t
+done
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin; then
   JAVA_HOME=`cygpath --absolute --windows "$JAVA_HOME"`
   CARBON_HOME=`cygpath --absolute --windows "$CARBON_HOME"`
   RUNTIME_HOME=`cygpath --absolute --windows "$RUNTIME_HOME"`
   CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
-  JAVA_ENDORSED_DIRS=`cygpath --path --windows "$JAVA_ENDORSED_DIRS"`
   CARBON_CLASSPATH=`cygpath --path --windows "$CARBON_CLASSPATH"`
   CARBON_XBOOTCLASSPATH=`cygpath --path --windows "$CARBON_XBOOTCLASSPATH"`
 fi
@@ -276,7 +289,6 @@ do
     -XX:HeapDumpPath="$RUNTIME_HOME/logs/heap-dump.hprof" \
     $JAVA_OPTS \
     -classpath "$CARBON_CLASSPATH" \
-    -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
     -Djava.io.tmpdir="$CARBON_HOME/tmp" \
     -Dcarbon.registry.root=/ \
     -Djava.command="$JAVACMD" \

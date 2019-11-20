@@ -24,7 +24,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
@@ -52,7 +52,7 @@ public class ESBJAVA3282CalloutJMSHeadersTestCase extends ESBIntegrationTest {
         Thread.sleep(60000); //wait until all message received to jms proxy
 
         LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         boolean logFound = false;
         for (LogEvent item : logs) {
             if (item.getPriority().equals("INFO")) {

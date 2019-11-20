@@ -30,7 +30,7 @@ import org.wso2.carbon.automation.extensions.servers.httpserver.SimpleHttpClient
 import org.wso2.carbon.automation.test.utils.dbutils.MySqlDatabaseManager;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.common.ServerConfigurationManager;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
@@ -114,7 +114,7 @@ public class JDBCMessageStoreProcRESTTestCase extends ESBIntegrationTest{
         HttpResponse response = httpClient.doPost(url, headers, payload, "application/json");
         assertEquals(response.getStatusLine().getStatusCode(), 202);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int i = 1;
         for (LogEvent log : logs) {
             if (log.getMessage().contains(logLine0)) {

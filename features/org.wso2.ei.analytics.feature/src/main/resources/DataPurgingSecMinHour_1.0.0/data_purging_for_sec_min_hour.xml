@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<analytics-data-purging>
+    <cron-expression>0 0 12 * * ?</cron-expression>
+    <purge-include-tables>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_STATPERSECOND</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_EVENT</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_STATPERSECONDALL</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_STATPERMINUTE</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_STATPERMINUTEALL</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_STATPERHOUR</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_MEDIATORSTATPERSECOND</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_MEDIATORSTATPERMINUTE</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_MEDIATORSTATPERHOUR</table>
+    </purge-include-tables>
+    <data-retention-days>2</data-retention-days>
+</analytics-data-purging>

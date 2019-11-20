@@ -10,7 +10,7 @@ Take a backup of the existing database used by the older version. This backup is
 
 1. Download latest EI product version and unzip it. 
 1. Download migration.zip, unzip and copy migration folder to <EI_HOME>.
-1. Copy **org.wso2.carbon.ei.migration-6.5.0.jar** to <EI_HOME>/dropins directory.
+1. Copy **org.wso2.carbon.ei.migration-6.6.0.jar** to <EI_HOME>/dropins directory.
 1. Update configurations in ```<EI_HOME>/migration/migration-conf.properties```.
                 
     * keystore.identity.location - Please follow either way to add keystore properties
@@ -23,7 +23,7 @@ Take a backup of the existing database used by the older version. This backup is
     * admin.user.name - admin username
 
 1. Stop the older product server
-1. Start Enterprise Integrator 6.5.0 with following command to perform the password migration.
+1. Start Enterprise Integrator 6.6.0 with following command to perform the password migration.
 
     a. Linux/Unix
     ```
@@ -34,7 +34,7 @@ Take a backup of the existing database used by the older version. This backup is
     integrator.bat -Dmigrate
     ```
 
-1. Once the migration is successful, stop the server and delete **org.wso2.carbon.ei.migration-6.5.0.jar** from 
+1. Once the migration is successful, stop the server and delete **org.wso2.carbon.ei.migration-6.6.0.jar** from 
 <EI_HOME>/dropins directory.
 1. Start the server using the appropriate command
 a. Linux/Unix

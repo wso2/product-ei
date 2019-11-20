@@ -20,7 +20,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 import static org.testng.Assert.assertFalse;
 
@@ -46,7 +46,7 @@ public class ESBJAVA3019_ScriptWithNullJson extends ESBIntegrationTest {
 
         boolean jsonNullErrorFound = false;
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains("testNull")) {
                 jsonNullErrorFound = true;

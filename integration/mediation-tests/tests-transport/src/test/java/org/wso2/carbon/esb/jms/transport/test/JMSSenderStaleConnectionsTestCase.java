@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
 import org.wso2.carbon.esb.jms.utils.JMSBroker;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.extensions.jmsserver.ActiveMQServerExtension;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
@@ -67,7 +67,7 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
           description = "Test for JMS sender side stale connections handling")
     public void staleConnectionsTestJMSProxy() throws Exception {
 
-        int beforeLogCount = logViewerClient.getAllSystemLogs().length;
+        int beforeLogCount = logViewerClient.getAllRemoteSystemLogs().length;
         AxisServiceClient client = new AxisServiceClient();
 
         boolean isExceptionThrown = false;
@@ -86,7 +86,7 @@ public class JMSSenderStaleConnectionsTestCase extends ESBIntegrationTest {
         client.sendRobust(Utils.getStockQuoteRequest("JMS"),
                 getProxyServiceURLHttp("JMSSenderStaleConnectionsTestProxy"), "getQuote");
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
         for (int i = 0; i < (logs.length - beforeLogCount); i++) {
             if (logs[i].getMessage().contains(exceptedErrorLog)) {

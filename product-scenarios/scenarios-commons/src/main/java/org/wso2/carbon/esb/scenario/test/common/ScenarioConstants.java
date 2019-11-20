@@ -36,6 +36,7 @@ public class ScenarioConstants {
     public static final String VERSION_630 = "EI-6.3.0";
     public static final String VERSION_640 = "EI-6.4.0";
     public static final String VERSION_650 = "EI-6.5.0";
+    public static final String VERSION_660 = "EI-6.6.0";
     public static final String BASIC_JSON_MESSAGE = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
     public static final String GET_QUOTE_REQUEST = "<soapenv:Envelope "
                                                    + "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" "

@@ -20,7 +20,8 @@ package org.wso2.mb.integration.common.clients.operations.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.mb.integration.common.clients.AndesClient;
 
 import javax.jms.JMSException;
@@ -40,7 +41,7 @@ public class AndesClientUtils {
     /**
      * The logger used in logging information, warnings, errors and etc.
      */
-    private static Logger log = Logger.getLogger(AndesClientUtils.class);
+    private static Log log = LogFactory.getLog(AndesClientUtils.class);
 
     /**
      * The print writer to print received messages to a file.

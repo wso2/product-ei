@@ -14,7 +14,8 @@
  *  limitations under the License.
  */
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -73,7 +74,7 @@ public class DatabaseConnection {
     /**
      * Initialize Logger object to log messages
      */
-    private static final Logger LOG = Logger.getLogger(DatabaseConnection.class);
+    private static final Log LOG = LogFactory.getLog(DatabaseConnection.class);
 
     /**
      * Represent the set of databases

@@ -28,7 +28,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClient;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 public class JMSOutOnlyTestCase extends ESBIntegrationTest {
     private LogViewerClient logViewerClient;
@@ -41,7 +41,7 @@ public class JMSOutOnlyTestCase extends ESBIntegrationTest {
         logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(),
                 getSessionCookie());
         //to clear the logs old logs
-        logViewerClient.getAllSystemLogs();
+        logViewerClient.getAllRemoteSystemLogs();
         logViewerClient.clearLogs();
     }
 
@@ -72,7 +72,7 @@ public class JMSOutOnlyTestCase extends ESBIntegrationTest {
         Thread.sleep(60000); //wait until all message received to jms proxy
         client.sendRobust(AXIOMUtil.stringToOM(payload), contextUrls.getServiceUrl() + "/EndLogProxy", "placeOrder");
 
-        LogEvent[] logs = logViewerClient.getAllSystemLogs();
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
 
         boolean logMessageFound = false;
         String logMessage = "";

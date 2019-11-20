@@ -25,7 +25,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 
@@ -63,7 +63,7 @@ public class ReplaceJSONRequestWithPayloadFactoryTestCase extends ESBIntegration
         WebResource webResource = client
                 .resource(getProxyServiceURLHttp("ReplacePayloadJSONProxy"));
 
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         // sending post request
         ClientResponse postResponse = webResource.type("application/json")

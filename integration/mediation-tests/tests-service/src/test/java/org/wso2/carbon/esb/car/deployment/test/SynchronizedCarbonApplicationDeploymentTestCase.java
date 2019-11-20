@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 
@@ -76,7 +76,7 @@ public class SynchronizedCarbonApplicationDeploymentTestCase extends ESBIntegrat
         boolean carAppDeploymentStatus = false;
 
         // before deployment of car app
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
@@ -101,7 +101,7 @@ public class SynchronizedCarbonApplicationDeploymentTestCase extends ESBIntegrat
                 , "ScheduledProcessor Message Processor deployment failed");
 
         // after deployment of car app
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {
@@ -170,7 +170,7 @@ public class SynchronizedCarbonApplicationDeploymentTestCase extends ESBIntegrat
         boolean endpointFailureStatus = false;
 
         // before deployment of car file
-        int beforeLogSize = logViewer.getAllSystemLogs().length;
+        int beforeLogSize = logViewer.getAllRemoteSystemLogs().length;
 
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(context.getContextUrls().getBackEndUrl(), getSessionCookie());
@@ -181,7 +181,7 @@ public class SynchronizedCarbonApplicationDeploymentTestCase extends ESBIntegrat
 
         TimeUnit.SECONDS.sleep(20);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int afterLogSize = logs.length;
 
         for (int i = (afterLogSize - beforeLogSize); i >= 0; i--) {

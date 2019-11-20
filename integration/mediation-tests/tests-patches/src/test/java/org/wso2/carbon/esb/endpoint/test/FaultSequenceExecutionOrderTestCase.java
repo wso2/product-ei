@@ -23,7 +23,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.ESBTestConstant;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
@@ -61,7 +61,7 @@ public class FaultSequenceExecutionOrderTestCase extends ESBIntegrationTest {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", contentType);
         httpClient.doPost(getMainSequenceURL() + "faultSequenceExecutionOrderTest", headers, "", contentType);
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean isImmediateOnly = false, isSuperSequecefalutExecuted = false;
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains("cF = C Fault")) {

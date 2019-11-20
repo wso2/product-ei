@@ -21,7 +21,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.IOException;
@@ -75,8 +75,9 @@ public class NestedForEachPropertiesTestCase extends ESBIntegrationTest {
         int afterLogSize = logs.length;
 
         // Verify logs to check that the order of symbols is same as in the payload. The symbols should be as SYM[1-10]
-        // as in payload. Since loop iterates from the last log onwards, verifying whether the symbols are in SYM[10-1] order
-        for (int i = (afterLogSize - beforeLogSize - 1); i >= 0; i--) {
+        // as in payload. Since loop iterates from the last log onwards, but log viewer client reverse the
+        // order so verifying whether the symbols are in SYM[1-10] order
+        for (int i = 0; i < (afterLogSize - beforeLogSize); i++) {
             String message = logs[i].getMessage();
 
             //*** MESSAGES FOR OUTER FOREACH ****

@@ -28,8 +28,8 @@ import org.wso2.carbon.automation.extensions.servers.ftpserver.FTPServerManager;
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.carbon.integration.common.admin.client.CarbonAppUploaderClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.Utils;
 
@@ -86,7 +86,7 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
     }
 
     private boolean checkUnDeployLogOrder(LogViewerClient logViewerClient)
-            throws LogViewerLogViewerException, RemoteException {
+            throws RemoteException {
         LogEvent[] systemLogs;
         systemLogs = logViewerClient.getAllRemoteSystemLogs();
         //Create a stack to store the intended logs in order
@@ -108,7 +108,7 @@ public class CAppDeploymentOrderTest extends ESBIntegrationTest {
         return logStack.isEmpty();
     }
 
-    private boolean checkLogOrder(LogViewerClient logViewerClient) throws LogViewerLogViewerException, RemoteException {
+    private boolean checkLogOrder(LogViewerClient logViewerClient) throws RemoteException {
         LogEvent[] systemLogs;
         systemLogs = logViewerClient.getAllRemoteSystemLogs();
         //Create a stack to store the intended logs in order

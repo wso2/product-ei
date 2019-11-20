@@ -94,13 +94,23 @@
                     <exclude name=".*"/>
                 </methods>
             </class>
+            <class name="org.wso2.carbon.esb.jms.transport.test.MSMPCronForwarderCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+            <class name="org.wso2.carbon.esb.jms.transport.test.ESBJAVA1832MessageInjectorTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
         </classes>
     </test>
 
     <test name="inbound-Http Endpoint-Test" preserve-order="true" verbose="2">
         <classes>
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTestCase"/>
-            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>
+<!--            <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundTransportTenantTestCase"/>-->
             <class name="org.wso2.carbon.esb.http.inbound.transport.test.HttpInboundDispatchTestCase"/>
         </classes>
     </test>
@@ -131,18 +141,18 @@
             </packages>
         </test>-->
 
-    <!--<test name="inbound-File Transport-Test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.file.inbound.transport.test"/>-->
-        <!--</packages>-->
-        <!--<classes>-->
-            <!--<class name="org.wso2.carbon.esb.file.inbound.transport.test.FtpInboundTransportTest">-->
-                <!--<methods>-->
-                    <!--<exclude name=".*"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <!--<test name="inbound-File Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.file.inbound.transport.test"/>
+        </packages>
+        <classes>
+            <class name="org.wso2.carbon.esb.file.inbound.transport.test.FtpInboundTransportTest">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>-->
 
     <test name="inbound-Generic Transport-Test" preserve-order="true" verbose="2">
         <packages>
@@ -163,11 +173,11 @@
         </packages>
     </test>
 
-    <!--<test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">-->
-        <!--<packages>-->
-            <!--<package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>-->
-        <!--</packages>-->
-    <!--</test>-->
+    <!--<test name="inbound-JMS Transport-Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.esb.jms.inbound.transport.test"/>
+        </packages>
+    </test>-->
 
     <test name="inbound-MQTT-Transport-Test" preserve-order="true" verbose="2">
         <packages>
@@ -197,6 +207,14 @@
         <packages>
             <package name="org.wso2.carbon.esb.https.inbound.transport.test"/>
         </packages>
+
+        <classes>
+            <class name="org.wso2.carbon.esb.https.inbound.transport.test.HttpsInboundTransportTenantTestCase">
+                <methods>
+                    <exclude name=".*"/>
+                </methods>
+            </class>
+        </classes>
     </test>
 
     <test name="SSL Test" preserve-order="true" verbose="2">

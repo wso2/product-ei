@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.annotations.ExecutionEnvironment;
 import org.wso2.carbon.automation.engine.annotations.SetEnvironment;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
@@ -62,7 +62,7 @@ public class TestFunctionStackDeepClone extends ESBIntegrationTest {
         //This sleep is added to wait till all the necessary logs are printed
         Thread.sleep(5000);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         int call1Count = 0, call2Count = 0, call3Count = 0;
 
         for (LogEvent log : logs) {

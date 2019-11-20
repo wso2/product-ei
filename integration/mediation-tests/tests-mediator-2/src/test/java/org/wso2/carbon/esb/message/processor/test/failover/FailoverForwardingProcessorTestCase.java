@@ -19,7 +19,7 @@
 package org.wso2.carbon.esb.message.processor.test.failover;
 
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -65,7 +65,7 @@ public class FailoverForwardingProcessorTestCase extends ESBIntegrationTest {
     private boolean isMatchFound(String matchStr) throws Exception {
         boolean logFound = false;
         for (int i = 0; i < 60; i++) {
-            LogEvent[] logEvents = logViewer.getAllSystemLogs();
+            LogEvent[] logEvents = logViewer.getAllRemoteSystemLogs();
             if (logEvents != null) {
                 for (LogEvent logEvent : logEvents) {
                     if (logEvent == null) {

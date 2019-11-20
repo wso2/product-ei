@@ -60,7 +60,7 @@
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
@@ -73,6 +73,7 @@
                 <exclude>**/wso2/components/plugins/saxon_*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/conf/tomcat/catalina.properties</exclude>
                 <exclude>**/conf/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/conf/registry.xml</exclude>
                 <exclude>**/conf/tomcat/web.xml</exclude>
@@ -102,7 +103,7 @@
                 <exclude>**/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/synapse.xml</exclude>
                 <exclude>**/Owasp.CsrfGuard.Carbon.properties</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
@@ -112,7 +113,10 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
+                <exclude>**/datasources/master-datasources.xml</exclude>
+                <exclude>**/user-mgt.xml</exclude>
                 <exclude>**/tomcat/catalina-server.xml</exclude>
+                <exclude>**/tomcat/catalina.properties</exclude>
                 <exclude>**/tomcat/webapp-classloading-environments.xml</exclude>
                 <exclude>**/registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
@@ -138,7 +142,7 @@
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/deployment.toml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
@@ -151,6 +155,7 @@
                 <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/tomcat/catalina.properties</exclude>
                 <exclude>**/repository/conf/registry.xml</exclude>
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -176,7 +181,7 @@
                 <exclude>**/axis2/axis2.xml</exclude>
                 <exclude>**/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
@@ -188,6 +193,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
+                <exclude>**//tomcat/catalina.properties</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -212,7 +218,7 @@
                 <exclude>**/conf/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/conf/synapse.xml</exclude>
                 <exclude>**/conf/deployment.toml</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
@@ -225,6 +231,7 @@
                 <exclude>**/wso2/components/plugins/saxon*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/tomcat/catalina.properties</exclude>
                 <exclude>**/repository/conf/registry.xml</exclude>
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -249,7 +256,7 @@
                 <exclude>**/axis2/axis2.xml</exclude>
                 <exclude>**/axis2/tenant-axis2.xml</exclude>
                 <exclude>**/synapse.xml</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/version.txt</exclude>
@@ -261,6 +268,7 @@
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**//tomcat/catalina-server.xml</exclude>
+                <exclude>**//tomcat/catalina.properties</exclude>
                 <exclude>**//registry.xml</exclude>
                 <exclude>**/tomcat/web.xml</exclude>
                 <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
@@ -272,7 +280,7 @@
         </fileSet>
 
         <!-- MSF4J product -->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 ../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}
             </directory>
@@ -284,10 +292,10 @@
                 <exclude>**/bin/kernel-version.txt</exclude>
 		<exclude>**/osgi/features/**</exclude>
             </excludes>
-        </fileSet>
+        </fileSet-->
 
         <!-- MSF4J scripts -->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 ../p2-profile/msf4j-profile/target/wso2msf4j-${msf4j.version}/bin
             </directory>
@@ -300,22 +308,22 @@
                 <exclude>carbon.bat</exclude>
             </excludes>
             <fileMode>755</fileMode>
-        </fileSet>
+        </fileSet-->
 
         <!-- MSF4J updating netty-transports.yml-->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 src/conf/msf4j-transport/
             </directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/conf/transports/</outputDirectory>
-        </fileSet>
+        </fileSet-->
 
         <!-- MSF4J Samples -->
-        <fileSet>
+        <!--fileSet>
             <directory>../samples/msf4j</directory>
             <outputDirectory>wso2ei-${pom.version}/samples/msf4j</outputDirectory>
             <fileMode>644</fileMode>
-        </fileSet>
+        </fileSet-->
 
         <!-- BPS scripts :start-->
 
@@ -793,6 +801,7 @@
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <excludes>
                 <exclude>**/catalina-server.xml</exclude>
+                <exclude>**/catalina.properties</exclude>
                 <exclude>**/webapp-classloading-environments.xml</exclude>
             </excludes>
         </fileSet>
@@ -889,7 +898,7 @@
             <outputDirectory>wso2ei-${pom.version}/wso2/lib</outputDirectory>
             <excludes>
                 <exclude>**/*.sh</exclude>
-                <exclude>**/log4j.properties</exclude>
+                <exclude>**/log4j2.properties</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/wso2server.bat</exclude>
@@ -931,6 +940,7 @@
             <outputDirectory>wso2ei-${pom.version}/conf/tomcat</outputDirectory>
             <includes>
                 <include>**/catalina-server.xml</include>
+                <include>**/catalina.properties</include>
                 <include>**/webapp-classloading-environments.xml</include>
             </includes>
         </fileSet>
@@ -1413,6 +1423,13 @@
             <fileMode>644</fileMode>
         </fileSet>
 
+        <!-- Copying the in-place update tools-->
+        <fileSet>
+            <directory>target/update/</directory>
+            <outputDirectory>wso2ei-${pom.version}/bin</outputDirectory>
+            <fileMode>744</fileMode>
+        </fileSet>
+
     </fileSets>
     <!-- End of Analytics dependencies -->
 
@@ -1582,6 +1599,20 @@
         </file>
 
         <file>
+            <source>src/conf/master-datasources.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/datasources</outputDirectory>
+            <destName>master-datasources.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>src/conf/user-mgt.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/</outputDirectory>
+            <destName>user-mgt.xml</destName>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
             <source>src/business-process/conf/axis2/tenant-axis2.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/business-process/conf/axis2
             </outputDirectory>
@@ -1687,6 +1718,16 @@
         </file>
         <file>
             <source>
+                src/business-process/conf/user-mgt.xml
+            </source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/business-process/conf
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
                 src/business-process/conf/datasources/bps-datasources.xml
             </source>
             <outputDirectory>
@@ -1694,13 +1735,6 @@
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>
-                ../p2-profile/business-process-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/logging-config.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/etc/
-            </outputDirectory>
         </file>
 
         <file>
@@ -1767,6 +1801,15 @@
         <file>
             <source>
                 src/business-process/conf/tomcat/catalina-server.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/tomcat/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                src/business-process/conf/tomcat/catalina.properties
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf/tomcat/
             </outputDirectory>
@@ -1843,7 +1886,7 @@
             <filtered>true</filtered>
         </file>
         <file>
-            <source>src/business-process/conf/log4j.properties</source>
+            <source>src/business-process/conf/log4j2.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/business-process/conf
             </outputDirectory>
             <fileMode>644</fileMode>
@@ -1906,6 +1949,13 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/etc/pax-logging.properties</source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/broker/conf/etc/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/broker/conf/tomcat/carbon/META-INF/context.xml</source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/carbon/META-INF/
@@ -1926,6 +1976,12 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/broker/conf/tomcat/catalina.properties</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/broker/conf/tomcat/tomcat-users.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/tomcat/
             </outputDirectory>
@@ -1938,9 +1994,8 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-
         <file>
-            <source>src/broker/conf/log4j.properties</source>
+            <source>src/broker/conf/log4j2.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/wso2/broker/conf/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
@@ -1951,7 +2006,6 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-
         <file>
             <source>src/business-process/conf/axis2/axis2_client.xml</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/axis2/</outputDirectory>
@@ -1960,6 +2014,13 @@
         </file>
         <file>
             <source>src/business-process/conf/etc/launch.ini</source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/wso2/business-process/conf/etc/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>src/conf/etc/pax-logging.properties</source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/wso2/business-process/conf/etc/
             </outputDirectory>
@@ -2058,11 +2119,6 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/broker/conf/logging-config.xml</source>
-            <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/etc/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
             <source>src/broker/conf/cipher-text.properties</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/conf/security/</outputDirectory>
             <fileMode>644</fileMode>
@@ -2124,7 +2180,7 @@
         </file>
         <file>
             <source>
-                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2METRICS_DB.h2.db
+                ../p2-profile/broker-profile/target/wso2carbon-core-${carbon.kernel.version}/wso2/database/WSO2METRICS_DB.mv.db
             </source>
             <outputDirectory>wso2ei-${pom.version}/wso2/broker/repository/database/
             </outputDirectory>
@@ -2237,9 +2293,9 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/log4j.properties</source>
+            <source>src/conf/log4j2.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
-            <destName>log4j.properties</destName>
+            <destName>log4j2.properties</destName>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
@@ -2433,13 +2489,15 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/etc/logging-config.xml</source>
+            <source>src/conf/etc/launch.ini</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/conf/etc</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>src/conf/etc/launch.ini</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/conf/etc</outputDirectory>
+            <source>src/conf/etc/pax-logging.properties</source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/conf/etc/
+            </outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
@@ -2620,7 +2678,7 @@
         <!--END Analytics file copying -->
 
 
-        <file>
+        <!--file>
             <source>src/msf4j/bin/kernel-version.txt</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
             <fileMode>644</fileMode>
@@ -2637,7 +2695,7 @@
             <source>src/msf4j/bin/carbon.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/msf4j/bin</outputDirectory>
             <fileMode>755</fileMode>
-        </file>
+        </file-->
         <!-- END Copying files related to msf4j -->
 
         <!-- Copying files related to forget me tool -->

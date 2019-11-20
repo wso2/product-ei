@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -199,19 +199,14 @@
                 <version>${axis2.wso2.version}</version>
             </dependency>
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
                 <version>${xercesImpl.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>${commons.logging.version}</version>
+                <groupId>org.ops4j.pax.logging</groupId>
+                <artifactId>pax-logging-api</artifactId>
+                <version>${pax.logging.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -626,6 +621,14 @@
                 <version>${automation.framework.version}</version>
                 <exclusions>
                     <exclusion>
+                        <groupId>org.apache.tomcat.embed</groupId>
+                        <artifactId>tomcat-embed-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.tomcat.embed</groupId>
+                        <artifactId>tomcat-embed-logging-juli</artifactId>
+                    </exclusion>
+                    <exclusion>
                         <groupId>org.apache.jmeter</groupId>
                         <artifactId>ApacheJMeter</artifactId>
                     </exclusion>
@@ -675,12 +678,6 @@
                 <artifactId>org.wso2.carbon.integration.common.tests</artifactId>
                 <version>${automation.framework.utils.version}</version>
                 <!--<scope>compile</scope>-->
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.commons</groupId>
-                <artifactId>org.wso2.carbon.logging.admin.stub</artifactId>
-                <version>${carbon.commons.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.wso2.orbit.httpcomponents</groupId>
@@ -1211,11 +1208,6 @@
                 <version>${javaee.web.api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.logging</artifactId>
-                <version>${carbon.kernel.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>axis</groupId>
                 <artifactId>axis-jaxrpc</artifactId>
                 <version>1.3</version>
@@ -1408,12 +1400,6 @@
                 <artifactId>org.wso2.carbon.das.messageflow.data.publisher</artifactId>
                 <version>${carbon.mediation.version}</version>
             </dependency>
-            <!--Log4j-2 dependencies for the Transport Client-->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>${log4j2.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.analytics-common</groupId>
                 <artifactId>org.wso2.carbon.event.stream.core</artifactId>
@@ -1448,11 +1434,6 @@
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.feature.mgt.core</artifactId>
                 <version>${carbon.kernel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${log4j2.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
@@ -1613,6 +1594,12 @@
                 <artifactId>javax.jms-api</artifactId>
                 <version>2.0.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.owasp.esapi</groupId>
+                <artifactId>esapi</artifactId>
+                <version>${es.api.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1659,10 +1646,10 @@
         <product.ei.version>6.6.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.5.6</carbon.business-process.version>
+        <carbon.business-process.version>4.5.22</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
-        <orbit.version.axis2>1.6.1-wso2v37</orbit.version.axis2>
+        <orbit.version.axis2>${axis2.wso2.version}</orbit.version.axis2>
         <orbit.version.ode>1.3.5-wso2v19</orbit.version.ode>
         <org.activiti.wso2.version>5.21.0.wso2v1</org.activiti.wso2.version>
         <orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1
@@ -1672,57 +1659,56 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.3.1</carbon.messaging.version>
-        <carbon.metrics.version>1.3.0</carbon.metrics.version>
-        <product.mb.version>3.1.0</product.mb.version>
+        <carbon.messaging.version>3.3.8</carbon.messaging.version>
+        <carbon.metrics.version>1.3.5</carbon.metrics.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.2.98</andes.version>
+        <andes.version>3.3.7</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
         <!-- Axis2 -->
-        <axis2.wso2.version>1.6.1-wso2v37</axis2.wso2.version>
+        <axis2.wso2.version>1.6.1-wso2v40</axis2.wso2.version>
         <addressing.version>${axis2.wso2.version}</addressing.version>
 
         <!-- Axiom -->
-        <axiom.api.wso2.version>1.2.11-wso2v16</axiom.api.wso2.version>
+        <axiom.api.wso2.version>${axiom.wso2.version}</axiom.api.wso2.version>
         <axiom.wso2.version>1.2.11-wso2v16</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v114</synapse.version>
+        <synapse.version>2.1.7-wso2v137</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v35</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v41</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.7.3</carbon.mediation.version>
+        <carbon.mediation.version>4.7.25</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.5.0-m2</carbon.kernel.version>
-        <carbon.kernel.imp.pkg.version>[4.5.0,5.0.0)</carbon.kernel.imp.pkg.version>
+        <carbon.kernel.version>4.5.2</carbon.kernel.version>
+        <carbon.kernel.imp.pkg.version>[4.5.2,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.7.1</carbon.commons.version>
+        <carbon.commons.version>4.7.17</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.9.3</carbon.deployment.version>
+        <carbon.deployment.version>4.9.13</carbon.deployment.version>
         <carbon-deployment.feature.imp.version>${carbon.deployment.version}</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.7.2</carbon.registry.version>
+        <carbon.registry.version>4.7.19</carbon.registry.version>
 
         <!-- Carbon Identity version-->
-        <carbon.identity-inbound-auth-sts.version>5.2.19</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.13.11</carbon.identity.framework.version>
-        <carbon.identity-inbound-auth-saml2.version>5.2.15</carbon.identity-inbound-auth-saml2.version>
-        <carbon.identity-local-auth-basicauth.version>6.0.8</carbon.identity-local-auth-basicauth.version>
-        <carbon.identity-user-ws.version>5.1.11</carbon.identity-user-ws.version>
+        <carbon.identity-inbound-auth-sts.version>5.4.3</carbon.identity-inbound-auth-sts.version>
+        <carbon.identity.framework.version>5.14.127</carbon.identity.framework.version>
+        <carbon.identity-inbound-auth-saml2.version>5.4.4</carbon.identity-inbound-auth-saml2.version>
+        <carbon.identity-local-auth-basicauth.version>6.2.4</carbon.identity-local-auth-basicauth.version>
+        <carbon.identity-user-ws.version>5.3.3</carbon.identity-user-ws.version>
 
         <!-- Carbon Rule version -->
-        <carbon.rule.version>4.5.1</carbon.rule.version>
+        <carbon.rule.version>4.5.5</carbon.rule.version>
 
         <!-- Data service hosting feature version -->
         <carbon-dataservice-hosting.feature.imp.version>${carbon.data.version}</carbon-dataservice-hosting.feature.imp.version>
@@ -1732,17 +1718,15 @@
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
-        <carbon.analytics.common.version>5.2.1</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.2.14</carbon.analytics.common.version>
 
         <!-- MSF4J version -->
         <!-- MSF4J version should also be updated at /p2-profile/msf4j/pom.xml and /samples/msf4j/pom.xml -->
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.7.3</carbon.multitenancy.version>
-        <!-- For carbon based products use 0.12.x jaggery version. 0.13.x is not for carbon based products
-        therefore please don't upgrade to 0.13.x -->
-        <jaggery.version>0.12.9</jaggery.version>
+        <carbon.multitenancy.version>4.7.13</carbon.multitenancy.version>
+        <jaggery.version>0.14.12</jaggery.version>
         <jaggery.modules.carbon.version>1.5.5</jaggery.modules.carbon.version>
         <jaggery.modules.process.version>1.5.5</jaggery.modules.process.version>
         <jaggery.modules.i18n.version>1.5.5</jaggery.modules.i18n.version>
@@ -1758,7 +1742,7 @@
         <sandesha2.version>1.6.1-wso2v1</sandesha2.version>
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
         <httpcore-nio.wso2.version>4.3.3.wso2v4</httpcore-nio.wso2.version>
-        <rampart.wso2.version>1.6.1-wso2v36</rampart.wso2.version>
+        <rampart.wso2.version>1.6.1-wso2v40</rampart.wso2.version>
         <neethi.orbit.version>2.0.4.wso2v4</neethi.orbit.version>
         <rampart.mar.version>${rampart.wso2.version}</rampart.mar.version>
 
@@ -1778,7 +1762,7 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.5.0</carbon.data.version>
+        <carbon.data.version>4.5.620</carbon.data.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <orbit.version.joda-time>2.9.4.wso2v1</orbit.version.joda-time>
 
@@ -1789,7 +1773,6 @@
         <carbon.caching.version>4.2.0</carbon.caching.version>
         <esotericsoftware.kryo.version>3.0.3</esotericsoftware.kryo.version>
         <carbon.rm.version>4.2.0</carbon.rm.version>
-        <log4j.version>1.2.13</log4j.version>
         <commons.logging.version>1.1</commons.logging.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <opencsv.version>1.8</opencsv.version>
@@ -1836,7 +1819,7 @@
 
         <!-- auto Framework versions -->
         <automation.framework.version>4.4.4</automation.framework.version>
-        <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
+        <automation.framework.utils.version>4.5.0</automation.framework.utils.version>
         <jettison.orbit.version>1.3.4.wso2v1</jettison.orbit.version>
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>3.141.59</selenium.version>
@@ -1850,7 +1833,7 @@
         <elasticsearch.version>7.1.0</elasticsearch.version>
 
         <!-- Log4j2 Version -->
-        <log4j2.version>2.8.2</log4j2.version>
+        <pax.logging.api.version>1.10.1</pax.logging.api.version>
 
         <!-- Maven Plugin Version -->
         <maven.build.helper.plugin.version>1.8</maven.build.helper.plugin.version>
@@ -1863,7 +1846,7 @@
         <!-- Forget-me tool -->
         <forgetme.tool.version>1.2.0</forgetme.tool.version>
 
-        <securevault.version>1.1.2</securevault.version>
+        <securevault.version>1.1.3</securevault.version>
         <awaitility.version>3.1.2</awaitility.version>
 
         <!--MB Integration Tests-->
@@ -1876,6 +1859,7 @@
         <!--Ei Migration-->
         <commons-lang.wso2.osgi.version.range>[2.6.0,3.0.0)</commons-lang.wso2.osgi.version.range>
         <maven.felix.scr.plugin.version>1.25.0</maven.felix.scr.plugin.version>
+        <es.api.version>2.0.1</es.api.version>
     </properties>
 
     <repositories>
@@ -1955,29 +1939,26 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <encoding>UTF-8</encoding>
                     <source>1.8</source>
-                    <target>1.8</target>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <!--This parameter disables doclint-->
+                            <doclint>none</doclint>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-scr-plugin</artifactId>
-                    <version>${maven.felix.scr.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>generate-scr-scrdescriptor</id>
-                            <goals>
-                                <goal>scr</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>

@@ -27,7 +27,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.esb.mediator.test.iterate.IterateClient;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 /**
@@ -59,8 +59,9 @@ public class ForEachSequentialExecutionTestCase extends ESBIntegrationTest {
         int forEachCount = 0;
 
         // Verify logs to check that the order of symbols is same as in the payload. The symbols should be as SYM[1-10]
-        // as in payload. Since loop iterates from the last log onwards, verifying whether the symbols are in SYM[10-1] order
-        for (int i = (logs.length- 1); i >= 0; i--) {
+        // as in payload. Since loop iterates from the last log onwards, verifying whether the symbols are in
+        // SYM[1-10] order since logViewer
+        for (int i = 0; i < logs.length; i++) {
             String message = logs[i].getMessage();
             if (message.contains("foreach = in")) {
                 if (!message.contains("SYM" + forEachCount)) {

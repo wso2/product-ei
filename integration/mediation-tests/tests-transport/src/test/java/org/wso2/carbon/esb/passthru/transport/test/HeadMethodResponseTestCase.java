@@ -24,7 +24,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.clients.SimpleHttpClient;
 
@@ -50,7 +50,7 @@ public class HeadMethodResponseTestCase extends ESBIntegrationTest {
         SimpleHttpClient httpClient = new SimpleHttpClient();
         httpClient.doGet(contextUrls.getServiceUrl() + "/ClientProxy", null);
 
-        LogEvent[] logs = logViewer.getAllSystemLogs();
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean errorLogFound = false;
         for (LogEvent log : logs) {
             if (log.getMessage().contains("HTTP protocol violation")) {

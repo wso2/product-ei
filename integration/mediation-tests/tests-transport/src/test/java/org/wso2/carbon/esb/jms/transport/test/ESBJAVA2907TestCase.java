@@ -10,7 +10,7 @@ import org.wso2.esb.integration.common.utils.clients.axis2client.AxisServiceClie
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
 import org.wso2.esb.integration.common.utils.Utils;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 
 /**
  * ESBJAVA-2907 OMElements are not added as properties when saving messages to the MessageStore
@@ -34,7 +34,7 @@ public class ESBJAVA2907TestCase extends ESBIntegrationTest {
 		LogViewerClient cli = new LogViewerClient(contextUrls.getBackEndUrl(),getSessionCookie());
 		boolean hasPrefix = Utils.checkForLog(cli, GET_QUOTE_REQUEST_BODY, 5);
 		Assert.assertTrue(hasPrefix, "OMElement is not saved to the message store");
-		log.info(cli.getAllSystemLogs());
+		log.info(cli.getAllRemoteSystemLogs());
 	}
 
 	@AfterClass(alwaysRun = true)

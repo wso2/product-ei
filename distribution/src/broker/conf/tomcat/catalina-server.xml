@@ -41,7 +41,7 @@
                    compression="on"
                    compressionMinSize="2048"
                    noCompressionUserAgents="gozilla, traviata"
-                   compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
+                   compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
                    URIEncoding="UTF-8"/>
 
         <!--
@@ -54,7 +54,7 @@
                    port="9443"
                    bindOnInit="false"
                    sslProtocol="TLS"
-                   sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
+                   sslEnabledProtocols="+TLSv1,+TLSv1.1,+TLSv1.2"
                    maxHttpHeaderSize="8192"
                    acceptorThreadCount="2"
                    maxThreads="250"
@@ -72,7 +72,7 @@
                    SSLEnabled="true"
                    compressionMinSize="2048"
                    noCompressionUserAgents="gozilla, traviata"
-                   compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
+                   compressibleMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
                    keystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"
                    keystorePass="wso2carbon"
                    URIEncoding="UTF-8"/>

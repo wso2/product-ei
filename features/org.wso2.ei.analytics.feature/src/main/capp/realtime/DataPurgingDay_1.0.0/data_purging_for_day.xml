@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<analytics-data-purging>
+    <cron-expression>0 0 12 * * ?</cron-expression>
+    <purge-include-tables>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_STATPERDAY</table>
+        <table>ORG_WSO2_ESB_ANALYTICS_STREAM_MEDIATORSTATPERDAY</table>
+    </purge-include-tables>
+    <data-retention-days>45</data-retention-days>
+</analytics-data-purging>

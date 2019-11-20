@@ -27,7 +27,7 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.apache.axis2.AxisFault;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 import org.wso2.esb.integration.common.utils.JMSEndpointManager;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.Utils;
 
 
@@ -59,7 +59,7 @@ public class ESBJAVA2824MissingResponseTestCase extends ESBIntegrationTest {
 			Assert.assertEquals(errMsg,"Send timeout", "JMS Client did not receive Send timeout");			
 			
 			LogViewerClient cli = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
-			LogEvent[] logs = cli.getAllSystemLogs();
+			LogEvent[] logs = cli.getAllRemoteSystemLogs();
 			Assert.assertNotNull(logs, "No logs found");
 			Assert.assertTrue(logs.length > 0, "No logs found");
 			boolean errorMsgTrue = Utils.checkForLogsWithPriority(cli,"ERROR", logLine0, 10);

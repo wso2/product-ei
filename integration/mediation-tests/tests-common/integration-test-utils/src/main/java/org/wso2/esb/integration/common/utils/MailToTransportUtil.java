@@ -23,8 +23,8 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.test.utils.common.EmailSender;
 import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
-import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
-import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
+//import org.wso2.carbon.logging.view.stub.LogViewerLogViewerException;
+import org.wso2.carbon.logging.view.data.xsd.LogEvent;
 import org.wso2.esb.integration.common.utils.exception.ESBMailTransportIntegrationTestException;
 
 import javax.mail.Authenticator;
@@ -276,9 +276,6 @@ public class MailToTransportUtil {
                 }
             }
             return expectedStringFound;
-        } catch (LogViewerLogViewerException e) {
-            log.error("Error when reading the log to find a string ", e);
-            throw new ESBMailTransportIntegrationTestException("Error when reading the log to find a string ", e);
         } catch (RemoteException e) {
             log.error("Error when getting the log ", e);
             throw new ESBMailTransportIntegrationTestException("Error when getting the log ", e);

@@ -41,7 +41,6 @@ public class TestCoverageGenerator {
     private static String carbonZip;
 
     public static void main(String[] args) throws AutomationFrameworkException, IOException {
-        BasicConfigurator.configure();
         if (carbonZip == null) {
             carbonZip = FrameworkPathUtil.getCarbonZipLocation();
             log.info("Using carbon zip file at  " + carbonZip);
