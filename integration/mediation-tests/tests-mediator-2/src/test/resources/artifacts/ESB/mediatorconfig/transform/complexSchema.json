@@ -1,0 +1,247 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "fruit": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 6,
+      "pattern": "^[0-9]{1,45}$"
+    },
+    "price": {
+      "type": "number",
+      "minimum": 2,
+      "maximum": 20,
+      "exclusiveMaximum": 20,
+      "multipleOf": 2.5
+    },
+    "simpleObject": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "age"
+      ]
+    },
+    "simpleArray": {
+      "type": "array",
+      "items": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": false
+    },
+    "objWithArray": {
+      "type": "object",
+      "properties": {
+        "marks": {
+          "type": "array",
+          "items": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "required": [
+        "marks"
+      ]
+    },
+    "arrayOfObjects": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "maths": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "maths"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "physics": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "physics"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chemistry": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "chemistry"
+          ]
+        }
+      ]
+    },
+    "singleObjArray": {
+      "type": "array",
+      "items": [
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "nestedObject": {
+      "type": "object",
+      "properties": {
+        "Lahiru": {
+          "type": "object",
+          "properties": {
+            "age": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "age"
+          ]
+        },
+        "Nimal": {
+          "type": "object",
+          "properties": {
+            "married": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "married"
+          ]
+        },
+        "Kamal": {
+          "type": "object",
+          "properties": {
+            "scores": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "required": [
+            "scores"
+          ]
+        }
+      },
+      "required": [
+        "Lahiru",
+        "Nimal",
+        "Kamal"
+      ]
+    },
+    "nestedArray": {
+      "type": "array",
+      "items": [
+        {
+          "type": "array",
+          "items": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        {
+          "type": "array",
+          "items": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "allNumericArray": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "nullArray": {
+      "type": "array",
+      "items": {
+        "type": "null"
+      }
+    }
+  },
+  "required": [
+    "fruit",
+    "price",
+    "simpleObject",
+    "simpleArray",
+    "objWithArray",
+    "arrayOfObjects",
+    "singleObjArray",
+    "nestedObject",
+    "nestedArray"
+  ],
+  "additionalProperties": true,
+  "minProperties": 10,
+  "maxProperties": 20,
+  "patternProperties": {
+    "_goals$": {
+      "type": "integer"
+    }
+  }
+}

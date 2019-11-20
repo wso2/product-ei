@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="transformMediatorBasic" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <transform schema="conf:/complexSchema.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <localEntry key="stockquote-json-schema"><![CDATA[{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "getQuote": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "symbol"
+          ]
+        }
+      },
+      "required": [
+        "request"
+      ]
+    }
+  },
+  "required": [
+    "getQuote"
+  ]
+}]]><description/>
+    </localEntry>
+</definitions>
