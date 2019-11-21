@@ -1831,6 +1831,8 @@
 
         <!-- Elasticsearch Version -->
         <elasticsearch.version>7.1.0</elasticsearch.version>
+        <elk.httpclient.version>4.5.8</elk.httpclient.version>
+        <elk.httpcore.version>4.4.11</elk.httpcore.version>
 
         <!-- Log4j2 Version -->
         <pax.logging.api.version>1.10.1</pax.logging.api.version>

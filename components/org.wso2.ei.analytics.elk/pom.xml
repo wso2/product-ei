@@ -76,11 +76,6 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <elk.httpclient.version>4.5.8</elk.httpclient.version>
-        <elk.httpcore.version>4.4.11</elk.httpcore.version>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
