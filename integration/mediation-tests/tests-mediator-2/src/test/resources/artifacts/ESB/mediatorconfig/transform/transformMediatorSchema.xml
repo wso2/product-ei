@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy name="transformMediatorSimple" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <jsontransform schema="conf:/simpleSchema.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="transformMediatorSimpleXMLtoJSONWithSchema" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <jsontransform schema="conf:/simpleSchema.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="transformMediatorSimpleXMLtoJSONWithSchemaLocalEntry" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <jsontransform schema="simpleSchemaLocalEntry"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="transformMediatorNotExistingSchema" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="messageType" scope="axis2" value="plain/text"/>
+                <jsontransform schema="conf:/simpleSchemaNotexisting.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="transformMediatorEmptySchema" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <jsontransform schema="conf:/emptySchema.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <proxy name="transformMediatorMalformedSchema" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <jsontransform schema="conf:/malformedSchema.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+    <localEntry key="simpleSchemaLocalEntry"><![CDATA[{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "fruit": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 6,
+      "pattern": "^[0-9]{1,45}$"
+    },
+    "price": {
+      "type": "number",
+      "minimum": 2,
+      "maximum": 20,
+      "exclusiveMaximum": 20,
+      "multipleOf": 2.5
+    }
+  },
+  "required": [
+    "price"
+  ]
+}]]><description/>
+    </localEntry>
+</definitions>

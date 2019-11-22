@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://ws.apache.org/ns/synapse">
+    <proxy xmlns="http://ws.apache.org/ns/synapse" name="transformMediatorSimpleAutoPrimitive" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <jsontransform>
+                    <property name="synapse.commons.json.output.autoPrimitive" value = "false"/>
+                </jsontransform>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
+</definitions>

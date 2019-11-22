@@ -36,20 +36,21 @@ import javax.activation.DataHandler;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Testcases to test the basic functionality of Transform Mediator
+ * Testcases to test the basic functionality of JSON Transform Mediator
  */
-public class TransformMediatorTestcases extends ESBIntegrationTest {
-    private ResourceAdminServiceClient resourceAdminServiceClient;
-    private Map<String, String> httpHeaders = new HashMap();
+public class JSONTransformMediatorTestcases extends ESBIntegrationTest {
+
+    private Map<String, String> httpHeaders = new HashMap<>();
     private JsonParser parser;
 
     @BeforeClass(alwaysRun = true)
     public void deployArtifacts() throws Exception {
         super.init();
-        resourceAdminServiceClient = new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        ResourceAdminServiceClient resourceAdminServiceClient =
+                new ResourceAdminServiceClient(contextUrls.getBackEndUrl(), getSessionCookie());
         URL complexSchemaURL = new URL("file:///" + getESBResourceLocation() + File.separator + "mediatorconfig"
                 + File.separator + "transform" + File.separator + "complexSchema.json");
-        resourceAdminServiceClient.addResource("/_system/config/complexSchema.json", "application/json", "JSON Schema"
+        resourceAdminServiceClient.addResource("/_system/config/complexSchema.json", "", "JSON Schema"
                 , new DataHandler(complexSchemaURL));
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
                 File.separator + "mediatorconfig" + File.separator + "transform" + File.separator +
@@ -58,8 +59,8 @@ public class TransformMediatorTestcases extends ESBIntegrationTest {
         parser = new JsonParser();
     }
 
-    @Test(groups = "wso2.esb", description = "Validating the request payload against the JSON Schema" +
-            " stored in local-entry")
+    @Test(groups = "wso2.esb", description = "Performing a JSON to JSON transformation using a complex schema " +
+            "stored in registry")
     public void testComplexJsonSchema() throws Exception {
         String payload = "{\n" +
                 "  \"fruit\"           : \"12345\",\n" +
