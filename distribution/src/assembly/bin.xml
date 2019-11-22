@@ -2465,6 +2465,18 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>../samples/product/src/main/conf/server/plugins</source>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server/repository/conf</outputDirectory>
+            <destName>plugins</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../samples/product/src/main/conf/server/log4j2.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/samples/axis2Server/repository/conf</outputDirectory>
+            <destName>log4j2.properties</destName>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>../samples/product/src/main/conf/server/sample-server-wrapper.conf</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>sample-server-wrapper.conf</destName>
