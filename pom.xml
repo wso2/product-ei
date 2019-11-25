@@ -1392,49 +1392,8 @@
             <!--Elasticsearch Transport Client Dependencies-->
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
-                <artifactId>transport</artifactId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticsearch.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-core</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.dataformat</groupId>
-                        <artifactId>jackson-dataformat-cbor</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.dataformat</groupId>
-                        <artifactId>jackson-dataformat-smile</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.dataformat</groupId>
-                        <artifactId>jackson-dataformat-yaml</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.elasticsearch</groupId>
-                        <artifactId>jna</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>x-pack-transport</artifactId>
-                <version>${elasticsearch.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.bouncycastle</groupId>
-                        <artifactId>bcprov-jdk15on</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.bouncycastle</groupId>
-                        <artifactId>bcpkix-jdk15on</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>x-pack-core</artifactId>
-                        <groupId>org.elasticsearch.plugin</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.mediation</groupId>
@@ -1871,7 +1830,9 @@
         <fasterxml.jackson.version>2.9.8.wso2v1</fasterxml.jackson.version>
 
         <!-- Elasticsearch Version -->
-        <elasticsearch.version>6.5.4</elasticsearch.version>
+        <elasticsearch.version>7.1.0</elasticsearch.version>
+        <elk.httpclient.version>4.5.8</elk.httpclient.version>
+        <elk.httpcore.version>4.4.11</elk.httpcore.version>
 
         <!-- Log4j2 Version -->
         <pax.logging.api.version>1.10.1</pax.logging.api.version>
