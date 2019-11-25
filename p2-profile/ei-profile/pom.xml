@@ -345,6 +345,9 @@
                                 <featureArtifactDef>
                                     org.wso2.ei:org.wso2.ei.styles.feature:${product.ei.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.ei:org.wso2.ei.admin.ui.feature:${product.ei.version}
+                                </featureArtifactDef>
 
                                 <!--10 Carbon-rules-->
                                 <featureArtifactDef>
@@ -769,6 +772,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.ei.samples.feature.group</id>
+                                    <version>${product.ei.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.ei.admin.ui.feature.group</id>
                                     <version>${product.ei.version}</version>
                                 </feature>
 

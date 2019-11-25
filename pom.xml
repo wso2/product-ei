@@ -1281,6 +1281,11 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.ei</groupId>
+                <artifactId>org.wso2.ei.admin.ui</artifactId>
+                <version>${product.ei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.ei</groupId>
                 <artifactId>org.wso2.ei.analytics.styles</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
@@ -1862,6 +1867,7 @@
         <commons-lang.wso2.osgi.version.range>[2.6.0,3.0.0)</commons-lang.wso2.osgi.version.range>
         <maven.felix.scr.plugin.version>1.25.0</maven.felix.scr.plugin.version>
         <es.api.version>2.0.1</es.api.version>
+        <imp.pkg.version.javax.servlet>[2.6.0, 3.0.0)</imp.pkg.version.javax.servlet>
     </properties>
 
     <repositories>
