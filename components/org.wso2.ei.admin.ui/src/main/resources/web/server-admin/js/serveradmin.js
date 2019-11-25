@@ -47,10 +47,6 @@ function shutdownServerCallback() {
         {
             "action":"shutdown"
         },function (responseText, status, XMLHttpRequest) {
-            /*        if (jQuery.trim(responseText) != '') {
-                CARBON.showWarningDialog(responseText);
-                return;
-            }*/
             if (status != "success") {
                 CARBON.showErrorDialog(jsi18n["shutdown.error"]);
             } else {
@@ -71,10 +67,6 @@ function restartServerGracefullyCallback() {
         {
             "action":"restartGracefully"
         },function (responseText, status, XMLHttpRequest) {
-            /*        if (jQuery.trim(responseText) != '') {
-                CARBON.showWarningDialog(responseText);
-                return;
-            }*/
             if (status != "success") {
                 CARBON.showErrorDialog(jsi18n["graceful.restart.error"]);
             } else {
@@ -95,10 +87,6 @@ function restartServerCallback() {
         {
             "action":"restart"
         },function (responseText, status, XMLHttpRequest) {
-            /*        if (jQuery.trim(responseText) != '') {
-                CARBON.showWarningDialog(responseText);
-                return;
-            }*/
             if (status != "success") {
                 CARBON.showErrorDialog(jsi18n["restart.error"]);
             } else {
