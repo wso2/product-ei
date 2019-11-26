@@ -2307,6 +2307,13 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/file.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>file.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/internal-apis.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>internal-apis.xml</destName>

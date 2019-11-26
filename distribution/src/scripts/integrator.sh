@@ -330,6 +330,7 @@ do
     -Dorg.apache.activemq.SERIALIZABLE_PACKAGES="*" \
     -Djavax.xml.xpath.XPathFactory:http://java.sun.com/jaxp/xpath/dom=net.sf.saxon.xpath.XPathFactoryImpl \
     -DavoidConfigUpdate=true \
+    -Dsynapse.commons.file.properties.path=default \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done
