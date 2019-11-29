@@ -1651,7 +1651,7 @@
         <product.ei.version>6.6.0-SNAPSHOT</product.ei.version>
 
         <!--Business-Process-->
-        <carbon.business-process.version>4.5.22</carbon.business-process.version>
+        <carbon.business-process.version>4.5.26</carbon.business-process.version>
         <bps.version>3.5.1</bps.version>
         <!--Business-Process-tests-->
         <orbit.version.axis2>${axis2.wso2.version}</orbit.version.axis2>
@@ -1664,10 +1664,10 @@
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
 
         <!--MB-->
-        <carbon.messaging.version>3.3.8</carbon.messaging.version>
-        <carbon.metrics.version>1.3.5</carbon.metrics.version>
+        <carbon.messaging.version>3.3.9</carbon.messaging.version>
+        <carbon.metrics.version>1.3.6</carbon.metrics.version>
         <jline.version>1.0</jline.version>
-        <andes.version>3.3.7</andes.version>
+        <andes.version>3.3.10</andes.version>
         <slf4j.wso2.version>1.5.10.wso2v1</slf4j.wso2.version>
         <orbit.version.geronimo-jms_1.1_spec>1.1.0.wso2v1</orbit.version.geronimo-jms_1.1_spec>
 
@@ -1680,34 +1680,34 @@
         <axiom.wso2.version>1.2.11-wso2v16</axiom.wso2.version>
 
         <!-- Synapse -->
-        <synapse.version>2.1.7-wso2v137</synapse.version>
+        <synapse.version>2.1.7-wso2v139</synapse.version>
 
         <!-- Axis2 Transport -->
-        <axis2.transport.version>2.0.0-wso2v41</axis2.transport.version>
+        <axis2.transport.version>2.0.0-wso2v42</axis2.transport.version>
 
         <!-- Apache Versions -->
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.7.25</carbon.mediation.version>
+        <carbon.mediation.version>4.7.27</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.5.2</carbon.kernel.version>
-        <carbon.kernel.imp.pkg.version>[4.5.2,5.0.0)</carbon.kernel.imp.pkg.version>
+        <carbon.kernel.version>4.5.3</carbon.kernel.version>
+        <carbon.kernel.imp.pkg.version>[4.5.0,5.0.0)</carbon.kernel.imp.pkg.version>
 
         <!-- Carbon Commons version-->
-        <carbon.commons.version>4.7.17</carbon.commons.version>
+        <carbon.commons.version>4.7.18</carbon.commons.version>
 
         <!-- Carbon Deployment version-->
-        <carbon.deployment.version>4.9.13</carbon.deployment.version>
+        <carbon.deployment.version>4.9.14</carbon.deployment.version>
         <carbon-deployment.feature.imp.version>${carbon.deployment.version}</carbon-deployment.feature.imp.version>
 
         <!-- Carbon Registry version-->
-        <carbon.registry.version>4.7.19</carbon.registry.version>
+        <carbon.registry.version>4.7.20</carbon.registry.version>
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.4.3</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.14.127</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.15.17</carbon.identity.framework.version>
         <carbon.identity-inbound-auth-saml2.version>5.4.4</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>6.2.4</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.3.3</carbon.identity-user-ws.version>
@@ -1723,14 +1723,14 @@
         <version.equinox.http.helper>1.1.0.wso2v1</version.equinox.http.helper>
         <version.equinox.p2.metadata>2.2.0.v20130523-1557</version.equinox.p2.metadata>
         <!-- Analytic Commons version-->
-        <carbon.analytics.common.version>5.2.14</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.2.17</carbon.analytics.common.version>
 
         <!-- MSF4J version -->
         <!-- MSF4J version should also be updated at /p2-profile/msf4j/pom.xml and /samples/msf4j/pom.xml -->
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.7.13</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.7.14</carbon.multitenancy.version>
         <jaggery.version>0.14.12</jaggery.version>
         <jaggery.modules.carbon.version>1.5.5</jaggery.modules.carbon.version>
         <jaggery.modules.process.version>1.5.5</jaggery.modules.process.version>
@@ -1747,7 +1747,7 @@
         <sandesha2.version>1.6.1-wso2v1</sandesha2.version>
         <geronimo.specs.jms.version>1.1.1</geronimo.specs.jms.version>
         <httpcore-nio.wso2.version>4.3.3.wso2v4</httpcore-nio.wso2.version>
-        <rampart.wso2.version>1.6.1-wso2v40</rampart.wso2.version>
+        <rampart.wso2.version>1.6.1-wso2v41</rampart.wso2.version>
         <neethi.orbit.version>2.0.4.wso2v4</neethi.orbit.version>
         <rampart.mar.version>${rampart.wso2.version}</rampart.mar.version>
 
@@ -1767,7 +1767,7 @@
         <!-- Product EI Analytics runtime -->
         <esb.analytics.version>5.0.0</esb.analytics.version>
         <carbon.dashboard.version>2.0.19</carbon.dashboard.version>
-        <carbon.data.version>4.5.620</carbon.data.version>
+        <carbon.data.version>4.5.1453</carbon.data.version>
         <sso.feature.version>1.5.5</sso.feature.version>
         <orbit.version.joda-time>2.9.4.wso2v1</orbit.version.joda-time>
 
