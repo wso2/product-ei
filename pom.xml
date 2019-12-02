@@ -1707,7 +1707,7 @@
 
         <!-- Carbon Identity version-->
         <carbon.identity-inbound-auth-sts.version>5.4.3</carbon.identity-inbound-auth-sts.version>
-        <carbon.identity.framework.version>5.15.17</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.14.127</carbon.identity.framework.version>
         <carbon.identity-inbound-auth-saml2.version>5.4.4</carbon.identity-inbound-auth-saml2.version>
         <carbon.identity-local-auth-basicauth.version>6.2.4</carbon.identity-local-auth-basicauth.version>
         <carbon.identity-user-ws.version>5.3.3</carbon.identity-user-ws.version>
@@ -1730,7 +1730,7 @@
         <msf4j.version>2.2.2</msf4j.version>
 
         <!-- Carbon Multitenancy version-->
-        <carbon.multitenancy.version>4.7.15</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.7.13</carbon.multitenancy.version>
         <jaggery.version>0.14.12</jaggery.version>
         <jaggery.modules.carbon.version>1.5.5</jaggery.modules.carbon.version>
         <jaggery.modules.process.version>1.5.5</jaggery.modules.process.version>
