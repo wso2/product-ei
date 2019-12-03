@@ -325,6 +325,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
     -DenableCorrelationLogs=false \
+    -Dorg.wso2.CorrelationLogInterceptor.BlacklistedThreads=Framework,Start,RegistryLogWritter,Component \
     -Dorg.wso2.ignoreHostnameVerification=true \
     -Dorg.apache.activemq.SERIALIZABLE_PACKAGES="*" \
     -Djavax.xml.xpath.XPathFactory:http://java.sun.com/jaxp/xpath/dom=net.sf.saxon.xpath.XPathFactoryImpl \

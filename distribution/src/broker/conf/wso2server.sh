@@ -338,6 +338,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
     -DenableCorrelationLogs=false \
+    -Dorg.wso2.CorrelationLogInterceptor.BlacklistedThreads=Framework,Start,RegistryLogWritter,Component \
     -Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600 \
     -DavoidConfigUpdate=true \
     $NODE_PARAMS \
