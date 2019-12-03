@@ -71,7 +71,6 @@
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
                 <exclude>**/wso2/components/plugins/saxon_*.jar</exclude>
-                <exclude>**/wso2/components/plugins/org.wso2.carbon.server.admin.ui_*.jar</exclude>
                 <exclude>**/lib/endorsed/xalan*.jar</exclude>
                 <exclude>**/conf/tomcat/catalina-server.xml</exclude>
                 <exclude>**/conf/tomcat/catalina.properties</exclude>
