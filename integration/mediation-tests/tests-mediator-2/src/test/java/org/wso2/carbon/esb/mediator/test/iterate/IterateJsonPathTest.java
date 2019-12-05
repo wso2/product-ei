@@ -22,23 +22,13 @@ import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.exceptions.AutomationFrameworkException;
+import org.wso2.carbon.automation.test.utils.http.client.HttpRequestUtil;
 import org.wso2.carbon.automation.test.utils.http.client.HttpResponse;
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import static org.testng.Assert.assertTrue;
@@ -53,8 +43,11 @@ public class IterateJsonPathTest extends ESBIntegrationTest {
     @BeforeClass(alwaysRun = true)
     public void uploadSynapseConfig() throws Exception {
         super.init();
-        input = FileUtils.readFileToString(new File(getESBResourceLocation() + "/json/inputESBIterateJson.json"));
-        loadESBConfigurationFromClasspath("/artifacts/ESB/mediatorconfig/iterate/iterate_jsonpath.xml");
+        input = FileUtils.readFileToString(new File(getESBResourceLocation() + File.separator + "json" +
+                File.separator + "inputESBIterateJson.json"));
+        loadESBConfigurationFromClasspath(File.separator + "artifacts" +  File.separator +
+                "ESB" + File.separator + "mediatorconfig" + File.separator + "iterate" + File.separator +
+                "iterate_jsonpath.xml");
     }
 
     @Test(groups = "wso2.esb", description = "Testing Iterate mediator json support with basic configuration")
@@ -115,82 +108,10 @@ public class IterateJsonPathTest extends ESBIntegrationTest {
         Map<String, String> header = new HashMap<String, String>();
         header.put("Content-Type", "application/json");
 
-        HttpResponse httpResponse = doPost(endpoint, input, header);
+        HttpResponse httpResponse = HttpRequestUtil.doPost(endpoint, input, header);
 
         assertTrue(httpResponse.getData().contains("Alice"), "Required element not found in aggregrated payload");
         assertTrue(httpResponse.getData().contains("Bob"), "Required element not found in aggregrated payload");
         assertTrue(httpResponse.getData().contains("Camry"), "Required element not found in aggregrated payload");
     }
-
-    private static HttpResponse doPost(URL endpoint, String postBody, Map<String, String> headers)
-            throws AutomationFrameworkException, IOException {
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpURLConnection) endpoint.openConnection();
-            try {
-                urlConnection.setRequestMethod("POST");
-            } catch (ProtocolException e) {
-                throw new AutomationFrameworkException("Shouldn't happen: HttpURLConnection doesn't support POST?? " +
-                        e.getMessage(), e);
-            }
-            urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(true);
-            urlConnection.setUseCaches(false);
-            urlConnection.setAllowUserInteraction(false);
-            urlConnection.setReadTimeout(10000);
-            for (Map.Entry<String, String> e : headers.entrySet()) {
-                urlConnection.setRequestProperty(e.getKey(), e.getValue());
-            }
-            OutputStream out = urlConnection.getOutputStream();
-            Writer writer = null;
-            try {
-                writer = new OutputStreamWriter(out, "UTF-8");
-                writer.write(postBody);
-            } catch (IOException e) {
-                throw new AutomationFrameworkException("IOException while posting data " + e.getMessage(), e);
-            } finally {
-                if (writer != null) {
-                    writer.close();
-                }
-            }
-            StringBuilder sb = new StringBuilder();
-            BufferedReader rd = null;
-            try {
-                rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), Charset.defaultCharset()));
-                String line;
-                while ((line = rd.readLine()) != null) {
-                    sb.append(line);
-                }
-            } finally {
-                if (rd != null) {
-                    rd.close();
-                }
-            }
-            Iterator<String> itr = urlConnection.getHeaderFields().keySet().iterator();
-            Object responseHeaders = new HashMap();
-            String key;
-            while (itr.hasNext()) {
-                key = itr.next();
-                if (key != null) {
-                    ((Map) responseHeaders).put(key, urlConnection.getHeaderField(key));
-                }
-            }
-            return new HttpResponse(sb.toString(), urlConnection.getResponseCode(), (Map) responseHeaders);
-        } catch (IOException e) {
-            StringBuilder sb = new StringBuilder();
-            BufferedReader rd = null;
-            rd = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream(), Charset.defaultCharset()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                sb.append(line);
-            }
-            rd.close();
-            return new HttpResponse(sb.toString(), urlConnection.getResponseCode());
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-    }
-
 }
