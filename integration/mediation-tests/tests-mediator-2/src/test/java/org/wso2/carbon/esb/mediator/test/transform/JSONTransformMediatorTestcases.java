@@ -36,7 +36,7 @@ import javax.activation.DataHandler;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Testcases to test the basic functionality of JSON Transform Mediator
+ * Testcase to test the basic functionality of JSON Transform Mediator with a complex schema
  */
 public class JSONTransformMediatorTestcases extends ESBIntegrationTest {
 

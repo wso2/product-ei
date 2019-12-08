@@ -1,0 +1,14 @@
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="transformMediatorXMLNilReadWrite"
+       startOnLoad="true" transports="https http">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="messageType" scope="axis2" value="application/json"/>
+            <jsontransform>
+                <property name="synapse.commons.enableXmlNilReadWrite" value="true"/>
+                <property name="synapse.commons.enableXmlNullForEmptyElement" value="false"/>
+            </jsontransform>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>

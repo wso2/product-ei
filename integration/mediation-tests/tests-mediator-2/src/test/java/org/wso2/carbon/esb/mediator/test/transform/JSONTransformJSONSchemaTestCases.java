@@ -40,7 +40,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /**
- * Testcases to test the basic functionality of JSON Transform Mediator
+ * Testcases to test schema functionality of JSON Transform Mediator
  */
 public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
     private JsonParser parser;
@@ -63,6 +63,10 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
                 + File.separator + "transform" + File.separator + "malformedSchema.json");
         resourceAdminServiceClient.addResource("/_system/config/malformedSchema.json", "", "JSON Schema"
                 , new DataHandler(malformedSchema));
+        URL schemaWithoutType = new URL("file:///" + getESBResourceLocation() + File.separator + "mediatorconfig"
+                + File.separator + "transform" + File.separator + "simpleSchemaWithoutType.json");
+        resourceAdminServiceClient.addResource("/_system/config/simpleSchemaWithoutType.json", "", "JSON Schema"
+                , new DataHandler(schemaWithoutType));
         loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
                 File.separator + "mediatorconfig" + File.separator + "transform" + File.separator +
                 "transformMediatorSchema.xml");
@@ -216,6 +220,35 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
             }
         }
         assertTrue(isErrorLogFound, "Expected error message not received when malformed schema is passed");
+    }
+
+    @Test(groups = "wso2.esb", description = "Changing the JSON payload against JSON schema without type attribute")
+    public void testJsonSchemaWithoutType() throws Exception {
+        logViewer.clearLogs();
+        String payload = "{\n" +
+                "  \"fruit\"           : \"12345\",\n" +
+                "  \"price\"           : \"7.5\",\n" +
+                "  \"nestedObject\"    : {\"Lahiru\" :{\"age\":\"27\"},\"Nimal\" :{\"married\" :\"true\"}, \"Kamal\" " +
+                ": {\"scores\": [\"24\",45,\"67\"]}},\n" +
+                "  \"nestedArray\"     : [[12,\"23\",34],[\"true\",false],[\"Linking Park\",\"Coldplay\"]]\n" +
+                "}";
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/json");
+        String expected_error = "JSON schema should contain a type declaration";
+        try {
+            HttpRequestUtil.doPost(
+                    new URL(getProxyServiceURLHttp("transformMediatorSchemaWithoutType")), payload, httpHeaders);
+        } catch (Exception e) {
+            assertTrue(e instanceof IOException);
+        }
+        LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
+        boolean isErrorLogFound = false;
+        for (LogEvent logEvent : logs) {
+            if (logEvent.getMessage().contains(expected_error)) {
+                isErrorLogFound = true;
+            }
+        }
+        assertTrue(isErrorLogFound, "Expected error message not received when type is not present in schema");
     }
 
     private void assertEqualJsonObjects(String json1, String json2, String errorMessage) {

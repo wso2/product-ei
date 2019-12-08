@@ -38,7 +38,7 @@ import java.util.Map;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Testcases to test the basic functionality of JSON Transform Mediator
+ * Testcases to test the synapse properties with JSON Transform Mediator
  */
 public class JSONTransformSynapsePropertiesTestCases extends ESBIntegrationTest {
     private JsonParser parser;
@@ -53,10 +53,15 @@ public class JSONTransformSynapsePropertiesTestCases extends ESBIntegrationTest 
                 File.separator + "jsonTransformationConfig" + File.separator + "synapse.properties"));
         super.init();
         verifyProxyServiceExistence("transformMediatorSimpleAutoPrimitive");
+        verifyProxyServiceExistence("transformMediatorNamespaceProperties");
+        verifyProxyServiceExistence("transformMediatorValidNCNameProperty");
+        verifyProxyServiceExistence("transformMediatorAutoPrimitiveCustomRegex");
+        verifyProxyServiceExistence("transformMediatorXMLNilReadWrite");
         parser = new JsonParser();
     }
 
-    @Test(groups = "wso2.esb", description = "Do XML to JSON transformation with overridden synapse property")
+    @Test(groups = "wso2.esb", description = "Do XML to JSON transformation with overridden autoprimitive" +
+            " synapse property")
     public void testSimpleAutoPrimitiveProperty() throws Exception {
         String payload = "<jsonObject>\n" +
                 "    <fruit>12345</fruit>\n" +
@@ -71,7 +76,108 @@ public class JSONTransformSynapsePropertiesTestCases extends ESBIntegrationTest 
         HttpResponse response = HttpRequestUtil.doPost(
                 new URL(getProxyServiceURLHttp("transformMediatorSimpleAutoPrimitive")), payload, httpHeaders);
         assertEqualJsonObjects(response.getData(), expectedOutput,
-                "XML to JSON transformation with a simple synapse property overridden");
+                "XML to JSON transformation with a simple synapse property overridden did not occur properly");
+    }
+
+    @Test(groups = "wso2.esb", description = "Do XML to JSON transformation with overridden namespace synapse property")
+    public void testSimpleNamespaceProperty() throws Exception {
+        String payload = "<ns:stock xmlns:ns='http://services.samples'>\n" +
+                "    <ns:name>WSO2</ns:name>\n" +
+                "</ns:stock>";
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/xml");
+        String expectedOutput = "{\n" +
+                "    \"ns^stock\": {\n" +
+                "        \"@xmlns^ns\": \"http://services.samples\",\n" +
+                "        \"ns^name\": \"WSO2\"\n" +
+                "    }\n" +
+                "}";
+        HttpResponse response = HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorNamespaceProperties")), payload, httpHeaders);
+        assertEqualJsonObjects(response.getData(), expectedOutput,
+                "XML to JSON transformation with namespace synapse properties overridden did not occur properly");
+    }
+
+    @Test(groups = "wso2.esb", description = "Do XML to JSON transformation with overridden validNCName synapse property")
+    public void testValidNCNameProperty() throws Exception {
+        String payload = "<stock_JsonReader_32_quote>\n" +
+                "    <name>WSO2</name>\n" +
+                "</stock_JsonReader_32_quote>";
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/xml");
+        String expectedOutput = "{\n" +
+                "    \"stock quote\": {\n" +
+                "        \"name\": \"WSO2\"\n" +
+                "    }\n" +
+                "}";
+        HttpResponse response = HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorValidNCNameProperty")), payload, httpHeaders);
+        assertEqualJsonObjects(response.getData(), expectedOutput,
+                "XML to JSON transformation with validNCName synapse properties overridden did not occur properly");
+    }
+
+    @Test(groups = "wso2.esb", description = "Do XML to JSON transformation with overridden autoprimitive " +
+            "custom regext synapse property")
+    public void testAutoprimitiveCustomRegexProperty() throws Exception {
+        String payload = "<coordinates>\n" +
+                "    <location>\n" +
+                "        <name>Bermuda Triangle</name>\n" +
+                "        <n>25e1</n>\n" +
+                "        <w>7.1e1</w>\n" +
+                "    </location>\n" +
+                "    <location>\n" +
+                "        <name>Eiffel Tower</name>\n" +
+                "        <n>4.8e3</n>\n" +
+                "        <e>1.8e2</e>\n" +
+                "    </location>\n" +
+                "</coordinates>";
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/xml");
+        String expectedOutput = "{\n" +
+                "    \"coordinates\": {\n" +
+                "        \"location\": [\n" +
+                "            {\n" +
+                "                \"name\": \"Bermuda Triangle\",\n" +
+                "                \"n\": \"25e1\",\n" +
+                "                \"w\": \"7.1e1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"name\": \"Eiffel Tower\",\n" +
+                "                \"n\": \"4.8e3\",\n" +
+                "                \"e\": \"1.8e2\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }\n" +
+                "}";
+        HttpResponse response = HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorAutoPrimitiveCustomRegex")), payload, httpHeaders);
+        assertEqualJsonObjects(response.getData(), expectedOutput,
+                "XML to JSON transformation with autoprimitve custom regext synapse properties overridden " +
+                        "did not occur properly");
+    }
+
+    @Test(groups = "wso2.esb", description = "Do XML to JSON transformation with overridden XMLNilReadWrite " +
+            "synapse property")
+    public void testXMLNilReadWriteProperty() throws Exception {
+        String payload = "<TransactionQuery xmlns=\"\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                "                        <TransactionID>1</TransactionID>\n" +
+                "                        <ResponseCode>001</ResponseCode>\n" +
+                "                        <ResponseDescription i:nil=\"true\"/>\n" +
+                "                    </TransactionQuery>";
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put("Content-Type", "application/xml");
+        String expectedOutput = "{\n" +
+                "    \"TransactionQuery\": {\n" +
+                "        \"TransactionID\": 1,\n" +
+                "        \"ResponseCode\": \"001\",\n" +
+                "        \"ResponseDescription\": null\n" +
+                "    }\n" +
+                "}";
+        HttpResponse response = HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorXMLNilReadWrite")), payload, httpHeaders);
+        assertEqualJsonObjects(response.getData(), expectedOutput,
+                "XML to JSON transformation with XMLNilReadWrite synapse properties " +
+                        "overridden did not occur properly");
     }
 
     @AfterClass(alwaysRun = true)

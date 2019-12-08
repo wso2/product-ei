@@ -59,6 +59,16 @@
             </inSequence>
         </target>
     </proxy>
+    <proxy name="transformMediatorSchemaWithoutType" startOnLoad="true" transports="https http">
+        <description/>
+        <target>
+            <inSequence>
+                <property name="messageType" scope="axis2" value="application/json"/>
+                <jsontransform schema="conf:/simpleSchemaWithoutType.json"/>
+                <respond/>
+            </inSequence>
+        </target>
+    </proxy>
     <localEntry key="simpleSchemaLocalEntry"><![CDATA[{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
