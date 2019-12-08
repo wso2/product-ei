@@ -50,5 +50,6 @@
         <module>org.wso2.ei.bpmn.analytics.udf</module>
         <module>org.wso2.ei.bpmn.analytics.core</module>
         <module>org.wso2.ei.analytics.elk</module>
+        <module>org.wso2.ei.admin.ui</module>
     </modules>
 </project>

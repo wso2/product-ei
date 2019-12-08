@@ -33,12 +33,11 @@ public class ElasticObserverConstants {
      <MediationFlowStatisticConfig>
         <AnalyticPublishingDisable>true</AnalyticPublishingDisable>
         <Observers>
-            org.wso2.custom.elastic.publisher.observer.ElasticMediationFlowObserver
+            org.wso2.ei.analytics.elk.observer.ElasticMediationFlowObserver
         </Observers>
         <ElasticObserver>   const: OBSERVER_ELEMENT
             <Host>localhost</Host>  HOST_CONFIG
-            <Port>9300</Port>   PORT_CONFIG
-            <ClusterName>elasticsearch</ClusterName>    CLUSTER_NAME_CONFIG
+            <Port>9200</Port>   PORT_CONFIG
             <BufferSize>5000</BufferSize>   BUFFER_SIZE_CONFIG
             <BulkSize>500</BulkSize>    BULK_SIZE_CONFIG
             <BulkCollectingTimeOut>5000</BulkCollectingTimeOut> BULK_COLLECTING_TIME_OUT_CONFIG
@@ -46,9 +45,11 @@ public class ElasticObserverConstants {
             <NoNodesSleepTime>5000</NoNodesSleepTime>   NO_NODES_SLEEP_TIME_CONFIG, in milliseconds
             <Username>transport_client_user</Username>  USERNAME_CONFIG
             <Password svns:secretAlias="Elastic.User.Password">password</Password>   PASSWORD_CONFIG, PASSWORD_ALIAS
-            <SslKey>/path/to/client.key</SslKey>    SSL_KEY_CONFIG
-            <SslCertificate>/path/to/client.crt</SslCertificate>    SSL_CERT_CONFIG
-            <SslCa>/path/to/ca.crt</SslCa>  SSL_CA_CONFIG
+            <SSLEnabled>true</SSLEnabled>   SSL_ENABLED_CONFIG
+            <TrustStorePath>/path/to/truststore.jks</TrustStorePath>    TRUST_STORE_PATH_CONFIG
+            <TrustStoreType>jks</TrustStoreType>    TRUST_STORE_TYPE_CONFIG
+            <TrustStorePassword>wso2carbon</TrustStorePassword>  TYPE_STORE_PASSWORD_CONFIG
+
         </ElasticObserver>
      </MediationFlowStatisticConfig>
      */
@@ -57,7 +58,6 @@ public class ElasticObserverConstants {
     private static final String OBSERVER_ELEMENT = AnalyticsDataPublisherConstants.STAT_CONFIG_ELEMENT + ".ElasticObserver";
     public static final String HOST_CONFIG = OBSERVER_ELEMENT + ".Host";
     public static final String PORT_CONFIG = OBSERVER_ELEMENT + ".Port";
-    public static final String CLUSTER_NAME_CONFIG = OBSERVER_ELEMENT + ".ClusterName";
     public static final String BUFFER_SIZE_CONFIG = OBSERVER_ELEMENT + ".BufferSize";
     public static final String BULK_SIZE_CONFIG = OBSERVER_ELEMENT + ".BulkSize";
     public static final String BULK_COLLECTING_TIME_OUT_CONFIG = OBSERVER_ELEMENT + ".BulkCollectingTimeOut";
@@ -65,15 +65,21 @@ public class ElasticObserverConstants {
     public static final String NO_NODES_SLEEP_TIME_CONFIG = OBSERVER_ELEMENT + ".NoNodesSleepTime";
     public static final String USERNAME_CONFIG = OBSERVER_ELEMENT + ".Username";
     public static final String PASSWORD_CONFIG = OBSERVER_ELEMENT + ".Password";
-    // path to SSL private key generated for this client
-    public static final String SSL_KEY_CONFIG = OBSERVER_ELEMENT + ".SslKey";
-    // path to SSL certificate for the client
-    public static final String SSL_CERT_CONFIG = OBSERVER_ELEMENT + ".SslCertificate";
-    // path to SSL CA certificate of the CA which is used to sign Elasticsearch node certificates
-    public static final String SSL_CA_CONFIG = OBSERVER_ELEMENT + ".SslCa";
+    // path to Truststore that contains the certificate for this client
+    public static final String TRUST_STORE_PATH_CONFIG = OBSERVER_ELEMENT + ".TrustStorePath";
+    // type of Truststore
+    public static final String TRUST_STORE_TYPE_CONFIG = OBSERVER_ELEMENT + ".TrustStoreType";
+    // password of Truststore
+    public static final String TRUST_STORE_PASSWORD_CONFIG = OBSERVER_ELEMENT + ".TrustStorePassword";
+    public static final String SSL_ENABLED_CONFIG = OBSERVER_ELEMENT + ".SSLEnabled";
+
+    // type of Protocol
+    public static final String HTTP_PROTOCOL = "http";
+    public static final String HTTPS_PROTOCOL = "https";
 
     // Password alias to check in Secure Vault
     public static final String PASSWORD_ALIAS = "Elastic.User.Password";
+    public static final String TRUST_STORE_PASSWORD_ALIAS = "Elastic.TrustStore.Password";
 
     // Default buffering queue size, overrides with the size config in carbon.xml
     public static final int DEFAULT_BUFFER_SIZE = 5000;
@@ -90,6 +96,14 @@ public class ElasticObserverConstants {
     // Default sleep time of the PublisherThread when the Elasticsearch server is down (in milliseconds)
     public static final long DEFAULT_NO_NODES_SLEEP_TIME = 5000;
 
+    public static final String DEFAULT_HOSTNAME = "localhost";
+    public static final String DEFAULT_USERNAME = "elastic";
+    public static final String DEFAULT_PASSWORD = "changeme";
+    public static final int DEFAULT_PORT = 9200;
+    public static final boolean DEFAULT_SSL_ENABLED = false;
+    public static final String DEFAULT_TRUSTSTORE_PASSWORD = "wso2carbon";
+    public static final String DEFAULT_TRUSTSTORE_TYPE = "jks";
+
     // Monitoring service types
     public static final String SEQUENCE = "Sequence";
     public static final String ENDPOINT = "Endpoint";
@@ -99,7 +113,6 @@ public class ElasticObserverConstants {
 
     // Keys for the configurations object in ElasticMediationFlowObserver getConfigurations()
     public static final String HOST = "host";
-    public static final String CLUSTER_NAME = "clusterName";
     public static final String PORT = "port";
     public static final String BUFFER_SIZE = "bufferSize";
     public static final String BULK_SIZE = "bulkSize";
@@ -108,7 +121,8 @@ public class ElasticObserverConstants {
     public static final String NO_NODES_SLEEP = "noNodesSleep";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
-    public static final String SSL_KEY = "sslKey";
-    public static final String SSL_CERT = "sslCert";
-    public static final String SSL_CA = "sslCa";
+    public static final String TRUST_STORE_PASSWORD = "trustStorePass";
+    public static final String TRUST_STORE_TYPE = "trustStoreType";
+    public static final String TRUST_STORE_PATH = "trustStorePath";
+    public static final String SSL_ENABLED = "sslEnabled";
 }

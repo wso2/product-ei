@@ -42,6 +42,7 @@
         <module>org.wso2.ei.broker.styles.feature</module>
         <module>org.wso2.ei.broker.stratos.dashboard.ui.feature</module>
         <module>org.wso2.ei.analytics.elk.feature</module>
+        <module>org.wso2.ei.admin.ui.feature</module>
     </modules>
 
 </project>

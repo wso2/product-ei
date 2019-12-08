@@ -602,6 +602,18 @@
             <Item>xsd</Item>
             <Class>org.wso2.carbon.core.transports.util.XsdProcessor</Class>
         </Processor>
+        <Processor>
+            <Item>swagger.json</Item>
+            <Class>org.wso2.carbon.mediation.transport.handlers.requestprocessors.swagger.format.SwaggerJsonProcessor</Class>
+        </Processor>
+        <Processor>
+            <Item>swagger.yaml</Item>
+            <Class>org.wso2.carbon.mediation.transport.handlers.requestprocessors.swagger.format.SwaggerYamlProcessor</Class>
+        </Processor>
+        <Processor>
+            <Item>swaggertryit</Item>
+            <Class>org.wso2.carbon.tryit.SwaggerTryitRequestProcessor</Class>
+        </Processor>
     </HttpGetRequestProcessors>
 
     <!-- Deployment Synchronizer Configuration. Enable value to true when running with "svn based" dep sync.

@@ -81,10 +81,22 @@ fi
 
 # update classpath
 AXIS2_CLASSPATH="$AXIS2_HOME/../../lib"
-for f in "$AXIS2_HOME"/../../wso2/components/plugins/org.wso2.ei*.jar
+
+#Add jars from plugind directory
+pluginsJars="$AXIS2_HOME/repository/conf/plugins"
+pluginsDir="$AXIS2_HOME/../../wso2/components/plugins"
+while IFS= read -r line
 do
-  AXIS2_CLASSPATH="$AXIS2_CLASSPATH":$f
-done
+    #trim line
+    trimmedline=`echo $line | sed 's/ *$//g'`
+    if [ ! -z "$trimmedline" ]
+    then
+        for f in "$pluginsDir"/$trimmedline
+        do
+            AXIS2_CLASSPATH="$AXIS2_CLASSPATH":$f
+        done
+    fi
+done < "$pluginsJars"
 
 for f in "$AXIS2_HOME"/../../wso2/lib/*.jar
 do
@@ -180,5 +192,6 @@ fi
 
 cd "$AXIS2_HOME"
 $JAVACMD -Dcarbon.home="$AXIS2_HOME/../../" $PROGRAM_PARAMS -Djava.io.tmpdir="$AXIS2_HOME/../../wso2/tmp/" \
- -Djava.endorsed.dirs="$AXIS2_ENDORSED" -Dcarbon.components.dir.path="$AXIS2_HOME/../../wso2/components/plugins/" -Dhttp.socket.reuseaddr="true" -classpath "$AXIS2_CLASSPATH" samples.util.SampleAxis2Server \
+ -Dhttp.socket.reuseaddr="true" -Dlog4j.configurationFile="$AXIS2_HOME/repository/conf/log4j2.properties" \
+ -classpath "$AXIS2_CLASSPATH" samples.util.SampleAxis2Server \
  -repo "$AXIS2_HOME/repository" -conf "$AXIS2_HOME/repository/conf/axis2.xml"
