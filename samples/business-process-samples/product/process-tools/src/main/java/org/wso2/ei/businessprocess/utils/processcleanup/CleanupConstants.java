@@ -58,4 +58,6 @@ public class CleanupConstants {
 	public static final String JAVAX_SSL_TRUST_STORE_PASSWORD = "javax.net.ssl.trustStorePassword";
 	public static final String JAVAX_SSL_TRUST_STORE_TYPE = "javax.net.ssl.trustStoreType";
 	public static final long TIME_OUT_MILLS = 600000;
+	public static final String BPEL_PACKAGE_MANAGEMENT_ADMIN_SERVICE_URL = "/BPELPackageManagementService/";
+	public static final String SERVICE_CONTEXT_PATH = "/services";
 }
