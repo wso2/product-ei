@@ -21,6 +21,10 @@ import org.apache.xerces.dom.DeferredElementImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
+import org.wso2.carbon.bpel.stub.mgt.types.DeployedPackagesPaginated;
+import org.wso2.carbon.bpel.stub.mgt.types.PackageType;
+import org.wso2.carbon.bpel.stub.mgt.types.Version_type0;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -30,6 +34,7 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.*;
 
@@ -44,6 +49,7 @@ public class CleanupExecutor {
 	static String bpsHome = null;
 	//DB query builder according to DB type
 	private static DBQuery query;
+	private static List<String> tenantPackageList;
 
 	/**
 	 * Get user configurations from processCleanup.properties file
@@ -292,13 +298,16 @@ public class CleanupExecutor {
 		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 
 		while (rs.next()) {
-			if (map.get(rs.getString(CleanupConstants.DEPLOYMENT_UNIT)) == null) {
-				List<String> list = new ArrayList<String>();
-				list.add(rs.getString(CleanupConstants.ID));
-				map.put(rs.getString(CleanupConstants.DEPLOYMENT_UNIT), list);
-			} else {
-				map.get(rs.getString(CleanupConstants.DEPLOYMENT_UNIT))
-				   .add(rs.getString(CleanupConstants.ID));
+			if(tenantPackageList != null &&
+					tenantPackageList.contains(rs.getString(CleanupConstants.DEPLOYMENT_UNIT))) {
+				if (map.get(rs.getString(CleanupConstants.DEPLOYMENT_UNIT)) == null) {
+					List<String> list = new ArrayList<String>();
+					list.add(rs.getString(CleanupConstants.ID));
+					map.put(rs.getString(CleanupConstants.DEPLOYMENT_UNIT), list);
+				} else {
+					map.get(rs.getString(CleanupConstants.DEPLOYMENT_UNIT))
+							.add(rs.getString(CleanupConstants.ID));
+				}
 			}
 		}
 
@@ -376,6 +385,7 @@ public class CleanupExecutor {
 		}
 
 		initializeDBConnection();
+		tenantPackageList = getTenantRelatedPackages();
 		query = new DBQuery(databaseURL, bpsHome);
 		TimeZone.setDefault(TimeZone.getTimeZone(getProperty(CleanupConstants.TIME_ZONE)));
 		System.out.println("\n=============ATTENTION=================\n" +
@@ -482,5 +492,27 @@ public class CleanupExecutor {
 		Method method = urlClass.getDeclaredMethod("addURL", URL.class);
 		method.setAccessible(true);
 		method.invoke(urlClassLoader, u);
+	}
+
+	private static List<String> getTenantRelatedPackages() throws RemoteException, PackageManagementException {
+		List<String> tenantPackageList = new ArrayList<String>();
+		BPELPackageManagementClient bpelClient = null;
+		try {
+			bpelClient = new BPELPackageManagementClient(
+					getProperty(CleanupConstants.TENANT_CONTEXT) + CleanupConstants.SERVICE_CONTEXT_PATH,
+					getProperty(CleanupConstants.BPS_USER_NAME),
+					getProperty(CleanupConstants.BPS_PASSWORD));
+		} catch (Exception e) {
+			String errMsg = "Error getting tenant related packages";
+			log.error(errMsg, e);
+		}
+		//List all the packages related to tenant
+		DeployedPackagesPaginated depl = bpelClient.listDeployedPackagesPaginated(0,"");
+		for(PackageType packageInfo : depl.get_package()) {
+			for (Version_type0 packageWithVersion : packageInfo.getVersions().getVersion()) {
+				tenantPackageList.add(packageWithVersion.getName());
+			}
+		}
+		return tenantPackageList;
 	}
 }
