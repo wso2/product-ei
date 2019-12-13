@@ -21,51 +21,80 @@ package org.wso2.carbon.ei.migration.internal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.ei.migration.migrate.SecureVaultPasswordMigrationClient;
+import org.wso2.carbon.ei.migration.migrate.RegistryTaskDeletionClient;
 import org.wso2.carbon.registry.core.service.RegistryService;
 
-/**
- * @scr.component name="org.wso2.carbon.ei.migration.client" immediate="true"
- * @scr.reference name="registry.service" interface="org.wso2.carbon.registry.core.service.RegistryService"
- * cardinality="1..1" policy="dynamic"  bind="setRegistryService" unbind="unsetRegistryService"
- */
+@Component(
+        name = "org.wso2.carbon.ei.migration.client",
+        immediate = true)
 public class EIMigrationServiceComponent {
 
     private static final Log log = LogFactory.getLog(EIMigrationServiceComponent.class);
 
-    /**
-     * Method to activate bundle.
-     *
-     * @param context OSGi component context.
-     */
+    @Activate
     protected void activate(ComponentContext context) {
-        if (Boolean.valueOf(System.getProperty("migrate"))) {
-            log.info("WSO2 EI migration bundle is activated");
-            log.info("Initiating WSO2 EI migration");
-            try {
-                SecureVaultPasswordMigrationClient migrateSecureVaultPasswords = new SecureVaultPasswordMigrationClient();
-                migrateSecureVaultPasswords.migratePasswords();
-                log.info("Successfully completed password migration");
-            } catch (Throwable e) {
-                log.error("Error occurred during migration", e);
-            }
+        log.info("WSO2 EI migration bundle is activated");
+        if (System.getProperty("migrate.from.product.version").startsWith("esb")) {
+            migrateSecureVaultPasswords();
+            deleteScheduledMPRegistryTasks();
+        } else if (System.getProperty("migrate.from.product.version").equalsIgnoreCase("ei650")) {
+            deleteScheduledMPRegistryTasks();
+        } else {
+            log.error("Provided product version is invalid");
         }
     }
 
-    /**
-     * Method to deactivate bundle.
-     *
-     * @param context OSGi component context.
-     */
+    @Deactivate
     protected void deactivate(ComponentContext context) {
         log.info("WSO2 EI migration bundle is deactivated");
     }
 
+    @Reference(
+            name = "registry.service",
+            service = org.wso2.carbon.registry.core.service.RegistryService.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetRegistryService")
     protected void setRegistryService(RegistryService registryService) {
         EIMigrationServiceDataHolder.setRegistryService(registryService);
     }
 
     protected void unsetRegistryService(RegistryService registryService) {
         EIMigrationServiceDataHolder.setRegistryService(null);
+    }
+
+    /**
+     * Migrate secure vault passwords
+     */
+    private void migrateSecureVaultPasswords() {
+        log.info("Initiating WSO2 EI secureVault password migration");
+        try {
+            SecureVaultPasswordMigrationClient migrateSecureVaultPasswords = new SecureVaultPasswordMigrationClient();
+            migrateSecureVaultPasswords.migratePasswords();
+            log.info("Successfully completed password migration");
+        } catch (Throwable e) {
+            log.error("Error occurred during secure vault password migration", e);
+        }
+    }
+
+    /**
+     * Delete scheduled message processor tasks
+     */
+    private void deleteScheduledMPRegistryTasks() {
+        log.info("Initiating WSO2 EI scheduled message processor task deletion");
+        try {
+            RegistryTaskDeletionClient registryTaskDeletionClient = new RegistryTaskDeletionClient();
+            registryTaskDeletionClient.deleteRegistryTasks();
+            log.info("Successfully completed task deletion");
+        } catch (Throwable e) {
+            log.error("Error occurred during registry task deletion", e);
+        }
     }
 }
