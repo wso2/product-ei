@@ -34,4 +34,4 @@ PRGDIR=`dirname "$PRG"`
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
 cd $CARBON_HOME
-sh $CARBON_HOME/wso2/tools/forget-me/bin/forgetme.sh -d $CARBON_HOME/wso2/tools/forget-me/conf $@
+sh $CARBON_HOME/wso2/tools/forget-me/bin/forgetme.sh -d $CARBON_HOME/wso2/tools/forget-me/conf $CARBON_HOME $@
