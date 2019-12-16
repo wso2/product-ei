@@ -35,7 +35,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.SocketException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
@@ -75,13 +77,15 @@ public class BPELPackageManagementClient {
             setKeyStore(clientTrustStorePath, trustStorePassword, trustStoreType);
 
             options.setManageSession(true);
-            options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING,
-                    login(username, password));
-
         } catch (IOException e) {
-            log.error("Error reading process-cleanup.properties file", e);
-        } catch (LoginAuthenticationExceptionException e) {
-            log.error("Error authenticating BPEL Package Management Client", e);
+            throw new AxisFault("Error reading process-cleanup.properties file", e);
+        }
+
+        try {
+            options.setProperty(HTTPConstants.COOKIE_STRING,
+                    login(username, password));
+        } catch (IOException | LoginAuthenticationExceptionException e) {
+            throw new AxisFault("Error authenticating BPEL Package Management Client", e);
         }
     }
 
@@ -120,7 +124,7 @@ public class BPELPackageManagementClient {
      * @throws Exception
      */
     public static String login(String userName, String password) throws RemoteException,
-            LoginAuthenticationExceptionException, SocketException {
+            LoginAuthenticationExceptionException, MalformedURLException, SocketException {
         AuthenticationAdminStub authenticationAdminStub;
         String authenticationAdminServiceURL = prop.getProperty(CleanupConstants.TENANT_CONTEXT) +
                 CleanupConstants.SERVICE_AUTHENTICATION_ADMIN_PATH;
@@ -130,7 +134,7 @@ public class BPELPackageManagementClient {
         Options options = client.getOptions();
         options.setManageSession(true);
 
-        String hostName = NetworkUtils.getLocalHostname();
+        String hostName = new URL(prop.getProperty(CleanupConstants.TENANT_CONTEXT)).getHost();
 
         authenticationAdminStub.login(userName, password, hostName);
 
