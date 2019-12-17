@@ -45,7 +45,6 @@ echo "	1.Integrator profile"
 echo "	2.Analytics Profile"
 echo "	3.Business Process profile"
 echo "	4.Broker profile"
-echo "	5.Msf4j profile"
 echo "Please enter the desired profile number to create the profile specific distribution."
 read profileNumber
 #Integrator profile
@@ -74,9 +73,6 @@ then
 	rm -rf ${DIR}/analytics-worker.sh
 	rm -rf ${DIR}/analytics-dashboard.bat
 	rm -rf ${DIR}/analytics-dashboard.sh
-	#remove msf4j
-	rm -rf ${DIR}/../wso2/msf4j
-
 	PROFILE="_integrator"
 
 #Analytics profile
@@ -84,8 +80,6 @@ elif [ ${profileNumber} -eq 2 ]
 then
 	echo "Preparing the Analytics profile distribution"
 	rm -rf ${DIR}/../conf
-	rm -rf ${DIR}/../lib
-	rm -rf ${DIR}/../dropins
 	rm -rf ${DIR}/../dbscripts
 	rm -rf ${DIR}/../patches
 	rm -rf ${DIR}/../repository
@@ -93,11 +87,8 @@ then
 	rm -rf ${DIR}/../samples
 	rm -rf ${DIR}/../servicepacks
 	rm -rf ${DIR}/../webapp-mode
-	rm -rf ${DIR}/../wso2/msf4j
 	rm -rf ${DIR}/../wso2/broker
 	rm -rf ${DIR}/../wso2/business-process
-	rm -rf ${DIR}/../wso2/components
-	rm -rf ${DIR}/../wso2/lib
 	rm -rf ${DIR}/../wso2/tmp
 	rm -rf ${DIR}/business-process.bat
 	rm -rf ${DIR}/business-process.sh
@@ -140,8 +131,6 @@ then
 	rm -rf ${DIR}/analytics-worker.sh
 	rm -rf ${DIR}/analytics-dashboard.bat
 	rm -rf ${DIR}/analytics-dashboard.sh
-	#remove msf4j
-	rm -rf ${DIR}/../wso2/msf4j
 
 	PROFILE="_businessprocess"
 
@@ -174,42 +163,8 @@ then
 	rm -rf ${DIR}/../samples/business-process
 	rm -rf ${DIR}/business-process.bat
 	rm -rf ${DIR}/business-process.sh
-	#remove msf4j
-	rm -rf ${DIR}/../wso2/msf4j
 
 	PROFILE="_broker"
-
-elif [ ${profileNumber} -eq 5 ]
-then
-    echo "Preparing the Msf4j profile distribution"
-    rm -rf ${DIR}/../conf
-    rm -rf ${DIR}/../lib
-    rm -rf ${DIR}/../dropins
-    rm -rf ${DIR}/../dbscripts
-    rm -rf ${DIR}/../patches
-    rm -rf ${DIR}/../repository
-    rm -rf ${DIR}/../resources
-    rm -rf ${DIR}/../samples
-    rm -rf ${DIR}/../servicepacks
-    rm -rf ${DIR}/../webapp-mode
-    rm -rf ${DIR}/../wso2/analytics
-    rm -rf ${DIR}/../wso2/broker
-    rm -rf ${DIR}/../wso2/business-process
-    rm -rf ${DIR}/../wso2/components
-    rm -rf ${DIR}/../wso2/lib
-    rm -rf ${DIR}/../wso2/tmp
-    rm -rf ${DIR}/business-process.bat
-	rm -rf ${DIR}/business-process.sh
-	rm -rf ${DIR}/wso2ei-samples.bat
-	rm -rf ${DIR}/wso2ei-samples.sh
-	rm -rf ${DIR}/analytics-worker.bat
-	rm -rf ${DIR}/analytics-worker.sh
-	rm -rf ${DIR}/analytics-dashboard.bat
-	rm -rf ${DIR}/analytics-dashboard.sh
-	rm -rf ${DIR}/broker.bat
-	rm -rf ${DIR}/broker.sh
-
-    PROFILE="_msf4j"
 
 else
 	echo "Invalid profile number. Terminating."
