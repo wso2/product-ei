@@ -1267,7 +1267,7 @@
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../p2-profile/analytics-profile/carbon-home/resources/security</directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/resources/security</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/resources/security</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
