@@ -145,17 +145,19 @@ rem find the version of the jdk
 
 set CMD=RUN %*
 
-:checkJdk16
-"%JAVA_HOME%\bin\java" -version 2>&1 | findstr /r "1.[8]" >NUL
-IF ERRORLEVEL 1 goto unknownJdk
-goto jdk16
+:checkJdk17
+PATH %PATH%;%JAVA_HOME%\bin\
+for /f tokens^=2-5^ delims^=.-_^" %%j in ('java -fullversion 2^>^&1') do set "JAVA_VERSION=%%j%%k"
+if %JAVA_VERSION% LSS 17 goto unknownJdk
+if %JAVA_VERSION% GTR 110 goto unknownJdk
+goto jdk17
 
 :unknownJdk
 echo Starting WSO2 Carbon (in unsupported JDK)
 echo [ERROR] CARBON is supported only on JDK 1.8
-goto jdk16
+goto jdk17
 
-:jdk16
+:jdk17
 goto runServer
 
 rem ----------------- Execute The Requested Command ----------------------------
