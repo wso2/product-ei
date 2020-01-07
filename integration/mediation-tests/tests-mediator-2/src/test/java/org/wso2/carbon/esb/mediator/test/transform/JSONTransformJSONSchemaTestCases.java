@@ -30,7 +30,6 @@ import org.wso2.esb.integration.common.clients.registry.ResourceAdminServiceClie
 import org.wso2.esb.integration.common.utils.ESBIntegrationTest;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,9 +66,6 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
                 + File.separator + "transform" + File.separator + "simpleSchemaWithoutType.json");
         resourceAdminServiceClient.addResource("/_system/config/simpleSchemaWithoutType.json", "", "JSON Schema"
                 , new DataHandler(schemaWithoutType));
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
-                File.separator + "mediatorconfig" + File.separator + "transform" + File.separator +
-                "transformMediatorSchema.xml");
         logViewer = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
         parser = new JsonParser();
     }
@@ -148,17 +144,14 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
         Map<String, String> httpHeaders = new HashMap<>();
         httpHeaders.put("Content-Type", "application/json");
         String expected_error = "Schema does not exist in the specified location : conf:/simpleSchemaNotexisting.json";
-        try {
-            HttpRequestUtil.doPost(
-                    new URL(getProxyServiceURLHttp("transformMediatorNotExistingSchema")), payload, httpHeaders);
-        } catch (Exception e) {
-            assertTrue(e instanceof IOException);
-        }
+        HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorNotExistingSchema")), payload, httpHeaders);
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean isErrorLogFound = false;
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains(expected_error)) {
                 isErrorLogFound = true;
+                break;
             }
         }
         assertTrue(isErrorLogFound, "Expected error message not received when not existing schema is provided");
@@ -177,17 +170,14 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
         Map<String, String> httpHeaders = new HashMap<>();
         httpHeaders.put("Content-Type", "application/json");
         String expected_error = "Input json and schema should not be null";
-        try {
-            HttpRequestUtil.doPost(
-                    new URL(getProxyServiceURLHttp("transformMediatorEmptySchema")), payload, httpHeaders);
-        } catch (Exception e) {
-            assertTrue(e instanceof IOException);
-        }
+        HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorEmptySchema")), payload, httpHeaders);
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean isErrorLogFound = false;
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains(expected_error)) {
                 isErrorLogFound = true;
+                break;
             }
         }
         assertTrue(isErrorLogFound, "Expected error message not received when empty schema is passed");
@@ -206,17 +196,14 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
         Map<String, String> httpHeaders = new HashMap<>();
         httpHeaders.put("Content-Type", "application/json");
         String expected_error = "Invalid JSON schema";
-        try {
-            HttpRequestUtil.doPost(
-                    new URL(getProxyServiceURLHttp("transformMediatorMalformedSchema")), payload, httpHeaders);
-        } catch (Exception e) {
-            assertTrue(e instanceof IOException);
-        }
+        HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorMalformedSchema")), payload, httpHeaders);
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean isErrorLogFound = false;
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains(expected_error)) {
                 isErrorLogFound = true;
+                break;
             }
         }
         assertTrue(isErrorLogFound, "Expected error message not received when malformed schema is passed");
@@ -235,17 +222,14 @@ public class JSONTransformJSONSchemaTestCases extends ESBIntegrationTest {
         Map<String, String> httpHeaders = new HashMap<>();
         httpHeaders.put("Content-Type", "application/json");
         String expected_error = "JSON schema should contain a type declaration";
-        try {
-            HttpRequestUtil.doPost(
-                    new URL(getProxyServiceURLHttp("transformMediatorSchemaWithoutType")), payload, httpHeaders);
-        } catch (Exception e) {
-            assertTrue(e instanceof IOException);
-        }
+        HttpRequestUtil.doPost(
+                new URL(getProxyServiceURLHttp("transformMediatorSchemaWithoutType")), payload, httpHeaders);
         LogEvent[] logs = logViewer.getAllRemoteSystemLogs();
         boolean isErrorLogFound = false;
         for (LogEvent logEvent : logs) {
             if (logEvent.getMessage().contains(expected_error)) {
                 isErrorLogFound = true;
+                break;
             }
         }
         assertTrue(isErrorLogFound, "Expected error message not received when type is not present in schema");

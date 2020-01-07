@@ -52,9 +52,6 @@ public class JSONTransformMediatorTestcases extends ESBIntegrationTest {
                 + File.separator + "transform" + File.separator + "complexSchema.json");
         resourceAdminServiceClient.addResource("/_system/config/complexSchema.json", "", "JSON Schema"
                 , new DataHandler(complexSchemaURL));
-        loadESBConfigurationFromClasspath(File.separator + "artifacts" + File.separator + "ESB" +
-                File.separator + "mediatorconfig" + File.separator + "transform" + File.separator +
-                "transformMediatorBasic.xml");
         httpHeaders.put("Content-Type", "application/json");
         parser = new JsonParser();
     }
