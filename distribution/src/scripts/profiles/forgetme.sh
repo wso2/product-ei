@@ -33,5 +33,6 @@ PRGDIR=`dirname "$PRG"`
 
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
+EI_HOME="$CARBON_HOME/../../"
 cd $CARBON_HOME
-sh $CARBON_HOME/../tools/forget-me/bin/forgetme.sh -d $CARBON_HOME/../tools/forget-me/conf $@
+sh $CARBON_HOME/../tools/forget-me/bin/forgetme.sh -d $CARBON_HOME/../tools/forget-me/conf $EI_HOME $@

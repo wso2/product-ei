@@ -67,10 +67,11 @@ public class MigrationClientConfig {
         }
         try (InputStream in = new FileInputStream(dataSourceFile)) {
             properties.load(in);
-            if (new File(properties.getProperty(MigrationConstants.KEYSTORE_LOCATION)).exists()) {
-                return properties;
-            } else {
+            if (System.getProperty("migrate.from.product.version").startsWith("esb") &&
+                !new File(properties.getProperty(MigrationConstants.KEYSTORE_LOCATION)).exists()) {
                 throw new MigrationClientException("keystore file does not exist");
+            } else {
+                return properties;
             }
         } catch (IOException e) {
             throw new MigrationClientException("Error loading properties from a file at : " + migrationConfPath);

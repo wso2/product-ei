@@ -77,11 +77,19 @@ rem ----- update classpath -----------------------------------------------------
 setlocal EnableDelayedExpansion
 cd %RUNTIME_HOME%
 set CARBON_CLASSPATH=
-FOR %%C in ("%CARBON_HOME%\bin\bootstrap\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\bin\bootstrap\%%~nC%%~xC"
+FOR %%C in ("%CARBON_HOME%\bin\bootstrap\*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;%%C
 
 set CARBON_CLASSPATH="%JAVA_HOME%\lib\tools.jar";%CARBON_CLASSPATH%;
 
-FOR %%D in ("%CARBON_HOME%\bin\bootstrap\commons-lang*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;".\bin\bootstrap\%%~nD%%~xD"
+FOR %%D in ("%CARBON_HOME%\bin\bootstrap\commons-lang*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;%%D
+
+FOR %%D in ("%CARBON_HOME%\..\lib\jaxb-api*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;%%D
+
+FOR %%D in ("%CARBON_HOME%\..\lib\javax.annotation-api*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;%%D
+
+FOR %%D in ("%CARBON_HOME%\..\components\plugins\org.wso2.orbit.sun.xml.bind.jaxb*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;%%D
+
+FOR %%D in ("%CARBON_HOME%\wso2\lib\plugins\org.apache.geronimo.specs.geronimo-activation*.jar") DO set CARBON_CLASSPATH=!CARBON_CLASSPATH!;%%D
 
 rem ----- Process the input command -------------------------------------------
 
@@ -145,17 +153,19 @@ rem find the version of the jdk
 
 set CMD=RUN %*
 
-:checkJdk16
-"%JAVA_HOME%\bin\java" -version 2>&1 | findstr /r "1.[8]" >NUL
-IF ERRORLEVEL 1 goto unknownJdk
-goto jdk16
+:checkJdk17
+PATH %PATH%;%JAVA_HOME%\bin\
+for /f tokens^=2-5^ delims^=.-_^" %%j in ('java -fullversion 2^>^&1') do set "JAVA_VERSION=%%j%%k"
+if %JAVA_VERSION% LSS 17 goto unknownJdk
+if %JAVA_VERSION% GTR 110 goto unknownJdk
+goto jdk17
 
 :unknownJdk
 echo Starting WSO2 Carbon (in unsupported JDK)
 echo [ERROR] CARBON is supported only on JDK 1.8
-goto jdk16
+goto jdk17
 
-:jdk16
+:jdk17
 goto runServer
 
 rem ----------------- Execute The Requested Command ----------------------------
@@ -166,8 +176,6 @@ cd %RUNTIME_HOME%
 rem ---------- Add jars to classpath ----------------
 
 set CARBON_CLASSPATH="%CARBON_HOME%\bin\bootstrap\*";%CARBON_CLASSPATH%
-
-set JAVA_ENDORSED="%CARBON_HOME%\bin\bootstrap\endorsed";"%JAVA_HOME%\jre\lib\endorsed";"%JAVA_HOME%\lib\endorsed"
 
 set CMD_LINE_ARGS=-Xbootclasspath/a:%CARBON_XBOOTCLASSPATH% -Xms256m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="%RUNTIME_HOME%\logs\heap-dump.hprof" -Dcom.sun.management.jmxremote -classpath %CARBON_CLASSPATH% %JAVA_OPTS% -Djava.endorsed.dirs=%JAVA_ENDORSED% -Dcarbon.home="%CARBON_HOME%" -Dwso2.runtime.path="%RUNTIME_HOME%" -Dwso2.runtime="%RUNTIME%" -Djava.command="%JAVA_HOME%\bin\java" -Djava.opts="%JAVA_OPTS%" -Djava.io.tmpdir="%CARBON_HOME%\tmp" -Dcarbon.classpath=%CARBON_CLASSPATH% -Dfile.encoding=UTF8 -Djavax.net.ssl.keyStore="%CARBON_HOME%\resources\security\wso2carbon.jks" -Djavax.net.ssl.keyStorePassword="wso2carbon" -Djavax.net.ssl.trustStore="%CARBON_HOME%\resources\security\client-truststore.jks" -Djavax.net.ssl.trustStorePassword="wso2carbon"
 

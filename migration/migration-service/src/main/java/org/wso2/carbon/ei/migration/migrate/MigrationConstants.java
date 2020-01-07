@@ -30,4 +30,7 @@ public class MigrationConstants {
     public static final String KEYSTORE_PASSWORD = "keystore.identity.key.password";
     public static final String KEYSTORE_LOCATION = "keystore.identity.location";
     public static final String ADMIN_USERNAME = "admin.user.name";
+
+    public static final String ESB_TASK_PATH = "/_system/governance/repository/components/org.wso2.carbon.tasks/definitions/-1234/ESB_TASK/";
+    public static final String SCHEDULED_MP_TASK_PREFIX = "MSMP_";
 }

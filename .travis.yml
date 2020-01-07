@@ -12,10 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 language: java
+
 jdk:
   - openjdk8
+  
 install: true
-script: mvn clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+
+before_script:
+  - mvn -N io.takari:maven:wrapper -Dmaven=3.6.0
+
+script: ./mvnw clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 cache:
   directories:
   - $HOME/.m2

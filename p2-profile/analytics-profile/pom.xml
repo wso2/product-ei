@@ -31,7 +31,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.ei</groupId>
     <artifactId>wso2analytics-profile</artifactId>
-    <version>6.6.0-SNAPSHOT</version>
+    <version>6.7.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>&gt;WSO2 Enterprise Integrator - Analytics Profile Generation</name>
 
@@ -169,15 +169,13 @@
         <googlecode.json-simple.version>1.1.wso2v1</googlecode.json-simple.version>
         <io.netty.version>4.1.19.Final</io.netty.version>
         <log4j.version>1.2.17</log4j.version>
+        <forgetme.tool.version>1.2.1</forgetme.tool.version>
         <commons-codec.wso2.version>1.12</commons-codec.wso2.version>
 
         <!--Performance Testing Versions-->
         <HdrHistogram.version>2.1.9</HdrHistogram.version>
         <jacoco.maven.version>0.7.8</jacoco.maven.version>
         <wso2.log4j.version>1.2.17.wso2v1</wso2.log4j.version>
-
-        <forgetme.tool.version>1.2.0</forgetme.tool.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.findbugsplugin.version>3.0.4</maven.findbugsplugin.version>
     </properties>
@@ -924,7 +922,6 @@
             <artifactId>org.wso2.carbon.privacy.forgetme.tool</artifactId>
             <version>${forgetme.tool.version}</version>
         </dependency>
-
         <!-- Analytics solutions Common -->
         <dependency>
             <groupId>org.wso2.analytics.solutions</groupId>

@@ -116,18 +116,17 @@ public class ElasticMediationFlowObserver implements MessageFlowObserver {
                 // Can use password without ssl
                 final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
                 credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-                String finalTrustStorePassword = trustStorePassword;
                 client = new RestHighLevelClient(RestClient.builder(elasticHost).
                         setHttpClientConfigCallback(httpClientBuilder -> {
                             if (sslEnabled) {
                                 try {
                                     KeyStore trustStore = KeyStore.getInstance(trustStoreType);
                                     InputStream is = Files.newInputStream(Paths.get(trustStorePath));
-                                    trustStore.load(is, finalTrustStorePassword.toCharArray());
+                                    trustStore.load(is, trustStorePassword.toCharArray());
                                     SSLContextBuilder sslBuilder = SSLContexts.custom().loadTrustMaterial(trustStore, null);
                                     httpClientBuilder.setSSLContext(sslBuilder.build());
                                 } catch (IOException e) {
-                                    log.error("The trustStore password = " + finalTrustStorePassword + " or trustStore path "
+                                    log.error("The trustStore password = " + trustStorePassword + " or trustStore path "
                                             + trustStorePath + " defined is incorrect while creating " + "sslContext");
                                 } catch (CertificateException e) {
                                     log.error("Any of the certificates in the keystore could not be loaded " +

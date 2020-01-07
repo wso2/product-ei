@@ -1267,7 +1267,7 @@
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../p2-profile/analytics-profile/carbon-home/resources/security</directory>
+            <directory>target/wso2carbon-core-${carbon.kernel.version}/repository/resources/security</directory>
             <outputDirectory>wso2ei-${pom.version}/wso2/analytics/resources/security</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
@@ -2755,13 +2755,13 @@
         </file>
 
         <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>
+            <source>src/scripts/tools/forgetme/forgetme.sh</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
 
         <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>
+            <source>src/scripts/tools/forgetme/forgetme.bat</source>
             <outputDirectory>wso2ei-${pom.version}/wso2/tools/forget-me/bin/</outputDirectory>
             <fileMode>744</fileMode>
         </file>
