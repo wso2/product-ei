@@ -1594,6 +1594,12 @@
                 <artifactId>org.wso2.ei.mb.platform.common.utils</artifactId>
                 <version>${product.ei.version}</version>
             </dependency>
+            <!--SAP feature dependency-->
+            <dependency>
+                <groupId>org.wso2.carbon.mediation</groupId>
+                <artifactId>sap-adapter</artifactId>
+                <version>${sap-adapter.feature.version}</version>
+            </dependency>
             <!-- JMS 2.0 API dependency -->
             <dependency>
                 <groupId>javax.jms</groupId>
@@ -1690,7 +1696,7 @@
         <org.apache.httpcomponents.wso2.version>4.3.6.wso2v2</org.apache.httpcomponents.wso2.version>
 
         <!-- Carbon mediation version -->
-        <carbon.mediation.version>4.7.30</carbon.mediation.version>
+        <carbon.mediation.version>4.7.33</carbon.mediation.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.5.3</carbon.kernel.version>
@@ -1761,6 +1767,9 @@
 
         <!-- Stratos -->
         <stratos.version>2.2.0</stratos.version>
+
+        <!-- SAP adapter - sap transport feature version -->
+        <sap-adapter.feature.version>4.7.33</sap-adapter.feature.version>
 
         <!-- mysql-connector-java -->
         <mysql-connector-java.version>5.1.6</mysql-connector-java.version>
@@ -1851,7 +1860,7 @@
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven.eclipse.plugin.version>2.10</maven.eclipse.plugin.version>
         <greenmail.version>1.3</greenmail.version>
-        <opensaml.orbit.version>2.6.4.wso2v5</opensaml.orbit.version>
+        <opensaml.orbit.version>3.3.1.wso2v1</opensaml.orbit.version>
         <!-- Forget-me tool -->
         <forgetme.tool.version>1.2.1</forgetme.tool.version>
 
