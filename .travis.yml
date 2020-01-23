@@ -18,10 +18,7 @@ jdk:
   
 install: true
 
-before_script:
-  - mvn -N io.takari:maven:wrapper -Dmaven=3.6.0
-
-script: ./mvnw clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+script: mvn clean install -P smoke-tests -Dsurefire.useSystemClassLoader=false -fae -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 cache:
   directories:
   - $HOME/.m2
