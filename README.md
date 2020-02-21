@@ -120,7 +120,7 @@ WSO2 EI is packaged in several forms for different platforms and environments. H
 |Platform                 |  OS                  | Infrastructure Mgt  |
 |-------------------------|----------------------|---------------------|
 |[WSO2 EI AWS CloudFormation](https://wso2.com/integration/install/aws/community/get-started/) |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=win64) for Windows  |[WSO2 EI Puppet Install](https://wso2.com/integration/install/puppet/)   |
-|[WSO2 EI Kubernetes](https://wso2.com/integration/install/kubernetes/community/get-started/)  |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=mac) for Mac        |[WSO2 EI Ancible Install](https://wso2.com/integration/install/ansible/) |
+|[WSO2 EI Kubernetes](https://wso2.com/integration/install/kubernetes/community/get-started/)  |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=mac) for Mac        |[WSO2 EI Ansible Install](https://wso2.com/integration/install/ansible/) |
 |[WSO2 EI Docker](https://wso2.com/integration/install/docker/community/get-started/)          |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=ubuntu) for Ubuntu  |   |
 |[WSO2 EI Vagrant](https://wso2.com/integration/install/vagrant/community/get-started/)        |[WSO2 EI installer](https://wso2.com/integration/install/download/?type=centos) for CentOS  |   |
 |[WSO2 EI Helm](https://wso2.com/integration/install/helm/community/get-started/)              |   |   |
