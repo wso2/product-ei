@@ -49,6 +49,7 @@
                 <module>tests-other</module>
                 <module>tests-ui</module>
                 <module>tests-platform</module>
+                <module>tests-connector</module>
                 <module>coverage-report</module>
             </modules>
         </profile>

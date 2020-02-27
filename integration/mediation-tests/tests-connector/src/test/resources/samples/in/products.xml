@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<products>
+    <product>
+        <description>Sony 54.6" (Diag) Xbr Hx929 Internet Tv</description>
+        <gtin>00027242816657</gtin>
+        <price>2999.99</price>
+        <orderId>2343</orderId>
+        <supplier>Sony</supplier>
+    </product>
+    <product>
+        <description>Apple iPad 2 with Wi-Fi 16GB - iOS 5 - Black
+        </description>
+        <gtin>00885909464517</gtin>
+        <price>399.0</price>
+        <orderId>2343</orderId>
+        <supplier>Apple</supplier>
+    </product>
+</products>
