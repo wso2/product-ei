@@ -1,4 +1,4 @@
-# WSO2 Enterprise Integrator Performance Test Results
+# WSO2 Enterprise Integrator 6.6.0 Performance Test Results
 
 During each release, we execute various automated performance test scenarios and publish the results.
 
