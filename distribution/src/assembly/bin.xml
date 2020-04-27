@@ -947,7 +947,7 @@
 
         <fileSet>
             <directory>./src/resources</directory>
-            <outputDirectory>wso2ei-${pom.version}/lib</outputDirectory>
+            <outputDirectory>wso2ei-${pom.version}/wso2/lib</outputDirectory>
             <includes>
                 <include>**/Saxon-HE-9.5.1-8.jar</include>
             </includes>
