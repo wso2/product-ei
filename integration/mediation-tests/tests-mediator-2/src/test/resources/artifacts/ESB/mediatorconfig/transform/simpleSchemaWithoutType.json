@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "fruit": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 6,
+      "pattern": "^[0-9]{1,45}$"
+    },
+    "price": {
+      "type": "number",
+      "minimum": 2,
+      "maximum": 20,
+      "exclusiveMaximum": 20,
+      "multipleOf": 2.5
+    }
+  },
+  "required": [
+    "price"
+  ]
+}
