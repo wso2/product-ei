@@ -24,9 +24,11 @@
         <!-- TestLoggingListener : Test listener to log test execution events -->
         <listener class-name="org.wso2.carbon.esb.scenario.test.common.testng.listeners.TestLoggingListener"/>
     </listeners>
-    <test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
+    <!-- This test is failing on testgrid environment. Hence, disable this to avoid creating CloudFormation stacks
+     until getting resolution in mail thread "Scenario Test Results for WUM Updates! #(546) - WSO2 TestGrid"-->
+    <!--<test name="ProxyService-Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
             <class name="org.wso2.carbon.ei.scenario.test.AsyncHttpToHttpViaActiveMqQueueTest"/>
         </classes>
-    </test>
+    </test>-->
 </suite>
