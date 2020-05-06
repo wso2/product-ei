@@ -86,7 +86,7 @@
         <module>8-connect-devices-to-enterprise</module>
         <!--TODO Scenario 10 is commented until VFS is supported-->
         <!--<module>10-file-processing</module>-->
-        <module>11-Asynchronous-message-processing</module>
+        <!--<module>11-Asynchronous-message-processing</module>-->
         <module>13-micro-services</module>
         <module>14-periodically-execute-an-integration-process</module>
     </modules>
