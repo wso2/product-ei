@@ -92,8 +92,11 @@ public class AlterRequestWithScriptTest extends ScenarioTestBase {
                         + "   </soap:Body>\n"
                         + "</soap:Envelope>";
 
+        log.info("Prior to invoking backend " + url + " in alterPayloadByInlineGroovyScriptTestCase ");
         HTTPUtils.invokeSoapActionAndAssert(url, REQUEST_1_6_10, testCaseID, expectedResponse, 200,
-                "urn:mediate", "alterPayloadByInlineGroovyScript");
+                "urn:mediate", "alterPayloadByInlineGroovyScript", 60000,
+                60000);
+        log.info("After invoking backend " + url + " in alterPayloadByInlineGroovyScriptTestCase ");
     }
 
      //This test is to verify if payload can be modified by removing the last element using inline javascript.
