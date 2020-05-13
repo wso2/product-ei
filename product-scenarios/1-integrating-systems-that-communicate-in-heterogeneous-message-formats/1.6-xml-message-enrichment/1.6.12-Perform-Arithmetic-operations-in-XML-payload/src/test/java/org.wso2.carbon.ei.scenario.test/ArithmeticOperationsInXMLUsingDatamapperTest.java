@@ -63,8 +63,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>57.0</result>\n"
                         + "</ResultAdd>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "performAddOperationUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultAdd>\n"
+                        + "    <result>57</result>\n"
+                        + "</ResultAdd>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "performAddOperationUsingDatamapper");
 
     }
 
@@ -88,8 +94,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>45.0</result>\n"
                         + "</ResultSubstract>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "performSubstractOperationUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultSubstract>\n"
+                        + "    <result>45</result>\n"
+                        + "</ResultSubstract>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "performSubstractOperationUsingDatamapper");
 
     }
 
@@ -113,8 +125,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>30.0</result>\n"
                         + "</ResultMultiply>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "performMultiplicationOperationUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultMultiply>\n"
+                        + "    <result>30</result>\n"
+                        + "</ResultMultiply>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200,
+                "performMultiplicationOperationUsingDatamapper");
 
     }
 
@@ -137,9 +155,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                 "<ResultDivide>\n"
                         + "    <result>2.0</result>\n"
                         + "</ResultDivide>";
+        String jdk11ExpectedResponse =
+                "<ResultDivide>\n"
+                        + "    <result>2</result>\n"
+                        + "</ResultDivide>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "performDivisionOperationUsingDatamapper");
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "performDivisionOperationUsingDatamapper");
 
     }
 
@@ -162,8 +185,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>2.0</result>\n"
                         + "</ResultRoundValue>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "getRoundValueUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultRoundValue>\n"
+                        + "    <result>2</result>\n"
+                        + "</ResultRoundValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "getRoundValueUsingDatamapper");
 
     }
 
@@ -186,8 +215,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>2.0</result>\n"
                         + "</ResultCeilingValue>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "getCeilingValueUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultCeilingValue>\n"
+                        + "    <result>2</result>\n"
+                        + "</ResultCeilingValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "getCeilingValueUsingDatamapper");
 
     }
 
@@ -210,8 +245,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>7.0</result>\n"
                         + "</ResultAbsoluteValue>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "getAbsoluteValueUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultAbsoluteValue>\n"
+                        + "    <result>7</result>\n"
+                        + "</ResultAbsoluteValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "getAbsoluteValueUsingDatamapper");
 
     }
 
@@ -235,8 +276,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>5.0</result>\n"
                         + "</ResultMinimumValue>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "getMinimumValueUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultMinimumValue>\n"
+                        + "    <result>5</result>\n"
+                        + "</ResultMinimumValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "getMinimumValueUsingDatamapper");
 
     }
 
@@ -259,9 +306,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                 "<ResultMaximumValue>\n"
                         + "    <result>9.0</result>\n"
                         + "</ResultMaximumValue>";
+        String jdk11ExpectedResponse =
+                "<ResultMaximumValue>\n"
+                        + "    <result>9</result>\n"
+                        + "</ResultMaximumValue>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "getMaximumValueUsingDatamapper");
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "getMaximumValueUsingDatamapper");
 
     }
 
@@ -284,8 +336,14 @@ public class ArithmeticOperationsInXMLUsingDatamapperTest extends ScenarioTestBa
                         + "    <result>4.0</result>\n"
                         + "</ResultFloorValue>";
 
-        HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl,request, HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
-                testCaseId, expectedResponse, 200, "getFloorValueUsingDatamapper");
+        String jdk11ExpectedResponse =
+                "<ResultFloorValue>\n"
+                        + "    <result>4</result>\n"
+                        + "</ResultFloorValue>";
+
+        HTTPUtils.invokePoxEndpointAndAssertTwoPayloads(apiInvocationUrl, request,
+                HTTPConstants.MEDIA_TYPE_APPLICATION_XML,
+                testCaseId, expectedResponse, jdk11ExpectedResponse, 200, "getFloorValueUsingDatamapper");
 
     }
 

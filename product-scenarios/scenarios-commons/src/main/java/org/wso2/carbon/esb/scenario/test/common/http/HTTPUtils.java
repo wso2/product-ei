@@ -275,6 +275,50 @@ public class HTTPUtils {
     }
 
     /**
+     * Invoke a pox action and assert
+     *
+     * @param serviceUrl proxy service url
+     * @param request the request to transform
+     * @param contentType content-type of the request
+     * @param messageId message id to be sent a header
+     * @param expectedResponse expected response after transformation
+     * @param nextExpectedResponse next expected response after transformation
+     * @param statusCode expected status code
+     * @param testcaseName testcase name to be logged during a test failure
+     * @throws IOException
+     * @throws XMLStreamException
+     */
+    public static void invokePoxEndpointAndAssertTwoPayloads(String serviceUrl, String request, String contentType,
+                                                             String messageId,
+                                                             String expectedResponse, String nextExpectedResponse,
+                                                             int statusCode, String testcaseName)
+            throws IOException, XMLStreamException {
+
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(ScenarioConstants.MESSAGE_ID, messageId);
+
+        RESTClient restClient = new RESTClient();
+        HttpResponse httpResponse = restClient.doPost(serviceUrl, headers, request, contentType);
+
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), statusCode, testcaseName + " failed");
+
+        OMElement actualOMResponse = HTTPUtils.getOMFromResponse(httpResponse);
+        OMElement expectedOMResponse = XMLUtils.StringASOM(expectedResponse);
+        boolean compareNextResponse = false;
+        boolean compareResponse = XMLUtils.compareOMElements(expectedOMResponse, actualOMResponse);
+        if (!compareResponse) {
+            OMElement nextExpectedOMResponse = XMLUtils.StringASOM(nextExpectedResponse);
+            compareNextResponse = XMLUtils.compareOMElements(nextExpectedOMResponse, actualOMResponse);
+        }
+
+        Assert.assertNotNull(actualOMResponse, "Invalid response");
+
+        Assert.assertTrue(compareResponse || compareNextResponse,
+                "Expected : <" + expectedResponse + "> or Expected : <" + nextExpectedResponse + ">  but was <"
+                        + actualOMResponse + "> in test case : " + messageId);
+    }
+
+    /**
      * Invoke pox action and check contains
      *
      * @param serviceUrl proxy service url
