@@ -31,15 +31,6 @@
     <name>Integrating Systems that Communicate in Heterogeneous Message Formats</name>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>01-SynapseConfigProject</module>
-        <module>1.1-converting-soap-to-json</module>
-        <module>1.2-converting-pox-to-json</module>
-        <module>1.3-converting-json-to-soap</module>
-        <module>1.6-xml-message-enrichment</module>
-        <module>1.8-plaintext-message-enrichment</module>
-    </modules>
-
     <dependencies>
         <dependency>
             <groupId>org.wso2.ei</groupId>
@@ -50,6 +41,13 @@
     <profiles>
         <profile>
             <id>profile_general</id>
+            <modules>
+                <module>1.1-converting-soap-to-json</module>
+                <module>1.2-converting-pox-to-json</module>
+                <module>1.3-converting-json-to-soap</module>
+                <module>1.6-xml-message-enrichment</module>
+                <module>1.8-plaintext-message-enrichment</module>
+            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -102,7 +100,10 @@
             </build>
         </profile>
         <profile>
-            <id>profile_490</id>
+            <id>profile_artifacts</id>
+            <modules>
+                <module>01-SynapseConfigProject</module>
+            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -133,14 +134,14 @@
                                     <!-- Directory containing carbon applications -->
                                     <name>test.resources.carbonApplications.dir</name>
                                     <value>
-                                        ${basedir}/../../01-SynapseConfigProject/01-synapseConfigCompositeApplication_490/target/
+                                        ${basedir}/../../01-SynapseConfigProject/01-synapseConfigCompositeApplication/target/
                                     </value>
                                 </property>
                                 <property>
                                     <!-- Related carbon applications (comma separated) to deploy -->
                                     <name>test.resources.carbonApplications.list</name>
                                     <value>
-                                        01-synapseConfigCompositeApplication_490_1.0.0
+                                        01-synapseConfigCompositeApplication_1.0.0
                                     </value>
                                 </property>
                                 <property>

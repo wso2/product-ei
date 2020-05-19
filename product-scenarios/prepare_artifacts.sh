@@ -34,6 +34,11 @@ function runTestProfile()
     mvn clean install -Dmaven.repo.local="${INPUT_DIR}/m2" -Dinvocation.uuid="$UUID" -Ddata.bucket.location="${INPUT_DIR}" \
     -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=info -fae -B -f ./pom.xml \
      -P $1
+
+     rm -r -f ${HOME}/capps
+     mkdir -p ${HOME}/capps
+     find -iname '*-synapseConfigCompositeApplication_1.0.0.car' -exec cp {} ${HOME}/capps \;
+     rm -f ${HOME}/capps/1_6_10-synapseConfigCompositeApplication_1.0.0.car
 }
 
 optspec=":hiom-:"
@@ -88,7 +93,7 @@ echo "output directory : ${OUTPUT_DIR}"
 
 #export DATA_BUCKET_LOCATION=${INPUT_DIR}
 
-#=============== Execute Scenarios ===============================================
+#=============== Execute Artifact Generation ===============================================
 
 #generate uuid representing the test run
 UUID=$(uuidgen)
@@ -104,7 +109,7 @@ do
     case ${productVersion} in
         ESB-5.0.0|EI-6.0.0|EI-6.1.0|EI-6.1.1|EI-6.2.0|EI-6.3.0|EI-6.4.0|EI-6.5.0|EI-6.6.0|MI-1.2.0)
             echo "Executing tests for the product version: $productVersion"
-            runTestProfile profile_general ;;
+            runTestProfile profile_artifacts ;;
         *)
             echo "ERROR: Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
     esac
@@ -115,7 +120,7 @@ done < "${INPUT_DIR}/deployment.properties"
 
 if ! $PRODUCT_VERSION_FOUND ; then
     echo "deployment.properties file does not contain the product version. Executing the default suite ."
-    runTestProfile profile_general
+    runTestProfile profile_artifacts
 fi
 
 #=============== Copy Surefire Reports ===========================================

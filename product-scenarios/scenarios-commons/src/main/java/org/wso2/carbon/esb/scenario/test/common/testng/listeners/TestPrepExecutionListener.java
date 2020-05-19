@@ -79,7 +79,7 @@ public class TestPrepExecutionListener implements IExecutionListener {
             setKeyStoreProperties();
 
             // login
-            try {
+            /*try {
                 AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
                 sessionCookie = authenticatorClient.login("admin", "admin", getServerHost(mgtConsoleUrl));
             } catch (Exception e) {
@@ -94,7 +94,7 @@ public class TestPrepExecutionListener implements IExecutionListener {
                 }
             } catch (RemoteException | ApplicationAdminExceptionException e) {
                 throw new RuntimeException("Error occurred while deploying carbon application : " + carbonAppListStr, e);
-            }
+            }*/
         }
     }
 
