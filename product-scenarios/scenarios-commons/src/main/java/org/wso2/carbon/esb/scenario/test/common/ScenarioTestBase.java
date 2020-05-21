@@ -104,7 +104,7 @@ public class ScenarioTestBase {
 
         // login
         AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
-        sessionCookie = authenticatorClient.login("admin", "admin", getServerHost());
+//        sessionCookie = authenticatorClient.login("admin", "admin", getServerHost());
 
         log.info("Service URL: " + serviceURL + " | Secured Service URL: " + securedServiceURL);
         log.info("The Backend service URL : " + backendURL + ". session cookie: " + sessionCookie);
