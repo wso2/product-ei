@@ -32,7 +32,7 @@ function usage()
 function runTestProfile()
 {
     mvn clean install -Dmaven.repo.local="${INPUT_DIR}/m2" -Dinvocation.uuid="$UUID" -Ddata.bucket.location="${INPUT_DIR}" \
-    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=info -fae -B -f ./pom.xml \
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -fae -B -f ./pom.xml \
      -P $1
 }
 

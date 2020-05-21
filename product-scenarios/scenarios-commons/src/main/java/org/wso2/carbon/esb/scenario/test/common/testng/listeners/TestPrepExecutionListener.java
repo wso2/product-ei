@@ -77,24 +77,6 @@ public class TestPrepExecutionListener implements IExecutionListener {
             mgtConsoleUrl = ScenarioTestBase.getMgtConsoleURL();
 
             setKeyStoreProperties();
-
-            // login
-            /*try {
-                AuthenticatorClient authenticatorClient = new AuthenticatorClient(backendURL);
-                sessionCookie = authenticatorClient.login("admin", "admin", getServerHost(mgtConsoleUrl));
-            } catch (Exception e) {
-                throw new RuntimeException("Login failed", e);
-            }
-
-            try {
-                String[] cAppList = carbonAppListStr.split(",");
-                for (String cApp : cAppList) {
-                    // deploy carbon application
-                    deployCarbonApplication(cApp.trim());
-                }
-            } catch (RemoteException | ApplicationAdminExceptionException e) {
-                throw new RuntimeException("Error occurred while deploying carbon application : " + carbonAppListStr, e);
-            }*/
         }
     }
 

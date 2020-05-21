@@ -43,112 +43,12 @@
             <modules>
                 <module>2.1-http-to-http-protocol-translation</module>
             </modules>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=128m</argLine>
-                            <disableXmlReport>false</disableXmlReport>
-                            <parallel>false</parallel>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
-                            </suiteXmlFiles>
-                            <systemProperties>
-                                <property>
-                                    <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
-                                    <name>common.resources.dir</name>
-                                    <value>
-                                        ${basedir}/../../resources/
-                                    </value>
-                                </property>
-                                <property>
-                                    <!-- testcase specific  resources directory-->
-                                    <name>test.resources.dir</name>
-                                    <value>
-                                        ${basedir}/src/test/resources/
-                                    </value>
-                                </property>
-                                <property>
-                                    <!-- Directory containing carbon applications -->
-                                    <name>test.resources.carbonApplications.dir</name>
-                                    <value>
-                                        ${basedir}/../../02-synapseConfigProject/02-synapseConfigCompositeApplication/target/
-                                    </value>
-                                </property>
-                                <property>
-                                    <!-- Related carbon applications (comma separated) to deploy -->
-                                    <name>test.resources.carbonApplications.list</name>
-                                    <value>
-                                        02-synapseConfigCompositeApplication_1.0.0
-                                    </value>
-                                </property>
-                                <property>
-                                    <name>usedefaultlisteners</name>
-                                    <value>false</value>
-                                </property>
-                            </systemProperties>
-                            <workingDirectory>${basedir}/target</workingDirectory>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>profile_artifacts</id>
             <modules>
                 <module>02-synapseConfigProject</module>
             </modules>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=128m</argLine>
-                            <disableXmlReport>false</disableXmlReport>
-                            <parallel>false</parallel>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
-                            </suiteXmlFiles>
-                            <systemProperties>
-                                <property>
-                                    <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
-                                    <name>common.resources.dir</name>
-                                    <value>
-                                        ${basedir}/../../resources/
-                                    </value>
-                                </property>
-                                <property>
-                                    <!-- testcase specific  resources directory-->
-                                    <name>test.resources.dir</name>
-                                    <value>
-                                        ${basedir}/src/test/resources/
-                                    </value>
-                                </property>
-                                <property>
-                                    <!-- Directory containing carbon applications -->
-                                    <name>test.resources.carbonApplications.dir</name>
-                                    <value>
-                                        ${basedir}/../../02-synapseConfigProject/02-synapseConfigCompositeApplication/target/
-                                    </value>
-                                </property>
-                                <property>
-                                    <!-- Related carbon applications (comma separated) to deploy -->
-                                    <name>test.resources.carbonApplications.list</name>
-                                    <value>
-                                        02-synapseConfigCompositeApplication_1.0.0
-                                    </value>
-                                </property>
-                                <property>
-                                    <name>usedefaultlisteners</name>
-                                    <value>false</value>
-                                </property>
-                            </systemProperties>
-                            <workingDirectory>${basedir}/target</workingDirectory>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 
@@ -161,14 +61,14 @@
                     <disableXmlReport>false</disableXmlReport>
                     <parallel>false</parallel>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemProperties>
                         <property>
                             <!-- Common resource directory (eg: Key stores, certificates, etc.)-->
                             <name>common.resources.dir</name>
                             <value>
-                                ${basedir}/../../../resources/
+                                ${basedir}/../../resources/
                             </value>
                         </property>
                         <property>
@@ -182,7 +82,7 @@
                             <!-- Directory containing carbon applications -->
                             <name>test.resources.carbonApplications.dir</name>
                             <value>
-                                ${basedir}/../../../../02-SynapseConfigProject/02-synapseConfigCompositeApplication/target/
+                                ${basedir}/../../02-synapseConfigProject/02-synapseConfigCompositeApplication/target/
                             </value>
                         </property>
                         <property>
