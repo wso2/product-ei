@@ -284,6 +284,7 @@
                     <parameter name="-DportOffset" value="200" />
                     <parameter name="startupScript" value="integrator" />
                     <!--<parameter name="cmdArg" value="debug 5005" />-->
+                    <parameter name="-DgracefulShutdown" value="false"></parameter>
                 </class>
                 <class>
                     <name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>

@@ -269,6 +269,7 @@
                     <!--  Added for PrometheusStatisticsTest -->
                     <parameter name="-DenablePrometheusApi" value="true"/>
                     <parameter name="startupScript" value="integrator" />
+                    <parameter name="-DgracefulShutdown" value="false"></parameter>
                     <!--<parameter name="cmdArg" value="debug 5005" />-->
                 </class>
                 <class>

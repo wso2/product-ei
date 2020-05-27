@@ -267,6 +267,7 @@
                     <name>org.wso2.esb.integration.common.extensions.carbonserver.CarbonServerExtension</name>
                     <parameter name="-DportOffset" value="200" />
                     <parameter name="startupScript" value="integrator" />
+                    <parameter name="-DgracefulShutdown" value="false"></parameter>
                     <!--<parameter name="cmdArg" value="debug 5005" />-->
                 </class>
                 <class>
