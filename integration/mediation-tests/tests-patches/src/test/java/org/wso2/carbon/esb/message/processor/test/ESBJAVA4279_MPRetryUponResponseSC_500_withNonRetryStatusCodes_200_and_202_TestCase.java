@@ -119,6 +119,7 @@ public class ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_a
             String message = logEvent.getMessage();
             if (message.contains(messageAfterFailOver)) {
                 isOrginalMsgStoredInFailOverStore = true;
+                break;
             }
         }
         Assert.assertTrue(isOrginalMsgStoredInFailOverStore,
