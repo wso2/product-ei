@@ -2249,6 +2249,14 @@
         </file>
 
         <file>
+            <source>src/conf/carbon.properties</source>
+            <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
+            <destName>carbon.properties</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
             <source>src/conf/registry.xml</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>registry.xml</destName>
