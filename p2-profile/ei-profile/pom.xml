@@ -103,6 +103,9 @@
                                     org.apache.synapse:org.apache.synapse.transport.vfs.feature:${synapse.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.apache.synapse:org.apache.synapse.transport.vfs.smb2.feature:${synapse.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.mediation:org.wso2.carbon.application.deployer.synapse.feature:${carbon.mediation.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -574,7 +577,11 @@
                                     <id>org.wso2.carbon.mediator.datamapper.engine.feature.group</id>
                                     <version>${carbon.mediation.version}</version>
                                 </feature>
-
+                                <!-- SMB2 -->
+                                <feature>
+                                    <id>org.apache.synapse.transport.vfs.smb2.feature.group</id>
+                                    <version>${synapse.version}</version>
+                                </feature>
                                 <!-- 2 Carbon-Kernel -->
                                 <feature>
                                     <id>org.wso2.carbon.core.ui.feature.group</id>
