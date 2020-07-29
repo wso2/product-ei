@@ -2379,6 +2379,13 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>src/conf/security/external-vaults.xml</source>
+            <outputDirectory>wso2ei-${pom.version}/conf/security</outputDirectory>
+            <destName>external-vaults.xml</destName>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>src/conf/nhttp.properties</source>
             <outputDirectory>wso2ei-${pom.version}/conf</outputDirectory>
             <destName>nhttp.properties</destName>

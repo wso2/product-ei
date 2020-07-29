@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright 2020 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+  <secureVaults>
+
+    <!-- Uncomment this and configure as appropriate for HashiCorp secure vault support -->
+    <!-- <vault name="hashicorp"> -->
+        <!-- Server address to be used in the http communication -->
+        <!-- <parameter name="address">http://127.0.0.1:8200</parameter> -->
+        <!-- Server address to be used in the https communication -->
+        <!-- <parameter name="address">https://127.0.0.1:8200</parameter>-->
+        <!-- Root token parameter for authenticate with the HashiCorp vault server-->
+        <!-- <parameter name="rootToken">root_token</parameter> -->
+        <!-- All resources fetched from the HashiCorp vault would be cached for this number of milliseconds -->
+        <!-- <parameter name="cachableDuration">15000</parameter> -->
+        <!-- Version of the HashiCorp secret engine -->
+        <!-- <parameter name="engineVersion">2</parameter> -->
+        <!-- HashiCorp namespace across the runtime -->
+        <!-- <parameter name="namespace">namespace</parameter> -->
+        
+        <!-- SSL configuration. By defaults truststore and keystore files pointed to the default WSO2 JKS files. 
+             Can define paths as both absolute or relative to the ${carbon.home} -->
+        <!-- <parameter name="trustStoreFile">${carbon.home}/repository/resources/security/client-truststore.jks</parameter> -->
+        <!-- <parameter name="keyStoreFile">${carbon.home}/repository/resources/security/wso2carbon.jks</parameter> -->
+        <!-- <parameter name="keyStorePassword">key_store_password</parameter> -->
+    <!-- </vault>  -->
+    
+  </secureVaults>
