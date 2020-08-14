@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="ResponseHeaderPreserveAPI" context="/ResponseHeaderPreserveAPI">
+    <resource methods="POST GET OPTIONS DELETE PUT"
+              url-mapping="/*"
+              faultSequence="fault">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>{
+                    "msg":"response"
+                    }</format>
+                <args/>
+            </payloadFactory>
+            <header name="Content-Type" scope="transport" value="application/json"/>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>
