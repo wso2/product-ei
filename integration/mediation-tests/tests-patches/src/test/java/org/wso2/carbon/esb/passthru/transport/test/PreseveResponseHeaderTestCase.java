@@ -42,6 +42,7 @@ public class PreseveResponseHeaderTestCase extends ESBIntegrationTest {
         super.init();
         verifyAPIExistence("ResponseHeaderPreserveAPI");
     }
+
     @Test(groups = "wso2.esb", description = "Preserve response header test", enabled = true)
     public void testPreserveContentTypeHeader() throws Exception {
         DefaultHttpClient httpclient = new DefaultHttpClient();
