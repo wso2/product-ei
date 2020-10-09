@@ -67,7 +67,7 @@ public class DBQuery {
 		    databaseURL.contains(CleanupConstants.POSTGRE_SQL)) {
 
 			SEARCH = "select distinct(s.PID) as PROCESS_ID, " +
-			         "case when o.ID is null then \"-1\" else o.ID end as ID" +
+			         "case when o.ID is null then -1 else o.ID end as ID" +
 			         ", s.VERSION, s.DU\n" +
 			         "from STORE_PROCESS s left join ODE_PROCESS o\n" +
 			         "on s.PID = o.PROCESS_ID\n" +
