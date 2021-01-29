@@ -179,13 +179,23 @@ public class MessageProcessorAdminTestCase extends ESBIntegrationTest {
 
             messageProcessorClient.activateMessageProcessor(PROCESSOR_NAME);
 
-            long processDeadline = System.currentTimeMillis() + waitMilliseconds;
-            while (System.currentTimeMillis() < processDeadline) {
-                if (messageStoreAdminClient.getMessageCount(STORE_NAME) == 0) {
+            //Now since the endpoint is suspended the processor should retry regardless of OUT_ONLY property
+            long deadlineForOutOnlyFlow = System.currentTimeMillis() + waitMilliseconds;
+            while (System.currentTimeMillis() < deadlineForOutOnlyFlow) {
+                if (!messageProcessorClient.isActive(PROCESSOR_NAME)) {
                     break;
                 }
                 Thread.sleep(1000);
             }
+
+            Assert.assertFalse(messageProcessorClient.isActive(PROCESSOR_NAME), "Message Processor : " + PROCESSOR_NAME +
+                    " did not de-activate after failed delivery attempts with OUT_ONLY property.");
+
+            MessageInfo[] messagesReceived = messageStoreAdminClient.getPaginatedMessages(STORE_NAME, 0);
+
+            Assert.assertEquals(messagesReceived.length, initialMessageCount - 1, "Pending message count from list for " +
+                    "Message store : " +
+                    STORE_NAME + " is not accurate.");
         } finally {
             offsetAxis2Server.stop();
         }
