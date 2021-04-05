@@ -211,10 +211,10 @@ public class CleanupExecutor {
 					cleanProcessInstances(processList, conn);
 				}
 				for (String id : processList) {
-					conn.createStatement().execute(query.deleteFromOdeProcess(id));
+                    executeStatement(conn, query.deleteFromOdeProcess(id));
 				}
-				conn.createStatement().execute(query.deleteFromStoreDu(packageName));
-				conn.createStatement().execute(query.deleteFromStoreProcess(packageName));
+                executeStatement(conn, query.deleteFromStoreDu(packageName));
+                executeStatement(conn, query.deleteFromStoreProcess(packageName));
 				conn.commit();
 				System.out.println("Database Cleaning Success!!");
 				return true;
@@ -250,18 +250,18 @@ public class CleanupExecutor {
 				ResultSet rs = stmt.executeQuery(sql);
 				while (rs.next()) {
 					String id = rs.getString(CleanupConstants.ID);
-					conn.createStatement().execute(query.deleteFromOdePartnerLink(id));
-					conn.createStatement().execute(query.deleteFromOdeScope(id));
-					conn.createStatement().execute(query.deleteFromOdeEvent(id));
-					conn.createStatement().execute(query.deleteFromOdeCorsetProp(id));
-					conn.createStatement().execute(query.deleteFromOdeCorrelationSet(id));
-					conn.createStatement().execute(query.deleteFromOdeXmlDataProp(id));
-					conn.createStatement().execute(query.deleteFromOdeXmlData(id));
-					conn.createStatement().execute(query.deleteFromOdeMexProp(id));
-					conn.createStatement().execute(query.deleteFromOdeMessage(id));
-					conn.createStatement().execute(query.deleteFromOdeMessageExchange(id));
-					conn.createStatement().execute(query.deleteFromOdeMessageRoute(id));
-					conn.createStatement().execute(query.deleteFromOdeProcessInstance(id));
+                    executeStatement(conn, query.deleteFromOdePartnerLink(id));
+                    executeStatement(conn, query.deleteFromOdeScope(id));
+                    executeStatement(conn, query.deleteFromOdeEvent(id));
+                    executeStatement(conn, query.deleteFromOdeCorsetProp(id));
+                    executeStatement(conn, query.deleteFromOdeCorrelationSet(id));
+                    executeStatement(conn, query.deleteFromOdeXmlDataProp(id));
+                    executeStatement(conn, query.deleteFromOdeXmlData(id));
+                    executeStatement(conn, query.deleteFromOdeMexProp(id));
+                    executeStatement(conn, query.deleteFromOdeMessage(id));
+                    executeStatement(conn, query.deleteFromOdeMessageExchange(id));
+                    executeStatement(conn, query.deleteFromOdeMessageRoute(id));
+                    executeStatement(conn, query.deleteFromOdeProcessInstance(id));
 					//printing the status
 					System.out.print("\b\b\b\b\b\b\b\b\b");
 					System.out.print(String.format("%09d", ++i));
@@ -275,6 +275,19 @@ public class CleanupExecutor {
 			throw new SQLException(e);
 		}
 	}
+
+    /**
+     * Execute the given query and close he statement.
+     *
+     * @param conn  SQL connection.
+     * @param query Query string.
+     * @throws SQLException exception occurred while executing the query.
+     */
+    private static void executeStatement(Connection conn, String query) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.execute(query);
+        statement.close();
+    }
 
 	/**
 	 * Using the search query gets all deletable package list
