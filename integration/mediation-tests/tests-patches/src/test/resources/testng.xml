@@ -106,6 +106,8 @@
             <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4940CharacterEncodingRemovalTestCase"/>
             <class name="org.wso2.carbon.esb.nhttp.transport.json.test.ESBJAVA4331MissingJSONEmptyArrayNHTTPTransport"/>
             <class name="org.wso2.carbon.esb.nhttp.transport.mtom.test.ESBJAVA4909MultipartRelatedTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.NonErrorHttpStatusCodesPropertyTestCase"/>
+            <class name="org.wso2.carbon.esb.passthru.transport.test.TestEmptyBodyResponseInBlockingMode"/>
             <!-- If there are any test cases which need server restarts with new configurations, they should not be added
              here but in a separate test block-->
         </classes>

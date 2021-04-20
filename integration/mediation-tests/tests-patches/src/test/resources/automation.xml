@@ -285,6 +285,7 @@
                     <parameter name="startupScript" value="integrator" />
                     <!--<parameter name="cmdArg" value="debug 5005" />-->
                     <parameter name="-DgracefulShutdown" value="false"></parameter>
+                    <parameter name="-DallowEmptyBodyForHttp2xx" value="true" />
                 </class>
                 <class>
                     <name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>
