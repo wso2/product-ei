@@ -60,6 +60,7 @@ public class CARBON15119DuplicateSOAPActionHeader extends ESBIntegrationTest {
 
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Soapaction", "urn:getQuote");
+        headers.put("Content-type", "text/xml;charset=UTF-8");
 
         HttpRequestUtil.doPost(new URL(proxyServiceUrl), requestPayload, headers);
         String capturedMsg = wireMonitorServer.getCapturedMessage();
