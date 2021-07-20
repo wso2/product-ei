@@ -43,6 +43,36 @@ public class EndpointErrorTest extends ESBIntegrationTest {
                 "Wrong fault sequence executed");
     }
 
+    @Test(groups = {"wso2.esb"}, description = "Faulty Proxy Services with unavailable WSDL Endpoint")
+    public void testWSDLEndpointError() throws Exception {
+        LogViewerClient logViewerClient = new LogViewerClient(contextUrls.getBackEndUrl(), getSessionCookie());
+        logViewerClient.clearLogs();
+        String corruptedApiPath = TestConfigurationProvider.getResourceLocation("ESB") +
+                File.separator + "proxyconfig" + File.separator + "proxy" + File.separator + "customProxy" +
+                File.separator + "WSDLEndpointErrorTestProxy.xml";
+        File corruptedWSDLProxyFile = new File(corruptedApiPath);
+        String esbApiPath = System.getProperty(ServerConstants.CARBON_HOME) + File.separator +
+                "repository" + File.separator + "deployment" + File.separator + "server" + File.separator +
+                "synapse-configs" + File.separator + "default" + File.separator + "proxy-services" + File.separator +
+                "WSDLEndpointErrorTestProxy.xml";
+        File esbProxyServiceFile = new File(esbApiPath);
+        log.info("Copying the corrupted WSDL endpoint proxy service file...");
+        Files.copy(corruptedWSDLProxyFile.toPath(), esbProxyServiceFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Thread.sleep(15000);
+        LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+        boolean logFound = false;
+        for (LogEvent item : logs) {
+            if (item.getPriority().equals("ERROR")) {
+                String message = item.getMessage();
+                if (message.contains("proxy-services/WSDLEndpointErrorTestProxy.xml : Failed")) {
+                    logFound = true;
+                    break;
+                }
+            }
+        }
+        assertTrue(logFound);
+    }
+
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
