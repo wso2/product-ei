@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="WSDLEndpointErrorTestProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <endpoint>
+                <!-- WSDL Endpoint which is not available-->
+                <wsdl port="testHttpSoap11Endpoint" service="test" uri="http://localhost:8280/services/test?wsdl">
+                    <timeout>
+                        <duration>600</duration>
+                    </timeout>
+                    <suspendOnFailure>
+                        <initialDuration>-1</initialDuration>
+                        <progressionFactor>1</progressionFactor>
+                    </suspendOnFailure>
+                    <markForSuspension>
+                        <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                    </markForSuspension>
+                </wsdl>
+            </endpoint>
+        </inSequence>
+        <outSequence/>
+        <faultSequence />
+    </target>
+</proxy>
