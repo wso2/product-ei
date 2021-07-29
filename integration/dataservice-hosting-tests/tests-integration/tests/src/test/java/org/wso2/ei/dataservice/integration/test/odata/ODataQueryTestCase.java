@@ -61,12 +61,12 @@ public class ODataQueryTestCase extends DSSIntegrationTest {
 
 	@Test(groups = "wso2.dss", description = "select query test")
 	public void validateSelectQueryTestCase() throws Exception {
-		String endpoint = webAppUrl + "/odata/" + serviceName + "/" + configId + "/FILES?$select=TYPE";
+		String endpoint = webAppUrl + "/odata/" + serviceName + "/" + configId + "/FILES?$select=FILENAME";
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Accept", "application/json");
 		Object[] response = sendGET(endpoint, headers);
 		Assert.assertEquals(response[0], ODataTestUtils.OK);
-		Assert.assertTrue(!response[1].toString().contains("FILENAME"));
+		Assert.assertTrue(!response[1].toString().contains("TYPE"));
 	}
 
 	@Test(groups = "wso2.dss", description = "top query test")
