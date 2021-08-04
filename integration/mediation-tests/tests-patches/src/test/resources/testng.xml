@@ -160,6 +160,7 @@
         <classes>
             <class name="org.wso2.carbon.esb.message.processor.test.ESBJAVA4279_MPRetryUponResponseSC_500_withNonRetryStatusCodes_200_and_202_TestCase" />
             <class name="org.wso2.carbon.esb.message.processor.test.ESBJAVA3650_CustomHeaderPreserved_MessageProcessorOutMessage_TestCase" />
+            <class name="org.wso2.carbon.esb.message.processor.test.MessageProcessorWithoutIntervalParamTestCase" />
         </classes>
     </test>
 
