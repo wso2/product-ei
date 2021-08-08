@@ -77,6 +77,38 @@ public class ProxyStatisticsTest extends ESBIntegrationTest {
                 thriftServer.getMsgCount());
     }
 
+    @Test(groups = {"wso2.esb"}, description = "Dynamic endpoint stat check")
+    public void dynamicEndpointStatisticsCollectionTest() throws Exception {
+        thriftServer.resetMsgCount();
+        thriftServer.resetPreservedEventList();
+        axis2Client.sendSimpleStockQuoteRequest(getProxyServiceURLHttp("TestEndpointStatProxy"), null, "WSO2");
+        thriftServer.waitToReceiveEvents(2000, 1);
+        Assert.assertEquals("Hundred statistics events are required, but different number is found", 1,
+                thriftServer.getMsgCount());
+        Map<String, Object> aggregatedEvent =
+                ESBTestCaseUtils.decompress((String) thriftServer.getPreservedEventList().get(0).getPayloadData()[1]);
+        ArrayList eventList = (ArrayList) aggregatedEvent.get("events");
+        HashSet<String> allMediatorEventIds = new HashSet<>();
+        for (Object list : eventList) {
+            allMediatorEventIds.add((String) ((ArrayList) list).get(MEDIATOR_ID_INDEX));
+        }
+
+        ArrayList<String> mediatorList = new ArrayList<>();
+        mediatorList.add("TestEndpointStatProxy@0:TestEndpointStatProxy");
+        mediatorList.add("TestEndpointStatProxy@1:PROXY_INSEQ");
+        mediatorList.add("TestEndpointStatProxy@2:CallMediator");
+        mediatorList.add("TestEndpointStatProxy@3:StatEndpoint1");
+        mediatorList.add("TestEndpointStatProxy@4:RespondMediator");
+
+        //Checking whether all the mediators are present in the event
+        Assert.assertEquals("Four configuration events are required", 5, eventList.size());
+
+        for (String mediatorId : mediatorList) {
+            Assert.assertTrue("Mediator not found", allMediatorEventIds.contains(mediatorId));
+        }
+
+    }
+
     @Test(groups = {"wso2.esb"}, description = "Proxy statistics statistics event data check")
     public void statisticsEventDataTest() throws Exception {
         thriftServer.resetMsgCount();
