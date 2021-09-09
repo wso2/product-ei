@@ -52,7 +52,7 @@ public class PoxToJsonUsingMessageTypeTest extends ScenarioTestBase {
         apiInvocationUrl = getApiInvocationURLHttp(apiName);
     }
 
-    @Test(description = "1.2.2.1", dataProvider = "1.2.2.1")
+    @Test(description = "1.2.2.1", dataProvider = "1.2.2.1", enabled = false)
     public void convertValidPoxToJsonUsingMessageType(String request, String expectedResponse, String header) throws Exception {
         HTTPUtils.invokePoxEndpointAndAssert(apiInvocationUrl, request, HttpConstants.MEDIA_TYPE_APPLICATION_XML,
                                            header, expectedResponse, 200,

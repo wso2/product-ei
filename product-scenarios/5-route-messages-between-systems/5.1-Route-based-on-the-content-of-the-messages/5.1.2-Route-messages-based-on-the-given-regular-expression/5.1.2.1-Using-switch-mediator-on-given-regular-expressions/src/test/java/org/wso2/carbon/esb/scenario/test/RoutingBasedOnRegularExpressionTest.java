@@ -42,7 +42,7 @@ public class RoutingBasedOnRegularExpressionTest extends ScenarioTestBase {
         super.init();
     }
 
-    @Test(description = "5.1.2.1.1")
+    @Test(description = "5.1.2.1.1", enabled = false)
     public void routeMessagesBasedOnValidRegexWithSwitchM() throws Exception {
         String header = "basic_xml";
         String request = "<m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n"

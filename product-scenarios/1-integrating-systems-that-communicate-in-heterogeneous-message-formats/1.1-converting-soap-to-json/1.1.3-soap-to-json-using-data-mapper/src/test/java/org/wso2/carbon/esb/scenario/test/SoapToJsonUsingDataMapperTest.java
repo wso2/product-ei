@@ -50,7 +50,7 @@ public class SoapToJsonUsingDataMapperTest extends ScenarioTestBase {
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
     }
 
-    @Test(description = "1.1.3.1")
+    @Test(description = "1.1.3.1", enabled = false)
     public void convertValidSoapToJsonUsingDataMapper() throws Exception {
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                          "    <soapenv:Body>\n" +

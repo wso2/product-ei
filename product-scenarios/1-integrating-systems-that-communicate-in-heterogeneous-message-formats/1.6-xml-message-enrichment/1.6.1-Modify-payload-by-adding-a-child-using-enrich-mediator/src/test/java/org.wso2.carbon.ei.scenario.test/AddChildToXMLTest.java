@@ -53,7 +53,7 @@ public class AddChildToXMLTest extends ScenarioTestBase {
         sourcesFilePath = testResourcesDir + File.separator + "source_files";
     }
 
-    @Test(description = "1.6.1.1")
+    @Test(description = "1.6.1.1", enabled = false)
     public void testAddingInlineContentAsChild() throws IOException, XMLStreamException {
         String url = getProxyServiceURLHttp("1_6_1_1_Proxy_SoapToPoxMsgEnrichWithChild");
         String request = FileUtils.readFile(sourcesFilePath + File.separator + "request_1_6_1_1.xml");
@@ -70,7 +70,7 @@ public class AddChildToXMLTest extends ScenarioTestBase {
     }
 
 
-    @Test(description = "1.6.1.2")
+    @Test(description = "1.6.1.2", enabled = false)
     public void testPassThroughProxyTemplate() throws IOException, XMLStreamException {
 
         String url = getProxyServiceURLHttp("1_6_1_2_Proxy_SoapToPoxEnrichWithXpathAsChild");

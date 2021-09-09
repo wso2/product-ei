@@ -45,7 +45,7 @@ public class RoutingBasedOnXpathTest extends ScenarioTestBase {
         super.init();
     }
 
-    @Test(description = "5.1.1.1.1")
+    @Test(description = "5.1.1.1.1", enabled = false)
     public void routeMessagesBasedOnValidXpathWithSwitchM() throws Exception {
         String header = "basic_xml";
         String url = getApiInvocationURLHttp("5_1_API_Routing_messages_based_on_content_of_message_test/"

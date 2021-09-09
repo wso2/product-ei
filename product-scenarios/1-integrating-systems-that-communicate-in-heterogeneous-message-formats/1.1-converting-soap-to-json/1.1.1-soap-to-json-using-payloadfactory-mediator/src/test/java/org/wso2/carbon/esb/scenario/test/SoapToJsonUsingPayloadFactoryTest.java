@@ -41,7 +41,7 @@ public class SoapToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
         log.info("proxyServiceUrl is set as : " + proxyServiceUrl);
     }
 
-    @Test(description = "1.1.1.1")
+    @Test(description = "1.1.1.1", enabled = false)
     public void convertValidSoapToJsonUsingPayloadFactory() throws Exception {
         String request ="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                         "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' " +
