@@ -107,7 +107,7 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
             <id>wso2-nexus</id>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -118,7 +118,7 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
             <id>wso2-nexus</id>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
         </pluginRepository>
     </pluginRepositories>
     <build>
