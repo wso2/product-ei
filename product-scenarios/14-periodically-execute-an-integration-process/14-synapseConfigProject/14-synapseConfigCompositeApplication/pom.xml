@@ -63,7 +63,7 @@
         <checksumPolicy>ignore</checksumPolicy>
       </releases>
       <id>wso2-nexus</id>
-      <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+      <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
     </repository>
     <repository>
       <id>wso2-maven2-repository-1</id>
@@ -71,7 +71,7 @@
     </repository>
     <repository>
       <id>wso2-nexus-repository-1</id>
-      <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+      <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -82,7 +82,7 @@
         <checksumPolicy>ignore</checksumPolicy>
       </releases>
       <id>wso2-nexus</id>
-      <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+      <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
     </pluginRepository>
     <pluginRepository>
       <id>wso2-maven2-repository-1</id>
@@ -90,7 +90,7 @@
     </pluginRepository>
     <pluginRepository>
       <id>wso2-nexus-repository-1</id>
-      <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+      <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
     </pluginRepository>
   </pluginRepositories>
   <build>
