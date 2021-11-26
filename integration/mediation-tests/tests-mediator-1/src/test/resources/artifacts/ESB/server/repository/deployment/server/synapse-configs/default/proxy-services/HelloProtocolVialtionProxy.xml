@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="HelloProtocolVialtionProxy"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target faultSequence="protocolVialtionTestFault">
+        <endpoint name="testAddress">
+            <address uri="http://localhost:8989"/>
+        </endpoint>
+        <inSequence>
+            <property name="preserveProcessedHeaders"
+                      value="true"
+                      scope="default"
+                      type="STRING"/>
+            <log/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>
