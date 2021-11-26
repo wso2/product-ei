@@ -1,0 +1,14 @@
+
+<sequence name="protocolVialtionTestFault">
+    <log level="full" separator=","/>
+    <makefault version="soap11">
+        <code xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"
+              value="soap11Env:Server"/>
+        <reason value="Test Only to see if there are two envelopes."/>
+        <role/>
+    </makefault>
+    <property name="RESPONSE" value="true" scope="default" type="STRING"/>
+    <header name="To" action="remove"/>
+    <header name="ReplyTo" action="remove"/>
+    <send/>
+</sequence>

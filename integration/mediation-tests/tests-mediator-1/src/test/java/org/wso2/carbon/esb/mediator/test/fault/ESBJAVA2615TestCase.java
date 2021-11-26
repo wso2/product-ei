@@ -25,13 +25,12 @@ public class ESBJAVA2615TestCase  extends ESBIntegrationTest {
         super.init();
         server = new ProtocolViolationServer();
         server.runServer();
-        loadESBConfigurationFromClasspath("/artifacts/ESB/proxyconfig/proxy/protocolViolationProxy/synapse.xml");
     }
     
     @Test(groups = {"wso2.esb"}, description = "Creating Protocol Violation test",enabled=true)
     public void testSOAP11FaultActor() throws AxisFault {
         String messageBody = createRequest();
-        String reposnce = httpClient(getProxyServiceURLHttp("HelloProxy"), messageBody);
+        String reposnce = httpClient(getProxyServiceURLHttp("HelloProtocolVialtionProxy"), messageBody);
         if (reposnce.contains(messageBody) && reposnce.contains(faultMessage)) {
             Assert.fail("client received two SOAP envelops");
         }
