@@ -18,6 +18,7 @@ set -o xtrace
 
 HOME=`pwd`
 TEST_SCRIPT=test.sh
+MVNSTATE=1
 
 function usage()
 {
@@ -120,6 +121,8 @@ if ! $PRODUCT_VERSION_FOUND ; then
     echo "deployment.properties file does not contain the product version. Executing the default suite ."
     runTestProfile profile_general
 fi
+
+MVNSTATE=$?
 
 #=============== Copy Surefire Reports ===========================================
 echo
