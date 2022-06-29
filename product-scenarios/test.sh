@@ -102,15 +102,16 @@ do
   value=${tokens[1]}
   if [ "$key" = "ProductVersion" ]; then
     productVersion=${tokens[1]}
-    case ${productVersion} in
-        ESB-5.0.0|EI-6.0.0|EI-6.1.0|EI-6.1.1|EI-6.2.0|EI-6.3.0|EI-6.4.0|EI-6.5.0|EI-6.6.0)
-            echo "Executing tests for the product version: $productVersion"
+    productName=${product}-${productVersion}
+    case ${productName} in
+        esb-5.0.0|ei-6.0.0|ei-6.1.0|ei-6.1.1|ei-6.2.0|ei-6.3.0|ei-6.4.0|ei-6.5.0|ei-6.6.0)
+            echo "Executing tests for the product : $productName"
             runTestProfile profile_general ;;
-        ESB-4.9.0)
-            echo "Executing tests for the product version: $productVersion"
+        esb-4.9.0)
+            echo "Executing tests for the product : $productName"
             runTestProfile profile_490 ;;
         *)
-            echo "ERROR: Unknown product version: " ${productVersion} "read from deployment.properties. Aborting the execution.";;
+            echo "ERROR: Unknown product : " ${productName} "read from deployment.properties. Aborting the execution.";;
     esac
     PRODUCT_VERSION_FOUND=true
     break
