@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="JSON_EP" xmlns="http://ws.apache.org/ns/synapse">
-    <http method="post" uri-template="http://ei-backend.scenarios.wso2.org:9090/eiTests/JSONEndpoint">
+    <http method="post" uri-template="http://localhost:8290/json/message/1_1_1_1_1">
         <timeout>
             <responseAction>fault</responseAction>
         </timeout>
@@ -12,6 +12,7 @@
         </suspendOnFailure>
         <markForSuspension>
             <errorCodes>-1</errorCodes>
+            <retriesBeforeSuspension>0</retriesBeforeSuspension>
         </markForSuspension>
     </http>
 </endpoint>

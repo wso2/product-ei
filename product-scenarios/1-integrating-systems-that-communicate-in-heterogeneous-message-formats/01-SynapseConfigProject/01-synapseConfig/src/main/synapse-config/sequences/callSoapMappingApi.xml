@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="callSoapMappingApi" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <send>
+        <endpoint>
+            <address format="soap11" uri="http://localhost:8290/soap/message">
+                <timeout>
+                    <responseAction>fault</responseAction>
+                </timeout>
+                <suspendOnFailure>
+                    <errorCodes>-1</errorCodes>
+                    <initialDuration>0</initialDuration>
+                    <progressionFactor>1.0</progressionFactor>
+                    <maximumDuration>0</maximumDuration>
+                </suspendOnFailure>
+                <markForSuspension>
+                    <errorCodes>-1</errorCodes>
+                    <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                </markForSuspension>
+            </address>
+        </endpoint>
+    </send>
+</sequence>

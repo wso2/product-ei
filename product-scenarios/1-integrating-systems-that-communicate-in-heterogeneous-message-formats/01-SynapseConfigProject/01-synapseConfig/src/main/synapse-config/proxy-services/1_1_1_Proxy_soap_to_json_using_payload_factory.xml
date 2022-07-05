@@ -8,9 +8,7 @@
                     <arg evaluator="xml" expression="//tem:LookupCity/tem:Zip" xmlns:tem="http://tempuri.org"/>
                 </args>
             </payloadFactory>
-            <send>
-                <endpoint key="JSON_EP"/>
-            </send>
+            <sequence key="callJsonMappingApi"/>
         </inSequence>
         <outSequence>
             <payloadFactory description="Build SOAP request payload" media-type="xml">

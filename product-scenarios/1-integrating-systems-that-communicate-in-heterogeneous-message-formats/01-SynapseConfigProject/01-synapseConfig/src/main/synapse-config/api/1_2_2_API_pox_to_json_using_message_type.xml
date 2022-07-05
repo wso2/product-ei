@@ -6,9 +6,7 @@
             <log level="custom">
                 <property expression="json-eval($)" name="JSON_VALUE"/>
             </log>
-            <send description="Send Request Payload to JSON endpoint">
-                <endpoint key="JSON_EP"/>
-            </send>
+            <sequence key="callJsonMappingApi"/>
         </inSequence>
         <outSequence>
             <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>

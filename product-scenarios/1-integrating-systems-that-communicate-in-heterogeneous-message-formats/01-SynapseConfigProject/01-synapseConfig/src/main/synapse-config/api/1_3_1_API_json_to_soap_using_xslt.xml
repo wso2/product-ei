@@ -9,9 +9,7 @@
                 <source clone="true" xmlns:m0="http://services.samples" xpath="//m0:getQuote"/>
                 <target type="body"/>
             </enrich>
-            <send>
-                <endpoint key="SOAP_EP"/>
-            </send>
+            <sequence key="callSoapMappingApi"/>
         </inSequence>
         <outSequence>
             <xslt key="out_transform"/>

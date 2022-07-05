@@ -4,9 +4,7 @@
         <inSequence>
             <log level="full"/>
             <datamapper config="gov:datamapper/config_convert_soap_to_json.dmc" inputSchema="gov:datamapper/config_convert_soap_to_json_inputSchema.json" inputType="XML" outputSchema="gov:datamapper/config_convert_soap_to_json_outputSchema.json" outputType="JSON" xsltStyleSheet="gov:datamapper/config_convert_soap_to_json_xsltStyleSheet.xml"/>
-            <send>
-                <endpoint key="JSON_EP"/>
-            </send>
+            <sequence key="callJsonMappingApi"/>
         </inSequence>
         <outSequence>
             <datamapper config="gov:datamapper/config_convert_json_to_soap.dmc" inputSchema="gov:datamapper/config_convert_json_to_soap_inputSchema.json" inputType="JSON" outputSchema="gov:datamapper/config_convert_json_to_soap_outputSchema.json" outputType="XML" xsltStyleSheet="gov:datamapper/config_convert_json_to_soap_xsltStyleSheet.xml"/>
