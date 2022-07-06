@@ -18,7 +18,7 @@
   -->
 
 <endpoint name="05_EP_XML" xmlns="http://ws.apache.org/ns/synapse">
-    <address uri="http://localhost:8290/xml/message/">
+    <address uri="http://localhost:8280/xml/message/">
         <timeout>
             <responseAction>fault</responseAction>
         </timeout>

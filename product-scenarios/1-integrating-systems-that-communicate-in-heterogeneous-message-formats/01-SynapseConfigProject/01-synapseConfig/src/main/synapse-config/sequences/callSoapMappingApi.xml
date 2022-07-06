@@ -2,7 +2,7 @@
 <sequence name="callSoapMappingApi" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <send>
         <endpoint>
-            <address format="soap11" uri="http://localhost:8290/soap/message">
+            <address format="soap11" uri="http://localhost:8280/soap/message">
                 <timeout>
                     <responseAction>fault</responseAction>
                 </timeout>

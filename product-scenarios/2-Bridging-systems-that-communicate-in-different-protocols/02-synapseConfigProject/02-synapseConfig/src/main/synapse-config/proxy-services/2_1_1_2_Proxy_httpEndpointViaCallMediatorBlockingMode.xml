@@ -23,7 +23,7 @@
             <header name="Action" scope="default" value="urn:getQuote"/>
             <call blocking="true">
                 <endpoint>
-                    <http method="post" uri-template="http://localhost:8290/services/2_SoapMappingProxy">
+                    <http method="post" uri-template="http://localhost:8280/services/2_SoapMappingProxy">
                         <suspendOnFailure>
                             <initialDuration>-1</initialDuration>
                             <progressionFactor>1</progressionFactor>

@@ -7,7 +7,7 @@
     <property expression="get-property('transport','messageId')" name="messageId" scope="default" type="STRING"/>
     <send>
         <endpoint name="JSON_EP">
-            <http method="post" uri-template="http://localhost:8290/json/message/${messageId}">
+            <http method="post" uri-template="http://localhost:8280/json/message/${messageId}">
                 <timeout>
                     <responseAction>fault</responseAction>
                 </timeout>

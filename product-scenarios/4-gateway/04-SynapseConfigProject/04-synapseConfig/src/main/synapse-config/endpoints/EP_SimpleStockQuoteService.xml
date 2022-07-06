@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="EP_SimpleStockQuoteService" xmlns="http://ws.apache.org/ns/synapse">
-    <address uri="http://localhost:8290/services/4_SoapMappingProxy">
+    <address uri="http://localhost:8280/services/4_SoapMappingProxy">
         <suspendOnFailure>
             <errorCodes>-1</errorCodes>
             <initialDuration>0</initialDuration>

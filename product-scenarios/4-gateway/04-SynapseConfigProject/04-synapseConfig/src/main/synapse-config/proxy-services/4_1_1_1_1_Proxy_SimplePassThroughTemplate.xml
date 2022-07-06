@@ -2,7 +2,7 @@
 <proxy name="4_1_1_1_1_Proxy_SimplePassThroughTemplate" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <endpoint name="endpoint_urn_uuid_2a8878b7-0092-4121-bb4e-5ba3d38cc8b5">
-            <address uri="http://localhost:8290/services/4_SoapMappingProxy">
+            <address uri="http://localhost:8280/services/4_SoapMappingProxy">
                 <suspendOnFailure>
                     <initialDuration>-1</initialDuration>
                     <progressionFactor>1</progressionFactor>
